@@ -404,9 +404,18 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
     private static HashSet<string> EnumerateBaseModelProperties(ModelProvider baseModel)
     {
         var basePropertyNames = new HashSet<string>(StringComparer.Ordinal);
+        var visited = new HashSet<ModelProvider>();
         ModelProvider? currentModel = baseModel;
-        while (currentModel != null)
+        while (currentModel != null && visited.Add(currentModel))
         {
+            if (currentModel is SystemObjectModelProvider systemModel && systemModel.SystemType.IsFrameworkType)
+            {
+                foreach (var property in systemModel.SystemType.FrameworkType.GetProperties(BindingFlags.Instance | BindingFlags.Public))
+                {
+                    basePropertyNames.Add(property.Name);
+                }
+            }
+
             foreach (var property in currentModel.Properties)
             {
                 basePropertyNames.Add(property.Name);
@@ -437,8 +446,9 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
 
     private static IEnumerable<ModelProvider> EnumerateBaseModels(ModelProvider baseModel)
     {
+        var visited = new HashSet<ModelProvider>();
         ModelProvider? currentModel = baseModel;
-        while (currentModel != null)
+        while (currentModel != null && visited.Add(currentModel))
         {
             yield return currentModel;
             currentModel = currentModel.BaseModelProvider;
@@ -453,7 +463,8 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
         }
 
         ModelProvider? current = baseModel;
-        while (current != null)
+        var visited = new HashSet<ModelProvider>();
+        while (current != null && visited.Add(current))
         {
             foreach (var property in current.Properties)
             {

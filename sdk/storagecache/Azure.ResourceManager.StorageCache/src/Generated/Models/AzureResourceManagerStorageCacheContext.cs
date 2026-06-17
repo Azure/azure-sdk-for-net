@@ -114,7 +114,6 @@ namespace Azure.ResourceManager.StorageCache
     [ModelReaderWriterBuildable(typeof(StorageTargetResource))]
     [ModelReaderWriterBuildable(typeof(StorageTargetSpaceAllocation))]
     [ModelReaderWriterBuildable(typeof(StorageTargetsResult))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UnknownTarget))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerStorageCacheContext : ModelReaderWriterContext

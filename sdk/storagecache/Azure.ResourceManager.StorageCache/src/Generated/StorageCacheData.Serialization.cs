@@ -18,13 +18,8 @@ using Azure.ResourceManager.StorageCache.Models;
 namespace Azure.ResourceManager.StorageCache
 {
     /// <summary> A cache instance. Follows Azure Resource Manager standards: https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/resource-api-reference.md. </summary>
-    public partial class StorageCacheData : TrackedResourceData, IJsonModel<StorageCacheData>
+    public partial class StorageCacheData : ResourceData, IJsonModel<StorageCacheData>
     {
-        /// <summary> Initializes a new instance of <see cref="StorageCacheData"/> for deserialization. </summary>
-        internal StorageCacheData()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -106,6 +101,27 @@ namespace Azure.ResourceManager.StorageCache
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
             }
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(Location))
+            {
+                writer.WritePropertyName("location"u8);
+                writer.WriteStringValue(Location);
+            }
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
@@ -158,48 +174,21 @@ namespace Azure.ResourceManager.StorageCache
             {
                 return null;
             }
-            ResourceIdentifier id = default;
-            string name = default;
-            ResourceType resourceType = default;
-            SystemData systemData = default;
-            IDictionary<string, string> tags = default;
-            AzureLocation location = default;
             CacheProperties properties = default;
+            IDictionary<string, string> tags = default;
+            string location = default;
             ManagedServiceIdentity identity = default;
             StorageCacheSkuInfo sku = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("id"u8))
+                if (prop.NameEquals("properties"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    id = new ResourceIdentifier(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("name"u8))
-                {
-                    name = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("type"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    resourceType = new ResourceType(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("systemData"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerStorageCacheContext.Default);
+                    properties = CacheProperties.DeserializeCacheProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("tags"u8))
@@ -225,16 +214,7 @@ namespace Azure.ResourceManager.StorageCache
                 }
                 if (prop.NameEquals("location"u8))
                 {
-                    location = new AzureLocation(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("properties"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    properties = CacheProperties.DeserializeCacheProperties(prop.Value, options);
+                    location = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("identity"u8))
@@ -261,13 +241,9 @@ namespace Azure.ResourceManager.StorageCache
                 }
             }
             return new StorageCacheData(
-                id,
-                name,
-                resourceType,
-                systemData,
+                properties,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                properties,
                 identity,
                 sku,
                 additionalBinaryDataProperties);

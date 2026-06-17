@@ -3,13 +3,12 @@
 
 #nullable disable
 
-using Azure.ResourceManager.Models;
 using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.StorageCache
 {
     [CodeGenType("Cache")]
-    public partial class StorageCacheData : TrackedResourceData
+    public partial class StorageCacheData
     {
     }
 }

@@ -45,12 +45,6 @@ namespace Azure.ResourceManager.StorageCache.Models
             return new RequiredAmlFileSystemSubnetsSize(filesystemSubnetSize, default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="cacheSizeGB"> The size of this Cache, in GB. </param>
         /// <param name="health"> Health of the cache. </param>
         /// <param name="mountAddresses"> Array of IPv4 addresses that can be used by clients mounting this cache. </param>
@@ -65,20 +59,16 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <param name="primingJobs"> Specifies the priming jobs defined in the cache. </param>
         /// <param name="spaceAllocation"> Specifies the space allocation percentage for each storage target in the cache. </param>
         /// <param name="securityAccessPolicies"> NFS access policies defined for this cache. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> Region name string. </param>
         /// <param name="identity"> The identity of the cache, if configured. </param>
         /// <param name="skuName"> SKU name for this cache. </param>
         /// <returns> A new <see cref="StorageCache.StorageCacheData"/> instance for mocking. </returns>
-        public static StorageCacheData StorageCacheData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, int? cacheSizeGB = default, StorageCacheHealth health = default, IEnumerable<IPAddress> mountAddresses = default, StorageCacheProvisioningStateType? provisioningState = default, ResourceIdentifier subnet = default, StorageCacheUpgradeStatus upgradeStatus = default, StorageCacheUpgradeSettings upgradeSettings = default, StorageCacheNetworkSettings networkSettings = default, StorageCacheEncryptionSettings encryptionSettings = default, StorageCacheDirectorySettings directoryServicesSettings = default, IEnumerable<string> zones = default, IEnumerable<PrimingJob> primingJobs = default, IEnumerable<StorageTargetSpaceAllocation> spaceAllocation = default, IEnumerable<NfsAccessPolicy> securityAccessPolicies = default, ManagedServiceIdentity identity = default, string skuName = default)
+        public static StorageCacheData StorageCacheData(int? cacheSizeGB = default, StorageCacheHealth health = default, IEnumerable<IPAddress> mountAddresses = default, StorageCacheProvisioningStateType? provisioningState = default, ResourceIdentifier subnet = default, StorageCacheUpgradeStatus upgradeStatus = default, StorageCacheUpgradeSettings upgradeSettings = default, StorageCacheNetworkSettings networkSettings = default, StorageCacheEncryptionSettings encryptionSettings = default, StorageCacheDirectorySettings directoryServicesSettings = default, IEnumerable<string> zones = default, IEnumerable<PrimingJob> primingJobs = default, IEnumerable<StorageTargetSpaceAllocation> spaceAllocation = default, IEnumerable<NfsAccessPolicy> securityAccessPolicies = default, IDictionary<string, string> tags = default, string location = default, ManagedServiceIdentity identity = default, string skuName = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new StorageCacheData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
                 cacheSizeGB is null && health is null && mountAddresses is null && provisioningState is null && subnet is null && upgradeStatus is null && upgradeSettings is null && networkSettings is null && encryptionSettings is null && securityAccessPolicies is null && directoryServicesSettings is null && zones is null && primingJobs is null && spaceAllocation is null ? default : new CacheProperties(
                     cacheSizeGB,
                     health,
@@ -95,6 +85,8 @@ namespace Azure.ResourceManager.StorageCache.Models
                     (primingJobs ?? new ChangeTrackingList<PrimingJob>()).ToList(),
                     (spaceAllocation ?? new ChangeTrackingList<StorageTargetSpaceAllocation>()).ToList(),
                     default),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
                 identity,
                 skuName is null ? default : new StorageCacheSkuInfo(skuName, default),
                 default);
@@ -325,10 +317,6 @@ namespace Azure.ResourceManager.StorageCache.Models
             return new PrimingJobContent(primingJobId, default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="junctions"> List of cache namespace junctions to target for namespace associations. </param>
         /// <param name="targetType"> Type of the Storage Target. </param>
         /// <param name="provisioningState"> ARM provisioning state, see https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/Addendum.md#provisioningstate-property. </param>
@@ -340,26 +328,19 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <param name="unknownAttributes"> Dictionary of string-&gt;string pairs containing information about the Storage Target. </param>
         /// <param name="location"> Region name string. </param>
         /// <returns> A new <see cref="StorageCache.StorageTargetData"/> instance for mocking. </returns>
-        public static StorageTargetData StorageTargetData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<NamespaceJunction> junctions = default, StorageTargetType? targetType = default, StorageCacheProvisioningStateType? provisioningState = default, StorageTargetOperationalStateType? state = default, Nfs3Target nfs3 = default, BlobNfsTarget blobNfs = default, int? allocationPercentage = default, ResourceIdentifier clfsTarget = default, IDictionary<string, string> unknownAttributes = default, AzureLocation? location = default)
+        public static StorageTargetData StorageTargetData(IEnumerable<NamespaceJunction> junctions = default, StorageTargetType? targetType = default, StorageCacheProvisioningStateType? provisioningState = default, StorageTargetOperationalStateType? state = default, Nfs3Target nfs3 = default, BlobNfsTarget blobNfs = default, int? allocationPercentage = default, ResourceIdentifier clfsTarget = default, IDictionary<string, string> unknownAttributes = default, AzureLocation? location = default)
         {
-            return new StorageTargetData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                junctions is null && targetType is null && provisioningState is null && state is null && nfs3 is null && clfsTarget is null && unknownAttributes is null && blobNfs is null && allocationPercentage is null ? default : new StorageTargetProperties(
-                    (junctions ?? new ChangeTrackingList<NamespaceJunction>()).ToList(),
-                    targetType.GetValueOrDefault(),
-                    provisioningState,
-                    state,
-                    nfs3,
-                    new ClfsTarget(clfsTarget, default),
-                    new UnknownTarget(unknownAttributes ?? new ChangeTrackingDictionary<string, string>(), default),
-                    blobNfs,
-                    allocationPercentage,
-                    default),
-                location,
-                default);
+            return new StorageTargetData(junctions is null && targetType is null && provisioningState is null && state is null && nfs3 is null && clfsTarget is null && unknownAttributes is null && blobNfs is null && allocationPercentage is null ? default : new StorageTargetProperties(
+                (junctions ?? new ChangeTrackingList<NamespaceJunction>()).ToList(),
+                targetType.GetValueOrDefault(),
+                provisioningState,
+                state,
+                nfs3,
+                new ClfsTarget(clfsTarget, default),
+                new UnknownTarget(unknownAttributes ?? new ChangeTrackingDictionary<string, string>(), default),
+                blobNfs,
+                allocationPercentage,
+                default), location, default);
         }
 
         /// <param name="namespacePath"> Namespace path on a cache for a Storage Target. </param>
@@ -392,12 +373,6 @@ namespace Azure.ResourceManager.StorageCache.Models
             return new BlobNfsTarget(target, usageModel, verificationDelayInSeconds, writeBackDelayInSeconds, default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="storageCapacityTiB"> The size of the AML file system, in TiB. This might be rounded up. </param>
         /// <param name="currentStorageCapacityTiB"> The current storage capacity of the AML file system, in TiB. This reflects the actual capacity including any expansions. </param>
         /// <param name="clusterUuid"> The unique identifier of the AML file system cluster. </param>
@@ -414,36 +389,24 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <param name="skuName"> SKU name for this resource. </param>
         /// <param name="zones"> The availability zones. </param>
         /// <returns> A new <see cref="StorageCache.AmlFileSystemData"/> instance for mocking. </returns>
-        public static AmlFileSystemData AmlFileSystemData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, float? storageCapacityTiB = default, float? currentStorageCapacityTiB = default, Guid? clusterUuid = default, AmlFileSystemHealth health = default, AmlFileSystemProvisioningStateType? provisioningState = default, string filesystemSubnet = default, AmlFileSystemClientInfo clientInfo = default, int? throughputProvisionedMBps = default, AmlFileSystemPropertiesMaintenanceWindow maintenanceWindow = default, AmlFileSystemPropertiesHsm hsm = default, AmlFileSystemRootSquashSettings rootSquashSettings = default, StorageCacheEncryptionKeyVaultKeyReference keyEncryptionKey = default, ManagedServiceIdentity identity = default, string skuName = default, IEnumerable<string> zones = default)
+        public static AmlFileSystemData AmlFileSystemData(float? storageCapacityTiB = default, float? currentStorageCapacityTiB = default, Guid? clusterUuid = default, AmlFileSystemHealth health = default, AmlFileSystemProvisioningStateType? provisioningState = default, string filesystemSubnet = default, AmlFileSystemClientInfo clientInfo = default, int? throughputProvisionedMBps = default, AmlFileSystemPropertiesMaintenanceWindow maintenanceWindow = default, AmlFileSystemPropertiesHsm hsm = default, AmlFileSystemRootSquashSettings rootSquashSettings = default, StorageCacheEncryptionKeyVaultKeyReference keyEncryptionKey = default, ManagedServiceIdentity identity = default, string skuName = default, IEnumerable<string> zones = default)
         {
-            tags ??= new ChangeTrackingDictionary<string, string>();
             zones ??= new ChangeTrackingList<string>();
 
-            return new AmlFileSystemData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                storageCapacityTiB is null && currentStorageCapacityTiB is null && clusterUuid is null && health is null && provisioningState is null && filesystemSubnet is null && clientInfo is null && throughputProvisionedMBps is null && keyEncryptionKey is null && maintenanceWindow is null && hsm is null && rootSquashSettings is null ? default : new AmlFilesystemProperties(
-                    storageCapacityTiB.GetValueOrDefault(),
-                    currentStorageCapacityTiB,
-                    clusterUuid,
-                    health,
-                    provisioningState,
-                    filesystemSubnet,
-                    clientInfo,
-                    throughputProvisionedMBps,
-                    new AmlFileSystemEncryptionSettings(keyEncryptionKey, default),
-                    maintenanceWindow,
-                    hsm,
-                    rootSquashSettings,
-                    default),
-                identity,
-                skuName is null ? default : new StorageCacheSkuName(skuName, default),
-                (zones ?? new ChangeTrackingList<string>()).ToList(),
-                default);
+            return new AmlFileSystemData(storageCapacityTiB is null && currentStorageCapacityTiB is null && clusterUuid is null && health is null && provisioningState is null && filesystemSubnet is null && clientInfo is null && throughputProvisionedMBps is null && keyEncryptionKey is null && maintenanceWindow is null && hsm is null && rootSquashSettings is null ? default : new AmlFilesystemProperties(
+                storageCapacityTiB.GetValueOrDefault(),
+                currentStorageCapacityTiB,
+                clusterUuid,
+                health,
+                provisioningState,
+                filesystemSubnet,
+                clientInfo,
+                throughputProvisionedMBps,
+                new AmlFileSystemEncryptionSettings(keyEncryptionKey, default),
+                maintenanceWindow,
+                hsm,
+                rootSquashSettings,
+                default), identity, skuName is null ? default : new StorageCacheSkuName(skuName, default), (zones ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
         /// <param name="state"> List of AML file system health states. </param>
@@ -575,12 +538,6 @@ namespace Azure.ResourceManager.StorageCache.Models
             return new AmlFileSystemArchiveContent(filesystemPath, default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="provisioningState"> ARM provisioning state. </param>
         /// <param name="adminStatus"> The administrative status of the auto export job. Possible values: 'Enable', 'Disable'. Passing in a value of 'Disable' will disable the current active auto export job. By default it is set to 'Enable'. </param>
         /// <param name="autoExportPrefixes"> An array of blob paths/prefixes that get auto exported to the cluster namespace. It has '/' as the default value. Number of maximum allowed paths for now is 1. </param>
@@ -600,35 +557,25 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <param name="lastStartedTimeUTC"> The time (in UTC) the latest auto export job started. </param>
         /// <param name="lastCompletionTimeUTC"> The time (in UTC) of the last completed auto export job. </param>
         /// <returns> A new <see cref="StorageCache.AutoExportJobData"/> instance for mocking. </returns>
-        public static AutoExportJobData AutoExportJobData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, AutoExportJobProvisioningStateType? provisioningState = default, AutoExportJobAdminStatus? adminStatus = default, IEnumerable<string> autoExportPrefixes = default, AutoExportStatusType? state = default, string statusCode = default, string statusMessage = default, long? totalFilesExported = default, long? totalMiBExported = default, long? totalFilesFailed = default, int? exportIterationCount = default, DateTimeOffset? lastSuccessfulIterationCompletionTimeUTC = default, long? currentIterationFilesDiscovered = default, long? currentIterationMiBDiscovered = default, long? currentIterationFilesExported = default, long? currentIterationMiBExported = default, long? currentIterationFilesFailed = default, DateTimeOffset? lastStartedTimeUTC = default, DateTimeOffset? lastCompletionTimeUTC = default)
+        public static AutoExportJobData AutoExportJobData(AutoExportJobProvisioningStateType? provisioningState = default, AutoExportJobAdminStatus? adminStatus = default, IEnumerable<string> autoExportPrefixes = default, AutoExportStatusType? state = default, string statusCode = default, string statusMessage = default, long? totalFilesExported = default, long? totalMiBExported = default, long? totalFilesFailed = default, int? exportIterationCount = default, DateTimeOffset? lastSuccessfulIterationCompletionTimeUTC = default, long? currentIterationFilesDiscovered = default, long? currentIterationMiBDiscovered = default, long? currentIterationFilesExported = default, long? currentIterationMiBExported = default, long? currentIterationFilesFailed = default, DateTimeOffset? lastStartedTimeUTC = default, DateTimeOffset? lastCompletionTimeUTC = default)
         {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new AutoExportJobData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                provisioningState is null && adminStatus is null && autoExportPrefixes is null && state is null && statusCode is null && statusMessage is null && totalFilesExported is null && totalMiBExported is null && totalFilesFailed is null && exportIterationCount is null && lastSuccessfulIterationCompletionTimeUTC is null && currentIterationFilesDiscovered is null && currentIterationMiBDiscovered is null && currentIterationFilesExported is null && currentIterationMiBExported is null && currentIterationFilesFailed is null && lastStartedTimeUTC is null && lastCompletionTimeUTC is null ? default : new AutoExportJobProperties(provisioningState, adminStatus, (autoExportPrefixes ?? new ChangeTrackingList<string>()).ToList(), new AutoExportJobPropertiesStatus(
-                    state,
-                    statusCode,
-                    statusMessage,
-                    totalFilesExported,
-                    totalMiBExported,
-                    totalFilesFailed,
-                    exportIterationCount,
-                    lastSuccessfulIterationCompletionTimeUTC,
-                    currentIterationFilesDiscovered,
-                    currentIterationMiBDiscovered,
-                    currentIterationFilesExported,
-                    currentIterationMiBExported,
-                    currentIterationFilesFailed,
-                    lastStartedTimeUTC,
-                    lastCompletionTimeUTC,
-                    default), default),
-                default);
+            return new AutoExportJobData(provisioningState is null && adminStatus is null && autoExportPrefixes is null && state is null && statusCode is null && statusMessage is null && totalFilesExported is null && totalMiBExported is null && totalFilesFailed is null && exportIterationCount is null && lastSuccessfulIterationCompletionTimeUTC is null && currentIterationFilesDiscovered is null && currentIterationMiBDiscovered is null && currentIterationFilesExported is null && currentIterationMiBExported is null && currentIterationFilesFailed is null && lastStartedTimeUTC is null && lastCompletionTimeUTC is null ? default : new AutoExportJobProperties(provisioningState, adminStatus, (autoExportPrefixes ?? new ChangeTrackingList<string>()).ToList(), new AutoExportJobPropertiesStatus(
+                state,
+                statusCode,
+                statusMessage,
+                totalFilesExported,
+                totalMiBExported,
+                totalFilesFailed,
+                exportIterationCount,
+                lastSuccessfulIterationCompletionTimeUTC,
+                currentIterationFilesDiscovered,
+                currentIterationMiBDiscovered,
+                currentIterationFilesExported,
+                currentIterationMiBExported,
+                currentIterationFilesFailed,
+                lastStartedTimeUTC,
+                lastCompletionTimeUTC,
+                default), default), default);
         }
 
         /// <param name="tags"> Resource tags. </param>
@@ -641,12 +588,6 @@ namespace Azure.ResourceManager.StorageCache.Models
             return new AutoExportJobPatch(tags ?? new ChangeTrackingDictionary<string, string>(), adminStatus is null ? default : new AutoExportJobUpdateProperties(adminStatus, default), default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="provisioningState"> ARM provisioning state. </param>
         /// <param name="adminStatus"> The administrative status of the import job. Possible values: 'Active', 'Cancel'. Passing in a value of 'Cancel' will cancel the current active import job. By default it is set to 'Active'. </param>
         /// <param name="importPrefixes"> An array of blob paths/prefixes that get imported into the cluster namespace. It has '/' as the default value. </param>
@@ -669,43 +610,33 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <param name="totalErrors"> Number of errors in the import job. </param>
         /// <param name="totalConflicts"> Number of conflicts in the import job. </param>
         /// <returns> A new <see cref="StorageCache.StorageCacheImportJobData"/> instance for mocking. </returns>
-        public static StorageCacheImportJobData StorageCacheImportJobData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ImportJobProvisioningStateType? provisioningState = default, ImportJobAdminStatus? adminStatus = default, IEnumerable<string> importPrefixes = default, ConflictResolutionMode? conflictResolutionMode = default, int? maximumErrors = default, ImportStatusType? state = default, string statusMessage = default, long? totalBlobsWalked = default, long? blobsWalkedPerSecond = default, long? totalBlobsImported = default, long? importedFiles = default, long? importedDirectories = default, long? importedSymlinks = default, long? preexistingFiles = default, long? preexistingDirectories = default, long? preexistingSymlinks = default, long? blobsImportedPerSecond = default, DateTimeOffset? lastCompletionOn = default, DateTimeOffset? lastStartedOn = default, int? totalErrors = default, int? totalConflicts = default)
+        public static StorageCacheImportJobData StorageCacheImportJobData(ImportJobProvisioningStateType? provisioningState = default, ImportJobAdminStatus? adminStatus = default, IEnumerable<string> importPrefixes = default, ConflictResolutionMode? conflictResolutionMode = default, int? maximumErrors = default, ImportStatusType? state = default, string statusMessage = default, long? totalBlobsWalked = default, long? blobsWalkedPerSecond = default, long? totalBlobsImported = default, long? importedFiles = default, long? importedDirectories = default, long? importedSymlinks = default, long? preexistingFiles = default, long? preexistingDirectories = default, long? preexistingSymlinks = default, long? blobsImportedPerSecond = default, DateTimeOffset? lastCompletionOn = default, DateTimeOffset? lastStartedOn = default, int? totalErrors = default, int? totalConflicts = default)
         {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new StorageCacheImportJobData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                provisioningState is null && adminStatus is null && importPrefixes is null && conflictResolutionMode is null && maximumErrors is null && state is null && statusMessage is null && totalBlobsWalked is null && blobsWalkedPerSecond is null && totalBlobsImported is null && importedFiles is null && importedDirectories is null && importedSymlinks is null && preexistingFiles is null && preexistingDirectories is null && preexistingSymlinks is null && blobsImportedPerSecond is null && lastCompletionOn is null && lastStartedOn is null && totalErrors is null && totalConflicts is null ? default : new ImportJobProperties(
-                    provisioningState,
-                    adminStatus,
-                    (importPrefixes ?? new ChangeTrackingList<string>()).ToList(),
-                    conflictResolutionMode,
-                    maximumErrors,
-                    new ImportJobPropertiesStatus(
-                        state,
-                        statusMessage,
-                        totalBlobsWalked,
-                        blobsWalkedPerSecond,
-                        totalBlobsImported,
-                        importedFiles,
-                        importedDirectories,
-                        importedSymlinks,
-                        preexistingFiles,
-                        preexistingDirectories,
-                        preexistingSymlinks,
-                        blobsImportedPerSecond,
-                        lastCompletionOn,
-                        lastStartedOn,
-                        totalErrors,
-                        totalConflicts,
-                        default),
+            return new StorageCacheImportJobData(provisioningState is null && adminStatus is null && importPrefixes is null && conflictResolutionMode is null && maximumErrors is null && state is null && statusMessage is null && totalBlobsWalked is null && blobsWalkedPerSecond is null && totalBlobsImported is null && importedFiles is null && importedDirectories is null && importedSymlinks is null && preexistingFiles is null && preexistingDirectories is null && preexistingSymlinks is null && blobsImportedPerSecond is null && lastCompletionOn is null && lastStartedOn is null && totalErrors is null && totalConflicts is null ? default : new ImportJobProperties(
+                provisioningState,
+                adminStatus,
+                (importPrefixes ?? new ChangeTrackingList<string>()).ToList(),
+                conflictResolutionMode,
+                maximumErrors,
+                new ImportJobPropertiesStatus(
+                    state,
+                    statusMessage,
+                    totalBlobsWalked,
+                    blobsWalkedPerSecond,
+                    totalBlobsImported,
+                    importedFiles,
+                    importedDirectories,
+                    importedSymlinks,
+                    preexistingFiles,
+                    preexistingDirectories,
+                    preexistingSymlinks,
+                    blobsImportedPerSecond,
+                    lastCompletionOn,
+                    lastStartedOn,
+                    totalErrors,
+                    totalConflicts,
                     default),
-                default);
+                default), default);
         }
 
         /// <param name="tags"> Resource tags. </param>
@@ -718,12 +649,6 @@ namespace Azure.ResourceManager.StorageCache.Models
             return new StorageCacheImportJobPatch(tags ?? new ChangeTrackingDictionary<string, string>(), adminStatus is null ? default : new ImportJobUpdateProperties(adminStatus, default), default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="provisioningState"> ARM provisioning state. </param>
         /// <param name="adminStatus"> The administrative status of the auto import job. Possible values: 'Enable', 'Disable'. Passing in a value of 'Disable' will disable the current active auto import job. By default it is set to 'Enable'. </param>
         /// <param name="autoImportPrefixes"> An array of blob paths/prefixes that get auto imported to the cluster namespace. It has '/' as the default value. Number of maximum allowed paths is 100. </param>
@@ -751,48 +676,38 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <param name="lastStartedTimeUTC"> The time (in UTC) the latest auto import job started. </param>
         /// <param name="lastCompletionTimeUTC"> The time (in UTC) of the last completed auto import job. </param>
         /// <returns> A new <see cref="StorageCache.AutoImportJobData"/> instance for mocking. </returns>
-        public static AutoImportJobData AutoImportJobData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, AutoImportJobPropertiesProvisioningState? provisioningState = default, AutoImportJobPropertiesAdminStatus? adminStatus = default, IEnumerable<string> autoImportPrefixes = default, ConflictResolutionMode? conflictResolutionMode = default, bool? enableDeletions = default, long? maximumErrors = default, AutoImportJobState? state = default, string statusCode = default, string statusMessage = default, DateTimeOffset? scanStartOn = default, DateTimeOffset? scanEndOn = default, long? totalBlobsWalked = default, long? rateOfBlobWalk = default, long? totalBlobsImported = default, long? rateOfBlobImport = default, long? importedFiles = default, long? importedDirectories = default, long? importedSymlinks = default, long? preexistingFiles = default, long? preexistingDirectories = default, long? preexistingSymlinks = default, long? totalErrors = default, long? totalConflicts = default, AutoImportJobPropertiesStatusBlobSyncEvents blobSyncEvents = default, DateTimeOffset? lastStartedTimeUTC = default, DateTimeOffset? lastCompletionTimeUTC = default)
+        public static AutoImportJobData AutoImportJobData(AutoImportJobPropertiesProvisioningState? provisioningState = default, AutoImportJobPropertiesAdminStatus? adminStatus = default, IEnumerable<string> autoImportPrefixes = default, ConflictResolutionMode? conflictResolutionMode = default, bool? enableDeletions = default, long? maximumErrors = default, AutoImportJobState? state = default, string statusCode = default, string statusMessage = default, DateTimeOffset? scanStartOn = default, DateTimeOffset? scanEndOn = default, long? totalBlobsWalked = default, long? rateOfBlobWalk = default, long? totalBlobsImported = default, long? rateOfBlobImport = default, long? importedFiles = default, long? importedDirectories = default, long? importedSymlinks = default, long? preexistingFiles = default, long? preexistingDirectories = default, long? preexistingSymlinks = default, long? totalErrors = default, long? totalConflicts = default, AutoImportJobPropertiesStatusBlobSyncEvents blobSyncEvents = default, DateTimeOffset? lastStartedTimeUTC = default, DateTimeOffset? lastCompletionTimeUTC = default)
         {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new AutoImportJobData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                provisioningState is null && adminStatus is null && autoImportPrefixes is null && conflictResolutionMode is null && enableDeletions is null && maximumErrors is null && state is null && statusCode is null && statusMessage is null && scanStartOn is null && scanEndOn is null && totalBlobsWalked is null && rateOfBlobWalk is null && totalBlobsImported is null && rateOfBlobImport is null && importedFiles is null && importedDirectories is null && importedSymlinks is null && preexistingFiles is null && preexistingDirectories is null && preexistingSymlinks is null && totalErrors is null && totalConflicts is null && blobSyncEvents is null && lastStartedTimeUTC is null && lastCompletionTimeUTC is null ? default : new AutoImportJobProperties(
-                    provisioningState,
-                    adminStatus,
-                    (autoImportPrefixes ?? new ChangeTrackingList<string>()).ToList(),
-                    conflictResolutionMode,
-                    enableDeletions,
-                    maximumErrors,
-                    new AutoImportJobPropertiesStatus(
-                        state,
-                        statusCode,
-                        statusMessage,
-                        scanStartOn,
-                        scanEndOn,
-                        totalBlobsWalked,
-                        rateOfBlobWalk,
-                        totalBlobsImported,
-                        rateOfBlobImport,
-                        importedFiles,
-                        importedDirectories,
-                        importedSymlinks,
-                        preexistingFiles,
-                        preexistingDirectories,
-                        preexistingSymlinks,
-                        totalErrors,
-                        totalConflicts,
-                        blobSyncEvents,
-                        lastStartedTimeUTC,
-                        lastCompletionTimeUTC,
-                        default),
+            return new AutoImportJobData(provisioningState is null && adminStatus is null && autoImportPrefixes is null && conflictResolutionMode is null && enableDeletions is null && maximumErrors is null && state is null && statusCode is null && statusMessage is null && scanStartOn is null && scanEndOn is null && totalBlobsWalked is null && rateOfBlobWalk is null && totalBlobsImported is null && rateOfBlobImport is null && importedFiles is null && importedDirectories is null && importedSymlinks is null && preexistingFiles is null && preexistingDirectories is null && preexistingSymlinks is null && totalErrors is null && totalConflicts is null && blobSyncEvents is null && lastStartedTimeUTC is null && lastCompletionTimeUTC is null ? default : new AutoImportJobProperties(
+                provisioningState,
+                adminStatus,
+                (autoImportPrefixes ?? new ChangeTrackingList<string>()).ToList(),
+                conflictResolutionMode,
+                enableDeletions,
+                maximumErrors,
+                new AutoImportJobPropertiesStatus(
+                    state,
+                    statusCode,
+                    statusMessage,
+                    scanStartOn,
+                    scanEndOn,
+                    totalBlobsWalked,
+                    rateOfBlobWalk,
+                    totalBlobsImported,
+                    rateOfBlobImport,
+                    importedFiles,
+                    importedDirectories,
+                    importedSymlinks,
+                    preexistingFiles,
+                    preexistingDirectories,
+                    preexistingSymlinks,
+                    totalErrors,
+                    totalConflicts,
+                    blobSyncEvents,
+                    lastStartedTimeUTC,
+                    lastCompletionTimeUTC,
                     default),
-                default);
+                default), default);
         }
 
         /// <param name="importedFiles"> Number of files imported during auto import. </param>
@@ -838,12 +753,6 @@ namespace Azure.ResourceManager.StorageCache.Models
             return new AutoImportJobPatch(tags ?? new ChangeTrackingDictionary<string, string>(), adminStatus is null ? default : new AutoImportJobUpdateProperties(adminStatus, default), default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="provisioningState"> ARM provisioning state, see https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/Addendum.md#provisioningstate-property. </param>
         /// <param name="newStorageCapacityTiB"> The new storage capacity in TiB for the AML file system after expansion. This must be a multiple of the Sku step size, and greater than the current storage capacity of the AML file system. </param>
         /// <param name="state"> The operational state of the expansion job. InProgress indicates the expansion is still running. Completed indicates expansion finished successfully. Failed means the expansion was unable to complete due to a fatal error. Deleting indicates the expansion is being rolled back. </param>
@@ -853,26 +762,16 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <param name="startedOn"> The time (in UTC) the expansion job started. </param>
         /// <param name="completedOn"> The time (in UTC) when the expansion job completed. Only populated when job reaches a terminal state. </param>
         /// <returns> A new <see cref="StorageCache.AmlFileSystemExpansionJobData"/> instance for mocking. </returns>
-        public static AmlFileSystemExpansionJobData AmlFileSystemExpansionJobData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, AmlFileSystemExpansionJobProvisioningState? provisioningState = default, float? newStorageCapacityTiB = default, AmlFileSystemExpansionJobStatusType? state = default, string statusCode = default, string statusMessage = default, float? percentComplete = default, DateTimeOffset? startedOn = default, DateTimeOffset? completedOn = default)
+        public static AmlFileSystemExpansionJobData AmlFileSystemExpansionJobData(AmlFileSystemExpansionJobProvisioningState? provisioningState = default, float? newStorageCapacityTiB = default, AmlFileSystemExpansionJobStatusType? state = default, string statusCode = default, string statusMessage = default, float? percentComplete = default, DateTimeOffset? startedOn = default, DateTimeOffset? completedOn = default)
         {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new AmlFileSystemExpansionJobData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                provisioningState is null && newStorageCapacityTiB is null && state is null && statusCode is null && statusMessage is null && percentComplete is null && startedOn is null && completedOn is null ? default : new ExpansionJobProperties(provisioningState, newStorageCapacityTiB, new ExpansionJobPropertiesStatus(
-                    state,
-                    statusCode,
-                    statusMessage,
-                    percentComplete,
-                    startedOn,
-                    completedOn,
-                    default), default),
-                default);
+            return new AmlFileSystemExpansionJobData(provisioningState is null && newStorageCapacityTiB is null && state is null && statusCode is null && statusMessage is null && percentComplete is null && startedOn is null && completedOn is null ? default : new ExpansionJobProperties(provisioningState, newStorageCapacityTiB, new ExpansionJobPropertiesStatus(
+                state,
+                statusCode,
+                statusMessage,
+                percentComplete,
+                startedOn,
+                completedOn,
+                default), default), default);
         }
 
         /// <param name="tags"> Resource tags. </param>
@@ -1017,31 +916,196 @@ namespace Azure.ResourceManager.StorageCache.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AmlFileSystemData AmlFileSystemData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ManagedServiceIdentity identity = default, string skuName = default, IEnumerable<string> zones = default, float? storageCapacityTiB = default, AmlFileSystemHealth health = default, AmlFileSystemProvisioningStateType? provisioningState = default, string filesystemSubnet = default, AmlFileSystemClientInfo clientInfo = default, int? throughputProvisionedMBps = default, StorageCacheEncryptionKeyVaultKeyReference keyEncryptionKey = default, AmlFileSystemPropertiesMaintenanceWindow maintenanceWindow = default, AmlFileSystemPropertiesHsm hsm = default, AmlFileSystemRootSquashSettings rootSquashSettings = default)
         {
-            return new AmlFileSystemData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                storageCapacityTiB is null && health is null && provisioningState is null && filesystemSubnet is null && clientInfo is null && throughputProvisionedMBps is null && keyEncryptionKey is null && maintenanceWindow is null && hsm is null && rootSquashSettings is null ? default : new AmlFilesystemProperties(
-                    storageCapacityTiB.GetValueOrDefault(),
-                    default,
-                    default,
-                    health,
-                    provisioningState,
-                    filesystemSubnet,
-                    clientInfo,
-                    throughputProvisionedMBps,
-                    new AmlFileSystemEncryptionSettings(keyEncryptionKey, default),
-                    maintenanceWindow,
-                    hsm,
-                    rootSquashSettings,
+            return new AmlFileSystemData(storageCapacityTiB is null && health is null && provisioningState is null && filesystemSubnet is null && clientInfo is null && throughputProvisionedMBps is null && keyEncryptionKey is null && maintenanceWindow is null && hsm is null && rootSquashSettings is null ? default : new AmlFilesystemProperties(
+                storageCapacityTiB.GetValueOrDefault(),
+                default,
+                default,
+                health,
+                provisioningState,
+                filesystemSubnet,
+                clientInfo,
+                throughputProvisionedMBps,
+                new AmlFileSystemEncryptionSettings(keyEncryptionKey, default),
+                maintenanceWindow,
+                hsm,
+                rootSquashSettings,
+                default), identity, skuName is null ? default : new StorageCacheSkuName(skuName, default), (zones ?? new ChangeTrackingList<string>()).ToList(), default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StorageCache.AutoExportJobData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="provisioningState"> ARM provisioning state. </param>
+        /// <param name="adminStatus"> The administrative status of the auto export job. Possible values: 'Enable', 'Disable'. Passing in a value of 'Disable' will disable the current active auto export job. By default it is set to 'Enable'. </param>
+        /// <param name="autoExportPrefixes"> An array of blob paths/prefixes that get auto exported to the cluster namespace. It has '/' as the default value. Number of maximum allowed paths for now is 1. </param>
+        /// <param name="state"> The operational state of auto export. InProgress indicates the export is running.  Disabling indicates the user has requested to disable the export but the disabling is still in progress. Disabled indicates auto export has been disabled.  DisableFailed indicates the disabling has failed.  Failed means the export was unable to continue, due to a fatal error. </param>
+        /// <param name="statusCode"> Server-defined status code for auto export job. </param>
+        /// <param name="statusMessage"> Server-defined status message for auto export job. </param>
+        /// <param name="totalFilesExported"> Total files exported since the start of the export. This is accumulative, some files may be counted repeatedly. </param>
+        /// <param name="totalMiBExported"> Total data (in MiB) exported since the start of the export. This is accumulative, some files may be counted repeatedly. </param>
+        /// <param name="totalFilesFailed"> Total files failed to be export since the last successfully completed iteration. This is accumulative, some files may be counted repeatedly. </param>
+        /// <param name="exportIterationCount"> Number of iterations completed since the start of the export. </param>
+        /// <param name="lastSuccessfulIterationCompletionTimeUTC"> Time (in UTC) of the last successfully completed export iteration. Look at logging container for details. </param>
+        /// <param name="currentIterationFilesDiscovered"> Files discovered for export in current iteration. It may increase while more export items are found. </param>
+        /// <param name="currentIterationMiBDiscovered"> Data (in MiB) discovered for export in current iteration. It may increase while more export items are found. </param>
+        /// <param name="currentIterationFilesExported"> Files that have been exported in current iteration. </param>
+        /// <param name="currentIterationMiBExported"> Data (in MiB) that have been exported in current iteration. </param>
+        /// <param name="currentIterationFilesFailed"> Files failed to export in current iteration. </param>
+        /// <param name="lastStartedTimeUTC"> The time (in UTC) the latest auto export job started. </param>
+        /// <param name="lastCompletionTimeUTC"> The time (in UTC) of the last completed auto export job. </param>
+        /// <returns> A new <see cref="StorageCache.AutoExportJobData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AutoExportJobData AutoExportJobData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, AutoExportJobProvisioningStateType? provisioningState = default, AutoExportJobAdminStatus? adminStatus = default, IEnumerable<string> autoExportPrefixes = default, AutoExportStatusType? state = default, string statusCode = default, string statusMessage = default, long? totalFilesExported = default, long? totalMiBExported = default, long? totalFilesFailed = default, int? exportIterationCount = default, DateTimeOffset? lastSuccessfulIterationCompletionTimeUTC = default, long? currentIterationFilesDiscovered = default, long? currentIterationMiBDiscovered = default, long? currentIterationFilesExported = default, long? currentIterationMiBExported = default, long? currentIterationFilesFailed = default, DateTimeOffset? lastStartedTimeUTC = default, DateTimeOffset? lastCompletionTimeUTC = default)
+        {
+            return new AutoExportJobData(provisioningState is null && adminStatus is null && autoExportPrefixes is null && state is null && statusCode is null && statusMessage is null && totalFilesExported is null && totalMiBExported is null && totalFilesFailed is null && exportIterationCount is null && lastSuccessfulIterationCompletionTimeUTC is null && currentIterationFilesDiscovered is null && currentIterationMiBDiscovered is null && currentIterationFilesExported is null && currentIterationMiBExported is null && currentIterationFilesFailed is null && lastStartedTimeUTC is null && lastCompletionTimeUTC is null ? default : new AutoExportJobProperties(provisioningState, adminStatus, (autoExportPrefixes ?? new ChangeTrackingList<string>()).ToList(), new AutoExportJobPropertiesStatus(
+                state,
+                statusCode,
+                statusMessage,
+                totalFilesExported,
+                totalMiBExported,
+                totalFilesFailed,
+                exportIterationCount,
+                lastSuccessfulIterationCompletionTimeUTC,
+                currentIterationFilesDiscovered,
+                currentIterationMiBDiscovered,
+                currentIterationFilesExported,
+                currentIterationMiBExported,
+                currentIterationFilesFailed,
+                lastStartedTimeUTC,
+                lastCompletionTimeUTC,
+                default), default), default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StorageCache.StorageCacheImportJobData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="provisioningState"> ARM provisioning state. </param>
+        /// <param name="adminStatus"> The administrative status of the import job. Possible values: 'Active', 'Cancel'. Passing in a value of 'Cancel' will cancel the current active import job. By default it is set to 'Active'. </param>
+        /// <param name="importPrefixes"> An array of blob paths/prefixes that get imported into the cluster namespace. It has '/' as the default value. </param>
+        /// <param name="conflictResolutionMode"> How the import job will handle conflicts. For example, if the import job is trying to bring in a directory, but a file is at that path, how it handles it. Fail indicates that the import job should stop immediately and not do anything with the conflict. Skip indicates that it should pass over the conflict. OverwriteIfDirty causes the import job to delete and re-import the file or directory if it is a conflicting type, is dirty, or was not previously imported. OverwriteAlways extends OverwriteIfDirty to include releasing files that had been restored but were not dirty. Please reference https://learn.microsoft.com/en-us/azure/azure-managed-lustre/ for a thorough explanation of these resolution modes. </param>
+        /// <param name="maximumErrors"> Total non-conflict oriented errors the import job will tolerate before exiting with failure. -1 means infinite. 0 means exit immediately and is the default. </param>
+        /// <param name="state"> The operational state of the import job. InProgress indicates the import is still running. Canceled indicates it has been canceled by the user. Completed indicates import finished, successfully importing all discovered blobs into the Lustre namespace. CompletedPartial indicates the import finished but some blobs either were found to be conflicting and could not be imported or other errors were encountered. Failed means the import was unable to complete due to a fatal error. </param>
+        /// <param name="statusMessage"> The status message of the import job. </param>
+        /// <param name="totalBlobsWalked"> The total blob objects walked. </param>
+        /// <param name="blobsWalkedPerSecond"> A recent and frequently updated rate of blobs walked per second. </param>
+        /// <param name="totalBlobsImported"> The total blobs that have been imported since import began. </param>
+        /// <param name="importedFiles"> New or modified files that have been imported into the filesystem. </param>
+        /// <param name="importedDirectories"> New or modified directories that have been imported into the filesystem. </param>
+        /// <param name="importedSymlinks"> Newly added symbolic links into the filesystem. </param>
+        /// <param name="preexistingFiles"> Files that already exist in the filesystem and have not been modified. </param>
+        /// <param name="preexistingDirectories"> Directories that already exist in the filesystem and have not been modified. </param>
+        /// <param name="preexistingSymlinks"> Symbolic links that already exist in the filesystem and have not been modified. </param>
+        /// <param name="blobsImportedPerSecond"> A recent and frequently updated rate of total files, directories, and symlinks imported per second. </param>
+        /// <param name="lastCompletionOn"> The time (in UTC) of the last completed import job. </param>
+        /// <param name="lastStartedOn"> The time (in UTC) the latest import job started. </param>
+        /// <param name="totalErrors"> Number of errors in the import job. </param>
+        /// <param name="totalConflicts"> Number of conflicts in the import job. </param>
+        /// <returns> A new <see cref="StorageCache.StorageCacheImportJobData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static StorageCacheImportJobData StorageCacheImportJobData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ImportJobProvisioningStateType? provisioningState = default, ImportJobAdminStatus? adminStatus = default, IEnumerable<string> importPrefixes = default, ConflictResolutionMode? conflictResolutionMode = default, int? maximumErrors = default, ImportStatusType? state = default, string statusMessage = default, long? totalBlobsWalked = default, long? blobsWalkedPerSecond = default, long? totalBlobsImported = default, long? importedFiles = default, long? importedDirectories = default, long? importedSymlinks = default, long? preexistingFiles = default, long? preexistingDirectories = default, long? preexistingSymlinks = default, long? blobsImportedPerSecond = default, DateTimeOffset? lastCompletionOn = default, DateTimeOffset? lastStartedOn = default, int? totalErrors = default, int? totalConflicts = default)
+        {
+            return new StorageCacheImportJobData(provisioningState is null && adminStatus is null && importPrefixes is null && conflictResolutionMode is null && maximumErrors is null && state is null && statusMessage is null && totalBlobsWalked is null && blobsWalkedPerSecond is null && totalBlobsImported is null && importedFiles is null && importedDirectories is null && importedSymlinks is null && preexistingFiles is null && preexistingDirectories is null && preexistingSymlinks is null && blobsImportedPerSecond is null && lastCompletionOn is null && lastStartedOn is null && totalErrors is null && totalConflicts is null ? default : new ImportJobProperties(
+                provisioningState,
+                adminStatus,
+                (importPrefixes ?? new ChangeTrackingList<string>()).ToList(),
+                conflictResolutionMode,
+                maximumErrors,
+                new ImportJobPropertiesStatus(
+                    state,
+                    statusMessage,
+                    totalBlobsWalked,
+                    blobsWalkedPerSecond,
+                    totalBlobsImported,
+                    importedFiles,
+                    importedDirectories,
+                    importedSymlinks,
+                    preexistingFiles,
+                    preexistingDirectories,
+                    preexistingSymlinks,
+                    blobsImportedPerSecond,
+                    lastCompletionOn,
+                    lastStartedOn,
+                    totalErrors,
+                    totalConflicts,
                     default),
-                identity,
-                skuName is null ? default : new StorageCacheSkuName(skuName, default),
-                (zones ?? new ChangeTrackingList<string>()).ToList(),
-                default);
+                default), default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StorageCache.AutoImportJobData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="provisioningState"> ARM provisioning state. </param>
+        /// <param name="adminStatus"> The administrative status of the auto import job. Possible values: 'Enable', 'Disable'. Passing in a value of 'Disable' will disable the current active auto import job. By default it is set to 'Enable'. </param>
+        /// <param name="autoImportPrefixes"> An array of blob paths/prefixes that get auto imported to the cluster namespace. It has '/' as the default value. Number of maximum allowed paths is 100. </param>
+        /// <param name="conflictResolutionMode"> How the auto import job will handle conflicts. For example, if the auto import job is trying to bring in a directory, but a file is at that path, how it handles it. Fail indicates that the auto import job should stop immediately and not do anything with the conflict. Skip indicates that it should pass over the conflict. OverwriteIfDirty causes the auto import job to delete and re-import the file or directory if it is a conflicting type, is dirty, or is currently released. OverwriteAlways extends OverwriteIfDirty to include releasing files that had been restored but were not dirty. Please reference https://learn.microsoft.com/en-us/azure/azure-managed-lustre/blob-integration#conflict-resolution-mode for a thorough explanation of these resolution modes. </param>
+        /// <param name="enableDeletions"> Whether or not to enable deletions during auto import. This only affects overwrite-dirty. </param>
+        /// <param name="maximumErrors"> Total non-conflict-oriented errors (e.g., OS errors) Import will tolerate before exiting with failure. -1 means infinite. 0 means exit immediately on any error. </param>
+        /// <param name="state"> The state of the auto import operation. </param>
+        /// <param name="statusCode"> Server-defined status code for auto import job. </param>
+        /// <param name="statusMessage"> Server-defined status message for auto import job. </param>
+        /// <param name="scanStartOn"> Date and time of when the currently running full scan began. </param>
+        /// <param name="scanEndOn"> Date and time of when the full scan ended. </param>
+        /// <param name="totalBlobsWalked"> Total number of blobs walked during full scan. </param>
+        /// <param name="rateOfBlobWalk"> Rate of blobs walked during full scan. </param>
+        /// <param name="totalBlobsImported"> Total number of blobs imported during full scan. </param>
+        /// <param name="rateOfBlobImport"> Rate of blob import during full scan. </param>
+        /// <param name="importedFiles"> Number of files imported during full scan. </param>
+        /// <param name="importedDirectories"> Number of directories imported during full scan. </param>
+        /// <param name="importedSymlinks"> Number of symlinks imported during full scan. </param>
+        /// <param name="preexistingFiles"> Number of preexisting files during full scan. </param>
+        /// <param name="preexistingDirectories"> Number of preexisting directories during full scan. </param>
+        /// <param name="preexistingSymlinks"> Number of preexisting symlinks during full scan. </param>
+        /// <param name="totalErrors"> Total errors encountered during full scan. </param>
+        /// <param name="totalConflicts"> Total conflicts encountered during full scan. </param>
+        /// <param name="blobSyncEvents"> The storage account blob change feed status of the auto import job. </param>
+        /// <param name="lastStartedTimeUTC"> The time (in UTC) the latest auto import job started. </param>
+        /// <param name="lastCompletionTimeUTC"> The time (in UTC) of the last completed auto import job. </param>
+        /// <returns> A new <see cref="StorageCache.AutoImportJobData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AutoImportJobData AutoImportJobData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, AutoImportJobPropertiesProvisioningState? provisioningState = default, AutoImportJobPropertiesAdminStatus? adminStatus = default, IEnumerable<string> autoImportPrefixes = default, ConflictResolutionMode? conflictResolutionMode = default, bool? enableDeletions = default, long? maximumErrors = default, AutoImportJobState? state = default, string statusCode = default, string statusMessage = default, DateTimeOffset? scanStartOn = default, DateTimeOffset? scanEndOn = default, long? totalBlobsWalked = default, long? rateOfBlobWalk = default, long? totalBlobsImported = default, long? rateOfBlobImport = default, long? importedFiles = default, long? importedDirectories = default, long? importedSymlinks = default, long? preexistingFiles = default, long? preexistingDirectories = default, long? preexistingSymlinks = default, long? totalErrors = default, long? totalConflicts = default, AutoImportJobPropertiesStatusBlobSyncEvents blobSyncEvents = default, DateTimeOffset? lastStartedTimeUTC = default, DateTimeOffset? lastCompletionTimeUTC = default)
+        {
+            return new AutoImportJobData(provisioningState is null && adminStatus is null && autoImportPrefixes is null && conflictResolutionMode is null && enableDeletions is null && maximumErrors is null && state is null && statusCode is null && statusMessage is null && scanStartOn is null && scanEndOn is null && totalBlobsWalked is null && rateOfBlobWalk is null && totalBlobsImported is null && rateOfBlobImport is null && importedFiles is null && importedDirectories is null && importedSymlinks is null && preexistingFiles is null && preexistingDirectories is null && preexistingSymlinks is null && totalErrors is null && totalConflicts is null && blobSyncEvents is null && lastStartedTimeUTC is null && lastCompletionTimeUTC is null ? default : new AutoImportJobProperties(
+                provisioningState,
+                adminStatus,
+                (autoImportPrefixes ?? new ChangeTrackingList<string>()).ToList(),
+                conflictResolutionMode,
+                enableDeletions,
+                maximumErrors,
+                new AutoImportJobPropertiesStatus(
+                    state,
+                    statusCode,
+                    statusMessage,
+                    scanStartOn,
+                    scanEndOn,
+                    totalBlobsWalked,
+                    rateOfBlobWalk,
+                    totalBlobsImported,
+                    rateOfBlobImport,
+                    importedFiles,
+                    importedDirectories,
+                    importedSymlinks,
+                    preexistingFiles,
+                    preexistingDirectories,
+                    preexistingSymlinks,
+                    totalErrors,
+                    totalConflicts,
+                    blobSyncEvents,
+                    lastStartedTimeUTC,
+                    lastCompletionTimeUTC,
+                    default),
+                default), default);
         }
 
         /// <summary> Initializes a new instance of <see cref="StorageCache.StorageCacheData"/>. </summary>
@@ -1072,12 +1136,6 @@ namespace Azure.ResourceManager.StorageCache.Models
         public static StorageCacheData StorageCacheData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ManagedServiceIdentity identity = default, string skuName = default, int? cacheSizeGB = default, StorageCacheHealth health = default, IEnumerable<IPAddress> mountAddresses = default, StorageCacheProvisioningStateType? provisioningState = default, ResourceIdentifier subnet = default, StorageCacheUpgradeStatus upgradeStatus = default, StorageCacheUpgradeSettings upgradeSettings = default, StorageCacheNetworkSettings networkSettings = default, StorageCacheEncryptionSettings encryptionSettings = default, IEnumerable<NfsAccessPolicy> securityAccessPolicies = default, StorageCacheDirectorySettings directoryServicesSettings = default, IEnumerable<string> zones = default, IEnumerable<PrimingJob> primingJobs = default, IEnumerable<StorageTargetSpaceAllocation> spaceAllocation = default)
         {
             return new StorageCacheData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
                 cacheSizeGB is null && health is null && mountAddresses is null && provisioningState is null && subnet is null && upgradeStatus is null && upgradeSettings is null && networkSettings is null && encryptionSettings is null && securityAccessPolicies is null && directoryServicesSettings is null && zones is null && primingJobs is null && spaceAllocation is null ? default : new CacheProperties(
                     cacheSizeGB,
                     health,
@@ -1094,6 +1152,8 @@ namespace Azure.ResourceManager.StorageCache.Models
                     (primingJobs ?? new ChangeTrackingList<PrimingJob>()).ToList(),
                     (spaceAllocation ?? new ChangeTrackingList<StorageTargetSpaceAllocation>()).ToList(),
                     default),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default,
                 identity,
                 skuName is null ? default : new StorageCacheSkuInfo(skuName, default),
                 default);
@@ -1118,24 +1178,17 @@ namespace Azure.ResourceManager.StorageCache.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static StorageTargetData StorageTargetData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<NamespaceJunction> junctions = default, StorageTargetType? targetType = default, StorageCacheProvisioningStateType? provisioningState = default, StorageTargetOperationalStateType? state = default, Nfs3Target nfs3 = default, ResourceIdentifier clfsTarget = default, IDictionary<string, string> unknownAttributes = default, BlobNfsTarget blobNfs = default, int? allocationPercentage = default, AzureLocation? location = default)
         {
-            return new StorageTargetData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                junctions is null && targetType is null && provisioningState is null && state is null && nfs3 is null && clfsTarget is null && unknownAttributes is null && blobNfs is null && allocationPercentage is null ? default : new StorageTargetProperties(
-                    (junctions ?? new ChangeTrackingList<NamespaceJunction>()).ToList(),
-                    targetType.GetValueOrDefault(),
-                    provisioningState,
-                    state,
-                    nfs3,
-                    new ClfsTarget(clfsTarget, default),
-                    new UnknownTarget(unknownAttributes ?? new ChangeTrackingDictionary<string, string>(), default),
-                    blobNfs,
-                    allocationPercentage,
-                    default),
-                location,
-                default);
+            return new StorageTargetData(junctions is null && targetType is null && provisioningState is null && state is null && nfs3 is null && clfsTarget is null && unknownAttributes is null && blobNfs is null && allocationPercentage is null ? default : new StorageTargetProperties(
+                (junctions ?? new ChangeTrackingList<NamespaceJunction>()).ToList(),
+                targetType.GetValueOrDefault(),
+                provisioningState,
+                state,
+                nfs3,
+                new ClfsTarget(clfsTarget, default),
+                new UnknownTarget(unknownAttributes ?? new ChangeTrackingDictionary<string, string>(), default),
+                blobNfs,
+                allocationPercentage,
+                default), location, default);
         }
 
         /// <summary> Initializes a new instance of <see cref="StorageCache.StorageCacheImportJobData"/>. </summary>
@@ -1163,39 +1216,31 @@ namespace Azure.ResourceManager.StorageCache.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static StorageCacheImportJobData StorageCacheImportJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ImportJobProvisioningStateType? provisioningState, IEnumerable<string> importPrefixes, ConflictResolutionMode? conflictResolutionMode, int? maximumErrors, ImportStatusType? state, string statusMessage, long? totalBlobsWalked, long? blobsWalkedPerSecond, long? totalBlobsImported, long? blobsImportedPerSecond, DateTimeOffset? lastCompletionOn, DateTimeOffset? lastStartedOn, int? totalErrors, int? totalConflicts)
         {
-            return new StorageCacheImportJobData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                provisioningState is null && importPrefixes is null && conflictResolutionMode is null && maximumErrors is null && state is null && statusMessage is null && totalBlobsWalked is null && blobsWalkedPerSecond is null && totalBlobsImported is null && blobsImportedPerSecond is null && lastCompletionOn is null && lastStartedOn is null && totalErrors is null && totalConflicts is null ? default : new ImportJobProperties(
-                    provisioningState,
+            return new StorageCacheImportJobData(provisioningState is null && importPrefixes is null && conflictResolutionMode is null && maximumErrors is null && state is null && statusMessage is null && totalBlobsWalked is null && blobsWalkedPerSecond is null && totalBlobsImported is null && blobsImportedPerSecond is null && lastCompletionOn is null && lastStartedOn is null && totalErrors is null && totalConflicts is null ? default : new ImportJobProperties(
+                provisioningState,
+                default,
+                (importPrefixes ?? new ChangeTrackingList<string>()).ToList(),
+                conflictResolutionMode,
+                maximumErrors,
+                new ImportJobPropertiesStatus(
+                    state,
+                    statusMessage,
+                    totalBlobsWalked,
+                    blobsWalkedPerSecond,
+                    totalBlobsImported,
                     default,
-                    (importPrefixes ?? new ChangeTrackingList<string>()).ToList(),
-                    conflictResolutionMode,
-                    maximumErrors,
-                    new ImportJobPropertiesStatus(
-                        state,
-                        statusMessage,
-                        totalBlobsWalked,
-                        blobsWalkedPerSecond,
-                        totalBlobsImported,
-                        default,
-                        default,
-                        default,
-                        default,
-                        default,
-                        default,
-                        blobsImportedPerSecond,
-                        lastCompletionOn,
-                        lastStartedOn,
-                        totalErrors,
-                        totalConflicts,
-                        default),
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    blobsImportedPerSecond,
+                    lastCompletionOn,
+                    lastStartedOn,
+                    totalErrors,
+                    totalConflicts,
                     default),
-                default);
+                default), default);
         }
 
         /// <summary> Initializes a new instance of <see cref="StorageCache.AmlFileSystemData"/>. </summary>
@@ -1221,31 +1266,20 @@ namespace Azure.ResourceManager.StorageCache.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AmlFileSystemData AmlFileSystemData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string skuName, IEnumerable<string> zones, float? storageCapacityTiB, AmlFileSystemHealth health, AmlFileSystemProvisioningStateType? provisioningState, string filesystemSubnet, AmlFileSystemClientInfo clientInfo, int? throughputProvisionedMBps, StorageCacheEncryptionKeyVaultKeyReference keyEncryptionKey, AmlFileSystemPropertiesMaintenanceWindow maintenanceWindow, AmlFileSystemPropertiesHsm hsm)
         {
-            return new AmlFileSystemData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                storageCapacityTiB is null && health is null && provisioningState is null && filesystemSubnet is null && clientInfo is null && throughputProvisionedMBps is null && keyEncryptionKey is null && maintenanceWindow is null && hsm is null ? default : new AmlFilesystemProperties(
-                    storageCapacityTiB.GetValueOrDefault(),
-                    default,
-                    default,
-                    health,
-                    provisioningState,
-                    filesystemSubnet,
-                    clientInfo,
-                    throughputProvisionedMBps,
-                    new AmlFileSystemEncryptionSettings(keyEncryptionKey, default),
-                    maintenanceWindow,
-                    hsm,
-                    default,
-                    default),
-                identity,
-                skuName is null ? default : new StorageCacheSkuName(skuName, default),
-                (zones ?? new ChangeTrackingList<string>()).ToList(),
-                default);
+            return new AmlFileSystemData(storageCapacityTiB is null && health is null && provisioningState is null && filesystemSubnet is null && clientInfo is null && throughputProvisionedMBps is null && keyEncryptionKey is null && maintenanceWindow is null && hsm is null ? default : new AmlFilesystemProperties(
+                storageCapacityTiB.GetValueOrDefault(),
+                default,
+                default,
+                health,
+                provisioningState,
+                filesystemSubnet,
+                clientInfo,
+                throughputProvisionedMBps,
+                new AmlFileSystemEncryptionSettings(keyEncryptionKey, default),
+                maintenanceWindow,
+                hsm,
+                default,
+                default), identity, skuName is null ? default : new StorageCacheSkuName(skuName, default), (zones ?? new ChangeTrackingList<string>()).ToList(), default);
         }
     }
 }
