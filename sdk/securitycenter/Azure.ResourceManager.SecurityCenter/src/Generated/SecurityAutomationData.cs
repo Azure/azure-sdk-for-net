@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.SecurityCenter.Models;
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="kind"> Kind of the resource. </param>
         /// <param name="eTag"> Entity tag is used for comparing two or more entities from the same requested resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityAutomationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AutomationProperties properties, IDictionary<string, string> tags, string location, string kind, string eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal SecurityAutomationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AutomationProperties properties, IDictionary<string, string> tags, string location, string kind, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Tags = tags;
@@ -59,7 +60,7 @@ namespace Azure.ResourceManager.SecurityCenter
         public string Kind { get; set; }
 
         /// <summary> Entity tag is used for comparing two or more entities from the same requested resource. </summary>
-        public string ETag { get; set; }
+        public ETag? ETag { get; set; }
 
         /// <summary> The security automation description. </summary>
         public string Description

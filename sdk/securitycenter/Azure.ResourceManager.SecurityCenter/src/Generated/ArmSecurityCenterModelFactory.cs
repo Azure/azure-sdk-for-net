@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="kind"> Kind of the resource. </param>
         /// <param name="eTag"> Entity tag is used for comparing two or more entities from the same requested resource. </param>
         /// <returns> A new <see cref="SecurityCenter.SecurityAutomationData"/> instance for mocking. </returns>
-        public static SecurityAutomationData SecurityAutomationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string description = default, bool? isEnabled = default, IEnumerable<SecurityAutomationScope> scopes = default, IEnumerable<SecurityAutomationSource> sources = default, IEnumerable<SecurityAutomationAction> actions = default, IDictionary<string, string> tags = default, string location = default, string kind = default, string eTag = default)
+        public static SecurityAutomationData SecurityAutomationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string description = default, bool? isEnabled = default, IEnumerable<SecurityAutomationScope> scopes = default, IEnumerable<SecurityAutomationSource> sources = default, IEnumerable<SecurityAutomationAction> actions = default, IDictionary<string, string> tags = default, string location = default, string kind = default, ETag? eTag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1328,7 +1328,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="kind"> Kind of the resource. </param>
         /// <param name="eTag"> Entity tag is used for comparing two or more entities from the same requested resource. </param>
         /// <returns> A new <see cref="SecurityCenter.SecurityConnectorData"/> instance for mocking. </returns>
-        public static SecurityConnectorData SecurityConnectorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string hierarchyIdentifier = default, DateTimeOffset? hierarchyIdentifierTrialEndOn = default, SecurityCenterCloudName? environmentName = default, IEnumerable<SecurityCenterCloudOffering> offerings = default, SecurityConnectorEnvironment environmentData = default, IDictionary<string, string> tags = default, string location = default, string kind = default, string eTag = default)
+        public static SecurityConnectorData SecurityConnectorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string hierarchyIdentifier = default, DateTimeOffset? hierarchyIdentifierTrialEndOn = default, SecurityCenterCloudName? environmentName = default, IEnumerable<SecurityCenterCloudOffering> offerings = default, SecurityConnectorEnvironment environmentData = default, IDictionary<string, string> tags = default, string location = default, string kind = default, ETag? eTag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
