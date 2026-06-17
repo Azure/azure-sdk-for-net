@@ -4165,6 +4165,40 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
+        /// Gets a list of all supported Security Solutions for the subscription.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterSubscriptionResource.GetSecuritySolutionsReferenceDataAsync(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        public static async Task<Response<SecuritySolutionsReferenceInfoList>> GetSecuritySolutionsReferenceDataAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSecuritySolutionsReferenceDataAsync(cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a list of all supported Security Solutions for the subscription.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterSubscriptionResource.GetSecuritySolutionsReferenceData(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        public static Response<SecuritySolutionsReferenceInfoList> GetSecuritySolutionsReferenceData(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSecuritySolutionsReferenceData(cancellationToken);
+        }
+
+        /// <summary>
         /// Recommended tasks that will help improve the security of the subscription proactively
         /// <item>
         /// <term> Mocking. </term>
@@ -4382,40 +4416,6 @@ namespace Azure.ResourceManager.SecurityCenter
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetTopologies(cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of all supported Security Solutions for the subscription.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterSubscriptionResource.GetSecuritySolutionsReferenceDataAsync(CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<SecuritySolutionsReferenceInfoList>> GetSecuritySolutionsReferenceDataAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return await GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSecuritySolutionsReferenceDataAsync(cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a list of all supported Security Solutions for the subscription.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterSubscriptionResource.GetSecuritySolutionsReferenceData(CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<SecuritySolutionsReferenceInfoList> GetSecuritySolutionsReferenceData(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSecuritySolutionsReferenceData(cancellationToken);
         }
 
         /// <summary>

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> AppServices. </summary>
         private const string AppServicesValue = "AppServices";
         /// <summary> DNS. </summary>
-        private const string DNSValue = "DNS";
+        private const string DnsValue = "DNS";
         /// <summary> KeyVaults. </summary>
         private const string KeyVaultsValue = "KeyVaults";
         /// <summary> KubernetesService. </summary>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static BundleType AppServices { get; } = new BundleType(AppServicesValue);
 
         /// <summary> DNS. </summary>
-        public static BundleType DNS { get; } = new BundleType(DNSValue);
+        public static BundleType Dns { get; } = new BundleType(DnsValue);
 
         /// <summary> KeyVaults. </summary>
         public static BundleType KeyVaults { get; } = new BundleType(KeyVaultsValue);

@@ -1956,6 +1956,58 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 location);
         }
 
+        /// <summary> The SecuritySolutionsReferenceInfoList. </summary>
+        /// <param name="value"></param>
+        /// <returns> A new <see cref="Models.SecuritySolutionsReferenceInfoList"/> instance for mocking. </returns>
+        public static SecuritySolutionsReferenceInfoList SecuritySolutionsReferenceInfoList(IEnumerable<SecuritySolutionsReferenceInfo> value = default)
+        {
+            value ??= new ChangeTrackingList<SecuritySolutionsReferenceInfo>();
+
+            return new SecuritySolutionsReferenceInfoList(value.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The SecuritySolutionsReferenceInfo. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="type"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="location"> Location where the resource is stored. </param>
+        /// <param name="properties"></param>
+        /// <returns> A new <see cref="Models.SecuritySolutionsReferenceInfo"/> instance for mocking. </returns>
+        public static SecuritySolutionsReferenceInfo SecuritySolutionsReferenceInfo(ResourceIdentifier id = default, string name = default, ResourceType? @type = default, SystemData systemData = default, AzureLocation? location = default, SecuritySolutionsReferenceInfoProperties properties = default)
+        {
+            return new SecuritySolutionsReferenceInfo(
+                id,
+                name,
+                @type,
+                systemData,
+                location,
+                properties,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The SecuritySolutionsReferenceInfoProperties. </summary>
+        /// <param name="securityFamily"> The security family of the security solution. </param>
+        /// <param name="alertVendorName"> The security solutions' vendor name. </param>
+        /// <param name="packageInfoUri"> The security solutions' package info url. </param>
+        /// <param name="productName"> The security solutions' product name. </param>
+        /// <param name="publisher"> The security solutions' publisher. </param>
+        /// <param name="publisherDisplayName"> The security solutions' publisher display name. </param>
+        /// <param name="template"> The security solutions' template. </param>
+        /// <returns> A new <see cref="Models.SecuritySolutionsReferenceInfoProperties"/> instance for mocking. </returns>
+        public static SecuritySolutionsReferenceInfoProperties SecuritySolutionsReferenceInfoProperties(SecurityFamily securityFamily = default, string alertVendorName = default, string packageInfoUri = default, string productName = default, string publisher = default, string publisherDisplayName = default, string template = default)
+        {
+            return new SecuritySolutionsReferenceInfoProperties(
+                securityFamily,
+                alertVendorName,
+                packageInfoUri,
+                productName,
+                publisher,
+                publisherDisplayName,
+                template,
+                additionalBinaryDataProperties: null);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -3219,6 +3271,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     null));
         }
 
+        /// <summary> Define the ARM SubResource model used for secure score assessment definitions. </summary>
+        /// <param name="id"> The resource id. </param>
+        /// <returns> A new <see cref="Models.SubResource"/> instance for mocking. </returns>
+        public static SubResource SubResource(ResourceIdentifier id = default)
+        {
+            return new SubResource(id, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Azure DevOps Repository resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -3481,58 +3541,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static TopologySingleResourceChild TopologySingleResourceChild(ResourceIdentifier resourceId = default)
         {
             return new TopologySingleResourceChild(resourceId, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The SecuritySolutionsReferenceInfoList. </summary>
-        /// <param name="value"></param>
-        /// <returns> A new <see cref="Models.SecuritySolutionsReferenceInfoList"/> instance for mocking. </returns>
-        public static SecuritySolutionsReferenceInfoList SecuritySolutionsReferenceInfoList(IEnumerable<SecuritySolutionsReferenceInfo> value = default)
-        {
-            value ??= new ChangeTrackingList<SecuritySolutionsReferenceInfo>();
-
-            return new SecuritySolutionsReferenceInfoList(value.ToList(), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The SecuritySolutionsReferenceInfo. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="type"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="location"> Location where the resource is stored. </param>
-        /// <param name="properties"></param>
-        /// <returns> A new <see cref="Models.SecuritySolutionsReferenceInfo"/> instance for mocking. </returns>
-        public static SecuritySolutionsReferenceInfo SecuritySolutionsReferenceInfo(ResourceIdentifier id = default, string name = default, ResourceType? @type = default, SystemData systemData = default, AzureLocation? location = default, SecuritySolutionsReferenceInfoProperties properties = default)
-        {
-            return new SecuritySolutionsReferenceInfo(
-                id,
-                name,
-                @type,
-                systemData,
-                location,
-                properties,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The SecuritySolutionsReferenceInfoProperties. </summary>
-        /// <param name="securityFamily"> The security family of the security solution. </param>
-        /// <param name="alertVendorName"> The security solutions' vendor name. </param>
-        /// <param name="packageInfoUri"> The security solutions' package info url. </param>
-        /// <param name="productName"> The security solutions' product name. </param>
-        /// <param name="publisher"> The security solutions' publisher. </param>
-        /// <param name="publisherDisplayName"> The security solutions' publisher display name. </param>
-        /// <param name="template"> The security solutions' template. </param>
-        /// <returns> A new <see cref="Models.SecuritySolutionsReferenceInfoProperties"/> instance for mocking. </returns>
-        public static SecuritySolutionsReferenceInfoProperties SecuritySolutionsReferenceInfoProperties(SecurityFamily securityFamily = default, string alertVendorName = default, string packageInfoUri = default, string productName = default, string publisher = default, string publisherDisplayName = default, string template = default)
-        {
-            return new SecuritySolutionsReferenceInfoProperties(
-                securityFamily,
-                alertVendorName,
-                packageInfoUri,
-                productName,
-                publisher,
-                publisherDisplayName,
-                template,
-                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Data sensitivity settings for sensitive data discovery. </summary>

@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> Define the ARM SubResource model so C# can use the shared Azure.ResourceManager.Resources.Models.SubResource type for compatibility. </summary>
+    /// <summary> Define the ARM SubResource model used for secure score assessment definitions. </summary>
     public partial class SubResource
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

@@ -43,6 +43,8 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         private ExternalSecuritySolutions _externalSecuritySolutionsRestClient;
         private ClientDiagnostics _securitySolutionsClientDiagnostics;
         private SecuritySolutions _securitySolutionsRestClient;
+        private ClientDiagnostics _securitySolutionsReferenceDataOperationGroupClientDiagnostics;
+        private SecuritySolutionsReferenceDataOperationGroup _securitySolutionsReferenceDataOperationGroupRestClient;
         private ClientDiagnostics _tasksClientDiagnostics;
         private Tasks _tasksRestClient;
         private ClientDiagnostics _apiCollectionsClientDiagnostics;
@@ -55,8 +57,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         private AllowedConnections _allowedConnectionsRestClient;
         private ClientDiagnostics _topologyClientDiagnostics;
         private Topology _topologyRestClient;
-        private ClientDiagnostics _securitySolutionsReferenceDataClientDiagnostics;
-        private SecuritySolutionsReferenceData _securitySolutionsReferenceDataRestClient;
 
         /// <summary> Initializes a new instance of MockableSecurityCenterSubscriptionResource for mocking. </summary>
         protected MockableSecurityCenterSubscriptionResource()
@@ -114,6 +114,10 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
 
         private SecuritySolutions SecuritySolutionsRestClient => _securitySolutionsRestClient ??= new SecuritySolutions(SecuritySolutionsClientDiagnostics, Pipeline, Endpoint, "2020-01-01");
 
+        private ClientDiagnostics SecuritySolutionsReferenceDataOperationGroupClientDiagnostics => _securitySolutionsReferenceDataOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private SecuritySolutionsReferenceDataOperationGroup SecuritySolutionsReferenceDataOperationGroupRestClient => _securitySolutionsReferenceDataOperationGroupRestClient ??= new SecuritySolutionsReferenceDataOperationGroup(SecuritySolutionsReferenceDataOperationGroupClientDiagnostics, Pipeline, Endpoint, "2020-01-01");
+
         private ClientDiagnostics TasksClientDiagnostics => _tasksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private Tasks TasksRestClient => _tasksRestClient ??= new Tasks(TasksClientDiagnostics, Pipeline, Endpoint, "2015-06-01-preview");
@@ -137,10 +141,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         private ClientDiagnostics TopologyClientDiagnostics => _topologyClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private Topology TopologyRestClient => _topologyRestClient ??= new Topology(TopologyClientDiagnostics, Pipeline, Endpoint, "2020-01-01");
-
-        private ClientDiagnostics SecuritySolutionsReferenceDataClientDiagnostics => _securitySolutionsReferenceDataClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private SecuritySolutionsReferenceData SecuritySolutionsReferenceDataRestClient => _securitySolutionsReferenceDataRestClient ??= new SecuritySolutionsReferenceData(SecuritySolutionsReferenceDataClientDiagnostics, Pipeline, Endpoint, "2020-01-01");
 
         /// <summary> Gets a collection of SecurityAlertsSuppressionRules in the <see cref="SubscriptionResource"/>. </summary>
         /// <returns> An object representing collection of SecurityAlertsSuppressionRules and their operations over a SecurityAlertsSuppressionRuleResource. </returns>
@@ -1605,6 +1605,94 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         }
 
         /// <summary>
+        /// Gets a list of all supported Security Solutions for the subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/securitySolutionsReferenceData. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SecuritySolutionsReferenceDataOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2020-01-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<SecuritySolutionsReferenceInfoList>> GetSecuritySolutionsReferenceDataAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = SecuritySolutionsReferenceDataOperationGroupClientDiagnostics.CreateScope("MockableSecurityCenterSubscriptionResource.GetSecuritySolutionsReferenceData");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = SecuritySolutionsReferenceDataOperationGroupRestClient.CreateGetSecuritySolutionsReferenceDataRequest(Guid.Parse(Id.SubscriptionId), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SecuritySolutionsReferenceInfoList> response = Response.FromValue(SecuritySolutionsReferenceInfoList.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets a list of all supported Security Solutions for the subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/securitySolutionsReferenceData. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SecuritySolutionsReferenceDataOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2020-01-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<SecuritySolutionsReferenceInfoList> GetSecuritySolutionsReferenceData(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = SecuritySolutionsReferenceDataOperationGroupClientDiagnostics.CreateScope("MockableSecurityCenterSubscriptionResource.GetSecuritySolutionsReferenceData");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = SecuritySolutionsReferenceDataOperationGroupRestClient.CreateGetSecuritySolutionsReferenceDataRequest(Guid.Parse(Id.SubscriptionId), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SecuritySolutionsReferenceInfoList> response = Response.FromValue(SecuritySolutionsReferenceInfoList.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Recommended tasks that will help improve the security of the subscription proactively
         /// <list type="bullet">
         /// <item>
@@ -1942,94 +2030,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
                 CancellationToken = cancellationToken
             };
             return new TopologyGetTopologiesCollectionResultOfT(TopologyRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSecurityCenterSubscriptionResource.GetTopologies");
-        }
-
-        /// <summary>
-        /// Gets a list of all supported Security Solutions for the subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/securitySolutionsReferenceData. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SecuritySolutionsReferenceDataOperationGroup_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2020-01-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SecuritySolutionsReferenceInfoList>> GetSecuritySolutionsReferenceDataAsync(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = SecuritySolutionsReferenceDataClientDiagnostics.CreateScope("MockableSecurityCenterSubscriptionResource.GetSecuritySolutionsReferenceData");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = SecuritySolutionsReferenceDataRestClient.CreateGetSecuritySolutionsReferenceDataRequest(Guid.Parse(Id.SubscriptionId), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<SecuritySolutionsReferenceInfoList> response = Response.FromValue(SecuritySolutionsReferenceInfoList.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets a list of all supported Security Solutions for the subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Security/securitySolutionsReferenceData. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SecuritySolutionsReferenceDataOperationGroup_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2020-01-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SecuritySolutionsReferenceInfoList> GetSecuritySolutionsReferenceData(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = SecuritySolutionsReferenceDataClientDiagnostics.CreateScope("MockableSecurityCenterSubscriptionResource.GetSecuritySolutionsReferenceData");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = SecuritySolutionsReferenceDataRestClient.CreateGetSecuritySolutionsReferenceDataRequest(Guid.Parse(Id.SubscriptionId), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<SecuritySolutionsReferenceInfoList> response = Response.FromValue(SecuritySolutionsReferenceInfoList.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
     }
 }

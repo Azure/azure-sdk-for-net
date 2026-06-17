@@ -31,8 +31,8 @@ namespace Azure.ResourceManager.SecurityCenter
         private readonly OperationResults _operationResultsRestClient;
         private readonly ClientDiagnostics _externalSecuritySolutionsClientDiagnostics;
         private readonly ExternalSecuritySolutions _externalSecuritySolutionsRestClient;
-        private readonly ClientDiagnostics _securitySolutionsReferenceDataClientDiagnostics;
-        private readonly SecuritySolutionsReferenceData _securitySolutionsReferenceDataRestClient;
+        private readonly ClientDiagnostics _securitySolutionsReferenceDataOperationGroupClientDiagnostics;
+        private readonly SecuritySolutionsReferenceDataOperationGroup _securitySolutionsReferenceDataOperationGroupRestClient;
         private readonly SecurityCenterLocationData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Security/locations";
@@ -63,8 +63,8 @@ namespace Azure.ResourceManager.SecurityCenter
             _operationResultsRestClient = new OperationResults(_operationResultsClientDiagnostics, Pipeline, Endpoint, securityCenterLocationApiVersion ?? "2025-10-01-preview");
             _externalSecuritySolutionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
             _externalSecuritySolutionsRestClient = new ExternalSecuritySolutions(_externalSecuritySolutionsClientDiagnostics, Pipeline, Endpoint, securityCenterLocationApiVersion ?? "2020-01-01");
-            _securitySolutionsReferenceDataClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
-            _securitySolutionsReferenceDataRestClient = new SecuritySolutionsReferenceData(_securitySolutionsReferenceDataClientDiagnostics, Pipeline, Endpoint, securityCenterLocationApiVersion ?? "2020-01-01");
+            _securitySolutionsReferenceDataOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
+            _securitySolutionsReferenceDataOperationGroupRestClient = new SecuritySolutionsReferenceDataOperationGroup(_securitySolutionsReferenceDataOperationGroupClientDiagnostics, Pipeline, Endpoint, securityCenterLocationApiVersion ?? "2020-01-01");
             ValidateResourceId(id);
         }
 
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SecuritySolutionsReferenceInfoList>> GetByHomeRegionAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _securitySolutionsReferenceDataClientDiagnostics.CreateScope("SecurityCenterLocationResource.GetByHomeRegion");
+            using DiagnosticScope scope = _securitySolutionsReferenceDataOperationGroupClientDiagnostics.CreateScope("SecurityCenterLocationResource.GetByHomeRegion");
             scope.Start();
             try
             {
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _securitySolutionsReferenceDataRestClient.CreateGetByHomeRegionRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                HttpMessage message = _securitySolutionsReferenceDataOperationGroupRestClient.CreateGetByHomeRegionRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SecuritySolutionsReferenceInfoList> response = Response.FromValue(SecuritySolutionsReferenceInfoList.FromResponse(result), result);
                 if (response.Value == null)
@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SecuritySolutionsReferenceInfoList> GetByHomeRegion(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _securitySolutionsReferenceDataClientDiagnostics.CreateScope("SecurityCenterLocationResource.GetByHomeRegion");
+            using DiagnosticScope scope = _securitySolutionsReferenceDataOperationGroupClientDiagnostics.CreateScope("SecurityCenterLocationResource.GetByHomeRegion");
             scope.Start();
             try
             {
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _securitySolutionsReferenceDataRestClient.CreateGetByHomeRegionRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                HttpMessage message = _securitySolutionsReferenceDataOperationGroupRestClient.CreateGetByHomeRegionRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SecuritySolutionsReferenceInfoList> response = Response.FromValue(SecuritySolutionsReferenceInfoList.FromResponse(result), result);
                 if (response.Value == null)
