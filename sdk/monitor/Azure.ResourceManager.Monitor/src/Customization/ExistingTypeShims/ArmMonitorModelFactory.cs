@@ -69,6 +69,15 @@ namespace Azure.ResourceManager.Monitor.Models
             => throw new NotSupportedException("This API is no longer supported.");
 
         /// <summary>
+        /// Initializes a new instance of <see cref="Azure.ResourceManager.Monitor.DiagnosticSettingData"/>.
+        /// </summary>
+        /// <remarks>This API is no longer supported.</remarks>
+        [Obsolete("This API is no longer supported.", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.Monitor.DiagnosticSettingData DiagnosticSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier resourceId, ResourceIdentifier storageAccountId, ResourceIdentifier serviceBusRuleId, string logAnalyticsDestinationType, IEnumerable<MetricSettings> metrics, IEnumerable<LogSettings> logs, ResourceIdentifier workspaceId, ResourceIdentifier marketplacePartnerId, string eventHubName)
+            => throw new NotSupportedException("This API is no longer supported.");
+
+        /// <summary>
         /// Initializes a new instance of <see cref="AlertRulePatch"/>.
         /// </summary>
         /// <remarks>This API is no longer supported.</remarks>
