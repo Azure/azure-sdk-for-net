@@ -12,26 +12,26 @@ using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    /// <summary> ClusterRotateCredentialParameters represents the body of the request to rotate cluster credentials. </summary>
-    public partial class ClusterRotateCredentialParameters
+    /// <summary> ClusterRotateCredentialContent represents the body of the request to rotate cluster credentials. </summary>
+    public partial class ClusterRotateCredentialContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ClusterRotateCredentialParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterRotateCredentialContent"/>. </summary>
         /// <param name="credentials"> The list of credential names for the credentials to rotate. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="credentials"/> is null. </exception>
-        public ClusterRotateCredentialParameters(IEnumerable<string> credentials)
+        public ClusterRotateCredentialContent(IEnumerable<string> credentials)
         {
             Argument.AssertNotNull(credentials, nameof(credentials));
 
             Credentials = credentials.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ClusterRotateCredentialParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterRotateCredentialContent"/>. </summary>
         /// <param name="credentials"> The list of credential names for the credentials to rotate. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ClusterRotateCredentialParameters(IList<string> credentials, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ClusterRotateCredentialContent(IList<string> credentials, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Credentials = credentials;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
