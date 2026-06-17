@@ -14,56 +14,56 @@ using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    /// <summary> ClusterRotateCredentialContent represents the body of the request to rotate cluster credentials. </summary>
-    public partial class ClusterRotateCredentialContent : IJsonModel<ClusterRotateCredentialContent>
+    /// <summary> ClusterRotateCredentialParameters represents the body of the request to rotate cluster credentials. </summary>
+    public partial class ClusterRotateCredentialParameters : IJsonModel<ClusterRotateCredentialParameters>
     {
-        /// <summary> Initializes a new instance of <see cref="ClusterRotateCredentialContent"/> for deserialization. </summary>
-        internal ClusterRotateCredentialContent()
+        /// <summary> Initializes a new instance of <see cref="ClusterRotateCredentialParameters"/> for deserialization. </summary>
+        internal ClusterRotateCredentialParameters()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ClusterRotateCredentialContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ClusterRotateCredentialParameters PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ClusterRotateCredentialContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ClusterRotateCredentialParameters>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeClusterRotateCredentialContent(document.RootElement, options);
+                        return DeserializeClusterRotateCredentialParameters(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ClusterRotateCredentialContent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClusterRotateCredentialParameters)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ClusterRotateCredentialContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ClusterRotateCredentialParameters>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkCloudContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ClusterRotateCredentialContent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClusterRotateCredentialParameters)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ClusterRotateCredentialContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ClusterRotateCredentialParameters>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ClusterRotateCredentialContent IPersistableModel<ClusterRotateCredentialContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ClusterRotateCredentialParameters IPersistableModel<ClusterRotateCredentialParameters>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ClusterRotateCredentialContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ClusterRotateCredentialParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="clusterRotateCredentialParameters"> The <see cref="ClusterRotateCredentialContent"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(ClusterRotateCredentialContent clusterRotateCredentialParameters)
+        /// <param name="clusterRotateCredentialParameters"> The <see cref="ClusterRotateCredentialParameters"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ClusterRotateCredentialParameters clusterRotateCredentialParameters)
         {
             if (clusterRotateCredentialParameters == null)
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ClusterRotateCredentialContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ClusterRotateCredentialParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ClusterRotateCredentialContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ClusterRotateCredentialParameters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterRotateCredentialContent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ClusterRotateCredentialParameters)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("credentials"u8);
             writer.WriteStartArray();
@@ -121,24 +121,24 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ClusterRotateCredentialContent IJsonModel<ClusterRotateCredentialContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ClusterRotateCredentialParameters IJsonModel<ClusterRotateCredentialParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ClusterRotateCredentialContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ClusterRotateCredentialParameters JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ClusterRotateCredentialContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ClusterRotateCredentialParameters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterRotateCredentialContent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ClusterRotateCredentialParameters)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeClusterRotateCredentialContent(document.RootElement, options);
+            return DeserializeClusterRotateCredentialParameters(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ClusterRotateCredentialContent DeserializeClusterRotateCredentialContent(JsonElement element, ModelReaderWriterOptions options)
+        internal static ClusterRotateCredentialParameters DeserializeClusterRotateCredentialParameters(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ClusterRotateCredentialContent(credentials, additionalBinaryDataProperties);
+            return new ClusterRotateCredentialParameters(credentials, additionalBinaryDataProperties);
         }
     }
 }
