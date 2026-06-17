@@ -47,5 +47,26 @@ namespace Azure.AI.Language.Documents.Tests.Samples
             DocumentsServiceClient client = new DocumentsServiceClient(endpoint, credential);
             #endregion
         }
+
+        [RecordedTest]
+        [SyncOnly]
+        public void BadArgument()
+        {
+            DocumentsServiceClient client = Client;
+
+            #region Snippet:DocumentsServiceClient_BadRequest
+            try
+            {
+                Response<AnalyzeDocumentsJobState> response = client.GetAnalyzeDocumentsJobState(
+                    Guid.Parse("00000000-0000-0000-0000-000000000000"));
+            }
+            catch (RequestFailedException ex)
+            {
+                Console.WriteLine($"Status: {ex.Status}");
+                Console.WriteLine($"ErrorCode: {ex.ErrorCode}");
+                Console.WriteLine(ex.Message);
+            }
+            #endregion
+        }
     }
 }
