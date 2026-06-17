@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 HttpMessage message = _azureDevOpsReposRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, AzureDevOpsRepositoryData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SecurityCenterArmOperation<AzureDevOpsRepositoryResource> operation = new SecurityCenterArmOperation<AzureDevOpsRepositoryResource>(
-                    new AzureDevOpsRepositoryOperationSource(Client),
+                    new AzureDevOpsRepositoryResourceOperationSource(Client),
                     _azureDevOpsReposClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 HttpMessage message = _azureDevOpsReposRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, AzureDevOpsRepositoryData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SecurityCenterArmOperation<AzureDevOpsRepositoryResource> operation = new SecurityCenterArmOperation<AzureDevOpsRepositoryResource>(
-                    new AzureDevOpsRepositoryOperationSource(Client),
+                    new AzureDevOpsRepositoryResourceOperationSource(Client),
                     _azureDevOpsReposClientDiagnostics,
                     Pipeline,
                     message.Request,

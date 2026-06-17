@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary></summary>
-    internal partial class AzureDevOpsOrgOperationSource : IOperationSource<AzureDevOpsOrgResource>
+    internal partial class ApiCollectionResourceOperationSource : IOperationSource<ApiCollectionResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal AzureDevOpsOrgOperationSource(ArmClient client)
+        internal ApiCollectionResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        AzureDevOpsOrgResource IOperationSource<AzureDevOpsOrgResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ApiCollectionResource IOperationSource<ApiCollectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            AzureDevOpsOrgData data = AzureDevOpsOrgData.DeserializeAzureDevOpsOrgData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new AzureDevOpsOrgResource(_client, data);
+            ApiCollectionData data = ApiCollectionData.DeserializeApiCollectionData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ApiCollectionResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<AzureDevOpsOrgResource> IOperationSource<AzureDevOpsOrgResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ApiCollectionResource> IOperationSource<ApiCollectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            AzureDevOpsOrgData data = AzureDevOpsOrgData.DeserializeAzureDevOpsOrgData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new AzureDevOpsOrgResource(_client, data);
+            ApiCollectionData data = ApiCollectionData.DeserializeApiCollectionData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ApiCollectionResource(_client, data);
         }
     }
 }

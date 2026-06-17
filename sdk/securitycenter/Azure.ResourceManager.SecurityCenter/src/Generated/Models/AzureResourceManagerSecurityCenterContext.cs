@@ -312,7 +312,6 @@ namespace Azure.ResourceManager.SecurityCenter
     [ModelReaderWriterBuildable(typeof(OnUploadProperties))]
     [ModelReaderWriterBuildable(typeof(Models.OperationResult))]
     [ModelReaderWriterBuildable(typeof(OperationStatus))]
-    [ModelReaderWriterBuildable(typeof(OperationStatusResult))]
     [ModelReaderWriterBuildable(typeof(PartialAssessmentProperties))]
     [ModelReaderWriterBuildable(typeof(PricingList))]
     [ModelReaderWriterBuildable(typeof(PricingProperties))]

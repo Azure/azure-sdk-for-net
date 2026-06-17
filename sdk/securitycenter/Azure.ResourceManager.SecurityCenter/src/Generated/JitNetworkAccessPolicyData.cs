@@ -34,16 +34,16 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"></param>
         /// <param name="kind"> Kind of the resource. </param>
         /// <param name="location"> Location where the resource is stored. </param>
-        internal JitNetworkAccessPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, JitNetworkAccessPolicyProperties properties, string kind, AzureLocation? location) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal JitNetworkAccessPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, JitNetworkAccessPolicyProperties properties, string kind, string location, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             Kind = kind;
             Location = location;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Gets or sets the Properties. </summary>
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.SecurityCenter
         public string Kind { get; set; }
 
         /// <summary> Location where the resource is stored. </summary>
-        public AzureLocation? Location { get; }
+        public string Location { get; }
 
         /// <summary> Configurations for Microsoft.Compute/virtualMachines resource type. </summary>
         public IList<JitNetworkAccessPolicyVirtualMachine> VirtualMachines
