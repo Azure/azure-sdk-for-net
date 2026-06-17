@@ -3,7 +3,7 @@
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    public partial class ScheduledActionExecutionParameterDetail
+    public partial class UserRequestResources
     {
     }
 }

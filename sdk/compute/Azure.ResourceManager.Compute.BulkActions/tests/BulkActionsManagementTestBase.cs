@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -77,12 +76,14 @@ namespace Azure.ResourceManager.Compute.BulkActions.Tests
         }
 
         // Returns the resource IDs of the pre-created VMs in the test RG that the recording guide
-        // expects (bulkactions-sdkrec-vm-1, -vm-2). Uses static IDs assembled from env vars so we
-        // do not depend on a list VMs call (which would add unnecessary noise to recordings).
-        protected IList<ResourceIdentifier> GetPreCreatedVmIds(int count = 2)
+        // expects (bulkactions-sdkrec-vm-1 .. -vm-5). Each test targets its own dedicated VM(s) so
+        // a still-Executing bulk operation from one test never blocks (OperationConflict) the next
+        // one running against the same VM. IDs are assembled statically from env vars so we do not
+        // depend on a list VMs call (which would add unnecessary noise to recordings).
+        protected IList<ResourceIdentifier> GetPreCreatedVmIds(params int[] indexes)
         {
-            var ids = new List<ResourceIdentifier>(count);
-            for (int i = 1; i <= count; i++)
+            var ids = new List<ResourceIdentifier>(indexes.Length);
+            foreach (int i in indexes)
             {
                 ids.Add(new ResourceIdentifier(
                     $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{PreCreatedResourceGroupName}/providers/Microsoft.Compute/virtualMachines/bulkactions-sdkrec-vm-{i}"));
@@ -91,27 +92,24 @@ namespace Azure.ResourceManager.Compute.BulkActions.Tests
         }
 
         protected static ExecuteStartContent BuildStartContent(IList<ResourceIdentifier> ids) =>
-            EnsureExecutionParameters(new ExecuteStartContent(ids));
+            new ExecuteStartContent(BuildExecutionParameters(), new UserRequestResources(ids));
 
         protected static ExecuteDeallocateContent BuildDeallocateContent(IList<ResourceIdentifier> ids) =>
-            EnsureExecutionParameters(new ExecuteDeallocateContent(ids));
+            new ExecuteDeallocateContent(BuildExecutionParameters(), new UserRequestResources(ids));
 
         protected static ExecuteHibernateContent BuildHibernateContent(IList<ResourceIdentifier> ids) =>
-            EnsureExecutionParameters(new ExecuteHibernateContent(ids));
+            new ExecuteHibernateContent(BuildExecutionParameters(), new UserRequestResources(ids));
 
         protected static ExecuteDeleteContent BuildDeleteContent(IList<ResourceIdentifier> ids, bool forceDelete = false) =>
-            EnsureExecutionParameters(new ExecuteDeleteContent(ids) { IsForceDeletion = forceDelete });
+            new ExecuteDeleteContent(BuildExecutionParameters(), new UserRequestResources(ids)) { IsForceDeletion = forceDelete };
 
-        // The generated request models leave ExecutionParameters null (the public constructor only
-        // accepts resource ids and the property has no setter), which causes the service to reject
-        // the request with "The ExecutionParameters field is required". Inject a default instance
-        // via the auto-property backing field so recordings exercise a valid request shape.
-        private static T EnsureExecutionParameters<T>(T content) where T : class
-        {
-            var field = typeof(T).GetField("<ExecutionParameters>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance);
-            field?.SetValue(content, new ScheduledActionExecutionParameterDetail());
-            return content;
-        }
+        // Builds execution parameters with a representative retry policy so recordings exercise a
+        // realistic request shape.
+        private static ScheduledActionExecutionParameterDetail BuildExecutionParameters() =>
+            new ScheduledActionExecutionParameterDetail
+            {
+                RetryPolicy = new BulkOperationRetryPolicy { RetryCount = 3, RetryWindowInMinutes = 30 }
+            };
 
         // Extracts non-empty operation IDs from a bulk action response, filtering out any result
         // entries the service rejected up-front (e.g. resource not found).

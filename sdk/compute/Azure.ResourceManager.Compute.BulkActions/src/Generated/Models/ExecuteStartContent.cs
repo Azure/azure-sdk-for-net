@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
@@ -17,16 +16,6 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
-        /// <summary> Initializes a new instance of <see cref="ExecuteStartContent"/>. </summary>
-        /// <param name="resourcesIds"> The resource ids used for the request. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourcesIds"/> is null. </exception>
-        public ExecuteStartContent(IList<ResourceIdentifier> resourcesIds)
-        {
-            Argument.AssertNotNull(resourcesIds, nameof(resourcesIds));
-
-            Resources = new UserRequestResources(resourcesIds);
-        }
 
         /// <summary> Initializes a new instance of <see cref="ExecuteStartContent"/>. </summary>
         /// <param name="executionParameters"> The execution parameters for the request. </param>
@@ -44,6 +33,15 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <summary> The resources for the request. </summary>
         internal UserRequestResources Resources { get; }
+
+        /// <summary> Retry policy the user can pass. </summary>
+        public BulkOperationRetryPolicy ExecutionParametersRetryPolicy
+        {
+            get
+            {
+                return ExecutionParameters.RetryPolicy;
+            }
+        }
 
         /// <summary> The resource ids used for the request. </summary>
         public IList<ResourceIdentifier> ResourcesIds

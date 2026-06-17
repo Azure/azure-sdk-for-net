@@ -43,6 +43,15 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             return new BulkOperationRetryPolicy(retryCount, retryWindowInMinutes, onFailureAction, default);
         }
 
+        /// <param name="ids"> The resource ids used for the request. </param>
+        /// <returns> A new <see cref="Models.UserRequestResources"/> instance for mocking. </returns>
+        public static UserRequestResources UserRequestResources(IEnumerable<ResourceIdentifier> ids = default)
+        {
+            ids ??= new ChangeTrackingList<ResourceIdentifier>();
+
+            return new UserRequestResources((ids ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default);
+        }
+
         /// <param name="description"> The description of the operation response. </param>
         /// <param name="resourceType"> The type of resources used in the deallocate request eg virtual machines. </param>
         /// <param name="location"> The location of the deallocate request eg westus. </param>
