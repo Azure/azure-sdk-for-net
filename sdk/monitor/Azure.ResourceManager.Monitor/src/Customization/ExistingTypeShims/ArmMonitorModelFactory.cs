@@ -14,7 +14,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 namespace Azure.ResourceManager.Monitor.Models
 {
 #pragma warning disable CS0618 // This partial class intentionally exposes obsolete compatibility members.
-#pragma warning disable CS1591 // This partial class intentionally restores compatibility members.
     [CodeGenSuppress("MonitorMetricDefinition", typeof(bool?), typeof(string), typeof(string), typeof(MonitorLocalizableString), typeof(string), typeof(string), typeof(MonitorMetricClass?), typeof(MonitorMetricUnit?), typeof(MonitorAggregationType?), typeof(IEnumerable<MonitorAggregationType>), typeof(IEnumerable<MonitorMetricAvailability>), typeof(string), typeof(IEnumerable<MonitorLocalizableString>))]
     public static partial class ArmMonitorModelFactory
     {
@@ -51,81 +50,140 @@ namespace Azure.ResourceManager.Monitor.Models
                 id,
                 dimensions);
 
+        /// <summary>
+        /// Initializes a new instance of <see cref="AlertRuleData"/>.
+        /// </summary>
+        /// <remarks>This API is no longer supported.</remarks>
         [Obsolete("This API is no longer supported.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Monitor.AlertRuleData AlertRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, string provisioningState, string alertRuleName, bool isEnabled, AlertRuleCondition condition, AlertRuleAction action, IEnumerable<AlertRuleAction> actions, DateTimeOffset? lastUpdatedOn)
             => throw new NotSupportedException("This API is no longer supported.");
 
+        /// <summary>
+        /// Initializes a new instance of <see cref="DiagnosticSettingsCategoryData"/>.
+        /// </summary>
+        /// <remarks>This API is no longer supported.</remarks>
         [Obsolete("This API is no longer supported.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Monitor.DiagnosticSettingsCategoryData DiagnosticSettingsCategoryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MonitorCategoryType? categoryType, IEnumerable<string> categoryGroups)
             => throw new NotSupportedException("This API is no longer supported.");
 
+        /// <summary>
+        /// Initializes a new instance of <see cref="AlertRulePatch"/>.
+        /// </summary>
+        /// <remarks>This API is no longer supported.</remarks>
         [Obsolete("This API is no longer supported.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AlertRulePatch AlertRulePatch(IDictionary<string, string> tags, string name, string description, string provisioningState, bool? isEnabled, AlertRuleCondition condition, AlertRuleAction action, IEnumerable<AlertRuleAction> actions, DateTimeOffset? lastUpdatedOn)
             => throw new NotSupportedException("This API is no longer supported.");
 
+        /// <summary>
+        /// Initializes a new instance of <see cref="DataContainer"/>.
+        /// </summary>
+        /// <remarks>This API is no longer supported.</remarks>
         [Obsolete("This API is no longer supported.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static DataContainer DataContainer(DataContainerWorkspace workspace)
             => throw new NotSupportedException("This API is no longer supported.");
 
+        /// <summary>
+        /// Initializes a new instance of <see cref="DataContainerWorkspace"/>.
+        /// </summary>
+        /// <remarks>This API is no longer supported.</remarks>
         [Obsolete("This API is no longer supported.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static DataContainerWorkspace DataContainerWorkspace(ResourceIdentifier id, AzureLocation location, string customerId)
             => throw new NotSupportedException("This API is no longer supported.");
 
+        /// <summary>
+        /// Initializes a new instance of <see cref="MonitorIncident"/>.
+        /// </summary>
+        /// <remarks>This API is no longer supported.</remarks>
         [Obsolete("This API is no longer supported.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static MonitorIncident MonitorIncident(string name, string ruleName, bool? isActive, DateTimeOffset? activatedOn, DateTimeOffset? resolvedOn)
             => throw new NotSupportedException("This API is no longer supported.");
 
+        /// <summary>
+        /// Initializes a new instance of <see cref="MonitorPrivateLinkScopeOperationStatus"/>.
+        /// </summary>
+        /// <remarks>This API is no longer supported.</remarks>
         [Obsolete("This API is no longer supported.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static MonitorPrivateLinkScopeOperationStatus MonitorPrivateLinkScopeOperationStatus(string id, string name, DateTimeOffset? startOn, DateTimeOffset? endOn, string status, ResponseError error)
             => throw new NotSupportedException("This API is no longer supported.");
 
+        /// <summary>
+        /// Initializes a new instance of <see cref="MonitorWorkspaceDefaultIngestionSettings"/>.
+        /// </summary>
+        /// <remarks>This API has moved to Azure.ResourceManager.Monitor.Workspaces.</remarks>
         [Obsolete("This API has moved to Azure.ResourceManager.Monitor.Workspaces. Use Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceResource, Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceCollection, or Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceData instead.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static MonitorWorkspaceDefaultIngestionSettings MonitorWorkspaceDefaultIngestionSettings(ResourceIdentifier dataCollectionEndpointResourceId, ResourceIdentifier dataCollectionRuleResourceId)
             => throw new NotSupportedException("This API has moved to Azure.ResourceManager.Monitor.Workspaces. Use Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceResource, Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceCollection, or Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceData instead.");
 
+        /// <summary>
+        /// Initializes a new instance of <see cref="MonitorWorkspaceIngestionSettings"/>.
+        /// </summary>
+        /// <remarks>This API has moved to Azure.ResourceManager.Monitor.Workspaces.</remarks>
         [Obsolete("This API has moved to Azure.ResourceManager.Monitor.Workspaces. Use Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceResource, Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceCollection, or Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceData instead.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static MonitorWorkspaceIngestionSettings MonitorWorkspaceIngestionSettings(ResourceIdentifier dataCollectionEndpointResourceId, ResourceIdentifier dataCollectionRuleResourceId)
             => throw new NotSupportedException("This API has moved to Azure.ResourceManager.Monitor.Workspaces. Use Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceResource, Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceCollection, or Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceData instead.");
 
+        /// <summary>
+        /// Initializes a new instance of <see cref="MonitorWorkspaceMetricProperties"/>.
+        /// </summary>
+        /// <remarks>This API has moved to Azure.ResourceManager.Monitor.Workspaces.</remarks>
         [Obsolete("This API has moved to Azure.ResourceManager.Monitor.Workspaces. Use Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceResource, Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceCollection, or Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceData instead.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static MonitorWorkspaceMetricProperties MonitorWorkspaceMetricProperties(string internalId, string prometheusQueryEndpoint)
             => throw new NotSupportedException("This API has moved to Azure.ResourceManager.Monitor.Workspaces. Use Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceResource, Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceCollection, or Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceData instead.");
 
+        /// <summary>
+        /// Initializes a new instance of <see cref="MonitorWorkspaceMetrics"/>.
+        /// </summary>
+        /// <remarks>This API has moved to Azure.ResourceManager.Monitor.Workspaces.</remarks>
         [Obsolete("This API has moved to Azure.ResourceManager.Monitor.Workspaces. Use Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceResource, Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceCollection, or Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceData instead.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static MonitorWorkspaceMetrics MonitorWorkspaceMetrics(string internalId, string prometheusQueryEndpoint)
             => throw new NotSupportedException("This API has moved to Azure.ResourceManager.Monitor.Workspaces. Use Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceResource, Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceCollection, or Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceData instead.");
 
+        /// <summary>
+        /// Initializes a new instance of <see cref="MonitorWorkspacePrivateEndpointConnection"/>.
+        /// </summary>
+        /// <remarks>This API has moved to Azure.ResourceManager.Monitor.Workspaces.</remarks>
         [Obsolete("This API has moved to Azure.ResourceManager.Monitor.Workspaces. Use Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceResource, Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceCollection, or Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceData instead.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static MonitorWorkspacePrivateEndpointConnection MonitorWorkspacePrivateEndpointConnection(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IEnumerable<string> groupIds, ResourceIdentifier privateEndpointId, MonitorPrivateLinkServiceConnectionState connectionState, MonitorPrivateEndpointConnectionProvisioningState? provisioningState)
             => throw new NotSupportedException("This API has moved to Azure.ResourceManager.Monitor.Workspaces. Use Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceResource, Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceCollection, or Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceData instead.");
 
+        /// <summary>
+        /// Initializes a new instance of <see cref="SubscriptionMonitorMetric"/>.
+        /// </summary>
+        /// <remarks>This API is no longer supported.</remarks>
         [Obsolete("This API is no longer supported.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static SubscriptionMonitorMetric SubscriptionMonitorMetric(string id, string subscriptionScopeMetricType, MonitorLocalizableString name, string displayDescription, string errorCode, string errorMessage, MonitorMetricUnit unit, IEnumerable<MonitorTimeSeriesElement> timeseries)
             => throw new NotSupportedException("This API is no longer supported.");
 
+        /// <summary>
+        /// Initializes a new instance of <see cref="MonitorWorkspaceResourceData"/>.
+        /// </summary>
+        /// <remarks>This API has moved to Azure.ResourceManager.Monitor.Workspaces.</remarks>
         [Obsolete("This API has moved to Azure.ResourceManager.Monitor.Workspaces. Use Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceResource, Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceCollection, or Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceData instead.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Monitor.MonitorWorkspaceResourceData MonitorWorkspaceResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? eTag, string accountId, MonitorWorkspaceMetrics metrics, MonitorProvisioningState? provisioningState, MonitorWorkspaceDefaultIngestionSettings defaultIngestionSettings, IEnumerable<MonitorWorkspacePrivateEndpointConnection> privateEndpointConnections, MonitorWorkspacePublicNetworkAccess? publicNetworkAccess)
             => throw new NotSupportedException("This API has moved to Azure.ResourceManager.Monitor.Workspaces. Use Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceResource, Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceCollection, or Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceData instead.");
 
+        /// <summary>
+        /// Initializes a new instance of <see cref="VmInsightsOnboardingStatusData"/>.
+        /// </summary>
+        /// <remarks>This API is no longer supported.</remarks>
         [Obsolete("This API is no longer supported.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Monitor.VmInsightsOnboardingStatusData VmInsightsOnboardingStatusData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier resourceId, OnboardingStatus? onboardingStatus, DataStatus? dataStatus, IEnumerable<DataContainer> data)
             => throw new NotSupportedException("This API is no longer supported.");
     }
 #pragma warning restore CS0618
-#pragma warning restore CS1591
 }

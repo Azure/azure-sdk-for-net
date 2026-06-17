@@ -420,19 +420,19 @@ namespace Azure.ResourceManager.Monitor
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DataCollectionRuleAssociationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DataCollectionRuleAssociationResource> GetByDataCollectionEndpointAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DataCollectionRuleAssociationResource> GetDataCollectionRuleAssociationsAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataCollectionRuleAssociationData, DataCollectionRuleAssociationResource>(new DataCollectionRuleAssociationsGetByDataCollectionEndpointAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DataCollectionRuleAssociationData, DataCollectionRuleAssociationResource>(new DataCollectionRuleAssociationsGetDataCollectionRuleAssociationsAsyncCollectionResultOfT(
                 _dataCollectionRuleAssociationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Parent.Name,
                 Id.Name,
                 context,
-                "DataCollectionEndpointResource.GetByDataCollectionEndpoint"), data => new DataCollectionRuleAssociationResource(Client, data));
+                "DataCollectionEndpointResource.GetDataCollectionRuleAssociations"), data => new DataCollectionRuleAssociationResource(Client, data));
         }
 
         /// <summary>
@@ -458,19 +458,19 @@ namespace Azure.ResourceManager.Monitor
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DataCollectionRuleAssociationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DataCollectionRuleAssociationResource> GetByDataCollectionEndpoint(CancellationToken cancellationToken = default)
+        public virtual Pageable<DataCollectionRuleAssociationResource> GetDataCollectionRuleAssociations(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataCollectionRuleAssociationData, DataCollectionRuleAssociationResource>(new DataCollectionRuleAssociationsGetByDataCollectionEndpointCollectionResultOfT(
+            return new PageableWrapper<DataCollectionRuleAssociationData, DataCollectionRuleAssociationResource>(new DataCollectionRuleAssociationsGetDataCollectionRuleAssociationsCollectionResultOfT(
                 _dataCollectionRuleAssociationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Parent.Name,
                 Id.Name,
                 context,
-                "DataCollectionEndpointResource.GetByDataCollectionEndpoint"), data => new DataCollectionRuleAssociationResource(Client, data));
+                "DataCollectionEndpointResource.GetDataCollectionRuleAssociations"), data => new DataCollectionRuleAssociationResource(Client, data));
         }
 
         /// <summary>

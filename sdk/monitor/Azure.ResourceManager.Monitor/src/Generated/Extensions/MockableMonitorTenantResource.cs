@@ -63,13 +63,13 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MonitorLocalizableString"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MonitorLocalizableString> GetAllAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<MonitorLocalizableString> GetEventCategoriesAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new EventCategoriesGetAllAsyncCollectionResultOfT(EventCategoriesRestClient, context, "MockableMonitorTenantResource.GetAll");
+            return new EventCategoriesGetEventCategoriesAsyncCollectionResultOfT(EventCategoriesRestClient, context, "MockableMonitorTenantResource.GetEventCategories");
         }
 
         /// <summary>
@@ -91,13 +91,13 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MonitorLocalizableString"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MonitorLocalizableString> GetAll(CancellationToken cancellationToken = default)
+        public virtual Pageable<MonitorLocalizableString> GetEventCategories(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new EventCategoriesGetAllCollectionResultOfT(EventCategoriesRestClient, context, "MockableMonitorTenantResource.GetAll");
+            return new EventCategoriesGetEventCategoriesCollectionResultOfT(EventCategoriesRestClient, context, "MockableMonitorTenantResource.GetEventCategories");
         }
 
         /// <summary>
@@ -121,13 +121,13 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <param name="select"> Used to fetch events with only the given properties.&lt;br&gt;The <b>$select</b> argument is a comma separated list of property names to be returned. Possible values are: <i>authorization</i>, <i>claims</i>, <i>correlationId</i>, <i>description</i>, <i>eventDataId</i>, <i>eventName</i>, <i>eventTimestamp</i>, <i>httpRequest</i>, <i>level</i>, <i>operationId</i>, <i>operationName</i>, <i>properties</i>, <i>resourceGroupName</i>, <i>resourceProviderName</i>, <i>resourceId</i>, <i>status</i>, <i>submissionTimestamp</i>, <i>subStatus</i>, <i>subscriptionId</i>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="EventDataInfo"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<EventDataInfo> GetAllAsync(string filter = default, string @select = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<EventDataInfo> GetTenantActivityLogsAsync(string filter = default, string @select = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new TenantActivityLogsGetAllAsyncCollectionResultOfT(TenantActivityLogsRestClient, filter, @select, context, "MockableMonitorTenantResource.GetAll");
+            return new TenantActivityLogsGetTenantActivityLogsAsyncCollectionResultOfT(TenantActivityLogsRestClient, filter, @select, context, "MockableMonitorTenantResource.GetTenantActivityLogs");
         }
 
         /// <summary>
@@ -151,13 +151,13 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <param name="select"> Used to fetch events with only the given properties.&lt;br&gt;The <b>$select</b> argument is a comma separated list of property names to be returned. Possible values are: <i>authorization</i>, <i>claims</i>, <i>correlationId</i>, <i>description</i>, <i>eventDataId</i>, <i>eventName</i>, <i>eventTimestamp</i>, <i>httpRequest</i>, <i>level</i>, <i>operationId</i>, <i>operationName</i>, <i>properties</i>, <i>resourceGroupName</i>, <i>resourceProviderName</i>, <i>resourceId</i>, <i>status</i>, <i>submissionTimestamp</i>, <i>subStatus</i>, <i>subscriptionId</i>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="EventDataInfo"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<EventDataInfo> GetAll(string filter = default, string @select = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<EventDataInfo> GetTenantActivityLogs(string filter = default, string @select = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new TenantActivityLogsGetAllCollectionResultOfT(TenantActivityLogsRestClient, filter, @select, context, "MockableMonitorTenantResource.GetAll");
+            return new TenantActivityLogsGetTenantActivityLogsCollectionResultOfT(TenantActivityLogsRestClient, filter, @select, context, "MockableMonitorTenantResource.GetTenantActivityLogs");
         }
     }
 }

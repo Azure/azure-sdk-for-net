@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Monitor
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetByDataCollectionEndpointRequest(Guid subscriptionId, string resourceGroupName, string dataCollectionEndpointName, RequestContext context)
+        internal HttpMessage CreateGetDataCollectionRuleAssociationsRequest(Guid subscriptionId, string resourceGroupName, string dataCollectionEndpointName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Monitor
             return message;
         }
 
-        internal HttpMessage CreateNextGetByDataCollectionEndpointRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string dataCollectionEndpointName, RequestContext context)
+        internal HttpMessage CreateNextGetDataCollectionRuleAssociationsRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string dataCollectionEndpointName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Monitor
             return message;
         }
 
-        internal HttpMessage CreateGetByRuleRequest(Guid subscriptionId, string resourceGroupName, string dataCollectionRuleName, string skipToken, int? top, RequestContext context)
+        internal HttpMessage CreateGetDataCollectionRuleAssociationsByRuleRequest(Guid subscriptionId, string resourceGroupName, string dataCollectionRuleName, string skipToken, int? top, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Monitor
             return message;
         }
 
-        internal HttpMessage CreateNextGetByRuleRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string dataCollectionRuleName, string skipToken, int? top, RequestContext context)
+        internal HttpMessage CreateNextGetDataCollectionRuleAssociationsByRuleRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string dataCollectionRuleName, string skipToken, int? top, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

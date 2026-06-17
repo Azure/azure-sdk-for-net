@@ -1461,7 +1461,7 @@ namespace Azure.ResourceManager.Monitor
         /// Provides the list of records from the activity logs.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMonitorSubscriptionResource.GetAllAsync(string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorSubscriptionResource.GetActivityLogsAsync(string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -1470,18 +1470,18 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="EventDataInfo"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<EventDataInfo> GetAllAsync(this SubscriptionResource subscriptionResource, string filter, string @select = default, CancellationToken cancellationToken = default)
+        public static AsyncPageable<EventDataInfo> GetActivityLogsAsync(this SubscriptionResource subscriptionResource, string filter, string @select = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableMonitorSubscriptionResource(subscriptionResource).GetAllAsync(filter, @select, cancellationToken);
+            return GetMockableMonitorSubscriptionResource(subscriptionResource).GetActivityLogsAsync(filter, @select, cancellationToken);
         }
 
         /// <summary>
         /// Provides the list of records from the activity logs.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMonitorSubscriptionResource.GetAll(string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorSubscriptionResource.GetActivityLogs(string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -1490,11 +1490,11 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="EventDataInfo"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<EventDataInfo> GetAll(this SubscriptionResource subscriptionResource, string filter, string @select = default, CancellationToken cancellationToken = default)
+        public static Pageable<EventDataInfo> GetActivityLogs(this SubscriptionResource subscriptionResource, string filter, string @select = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableMonitorSubscriptionResource(subscriptionResource).GetAll(filter, @select, cancellationToken);
+            return GetMockableMonitorSubscriptionResource(subscriptionResource).GetActivityLogs(filter, @select, cancellationToken);
         }
 
         /// <summary>
@@ -1719,43 +1719,43 @@ namespace Azure.ResourceManager.Monitor
         /// Get the list of available event categories supported in the Activity Logs Service.&lt;br&gt;The current list includes the following: Administrative, Security, ServiceHealth, Alert, Recommendation, Policy.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMonitorTenantResource.GetAllAsync(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorTenantResource.GetEventCategoriesAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         /// <returns> A collection of <see cref="MonitorLocalizableString"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<MonitorLocalizableString> GetAllAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
+        public static AsyncPageable<MonitorLocalizableString> GetEventCategoriesAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetMockableMonitorTenantResource(tenantResource).GetAllAsync(cancellationToken);
+            return GetMockableMonitorTenantResource(tenantResource).GetEventCategoriesAsync(cancellationToken);
         }
 
         /// <summary>
         /// Get the list of available event categories supported in the Activity Logs Service.&lt;br&gt;The current list includes the following: Administrative, Security, ServiceHealth, Alert, Recommendation, Policy.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMonitorTenantResource.GetAll(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorTenantResource.GetEventCategories(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         /// <returns> A collection of <see cref="MonitorLocalizableString"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<MonitorLocalizableString> GetAll(this TenantResource tenantResource, CancellationToken cancellationToken = default)
+        public static Pageable<MonitorLocalizableString> GetEventCategories(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetMockableMonitorTenantResource(tenantResource).GetAll(cancellationToken);
+            return GetMockableMonitorTenantResource(tenantResource).GetEventCategories(cancellationToken);
         }
 
         /// <summary>
         /// Gets the Activity Logs for the Tenant.&lt;br&gt;Everything that is applicable to the API to get the Activity Logs for the subscription is applicable to this API (the parameters, $filter, etc.).&lt;br&gt;One thing to point out here is that this API does <i>not</i> retrieve the logs at the individual subscription of the tenant but only surfaces the logs that were generated at the tenant level.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMonitorTenantResource.GetAllAsync(string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorTenantResource.GetTenantActivityLogsAsync(string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
@@ -1764,18 +1764,18 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         /// <returns> A collection of <see cref="EventDataInfo"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<EventDataInfo> GetAllAsync(this TenantResource tenantResource, string filter = default, string @select = default, CancellationToken cancellationToken = default)
+        public static AsyncPageable<EventDataInfo> GetTenantActivityLogsAsync(this TenantResource tenantResource, string filter = default, string @select = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetMockableMonitorTenantResource(tenantResource).GetAllAsync(filter, @select, cancellationToken);
+            return GetMockableMonitorTenantResource(tenantResource).GetTenantActivityLogsAsync(filter, @select, cancellationToken);
         }
 
         /// <summary>
         /// Gets the Activity Logs for the Tenant.&lt;br&gt;Everything that is applicable to the API to get the Activity Logs for the subscription is applicable to this API (the parameters, $filter, etc.).&lt;br&gt;One thing to point out here is that this API does <i>not</i> retrieve the logs at the individual subscription of the tenant but only surfaces the logs that were generated at the tenant level.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMonitorTenantResource.GetAll(string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorTenantResource.GetTenantActivityLogs(string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
@@ -1784,11 +1784,11 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         /// <returns> A collection of <see cref="EventDataInfo"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<EventDataInfo> GetAll(this TenantResource tenantResource, string filter = default, string @select = default, CancellationToken cancellationToken = default)
+        public static Pageable<EventDataInfo> GetTenantActivityLogs(this TenantResource tenantResource, string filter = default, string @select = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetMockableMonitorTenantResource(tenantResource).GetAll(filter, @select, cancellationToken);
+            return GetMockableMonitorTenantResource(tenantResource).GetTenantActivityLogs(filter, @select, cancellationToken);
         }
     }
 }

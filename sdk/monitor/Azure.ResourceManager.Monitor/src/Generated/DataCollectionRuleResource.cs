@@ -420,13 +420,13 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="top"> (Optional) The max number of items to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DataCollectionRuleAssociationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DataCollectionRuleAssociationResource> GetByRuleAsync(string skipToken = default, int? top = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DataCollectionRuleAssociationResource> GetDataCollectionRuleAssociationsByRuleAsync(string skipToken = default, int? top = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataCollectionRuleAssociationData, DataCollectionRuleAssociationResource>(new DataCollectionRuleAssociationsGetByRuleAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DataCollectionRuleAssociationData, DataCollectionRuleAssociationResource>(new DataCollectionRuleAssociationsGetDataCollectionRuleAssociationsByRuleAsyncCollectionResultOfT(
                 _dataCollectionRuleAssociationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Parent.Name,
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.Monitor
                 skipToken,
                 top,
                 context,
-                "DataCollectionRuleResource.GetByRule"), data => new DataCollectionRuleAssociationResource(Client, data));
+                "DataCollectionRuleResource.GetDataCollectionRuleAssociationsByRule"), data => new DataCollectionRuleAssociationResource(Client, data));
         }
 
         /// <summary>
@@ -462,13 +462,13 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="top"> (Optional) The max number of items to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DataCollectionRuleAssociationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DataCollectionRuleAssociationResource> GetByRule(string skipToken = default, int? top = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<DataCollectionRuleAssociationResource> GetDataCollectionRuleAssociationsByRule(string skipToken = default, int? top = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataCollectionRuleAssociationData, DataCollectionRuleAssociationResource>(new DataCollectionRuleAssociationsGetByRuleCollectionResultOfT(
+            return new PageableWrapper<DataCollectionRuleAssociationData, DataCollectionRuleAssociationResource>(new DataCollectionRuleAssociationsGetDataCollectionRuleAssociationsByRuleCollectionResultOfT(
                 _dataCollectionRuleAssociationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Parent.Name,
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.Monitor
                 skipToken,
                 top,
                 context,
-                "DataCollectionRuleResource.GetByRule"), data => new DataCollectionRuleAssociationResource(Client, data));
+                "DataCollectionRuleResource.GetDataCollectionRuleAssociationsByRule"), data => new DataCollectionRuleAssociationResource(Client, data));
         }
 
         /// <summary> Add a tag to the current resource. </summary>

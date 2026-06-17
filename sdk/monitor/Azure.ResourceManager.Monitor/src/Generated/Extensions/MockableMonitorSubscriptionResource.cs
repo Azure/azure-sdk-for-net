@@ -636,7 +636,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="filter"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="EventDataInfo"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<EventDataInfo> GetAllAsync(string filter, string @select = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<EventDataInfo> GetActivityLogsAsync(string filter, string @select = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(filter, nameof(filter));
 
@@ -644,13 +644,13 @@ namespace Azure.ResourceManager.Monitor.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ActivityLogsGetAllAsyncCollectionResultOfT(
+            return new ActivityLogsGetActivityLogsAsyncCollectionResultOfT(
                 ActivityLogsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 filter,
                 @select,
                 context,
-                "MockableMonitorSubscriptionResource.GetAll");
+                "MockableMonitorSubscriptionResource.GetActivityLogs");
         }
 
         /// <summary>
@@ -676,7 +676,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="filter"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="EventDataInfo"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<EventDataInfo> GetAll(string filter, string @select = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<EventDataInfo> GetActivityLogs(string filter, string @select = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(filter, nameof(filter));
 
@@ -684,13 +684,13 @@ namespace Azure.ResourceManager.Monitor.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ActivityLogsGetAllCollectionResultOfT(
+            return new ActivityLogsGetActivityLogsCollectionResultOfT(
                 ActivityLogsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 filter,
                 @select,
                 context,
-                "MockableMonitorSubscriptionResource.GetAll");
+                "MockableMonitorSubscriptionResource.GetActivityLogs");
         }
 
         /// <summary>
