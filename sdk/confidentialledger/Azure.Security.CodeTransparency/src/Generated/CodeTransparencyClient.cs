@@ -394,7 +394,7 @@ namespace Azure.Security.CodeTransparency
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response CreateEntryV09(RequestContent content, bool? waitForCommit = default, RequestContext context = null)
+        internal virtual Response CreateEntryV09(RequestContent content, bool? waitForCommit = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("CodeTransparencyClient.CreateEntryV09");
             scope.Start();
@@ -426,7 +426,7 @@ namespace Azure.Security.CodeTransparency
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CreateEntryV09Async(RequestContent content, bool? waitForCommit = default, RequestContext context = null)
+        internal virtual async Task<Response> CreateEntryV09Async(RequestContent content, bool? waitForCommit = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("CodeTransparencyClient.CreateEntryV09");
             scope.Start();
@@ -450,7 +450,7 @@ namespace Azure.Security.CodeTransparency
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<BinaryData> CreateEntryV09(BinaryData body, bool? waitForCommit = default, CancellationToken cancellationToken = default)
+        internal virtual Response<BinaryData> CreateEntryV09(BinaryData body, bool? waitForCommit = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
@@ -464,7 +464,7 @@ namespace Azure.Security.CodeTransparency
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<BinaryData>> CreateEntryV09Async(BinaryData body, bool? waitForCommit = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<BinaryData>> CreateEntryV09Async(BinaryData body, bool? waitForCommit = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
@@ -486,7 +486,7 @@ namespace Azure.Security.CodeTransparency
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetOperationV09(string operationId, RequestContext context)
+        internal virtual Response GetOperationV09(string operationId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("CodeTransparencyClient.GetOperationV09");
             scope.Start();
@@ -518,7 +518,7 @@ namespace Azure.Security.CodeTransparency
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetOperationV09Async(string operationId, RequestContext context)
+        internal virtual async Task<Response> GetOperationV09Async(string operationId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("CodeTransparencyClient.GetOperationV09");
             scope.Start();
@@ -542,7 +542,7 @@ namespace Azure.Security.CodeTransparency
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<BinaryData> GetOperationV09(string operationId, CancellationToken cancellationToken = default)
+        internal virtual Response<BinaryData> GetOperationV09(string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
@@ -556,7 +556,7 @@ namespace Azure.Security.CodeTransparency
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<BinaryData>> GetOperationV09Async(string operationId, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<BinaryData>> GetOperationV09Async(string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
@@ -578,7 +578,7 @@ namespace Azure.Security.CodeTransparency
         /// <exception cref="ArgumentException"> <paramref name="entryId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetEntryV09(string entryId, RequestContext context)
+        internal virtual Response GetEntryV09(string entryId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("CodeTransparencyClient.GetEntryV09");
             scope.Start();
@@ -610,7 +610,7 @@ namespace Azure.Security.CodeTransparency
         /// <exception cref="ArgumentException"> <paramref name="entryId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetEntryV09Async(string entryId, RequestContext context)
+        internal virtual async Task<Response> GetEntryV09Async(string entryId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("CodeTransparencyClient.GetEntryV09");
             scope.Start();
@@ -634,7 +634,7 @@ namespace Azure.Security.CodeTransparency
         /// <exception cref="ArgumentNullException"> <paramref name="entryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="entryId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<BinaryData> GetEntryV09(string entryId, CancellationToken cancellationToken = default)
+        internal virtual Response<BinaryData> GetEntryV09(string entryId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(entryId, nameof(entryId));
 
@@ -648,7 +648,7 @@ namespace Azure.Security.CodeTransparency
         /// <exception cref="ArgumentNullException"> <paramref name="entryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="entryId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<BinaryData>> GetEntryV09Async(string entryId, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<BinaryData>> GetEntryV09Async(string entryId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(entryId, nameof(entryId));
 
@@ -670,7 +670,7 @@ namespace Azure.Security.CodeTransparency
         /// <exception cref="ArgumentException"> <paramref name="entryId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetEntryStatementV09(string entryId, RequestContext context)
+        internal virtual Response GetEntryStatementV09(string entryId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("CodeTransparencyClient.GetEntryStatementV09");
             scope.Start();
@@ -702,7 +702,7 @@ namespace Azure.Security.CodeTransparency
         /// <exception cref="ArgumentException"> <paramref name="entryId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetEntryStatementV09Async(string entryId, RequestContext context)
+        internal virtual async Task<Response> GetEntryStatementV09Async(string entryId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("CodeTransparencyClient.GetEntryStatementV09");
             scope.Start();
@@ -726,7 +726,7 @@ namespace Azure.Security.CodeTransparency
         /// <exception cref="ArgumentNullException"> <paramref name="entryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="entryId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<BinaryData> GetEntryStatementV09(string entryId, CancellationToken cancellationToken = default)
+        internal virtual Response<BinaryData> GetEntryStatementV09(string entryId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(entryId, nameof(entryId));
 
@@ -740,7 +740,7 @@ namespace Azure.Security.CodeTransparency
         /// <exception cref="ArgumentNullException"> <paramref name="entryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="entryId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<BinaryData>> GetEntryStatementV09Async(string entryId, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<BinaryData>> GetEntryStatementV09Async(string entryId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(entryId, nameof(entryId));
 

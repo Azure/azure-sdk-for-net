@@ -20,6 +20,22 @@ namespace Azure.Security.CodeTransparency
     [CodeGenSuppress("CreateEntryAsync", typeof(RequestContent), typeof(RequestContext))]
     [CodeGenSuppress("CreateEntry", typeof(BinaryData), typeof(CancellationToken))]
     [CodeGenSuppress("CreateEntryAsync", typeof(BinaryData), typeof(CancellationToken))]
+    [CodeGenSuppress("CreateEntryV09", typeof(RequestContent), typeof(bool?), typeof(RequestContext))]
+    [CodeGenSuppress("CreateEntryV09Async", typeof(RequestContent), typeof(bool?), typeof(RequestContext))]
+    [CodeGenSuppress("CreateEntryV09", typeof(BinaryData), typeof(bool?), typeof(CancellationToken))]
+    [CodeGenSuppress("CreateEntryV09Async", typeof(BinaryData), typeof(bool?), typeof(CancellationToken))]
+    [CodeGenSuppress("GetOperationV09", typeof(string), typeof(RequestContext))]
+    [CodeGenSuppress("GetOperationV09Async", typeof(string), typeof(RequestContext))]
+    [CodeGenSuppress("GetOperationV09", typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("GetOperationV09Async", typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("GetEntryV09", typeof(string), typeof(RequestContext))]
+    [CodeGenSuppress("GetEntryV09Async", typeof(string), typeof(RequestContext))]
+    [CodeGenSuppress("GetEntryV09", typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("GetEntryV09Async", typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("GetEntryStatementV09", typeof(string), typeof(RequestContext))]
+    [CodeGenSuppress("GetEntryStatementV09Async", typeof(string), typeof(RequestContext))]
+    [CodeGenSuppress("GetEntryStatementV09", typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("GetEntryStatementV09Async", typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("CreateGetTransparencyConfigCborRequest", typeof(RequestContext))]
     [CodeGenSuppress("CreateGetPublicKeysRequest", typeof(RequestContext))]
     [CodeGenSuppress("CreateGetOperationRequest", typeof(string), typeof(RequestContext))]
@@ -663,6 +679,18 @@ namespace Azure.Security.CodeTransparency
         }
 
         // Backward-compatible wrapper methods delegating to the V09 generated methods.
+
+        /// <summary> Post an entry to be registered on the CodeTransparency instance. </summary>
+        public virtual Response CreateEntry(RequestContent content, bool? waitForCommit = default, RequestContext context = null) => CreateEntryV09(content, waitForCommit, context);
+
+        /// <summary> Post an entry to be registered on the CodeTransparency instance. </summary>
+        public virtual async Task<Response> CreateEntryAsync(RequestContent content, bool? waitForCommit = default, RequestContext context = null) => await CreateEntryV09Async(content, waitForCommit, context).ConfigureAwait(false);
+
+        /// <summary> Post an entry to be registered on the CodeTransparency instance. </summary>
+        public virtual Response<BinaryData> CreateEntry(BinaryData body, bool? waitForCommit = default, CancellationToken cancellationToken = default) => CreateEntryV09(body, waitForCommit, cancellationToken);
+
+        /// <summary> Post an entry to be registered on the CodeTransparency instance. </summary>
+        public virtual async Task<Response<BinaryData>> CreateEntryAsync(BinaryData body, bool? waitForCommit = default, CancellationToken cancellationToken = default) => await CreateEntryV09Async(body, waitForCommit, cancellationToken).ConfigureAwait(false);
 
         /// <summary> Get receipt. </summary>
         public virtual Response GetEntry(string entryId, RequestContext context) => GetEntryV09(entryId, context);
