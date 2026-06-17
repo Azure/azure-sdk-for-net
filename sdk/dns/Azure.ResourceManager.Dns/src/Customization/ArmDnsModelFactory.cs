@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Dns.Models
         /// <returns> A new <see cref="Dns.DnsRecordData"/> instance for mocking. </returns>
         public static DnsRecordData DnsRecordData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, RecordSetProperties properties = default, ETag? eTag = default)
         {
-            throw new NotImplementedException();
+            return new DnsRecordData(id, name, resourceType, systemData, new Dictionary<string, BinaryData>(), properties, eTag);
         }
 
         /// <summary> Initializes a new instance of <see cref="Dns.DnsARecordData"/> for mocking. </summary>

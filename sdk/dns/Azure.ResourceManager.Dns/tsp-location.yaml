@@ -1,4 +1,4 @@
 directory: specification/dns/resource-manager/Microsoft.Network/Dns
-commit: 924420fe602b631163f1e2628337c2dd7f26c173
+commit: 7dcb27af65ac9347918f78dbb1fc57aff2b03ac1
 repo: Azure/azure-rest-api-specs
 emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json
