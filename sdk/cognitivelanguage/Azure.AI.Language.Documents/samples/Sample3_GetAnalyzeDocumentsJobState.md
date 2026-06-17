@@ -5,11 +5,18 @@ This sample demonstrates how to retrieve the state of a previously submitted doc
 Start by importing the namespace for the `DocumentsServiceClient` and related classes:
 
 ```C# Snippet:DocumentsServiceClient_Namespaces
+using Azure.Core;
+using Azure.Core.Serialization;
+using Azure.AI.Language.Documents;
 ```
 
 Create a client:
 
 ```C# Snippet:CreateDocumentsServiceClientForSpecificApiVersion
+Uri endpoint = new Uri("{endpoint}");
+AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
+DocumentsServiceClientOptions options = new DocumentsServiceClientOptions(DocumentsServiceClientOptions.ServiceVersion.V2026_05_15_Preview);
+DocumentsServiceClient client = new DocumentsServiceClient(endpoint, credential, options);
 ```
 
 Once you have created a client, you can call synchronous or asynchronous methods.
@@ -17,14 +24,15 @@ Once you have created a client, you can call synchronous or asynchronous methods
 ## Synchronous
 
 ```C# Snippet:DocumentsService_GetJobState
-using System.Linq;
-
-AzureBlobDocumentLocation sourceLocation = new AzureBlobDocumentLocation("{sourceSasUrl}");
-AzureContainerFolderDocumentLocation targetLocation = new AzureContainerFolderDocumentLocation("{targetFolderSasUrl}");
+string sourceLocation = "https://<storage-account>.blob.core.windows.net/input/document.txt?<sas-token>";
+string targetLocation = "https://<storage-account>.blob.core.windows.net/output/pii?<sas-token>";
 
 MultiLanguageDocumentCollection documents = new MultiLanguageDocumentCollection();
 documents.Documents.Add(
-    new MultiLanguageInput("1", sourceLocation, targetLocation)
+    new MultiLanguageInput(
+        "1",
+        new AzureBlobDocumentLocation(sourceLocation),
+        new AzureContainerFolderDocumentLocation(targetLocation))
     {
         Language = "en",
     });
@@ -53,17 +61,13 @@ Operation operation = client.AnalyzeDocumentsSubmitOperation(
     WaitUntil.Started,
     request);
 
-if (!operation.GetRawResponse().Headers.TryGetValue("Operation-Location", out string operationLocation))
-{
-    throw new InvalidOperationException("Operation-Location header was not found.");
-}
+string operationLocation = operation.GetRawResponse().Headers.TryGetValue("Operation-Location", out string headerValue)
+    ? headerValue
+    : throw new InvalidOperationException("Operation-Location header was not found.");
 
 Guid jobId = Guid.Parse(new Uri(operationLocation).AbsolutePath.TrimEnd('/').Split('/').Last());
 
 Response<AnalyzeDocumentsJobState> response = client.GetAnalyzeDocumentsJobState(jobId);
-
-Console.WriteLine($"Job Id: {response.Value.JobId}");
-Console.WriteLine($"Status: {response.Value.Status}");
 ```
 
 ## Asynchronous
@@ -71,19 +75,5 @@ Console.WriteLine($"Status: {response.Value.Status}");
 Using the same `request` definition above, you can make an asynchronous request by calling `GetAnalyzeDocumentsJobStateAsync`:
 
 ```C# Snippet:DocumentsService_GetJobStateAsync
-Operation operation = await client.AnalyzeDocumentsSubmitOperationAsync(
-    WaitUntil.Started,
-    request);
-
-if (!operation.GetRawResponse().Headers.TryGetValue("Operation-Location", out string operationLocation))
-{
-    throw new InvalidOperationException("Operation-Location header was not found.");
-}
-
-Guid jobId = Guid.Parse(new Uri(operationLocation).AbsolutePath.TrimEnd('/').Split('/').Last());
-
 Response<AnalyzeDocumentsJobState> response = await client.GetAnalyzeDocumentsJobStateAsync(jobId);
-
-Console.WriteLine($"Job Id: {response.Value.JobId}");
-Console.WriteLine($"Status: {response.Value.Status}");
 ```

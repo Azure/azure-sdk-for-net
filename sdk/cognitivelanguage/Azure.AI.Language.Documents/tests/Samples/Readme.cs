@@ -10,7 +10,7 @@ using Azure.Core.Serialization;
 using Azure.AI.Language.Documents;
 #endregion
 
-#region Snippet:Conversation_Identity_Namespace
+#region Snippet:DocumentsService_Identity_Namespace
 using Azure.Identity;
 #endregion
 

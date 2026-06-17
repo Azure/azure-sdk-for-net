@@ -5,26 +5,34 @@ This sample demonstrates how to cancel a previously submitted document analysis 
 Start by importing the namespace for the `DocumentsServiceClient` and related classes:
 
 ```C# Snippet:DocumentsServiceClient_Namespaces
+using Azure.Core;
+using Azure.Core.Serialization;
+using Azure.AI.Language.Documents;
 ```
 
 Create a client:
 
 ```C# Snippet:CreateDocumentsServiceClientForSpecificApiVersion
+Uri endpoint = new Uri("{endpoint}");
+AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
+DocumentsServiceClientOptions options = new DocumentsServiceClientOptions(DocumentsServiceClientOptions.ServiceVersion.V2026_05_15_Preview);
+DocumentsServiceClient client = new DocumentsServiceClient(endpoint, credential, options);
 ```
 
 Once you have created a client, you can call synchronous or asynchronous methods.
 
 ## Synchronous
 
-```C# Snippet:DocumentsService_CancelJob 
-using System.Linq;
-
-AzureBlobDocumentLocation sourceLocation = new AzureBlobDocumentLocation("{sourceSasUrl}");
-AzureContainerFolderDocumentLocation targetLocation = new AzureContainerFolderDocumentLocation("{targetFolderSasUrl}");
+```C# Snippet:DocumentsService_CancelJob
+string sourceLocation = "https://<storage-account>.blob.core.windows.net/input/document.txt?<sas-token>";
+string targetLocation = "https://<storage-account>.blob.core.windows.net/output/pii?<sas-token>";
 
 MultiLanguageDocumentCollection documents = new MultiLanguageDocumentCollection();
 documents.Documents.Add(
-    new MultiLanguageInput("1", sourceLocation, targetLocation)
+    new MultiLanguageInput(
+        "1",
+        new AzureBlobDocumentLocation(sourceLocation),
+        new AzureContainerFolderDocumentLocation(targetLocation))
     {
         Language = "en",
     });
@@ -53,18 +61,15 @@ Operation submitOperation = client.AnalyzeDocumentsSubmitOperation(
     WaitUntil.Started,
     request);
 
-if (!submitOperation.GetRawResponse().Headers.TryGetValue("Operation-Location", out string operationLocation))
-{
-    throw new InvalidOperationException("Operation-Location header was not found.");
-}
+string operationLocation = submitOperation.GetRawResponse().Headers.TryGetValue("Operation-Location", out string headerValue)
+    ? headerValue
+    : throw new InvalidOperationException("Operation-Location header was not found.");
 
 Guid jobId = Guid.Parse(new Uri(operationLocation).AbsolutePath.TrimEnd('/').Split('/').Last());
 
 Operation cancelOperation = client.AnalyzeDocumentsCancelOperation(
     WaitUntil.Started,
     jobId);
-
-Console.WriteLine($"Cancel operation status: {cancelOperation.GetRawResponse().Status}");
 ```
 
 ## Asynchronous
@@ -72,20 +77,7 @@ Console.WriteLine($"Cancel operation status: {cancelOperation.GetRawResponse().S
 Using the same `request` definition above, you can make an asynchronous request by calling `AnalyzeDocumentsCancelOperationAsync`:
 
 ```C# Snippet:DocumentsService_CancelJobAsync
-Operation submitOperation = await client.AnalyzeDocumentsSubmitOperationAsync(
-    WaitUntil.Started,
-    request);
-
-if (!submitOperation.GetRawResponse().Headers.TryGetValue("Operation-Location", out string operationLocation))
-{
-    throw new InvalidOperationException("Operation-Location header was not found.");
-}
-
-Guid jobId = Guid.Parse(new Uri(operationLocation).AbsolutePath.TrimEnd('/').Split('/').Last());
-
 Operation cancelOperation = await client.AnalyzeDocumentsCancelOperationAsync(
     WaitUntil.Started,
     jobId);
-
-Console.WriteLine($"Cancel operation status: {cancelOperation.GetRawResponse().Status}");
 ```
