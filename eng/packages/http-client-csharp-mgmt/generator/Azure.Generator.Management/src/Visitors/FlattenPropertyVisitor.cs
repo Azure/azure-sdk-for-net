@@ -1008,10 +1008,10 @@ namespace Azure.Generator.Management.Visitors
             List<MethodBodyStatement> updatedBodyStatements,
             HashSet<PropertyProvider> assignedInternalProperties)
         {
-            var initializedInternalProperties = new HashSet<PropertyProvider>(assignedInternalProperties);
+            var alreadyInitializedInternalProperties = new HashSet<PropertyProvider>(assignedInternalProperties);
             foreach (var internalProperty in flattenPropertyMap.Values.SelectMany(v => v).Select(v => v.InternalProperty))
             {
-                if (!initializedInternalProperties.Add(internalProperty)
+                if (!alreadyInitializedInternalProperties.Add(internalProperty)
                     || ShouldLiftToNullable(internalProperty)
                     || !TryGetModelProvider(internalProperty.Type, out var nestedModel)
                     || !nestedModel.Constructors.Any(c => !c.Signature.Parameters.Any()))
