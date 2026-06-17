@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Conversations.Authoring
 {
     /// <summary> Represents the orchestration options for a LUIS application target. </summary>
-    public partial class ExportedLuisOrchestrationDetails : ExportedOrchestrationDetails
+    internal partial class ExportedLuisOrchestrationDetails : ExportedOrchestrationDetails
     {
         /// <summary> Initializes a new instance of <see cref="ExportedLuisOrchestrationDetails"/>. </summary>
         /// <param name="luisOrchestration"> The LUIS application target details. </param>

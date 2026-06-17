@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> A memory command tool call. </summary>
-    public partial class MemoryCommandToolCall : AgentResponseItem, IJsonModel<MemoryCommandToolCall>
+    internal partial class MemoryCommandToolCall : AgentResponseItem, IJsonModel<MemoryCommandToolCall>
     {
         /// <summary> Initializes a new instance of <see cref="MemoryCommandToolCall"/> for deserialization. </summary>
         internal MemoryCommandToolCall()

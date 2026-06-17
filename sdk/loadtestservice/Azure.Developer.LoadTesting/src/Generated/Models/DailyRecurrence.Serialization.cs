@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.Developer.LoadTesting
 {
     /// <summary> Recurrence model when frequency is set as Daily. </summary>
-    public partial class DailyRecurrence : LoadTestingRecurrence, IJsonModel<DailyRecurrence>
+    internal partial class DailyRecurrence : LoadTestingRecurrence, IJsonModel<DailyRecurrence>
     {
         /// <summary> Initializes a new instance of <see cref="DailyRecurrence"/> for deserialization. </summary>
         internal DailyRecurrence()

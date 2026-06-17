@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> A single item in an inline dataset. </summary>
-    public partial class OptimizationDatasetItem : IJsonModel<OptimizationDatasetItem>
+    internal partial class OptimizationDatasetItem : IJsonModel<OptimizationDatasetItem>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

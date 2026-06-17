@@ -12,7 +12,7 @@ using Azure.AI.Language.Conversations;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> The concrete entity Subtype model of extra information. </summary>
-    public partial class EntitySubtype : ConversationEntityExtraInformation
+    internal partial class EntitySubtype : ConversationEntityExtraInformation
     {
         /// <summary> Initializes a new instance of <see cref="EntitySubtype"/>. </summary>
         internal EntitySubtype() : base(ExtraInformationKind.EntitySubtype)

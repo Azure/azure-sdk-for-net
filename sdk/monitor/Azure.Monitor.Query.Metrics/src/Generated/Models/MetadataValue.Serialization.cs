@@ -14,7 +14,7 @@ using Azure.Monitor.Query.Metrics;
 namespace Azure.Monitor.Query.Metrics.Models
 {
     /// <summary> Represents a metric metadata value. </summary>
-    internal partial class MetadataValue : IJsonModel<MetadataValue>
+    public partial class MetadataValue : IJsonModel<MetadataValue>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

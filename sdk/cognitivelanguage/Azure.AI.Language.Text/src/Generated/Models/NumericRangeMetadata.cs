@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Text
 {
     /// <summary> represents the Metadata of numeric intervals. </summary>
-    public partial class NumericRangeMetadata : BaseMetadata
+    internal partial class NumericRangeMetadata : BaseMetadata
     {
         /// <summary> Initializes a new instance of <see cref="NumericRangeMetadata"/>. </summary>
         /// <param name="rangeKind"> Kind of numeric ranges supported - like Number, Speed, etc. </param>

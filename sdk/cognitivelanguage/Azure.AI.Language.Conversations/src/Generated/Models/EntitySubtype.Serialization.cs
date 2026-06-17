@@ -14,7 +14,7 @@ using Azure.AI.Language.Conversations;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> The concrete entity Subtype model of extra information. </summary>
-    public partial class EntitySubtype : ConversationEntityExtraInformation, IJsonModel<EntitySubtype>
+    internal partial class EntitySubtype : ConversationEntityExtraInformation, IJsonModel<EntitySubtype>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

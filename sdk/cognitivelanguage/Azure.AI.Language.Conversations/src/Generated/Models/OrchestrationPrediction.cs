@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> This represents the prediction result of an Orchestration project. </summary>
-    public partial class OrchestrationPrediction : PredictionBase
+    internal partial class OrchestrationPrediction : PredictionBase
     {
         /// <summary> Initializes a new instance of <see cref="OrchestrationPrediction"/>. </summary>
         /// <param name="intents"> A dictionary that contains all intents. A key is an intent name and a value is its confidence score and target type. The top intent's value also contains the actual response from the target project. </param>

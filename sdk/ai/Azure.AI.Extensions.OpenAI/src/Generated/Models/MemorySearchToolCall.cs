@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> A memory search tool call. </summary>
-    public partial class MemorySearchToolCall : AgentResponseItem
+    internal partial class MemorySearchToolCall : AgentResponseItem
     {
         /// <summary> Initializes a new instance of <see cref="MemorySearchToolCall"/>. </summary>
         /// <param name="status"> The status of the tool call. </param>

@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> An OTLP (OpenTelemetry Protocol) telemetry export endpoint. </summary>
-    public partial class OtlpTelemetryEndpoint : TelemetryEndpoint
+    internal partial class OtlpTelemetryEndpoint : TelemetryEndpoint
     {
         /// <summary> Initializes a new instance of <see cref="OtlpTelemetryEndpoint"/>. </summary>
         /// <param name="exportedDataTypes"> Data types to export to this endpoint. Use an empty array to export no data. </param>

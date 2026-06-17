@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Returned when the output audio buffer has been cleared. </summary>
-    public partial class ServerEventOutputAudioBufferCleared : SessionUpdate
+    internal partial class ServerEventOutputAudioBufferCleared : SessionUpdate
     {
         /// <summary> Initializes a new instance of <see cref="ServerEventOutputAudioBufferCleared"/>. </summary>
         internal ServerEventOutputAudioBufferCleared() : base(ServerEventType.OutputAudioBufferCleared)

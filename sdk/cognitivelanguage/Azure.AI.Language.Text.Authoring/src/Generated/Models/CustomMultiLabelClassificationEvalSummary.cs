@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Text.Authoring
 {
     /// <summary> Represents the evaluation summary for a custom multi-label classification project. </summary>
-    public partial class CustomMultiLabelClassificationEvalSummary : TextAuthoringEvalSummary
+    internal partial class CustomMultiLabelClassificationEvalSummary : TextAuthoringEvalSummary
     {
         /// <summary> Initializes a new instance of <see cref="CustomMultiLabelClassificationEvalSummary"/>. </summary>
         /// <param name="evaluationOptions"> Represents the options used running the evaluation. </param>

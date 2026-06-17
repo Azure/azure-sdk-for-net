@@ -14,7 +14,7 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Parameters for Foundry connection authentication. </summary>
-    public partial class McpServerFoundryConnectionParameters : IJsonModel<McpServerFoundryConnectionParameters>
+    internal partial class McpServerFoundryConnectionParameters : IJsonModel<McpServerFoundryConnectionParameters>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

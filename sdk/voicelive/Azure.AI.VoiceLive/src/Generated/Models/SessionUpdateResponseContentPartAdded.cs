@@ -14,7 +14,7 @@ namespace Azure.AI.VoiceLive
     /// Returned when a new content part is added to an assistant message item during
     /// response generation.
     /// </summary>
-    public partial class SessionUpdateResponseContentPartAdded : SessionUpdate
+    internal partial class SessionUpdateResponseContentPartAdded : SessionUpdate
     {
         /// <summary> Initializes a new instance of <see cref="SessionUpdateResponseContentPartAdded"/>. </summary>
         /// <param name="responseId"> The ID of the response. </param>

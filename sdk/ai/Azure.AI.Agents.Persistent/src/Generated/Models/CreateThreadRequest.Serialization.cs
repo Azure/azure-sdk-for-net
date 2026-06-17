@@ -14,7 +14,7 @@ using Azure.Core;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> The CreateThreadRequest. </summary>
-    internal partial class CreateThreadRequest : IJsonModel<CreateThreadRequest>
+    public partial class CreateThreadRequest : IJsonModel<CreateThreadRequest>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

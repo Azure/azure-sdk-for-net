@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Text
 {
     /// <summary> Represents the Area entity Metadata model. </summary>
-    public partial class AreaMetadata : BaseMetadata
+    internal partial class AreaMetadata : BaseMetadata
     {
         /// <summary> Initializes a new instance of <see cref="AreaMetadata"/>. </summary>
         /// <param name="value"> The numeric value that the extracted text denotes. </param>

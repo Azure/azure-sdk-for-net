@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Parameters for stored headers authentication. </summary>
-    public partial class McpServerStoredHeadersParameters
+    internal partial class McpServerStoredHeadersParameters
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

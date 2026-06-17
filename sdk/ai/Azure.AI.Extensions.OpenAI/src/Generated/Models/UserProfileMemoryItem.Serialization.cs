@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> A memory item specifically containing user profile information extracted from conversations, such as preferences, interests, and personal details. </summary>
-    public partial class UserProfileMemoryItem : MemoryOutputItem, IJsonModel<UserProfileMemoryItem>
+    internal partial class UserProfileMemoryItem : MemoryOutputItem, IJsonModel<UserProfileMemoryItem>
     {
         /// <summary> Initializes a new instance of <see cref="UserProfileMemoryItem"/> for deserialization. </summary>
         internal UserProfileMemoryItem()

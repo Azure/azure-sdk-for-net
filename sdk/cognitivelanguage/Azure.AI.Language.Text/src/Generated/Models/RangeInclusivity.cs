@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.Language.Text
 {
     /// <summary> The range inclusiveness of this property property. </summary>
-    public readonly partial struct RangeInclusivity : IEquatable<RangeInclusivity>
+    internal readonly partial struct RangeInclusivity : IEquatable<RangeInclusivity>
     {
         private readonly string _value;
         /// <summary> No inclusivity. </summary>

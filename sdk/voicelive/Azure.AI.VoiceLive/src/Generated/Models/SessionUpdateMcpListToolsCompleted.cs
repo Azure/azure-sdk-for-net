@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> MCP list tools completed message. </summary>
-    public partial class SessionUpdateMcpListToolsCompleted : SessionUpdate
+    internal partial class SessionUpdateMcpListToolsCompleted : SessionUpdate
     {
         /// <summary> Initializes a new instance of <see cref="SessionUpdateMcpListToolsCompleted"/>. </summary>
         /// <param name="itemId"> The item ID. </param>

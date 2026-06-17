@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Details for an incomplete response. </summary>
-    public partial class ResponseIncompleteDetails : ResponseStatusDetails
+    internal partial class ResponseIncompleteDetails : ResponseStatusDetails
     {
         /// <summary> Initializes a new instance of <see cref="ResponseIncompleteDetails"/>. </summary>
         /// <param name="reason"></param>

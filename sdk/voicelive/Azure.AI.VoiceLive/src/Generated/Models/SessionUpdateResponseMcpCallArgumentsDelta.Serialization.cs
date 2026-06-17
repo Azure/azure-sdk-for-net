@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Represents a delta update of the arguments for an MCP tool call. </summary>
-    public partial class SessionUpdateResponseMcpCallArgumentsDelta : SessionUpdate, IJsonModel<SessionUpdateResponseMcpCallArgumentsDelta>
+    internal partial class SessionUpdateResponseMcpCallArgumentsDelta : SessionUpdate, IJsonModel<SessionUpdateResponseMcpCallArgumentsDelta>
     {
         /// <summary> Initializes a new instance of <see cref="SessionUpdateResponseMcpCallArgumentsDelta"/> for deserialization. </summary>
         internal SessionUpdateResponseMcpCallArgumentsDelta()

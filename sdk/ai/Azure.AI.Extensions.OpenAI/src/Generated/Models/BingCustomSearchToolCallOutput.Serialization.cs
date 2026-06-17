@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The output of a Bing custom search tool call. </summary>
-    public partial class BingCustomSearchToolCallOutput : AgentResponseItem, IJsonModel<BingCustomSearchToolCallOutput>
+    internal partial class BingCustomSearchToolCallOutput : AgentResponseItem, IJsonModel<BingCustomSearchToolCallOutput>
     {
         /// <summary> Initializes a new instance of <see cref="BingCustomSearchToolCallOutput"/> for deserialization. </summary>
         internal BingCustomSearchToolCallOutput()

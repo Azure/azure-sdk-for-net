@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Result details for an individual PII subcategory. </summary>
-    internal partial class AzureContentFilterPiiSubCategoryResult : IJsonModel<AzureContentFilterPiiSubCategoryResult>
+    public partial class AzureContentFilterPiiSubCategoryResult : IJsonModel<AzureContentFilterPiiSubCategoryResult>
     {
         /// <summary> Initializes a new instance of <see cref="AzureContentFilterPiiSubCategoryResult"/> for deserialization. </summary>
         internal AzureContentFilterPiiSubCategoryResult()

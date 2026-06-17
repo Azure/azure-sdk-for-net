@@ -23,7 +23,7 @@ namespace Azure.AI.VoiceLive
     /// The transcript may diverge somewhat from the model's interpretation, and
     /// should be treated as a rough guide.
     /// </summary>
-    public partial class SessionUpdateConversationItemInputAudioTranscriptionCompleted : SessionUpdate, IJsonModel<SessionUpdateConversationItemInputAudioTranscriptionCompleted>
+    internal partial class SessionUpdateConversationItemInputAudioTranscriptionCompleted : SessionUpdate, IJsonModel<SessionUpdateConversationItemInputAudioTranscriptionCompleted>
     {
         /// <summary> Initializes a new instance of <see cref="SessionUpdateConversationItemInputAudioTranscriptionCompleted"/> for deserialization. </summary>
         internal SessionUpdateConversationItemInputAudioTranscriptionCompleted()

@@ -14,7 +14,7 @@ using Azure.AI.Language.Conversations;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> Represents the prediction section of a Conversation project. </summary>
-    public partial class ConversationPrediction : PredictionBase, IJsonModel<ConversationPrediction>
+    internal partial class ConversationPrediction : PredictionBase, IJsonModel<ConversationPrediction>
     {
         /// <summary> Initializes a new instance of <see cref="ConversationPrediction"/> for deserialization. </summary>
         internal ConversationPrediction()

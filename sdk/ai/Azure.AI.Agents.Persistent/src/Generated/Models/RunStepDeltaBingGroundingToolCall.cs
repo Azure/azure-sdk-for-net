@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> Represents the bing grounding tool call in a streaming run step. </summary>
-    public partial class RunStepDeltaBingGroundingToolCall : RunStepDeltaToolCall
+    internal partial class RunStepDeltaBingGroundingToolCall : RunStepDeltaToolCall
     {
         /// <summary> Initializes a new instance of <see cref="RunStepDeltaBingGroundingToolCall"/>. </summary>
         /// <param name="index"> The index of the tool call detail in the run step's tool_calls array. </param>

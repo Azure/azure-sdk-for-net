@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.AI.Language.Text.Authoring
 {
     /// <summary> Represents the evaluation comparison between the expected and predicted entities of a document region. </summary>
-    public partial class DocumentEntityRegionEvalResult
+    internal partial class DocumentEntityRegionEvalResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> The detailed information about the deep research tasks performed by the model. </summary>
-    public partial class RunStepDeepResearchToolCallDetails
+    internal partial class RunStepDeepResearchToolCallDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

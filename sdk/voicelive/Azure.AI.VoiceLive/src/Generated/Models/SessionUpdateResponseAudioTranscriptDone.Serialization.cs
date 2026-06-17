@@ -17,7 +17,7 @@ namespace Azure.AI.VoiceLive
     /// streaming. Also emitted when a Response is interrupted, incomplete, or
     /// cancelled.
     /// </summary>
-    public partial class SessionUpdateResponseAudioTranscriptDone : SessionUpdate, IJsonModel<SessionUpdateResponseAudioTranscriptDone>
+    internal partial class SessionUpdateResponseAudioTranscriptDone : SessionUpdate, IJsonModel<SessionUpdateResponseAudioTranscriptDone>
     {
         /// <summary> Initializes a new instance of <see cref="SessionUpdateResponseAudioTranscriptDone"/> for deserialization. </summary>
         internal SessionUpdateResponseAudioTranscriptDone()

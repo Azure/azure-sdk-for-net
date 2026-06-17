@@ -16,7 +16,7 @@ namespace Azure.AI.Agents.Persistent
     /// The Azure function call description. All the fields are present in the completed run step, however
     /// only some fields are present in the RunStepDeltaAzureFunctionToolCall.
     /// </summary>
-    public partial class AzureFunctionToolCallDetails : IJsonModel<AzureFunctionToolCallDetails>
+    internal partial class AzureFunctionToolCallDetails : IJsonModel<AzureFunctionToolCallDetails>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

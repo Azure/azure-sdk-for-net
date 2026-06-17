@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Developer.LoadTesting
 {
     /// <summary> Recurrence model when frequency is set as MonthlyByDates. </summary>
-    public partial class MonthlyRecurrenceByDates : LoadTestingRecurrence
+    internal partial class MonthlyRecurrenceByDates : LoadTestingRecurrence
     {
         /// <summary> Initializes a new instance of <see cref="MonthlyRecurrenceByDates"/>. </summary>
         public MonthlyRecurrenceByDates() : base(Frequency.MonthlyByDates)

@@ -14,7 +14,7 @@ using Azure.AI.Language.Conversations;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> A resolution for boolean expressions. </summary>
-    public partial class BooleanResolution : ResolutionBase, IJsonModel<BooleanResolution>
+    internal partial class BooleanResolution : ResolutionBase, IJsonModel<BooleanResolution>
     {
         /// <summary> Initializes a new instance of <see cref="BooleanResolution"/> for deserialization. </summary>
         internal BooleanResolution()

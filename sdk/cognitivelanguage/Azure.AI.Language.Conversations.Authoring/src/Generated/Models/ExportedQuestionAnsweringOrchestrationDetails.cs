@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Conversations.Authoring
 {
     /// <summary> Represents the orchestration options for a Question Answering project target. </summary>
-    public partial class ExportedQuestionAnsweringOrchestrationDetails : ExportedOrchestrationDetails
+    internal partial class ExportedQuestionAnsweringOrchestrationDetails : ExportedOrchestrationDetails
     {
         /// <summary> Initializes a new instance of <see cref="ExportedQuestionAnsweringOrchestrationDetails"/>. </summary>
         /// <param name="questionAnsweringOrchestration"> The Question Answering project details. </param>

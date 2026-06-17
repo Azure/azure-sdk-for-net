@@ -12,7 +12,7 @@ using Azure.AI.Language.Conversations;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> The Age Unit of measurement. </summary>
-    public readonly partial struct AgeUnit : IEquatable<AgeUnit>
+    internal readonly partial struct AgeUnit : IEquatable<AgeUnit>
     {
         private readonly string _value;
         /// <summary> Unspecified age unit. </summary>

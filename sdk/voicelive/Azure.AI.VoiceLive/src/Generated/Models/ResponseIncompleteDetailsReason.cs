@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.VoiceLive
 {
     /// <summary></summary>
-    public readonly partial struct ResponseIncompleteDetailsReason : IEquatable<ResponseIncompleteDetailsReason>
+    internal readonly partial struct ResponseIncompleteDetailsReason : IEquatable<ResponseIncompleteDetailsReason>
     {
         private readonly string _value;
         private const string MaxOutputTokensValue = "max_output_tokens";

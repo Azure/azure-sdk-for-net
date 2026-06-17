@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.Language.Text.Authoring
 {
     /// <summary> Represents the evaluation summary for a custom health care project. </summary>
-    public partial class CustomHealthcareEvalSummary : TextAuthoringEvalSummary, IJsonModel<CustomHealthcareEvalSummary>
+    internal partial class CustomHealthcareEvalSummary : TextAuthoringEvalSummary, IJsonModel<CustomHealthcareEvalSummary>
     {
         /// <summary> Initializes a new instance of <see cref="CustomHealthcareEvalSummary"/> for deserialization. </summary>
         internal CustomHealthcareEvalSummary()

@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The BotServiceRbacAuthorizationScheme. </summary>
-    public partial class BotServiceRbacAuthorizationScheme : AgentEndpointAuthorizationScheme
+    internal partial class BotServiceRbacAuthorizationScheme : AgentEndpointAuthorizationScheme
     {
         /// <summary> Initializes a new instance of <see cref="BotServiceRbacAuthorizationScheme"/>. </summary>
         public BotServiceRbacAuthorizationScheme() : base(AgentEndpointAuthorizationSchemeType.BotServiceRbac)

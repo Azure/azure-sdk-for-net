@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> Represents the Deep research in a streaming run step. </summary>
-    public partial class RunStepDeltaDeepResearchToolCall : RunStepDeltaToolCall, IJsonModel<RunStepDeltaDeepResearchToolCall>
+    internal partial class RunStepDeltaDeepResearchToolCall : RunStepDeltaToolCall, IJsonModel<RunStepDeltaDeepResearchToolCall>
     {
         /// <summary> Initializes a new instance of <see cref="RunStepDeltaDeepResearchToolCall"/> for deserialization. </summary>
         internal RunStepDeltaDeepResearchToolCall()

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Search.Documents.Models
 {
     /// <summary> The results of the vector query will be filtered based on the vector similarity metric. Note this is the canonical definition of similarity metric, not the 'distance' version. The threshold direction (larger or smaller) will be chosen automatically according to the metric used by the field. </summary>
-    public partial class VectorSimilarityThreshold : VectorThreshold
+    internal partial class VectorSimilarityThreshold : VectorThreshold
     {
         /// <summary> Initializes a new instance of <see cref="VectorSimilarityThreshold"/>. </summary>
         /// <param name="value"> The threshold will filter based on the similarity metric value. Note this is the canonical definition of similarity metric, not the 'distance' version. The threshold direction (larger or smaller) will be chosen automatically according to the metric used by the field. </param>

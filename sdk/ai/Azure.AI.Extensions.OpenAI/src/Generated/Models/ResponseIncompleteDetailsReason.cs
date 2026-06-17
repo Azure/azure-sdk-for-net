@@ -5,7 +5,7 @@
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary></summary>
-    internal enum ResponseIncompleteDetailsReason
+    public enum ResponseIncompleteDetailsReason
     {
         /// <summary> MaxOutputTokens. </summary>
         MaxOutputTokens,

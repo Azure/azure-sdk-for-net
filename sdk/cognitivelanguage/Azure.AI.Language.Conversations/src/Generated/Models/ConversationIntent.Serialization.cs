@@ -14,7 +14,7 @@ using Azure.AI.Language.Conversations;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> The intent classification result of a Conversation project. </summary>
-    public partial class ConversationIntent : IJsonModel<ConversationIntent>
+    internal partial class ConversationIntent : IJsonModel<ConversationIntent>
     {
         /// <summary> Initializes a new instance of <see cref="ConversationIntent"/> for deserialization. </summary>
         internal ConversationIntent()

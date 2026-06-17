@@ -14,7 +14,7 @@ using Azure.Monitor.Query.Logs;
 namespace Azure.Monitor.Query.Logs.Models
 {
     /// <summary> Contains the batch query response and the headers, id, and status of the request. </summary>
-    internal partial class BatchQueryResponse : IJsonModel<BatchQueryResponse>
+    public partial class BatchQueryResponse : IJsonModel<BatchQueryResponse>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

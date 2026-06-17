@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> MCP approval response. </summary>
-    public partial class OutputItemMcpApprovalResponseResource : AgentResponseItem, IJsonModel<OutputItemMcpApprovalResponseResource>
+    internal partial class OutputItemMcpApprovalResponseResource : AgentResponseItem, IJsonModel<OutputItemMcpApprovalResponseResource>
     {
         /// <summary> Initializes a new instance of <see cref="OutputItemMcpApprovalResponseResource"/> for deserialization. </summary>
         internal OutputItemMcpApprovalResponseResource()

@@ -14,7 +14,7 @@ using Azure.AI.Language.Conversations;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> The response returned by a Conversation project. </summary>
-    public partial class ConversationResult : IJsonModel<ConversationResult>
+    internal partial class ConversationResult : IJsonModel<ConversationResult>
     {
         /// <summary> Initializes a new instance of <see cref="ConversationResult"/> for deserialization. </summary>
         internal ConversationResult()

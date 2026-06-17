@@ -5,7 +5,7 @@
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary></summary>
-    internal enum ResponseTextParamVerbosity
+    public enum ResponseTextParamVerbosity
     {
         /// <summary> Low. </summary>
         Low,

@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.AI.Language.Text
 {
     /// <summary> Represents the Address entity Metadata model. </summary>
-    public partial class AddressMetadata : BaseMetadata
+    internal partial class AddressMetadata : BaseMetadata
     {
         /// <summary> Initializes a new instance of <see cref="AddressMetadata"/>. </summary>
         /// <param name="formatedAddress"> The fully formatted address string following postal conventions for the address's country/region. </param>

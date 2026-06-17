@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Text.Authoring
 {
     /// <summary> Represents the exported assets for a single-label classification project. </summary>
-    public partial class ExportedCustomSingleLabelClassificationProjectAsset : TextAuthoringExportedProjectAsset
+    internal partial class ExportedCustomSingleLabelClassificationProjectAsset : TextAuthoringExportedProjectAsset
     {
         /// <summary> Initializes a new instance of <see cref="ExportedCustomSingleLabelClassificationProjectAsset"/>. </summary>
         public ExportedCustomSingleLabelClassificationProjectAsset() : base(TextAuthoringProjectKind.CustomSingleLabelClassification)

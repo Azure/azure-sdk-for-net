@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects
 {
     /// <summary> A one-shot timer routine trigger. </summary>
-    public partial class TimerRoutineTrigger : RoutineTrigger
+    internal partial class TimerRoutineTrigger : RoutineTrigger
     {
         /// <summary> Initializes a new instance of <see cref="TimerRoutineTrigger"/>. </summary>
         public TimerRoutineTrigger() : base(RoutineTriggerType.Timer)

@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.Language.Text
 {
     /// <summary> The kind of the number range entity. </summary>
-    public readonly partial struct RangeKind : IEquatable<RangeKind>
+    internal readonly partial struct RangeKind : IEquatable<RangeKind>
     {
         private readonly string _value;
         /// <summary> Number range. </summary>

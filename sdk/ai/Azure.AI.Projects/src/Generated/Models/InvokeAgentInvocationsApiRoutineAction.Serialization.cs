@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> Dispatches a routine through the raw invocations API. Exactly one of agent_name or agent_endpoint_id must be provided. </summary>
-    public partial class InvokeAgentInvocationsApiRoutineAction : RoutineAction, IJsonModel<InvokeAgentInvocationsApiRoutineAction>
+    internal partial class InvokeAgentInvocationsApiRoutineAction : RoutineAction, IJsonModel<InvokeAgentInvocationsApiRoutineAction>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

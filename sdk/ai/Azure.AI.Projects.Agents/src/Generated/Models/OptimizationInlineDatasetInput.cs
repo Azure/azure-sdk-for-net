@@ -9,7 +9,7 @@ using System.Linq;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Inline dataset — items supplied directly in the request body. </summary>
-    public partial class OptimizationInlineDatasetInput : OptimizationDatasetInput
+    internal partial class OptimizationInlineDatasetInput : OptimizationDatasetInput
     {
         /// <summary> Initializes a new instance of <see cref="OptimizationInlineDatasetInput"/>. </summary>
         /// <param name="items"> Dataset items. </param>

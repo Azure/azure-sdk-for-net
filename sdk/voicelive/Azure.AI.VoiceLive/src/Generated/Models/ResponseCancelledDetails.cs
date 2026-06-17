@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Details for a cancelled response. </summary>
-    public partial class ResponseCancelledDetails : ResponseStatusDetails
+    internal partial class ResponseCancelledDetails : ResponseStatusDetails
     {
         /// <summary> Initializes a new instance of <see cref="ResponseCancelledDetails"/>. </summary>
         /// <param name="reason"></param>

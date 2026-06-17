@@ -12,7 +12,7 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> A response item that represents a call to an MCP tool. </summary>
-    public partial class SessionResponseMcpCallItem : SessionResponseItem
+    internal partial class SessionResponseMcpCallItem : SessionResponseItem
     {
         /// <summary> Initializes a new instance of <see cref="SessionResponseMcpCallItem"/>. </summary>
         /// <param name="arguments"> The arguments for the tool call. </param>

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Parameters for split output parsing. </summary>
-    public partial class McpServerOutputParsingSplitParameters
+    internal partial class McpServerOutputParsingSplitParameters
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

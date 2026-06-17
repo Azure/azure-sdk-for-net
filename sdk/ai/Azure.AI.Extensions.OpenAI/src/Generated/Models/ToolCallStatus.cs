@@ -5,7 +5,7 @@
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The status of a tool call. </summary>
-    public enum ToolCallStatus
+    internal enum ToolCallStatus
     {
         /// <summary> InProgress. </summary>
         InProgress,

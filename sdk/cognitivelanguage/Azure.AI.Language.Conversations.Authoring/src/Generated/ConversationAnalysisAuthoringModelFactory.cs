@@ -596,64 +596,13 @@ namespace Azure.AI.Language.Conversations.Authoring
 
         /// <summary>
         /// Represents the options used to define the orchestration behavior of an intent.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Authoring.ExportedConversationOrchestrationDetails"/>, <see cref="Authoring.ExportedLuisOrchestrationDetails"/>, and <see cref="Authoring.ExportedQuestionAnsweringOrchestrationDetails"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ExportedConversationOrchestrationDetails"/>, <see cref="ExportedLuisOrchestrationDetails"/>, and <see cref="ExportedQuestionAnsweringOrchestrationDetails"/>.
         /// </summary>
         /// <param name="targetProjectKind"></param>
         /// <returns> A new <see cref="Authoring.ExportedOrchestrationDetails"/> instance for mocking. </returns>
         public static ExportedOrchestrationDetails ExportedOrchestrationDetails(string targetProjectKind = default)
         {
             return new UnknownExportedOrchestrationDetails(new OrchestrationTargetProjectKind(targetProjectKind), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Represents the orchestration options for a Conversational project target. </summary>
-        /// <param name="conversationOrchestration"> The Conversational project target details. </param>
-        /// <returns> A new <see cref="Authoring.ExportedConversationOrchestrationDetails"/> instance for mocking. </returns>
-        public static ExportedConversationOrchestrationDetails ExportedConversationOrchestrationDetails(ExportedConversationOrchestration conversationOrchestration = default)
-        {
-            return new ExportedConversationOrchestrationDetails(OrchestrationTargetProjectKind.Conversation, additionalBinaryDataProperties: null, conversationOrchestration);
-        }
-
-        /// <summary> Defines the orchestration details for a Conversational project target. </summary>
-        /// <param name="projectName"> The name of the targeted project. </param>
-        /// <param name="deploymentName"> The name of the targeted deployment. </param>
-        /// <returns> A new <see cref="Authoring.ExportedConversationOrchestration"/> instance for mocking. </returns>
-        public static ExportedConversationOrchestration ExportedConversationOrchestration(string projectName = default, string deploymentName = default)
-        {
-            return new ExportedConversationOrchestration(projectName, deploymentName, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Represents the orchestration options for a LUIS application target. </summary>
-        /// <param name="luisOrchestration"> The LUIS application target details. </param>
-        /// <returns> A new <see cref="Authoring.ExportedLuisOrchestrationDetails"/> instance for mocking. </returns>
-        public static ExportedLuisOrchestrationDetails ExportedLuisOrchestrationDetails(ExportedLuisOrchestration luisOrchestration = default)
-        {
-            return new ExportedLuisOrchestrationDetails(OrchestrationTargetProjectKind.Luis, additionalBinaryDataProperties: null, luisOrchestration);
-        }
-
-        /// <summary> Defines the orchestration details for a LUIS application target. </summary>
-        /// <param name="appId"> The LUIS application ID. </param>
-        /// <param name="appVersion"> The targeted version Id. </param>
-        /// <param name="slotName"> The targeted slot name. </param>
-        /// <returns> A new <see cref="Authoring.ExportedLuisOrchestration"/> instance for mocking. </returns>
-        public static ExportedLuisOrchestration ExportedLuisOrchestration(Guid appId = default, string appVersion = default, string slotName = default)
-        {
-            return new ExportedLuisOrchestration(appId, appVersion, slotName, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Represents the orchestration options for a Question Answering project target. </summary>
-        /// <param name="questionAnsweringOrchestration"> The Question Answering project details. </param>
-        /// <returns> A new <see cref="Authoring.ExportedQuestionAnsweringOrchestrationDetails"/> instance for mocking. </returns>
-        public static ExportedQuestionAnsweringOrchestrationDetails ExportedQuestionAnsweringOrchestrationDetails(ExportedQuestionAnsweringOrchestration questionAnsweringOrchestration = default)
-        {
-            return new ExportedQuestionAnsweringOrchestrationDetails(OrchestrationTargetProjectKind.QuestionAnswering, additionalBinaryDataProperties: null, questionAnsweringOrchestration);
-        }
-
-        /// <summary> Defines the orchestration details for a Question Answering project target. </summary>
-        /// <param name="projectName"> The name of the target project. </param>
-        /// <returns> A new <see cref="Authoring.ExportedQuestionAnsweringOrchestration"/> instance for mocking. </returns>
-        public static ExportedQuestionAnsweringOrchestration ExportedQuestionAnsweringOrchestration(string projectName = default)
-        {
-            return new ExportedQuestionAnsweringOrchestration(projectName, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Represents an utterance of an orchestration project. </summary>

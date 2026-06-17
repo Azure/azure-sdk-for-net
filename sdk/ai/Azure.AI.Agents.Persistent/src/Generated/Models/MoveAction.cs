@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> A mouse move action. </summary>
-    public partial class MoveAction : ComputerUseAction
+    internal partial class MoveAction : ComputerUseAction
     {
         /// <summary> Initializes a new instance of <see cref="MoveAction"/>. </summary>
         /// <param name="x"> The x-coordinate to move to. </param>

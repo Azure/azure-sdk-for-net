@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Input image content part. </summary>
-    public partial class RequestImageContentPart : VoiceLiveContentPart
+    internal partial class RequestImageContentPart : VoiceLiveContentPart
     {
         /// <summary> Initializes a new instance of <see cref="RequestImageContentPart"/>. </summary>
         public RequestImageContentPart() : base(ContentPartType.InputImage)

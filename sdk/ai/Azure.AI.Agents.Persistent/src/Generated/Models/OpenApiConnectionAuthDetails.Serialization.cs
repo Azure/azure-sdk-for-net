@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> Security details for OpenApi connection authentication. </summary>
-    public partial class OpenApiConnectionAuthDetails : OpenApiAuthDetails, IJsonModel<OpenApiConnectionAuthDetails>
+    internal partial class OpenApiConnectionAuthDetails : OpenApiAuthDetails, IJsonModel<OpenApiConnectionAuthDetails>
     {
         /// <summary> Initializes a new instance of <see cref="OpenApiConnectionAuthDetails"/> for deserialization. </summary>
         internal OpenApiConnectionAuthDetails()

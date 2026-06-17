@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.Language.Text.Authoring
 {
     /// <summary></summary>
-    public readonly partial struct TextAuthoringCompositionMode : IEquatable<TextAuthoringCompositionMode>
+    internal readonly partial struct TextAuthoringCompositionMode : IEquatable<TextAuthoringCompositionMode>
     {
         private readonly string _value;
         /// <summary> Every component's match or prediction is returned as a separate instance of the entity. </summary>

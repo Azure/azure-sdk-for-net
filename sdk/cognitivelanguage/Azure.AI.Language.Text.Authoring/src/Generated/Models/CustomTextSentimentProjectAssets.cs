@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Text.Authoring
 {
     /// <summary> Represents the exported assets for a custom text sentiment project. </summary>
-    public partial class CustomTextSentimentProjectAssets : TextAuthoringExportedProjectAsset
+    internal partial class CustomTextSentimentProjectAssets : TextAuthoringExportedProjectAsset
     {
         /// <summary> Initializes a new instance of <see cref="CustomTextSentimentProjectAssets"/>. </summary>
         public CustomTextSentimentProjectAssets() : base(TextAuthoringProjectKind.CustomTextSentiment)

@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Indicates the MCP call has completed. </summary>
-    public partial class SessionUpdateResponseMcpCallCompleted : SessionUpdate, IJsonModel<SessionUpdateResponseMcpCallCompleted>
+    internal partial class SessionUpdateResponseMcpCallCompleted : SessionUpdate, IJsonModel<SessionUpdateResponseMcpCallCompleted>
     {
         /// <summary> Initializes a new instance of <see cref="SessionUpdateResponseMcpCallCompleted"/> for deserialization. </summary>
         internal SessionUpdateResponseMcpCallCompleted()

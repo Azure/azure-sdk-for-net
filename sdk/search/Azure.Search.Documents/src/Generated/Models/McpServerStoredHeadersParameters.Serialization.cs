@@ -14,7 +14,7 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Parameters for stored headers authentication. </summary>
-    public partial class McpServerStoredHeadersParameters : IJsonModel<McpServerStoredHeadersParameters>
+    internal partial class McpServerStoredHeadersParameters : IJsonModel<McpServerStoredHeadersParameters>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

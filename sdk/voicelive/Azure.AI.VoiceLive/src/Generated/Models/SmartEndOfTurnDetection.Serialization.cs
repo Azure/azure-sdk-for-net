@@ -17,7 +17,7 @@ namespace Azure.AI.VoiceLive
     /// stream rather than text. Use `threshold_level` and `timeout_ms` to tune
     /// detection.
     /// </summary>
-    public partial class SmartEndOfTurnDetection : EouDetection, IJsonModel<SmartEndOfTurnDetection>
+    internal partial class SmartEndOfTurnDetection : EouDetection, IJsonModel<SmartEndOfTurnDetection>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> Azure OpenAI file output for a data generation job. </summary>
-    public partial class FileDataGenerationJobOutput : DataGenerationJobOutput, IJsonModel<FileDataGenerationJobOutput>
+    internal partial class FileDataGenerationJobOutput : DataGenerationJobOutput, IJsonModel<FileDataGenerationJobOutput>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Represents a mcp tool definition. </summary>
-    public partial class VoiceLiveMcpTool : IJsonModel<VoiceLiveMcpTool>
+    internal partial class VoiceLiveMcpTool : IJsonModel<VoiceLiveMcpTool>
     {
         /// <summary> Initializes a new instance of <see cref="VoiceLiveMcpTool"/> for deserialization. </summary>
         internal VoiceLiveMcpTool()

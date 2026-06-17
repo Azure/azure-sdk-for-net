@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects
 {
     /// <summary> The options for a data generation job with Traces type. </summary>
-    public partial class TracesDataGenerationJobOptions : DataGenerationJobOptions
+    internal partial class TracesDataGenerationJobOptions : DataGenerationJobOptions
     {
         /// <summary> Initializes a new instance of <see cref="TracesDataGenerationJobOptions"/>. </summary>
         /// <param name="maxSamples"> Maximum number of samples to generate. </param>

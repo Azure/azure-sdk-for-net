@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The ManagedAgentIdentityBlueprintReference. </summary>
-    public partial class ManagedAgentIdentityBlueprintReference : AgentBlueprintReference
+    internal partial class ManagedAgentIdentityBlueprintReference : AgentBlueprintReference
     {
         /// <summary> Initializes a new instance of <see cref="ManagedAgentIdentityBlueprintReference"/>. </summary>
         /// <param name="blueprintId"> The ID of the managed blueprint. </param>

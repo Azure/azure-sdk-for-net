@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Text
 {
     /// <summary> A Metadata for temporal set entity instances. </summary>
-    public partial class TemporalSetMetadata : BaseMetadata
+    internal partial class TemporalSetMetadata : BaseMetadata
     {
         /// <summary> Initializes a new instance of <see cref="TemporalSetMetadata"/>. </summary>
         internal TemporalSetMetadata() : base(MetadataKind.TemporalSetMetadata)

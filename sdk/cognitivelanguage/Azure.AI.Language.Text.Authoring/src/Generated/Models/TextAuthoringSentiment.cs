@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.Language.Text.Authoring
 {
     /// <summary></summary>
-    public readonly partial struct TextAuthoringSentiment : IEquatable<TextAuthoringSentiment>
+    internal readonly partial struct TextAuthoringSentiment : IEquatable<TextAuthoringSentiment>
     {
         private readonly string _value;
         private const string PositiveValue = "positive";

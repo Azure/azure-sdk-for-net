@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> Security details for OpenApi connection authentication. </summary>
-    public partial class OpenApiConnectionAuthDetails : OpenApiAuthDetails
+    internal partial class OpenApiConnectionAuthDetails : OpenApiAuthDetails
     {
         /// <summary> Initializes a new instance of <see cref="OpenApiConnectionAuthDetails"/>. </summary>
         /// <param name="securityScheme"> Connection auth security details. </param>

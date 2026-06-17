@@ -14,7 +14,7 @@ namespace Azure.AI.VoiceLive
     /// Returned when the model-generated audio is done. Also emitted when a Response
     /// is interrupted, incomplete, or cancelled.
     /// </summary>
-    public partial class SessionUpdateResponseAudioDone : SessionUpdate
+    internal partial class SessionUpdateResponseAudioDone : SessionUpdate
     {
         /// <summary> Initializes a new instance of <see cref="SessionUpdateResponseAudioDone"/>. </summary>
         /// <param name="responseId"> The ID of the response. </param>

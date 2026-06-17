@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The output of a browser automation tool call. </summary>
-    public partial class BrowserAutomationToolCallOutput : AgentResponseItem, IJsonModel<BrowserAutomationToolCallOutput>
+    internal partial class BrowserAutomationToolCallOutput : AgentResponseItem, IJsonModel<BrowserAutomationToolCallOutput>
     {
         /// <summary> Initializes a new instance of <see cref="BrowserAutomationToolCallOutput"/> for deserialization. </summary>
         internal BrowserAutomationToolCallOutput()

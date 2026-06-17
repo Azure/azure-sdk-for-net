@@ -15,7 +15,7 @@ namespace Azure.AI.VoiceLive
     /// request for a user message failed. These events are separate from other
     /// `error` events so that the client can identify the related Item.
     /// </summary>
-    public partial class SessionUpdateConversationItemInputAudioTranscriptionFailed : SessionUpdate
+    internal partial class SessionUpdateConversationItemInputAudioTranscriptionFailed : SessionUpdate
     {
         /// <summary> Initializes a new instance of <see cref="SessionUpdateConversationItemInputAudioTranscriptionFailed"/>. </summary>
         /// <param name="itemId"> The ID of the user message item. </param>

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> A wrap up of Conversation project response. </summary>
-    public partial class ConversationTargetIntentResult : TargetIntentResult
+    internal partial class ConversationTargetIntentResult : TargetIntentResult
     {
         /// <summary> Initializes a new instance of <see cref="ConversationTargetIntentResult"/>. </summary>
         /// <param name="confidence"> The prediction score and it ranges from 0.0 to 1.0. </param>

@@ -12,7 +12,7 @@ namespace Azure.AI.Projects.Agents
     /// Registration is metadata-only: Foundry records the agent definition to light up observability experiences (traces, evaluations)
     /// over customer-emitted OpenTelemetry data.
     /// </summary>
-    public partial class ExternalAgentDefinition : ProjectsAgentDefinition
+    internal partial class ExternalAgentDefinition : ProjectsAgentDefinition
     {
         /// <summary> Initializes a new instance of <see cref="ExternalAgentDefinition"/>. </summary>
         public ExternalAgentDefinition() : base(ProjectsAgentKind.External)

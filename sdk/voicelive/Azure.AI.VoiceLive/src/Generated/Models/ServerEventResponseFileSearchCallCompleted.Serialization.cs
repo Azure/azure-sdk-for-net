@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Returned when a file search call has completed. </summary>
-    public partial class ServerEventResponseFileSearchCallCompleted : SessionUpdate, IJsonModel<ServerEventResponseFileSearchCallCompleted>
+    internal partial class ServerEventResponseFileSearchCallCompleted : SessionUpdate, IJsonModel<ServerEventResponseFileSearchCallCompleted>
     {
         /// <summary> Initializes a new instance of <see cref="ServerEventResponseFileSearchCallCompleted"/> for deserialization. </summary>
         internal ServerEventResponseFileSearchCallCompleted()

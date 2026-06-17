@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> Security scheme for OpenApi managed_identity authentication. </summary>
-    public partial class OpenApiManagedSecurityScheme
+    internal partial class OpenApiManagedSecurityScheme
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

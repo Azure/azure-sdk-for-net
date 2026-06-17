@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> A response item that represents a response to an MCP approval request. </summary>
-    public partial class SessionResponseMcpApprovalResponseItem : SessionResponseItem, IJsonModel<SessionResponseMcpApprovalResponseItem>
+    internal partial class SessionResponseMcpApprovalResponseItem : SessionResponseItem, IJsonModel<SessionResponseMcpApprovalResponseItem>
     {
         /// <summary> Initializes a new instance of <see cref="SessionResponseMcpApprovalResponseItem"/> for deserialization. </summary>
         internal SessionResponseMcpApprovalResponseItem()

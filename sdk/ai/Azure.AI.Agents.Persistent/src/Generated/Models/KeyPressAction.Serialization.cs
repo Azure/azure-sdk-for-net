@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> A collection of keypresses the model would like to perform. </summary>
-    public partial class KeyPressAction : ComputerUseAction, IJsonModel<KeyPressAction>
+    internal partial class KeyPressAction : ComputerUseAction, IJsonModel<KeyPressAction>
     {
         /// <summary> Initializes a new instance of <see cref="KeyPressAction"/> for deserialization. </summary>
         internal KeyPressAction()

@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.Language.Text.Authoring
 {
     /// <summary> Represents the exported assets for a entity recognition project. </summary>
-    public partial class ExportedCustomEntityRecognitionProjectAsset : TextAuthoringExportedProjectAsset, IJsonModel<ExportedCustomEntityRecognitionProjectAsset>
+    internal partial class ExportedCustomEntityRecognitionProjectAsset : TextAuthoringExportedProjectAsset, IJsonModel<ExportedCustomEntityRecognitionProjectAsset>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

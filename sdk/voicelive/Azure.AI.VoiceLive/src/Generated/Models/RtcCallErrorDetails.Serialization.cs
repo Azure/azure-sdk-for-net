@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Error details for RTC call errors. </summary>
-    public partial class RtcCallErrorDetails : IJsonModel<RtcCallErrorDetails>
+    internal partial class RtcCallErrorDetails : IJsonModel<RtcCallErrorDetails>
     {
         /// <summary> Initializes a new instance of <see cref="RtcCallErrorDetails"/> for deserialization. </summary>
         internal RtcCallErrorDetails()

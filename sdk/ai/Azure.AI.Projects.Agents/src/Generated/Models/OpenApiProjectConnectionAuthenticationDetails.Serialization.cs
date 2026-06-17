@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Security details for OpenApi project connection authentication. </summary>
-    public partial class OpenApiProjectConnectionAuthenticationDetails : OpenApiAuthenticationDetails, IJsonModel<OpenApiProjectConnectionAuthenticationDetails>
+    internal partial class OpenApiProjectConnectionAuthenticationDetails : OpenApiAuthenticationDetails, IJsonModel<OpenApiProjectConnectionAuthenticationDetails>
     {
         /// <summary> Initializes a new instance of <see cref="OpenApiProjectConnectionAuthenticationDetails"/> for deserialization. </summary>
         internal OpenApiProjectConnectionAuthenticationDetails()

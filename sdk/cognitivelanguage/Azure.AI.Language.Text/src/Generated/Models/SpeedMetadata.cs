@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Text
 {
     /// <summary> Represents the Speed entity Metadata model. </summary>
-    public partial class SpeedMetadata : BaseMetadata
+    internal partial class SpeedMetadata : BaseMetadata
     {
         /// <summary> Initializes a new instance of <see cref="SpeedMetadata"/>. </summary>
         /// <param name="value"> The numeric value that the extracted text denotes. </param>

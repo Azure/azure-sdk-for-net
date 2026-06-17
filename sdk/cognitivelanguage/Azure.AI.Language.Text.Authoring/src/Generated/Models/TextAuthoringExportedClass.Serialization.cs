@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.Language.Text.Authoring
 {
     /// <summary> Represents a class of an exported project. </summary>
-    public partial class TextAuthoringExportedClass : IJsonModel<TextAuthoringExportedClass>
+    internal partial class TextAuthoringExportedClass : IJsonModel<TextAuthoringExportedClass>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

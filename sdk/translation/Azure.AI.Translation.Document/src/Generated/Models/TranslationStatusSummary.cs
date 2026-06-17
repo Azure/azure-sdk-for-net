@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Translation.Document
 {
     /// <summary> Status Summary. </summary>
-    internal partial class TranslationStatusSummary
+    public partial class TranslationStatusSummary
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

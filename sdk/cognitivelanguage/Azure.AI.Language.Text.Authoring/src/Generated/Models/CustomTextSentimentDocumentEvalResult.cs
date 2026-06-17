@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Text.Authoring
 {
     /// <summary> Represents the document evaluation result for a custom sentiment project. </summary>
-    public partial class CustomTextSentimentDocumentEvalResult : TextAuthoringDocumentEvalResult
+    internal partial class CustomTextSentimentDocumentEvalResult : TextAuthoringDocumentEvalResult
     {
         /// <summary> Initializes a new instance of <see cref="CustomTextSentimentDocumentEvalResult"/>. </summary>
         /// <param name="location"> Represents the document path. </param>

@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.Language.Text
 {
     /// <summary> Represents the Information entity Metadata model. </summary>
-    public partial class TemperatureMetadata : BaseMetadata, IJsonModel<TemperatureMetadata>
+    internal partial class TemperatureMetadata : BaseMetadata, IJsonModel<TemperatureMetadata>
     {
         /// <summary> Initializes a new instance of <see cref="TemperatureMetadata"/> for deserialization. </summary>
         internal TemperatureMetadata()

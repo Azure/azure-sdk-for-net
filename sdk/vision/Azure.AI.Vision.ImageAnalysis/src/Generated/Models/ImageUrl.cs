@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Vision.ImageAnalysis
 {
     /// <summary> An object holding the publicly reachable URL of an image to analyze. </summary>
-    internal partial class ImageUrl
+    public partial class ImageUrl
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

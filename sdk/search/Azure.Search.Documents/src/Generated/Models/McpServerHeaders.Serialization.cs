@@ -14,7 +14,7 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> A dictionary of HTTP header names and values. </summary>
-    public partial class McpServerHeaders : IJsonModel<McpServerHeaders>
+    internal partial class McpServerHeaders : IJsonModel<McpServerHeaders>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

@@ -15,7 +15,7 @@ using Azure.Search.Documents.Indexes.Models;
 namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary> Specifies the Azure OpenAI resource used to vectorize a query string. </summary>
-    public partial class KnowledgeSourceAzureOpenAIVectorizer : KnowledgeSourceVectorizer, IJsonModel<KnowledgeSourceAzureOpenAIVectorizer>
+    internal partial class KnowledgeSourceAzureOpenAIVectorizer : KnowledgeSourceVectorizer, IJsonModel<KnowledgeSourceAzureOpenAIVectorizer>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

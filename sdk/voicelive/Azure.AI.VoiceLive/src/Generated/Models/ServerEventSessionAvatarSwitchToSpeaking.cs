@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Returned when the avatar switches to speaking state. </summary>
-    public partial class ServerEventSessionAvatarSwitchToSpeaking : SessionUpdate
+    internal partial class ServerEventSessionAvatarSwitchToSpeaking : SessionUpdate
     {
         /// <summary> Initializes a new instance of <see cref="ServerEventSessionAvatarSwitchToSpeaking"/>. </summary>
         internal ServerEventSessionAvatarSwitchToSpeaking() : base(ServerEventType.SessionAvatarSwitchToSpeaking)

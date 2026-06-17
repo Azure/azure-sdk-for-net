@@ -14,7 +14,7 @@ using Azure.AI.Language.Conversations;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> Represents the policy of not masking found PII. </summary>
-    public partial class NoMaskPolicyType : BaseRedactionPolicy, IJsonModel<NoMaskPolicyType>
+    internal partial class NoMaskPolicyType : BaseRedactionPolicy, IJsonModel<NoMaskPolicyType>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

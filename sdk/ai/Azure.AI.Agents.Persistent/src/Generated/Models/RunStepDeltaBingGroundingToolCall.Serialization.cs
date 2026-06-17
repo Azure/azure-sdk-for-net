@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> Represents the bing grounding tool call in a streaming run step. </summary>
-    public partial class RunStepDeltaBingGroundingToolCall : RunStepDeltaToolCall, IJsonModel<RunStepDeltaBingGroundingToolCall>
+    internal partial class RunStepDeltaBingGroundingToolCall : RunStepDeltaToolCall, IJsonModel<RunStepDeltaBingGroundingToolCall>
     {
         /// <summary> Initializes a new instance of <see cref="RunStepDeltaBingGroundingToolCall"/> for deserialization. </summary>
         internal RunStepDeltaBingGroundingToolCall()

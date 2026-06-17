@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> A GitHub issue routine trigger. </summary>
-    public partial class GitHubIssueRoutineTrigger : RoutineTrigger, IJsonModel<GitHubIssueRoutineTrigger>
+    internal partial class GitHubIssueRoutineTrigger : RoutineTrigger, IJsonModel<GitHubIssueRoutineTrigger>
     {
         /// <summary> Initializes a new instance of <see cref="GitHubIssueRoutineTrigger"/> for deserialization. </summary>
         internal GitHubIssueRoutineTrigger()

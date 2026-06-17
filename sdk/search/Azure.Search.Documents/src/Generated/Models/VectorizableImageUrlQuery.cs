@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Search.Documents.Models
 {
     /// <summary> The query parameters to use for vector search when an url that represents an image value that needs to be vectorized is provided. </summary>
-    public partial class VectorizableImageUrlQuery : VectorQuery
+    internal partial class VectorizableImageUrlQuery : VectorQuery
     {
         /// <summary> Initializes a new instance of <see cref="VectorizableImageUrlQuery"/>. </summary>
         public VectorizableImageUrlQuery() : base(VectorQueryKind.ImageUrl)

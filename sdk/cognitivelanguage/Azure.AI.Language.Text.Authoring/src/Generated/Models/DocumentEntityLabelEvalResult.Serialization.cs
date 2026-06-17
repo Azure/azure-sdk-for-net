@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.Language.Text.Authoring
 {
     /// <summary> Represents an evaluation result entity label. </summary>
-    public partial class DocumentEntityLabelEvalResult : IJsonModel<DocumentEntityLabelEvalResult>
+    internal partial class DocumentEntityLabelEvalResult : IJsonModel<DocumentEntityLabelEvalResult>
     {
         /// <summary> Initializes a new instance of <see cref="DocumentEntityLabelEvalResult"/> for deserialization. </summary>
         internal DocumentEntityLabelEvalResult()

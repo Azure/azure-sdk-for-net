@@ -14,7 +14,7 @@ using Azure.AI.Language.Conversations;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> Represents the area entity resolution model. </summary>
-    public partial class AreaResolution : ResolutionBase, IJsonModel<AreaResolution>
+    internal partial class AreaResolution : ResolutionBase, IJsonModel<AreaResolution>
     {
         /// <summary> Initializes a new instance of <see cref="AreaResolution"/> for deserialization. </summary>
         internal AreaResolution()

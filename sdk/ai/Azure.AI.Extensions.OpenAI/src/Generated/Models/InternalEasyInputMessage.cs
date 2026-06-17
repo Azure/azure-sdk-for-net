@@ -9,9 +9,9 @@ using Azure.AI.Extensions.OpenAI;
 
 namespace OpenAI
 {
-    internal partial class InternalEasyInputMessage : InputItem
+    internal partial class InternalEasyInputMessage : global::Azure.AI.Extensions.OpenAI.InputItem
     {
-        /// <summary> Initializes a new instance of <see cref="InternalEasyInputMessage"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::OpenAI.InternalEasyInputMessage"/>. </summary>
         /// <param name="role">
         /// The role of the message input. One of `user`, `assistant`, `system`, or
         ///   `developer`.
@@ -20,13 +20,13 @@ namespace OpenAI
         /// Text, image, or audio input to the model, used to generate a response.
         ///   Can also contain previous assistant responses.
         /// </param>
-        public InternalEasyInputMessage(EasyInputMessageRole role, BinaryData content) : base(InputItemType.Message)
+        public InternalEasyInputMessage(global::Azure.AI.Extensions.OpenAI.EasyInputMessageRole role, global::System.BinaryData content) : base(global::Azure.AI.Extensions.OpenAI.InputItemType.Message)
         {
             Role = role;
             Content = content;
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalEasyInputMessage"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="global::OpenAI.InternalEasyInputMessage"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="role">
@@ -42,7 +42,7 @@ namespace OpenAI
         /// The status of item. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when items are returned via API.
         /// </param>
-        internal InternalEasyInputMessage(InputItemType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, EasyInputMessageRole role, BinaryData content, MessagePhase? phase, EasyInputMessageStatus? status) : base(@type, additionalBinaryDataProperties)
+        internal InternalEasyInputMessage(global::Azure.AI.Extensions.OpenAI.InputItemType @type, global::System.Collections.Generic.IDictionary<string, global::System.BinaryData> additionalBinaryDataProperties, global::Azure.AI.Extensions.OpenAI.EasyInputMessageRole role, global::System.BinaryData content, global::Azure.AI.Extensions.OpenAI.MessagePhase? phase, global::Azure.AI.Extensions.OpenAI.EasyInputMessageStatus? status) : base(@type, additionalBinaryDataProperties)
         {
             Role = role;
             Content = content;
@@ -54,13 +54,13 @@ namespace OpenAI
         /// The role of the message input. One of `user`, `assistant`, `system`, or
         ///   `developer`.
         /// </summary>
-        public EasyInputMessageRole Role { get; set; }
+        public global::Azure.AI.Extensions.OpenAI.EasyInputMessageRole Role { get; set; }
 
         /// <summary>
         /// Text, image, or audio input to the model, used to generate a response.
         ///   Can also contain previous assistant responses.
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para> To assign an object to this property use <see cref="global::System.BinaryData.FromObjectAsJson{T}(T, global::System.Text.Json.JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="global::System.BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// <remarks>
         /// Supported types:
@@ -69,7 +69,7 @@ namespace OpenAI
         /// <description> <see cref="string"/>. </description>
         /// </item>
         /// <item>
-        /// <description> <see cref="IList{T}"/> where <c>T</c> is of type <see cref="InputContent"/>. </description>
+        /// <description> <see cref="global::System.Collections.Generic.IList{T}"/> where <c>T</c> is of type :Azure.AI.Extensions.OpenAI.InputContent. </description>
         /// </item>
         /// </list>
         /// </remarks>
@@ -96,15 +96,15 @@ namespace OpenAI
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData Content { get; set; }
+        public global::System.BinaryData Content { get; set; }
 
         /// <summary> Gets or sets the Phase. </summary>
-        public MessagePhase? Phase { get; set; }
+        public global::Azure.AI.Extensions.OpenAI.MessagePhase? Phase { get; set; }
 
         /// <summary>
         /// The status of item. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when items are returned via API.
         /// </summary>
-        public EasyInputMessageStatus? Status { get; set; }
+        public global::Azure.AI.Extensions.OpenAI.EasyInputMessageStatus? Status { get; set; }
     }
 }

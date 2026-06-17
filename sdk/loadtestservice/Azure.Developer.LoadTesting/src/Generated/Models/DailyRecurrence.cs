@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Developer.LoadTesting
 {
     /// <summary> Recurrence model when frequency is set as Daily. </summary>
-    public partial class DailyRecurrence : LoadTestingRecurrence
+    internal partial class DailyRecurrence : LoadTestingRecurrence
     {
         /// <summary> Initializes a new instance of <see cref="DailyRecurrence"/>. </summary>
         /// <param name="interval"> The interval at which the recurrence should repeat. It signifies the number of days between each recurrence. </param>

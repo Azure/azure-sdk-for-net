@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> The SubmitToolOutputsToRunRequest. </summary>
-    internal partial class SubmitToolOutputsToRunRequest
+    public partial class SubmitToolOutputsToRunRequest
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

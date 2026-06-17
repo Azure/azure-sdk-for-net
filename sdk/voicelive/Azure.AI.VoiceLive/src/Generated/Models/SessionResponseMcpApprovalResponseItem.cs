@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> A response item that represents a response to an MCP approval request. </summary>
-    public partial class SessionResponseMcpApprovalResponseItem : SessionResponseItem
+    internal partial class SessionResponseMcpApprovalResponseItem : SessionResponseItem
     {
         /// <summary> Initializes a new instance of <see cref="SessionResponseMcpApprovalResponseItem"/>. </summary>
         /// <param name="approvalRequestId"> The ID of the approval request. </param>

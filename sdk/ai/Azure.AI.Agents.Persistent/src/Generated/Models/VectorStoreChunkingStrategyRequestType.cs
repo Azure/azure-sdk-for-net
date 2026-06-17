@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> Type of chunking strategy. </summary>
-    internal readonly partial struct VectorStoreChunkingStrategyRequestType : IEquatable<VectorStoreChunkingStrategyRequestType>
+    public readonly partial struct VectorStoreChunkingStrategyRequestType : IEquatable<VectorStoreChunkingStrategyRequestType>
     {
         private readonly string _value;
         private const string AutoValue = "auto";

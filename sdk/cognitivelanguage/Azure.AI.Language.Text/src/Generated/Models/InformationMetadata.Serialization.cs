@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.Language.Text
 {
     /// <summary> Represents the Information (data) entity Metadata model. </summary>
-    public partial class InformationMetadata : BaseMetadata, IJsonModel<InformationMetadata>
+    internal partial class InformationMetadata : BaseMetadata, IJsonModel<InformationMetadata>
     {
         /// <summary> Initializes a new instance of <see cref="InformationMetadata"/> for deserialization. </summary>
         internal InformationMetadata()

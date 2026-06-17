@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> Prompt source for evaluator generation jobs — inline text provided by the user. </summary>
-    public partial class PromptEvaluatorGenerationJobSource : EvaluatorGenerationJobSource, IJsonModel<PromptEvaluatorGenerationJobSource>
+    internal partial class PromptEvaluatorGenerationJobSource : EvaluatorGenerationJobSource, IJsonModel<PromptEvaluatorGenerationJobSource>
     {
         /// <summary> Initializes a new instance of <see cref="PromptEvaluatorGenerationJobSource"/> for deserialization. </summary>
         internal PromptEvaluatorGenerationJobSource()

@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> Prompt source for data generation jobs — inline text provided by the user. </summary>
-    public partial class PromptDataGenerationJobSource : DataGenerationJobSource, IJsonModel<PromptDataGenerationJobSource>
+    internal partial class PromptDataGenerationJobSource : DataGenerationJobSource, IJsonModel<PromptDataGenerationJobSource>
     {
         /// <summary> Initializes a new instance of <see cref="PromptDataGenerationJobSource"/> for deserialization. </summary>
         internal PromptDataGenerationJobSource()

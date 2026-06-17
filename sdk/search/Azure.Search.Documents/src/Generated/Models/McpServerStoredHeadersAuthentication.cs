@@ -12,7 +12,7 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Authentication using stored HTTP headers. </summary>
-    public partial class McpServerStoredHeadersAuthentication : McpServerAuthentication
+    internal partial class McpServerStoredHeadersAuthentication : McpServerAuthentication
     {
         /// <summary> Initializes a new instance of <see cref="McpServerStoredHeadersAuthentication"/>. </summary>
         /// <param name="storedHeadersParameters"> Parameters for stored headers authentication. </param>

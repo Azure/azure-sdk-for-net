@@ -14,7 +14,7 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Parameters for JSON output parsing. </summary>
-    public partial class McpServerOutputParsingJsonParameters : IJsonModel<McpServerOutputParsingJsonParameters>
+    internal partial class McpServerOutputParsingJsonParameters : IJsonModel<McpServerOutputParsingJsonParameters>
     {
         /// <summary> Initializes a new instance of <see cref="McpServerOutputParsingJsonParameters"/> for deserialization. </summary>
         internal McpServerOutputParsingJsonParameters()

@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Details of the warning. </summary>
-    public partial class ServerEventWarningDetails : IJsonModel<ServerEventWarningDetails>
+    internal partial class ServerEventWarningDetails : IJsonModel<ServerEventWarningDetails>
     {
         /// <summary> Initializes a new instance of <see cref="ServerEventWarningDetails"/> for deserialization. </summary>
         internal ServerEventWarningDetails()

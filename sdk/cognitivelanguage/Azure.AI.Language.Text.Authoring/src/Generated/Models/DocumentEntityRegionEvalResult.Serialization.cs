@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.Language.Text.Authoring
 {
     /// <summary> Represents the evaluation comparison between the expected and predicted entities of a document region. </summary>
-    public partial class DocumentEntityRegionEvalResult : IJsonModel<DocumentEntityRegionEvalResult>
+    internal partial class DocumentEntityRegionEvalResult : IJsonModel<DocumentEntityRegionEvalResult>
     {
         /// <summary> Initializes a new instance of <see cref="DocumentEntityRegionEvalResult"/> for deserialization. </summary>
         internal DocumentEntityRegionEvalResult()

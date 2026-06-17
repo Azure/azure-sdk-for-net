@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> A mouse move action. </summary>
-    public partial class MoveAction : ComputerUseAction, IJsonModel<MoveAction>
+    internal partial class MoveAction : ComputerUseAction, IJsonModel<MoveAction>
     {
         /// <summary> Initializes a new instance of <see cref="MoveAction"/> for deserialization. </summary>
         internal MoveAction()

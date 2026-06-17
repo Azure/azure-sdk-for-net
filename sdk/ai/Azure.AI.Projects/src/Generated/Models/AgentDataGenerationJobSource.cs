@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects
 {
     /// <summary> Agent source for data generation jobs — references an agent to fetch instructions and metadata from. </summary>
-    public partial class AgentDataGenerationJobSource : DataGenerationJobSource
+    internal partial class AgentDataGenerationJobSource : DataGenerationJobSource
     {
         /// <summary> Initializes a new instance of <see cref="AgentDataGenerationJobSource"/>. </summary>
         /// <param name="agentName"> The agent name to fetch instructions from. </param>

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> Represents the Computer Use tool call details in a streaming run step. </summary>
-    public partial class RunStepDeltaComputerUseDetails
+    internal partial class RunStepDeltaComputerUseDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

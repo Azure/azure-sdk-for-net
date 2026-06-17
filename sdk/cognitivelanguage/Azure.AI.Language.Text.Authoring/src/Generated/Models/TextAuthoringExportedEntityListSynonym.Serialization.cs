@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.Language.Text.Authoring
 {
     /// <summary> Represents a list of synonyms inside a list component. </summary>
-    public partial class TextAuthoringExportedEntityListSynonym : IJsonModel<TextAuthoringExportedEntityListSynonym>
+    internal partial class TextAuthoringExportedEntityListSynonym : IJsonModel<TextAuthoringExportedEntityListSynonym>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

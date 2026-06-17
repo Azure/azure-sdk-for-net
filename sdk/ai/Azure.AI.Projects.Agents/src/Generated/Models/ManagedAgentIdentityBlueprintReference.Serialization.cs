@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The ManagedAgentIdentityBlueprintReference. </summary>
-    public partial class ManagedAgentIdentityBlueprintReference : AgentBlueprintReference, IJsonModel<ManagedAgentIdentityBlueprintReference>
+    internal partial class ManagedAgentIdentityBlueprintReference : AgentBlueprintReference, IJsonModel<ManagedAgentIdentityBlueprintReference>
     {
         /// <summary> Initializes a new instance of <see cref="ManagedAgentIdentityBlueprintReference"/> for deserialization. </summary>
         internal ManagedAgentIdentityBlueprintReference()

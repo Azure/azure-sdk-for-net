@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects
 {
     /// <summary> A GitHub issue routine trigger. </summary>
-    public partial class GitHubIssueRoutineTrigger : RoutineTrigger
+    internal partial class GitHubIssueRoutineTrigger : RoutineTrigger
     {
         /// <summary> Initializes a new instance of <see cref="GitHubIssueRoutineTrigger"/>. </summary>
         /// <param name="connectionId"> The workspace connection identifier that resolves the GitHub configuration for the trigger. </param>

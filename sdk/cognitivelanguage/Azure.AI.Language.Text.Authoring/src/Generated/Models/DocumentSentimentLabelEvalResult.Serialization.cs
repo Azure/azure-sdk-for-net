@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.Language.Text.Authoring
 {
     /// <summary> Represents an evaluation result Sentiment label. </summary>
-    public partial class DocumentSentimentLabelEvalResult : IJsonModel<DocumentSentimentLabelEvalResult>
+    internal partial class DocumentSentimentLabelEvalResult : IJsonModel<DocumentSentimentLabelEvalResult>
     {
         /// <summary> Initializes a new instance of <see cref="DocumentSentimentLabelEvalResult"/> for deserialization. </summary>
         internal DocumentSentimentLabelEvalResult()

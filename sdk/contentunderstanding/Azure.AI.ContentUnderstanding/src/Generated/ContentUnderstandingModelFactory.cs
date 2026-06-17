@@ -15,6 +15,17 @@ namespace Azure.AI.ContentUnderstanding
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ContentUnderstandingModelFactory
     {
+        /// <summary> The AnalyzeRequest1. </summary>
+        /// <param name="inputs"> Inputs to analyze.  Currently, only pro mode supports multiple inputs. </param>
+        /// <param name="modelDeployments"> Specify the default mapping of model names to LLM/embedding deployments in Microsoft Foundry. For details and current semantics, see https://aka.ms/cudoc-quickstart-rest. </param>
+        /// <returns> A new <see cref="ContentUnderstanding.AnalyzeRequest1"/> instance for mocking. </returns>
+        public static AnalyzeRequest1 AnalyzeRequest1(IEnumerable<AnalysisInput> inputs = default, IDictionary<string, string> modelDeployments = default)
+        {
+            inputs ??= new ChangeTrackingList<AnalysisInput>();
+            modelDeployments ??= new ChangeTrackingDictionary<string, string>();
+
+            return new AnalyzeRequest1(inputs.ToList(), modelDeployments, additionalBinaryDataProperties: null);
+        }
 
         /// <summary> Additional input to analyze. </summary>
         /// <param name="uri"> The URL of the input to analyze.  Only one of url or data should be specified. </param>
@@ -373,7 +384,7 @@ namespace Azure.AI.ContentUnderstanding
 
         /// <summary>
         /// Figure in a document.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ContentUnderstanding.DocumentChartFigure"/> and <see cref="ContentUnderstanding.DocumentMermaidFigure"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DocumentChartFigure"/> and <see cref="DocumentMermaidFigure"/>.
         /// </summary>
         /// <param name="kind"> Figure kind. </param>
         /// <param name="id"> Figure identifier. </param>
@@ -401,67 +412,6 @@ namespace Azure.AI.ContentUnderstanding
                 description,
                 role,
                 additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Figure containing a chart, such as a bar chart, line chart, or pie chart. </summary>
-        /// <param name="id"> Figure identifier. </param>
-        /// <param name="source"> Encoded source that identifies the position of the figure in the content. </param>
-        /// <param name="span"> Span of the figure in the markdown content. </param>
-        /// <param name="elements"> Child elements of the figure, excluding any caption or footnotes. </param>
-        /// <param name="caption"> Figure caption. </param>
-        /// <param name="footnotes"> List of figure footnotes. </param>
-        /// <param name="description"> Description of the figure. </param>
-        /// <param name="role"> Semantic role of the figure. </param>
-        /// <param name="content"> Chart content represented using [Chart.js config](https://www.chartjs.org/docs/latest/configuration/). </param>
-        /// <returns> A new <see cref="ContentUnderstanding.DocumentChartFigure"/> instance for mocking. </returns>
-        public static DocumentChartFigure DocumentChartFigure(string id = default, string source = default, ContentSpan span = default, IEnumerable<string> elements = default, DocumentCaption caption = default, IEnumerable<DocumentFootnote> footnotes = default, string description = default, SemanticRole? role = default, IDictionary<string, BinaryData> content = default)
-        {
-            elements ??= new ChangeTrackingList<string>();
-            footnotes ??= new ChangeTrackingList<DocumentFootnote>();
-            content ??= new ChangeTrackingDictionary<string, BinaryData>();
-
-            return new DocumentChartFigure(
-                DocumentFigureKind.Chart,
-                id,
-                source,
-                span,
-                elements.ToList(),
-                caption,
-                footnotes.ToList(),
-                description,
-                role,
-                additionalBinaryDataProperties: null,
-                content);
-        }
-
-        /// <summary> Figure containing a diagram, such as a flowchart or network diagram. </summary>
-        /// <param name="id"> Figure identifier. </param>
-        /// <param name="source"> Encoded source that identifies the position of the figure in the content. </param>
-        /// <param name="span"> Span of the figure in the markdown content. </param>
-        /// <param name="elements"> Child elements of the figure, excluding any caption or footnotes. </param>
-        /// <param name="caption"> Figure caption. </param>
-        /// <param name="footnotes"> List of figure footnotes. </param>
-        /// <param name="description"> Description of the figure. </param>
-        /// <param name="role"> Semantic role of the figure. </param>
-        /// <param name="content"> Diagram content represented using [Mermaid syntax](https://mermaid.js.org/intro/). </param>
-        /// <returns> A new <see cref="ContentUnderstanding.DocumentMermaidFigure"/> instance for mocking. </returns>
-        public static DocumentMermaidFigure DocumentMermaidFigure(string id = default, string source = default, ContentSpan span = default, IEnumerable<string> elements = default, DocumentCaption caption = default, IEnumerable<DocumentFootnote> footnotes = default, string description = default, SemanticRole? role = default, string content = default)
-        {
-            elements ??= new ChangeTrackingList<string>();
-            footnotes ??= new ChangeTrackingList<DocumentFootnote>();
-
-            return new DocumentMermaidFigure(
-                DocumentFigureKind.Mermaid,
-                id,
-                source,
-                span,
-                elements.ToList(),
-                caption,
-                footnotes.ToList(),
-                description,
-                role,
-                additionalBinaryDataProperties: null,
-                content);
         }
 
         /// <summary> Annotation in a document, such as a strikethrough or a comment. </summary>

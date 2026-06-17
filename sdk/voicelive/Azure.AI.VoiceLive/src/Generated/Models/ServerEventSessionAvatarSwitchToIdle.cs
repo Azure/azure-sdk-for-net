@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Returned when the avatar switches to idle state. </summary>
-    public partial class ServerEventSessionAvatarSwitchToIdle : SessionUpdate
+    internal partial class ServerEventSessionAvatarSwitchToIdle : SessionUpdate
     {
         /// <summary> Initializes a new instance of <see cref="ServerEventSessionAvatarSwitchToIdle"/>. </summary>
         internal ServerEventSessionAvatarSwitchToIdle() : base(ServerEventType.SessionAvatarSwitchToIdle)

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> Represents the Deep research in a streaming run step. </summary>
-    public partial class RunStepDeltaDeepResearchToolCall : RunStepDeltaToolCall
+    internal partial class RunStepDeltaDeepResearchToolCall : RunStepDeltaToolCall
     {
         /// <summary> Initializes a new instance of <see cref="RunStepDeltaDeepResearchToolCall"/>. </summary>
         /// <param name="index"> The index of the tool call detail in the run step's tool_calls array. </param>

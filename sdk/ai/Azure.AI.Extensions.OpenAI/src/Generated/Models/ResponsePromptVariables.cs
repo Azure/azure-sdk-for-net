@@ -9,7 +9,7 @@ using System.Collections.ObjectModel;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Prompt Variables. </summary>
-    internal partial class ResponsePromptVariables
+    public partial class ResponsePromptVariables
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

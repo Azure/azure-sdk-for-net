@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.Developer.LoadTesting
 {
     /// <summary> Recurrence model when frequency is set as MonthlyByDates. </summary>
-    public partial class MonthlyRecurrenceByDates : LoadTestingRecurrence, IJsonModel<MonthlyRecurrenceByDates>
+    internal partial class MonthlyRecurrenceByDates : LoadTestingRecurrence, IJsonModel<MonthlyRecurrenceByDates>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

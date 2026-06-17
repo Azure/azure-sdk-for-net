@@ -14,7 +14,7 @@ using Azure.AI.Language.Conversations;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> Represents the information (data) entity resolution model. </summary>
-    public partial class InformationResolution : ResolutionBase, IJsonModel<InformationResolution>
+    internal partial class InformationResolution : ResolutionBase, IJsonModel<InformationResolution>
     {
         /// <summary> Initializes a new instance of <see cref="InformationResolution"/> for deserialization. </summary>
         internal InformationResolution()

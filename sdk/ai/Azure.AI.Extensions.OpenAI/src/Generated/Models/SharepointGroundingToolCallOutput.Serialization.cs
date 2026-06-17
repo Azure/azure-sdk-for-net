@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The output of a SharePoint grounding tool call. </summary>
-    public partial class SharepointGroundingToolCallOutput : AgentResponseItem, IJsonModel<SharepointGroundingToolCallOutput>
+    internal partial class SharepointGroundingToolCallOutput : AgentResponseItem, IJsonModel<SharepointGroundingToolCallOutput>
     {
         /// <summary> Initializes a new instance of <see cref="SharepointGroundingToolCallOutput"/> for deserialization. </summary>
         internal SharepointGroundingToolCallOutput()

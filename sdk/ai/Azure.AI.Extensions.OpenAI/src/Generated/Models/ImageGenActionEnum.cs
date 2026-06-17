@@ -5,7 +5,7 @@
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary></summary>
-    internal enum ImageGenActionEnum
+    public enum ImageGenActionEnum
     {
         /// <summary> Generate. </summary>
         Generate,

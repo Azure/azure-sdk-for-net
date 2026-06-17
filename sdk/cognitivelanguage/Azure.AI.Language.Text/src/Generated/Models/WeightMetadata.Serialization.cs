@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.Language.Text
 {
     /// <summary> Represents the Weight ) entity Metadata model. </summary>
-    public partial class WeightMetadata : BaseMetadata, IJsonModel<WeightMetadata>
+    internal partial class WeightMetadata : BaseMetadata, IJsonModel<WeightMetadata>
     {
         /// <summary> Initializes a new instance of <see cref="WeightMetadata"/> for deserialization. </summary>
         internal WeightMetadata()

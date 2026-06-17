@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Text.Authoring
 {
     /// <summary> Represents an evaluation result Sentiment label. </summary>
-    public partial class DocumentSentimentLabelEvalResult
+    internal partial class DocumentSentimentLabelEvalResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

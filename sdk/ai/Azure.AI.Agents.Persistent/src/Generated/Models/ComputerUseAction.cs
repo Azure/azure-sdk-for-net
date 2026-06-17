@@ -14,7 +14,7 @@ namespace Azure.AI.Agents.Persistent
     /// An abstract representation of a computer use action.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ClickAction"/>, <see cref="DoubleClickAction"/>, <see cref="DragAction"/>, <see cref="KeyPressAction"/>, <see cref="MoveAction"/>, <see cref="ScreenshotAction"/>, <see cref="ScrollAction"/>, <see cref="TypeAction"/>, and <see cref="WaitAction"/>.
     /// </summary>
-    public abstract partial class ComputerUseAction
+    internal abstract partial class ComputerUseAction
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

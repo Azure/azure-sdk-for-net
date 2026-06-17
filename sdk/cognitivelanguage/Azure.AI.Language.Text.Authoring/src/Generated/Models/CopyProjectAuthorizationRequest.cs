@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Text.Authoring
 {
     /// <summary> The CopyProjectAuthorizationRequest. </summary>
-    internal partial class CopyProjectAuthorizationRequest
+    public partial class CopyProjectAuthorizationRequest
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

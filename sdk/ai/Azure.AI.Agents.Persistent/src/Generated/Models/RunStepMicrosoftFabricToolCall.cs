@@ -14,7 +14,7 @@ namespace Azure.AI.Agents.Persistent
     /// A record of a call to a Microsoft Fabric tool, issued by the model in evaluation of a defined tool, that represents
     /// executed Microsoft Fabric operations.
     /// </summary>
-    public partial class RunStepMicrosoftFabricToolCall : RunStepToolCall
+    internal partial class RunStepMicrosoftFabricToolCall : RunStepToolCall
     {
         /// <summary> Initializes a new instance of <see cref="RunStepMicrosoftFabricToolCall"/>. </summary>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>

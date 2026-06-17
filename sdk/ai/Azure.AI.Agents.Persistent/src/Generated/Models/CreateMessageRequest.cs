@@ -12,7 +12,7 @@ using System.Text.Json;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> The CreateMessageRequest. </summary>
-    internal partial class CreateMessageRequest
+    public partial class CreateMessageRequest
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.Language.Text.Authoring
 {
     /// <summary> Represents a list component of an entity. </summary>
-    public partial class TextAuthoringExportedEntityList : IJsonModel<TextAuthoringExportedEntityList>
+    internal partial class TextAuthoringExportedEntityList : IJsonModel<TextAuthoringExportedEntityList>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

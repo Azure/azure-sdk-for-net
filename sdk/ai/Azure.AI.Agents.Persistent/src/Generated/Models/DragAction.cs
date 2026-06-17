@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> A drag action. </summary>
-    public partial class DragAction : ComputerUseAction
+    internal partial class DragAction : ComputerUseAction
     {
         /// <summary> Initializes a new instance of <see cref="DragAction"/>. </summary>
         /// <param name="path"> An array of coordinates representing the path of the drag action. </param>

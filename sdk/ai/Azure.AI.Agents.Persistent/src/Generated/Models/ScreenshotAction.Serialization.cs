@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> A screenshot action. </summary>
-    public partial class ScreenshotAction : ComputerUseAction, IJsonModel<ScreenshotAction>
+    internal partial class ScreenshotAction : ComputerUseAction, IJsonModel<ScreenshotAction>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

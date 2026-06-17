@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.Communication.Messages
 {
     /// <summary> The message content of type video information. </summary>
-    public partial class VideoMessageContent : MessageContent, IJsonModel<VideoMessageContent>
+    internal partial class VideoMessageContent : MessageContent, IJsonModel<VideoMessageContent>
     {
         /// <summary> Initializes a new instance of <see cref="VideoMessageContent"/> for deserialization. </summary>
         internal VideoMessageContent()

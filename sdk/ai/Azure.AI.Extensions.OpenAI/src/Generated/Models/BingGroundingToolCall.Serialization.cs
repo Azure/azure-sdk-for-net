@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> A Bing grounding tool call. </summary>
-    public partial class BingGroundingToolCall : AgentResponseItem, IJsonModel<BingGroundingToolCall>
+    internal partial class BingGroundingToolCall : AgentResponseItem, IJsonModel<BingGroundingToolCall>
     {
         /// <summary> Initializes a new instance of <see cref="BingGroundingToolCall"/> for deserialization. </summary>
         internal BingGroundingToolCall()

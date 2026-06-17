@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.Language.Text.Authoring
 {
     /// <summary> Represents an exported prebuilt entity component. </summary>
-    public partial class TextAuthoringExportedPrebuiltEntity : IJsonModel<TextAuthoringExportedPrebuiltEntity>
+    internal partial class TextAuthoringExportedPrebuiltEntity : IJsonModel<TextAuthoringExportedPrebuiltEntity>
     {
         /// <summary> Initializes a new instance of <see cref="TextAuthoringExportedPrebuiltEntity"/> for deserialization. </summary>
         internal TextAuthoringExportedPrebuiltEntity()

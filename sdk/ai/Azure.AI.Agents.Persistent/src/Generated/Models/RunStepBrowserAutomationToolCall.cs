@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> A record of a call to a Browser Automation tool issued by the Agent. </summary>
-    public partial class RunStepBrowserAutomationToolCall : RunStepToolCall
+    internal partial class RunStepBrowserAutomationToolCall : RunStepToolCall
     {
         /// <summary> Initializes a new instance of <see cref="RunStepBrowserAutomationToolCall"/>. </summary>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>

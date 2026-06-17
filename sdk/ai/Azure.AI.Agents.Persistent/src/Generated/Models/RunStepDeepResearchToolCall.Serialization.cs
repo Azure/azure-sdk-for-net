@@ -16,7 +16,7 @@ namespace Azure.AI.Agents.Persistent
     /// A record of a call to a Deep Research tool, issued by the model in evaluation of a defined tool, that represents
     /// executed deep research operations.
     /// </summary>
-    public partial class RunStepDeepResearchToolCall : RunStepToolCall, IJsonModel<RunStepDeepResearchToolCall>
+    internal partial class RunStepDeepResearchToolCall : RunStepToolCall, IJsonModel<RunStepDeepResearchToolCall>
     {
         /// <summary> Initializes a new instance of <see cref="RunStepDeepResearchToolCall"/> for deserialization. </summary>
         internal RunStepDeepResearchToolCall()

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> Security details for OpenApi anonymous authentication. </summary>
-    public partial class OpenApiAnonymousAuthDetails : OpenApiAuthDetails
+    internal partial class OpenApiAnonymousAuthDetails : OpenApiAuthDetails
     {
         /// <summary> Initializes a new instance of <see cref="OpenApiAnonymousAuthDetails"/>. </summary>
         public OpenApiAnonymousAuthDetails() : base(OpenApiAuthType.Anonymous)

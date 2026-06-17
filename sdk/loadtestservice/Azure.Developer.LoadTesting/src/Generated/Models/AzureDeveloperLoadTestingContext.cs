@@ -60,6 +60,7 @@ namespace Azure.Developer.LoadTesting
     [ModelReaderWriterBuildable(typeof(RecurrenceWithCron))]
     [ModelReaderWriterBuildable(typeof(RegionalConfiguration))]
     [ModelReaderWriterBuildable(typeof(ResourceMetric))]
+    [ModelReaderWriterBuildable(typeof(ResourceOperationStatusTestError))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ScheduleTestsTrigger))]
     [ModelReaderWriterBuildable(typeof(StateDetails))]

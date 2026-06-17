@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Specifies an image's detail level. Can be 'auto', 'low', 'high', or an unknown future value. </summary>
-    public readonly partial struct RequestImageContentPartDetail : IEquatable<RequestImageContentPartDetail>
+    internal readonly partial struct RequestImageContentPartDetail : IEquatable<RequestImageContentPartDetail>
     {
         private readonly string _value;
         /// <summary> Automatically select an appropriate detail level. </summary>

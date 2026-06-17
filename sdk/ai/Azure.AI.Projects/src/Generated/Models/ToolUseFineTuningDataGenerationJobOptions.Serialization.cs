@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> The options for a data generation job with ToolUse type. Used only for fine-tuning scenarios. </summary>
-    public partial class ToolUseFineTuningDataGenerationJobOptions : DataGenerationJobOptions, IJsonModel<ToolUseFineTuningDataGenerationJobOptions>
+    internal partial class ToolUseFineTuningDataGenerationJobOptions : DataGenerationJobOptions, IJsonModel<ToolUseFineTuningDataGenerationJobOptions>
     {
         /// <summary> Initializes a new instance of <see cref="ToolUseFineTuningDataGenerationJobOptions"/> for deserialization. </summary>
         internal ToolUseFineTuningDataGenerationJobOptions()

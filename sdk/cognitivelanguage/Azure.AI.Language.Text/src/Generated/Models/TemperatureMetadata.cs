@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Text
 {
     /// <summary> Represents the Information entity Metadata model. </summary>
-    public partial class TemperatureMetadata : BaseMetadata
+    internal partial class TemperatureMetadata : BaseMetadata
     {
         /// <summary> Initializes a new instance of <see cref="TemperatureMetadata"/>. </summary>
         /// <param name="value"> The numeric value that the extracted text denotes. </param>

@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects
 {
     /// <summary> The options for a data generation job with ToolUse type. Used only for fine-tuning scenarios. </summary>
-    public partial class ToolUseFineTuningDataGenerationJobOptions : DataGenerationJobOptions
+    internal partial class ToolUseFineTuningDataGenerationJobOptions : DataGenerationJobOptions
     {
         /// <summary> Initializes a new instance of <see cref="ToolUseFineTuningDataGenerationJobOptions"/>. </summary>
         /// <param name="maxSamples"> Maximum number of samples to generate. </param>

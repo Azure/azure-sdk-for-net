@@ -12,7 +12,7 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Parse the output as a JSON document using the configured JSON parameters. </summary>
-    public partial class McpServerJsonOutputParsing : McpServerOutputParsing
+    internal partial class McpServerJsonOutputParsing : McpServerOutputParsing
     {
         /// <summary> Initializes a new instance of <see cref="McpServerJsonOutputParsing"/>. </summary>
         /// <param name="jsonParameters"> Parameters for JSON output parsing. Required when kind is 'json'. </param>
