@@ -5,10 +5,10 @@
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    // Compatibility customization: generated derived constructors still need the GA base constructor argument order.
+    // Compatibility customization: generated derived constructors call the GA base constructor argument order.
     public partial class ThresholdCustomAlertRule
     {
-        private protected ThresholdCustomAlertRule(string ruleType, bool isEnabled, int minThreshold, int maxThreshold) : base(ruleType, isEnabled)
+        internal ThresholdCustomAlertRule(string ruleType, bool isEnabled, int minThreshold, int maxThreshold) : base(ruleType, isEnabled)
         {
             MinThreshold = minThreshold;
             MaxThreshold = maxThreshold;

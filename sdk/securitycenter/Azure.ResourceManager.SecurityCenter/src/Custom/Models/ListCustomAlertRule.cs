@@ -5,10 +5,10 @@
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    // Compatibility customization: generated derived constructors still need the GA base constructor argument order.
+    // Compatibility customization: generated derived constructors call the GA base constructor argument order.
     public partial class ListCustomAlertRule
     {
-        private protected ListCustomAlertRule(string ruleType, bool isEnabled) : base(ruleType, isEnabled)
+        internal ListCustomAlertRule(string ruleType, bool isEnabled) : base(ruleType, isEnabled)
         {
         }
     }

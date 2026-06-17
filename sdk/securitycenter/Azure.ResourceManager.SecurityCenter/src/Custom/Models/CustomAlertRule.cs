@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    // Compatibility customization: the generator emits this discriminator constructor as private protected, but the GA API exposes it as protected for derived custom alert rule types.
+    // Compatibility customization: GA exposes this discriminator constructor as protected for derived custom alert rule types.
     public abstract partial class CustomAlertRule
     {
         /// <summary> Initializes a new instance of <see cref="CustomAlertRule"/>. </summary>
