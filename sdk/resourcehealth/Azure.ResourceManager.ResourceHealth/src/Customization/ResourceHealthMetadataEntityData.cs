@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ResourceHealth
         {
             get
             {
-                return Properties is null ? default : (IReadOnlyList<string>)Properties.DependsOn;
+                return Properties?.DependsOn as IReadOnlyList<string>;
             }
         }
 
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ResourceHealth
         {
             get
             {
-                return Properties is null ? default : (IReadOnlyList<MetadataEntityScenario>)Properties.ApplicableScenarios;
+                return Properties?.ApplicableScenarios as IReadOnlyList<MetadataEntityScenario>;
             }
         }
 
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ResourceHealth
         {
             get
             {
-                return Properties is null ? default : (IReadOnlyList<MetadataSupportedValueDetail>)Properties.SupportedValues;
+                return Properties?.SupportedValues as IReadOnlyList<MetadataSupportedValueDetail>;
             }
         }
     }

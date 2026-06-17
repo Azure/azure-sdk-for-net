@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ResourceHealth
         {
             get
             {
-                return Properties is null ? default : (IReadOnlyList<EmergingIssueBannerType>)Properties.StatusBanners;
+                return Properties?.StatusBanners as IReadOnlyList<EmergingIssueBannerType>;
             }
         }
 
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ResourceHealth
         {
             get
             {
-                return Properties is null ? default : (IReadOnlyList<EmergingIssueActiveEventType>)Properties.StatusActiveEvents;
+                return Properties?.StatusActiveEvents as IReadOnlyList<EmergingIssueActiveEventType>;
             }
         }
     }
