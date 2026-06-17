@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.RecoveryServicesSiteRecovery.Models;
 using Azure.ResourceManager.Resources;
 
@@ -26,56 +27,53 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
     /// </summary>
     public partial class SiteRecoveryPolicyCollection : ArmCollection, IEnumerable<SiteRecoveryPolicyResource>, IAsyncEnumerable<SiteRecoveryPolicyResource>
     {
-        private readonly ClientDiagnostics _siteRecoveryPolicyReplicationPoliciesClientDiagnostics;
-        private readonly ReplicationPoliciesRestOperations _siteRecoveryPolicyReplicationPoliciesRestClient;
+        private readonly ClientDiagnostics _replicationPoliciesClientDiagnostics;
+        private readonly ReplicationPolicies _replicationPoliciesRestClient;
+        /// <summary> The resourceName. </summary>
         private readonly string _resourceName;
 
-        /// <summary> Initializes a new instance of the <see cref="SiteRecoveryPolicyCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of SiteRecoveryPolicyCollection for mocking. </summary>
         protected SiteRecoveryPolicyCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SiteRecoveryPolicyCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryPolicyCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="resourceName"> The resourceName for the resource. </param>
         internal SiteRecoveryPolicyCollection(ArmClient client, ResourceIdentifier id, string resourceName) : base(client, id)
         {
+            TryGetApiVersion(SiteRecoveryPolicyResource.ResourceType, out string siteRecoveryPolicyApiVersion);
             _resourceName = resourceName;
-            _siteRecoveryPolicyReplicationPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery", SiteRecoveryPolicyResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(SiteRecoveryPolicyResource.ResourceType, out string siteRecoveryPolicyReplicationPoliciesApiVersion);
-            _siteRecoveryPolicyReplicationPoliciesRestClient = new ReplicationPoliciesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, siteRecoveryPolicyReplicationPoliciesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _replicationPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery", SiteRecoveryPolicyResource.ResourceType.Namespace, Diagnostics);
+            _replicationPoliciesRestClient = new ReplicationPolicies(_replicationPoliciesClientDiagnostics, Pipeline, Endpoint, siteRecoveryPolicyApiVersion ?? "2026-02-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// The operation to create a replication policy.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationPolicies/{policyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationPolicies/{policyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationPolicies_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> Policies_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteRecoveryPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -83,21 +81,34 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="policyName"> Replication policy name. </param>
         /// <param name="content"> Create policy input. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<SiteRecoveryPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string policyName, SiteRecoveryPolicyCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _siteRecoveryPolicyReplicationPoliciesClientDiagnostics.CreateScope("SiteRecoveryPolicyCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _replicationPoliciesClientDiagnostics.CreateScope("SiteRecoveryPolicyCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _siteRecoveryPolicyReplicationPoliciesRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, policyName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryPolicyResource>(new SiteRecoveryPolicyOperationSource(Client), _siteRecoveryPolicyReplicationPoliciesClientDiagnostics, Pipeline, _siteRecoveryPolicyReplicationPoliciesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, policyName, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _replicationPoliciesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _resourceName, policyName, SiteRecoveryPolicyCreateOrUpdateContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryPolicyResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryPolicyResource>(
+                    new SiteRecoveryPolicyResourceOperationSource(Client),
+                    _replicationPoliciesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -111,20 +122,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// The operation to create a replication policy.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationPolicies/{policyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationPolicies/{policyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationPolicies_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> Policies_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteRecoveryPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -132,21 +139,34 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="policyName"> Replication policy name. </param>
         /// <param name="content"> Create policy input. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<SiteRecoveryPolicyResource> CreateOrUpdate(WaitUntil waitUntil, string policyName, SiteRecoveryPolicyCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _siteRecoveryPolicyReplicationPoliciesClientDiagnostics.CreateScope("SiteRecoveryPolicyCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _replicationPoliciesClientDiagnostics.CreateScope("SiteRecoveryPolicyCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _siteRecoveryPolicyReplicationPoliciesRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, policyName, content, cancellationToken);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryPolicyResource>(new SiteRecoveryPolicyOperationSource(Client), _siteRecoveryPolicyReplicationPoliciesClientDiagnostics, Pipeline, _siteRecoveryPolicyReplicationPoliciesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, policyName, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _replicationPoliciesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _resourceName, policyName, SiteRecoveryPolicyCreateOrUpdateContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryPolicyResource> operation = new RecoveryServicesSiteRecoveryArmOperation<SiteRecoveryPolicyResource>(
+                    new SiteRecoveryPolicyResourceOperationSource(Client),
+                    _replicationPoliciesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -160,38 +180,42 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// Gets the details of a replication policy.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationPolicies/{policyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationPolicies/{policyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationPolicies_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Policies_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteRecoveryPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="policyName"> Replication policy name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<SiteRecoveryPolicyResource>> GetAsync(string policyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
 
-            using var scope = _siteRecoveryPolicyReplicationPoliciesClientDiagnostics.CreateScope("SiteRecoveryPolicyCollection.Get");
+            using DiagnosticScope scope = _replicationPoliciesClientDiagnostics.CreateScope("SiteRecoveryPolicyCollection.Get");
             scope.Start();
             try
             {
-                var response = await _siteRecoveryPolicyReplicationPoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, policyName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _replicationPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _resourceName, policyName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SiteRecoveryPolicyData> response = Response.FromValue(SiteRecoveryPolicyData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SiteRecoveryPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -205,38 +229,42 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// Gets the details of a replication policy.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationPolicies/{policyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationPolicies/{policyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationPolicies_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Policies_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteRecoveryPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="policyName"> Replication policy name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<SiteRecoveryPolicyResource> Get(string policyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
 
-            using var scope = _siteRecoveryPolicyReplicationPoliciesClientDiagnostics.CreateScope("SiteRecoveryPolicyCollection.Get");
+            using DiagnosticScope scope = _replicationPoliciesClientDiagnostics.CreateScope("SiteRecoveryPolicyCollection.Get");
             scope.Start();
             try
             {
-                var response = _siteRecoveryPolicyReplicationPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, policyName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _replicationPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _resourceName, policyName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SiteRecoveryPolicyData> response = Response.FromValue(SiteRecoveryPolicyData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SiteRecoveryPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -250,50 +278,50 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// Lists the replication policies for a vault.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationPolicies</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationPolicies. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationPolicies_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> Policies_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteRecoveryPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SiteRecoveryPolicyResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SiteRecoveryPolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SiteRecoveryPolicyResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _siteRecoveryPolicyReplicationPoliciesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteRecoveryPolicyReplicationPoliciesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SiteRecoveryPolicyResource(Client, SiteRecoveryPolicyData.DeserializeSiteRecoveryPolicyData(e)), _siteRecoveryPolicyReplicationPoliciesClientDiagnostics, Pipeline, "SiteRecoveryPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<SiteRecoveryPolicyData, SiteRecoveryPolicyResource>(new ReplicationPoliciesGetAllAsyncCollectionResultOfT(
+                _replicationPoliciesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                _resourceName,
+                context,
+                "SiteRecoveryPolicyCollection.GetAll"), data => new SiteRecoveryPolicyResource(Client, data));
         }
 
         /// <summary>
         /// Lists the replication policies for a vault.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationPolicies</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationPolicies. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationPolicies_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> Policies_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteRecoveryPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -301,45 +329,67 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <returns> A collection of <see cref="SiteRecoveryPolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SiteRecoveryPolicyResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _siteRecoveryPolicyReplicationPoliciesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteRecoveryPolicyReplicationPoliciesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SiteRecoveryPolicyResource(Client, SiteRecoveryPolicyData.DeserializeSiteRecoveryPolicyData(e)), _siteRecoveryPolicyReplicationPoliciesClientDiagnostics, Pipeline, "SiteRecoveryPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<SiteRecoveryPolicyData, SiteRecoveryPolicyResource>(new ReplicationPoliciesGetAllCollectionResultOfT(
+                _replicationPoliciesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                _resourceName,
+                context,
+                "SiteRecoveryPolicyCollection.GetAll"), data => new SiteRecoveryPolicyResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationPolicies/{policyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationPolicies/{policyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationPolicies_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Policies_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteRecoveryPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="policyName"> Replication policy name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string policyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
 
-            using var scope = _siteRecoveryPolicyReplicationPoliciesClientDiagnostics.CreateScope("SiteRecoveryPolicyCollection.Exists");
+            using DiagnosticScope scope = _replicationPoliciesClientDiagnostics.CreateScope("SiteRecoveryPolicyCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _siteRecoveryPolicyReplicationPoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, policyName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _replicationPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _resourceName, policyName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SiteRecoveryPolicyData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SiteRecoveryPolicyData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SiteRecoveryPolicyData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -353,36 +403,50 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationPolicies/{policyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationPolicies/{policyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationPolicies_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Policies_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteRecoveryPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="policyName"> Replication policy name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string policyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
 
-            using var scope = _siteRecoveryPolicyReplicationPoliciesClientDiagnostics.CreateScope("SiteRecoveryPolicyCollection.Exists");
+            using DiagnosticScope scope = _replicationPoliciesClientDiagnostics.CreateScope("SiteRecoveryPolicyCollection.Exists");
             scope.Start();
             try
             {
-                var response = _siteRecoveryPolicyReplicationPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, policyName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _replicationPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _resourceName, policyName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SiteRecoveryPolicyData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SiteRecoveryPolicyData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SiteRecoveryPolicyData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -396,38 +460,54 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationPolicies/{policyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationPolicies/{policyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationPolicies_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Policies_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteRecoveryPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="policyName"> Replication policy name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<SiteRecoveryPolicyResource>> GetIfExistsAsync(string policyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
 
-            using var scope = _siteRecoveryPolicyReplicationPoliciesClientDiagnostics.CreateScope("SiteRecoveryPolicyCollection.GetIfExists");
+            using DiagnosticScope scope = _replicationPoliciesClientDiagnostics.CreateScope("SiteRecoveryPolicyCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _siteRecoveryPolicyReplicationPoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, policyName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _replicationPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _resourceName, policyName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SiteRecoveryPolicyData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SiteRecoveryPolicyData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SiteRecoveryPolicyData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SiteRecoveryPolicyResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SiteRecoveryPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -441,38 +521,54 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationPolicies/{policyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationPolicies/{policyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationPolicies_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Policies_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteRecoveryPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="policyName"> Replication policy name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<SiteRecoveryPolicyResource> GetIfExists(string policyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(policyName, nameof(policyName));
 
-            using var scope = _siteRecoveryPolicyReplicationPoliciesClientDiagnostics.CreateScope("SiteRecoveryPolicyCollection.GetIfExists");
+            using DiagnosticScope scope = _replicationPoliciesClientDiagnostics.CreateScope("SiteRecoveryPolicyCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _siteRecoveryPolicyReplicationPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, policyName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _replicationPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _resourceName, policyName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SiteRecoveryPolicyData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SiteRecoveryPolicyData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SiteRecoveryPolicyData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SiteRecoveryPolicyResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SiteRecoveryPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -492,6 +588,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<SiteRecoveryPolicyResource> IAsyncEnumerable<SiteRecoveryPolicyResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

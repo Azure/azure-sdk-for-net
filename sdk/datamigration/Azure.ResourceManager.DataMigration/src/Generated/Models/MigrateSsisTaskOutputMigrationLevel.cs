@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -14,16 +15,15 @@ namespace Azure.ResourceManager.DataMigration.Models
     public partial class MigrateSsisTaskOutputMigrationLevel : MigrateSsisTaskOutput
     {
         /// <summary> Initializes a new instance of <see cref="MigrateSsisTaskOutputMigrationLevel"/>. </summary>
-        internal MigrateSsisTaskOutputMigrationLevel()
+        internal MigrateSsisTaskOutputMigrationLevel() : base("MigrationLevelOutput")
         {
             ExceptionsAndWarnings = new ChangeTrackingList<DataMigrationReportableException>();
-            ResultType = "MigrationLevelOutput";
         }
 
         /// <summary> Initializes a new instance of <see cref="MigrateSsisTaskOutputMigrationLevel"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="startedOn"> Migration start time. </param>
         /// <param name="endedOn"> Migration end time. </param>
         /// <param name="status"> Current status of migration. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="targetServerBrandVersion"> Target server brand version. </param>
         /// <param name="exceptionsAndWarnings"> Migration exceptions and warnings. </param>
         /// <param name="stage"> Stage of SSIS migration. </param>
-        internal MigrateSsisTaskOutputMigrationLevel(string id, string resultType, IDictionary<string, BinaryData> serializedAdditionalRawData, DateTimeOffset? startedOn, DateTimeOffset? endedOn, DataMigrationStatus? status, string message, string sourceServerVersion, string sourceServerBrandVersion, string targetServerVersion, string targetServerBrandVersion, IReadOnlyList<DataMigrationReportableException> exceptionsAndWarnings, SsisMigrationStage? stage) : base(id, resultType, serializedAdditionalRawData)
+        internal MigrateSsisTaskOutputMigrationLevel(string id, string resultType, IDictionary<string, BinaryData> additionalBinaryDataProperties, DateTimeOffset? startedOn, DateTimeOffset? endedOn, DataMigrationStatus? status, string message, string sourceServerVersion, string sourceServerBrandVersion, string targetServerVersion, string targetServerBrandVersion, IReadOnlyList<DataMigrationReportableException> exceptionsAndWarnings, SsisMigrationStage? stage) : base(id, resultType, additionalBinaryDataProperties)
         {
             StartedOn = startedOn;
             EndedOn = endedOn;
@@ -46,27 +46,35 @@ namespace Azure.ResourceManager.DataMigration.Models
             TargetServerBrandVersion = targetServerBrandVersion;
             ExceptionsAndWarnings = exceptionsAndWarnings;
             Stage = stage;
-            ResultType = resultType ?? "MigrationLevelOutput";
         }
 
         /// <summary> Migration start time. </summary>
         public DateTimeOffset? StartedOn { get; }
+
         /// <summary> Migration end time. </summary>
         public DateTimeOffset? EndedOn { get; }
+
         /// <summary> Current status of migration. </summary>
         public DataMigrationStatus? Status { get; }
+
         /// <summary> Migration progress message. </summary>
         public string Message { get; }
+
         /// <summary> Source server version. </summary>
         public string SourceServerVersion { get; }
+
         /// <summary> Source server brand version. </summary>
         public string SourceServerBrandVersion { get; }
+
         /// <summary> Target server version. </summary>
         public string TargetServerVersion { get; }
+
         /// <summary> Target server brand version. </summary>
         public string TargetServerBrandVersion { get; }
+
         /// <summary> Migration exceptions and warnings. </summary>
         public IReadOnlyList<DataMigrationReportableException> ExceptionsAndWarnings { get; }
+
         /// <summary> Stage of SSIS migration. </summary>
         public SsisMigrationStage? Stage { get; }
     }

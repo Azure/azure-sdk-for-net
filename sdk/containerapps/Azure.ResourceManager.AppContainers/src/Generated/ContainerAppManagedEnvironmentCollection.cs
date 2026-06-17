@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.AppContainers
                 HttpMessage message = _containerAppManagedEnvironmentsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, environmentName, ContainerAppManagedEnvironmentData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppContainersArmOperation<ContainerAppManagedEnvironmentResource> operation = new AppContainersArmOperation<ContainerAppManagedEnvironmentResource>(
-                    new ContainerAppManagedEnvironmentOperationSource(Client),
+                    new ContainerAppManagedEnvironmentResourceOperationSource(Client),
                     _containerAppManagedEnvironmentsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.AppContainers
                 HttpMessage message = _containerAppManagedEnvironmentsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, environmentName, ContainerAppManagedEnvironmentData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppContainersArmOperation<ContainerAppManagedEnvironmentResource> operation = new AppContainersArmOperation<ContainerAppManagedEnvironmentResource>(
-                    new ContainerAppManagedEnvironmentOperationSource(Client),
+                    new ContainerAppManagedEnvironmentResourceOperationSource(Client),
                     _containerAppManagedEnvironmentsClientDiagnostics,
                     Pipeline,
                     message.Request,

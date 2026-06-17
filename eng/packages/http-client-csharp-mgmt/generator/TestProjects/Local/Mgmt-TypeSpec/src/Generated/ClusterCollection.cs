@@ -94,7 +94,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 HttpMessage message = _clustersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, clusterName, ClusterData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 TestsArmOperation<ClusterResource> operation = new TestsArmOperation<ClusterResource>(
-                    new ClusterOperationSource(Client),
+                    new ClusterResourceOperationSource(Client),
                     _clustersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -153,7 +153,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 HttpMessage message = _clustersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, clusterName, ClusterData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 TestsArmOperation<ClusterResource> operation = new TestsArmOperation<ClusterResource>(
-                    new ClusterOperationSource(Client),
+                    new ClusterResourceOperationSource(Client),
                     _clustersClientDiagnostics,
                     Pipeline,
                     message.Request,

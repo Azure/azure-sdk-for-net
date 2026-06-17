@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.CosmosDB
 {
+    /// <summary></summary>
     public partial class MongoDBDatabaseResource : IJsonModel<MongoDBDatabaseData>
     {
-        private static MongoDBDatabaseData s_dataDeserializationInstance;
-        private static MongoDBDatabaseData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<MongoDBDatabaseData> s_dataDeserializationInstance;
 
+        private static IJsonModel<MongoDBDatabaseData> DataDeserializationInstance => s_dataDeserializationInstance ??= new MongoDBDatabaseData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MongoDBDatabaseData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MongoDBDatabaseData>)Data).Write(writer, options);
 
-        MongoDBDatabaseData IJsonModel<MongoDBDatabaseData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MongoDBDatabaseData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MongoDBDatabaseData IJsonModel<MongoDBDatabaseData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<MongoDBDatabaseData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MongoDBDatabaseData>(Data, options, AzureResourceManagerCosmosDBContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         MongoDBDatabaseData IPersistableModel<MongoDBDatabaseData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MongoDBDatabaseData>(data, options, AzureResourceManagerCosmosDBContext.Default);
 
-        string IPersistableModel<MongoDBDatabaseData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MongoDBDatabaseData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<MongoDBDatabaseData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

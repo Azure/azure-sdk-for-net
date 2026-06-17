@@ -92,6 +92,34 @@ var channelPhrases = result.CombinedPhrases.First();
 Console.WriteLine(channelPhrases.Text);
 ```
 
+## Guide Recognition with a Locale
+
+Enhanced Mode runs in multi-lingual mode by default, so you don't need to specify the input language. Optionally, to guide recognition toward a specific language, set `Locales` using a supported locale code (for example, `en-US`). The service uses the first locale as a hint to bias recognition.
+
+```C# Snippet:EnhancedModeWithLocale
+string audioFilePath = "path/to/audio.wav";
+using FileStream audioStream = File.OpenRead(audioFilePath);
+
+EnhancedModeProperties enhancedMode = new EnhancedModeProperties
+{
+    Task = "transcribe"
+};
+
+TranscriptionOptions options = new TranscriptionOptions(audioStream)
+{
+    EnhancedMode = enhancedMode
+};
+
+// Guide recognition toward a specific language
+options.Locales.Add("en-US");
+
+ClientResult<TranscriptionResult> response = await client.TranscribeAsync(options);
+TranscriptionResult result = response.Value;
+
+var channelPhrases = result.CombinedPhrases.First();
+Console.WriteLine(channelPhrases.Text);
+```
+
 ## Combine Enhanced Mode with Other Options
 
 Enhanced Mode can be combined with other transcription options like `diarization`, `profanityFilterMode`, and `channels` for comprehensive transcription scenarios such as meeting transcription.
@@ -133,7 +161,8 @@ foreach (TranscribedPhrase phrase in result.Phrases)
 - `confidence` is not available and always returns `0`
 - Word-level timing (`offsetMilliseconds`, `durationMilliseconds`) is not supported for the `translate` task
 - Diarization is not supported for the `translate` task (only `speaker1` label is returned)
-- `locales` and `phraseLists` options are not required or applicable with Enhanced Mode
+- `locales` is optional in Enhanced Mode. The service operates in multi-lingual mode by default; if specified, the first locale is used as a hint to guide recognition.
+- `phraseLists` options are not required or applicable with Enhanced Mode
 
 ## Related Resources
 

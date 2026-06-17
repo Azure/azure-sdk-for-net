@@ -120,9 +120,10 @@ namespace Azure.ResourceManager.Chaos.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ChaosExperimentData, ChaosExperimentResource>(new ExperimentsGetExperimentsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ChaosExperimentData, ChaosExperimentResource>(new ExperimentsListAsyncCollectionResultOfT(
                 ExperimentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
+                null,
                 running,
                 continuationToken,
                 context,
@@ -140,13 +141,62 @@ namespace Azure.ResourceManager.Chaos.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ChaosExperimentData, ChaosExperimentResource>(new ExperimentsGetExperimentsCollectionResultOfT(
+            return new PageableWrapper<ChaosExperimentData, ChaosExperimentResource>(new ExperimentsListCollectionResultOfT(
                 ExperimentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
+                null,
                 running,
                 continuationToken,
                 context,
                 "MockableChaosSubscriptionResource.GetChaosExperiments"), data => new ChaosExperimentResource(Client, data));
+        }
+
+        /// <summary>
+        /// Returns the current status of an async operation.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/locations/{location}/operationStatuses/{operationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>OperationStatuses_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location of the async operation. </param>
+        /// <param name="operationId"> The ID of an ongoing async operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Azure.Response<Azure.ResourceManager.Models.OperationStatusResult>> GetChaosOperationStatusAsync(AzureLocation location, string operationId, CancellationToken cancellationToken = default)
+        {
+            return await GetAsync(location.Name, operationId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Returns the current status of an async operation.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/locations/{location}/operationStatuses/{operationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>OperationStatuses_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location of the async operation. </param>
+        /// <param name="operationId"> The ID of an ongoing async operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Azure.Response<Azure.ResourceManager.Models.OperationStatusResult> GetChaosOperationStatus(AzureLocation location, string operationId, CancellationToken cancellationToken = default)
+        {
+            return Get(location.Name, operationId, cancellationToken);
         }
     }
 }

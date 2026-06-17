@@ -12,6 +12,11 @@ namespace Azure.AI.Projects
     /// <summary> A manual payload used to test a responses API routine dispatch. </summary>
     public partial class InvokeAgentResponsesApiDispatchPayload : RoutineDispatchPayload, IJsonModel<InvokeAgentResponsesApiDispatchPayload>
     {
+        /// <summary> Initializes a new instance of <see cref="InvokeAgentResponsesApiDispatchPayload"/> for deserialization. </summary>
+        internal InvokeAgentResponsesApiDispatchPayload()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override RoutineDispatchPayload PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -71,11 +76,15 @@ namespace Azure.AI.Projects
                 throw new FormatException($"The model {nameof(InvokeAgentResponsesApiDispatchPayload)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Input))
+            writer.WritePropertyName("input"u8);
+#if NET6_0_OR_GREATER
+            writer.WriteRawValue(Input);
+#else
+            using (JsonDocument document = JsonDocument.Parse(Input))
             {
-                writer.WritePropertyName("input"u8);
-                writer.WriteStringValue(Input);
+                JsonSerializer.Serialize(writer, document.RootElement);
             }
+#endif
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -105,7 +114,7 @@ namespace Azure.AI.Projects
             }
             RoutineDispatchPayloadType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            string input = default;
+            BinaryData input = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -115,7 +124,7 @@ namespace Azure.AI.Projects
                 }
                 if (prop.NameEquals("input"u8))
                 {
-                    input = prop.Value.GetString();
+                    input = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
                 if (options.Format != "W")

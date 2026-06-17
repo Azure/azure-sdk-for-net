@@ -9,7 +9,7 @@ namespace Azure.AI.Projects
 {
     /// <summary>
     /// The base source model for data generation jobs.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="PromptDataGenerationJobSource"/>, <see cref="AgentDataGenerationJobSource"/>, <see cref="TracesDataGenerationJobSource"/>, <see cref="DatasetDataGenerationJobSource"/>, and <see cref="FileDataGenerationJobSource"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="PromptDataGenerationJobSource"/>, <see cref="AgentDataGenerationJobSource"/>, <see cref="TracesDataGenerationJobSource"/>, and <see cref="FileDataGenerationJobSource"/>.
     /// </summary>
     public abstract partial class DataGenerationJobSource
     {

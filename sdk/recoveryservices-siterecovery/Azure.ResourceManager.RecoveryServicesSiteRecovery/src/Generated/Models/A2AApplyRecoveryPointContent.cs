@@ -14,17 +14,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public partial class A2AApplyRecoveryPointContent : SiteRecoveryApplyRecoveryPointProviderSpecificContent
     {
         /// <summary> Initializes a new instance of <see cref="A2AApplyRecoveryPointContent"/>. </summary>
-        public A2AApplyRecoveryPointContent()
+        public A2AApplyRecoveryPointContent() : base("A2A")
         {
-            InstanceType = "A2A";
         }
 
         /// <summary> Initializes a new instance of <see cref="A2AApplyRecoveryPointContent"/>. </summary>
         /// <param name="instanceType"> The class type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal A2AApplyRecoveryPointContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(instanceType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal A2AApplyRecoveryPointContent(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(instanceType, additionalBinaryDataProperties)
         {
-            InstanceType = instanceType ?? "A2A";
         }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     public readonly partial struct NetworkFabricLockType : IEquatable<NetworkFabricLockType>
     {
         private readonly string _value;
+        /// <summary> A administrative lock/unlock operation will be performed. </summary>
+        private const string AdministrativeValue = "Administrative";
+        /// <summary> A lock/unlock operation will be performed on the configuration. </summary>
+        private const string ConfigurationValue = "Configuration";
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricLockType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NetworkFabricLockType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AdministrativeValue = "Administrative";
-        private const string ConfigurationValue = "Configuration";
+            _value = value;
+        }
 
         /// <summary> A administrative lock/unlock operation will be performed. </summary>
         public static NetworkFabricLockType Administrative { get; } = new NetworkFabricLockType(AdministrativeValue);
+
         /// <summary> A lock/unlock operation will be performed on the configuration. </summary>
         public static NetworkFabricLockType Configuration { get; } = new NetworkFabricLockType(ConfigurationValue);
+
         /// <summary> Determines if two <see cref="NetworkFabricLockType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NetworkFabricLockType left, NetworkFabricLockType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NetworkFabricLockType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NetworkFabricLockType left, NetworkFabricLockType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NetworkFabricLockType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NetworkFabricLockType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NetworkFabricLockType(string value) => new NetworkFabricLockType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NetworkFabricLockType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NetworkFabricLockType?(string value) => value == null ? null : new NetworkFabricLockType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NetworkFabricLockType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NetworkFabricLockType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

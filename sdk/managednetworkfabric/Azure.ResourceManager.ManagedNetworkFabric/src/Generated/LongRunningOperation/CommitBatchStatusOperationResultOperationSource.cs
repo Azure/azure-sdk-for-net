@@ -8,23 +8,36 @@
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
-    internal class CommitBatchStatusOperationResultOperationSource : IOperationSource<CommitBatchStatusOperationResult>
+    /// <summary></summary>
+    internal partial class CommitBatchStatusOperationResultOperationSource : IOperationSource<CommitBatchStatusOperationResult>
     {
-        CommitBatchStatusOperationResult IOperationSource<CommitBatchStatusOperationResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        /// <summary></summary>
+        internal CommitBatchStatusOperationResultOperationSource()
         {
-            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            return CommitBatchStatusOperationResult.DeserializeCommitBatchStatusOperationResult(document.RootElement);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        CommitBatchStatusOperationResult IOperationSource<CommitBatchStatusOperationResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            return CommitBatchStatusOperationResult.DeserializeCommitBatchStatusOperationResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<CommitBatchStatusOperationResult> IOperationSource<CommitBatchStatusOperationResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            return CommitBatchStatusOperationResult.DeserializeCommitBatchStatusOperationResult(document.RootElement);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            return CommitBatchStatusOperationResult.DeserializeCommitBatchStatusOperationResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

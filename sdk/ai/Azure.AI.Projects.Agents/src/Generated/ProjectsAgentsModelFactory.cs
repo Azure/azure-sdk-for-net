@@ -3,8 +3,10 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using OpenAI;
 using OpenAI.Responses;
@@ -82,35 +84,30 @@ namespace Azure.AI.Projects.Agents
         /// An array of tools the hosted agent's model may call while generating a response. You
         /// can specify which tool to use by setting the `tool_choice` parameter.
         /// </param>
-        /// <param name="versions"> The protocols that the agent supports for ingress communication of the containers. </param>
         /// <param name="cpu"> The CPU configuration for the hosted agent. </param>
         /// <param name="memory"> The memory configuration for the hosted agent. </param>
         /// <param name="environmentVariables"> Environment variables to set in the hosted agent container. </param>
-        /// <param name="image"> The image ID for the agent, applicable to image-based hosted agents. </param>
         /// <param name="containerConfiguration"> Container-based deployment configuration. Provide this for image-based deployments. Mutually exclusive with code_configuration — the service validates that exactly one is set. </param>
-        /// <param name="protocolVersions"> The protocols that the agent supports for ingress communication. </param>
+        /// <param name="versions"> The protocols that the agent supports for ingress communication. </param>
         /// <param name="codeConfiguration"> Code-based deployment configuration. Provide this for code-based deployments. Mutually exclusive with container_configuration — the service validates that exactly one is set. </param>
         /// <param name="telemetryConfig"> Optional customer-supplied telemetry configuration for exporting container logs, traces, and metrics. </param>
         /// <returns> A new <see cref="Agents.HostedAgentDefinition"/> instance for mocking. </returns>
-        public static HostedAgentDefinition HostedAgentDefinition(ContentFilterConfiguration contentFilterConfiguration = default, IEnumerable<ProjectsAgentTool> tools = default, IEnumerable<ProtocolVersionRecord> versions = default, string cpu = default, string memory = default, IDictionary<string, string> environmentVariables = default, string image = default, ContainerConfiguration containerConfiguration = default, IEnumerable<ProtocolVersionRecord> protocolVersions = default, CodeConfiguration codeConfiguration = default, TelemetryConfig telemetryConfig = default)
+        public static HostedAgentDefinition HostedAgentDefinition(ContentFilterConfiguration contentFilterConfiguration = default, IEnumerable<ProjectsAgentTool> tools = default, string cpu = default, string memory = default, IDictionary<string, string> environmentVariables = default, ContainerConfiguration containerConfiguration = default, IEnumerable<ProtocolVersionRecord> versions = default, CodeConfiguration codeConfiguration = default, TelemetryConfig telemetryConfig = default)
         {
             tools ??= new ChangeTrackingList<ProjectsAgentTool>();
-            versions ??= new ChangeTrackingList<ProtocolVersionRecord>();
             environmentVariables ??= new ChangeTrackingDictionary<string, string>();
-            protocolVersions ??= new ChangeTrackingList<ProtocolVersionRecord>();
+            versions ??= new ChangeTrackingList<ProtocolVersionRecord>();
 
             return new HostedAgentDefinition(
                 ProjectsAgentKind.Hosted,
                 contentFilterConfiguration,
                 additionalBinaryDataProperties: null,
                 tools.ToList(),
-                versions.ToList(),
                 cpu,
                 memory,
                 environmentVariables,
-                image,
                 containerConfiguration,
-                protocolVersions.ToList(),
+                versions.ToList(),
                 codeConfiguration,
                 telemetryConfig);
         }
@@ -787,6 +784,14 @@ namespace Azure.AI.Projects.Agents
             return new ToolSearchTool(ToolType.ToolSearch, additionalBinaryDataProperties: null, execution, description, parameters);
         }
 
+        /// <summary> Container-based deployment configuration for a hosted agent. </summary>
+        /// <param name="image"> The container image for the hosted agent. </param>
+        /// <returns> A new <see cref="Agents.ContainerConfiguration"/> instance for mocking. </returns>
+        public static ContainerConfiguration ContainerConfiguration(string image = default)
+        {
+            return new ContainerConfiguration(image, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> A record mapping for a single protocol and its version. </summary>
         /// <param name="protocol"> The protocol type. </param>
         /// <param name="version"> The version string for the protocol, e.g. 'v0.1.1'. </param>
@@ -794,14 +799,6 @@ namespace Azure.AI.Projects.Agents
         public static ProtocolVersionRecord ProtocolVersionRecord(ProjectsAgentProtocol protocol = default, string version = default)
         {
             return new ProtocolVersionRecord(protocol, version, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Container-based deployment configuration for a hosted agent. </summary>
-        /// <param name="image"> The container image for the hosted agent. </param>
-        /// <returns> A new <see cref="Agents.ContainerConfiguration"/> instance for mocking. </returns>
-        public static ContainerConfiguration ContainerConfiguration(string image = default)
-        {
-            return new ContainerConfiguration(image, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Code-based deployment configuration for a hosted agent. </summary>
@@ -893,14 +890,14 @@ namespace Azure.AI.Projects.Agents
         /// <param name="instructions"> A system (or developer) message inserted into the model's context. </param>
         /// <param name="temperature">
         /// What sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic.
-        /// We generally recommend altering this or `top_p` but not both.
+        /// We generally recommend altering this or `top_p` but not both. Defaults to `1`.
         /// </param>
         /// <param name="topP">
         /// An alternative to sampling with temperature, called nucleus sampling,
         /// where the model considers the results of the tokens with top_p probability
         /// mass. So 0.1 means only the tokens comprising the top 10% probability mass
-        /// are considered.
-        /// We generally recommend altering this or `temperature` but not both.
+        /// are considered. We generally recommend altering this or `temperature` but not both.
+        /// Defaults to `1`.
         /// </param>
         /// <param name="reasoningOptions"></param>
         /// <param name="tools">
@@ -938,7 +935,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="description"> A human-readable description of the input. </param>
         /// <param name="defaultValue"> The default value for the input if no run-time value is provided. </param>
         /// <param name="schema"> The JSON schema for the structured input (optional). </param>
-        /// <param name="isRequired"> Whether the input property is required when the agent is invoked. </param>
+        /// <param name="isRequired"> Whether the input property is required when the agent is invoked. The service defaults to `false` if a value is not specified by the caller. </param>
         /// <returns> A new <see cref="Agents.StructuredInputDefinition"/> instance for mocking. </returns>
         public static StructuredInputDefinition StructuredInputDefinition(string description = default, BinaryData defaultValue = default, IDictionary<string, BinaryData> schema = default, bool? isRequired = default)
         {
@@ -1144,7 +1141,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> A new <see cref="Agents.CreateAgentFromCodeOptions"/> instance for mocking. </returns>
         public static CreateAgentFromCodeOptions CreateAgentFromCodeOptions(CreateAgentVersionFromCodeMetadata metadata = default, BinaryData code = default)
         {
-            return new CreateAgentFromCodeOptions(metadata, code, additionalBinaryDataProperties: null);
+            return new CreateAgentFromCodeOptions(metadata, code);
         }
 
         /// <summary>
@@ -1254,6 +1251,26 @@ namespace Azure.AI.Projects.Agents
             return new SessionLogEvent(@event, data, additionalBinaryDataProperties: null);
         }
 
+        /// <summary>
+        /// A skill source included in a toolbox.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.ToolboxSkillReference"/>.
+        /// </summary>
+        /// <param name="type"> The type of skill source. </param>
+        /// <returns> A new <see cref="Agents.ToolboxSkill"/> instance for mocking. </returns>
+        public static ToolboxSkill ToolboxSkill(string @type = default)
+        {
+            return new UnknownToolboxSkill(@type, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A reference to an existing skill to include in a toolbox. </summary>
+        /// <param name="name"> The name of the skill. </param>
+        /// <param name="version"> The version of the skill. If not specified, the skill's default version is used. When a version is specified, the reference is pinned to that immutable version. </param>
+        /// <returns> A new <see cref="Agents.ToolboxSkillReference"/> instance for mocking. </returns>
+        public static ToolboxSkillReference ToolboxSkillReference(string name = default, string version = default)
+        {
+            return new ToolboxSkillReference("skill_reference", additionalBinaryDataProperties: null, name, version);
+        }
+
         /// <summary> Policy configuration for a toolbox, including content safety and other governance settings. </summary>
         /// <param name="raiConfig"> Responsible AI content filtering configuration. </param>
         /// <returns> A new <see cref="Agents.ToolboxPolicies"/> instance for mocking. </returns>
@@ -1276,12 +1293,14 @@ namespace Azure.AI.Projects.Agents
         /// <param name="description"> A human-readable description of the toolbox. </param>
         /// <param name="createdAt"> The Unix timestamp (seconds) when the toolbox version was created. </param>
         /// <param name="tools"> The list of tools contained in this toolbox version. </param>
+        /// <param name="skills"> The list of skill sources included in this toolbox version. </param>
         /// <param name="policies"> Policy configuration for the toolbox version. </param>
         /// <returns> A new <see cref="Agents.ToolboxVersion"/> instance for mocking. </returns>
-        public static ToolboxVersion ToolboxVersion(IDictionary<string, string> metadata = default, string id = default, string name = default, string version = default, string description = default, DateTimeOffset createdAt = default, IEnumerable<ProjectsAgentTool> tools = default, ToolboxPolicies policies = default)
+        public static ToolboxVersion ToolboxVersion(IDictionary<string, string> metadata = default, string id = default, string name = default, string version = default, string description = default, DateTimeOffset createdAt = default, IEnumerable<ProjectsAgentTool> tools = default, IEnumerable<ToolboxSkill> skills = default, ToolboxPolicies policies = default)
         {
             metadata ??= new ChangeTrackingDictionary<string, string>();
             tools ??= new ChangeTrackingList<ProjectsAgentTool>();
+            skills ??= new ChangeTrackingList<ToolboxSkill>();
 
             return new ToolboxVersion(
                 metadata,
@@ -1291,6 +1310,7 @@ namespace Azure.AI.Projects.Agents
                 description,
                 createdAt,
                 tools.ToList(),
+                skills.ToList(),
                 policies,
                 additionalBinaryDataProperties: null);
         }
@@ -1305,39 +1325,88 @@ namespace Azure.AI.Projects.Agents
             return new ToolboxRecord(id, name, defaultVersion, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> A skill object. </summary>
-        /// <param name="skillId"> The unique identifier of the skill. </param>
-        /// <param name="hasBlob"> Whether the skill was created from a zip blob package. </param>
+        /// <summary> A skill resource. </summary>
+        /// <param name="id"> The unique identifier of the skill. </param>
         /// <param name="name"> The unique name of the skill. </param>
         /// <param name="description"> A human-readable description of the skill. </param>
-        /// <param name="metadata">
-        /// Set of 16 key-value pairs that can be attached to an object. This can be
-        /// useful for storing additional information about the object in a structured
-        /// format, and querying for objects via API or the dashboard.
-        /// Keys are strings with a maximum length of 64 characters. Values are strings
-        /// with a maximum length of 512 characters.
-        /// </param>
+        /// <param name="createdAt"> The Unix timestamp (seconds) when the skill was created. </param>
+        /// <param name="defaultVersion"> The default version for the skill. Can be changed via updateSkill. </param>
+        /// <param name="latestVersion"> The latest version for the skill. </param>
         /// <returns> A new <see cref="Agents.AgentsSkill"/> instance for mocking. </returns>
-        public static AgentsSkill AgentsSkill(string skillId = default, bool hasBlob = default, string name = default, string description = default, IDictionary<string, string> metadata = default)
+        public static AgentsSkill AgentsSkill(string id = default, string name = default, string description = default, DateTimeOffset createdAt = default, string defaultVersion = default, string latestVersion = default)
         {
-            metadata ??= new ChangeTrackingDictionary<string, string>();
-
             return new AgentsSkill(
-                skillId,
-                hasBlob,
+                id,
                 name,
                 description,
-                metadata,
+                createdAt,
+                defaultVersion,
+                latestVersion,
                 additionalBinaryDataProperties: null);
         }
 
-        /// <summary> A deleted skill Object. </summary>
+        /// <summary> A deleted skill. </summary>
+        /// <param name="id"> The unique identifier of the deleted skill. </param>
         /// <param name="name"> The unique name of the skill. </param>
         /// <param name="deleted"> Whether the skill was successfully deleted. </param>
         /// <returns> A new <see cref="Agents.DeleteSkillResponse"/> instance for mocking. </returns>
-        public static DeleteSkillResponse DeleteSkillResponse(string name = default, bool deleted = default)
+        public static DeleteSkillResponse DeleteSkillResponse(string id = default, string name = default, bool deleted = default)
         {
-            return new DeleteSkillResponse(name, deleted, additionalBinaryDataProperties: null);
+            return new DeleteSkillResponse(id, name, deleted, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Inline content for defining a simple skill without uploading files. Follows the agentskills.io SKILL.md specification. </summary>
+        /// <param name="description"> A human-readable description of what the skill does and when to use it. </param>
+        /// <param name="instructions"> The skill instructions in markdown format. This is the body content of the SKILL.md file. </param>
+        /// <param name="license"> License name or reference to a bundled license file. </param>
+        /// <param name="compatibility"> Environment requirements or compatibility notes for the skill. </param>
+        /// <param name="metadata"> Arbitrary key-value metadata for additional properties. </param>
+        /// <param name="allowedTools"> List of pre-approved tools the skill may use. Experimental. </param>
+        /// <returns> A new <see cref="Agents.SkillInlineContent"/> instance for mocking. </returns>
+        public static SkillInlineContent SkillInlineContent(string description = default, string instructions = default, string license = default, string compatibility = default, IDictionary<string, string> metadata = default, IEnumerable<string> allowedTools = default)
+        {
+            metadata ??= new ChangeTrackingDictionary<string, string>();
+            allowedTools ??= new ChangeTrackingList<string>();
+
+            return new SkillInlineContent(
+                description,
+                instructions,
+                license,
+                compatibility,
+                metadata,
+                allowedTools.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A specific version of a skill. </summary>
+        /// <param name="id"> The unique identifier of the skill version. </param>
+        /// <param name="skillId"> The identifier of the parent skill. </param>
+        /// <param name="name"> The name of the skill version. </param>
+        /// <param name="version"> The version identifier. Skill versions are immutable. </param>
+        /// <param name="description"> A human-readable description of the skill version. </param>
+        /// <param name="createdAt"> The Unix timestamp (seconds) when the skill version was created. </param>
+        /// <returns> A new <see cref="Agents.SkillVersion"/> instance for mocking. </returns>
+        public static SkillVersion SkillVersion(string id = default, string skillId = default, string name = default, string version = default, string description = default, DateTimeOffset createdAt = default)
+        {
+            return new SkillVersion(
+                id,
+                skillId,
+                name,
+                version,
+                description,
+                createdAt,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A deleted skill version. </summary>
+        /// <param name="id"> The unique identifier of the deleted skill version. </param>
+        /// <param name="name"> The name of the skill. </param>
+        /// <param name="deleted"> Whether the skill version was successfully deleted. </param>
+        /// <param name="version"> The version that was deleted. </param>
+        /// <returns> A new <see cref="Agents.DeleteSkillVersionResponse"/> instance for mocking. </returns>
+        public static DeleteSkillVersionResponse DeleteSkillVersionResponse(string id = default, string name = default, bool deleted = default, string version = default)
+        {
+            return new DeleteSkillVersionResponse(id, name, deleted, version, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Response from uploading a file to a session sandbox. </summary>
@@ -1349,17 +1418,6 @@ namespace Azure.AI.Projects.Agents
             return new SessionFileWriteResponse(path, bytesWritten, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Response from listing a directory in a session sandbox. </summary>
-        /// <param name="path"> The path that was listed, relative to the session home directory. </param>
-        /// <param name="entries"> The directory entries. </param>
-        /// <returns> A new <see cref="Agents.SessionDirectoryListResponse"/> instance for mocking. </returns>
-        public static SessionDirectoryListResponse SessionDirectoryListResponse(string path = default, IEnumerable<SessionDirectoryEntry> entries = default)
-        {
-            entries ??= new ChangeTrackingList<SessionDirectoryEntry>();
-
-            return new SessionDirectoryListResponse(path, entries.ToList(), additionalBinaryDataProperties: null);
-        }
-
         /// <summary> A single entry in a directory listing. </summary>
         /// <param name="name"> The name of the file or directory. </param>
         /// <param name="size"> The size in bytes (0 for directories). </param>
@@ -1369,6 +1427,174 @@ namespace Azure.AI.Projects.Agents
         public static SessionDirectoryEntry SessionDirectoryEntry(string name = default, long size = default, bool isDirectory = default, DateTimeOffset modifiedTime = default)
         {
             return new SessionDirectoryEntry(name, size, isDirectory, modifiedTime, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Caller-supplied inputs for an optimization job. </summary>
+        /// <param name="agent"> The agent (and pinned version) being optimized. </param>
+        /// <param name="trainDataset"> Training dataset — either inline items or a reference to a registered dataset. Required. </param>
+        /// <param name="validationDataset"> Optional held-out validation dataset for measuring generalization of the final candidate. </param>
+        /// <param name="evaluators"> Job-level evaluators referenced by name and optional version. Required; at least one must be provided. </param>
+        /// <param name="options"> Tuning knobs and run-mode. </param>
+        /// <returns> A new <see cref="Agents.OptimizationJobInputs"/> instance for mocking. </returns>
+        public static OptimizationJobInputs OptimizationJobInputs(OptimizationAgentIdentifier agent = default, OptimizationDatasetInput trainDataset = default, OptimizationDatasetInput validationDataset = default, IEnumerable<OptimizationEvaluatorRef> evaluators = default, OptimizationOptions options = default)
+        {
+            evaluators ??= new ChangeTrackingList<OptimizationEvaluatorRef>();
+
+            return new OptimizationJobInputs(
+                agent,
+                trainDataset,
+                validationDataset,
+                evaluators.ToList(),
+                options,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Identifies the registered Foundry agent to optimize (request-only). Skills, tools, and system_prompt are specified in options.optimization_config. </summary>
+        /// <param name="agentName"> Registered Foundry agent name (required). </param>
+        /// <param name="agentVersion"> Pinned agent version. Defaults to latest if omitted. </param>
+        /// <returns> A new <see cref="Agents.OptimizationAgentIdentifier"/> instance for mocking. </returns>
+        public static OptimizationAgentIdentifier OptimizationAgentIdentifier(string agentName = default, string agentVersion = default)
+        {
+            return new OptimizationAgentIdentifier(agentName, agentVersion, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// Base discriminated model for dataset input. Either inline items or a registered reference.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.OptimizationInlineDatasetInput"/> and <see cref="Agents.OptimizationReferenceDatasetInput"/>.
+        /// </summary>
+        /// <param name="type"> Dataset input type discriminator. </param>
+        /// <returns> A new <see cref="Agents.OptimizationDatasetInput"/> instance for mocking. </returns>
+        public static OptimizationDatasetInput OptimizationDatasetInput(string @type = default)
+        {
+            return new UnknownOptimizationDatasetInput(new OptimizationDatasetInputType(@type), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Inline dataset — items supplied directly in the request body. </summary>
+        /// <param name="items"> Dataset items. </param>
+        /// <returns> A new <see cref="Agents.OptimizationInlineDatasetInput"/> instance for mocking. </returns>
+        public static OptimizationInlineDatasetInput OptimizationInlineDatasetInput(IEnumerable<OptimizationDatasetItem> items = default)
+        {
+            items ??= new ChangeTrackingList<OptimizationDatasetItem>();
+
+            return new OptimizationInlineDatasetInput(OptimizationDatasetInputType.Inline, additionalBinaryDataProperties: null, items.ToList());
+        }
+
+        /// <summary> A single item in an inline dataset. </summary>
+        /// <param name="query"> The user query / prompt. </param>
+        /// <param name="groundTruth"> Expected ground truth answer. </param>
+        /// <param name="desiredNumTurns"> Desired number of conversation turns for simulation mode (1-20). </param>
+        /// <param name="criteria"> Per-item evaluation criteria. </param>
+        /// <returns> A new <see cref="Agents.OptimizationDatasetItem"/> instance for mocking. </returns>
+        public static OptimizationDatasetItem OptimizationDatasetItem(string query = default, string groundTruth = default, int? desiredNumTurns = default, IEnumerable<OptimizationDatasetCriterion> criteria = default)
+        {
+            criteria ??= new ChangeTrackingList<OptimizationDatasetCriterion>();
+
+            return new OptimizationDatasetItem(query, groundTruth, desiredNumTurns, criteria.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Evaluation criterion: a name + instruction pair used for per-item scoring. </summary>
+        /// <param name="name"> Criterion name. </param>
+        /// <param name="instruction"> Criterion instruction / description. </param>
+        /// <returns> A new <see cref="Agents.OptimizationDatasetCriterion"/> instance for mocking. </returns>
+        public static OptimizationDatasetCriterion OptimizationDatasetCriterion(string name = default, string instruction = default)
+        {
+            return new OptimizationDatasetCriterion(name, instruction, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Reference to a registered Foundry dataset. </summary>
+        /// <param name="name"> Registered dataset name. </param>
+        /// <param name="version"> Dataset version. If not specified, the latest version is used. </param>
+        /// <returns> A new <see cref="Agents.OptimizationReferenceDatasetInput"/> instance for mocking. </returns>
+        public static OptimizationReferenceDatasetInput OptimizationReferenceDatasetInput(string name = default, string version = default)
+        {
+            return new OptimizationReferenceDatasetInput(OptimizationDatasetInputType.Reference, additionalBinaryDataProperties: null, name, version);
+        }
+
+        /// <summary> Reference to a named evaluator, optionally pinned to a version. </summary>
+        /// <param name="name"> Evaluator name. </param>
+        /// <param name="version"> Evaluator version. If not specified, the latest version is used. </param>
+        /// <returns> A new <see cref="Agents.OptimizationEvaluatorRef"/> instance for mocking. </returns>
+        public static OptimizationEvaluatorRef OptimizationEvaluatorRef(string name = default, string version = default)
+        {
+            return new OptimizationEvaluatorRef(name, version, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Tuning knobs and run-mode for an optimization job. </summary>
+        /// <param name="maxCandidates"> Maximum number of optimization candidates to generate. Must be &gt;= 1. Default: 5. </param>
+        /// <param name="optimizationConfig"> Per-target-attribute configuration overrides. Contains skills, tools, system_prompt for the agent, plus model space for model optimization. </param>
+        /// <param name="evalModel"> Model deployment used for evaluation. Defaults to server config (typically 'gpt-4o'). </param>
+        /// <param name="optimizationModel"> Model deployment for optimization reasoning (must be gpt-5 family). Falls back to the default eval model when not set. </param>
+        /// <param name="evaluationLevel"> Evaluation granularity. Null/omitted means per-item single-turn. Set to 'conversation' for per-conversation multi-turn simulation scoring. </param>
+        /// <returns> A new <see cref="Agents.OptimizationOptions"/> instance for mocking. </returns>
+        public static OptimizationOptions OptimizationOptions(int? maxCandidates = default, IDictionary<string, BinaryData> optimizationConfig = default, string evalModel = default, string optimizationModel = default, EvaluationLevel? evaluationLevel = default)
+        {
+            optimizationConfig ??= new ChangeTrackingDictionary<string, BinaryData>();
+
+            return new OptimizationOptions(
+                maxCandidates,
+                optimizationConfig,
+                evalModel,
+                optimizationModel,
+                evaluationLevel,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Terminal-state result body. Populated when status is succeeded or failed. </summary>
+        /// <param name="baseline"> Candidate ID of the original (un-optimized) baseline evaluation. </param>
+        /// <param name="best"> Candidate ID of the highest-scoring candidate found during optimization. </param>
+        /// <param name="candidates"> All evaluated candidates including baseline. </param>
+        /// <returns> A new <see cref="Agents.OptimizationJobResult"/> instance for mocking. </returns>
+        public static OptimizationJobResult OptimizationJobResult(string baseline = default, string best = default, IEnumerable<OptimizationCandidate> candidates = default)
+        {
+            candidates ??= new ChangeTrackingList<OptimizationCandidate>();
+
+            return new OptimizationJobResult(baseline, best, candidates.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Aggregated evaluation result for a single candidate agent configuration across all tasks. </summary>
+        /// <param name="candidateId"> Server-assigned candidate identifier. Use with GET /candidates/{id} sub-endpoints. </param>
+        /// <param name="name"> Display name of the candidate (e.g., 'baseline', 'instruction-v2'). </param>
+        /// <param name="mutations"> What was mutated from the baseline (e.g., {system_prompt: 'new prompt'}). </param>
+        /// <param name="avgScore"> Average composite score across all tasks. </param>
+        /// <param name="avgTokens"> Average token usage across all tasks. </param>
+        /// <param name="evalId"> Foundry evaluation identifier used to score this candidate. </param>
+        /// <param name="evalRunId"> Foundry evaluation run identifier for this candidate's scoring run. </param>
+        /// <param name="promotion"> Promotion metadata. Null if the candidate has not been promoted. </param>
+        /// <returns> A new <see cref="Agents.OptimizationCandidate"/> instance for mocking. </returns>
+        public static OptimizationCandidate OptimizationCandidate(string candidateId = default, string name = default, IDictionary<string, BinaryData> mutations = default, double avgScore = default, double avgTokens = default, string evalId = default, string evalRunId = default, PromotionInfo promotion = default)
+        {
+            mutations ??= new ChangeTrackingDictionary<string, BinaryData>();
+
+            return new OptimizationCandidate(
+                candidateId,
+                name,
+                mutations,
+                avgScore,
+                avgTokens,
+                evalId,
+                evalRunId,
+                promotion,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Promotion metadata recorded when a candidate is deployed to a Foundry agent. </summary>
+        /// <param name="promotedAt"> Timestamp when promotion occurred, represented in Unix time. </param>
+        /// <param name="agentName"> Name of the Foundry agent this candidate was promoted to. </param>
+        /// <param name="agentVersion"> Version of the Foundry agent this candidate was promoted to. </param>
+        /// <returns> A new <see cref="Agents.PromotionInfo"/> instance for mocking. </returns>
+        public static PromotionInfo PromotionInfo(DateTimeOffset promotedAt = default, string agentName = default, string agentVersion = default)
+        {
+            return new PromotionInfo(promotedAt, agentName, agentVersion, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> In-flight progress; only populated while status is queued or in_progress. </summary>
+        /// <param name="candidatesCompleted"> Number of candidates whose evaluation has completed so far. </param>
+        /// <param name="bestScore"> Best score observed so far across all candidates. </param>
+        /// <param name="elapsedSeconds"> Wall-clock time elapsed in seconds since the job began executing. </param>
+        /// <returns> A new <see cref="Agents.OptimizationJobProgress"/> instance for mocking. </returns>
+        public static OptimizationJobProgress OptimizationJobProgress(int candidatesCompleted = default, double bestScore = default, double elapsedSeconds = default)
+        {
+            return new OptimizationJobProgress(candidatesCompleted, bestScore, elapsedSeconds, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The ProjectsAgentVersionCreationOptions. </summary>
@@ -1578,7 +1804,22 @@ namespace Azure.AI.Projects.Agents
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static HostedAgentDefinition HostedAgentDefinition(ContentFilterConfiguration contentFilterConfiguration, IEnumerable<ProjectsAgentTool> tools, IEnumerable<ProtocolVersionRecord> versions, string cpu, string memory, IDictionary<string, string> environmentVariables, string image)
         {
-            return HostedAgentDefinition(contentFilterConfiguration: contentFilterConfiguration, tools: tools, versions: versions, cpu: cpu, memory: memory, environmentVariables: environmentVariables, image: image, containerConfiguration: default, protocolVersions: default, codeConfiguration: default, telemetryConfig: default);
+            tools ??= new ChangeTrackingList<ProjectsAgentTool>();
+            versions ??= new ChangeTrackingList<ProtocolVersionRecord>();
+            environmentVariables ??= new ChangeTrackingDictionary<string, string>();
+
+            return new HostedAgentDefinition(
+                ProjectsAgentKind.Hosted,
+                contentFilterConfiguration,
+                additionalBinaryDataProperties: null,
+                tools.ToList(),
+                cpu,
+                memory,
+                environmentVariables,
+                default,
+                versions.ToList(),
+                default,
+                default);
         }
 
         /// <summary> The ProjectsAgentVersionCreationOptions. </summary>

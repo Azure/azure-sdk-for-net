@@ -1,16 +1,24 @@
 # Release History
 
-## 2.1.0-beta.3 (Unreleased)
+## 2.1.0-beta.4 (Unreleased)
 
 ### Features Added
-- Added `AIProjectModels` client for model weights management, accessible via `AIProjectClient`.
-- Added memory store item CRUD operations for management of memories inside the `MemoryStore`.
 
 ### Breaking Changes
 
 ### Bugs Fixed
+- Fixed the `EvaluatorGenerationJob` serialization
+
+### Sample Updates
+- Added sample for evaluator generator job.
 
 ### Other Changes
+
+## 2.1.0-beta.3 (2026-05-29)
+
+### Features Added
+- Added `AIProjectModels` client for model weights management, accessible via `AIProjectClient`.
+- Added memory store item CRUD operations for management of memories inside the `MemoryStore`.
 
 ## 2.1.0-beta.2 (2026-05-14)
 

@@ -47,6 +47,7 @@ The client library uses version `v1` of the AI Foundry [data plane REST APIs](ht
   - [Red teams](#red-teams)
   - [Schedules](#schedules)
   - [Toolboxes](#toolboxes)
+  - [Routines](#routines)
 - [Tracing](#tracing)
     - [Azure Monitor Tracing](#tracing-to-azure-monitor)
     - [Console Tracing](#tracing-to-console)
@@ -583,6 +584,50 @@ DeleteMemoryStoreResponse deleteResponse = projectClient.MemoryStores.DeleteMemo
 status = deleteResponse.IsDeleted ? "" : " not";
 Console.WriteLine($"The memory store {deleteResponse.Name} was{status} deleted.");
 ```
+
+The items, stored at the memories can be directly managed using MemoryStores client.
+Create Items.
+
+```C# Snippet:Sample_CreateItems_MemoryStoreItems_Async
+MemoryItem customerData = await projectClient.MemoryStores.CreateMemoryAsync(name: memoryStore.Name, scope: scope, content: "The lover of oranges.", kind: MemoryItemKind.UserProfile);
+MemoryItem orangeSKU = await projectClient.MemoryStores.CreateMemoryAsync(name: memoryStore.Name, scope: scope, content: "Orange SKU is 658954.", kind: MemoryItemKind.ChatSummary);
+Console.WriteLine($"Created memory store item {customerData.MemoryId}: {customerData.Content}");
+Console.WriteLine($"Created memory store item {orangeSKU.MemoryId}: {orangeSKU.Content}");
+```
+
+Update a memory store item.
+
+```C# Snippet:Sample_UpdateItem_MemoryStoreItems_Async
+MemoryItem item = await projectClient.MemoryStores.UpdateMemoryAsync(name: memoryStore.Name, memoryId: orangeSKU.MemoryId, content: "Apple SKU is 786545.");
+Console.WriteLine($"Updated memory store item {item.MemoryId}, new content: {item.Content}");
+```
+
+Get the memory store item.
+
+```C# Snippet:Sample_GetItems_MemoryStoreItems_Async
+item = await projectClient.MemoryStores.GetMemoryAsync(name: memoryStore.Name, memoryId: customerData.MemoryId);
+Console.WriteLine($"Retrieved memory store item {item.MemoryId}: {item.Content}");
+```
+
+List memory store items.
+
+```C# Snippet:Sample_ListItems_MemoryStoreItems_Async
+Console.WriteLine($"Listing memory store items from {memoryStore.Name}");
+await foreach (MemoryItem oneItem in projectClient.MemoryStores.GetMemoriesAsync(name: memoryStore.Name, scope: scope))
+{
+    Console.WriteLine($"    item {oneItem.MemoryId}: {oneItem.Content}");
+}
+```
+
+Delete memory store items.
+
+```C# Snippet:Sample_Delete_UpdateStoreItems_Async
+DeleteMemoryResponse response = await projectClient.MemoryStores.DeleteMemoryAsync(name: memoryStore.Name, memoryId: customerData.MemoryId);
+Console.WriteLine($"Memory Item with ID {response.MemoryId} was{(response.Deleted ? " " : " not ")}removed.");
+response = await projectClient.MemoryStores.DeleteMemoryAsync(name: memoryStore.Name, memoryId: orangeSKU.MemoryId);
+Console.WriteLine($"Memory Item with ID {response.MemoryId} was{(response.Deleted ? " " : " not ")}removed.");
+```
+
 
 For more information about memory stores please refer [this article](https://learn.microsoft.com/azure/ai-foundry/agents/concepts/agent-memory)
 
@@ -1219,7 +1264,7 @@ EvaluationRule continuousEvalRule = await projectClient.EvaluationRules.CreateOr
 Console.WriteLine($"Continuous Evaluation Rule created (id: {continuousEvalRule.Id}, name: {continuousEvalRule.DisplayName})");
 ```
 
-### Evaluation insights
+#### Evaluation insights
 
 To further analyze the evaluation runs the `ProjectInsights` can be used. They allow to cluster and compare the evaluation
 runs against baseline.
@@ -1337,6 +1382,55 @@ private static void ParseCompareResults(ProjectsInsight compareInsight)
         throw new InvalidOperationException("Evaluation comparison generation failed.");
     }
 }
+```
+
+#### Evaluator generation jobs
+
+To test the Agent or model, used for specific scenario we can generate the evaluator, which will ask
+question and evaluate answers related to it. In the code below we will create an Agent,
+which can generate questions and answers based on provided prompt and use it for evaluator generation.
+
+```C# Snippet:Sample_CreateAnAgent_EvaluatorGenerationJob_Async
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
+{
+    Instructions = "You are a helpful assistant that answers general questions",
+};
+ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
+    agentName: "evalAgent",
+    options: new(agentDefinition));
+Console.WriteLine($"Agent created (id: {agentVersion.Id}, name: {agentVersion.Name}, version: {agentVersion.Version})");
+EvaluatorGenerationJob job = new()
+{
+    Inputs = new EvaluatorGenerationInputs(
+        sources: [new AgentEvaluatorGenerationJobSource(agentName: agentVersion.Name)],
+        model: modelDeploymentName,
+        evaluatorName: "coherence"
+    )
+};
+```
+
+To generate the evaluator, we need to start the job:
+
+```C# Snippet:Sample_CreateJob_EvaluatorGenerationJob_Async
+EvaluatorGenerationJob runningJob = await projectClient.EvaluatorGenerationJobs.CreateAsync(job);
+Console.WriteLine($"Created job ID: {runningJob.Id}");
+```
+
+After the generation job is complete, the `EvaluatorVersion` object will be returned
+in `runningJob.Result` property.
+
+```C# Snippet:Sample_GetJob_EvaluatorGenerationJob_Async
+while (runningJob.Status != JobStatus.Failed && runningJob.Status != JobStatus.Succeeded)
+{
+    await Task.Delay(500);
+    Console.WriteLine($"Waiting for job ID: {runningJob.Id}...");
+    runningJob = await projectClient.EvaluatorGenerationJobs.GetAsync(jobId: runningJob.Id);
+}
+if (runningJob.Status == JobStatus.Failed)
+{
+    throw new InvalidOperationException($"The job {runningJob.Id} has failed.");
+}
+Console.WriteLine($"The job ID: {runningJob.Id} completed, created evaluator {runningJob.Result.Name}, v. {runningJob.Result.Version}");
 ```
 
 ### Red teams
@@ -1574,6 +1668,84 @@ The name of Toolbox and its version allow to get the `ToolboxVersion`, containin
 ```C# Snippet:Sample_GetToolboxVersion_ToolboxesCRUD_Async
 ToolboxVersion toolBox = await toolboxClient.GetToolboxVersionAsync(record.Name, record.DefaultVersion);
 Console.WriteLine($"Retrieved toolbox: {toolBox.Name} ({toolBox.Id})");
+```
+
+## Routines
+
+Routines client provides the mechanism to call the Hosted Agent asynchronously.
+The call can be scheduled in three different ways by using different trigger types.
+  - At a specific date and time using `TimerRoutineTrigger`.
+  - In response to an external event using `CustomRoutineTrigger`.
+  - Repeatedly according to a schedule using `ScheduleRoutineTrigger`.
+
+To create Routine, we need to define the hosted agent to be called and an action, which will be called on the
+Agent.
+
+```C# Snippet:Sample_CreateRoutine_RoutinesScheduleTrigger_Async
+RoutineAction action = new InvokeAgentResponsesApiRoutineAction
+{
+    AgentName = agentVersion.Name,
+    Input = BinaryData.FromObjectAsJson("Hello, Tell me a joke."),
+};
+ProjectsRoutineOptions routineOptions = new(action: action, description: "Routine used by the schedule-trigger sample.", enabled: true);
+routineOptions.Triggers.Add("every_five_minutes", new ScheduleRoutineTrigger(
+        cronExpression: "*/5 * * * *",
+        timeZone: "UTC"
+));
+ProjectsRoutine created = await routinesClient.CreateOrUpdateRoutineAsync(
+    routineName: routineName,
+    options: routineOptions
+);
+Console.WriteLine($"Created routine: {created.Name} enabled={created.Enabled}.");
+Console.WriteLine($"cron expression: {((ScheduleRoutineTrigger)routineOptions.Triggers["every_five_minutes"]).CronExpression}; time zone: {((ScheduleRoutineTrigger)routineOptions.Triggers["every_five_minutes"]).TimeZone}");
+```
+
+In this case we create schedule, when we call Agent every five minutes, we use responses API for invocation
+and the phrase "Hello, Tell me a joke." as an input.
+
+Similarly, we can create the routine, which will start the run in a response to the external event.
+
+```C# Snippet:Sample_CreateRoutine_RoutinesCRUD_Async
+RoutineAction action = new InvokeAgentResponsesApiRoutineAction
+{
+    AgentName = agentVersion.Name
+};
+ProjectsRoutineOptions routineOptions = new(action: action, description: "Routine created by the azure-ai-projects sample.", enabled: true);
+routineOptions.Triggers.Add("manual", new CustomRoutineTrigger(
+        provider: "sample-provider",
+        parameters: new Dictionary<string, BinaryData>
+        {
+            ["source"] = BinaryData.FromString("\"sample_routines_crud\"")
+        })
+{
+    EventName = "sample-event"
+});
+ProjectsRoutine created = await routinesClient.CreateOrUpdateRoutineAsync(
+    routineName: routineName,
+    options: routineOptions
+);
+Console.WriteLine($"Created routine: {created.Name} enabled={created.Enabled}");
+```
+
+To create a single run at given time we need to define routine as follows:
+
+```C# Snippet:Sample_CreateRoutine_RoutinesTimerTrigger_Async
+RoutineAction action = new InvokeAgentResponsesApiRoutineAction
+{
+    AgentName = agentVersion.Name,
+    Input = BinaryData.FromObjectAsJson("Hello, Tell me a joke."),
+};
+ProjectsRoutineOptions routineOptions = new(action: action, description: "Routine used by the timer-trigger sample.", enabled: true);
+routineOptions.Triggers.Add("once", new TimerRoutineTrigger()
+{
+    At = DateTimeOffset.UtcNow + TimeSpan.FromSeconds(20),
+});
+ProjectsRoutine created = await routinesClient.CreateOrUpdateRoutineAsync(
+    routineName: routineName,
+    options: routineOptions
+);
+Console.WriteLine($"Created routine: {created.Name} enabled={created.Enabled}.");
+Console.WriteLine($"Fire at: {((TimerRoutineTrigger)routineOptions.Triggers["once"]).At.Value.ToString("o")}");
 ```
 
 ## Tracing
