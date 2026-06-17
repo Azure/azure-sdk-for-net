@@ -81,18 +81,18 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
                         validationCode = events[0][DataKey][ValidationCodeKey].ToString();
                         break;
                     case JTokenType.Object:
-                    {
-                        // The Data is double-encoded in the CloudEvent subscription event
-                        var data = JToken.Parse(events[DataKey].ToString());
-                        validationCode = data[ValidationCodeKey].ToString();
-                        break;
-                    }
+                        {
+                            // The Data is double-encoded in the CloudEvent subscription event
+                            var data = JToken.Parse(events[DataKey].ToString());
+                            validationCode = data[ValidationCodeKey].ToString();
+                            break;
+                        }
                     default:
                         throw new ArgumentOutOfRangeException(
                             $"The request content should be parseable into a JSON object or array, but was {events.Type}.");
                 }
 
-                SubscriptionValidationResponse validationResponse = new SubscriptionValidationResponse{ ValidationResponse = validationCode };
+                SubscriptionValidationResponse validationResponse = new SubscriptionValidationResponse { ValidationResponse = validationCode };
                 var returnMessage = new HttpResponseMessage(HttpStatusCode.OK)
                 {
                     // use System.Text.Json to leverage the custom converter so that the casing is correct.
@@ -113,8 +113,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
                 }
                 JArray events = token.Type switch
                 {
-                    JTokenType.Array => (JArray) token,
-                    JTokenType.Object => new JArray {token},
+                    JTokenType.Array => (JArray)token,
+                    JTokenType.Object => new JArray { token },
                     _ => throw new ArgumentOutOfRangeException(
                         $"The request content should be parseable into a JSON object or array, but was {token.Type}.")
                 };
