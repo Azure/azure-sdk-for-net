@@ -156,10 +156,18 @@ namespace Azure.Generator.Management.Visitors
 
             IEnumerable<PropertyProvider> EnumerateAllPublicProperties(ModelProvider current)
             {
-                var visited = new HashSet<ModelProvider>();
                 var currentModel = current;
-                while (currentModel is not null && visited.Add(currentModel))
+                foreach (var property in currentModel.Properties)
                 {
+                    if (property.Modifiers.HasFlag(MethodSignatureModifiers.Public))
+                    {
+                        yield return property;
+                    }
+                }
+
+                while (currentModel.BaseModelProvider is not null)
+                {
+                    currentModel = currentModel.BaseModelProvider;
                     foreach (var property in currentModel.Properties)
                     {
                         if (property.Modifiers.HasFlag(MethodSignatureModifiers.Public))
@@ -167,8 +175,6 @@ namespace Azure.Generator.Management.Visitors
                             yield return property;
                         }
                     }
-
-                    currentModel = currentModel.BaseModelProvider;
                 }
             }
         }
