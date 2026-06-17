@@ -903,6 +903,7 @@ namespace Azure.Generator.Management.Visitors
             if (body is not null)
             {
                 var updatedBodyStatements = new List<MethodBodyStatement>();
+                var assignedInternalProperties = new HashSet<PropertyProvider>();
                 foreach (var statement in body)
                 {
                     // If the statement is validating a parameter, we need to update it to validate the flattened properties.
@@ -977,11 +978,13 @@ namespace Azure.Generator.Management.Visitors
                                         instanceExpression
                                         );
                                     updatedBodyStatements.Add(((MemberExpression)currentInternalProperty).Assign(assignmentExpression).Terminate());
+                                    assignedInternalProperties.Add(currentInternalProperty);
                                 }
                                 else
                                 {
                                     // Type not found in CSharpTypeMap; emit a safe assignment that does not reference the original parameter
                                     updatedBodyStatements.Add(((MemberExpression)currentInternalProperty).Assign(Default).Terminate());
+                                    assignedInternalProperties.Add(currentInternalProperty);
                                 }
                             }
                         }
@@ -995,7 +998,28 @@ namespace Azure.Generator.Management.Visitors
                         updatedBodyStatements.Add(statement);
                     }
                 }
+                AddRequiredFlattenedPropertyInitializers(flattenPropertyMap, updatedBodyStatements, assignedInternalProperties);
                 publicConstructor.Update(signature: publicConstructor.Signature, bodyStatements: updatedBodyStatements);
+            }
+        }
+
+        private static void AddRequiredFlattenedPropertyInitializers(
+            Dictionary<string, List<FlattenPropertyInfo>> flattenPropertyMap,
+            List<MethodBodyStatement> updatedBodyStatements,
+            HashSet<PropertyProvider> assignedInternalProperties)
+        {
+            var initializedInternalProperties = new HashSet<PropertyProvider>(assignedInternalProperties);
+            foreach (var internalProperty in flattenPropertyMap.Values.SelectMany(v => v).Select(v => v.InternalProperty))
+            {
+                if (!initializedInternalProperties.Add(internalProperty)
+                    || ShouldLiftToNullable(internalProperty)
+                    || !TryGetModelProvider(internalProperty.Type, out var nestedModel)
+                    || !nestedModel.Constructors.Any(c => !c.Signature.Parameters.Any()))
+                {
+                    continue;
+                }
+
+                updatedBodyStatements.Add(((MemberExpression)internalProperty).Assign(New.Instance(internalProperty.Type)).Terminate());
             }
         }
 
