@@ -7,7 +7,6 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -131,36 +130,6 @@ namespace Azure.ResourceManager.Network
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeNetworkSecurityPerimeterAssociationData(document.RootElement, options);
-        }
-
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static NetworkSecurityPerimeterAssociationData DeserializeNetworkSecurityPerimeterAssociationData(JsonElement element, ModelReaderWriterOptions options)
-        {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            NspAssociationProperties properties = default;
-            string name = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
-            {
-                if (prop.NameEquals("properties"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    properties = NspAssociationProperties.DeserializeNspAssociationProperties(prop.Value, options);
-                    continue;
-                }
-                if (options.Format != "W")
-                {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
-                }
-            }
-            return new NetworkSecurityPerimeterAssociationData(properties, name, additionalBinaryDataProperties);
         }
     }
 }

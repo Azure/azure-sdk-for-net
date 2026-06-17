@@ -24,19 +24,6 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DdosProtectionPlanData"/>. </summary>
-        /// <param name="properties"> Properties of the DDoS protection plan. </param>
-        /// <param name="name"> The name of the DDoS protection plan. </param>
-        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DdosProtectionPlanData(DdosProtectionPlanPropertiesFormat properties, string name, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            Properties = properties;
-            Name = name;
-            ETag = eTag;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
-
         /// <summary> Properties of the DDoS protection plan. </summary>
         [WirePath("properties")]
         internal DdosProtectionPlanPropertiesFormat Properties { get; set; }

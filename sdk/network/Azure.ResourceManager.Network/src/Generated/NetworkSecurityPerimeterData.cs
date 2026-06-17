@@ -23,17 +23,6 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterData"/>. </summary>
-        /// <param name="properties"> The network security perimeter properties. </param>
-        /// <param name="name"> The name of the network security perimeter. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeterData(NetworkSecurityPerimeterProperties properties, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            Properties = properties;
-            Name = name;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
-
         /// <summary> The network security perimeter properties. </summary>
         [WirePath("properties")]
         internal NetworkSecurityPerimeterProperties Properties { get; set; }

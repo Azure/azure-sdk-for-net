@@ -51,10 +51,7 @@ namespace Azure.ResourceManager.Network.Tests
             var name = Recording.GenerateAssetName(NamePrefix);
 
             // create
-            DdosProtectionPlanResource ddosProtectionPlan = await (await container.CreateOrUpdateAsync(WaitUntil.Completed, name, new DdosProtectionPlanData()
-            {
-                Location = TestEnvironment.Location
-            }, System.Threading.CancellationToken.None)).WaitForCompletionAsync();
+            DdosProtectionPlanResource ddosProtectionPlan = await (await container.CreateOrUpdateAsync(WaitUntil.Completed, name, new DdosProtectionPlanData(TestEnvironment.Location), System.Threading.CancellationToken.None)).WaitForCompletionAsync();
 
             Assert.True(await container.ExistsAsync(name));
 

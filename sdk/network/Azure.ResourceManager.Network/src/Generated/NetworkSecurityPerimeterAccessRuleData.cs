@@ -23,17 +23,6 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterAccessRuleData"/>. </summary>
-        /// <param name="properties"> Properties of the NSP access rule. </param>
-        /// <param name="name"> The name of the NSP access rule. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeterAccessRuleData(NspAccessRuleProperties properties, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            Properties = properties;
-            Name = name;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
-
         /// <summary> Properties of the NSP access rule. </summary>
         [WirePath("properties")]
         internal NspAccessRuleProperties Properties { get; set; }

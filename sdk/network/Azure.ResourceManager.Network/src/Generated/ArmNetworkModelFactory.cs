@@ -3236,8 +3236,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="provisioningState"> The provisioning state of the DDoS protection plan resource. </param>
         /// <param name="publicIPAddresses"> The list of public IPs associated with the DDoS protection plan resource. This list is read-only. </param>
         /// <param name="virtualNetworks"> The list of virtual networks associated with the DDoS protection plan resource. This list is read-only. </param>
-        /// <param name="name"> The name of the DDoS protection plan. </param>
-        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="name"></param>
+        /// <param name="eTag"></param>
         /// <returns> A new <see cref="Network.DdosProtectionPlanData"/> instance for mocking. </returns>
         public static DdosProtectionPlanData DdosProtectionPlanData(Guid? resourceGuid = default, NetworkProvisioningState? provisioningState = default, IEnumerable<WritableSubResource> publicIPAddresses = default, IEnumerable<WritableSubResource> virtualNetworks = default, string name = default, ETag? eTag = default)
         {
@@ -5692,7 +5692,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <param name="provisioningState"> The provisioning state of the scope assignment resource. </param>
         /// <param name="perimeterGuid"> perimeter guid of the network security perimeter. </param>
-        /// <param name="name"> The name of the network security perimeter. </param>
+        /// <param name="name"></param>
         /// <returns> A new <see cref="Network.NetworkSecurityPerimeterData"/> instance for mocking. </returns>
         public static NetworkSecurityPerimeterData NetworkSecurityPerimeterData(NetworkSecurityPerimeterProvisioningState? provisioningState = default, Guid? perimeterGuid = default, string name = default)
         {
@@ -10322,7 +10322,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <param name="accessRulesVersion"> Version number that increases with every update to access rules within the profile. </param>
         /// <param name="diagnosticSettingsVersion"> Version number that increases with every update to diagnostic settings within the profile. </param>
-        /// <param name="name"> The name of the NSP profile. </param>
+        /// <param name="name"></param>
         /// <returns> A new <see cref="Network.NetworkSecurityPerimeterProfileData"/> instance for mocking. </returns>
         public static NetworkSecurityPerimeterProfileData NetworkSecurityPerimeterProfileData(string accessRulesVersion = default, string diagnosticSettingsVersion = default, string name = default)
         {
@@ -10338,7 +10338,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="emailAddresses"> Outbound rules in email address format. This access rule type is currently unavailable for use. </param>
         /// <param name="phoneNumbers"> Outbound rules in phone number format. This access rule type is currently unavailable for use. </param>
         /// <param name="serviceTags"> Inbound rules of type service tag. This access rule type is currently unavailable for use. </param>
-        /// <param name="name"> The name of the NSP access rule. </param>
+        /// <param name="name"></param>
         /// <returns> A new <see cref="Network.NetworkSecurityPerimeterAccessRuleData"/> instance for mocking. </returns>
         public static NetworkSecurityPerimeterAccessRuleData NetworkSecurityPerimeterAccessRuleData(NetworkSecurityPerimeterProvisioningState? provisioningState = default, NetworkSecurityPerimeterAccessRuleDirection? direction = default, IEnumerable<string> addressPrefixes = default, IEnumerable<string> fullyQualifiedDomainNames = default, IEnumerable<WritableSubResource> subscriptions = default, IEnumerable<NetworkSecurityPerimeterBasedAccessRule> networkSecurityPerimeters = default, IEnumerable<string> emailAddresses = default, IEnumerable<string> phoneNumbers = default, IEnumerable<string> serviceTags = default, string name = default)
         {
@@ -10369,7 +10369,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="hasProvisioningIssues"> Specifies if there are provisioning issues. </param>
         /// <param name="privateLinkResourceId"> Resource ID. </param>
         /// <param name="profileId"> Resource ID. </param>
-        /// <param name="name"> The name of the NSP association. </param>
+        /// <param name="name"></param>
         /// <returns> A new <see cref="Network.NetworkSecurityPerimeterAssociationData"/> instance for mocking. </returns>
         public static NetworkSecurityPerimeterAssociationData NetworkSecurityPerimeterAssociationData(NetworkSecurityPerimeterProvisioningState? provisioningState = default, NetworkSecurityPerimeterAssociationAccessMode? accessMode = default, string hasProvisioningIssues = default, ResourceIdentifier privateLinkResourceId = default, ResourceIdentifier profileId = default, string name = default)
         {
@@ -10392,7 +10392,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="remoteOutboundProfiles"> Remote Outbound profile names from which Outbound is allowed. In current version, it is readonly property and it's value is set to ['*'] to allow outbound from all profiles. In later version, user will be able to modify it. </param>
         /// <param name="description"> A message passed to the owner of the remote NSP link resource with this connection request. In case of Auto-approved flow, it is default to 'Auto Approved'. Restricted to 140 chars. </param>
         /// <param name="status"> The NSP link state. </param>
-        /// <param name="name"> The name of the NSP link. </param>
+        /// <param name="name"></param>
         /// <returns> A new <see cref="Network.NetworkSecurityPerimeterLinkData"/> instance for mocking. </returns>
         public static NetworkSecurityPerimeterLinkData NetworkSecurityPerimeterLinkData(NetworkSecurityPerimeterLinkProvisioningState? provisioningState = default, ResourceIdentifier autoApprovedRemotePerimeterResourceId = default, Guid? remotePerimeterGuid = default, string remotePerimeterLocation = default, IEnumerable<string> localInboundProfiles = default, IEnumerable<string> localOutboundProfiles = default, IEnumerable<string> remoteInboundProfiles = default, IEnumerable<string> remoteOutboundProfiles = default, string description = default, NetworkSecurityPerimeterLinkStatus? status = default, string name = default)
         {
@@ -10420,7 +10420,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="remoteOutboundProfiles"> Remote Outbound profile names from which Outbound is allowed. ['*'] value implies outbound is allowed from all profiles at remote perimeter. This property can only be updated from corresponding link resource present in remote perimeter. </param>
         /// <param name="description"> A message sent by the remote NSP link admin for connection request. In case of Auto-approved flow, it is default to 'Auto Approved'. </param>
         /// <param name="status"> The NSP linkReference state. It cannot be changed if link is created in auto-approval mode. </param>
-        /// <param name="name"> The name of the NSP linkReference. </param>
+        /// <param name="name"></param>
         /// <returns> A new <see cref="Network.NetworkSecurityPerimeterLinkReferenceData"/> instance for mocking. </returns>
         public static NetworkSecurityPerimeterLinkReferenceData NetworkSecurityPerimeterLinkReferenceData(NetworkSecurityPerimeterLinkProvisioningState? provisioningState = default, ResourceIdentifier remotePerimeterResourceId = default, Guid? remotePerimeterGuid = default, string remotePerimeterLocation = default, IEnumerable<string> localInboundProfiles = default, IEnumerable<string> localOutboundProfiles = default, IEnumerable<string> remoteInboundProfiles = default, IEnumerable<string> remoteOutboundProfiles = default, string description = default, NetworkSecurityPerimeterLinkStatus? status = default, string name = default)
         {
@@ -10440,7 +10440,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <param name="enabledLogCategories"> The log categories to enable in the NSP logging configuration. </param>
         /// <param name="version"> The version of the NSP logging configuration. </param>
-        /// <param name="name"> The name of the NSP logging configuration. Accepts 'instance' as name. </param>
+        /// <param name="name"></param>
         /// <returns> A new <see cref="Network.NetworkSecurityPerimeterLoggingConfigurationData"/> instance for mocking. </returns>
         public static NetworkSecurityPerimeterLoggingConfigurationData NetworkSecurityPerimeterLoggingConfigurationData(IEnumerable<string> enabledLogCategories = default, string version = default, string name = default)
         {

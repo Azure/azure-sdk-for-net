@@ -19,17 +19,6 @@ namespace Azure.ResourceManager.Network
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterLinkReferenceData"/>. </summary>
-        /// <param name="properties"> Properties of the network security perimeter linkReference resource. </param>
-        /// <param name="name"> The name of the NSP linkReference. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeterLinkReferenceData(NspLinkReferenceProperties properties, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            Properties = properties;
-            Name = name;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
-
         /// <summary> Properties of the network security perimeter linkReference resource. </summary>
         [WirePath("properties")]
         internal NspLinkReferenceProperties Properties { get; }

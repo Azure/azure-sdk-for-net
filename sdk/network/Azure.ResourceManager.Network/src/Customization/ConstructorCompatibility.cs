@@ -45,6 +45,13 @@ namespace Azure.ResourceManager.Network
 
     public partial class IpamPoolData
     {
+        public IpamPoolData(IpamPoolProperties properties)
+        {
+            Argument.AssertNotNull(properties, nameof(properties));
+
+            Properties = properties;
+        }
+
         public IpamPoolData(AzureLocation location, IpamPoolProperties properties) : this(properties)
         {
             Location = location;

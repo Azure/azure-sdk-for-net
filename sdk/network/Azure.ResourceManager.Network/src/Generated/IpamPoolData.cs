@@ -21,16 +21,6 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Initializes a new instance of <see cref="IpamPoolData"/>. </summary>
         /// <param name="properties"> Properties of IpamPool resource properties which are specific to the Pool resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public IpamPoolData(IpamPoolProperties properties)
-        {
-            Argument.AssertNotNull(properties, nameof(properties));
-
-            Properties = properties;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="IpamPoolData"/>. </summary>
-        /// <param name="properties"> Properties of IpamPool resource properties which are specific to the Pool resource. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="name"> Pool resource name. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>

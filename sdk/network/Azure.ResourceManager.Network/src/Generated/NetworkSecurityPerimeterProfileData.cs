@@ -23,17 +23,6 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterProfileData"/>. </summary>
-        /// <param name="properties"> Properties of the network security perimeter profile. </param>
-        /// <param name="name"> The name of the NSP profile. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeterProfileData(NspProfileProperties properties, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            Properties = properties;
-            Name = name;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
-
         /// <summary> Properties of the network security perimeter profile. </summary>
         [WirePath("properties")]
         internal NspProfileProperties Properties { get; set; }

@@ -23,17 +23,6 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterLoggingConfigurationData"/>. </summary>
-        /// <param name="properties"> Properties of the NSP logging configuration. </param>
-        /// <param name="name"> The name of the NSP logging configuration. Accepts 'instance' as name. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeterLoggingConfigurationData(NspLoggingConfigurationProperties properties, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            Properties = properties;
-            Name = name;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
-
         /// <summary> Properties of the NSP logging configuration. </summary>
         [WirePath("properties")]
         internal NspLoggingConfigurationProperties Properties { get; set; }

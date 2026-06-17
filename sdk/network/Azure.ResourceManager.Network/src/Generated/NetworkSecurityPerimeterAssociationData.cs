@@ -24,17 +24,6 @@ namespace Azure.ResourceManager.Network
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterAssociationData"/>. </summary>
-        /// <param name="properties"> Properties of the NSP resource association. </param>
-        /// <param name="name"> The name of the NSP association. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeterAssociationData(NspAssociationProperties properties, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            Properties = properties;
-            Name = name;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
-
         /// <summary> Properties of the NSP resource association. </summary>
         [WirePath("properties")]
         internal NspAssociationProperties Properties { get; set; }
