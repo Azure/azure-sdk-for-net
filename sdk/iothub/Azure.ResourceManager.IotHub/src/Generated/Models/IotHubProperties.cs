@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.IotHub.Models
         }
 
         /// <summary> The IoT hub Gateway version. </summary>
-        public GatewayVersion? IotHubDetailsGatewayVersion
+        public IotHubGatewayVersion? IotHubDetailsGatewayVersion
         {
             get
             {

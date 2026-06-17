@@ -12,7 +12,7 @@ using Azure.ResourceManager.IotHub;
 namespace Azure.ResourceManager.IotHub.Models
 {
     /// <summary> The IoT hub Gateway version. </summary>
-    public readonly partial struct GatewayVersion : IEquatable<GatewayVersion>
+    public readonly partial struct IotHubGatewayVersion : IEquatable<IotHubGatewayVersion>
     {
         private readonly string _value;
         /// <summary> V1. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <summary> V2. </summary>
         private const string V2Value = "V2";
 
-        /// <summary> Initializes a new instance of <see cref="GatewayVersion"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubGatewayVersion"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public GatewayVersion(string value)
+        public IotHubGatewayVersion(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.IotHub.Models
         }
 
         /// <summary> V1. </summary>
-        public static GatewayVersion V1 { get; } = new GatewayVersion(V1Value);
+        public static IotHubGatewayVersion V1 { get; } = new IotHubGatewayVersion(V1Value);
 
         /// <summary> V2. </summary>
-        public static GatewayVersion V2 { get; } = new GatewayVersion(V2Value);
+        public static IotHubGatewayVersion V2 { get; } = new IotHubGatewayVersion(V2Value);
 
-        /// <summary> Determines if two <see cref="GatewayVersion"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="IotHubGatewayVersion"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(GatewayVersion left, GatewayVersion right) => left.Equals(right);
+        public static bool operator ==(IotHubGatewayVersion left, IotHubGatewayVersion right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="GatewayVersion"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="IotHubGatewayVersion"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(GatewayVersion left, GatewayVersion right) => !left.Equals(right);
+        public static bool operator !=(IotHubGatewayVersion left, IotHubGatewayVersion right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="GatewayVersion"/>. </summary>
+        /// <summary> Converts a string to a <see cref="IotHubGatewayVersion"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator GatewayVersion(string value) => new GatewayVersion(value);
+        public static implicit operator IotHubGatewayVersion(string value) => new IotHubGatewayVersion(value);
 
-        /// <summary> Converts a string to a <see cref="GatewayVersion"/>. </summary>
+        /// <summary> Converts a string to a <see cref="IotHubGatewayVersion"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator GatewayVersion?(string value) => value == null ? null : new GatewayVersion(value);
+        public static implicit operator IotHubGatewayVersion?(string value) => value == null ? null : new IotHubGatewayVersion(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is GatewayVersion other && Equals(other);
+        public override bool Equals(object obj) => obj is IotHubGatewayVersion other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(GatewayVersion other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(IotHubGatewayVersion other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

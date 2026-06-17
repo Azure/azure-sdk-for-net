@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            GatewayVersion? gatewayVersion = default;
+            IotHubGatewayVersion? gatewayVersion = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     {
                         continue;
                     }
-                    gatewayVersion = new GatewayVersion(prop.Value.GetString());
+                    gatewayVersion = new IotHubGatewayVersion(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

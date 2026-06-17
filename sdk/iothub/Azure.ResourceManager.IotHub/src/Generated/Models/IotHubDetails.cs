@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <summary> Initializes a new instance of <see cref="IotHubDetails"/>. </summary>
         /// <param name="gatewayVersion"> The IoT hub Gateway version. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IotHubDetails(GatewayVersion? gatewayVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IotHubDetails(IotHubGatewayVersion? gatewayVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             GatewayVersion = gatewayVersion;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The IoT hub Gateway version. </summary>
-        public GatewayVersion? GatewayVersion { get; }
+        public IotHubGatewayVersion? GatewayVersion { get; }
     }
 }
