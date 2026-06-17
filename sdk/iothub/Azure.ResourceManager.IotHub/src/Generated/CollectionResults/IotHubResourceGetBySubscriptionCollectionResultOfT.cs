@@ -6,11 +6,9 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.IotHub.Models;
 
 namespace Azure.ResourceManager.IotHub
 {
@@ -32,30 +30,6 @@ namespace Azure.ResourceManager.IotHub
             _subscriptionId = subscriptionId;
             _context = context;
             _diagnosticScope = diagnosticScope;
-        }
-
-        /// <summary> Gets the pages of IotHubResourceGetBySubscriptionCollectionResultOfT as an enumerable collection. </summary>
-        /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
-        /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of IotHubResourceGetBySubscriptionCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<IotHubDescriptionData>> AsPages(string continuationToken, int? pageSizeHint)
-        {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
-            while (true)
-            {
-                Response response = GetNextResponse(pageSizeHint, nextPage);
-                if (response is null)
-                {
-                    yield break;
-                }
-                IotHubDescriptionListResult result = IotHubDescriptionListResult.FromResponse(response);
-                yield return Page<IotHubDescriptionData>.FromValues((IReadOnlyList<IotHubDescriptionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
-                nextPage = result.NextLink;
-                if (nextPage == null)
-                {
-                    yield break;
-                }
-            }
         }
 
         /// <summary> Get next page. </summary>
