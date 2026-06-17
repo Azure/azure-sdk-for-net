@@ -162,17 +162,29 @@ try {
         Write-Host "Skipping snippet and API listing generation for tools directory"
     }
 
-    Write-Host "Validating that TypeSpec-generated libraries don't declare IncludeAutorestDependency"
+    Write-Host "Validating IncludeAutorestDependency usage"
+    # Known TypeSpec-migrated libraries that still legitimately declare IncludeAutorestDependency because
+    # their hand-written custom code relies on AutoRest-provided types (e.g. Autorest.CSharp.Core.GeneratorPageableHelpers
+    # or CodeGenMemberAttribute) that the management TypeSpec emitter does not yet emit. These are tracked tech
+    # debt and must be removed from this list once the emitter emits those types (see Azure.ResourceManager.PostgreSql
+    # for the target GeneratorPageableHelpers bridge pattern). Do NOT add new entries here.
+    $autorestDependencyExceptions = @(
+        "Azure.ResourceManager.MySql",
+        "Azure.ResourceManager.OracleDatabase",
+        "Azure.ResourceManager.PaloAltoNetworks.Ngfw"
+    )
     $serviceRoot = Join-Path "$PSScriptRoot/../../sdk" $ServiceDirectory | Resolve-Path
     $serviceRoot `
         | % { Get-ChildItem $_ -Filter "*.csproj" -Recurse } `
         | % {
             $csproj = $_
-            if (Select-String -Path $csproj.FullName -Pattern '<IncludeAutorestDependency>' -Quiet) {
+            $autorestProp = Select-String -Path $csproj.FullName -Pattern '<IncludeAutorestDependency>([^<]*)</IncludeAutorestDependency>'
+            if (($autorestDependencyExceptions -notcontains $csproj.BaseName) -and $autorestProp) {
+                $autorestValue = $autorestProp.Matches[0].Groups[1].Value.Trim()
+
                 # Walk up from the project file looking for a tsp-location.yaml, which marks
-                # a TypeSpec-generated library. Such libraries must not pull in the AutoRest dependency.
-                # The search is bounded by the service directory root rather than a fixed depth, so it
-                # works regardless of how deeply the project file is nested under the library folder.
+                # a TypeSpec-generated library. The search is bounded by the service directory root rather
+                # than a fixed depth, so it works regardless of how deeply the project file is nested.
                 $dir = $csproj.Directory
                 $tspLocation = $null
                 while ($dir -ne $null) {
@@ -181,11 +193,21 @@ try {
                     if ($dir.FullName -eq $serviceRoot.Path) { break }
                     $dir = $dir.Parent
                 }
+
                 if ($tspLocation) {
+                    # TypeSpec-generated libraries must not pull in the AutoRest dependency.
                     LogError `
 "Project '$($csproj.FullName)' declares the 'IncludeAutorestDependency' property but is a TypeSpec-generated`
     library (a 'tsp-location.yaml' exists at '$tspLocation'). TypeSpec-generated libraries must not use AutoRest.`
     Remove the <IncludeAutorestDependency> property from the project file."
+                }
+                elseif ($autorestValue -eq 'true' -and -not (Test-Path (Join-Path $csproj.Directory.FullName "autorest.md"))) {
+                    # An AutoRest-generated library (IncludeAutorestDependency=true, no tsp-location.yaml)
+                    # must have an autorest.md generator configuration next to its project file.
+                    LogError `
+"Project '$($csproj.FullName)' sets '<IncludeAutorestDependency>true</IncludeAutorestDependency>' but has neither a`
+    'tsp-location.yaml' (TypeSpec) nor an 'autorest.md' (AutoRest) next to the project file. Either add the missing`
+    generator configuration, or remove the <IncludeAutorestDependency> property if the library is not generated."
                 }
             }
         }

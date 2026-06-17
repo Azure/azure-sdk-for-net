@@ -8,6 +8,7 @@
     <PackageTags>azure;management;arm;resource manager;mysql</PackageTags>
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <UseDefaultNamespaceAndOutputFolder>false</UseDefaultNamespaceAndOutputFolder>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 
 </Project>
