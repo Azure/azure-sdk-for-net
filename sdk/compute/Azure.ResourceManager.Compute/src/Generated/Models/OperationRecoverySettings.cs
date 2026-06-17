@@ -44,11 +44,11 @@ namespace Azure.ResourceManager.Compute.Models
         internal ReimageRecoveryPolicy ReimageRecoveryPolicy { get; set; }
 
         /// <summary> Specifies whether restart recovery should be enabled. The default value is false. </summary>
-        public bool? RestartRecoveryPolicyEnabled
+        public bool? IsRestartRecoveryPolicyEnabled
         {
             get
             {
-                return RestartRecoveryPolicy is null ? default : RestartRecoveryPolicy.Enabled;
+                return RestartRecoveryPolicy is null ? default : RestartRecoveryPolicy.IsRestartRecoveryPolicyEnabled;
             }
             set
             {
@@ -56,16 +56,16 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     RestartRecoveryPolicy = new RestartRecoveryPolicy();
                 }
-                RestartRecoveryPolicy.Enabled = value;
+                RestartRecoveryPolicy.IsRestartRecoveryPolicyEnabled = value;
             }
         }
 
         /// <summary> Specifies whether start recovery should be enabled. The default value is false. </summary>
-        public bool? StartRecoveryPolicyEnabled
+        public bool? IsStartRecoveryPolicyEnabled
         {
             get
             {
-                return StartRecoveryPolicy is null ? default : StartRecoveryPolicy.Enabled;
+                return StartRecoveryPolicy is null ? default : StartRecoveryPolicy.IsStartRecoveryPolicyEnabled;
             }
             set
             {
@@ -73,16 +73,16 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     StartRecoveryPolicy = new StartRecoveryPolicy();
                 }
-                StartRecoveryPolicy.Enabled = value;
+                StartRecoveryPolicy.IsStartRecoveryPolicyEnabled = value;
             }
         }
 
         /// <summary> Specifies whether reimage recovery should be enabled. The default value is false. </summary>
-        public bool? ReimageRecoveryPolicyEnabled
+        public bool? IsReimageRecoveryPolicyEnabled
         {
             get
             {
-                return ReimageRecoveryPolicy is null ? default : ReimageRecoveryPolicy.Enabled;
+                return ReimageRecoveryPolicy is null ? default : ReimageRecoveryPolicy.IsReimageRecoveryPolicyEnabled;
             }
             set
             {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     ReimageRecoveryPolicy = new ReimageRecoveryPolicy();
                 }
-                ReimageRecoveryPolicy.Enabled = value;
+                ReimageRecoveryPolicy.IsReimageRecoveryPolicyEnabled = value;
             }
         }
     }

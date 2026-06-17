@@ -1873,9 +1873,9 @@ EnableIPForwarding = true,
                     {
                         OperationRecoverySettings = new OperationRecoverySettings
                         {
-                            RestartRecoveryPolicyEnabled = true,
-                            StartRecoveryPolicyEnabled = true,
-                            ReimageRecoveryPolicyEnabled = true,
+                            IsRestartRecoveryPolicyEnabled = true,
+                            IsStartRecoveryPolicyEnabled = true,
+                            IsReimageRecoveryPolicyEnabled = true,
                         },
                     },
                 },

@@ -22,15 +22,15 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RestartRecoveryPolicy"/>. </summary>
-        /// <param name="enabled"> Specifies whether restart recovery should be enabled. The default value is false. </param>
+        /// <param name="isRestartRecoveryPolicyEnabled"> Specifies whether restart recovery should be enabled. The default value is false. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RestartRecoveryPolicy(bool? enabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RestartRecoveryPolicy(bool? isRestartRecoveryPolicyEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Enabled = enabled;
+            IsRestartRecoveryPolicyEnabled = isRestartRecoveryPolicyEnabled;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Specifies whether restart recovery should be enabled. The default value is false. </summary>
-        public bool? Enabled { get; set; }
+        public bool? IsRestartRecoveryPolicyEnabled { get; set; }
     }
 }

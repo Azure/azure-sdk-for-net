@@ -924,13 +924,13 @@ namespace Azure.ResourceManager.Compute.Models
             return new MaxInstancePercentPerZonePolicy(enabled, value, default);
         }
 
-        /// <param name="restartRecoveryPolicyEnabled"> Specifies whether restart recovery should be enabled. The default value is false. </param>
-        /// <param name="startRecoveryPolicyEnabled"> Specifies whether start recovery should be enabled. The default value is false. </param>
-        /// <param name="reimageRecoveryPolicyEnabled"> Specifies whether reimage recovery should be enabled. The default value is false. </param>
+        /// <param name="isRestartRecoveryPolicyEnabled"> Specifies whether restart recovery should be enabled. The default value is false. </param>
+        /// <param name="isStartRecoveryPolicyEnabled"> Specifies whether start recovery should be enabled. The default value is false. </param>
+        /// <param name="isReimageRecoveryPolicyEnabled"> Specifies whether reimage recovery should be enabled. The default value is false. </param>
         /// <returns> A new <see cref="Models.OperationRecoverySettings"/> instance for mocking. </returns>
-        public static OperationRecoverySettings OperationRecoverySettings(bool? restartRecoveryPolicyEnabled = default, bool? startRecoveryPolicyEnabled = default, bool? reimageRecoveryPolicyEnabled = default)
+        public static OperationRecoverySettings OperationRecoverySettings(bool? isRestartRecoveryPolicyEnabled = default, bool? isStartRecoveryPolicyEnabled = default, bool? isReimageRecoveryPolicyEnabled = default)
         {
-            return new OperationRecoverySettings(restartRecoveryPolicyEnabled is null ? default : new RestartRecoveryPolicy(restartRecoveryPolicyEnabled, default), startRecoveryPolicyEnabled is null ? default : new StartRecoveryPolicy(startRecoveryPolicyEnabled, default), reimageRecoveryPolicyEnabled is null ? default : new ReimageRecoveryPolicy(reimageRecoveryPolicyEnabled, default), default);
+            return new OperationRecoverySettings(isRestartRecoveryPolicyEnabled is null ? default : new RestartRecoveryPolicy(isRestartRecoveryPolicyEnabled, default), isStartRecoveryPolicyEnabled is null ? default : new StartRecoveryPolicy(isStartRecoveryPolicyEnabled, default), isReimageRecoveryPolicyEnabled is null ? default : new ReimageRecoveryPolicy(isReimageRecoveryPolicyEnabled, default), default);
         }
 
         /// <param name="vmSizes"> Specifies the VM sizes for the virtual machine scale set. </param>

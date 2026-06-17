@@ -4038,7 +4038,7 @@ namespace Azure.ResourceManager.Compute.Models
         public static Azure.ResourceManager.Compute.Models.MaxInstancePercentPerZonePolicy MaxInstancePercentPerZonePolicy(bool? enabled = default(bool?), int? value = default(int?)) { throw null; }
         public static Azure.ResourceManager.Compute.Models.MigrateToVirtualMachineScaleSetInput MigrateToVirtualMachineScaleSetInput(Azure.Core.ResourceIdentifier virtualMachineScaleSetFlexibleId = null) { throw null; }
         public static Azure.ResourceManager.Compute.Models.MigrateVmToVirtualMachineScaleSetContent MigrateVmToVirtualMachineScaleSetContent(string targetZone = null, int? targetFaultDomain = default(int?), string targetVmSize = null) { throw null; }
-        public static Azure.ResourceManager.Compute.Models.OperationRecoverySettings OperationRecoverySettings(bool? restartRecoveryPolicyEnabled = default(bool?), bool? startRecoveryPolicyEnabled = default(bool?), bool? reimageRecoveryPolicyEnabled = default(bool?)) { throw null; }
+        public static Azure.ResourceManager.Compute.Models.OperationRecoverySettings OperationRecoverySettings(bool? isRestartRecoveryPolicyEnabled = default(bool?), bool? isStartRecoveryPolicyEnabled = default(bool?), bool? isReimageRecoveryPolicyEnabled = default(bool?)) { throw null; }
         public static Azure.ResourceManager.Compute.Models.OrchestrationServiceStateContent OrchestrationServiceStateContent(Azure.ResourceManager.Compute.Models.OrchestrationServiceName serviceName = default(Azure.ResourceManager.Compute.Models.OrchestrationServiceName), Azure.ResourceManager.Compute.Models.OrchestrationServiceStateAction action = default(Azure.ResourceManager.Compute.Models.OrchestrationServiceStateAction)) { throw null; }
         public static Azure.ResourceManager.Compute.Models.OrchestrationServiceSummary OrchestrationServiceSummary(Azure.ResourceManager.Compute.Models.OrchestrationServiceName? serviceName, Azure.ResourceManager.Compute.Models.OrchestrationServiceState? serviceState) { throw null; }
         public static Azure.ResourceManager.Compute.Models.OrchestrationServiceSummary OrchestrationServiceSummary(Azure.ResourceManager.Compute.Models.OrchestrationServiceName? serviceName = default(Azure.ResourceManager.Compute.Models.OrchestrationServiceName?), Azure.ResourceManager.Compute.Models.OrchestrationServiceState? serviceState = default(Azure.ResourceManager.Compute.Models.OrchestrationServiceState?), Azure.ResourceManager.Compute.Models.OrchestrationServiceOperationStatus? latestOperationStatus = default(Azure.ResourceManager.Compute.Models.OrchestrationServiceOperationStatus?), System.DateTimeOffset? lastStatusChangedOn = default(System.DateTimeOffset?)) { throw null; }
@@ -8330,9 +8330,9 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class OperationRecoverySettings : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.OperationRecoverySettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.OperationRecoverySettings>
     {
         public OperationRecoverySettings() { }
-        public bool? ReimageRecoveryPolicyEnabled { get { throw null; } set { } }
-        public bool? RestartRecoveryPolicyEnabled { get { throw null; } set { } }
-        public bool? StartRecoveryPolicyEnabled { get { throw null; } set { } }
+        public bool? IsReimageRecoveryPolicyEnabled { get { throw null; } set { } }
+        public bool? IsRestartRecoveryPolicyEnabled { get { throw null; } set { } }
+        public bool? IsStartRecoveryPolicyEnabled { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Compute.Models.OperationRecoverySettings JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Compute.Models.OperationRecoverySettings PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

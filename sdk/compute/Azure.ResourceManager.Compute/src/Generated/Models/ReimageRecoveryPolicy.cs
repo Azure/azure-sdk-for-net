@@ -22,15 +22,15 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ReimageRecoveryPolicy"/>. </summary>
-        /// <param name="enabled"> Specifies whether reimage recovery should be enabled. The default value is false. </param>
+        /// <param name="isReimageRecoveryPolicyEnabled"> Specifies whether reimage recovery should be enabled. The default value is false. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ReimageRecoveryPolicy(bool? enabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ReimageRecoveryPolicy(bool? isReimageRecoveryPolicyEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Enabled = enabled;
+            IsReimageRecoveryPolicyEnabled = isReimageRecoveryPolicyEnabled;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Specifies whether reimage recovery should be enabled. The default value is false. </summary>
-        public bool? Enabled { get; set; }
+        public bool? IsReimageRecoveryPolicyEnabled { get; set; }
     }
 }
