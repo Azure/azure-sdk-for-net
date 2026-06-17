@@ -13,7 +13,7 @@ using Microsoft.Extensions.Configuration;
 namespace Azure.Security.KeyVault.Secrets
 {
     /// <summary> Client options for <see cref="KeyVaultSecretsClient"/>. </summary>
-    public partial class KeyVaultSecretsClientOptions : ClientOptions
+internal partial class KeyVaultSecretsClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2026_05_01_Preview;
 
@@ -60,7 +60,7 @@ namespace Azure.Security.KeyVault.Secrets
         partial void ConfigureLogging();
 
         /// <summary> The version of the service to use. </summary>
-        public enum ServiceVersion
+        internal enum ServiceVersion
         {
             /// <summary> The 7.5 API version. </summary>
             V7_5 = 1,

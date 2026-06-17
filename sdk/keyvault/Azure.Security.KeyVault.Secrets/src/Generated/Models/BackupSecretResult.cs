@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Security.KeyVault.Secrets.Models
 {
     /// <summary> The backup secret result, containing the backup blob. </summary>
-    public partial class BackupSecretResult
+    internal partial class BackupSecretResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

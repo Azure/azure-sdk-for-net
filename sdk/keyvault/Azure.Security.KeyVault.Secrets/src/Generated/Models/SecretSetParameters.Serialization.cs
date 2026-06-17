@@ -15,7 +15,7 @@ using Azure.Security.KeyVault.Secrets;
 namespace Azure.Security.KeyVault.Secrets.Models
 {
     /// <summary> The secret set parameters. </summary>
-    public partial class SecretSetParameters : IJsonModel<SecretSetParameters>
+    internal partial class SecretSetParameters : IJsonModel<SecretSetParameters>
     {
         /// <summary> Initializes a new instance of <see cref="SecretSetParameters"/> for deserialization. </summary>
         internal SecretSetParameters()

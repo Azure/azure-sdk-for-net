@@ -14,7 +14,7 @@ using Azure.Security.KeyVault.Secrets;
 namespace Azure.Security.KeyVault.Secrets.Models
 {
     /// <summary> The secret management attributes. </summary>
-    public partial class SecretAttributesBundle : IJsonModel<SecretAttributesBundle>
+    internal partial class SecretAttributesBundle : IJsonModel<SecretAttributesBundle>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

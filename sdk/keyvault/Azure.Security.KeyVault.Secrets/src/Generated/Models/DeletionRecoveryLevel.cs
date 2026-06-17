@@ -12,7 +12,7 @@ using Azure.Security.KeyVault.Secrets;
 namespace Azure.Security.KeyVault.Secrets.Models
 {
     /// <summary> Reflects the deletion recovery level currently in effect for secrets in the current vault. If it contains 'Purgeable', the secret can be permanently deleted by a privileged user; otherwise, only the system can purge the secret, at the end of the retention interval. </summary>
-    public readonly partial struct DeletionRecoveryLevel : IEquatable<DeletionRecoveryLevel>
+    internal readonly partial struct DeletionRecoveryLevel : IEquatable<DeletionRecoveryLevel>
     {
         private readonly string _value;
         /// <summary> Denotes a vault state in which deletion is an irreversible operation, without the possibility for recovery. This level corresponds to no protection being available against a Delete operation; the data is irretrievably lost upon accepting a Delete operation at the entity level or higher (vault, resource group, subscription etc.). </summary>

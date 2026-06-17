@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -16,12 +15,11 @@ using Azure.Security.KeyVault.Secrets.Models;
 
 namespace Azure.Security.KeyVault.Secrets
 {
-    /// <summary> The key vault client performs cryptographic key operations and vault operations against the Key Vault service. </summary>
-    public partial class KeyVaultSecretsClient
+    internal partial class KeyVaultSecretsClient
     {
-        private readonly Uri _endpoint;
+        internal Uri _endpoint;
         private static readonly string[] AuthorizationScopes = new string[] { "https://vault.azure.net/.default" };
-        private readonly string _apiVersion;
+        internal string _apiVersion;
 
         /// <summary> Initializes a new instance of KeyVaultSecretsClient for mocking. </summary>
         protected KeyVaultSecretsClient()
@@ -31,7 +29,6 @@ namespace Azure.Security.KeyVault.Secrets
         /// <summary> Initializes a new instance of KeyVaultSecretsClient. </summary>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public KeyVaultSecretsClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new KeyVaultSecretsClientOptions())
         {
         }
@@ -63,23 +60,15 @@ namespace Azure.Security.KeyVault.Secrets
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public KeyVaultSecretsClient(Uri endpoint, TokenCredential credential, KeyVaultSecretsClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, options)
         {
         }
 
-        /// <summary> Initializes a new instance of KeyVaultSecretsClient from a <see cref="KeyVaultSecretsClientSettings"/>. </summary>
-        /// <param name="settings"> The settings for KeyVaultSecretsClient. </param>
-        [Experimental("SCME0002")]
-        public KeyVaultSecretsClient(KeyVaultSecretsClientSettings settings) : this(settings?.VaultBaseUrl, settings?.CredentialProvider as TokenCredential, settings?.Options)
-        {
-        }
-
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline { get; }
+        public virtual HttpPipeline Pipeline { get; internal set; }
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
-        internal ClientDiagnostics ClientDiagnostics { get; }
+        internal ClientDiagnostics ClientDiagnostics { get; set; }
 
         /// <summary>
         /// [Protocol Method] The SET operation adds a secret to the Azure Key Vault. If the named secret already exists, Azure Key Vault creates a new version of that secret. This operation requires the secrets/set permission.
@@ -92,8 +81,6 @@ namespace Azure.Security.KeyVault.Secrets
         /// <param name="secretName"> The name of the secret. The value you provide may be copied globally for the purpose of running the service. The value provided should not include personally identifiable or sensitive information. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response SetSecret(string secretName, RequestContent content, RequestContext context = null)
@@ -102,9 +89,6 @@ namespace Azure.Security.KeyVault.Secrets
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
-                Argument.AssertNotNull(content, nameof(content));
-
                 using HttpMessage message = CreateSetSecretRequest(secretName, content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -126,8 +110,6 @@ namespace Azure.Security.KeyVault.Secrets
         /// <param name="secretName"> The name of the secret. The value you provide may be copied globally for the purpose of running the service. The value provided should not include personally identifiable or sensitive information. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> SetSecretAsync(string secretName, RequestContent content, RequestContext context = null)
@@ -136,9 +118,6 @@ namespace Azure.Security.KeyVault.Secrets
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
-                Argument.AssertNotNull(content, nameof(content));
-
                 using HttpMessage message = CreateSetSecretRequest(secretName, content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -153,14 +132,9 @@ namespace Azure.Security.KeyVault.Secrets
         /// <param name="secretName"> The name of the secret. The value you provide may be copied globally for the purpose of running the service. The value provided should not include personally identifiable or sensitive information. </param>
         /// <param name="parameters"> The parameters for setting the secret. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> or <paramref name="parameters"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<SecretBundle> SetSecret(string secretName, SecretSetParameters parameters, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
-            Argument.AssertNotNull(parameters, nameof(parameters));
-
             Response result = SetSecret(secretName, parameters, cancellationToken.ToRequestContext());
             return Response.FromValue((SecretBundle)result, result);
         }
@@ -169,14 +143,9 @@ namespace Azure.Security.KeyVault.Secrets
         /// <param name="secretName"> The name of the secret. The value you provide may be copied globally for the purpose of running the service. The value provided should not include personally identifiable or sensitive information. </param>
         /// <param name="parameters"> The parameters for setting the secret. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> or <paramref name="parameters"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response<SecretBundle>> SetSecretAsync(string secretName, SecretSetParameters parameters, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
-            Argument.AssertNotNull(parameters, nameof(parameters));
-
             Response result = await SetSecretAsync(secretName, parameters, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((SecretBundle)result, result);
         }
@@ -191,8 +160,6 @@ namespace Azure.Security.KeyVault.Secrets
         /// </summary>
         /// <param name="secretName"> The name of the secret. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response DeleteSecret(string secretName, RequestContext context)
@@ -201,8 +168,6 @@ namespace Azure.Security.KeyVault.Secrets
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
-
                 using HttpMessage message = CreateDeleteSecretRequest(secretName, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -223,8 +188,6 @@ namespace Azure.Security.KeyVault.Secrets
         /// </summary>
         /// <param name="secretName"> The name of the secret. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> DeleteSecretAsync(string secretName, RequestContext context)
@@ -233,8 +196,6 @@ namespace Azure.Security.KeyVault.Secrets
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
-
                 using HttpMessage message = CreateDeleteSecretRequest(secretName, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -248,13 +209,9 @@ namespace Azure.Security.KeyVault.Secrets
         /// <summary> The DELETE operation applies to any secret stored in Azure Key Vault. DELETE cannot be applied to an individual version of a secret. This operation requires the secrets/delete permission. </summary>
         /// <param name="secretName"> The name of the secret. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<DeletedSecretBundle> DeleteSecret(string secretName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
-
             Response result = DeleteSecret(secretName, cancellationToken.ToRequestContext());
             return Response.FromValue((DeletedSecretBundle)result, result);
         }
@@ -262,13 +219,9 @@ namespace Azure.Security.KeyVault.Secrets
         /// <summary> The DELETE operation applies to any secret stored in Azure Key Vault. DELETE cannot be applied to an individual version of a secret. This operation requires the secrets/delete permission. </summary>
         /// <param name="secretName"> The name of the secret. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response<DeletedSecretBundle>> DeleteSecretAsync(string secretName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
-
             Response result = await DeleteSecretAsync(secretName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((DeletedSecretBundle)result, result);
         }
@@ -285,8 +238,6 @@ namespace Azure.Security.KeyVault.Secrets
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="secretVersion"> The version of the secret. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response UpdateSecret(string secretName, RequestContent content, string secretVersion = default, RequestContext context = null)
@@ -295,10 +246,7 @@ namespace Azure.Security.KeyVault.Secrets
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
-                Argument.AssertNotNull(content, nameof(content));
-
-                using HttpMessage message = this.CreateUpdateSecretRequest(secretName, content, secretVersion, context);
+                using HttpMessage message = this.CreateUpdateSecretRequest(secretName, secretVersion, content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -320,8 +268,6 @@ namespace Azure.Security.KeyVault.Secrets
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="secretVersion"> The version of the secret. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> UpdateSecretAsync(string secretName, RequestContent content, string secretVersion = default, RequestContext context = null)
@@ -330,10 +276,7 @@ namespace Azure.Security.KeyVault.Secrets
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
-                Argument.AssertNotNull(content, nameof(content));
-
-                using HttpMessage message = this.CreateUpdateSecretRequest(secretName, content, secretVersion, context);
+                using HttpMessage message = this.CreateUpdateSecretRequest(secretName, secretVersion, content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -355,8 +298,6 @@ namespace Azure.Security.KeyVault.Secrets
         /// <param name="secretVersion"> The version of the secret. This URI fragment is optional. If not specified, the latest version of the secret is returned. </param>
         /// <param name="outContentType"> The media type (MIME type) of the certificate. If a supported format is specified, the certificate content is converted to the requested format. Currently, only PFX to PEM conversion is supported. If an unsupported format is specified, the request is rejected. If not specified, the certificate is returned in its original format without conversion. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetSecret(string secretName, string secretVersion = default, string outContentType = default, RequestContext context = null)
@@ -365,8 +306,6 @@ namespace Azure.Security.KeyVault.Secrets
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
-
                 using HttpMessage message = CreateGetSecretRequest(secretName, secretVersion, outContentType, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -389,8 +328,6 @@ namespace Azure.Security.KeyVault.Secrets
         /// <param name="secretVersion"> The version of the secret. This URI fragment is optional. If not specified, the latest version of the secret is returned. </param>
         /// <param name="outContentType"> The media type (MIME type) of the certificate. If a supported format is specified, the certificate content is converted to the requested format. Currently, only PFX to PEM conversion is supported. If an unsupported format is specified, the request is rejected. If not specified, the certificate is returned in its original format without conversion. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> GetSecretAsync(string secretName, string secretVersion = default, string outContentType = default, RequestContext context = null)
@@ -399,8 +336,6 @@ namespace Azure.Security.KeyVault.Secrets
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
-
                 using HttpMessage message = CreateGetSecretRequest(secretName, secretVersion, outContentType, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -416,14 +351,9 @@ namespace Azure.Security.KeyVault.Secrets
         /// <param name="secretVersion"> The version of the secret. This URI fragment is optional. If not specified, the latest version of the secret is returned. </param>
         /// <param name="outContentType"> The media type (MIME type) of the certificate. If a supported format is specified, the certificate content is converted to the requested format. Currently, only PFX to PEM conversion is supported. If an unsupported format is specified, the request is rejected. If not specified, the certificate is returned in its original format without conversion. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> or <paramref name="secretVersion"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="secretName"/> or <paramref name="secretVersion"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<SecretBundle> GetSecret(string secretName, string secretVersion, Models.ContentType? outContentType = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
-            Argument.AssertNotNullOrEmpty(secretVersion, nameof(secretVersion));
-
             Response result = GetSecret(secretName, secretVersion, outContentType?.ToString(), cancellationToken.ToRequestContext());
             return Response.FromValue((SecretBundle)result, result);
         }
@@ -433,14 +363,9 @@ namespace Azure.Security.KeyVault.Secrets
         /// <param name="secretVersion"> The version of the secret. This URI fragment is optional. If not specified, the latest version of the secret is returned. </param>
         /// <param name="outContentType"> The media type (MIME type) of the certificate. If a supported format is specified, the certificate content is converted to the requested format. Currently, only PFX to PEM conversion is supported. If an unsupported format is specified, the request is rejected. If not specified, the certificate is returned in its original format without conversion. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> or <paramref name="secretVersion"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="secretName"/> or <paramref name="secretVersion"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response<SecretBundle>> GetSecretAsync(string secretName, string secretVersion, Models.ContentType? outContentType = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
-            Argument.AssertNotNullOrEmpty(secretVersion, nameof(secretVersion));
-
             Response result = await GetSecretAsync(secretName, secretVersion, outContentType?.ToString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((SecretBundle)result, result);
         }
@@ -508,14 +433,10 @@ namespace Azure.Security.KeyVault.Secrets
         /// <param name="secretName"> The name of the secret. </param>
         /// <param name="maxresults"> Maximum number of results to return in a page. If not specified the service will return up to 25 results. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetSecretVersions(string secretName, int? maxresults, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
-
             return new KeyVaultSecretsClientGetSecretVersionsCollectionResult(this, secretName, maxresults, context, "KeyVaultSecretsClient.GetSecretVersions");
         }
 
@@ -530,14 +451,10 @@ namespace Azure.Security.KeyVault.Secrets
         /// <param name="secretName"> The name of the secret. </param>
         /// <param name="maxresults"> Maximum number of results to return in a page. If not specified the service will return up to 25 results. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetSecretVersionsAsync(string secretName, int? maxresults, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
-
             return new KeyVaultSecretsClientGetSecretVersionsAsyncCollectionResult(this, secretName, maxresults, context, "KeyVaultSecretsClient.GetSecretVersions");
         }
 
@@ -545,13 +462,9 @@ namespace Azure.Security.KeyVault.Secrets
         /// <param name="secretName"> The name of the secret. </param>
         /// <param name="maxresults"> Maximum number of results to return in a page. If not specified the service will return up to 25 results. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<SecretItem> GetSecretVersions(string secretName, int? maxresults = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
-
             return new KeyVaultSecretsClientGetSecretVersionsCollectionResultOfT(this, secretName, maxresults, cancellationToken.ToRequestContext(), "KeyVaultSecretsClient.GetSecretVersions");
         }
 
@@ -559,13 +472,9 @@ namespace Azure.Security.KeyVault.Secrets
         /// <param name="secretName"> The name of the secret. </param>
         /// <param name="maxresults"> Maximum number of results to return in a page. If not specified the service will return up to 25 results. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<SecretItem> GetSecretVersionsAsync(string secretName, int? maxresults = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
-
             return new KeyVaultSecretsClientGetSecretVersionsAsyncCollectionResultOfT(this, secretName, maxresults, cancellationToken.ToRequestContext(), "KeyVaultSecretsClient.GetSecretVersions");
         }
 
@@ -631,8 +540,6 @@ namespace Azure.Security.KeyVault.Secrets
         /// </summary>
         /// <param name="secretName"> The name of the secret. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetDeletedSecret(string secretName, RequestContext context)
@@ -641,8 +548,6 @@ namespace Azure.Security.KeyVault.Secrets
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
-
                 using HttpMessage message = CreateGetDeletedSecretRequest(secretName, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -663,8 +568,6 @@ namespace Azure.Security.KeyVault.Secrets
         /// </summary>
         /// <param name="secretName"> The name of the secret. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> GetDeletedSecretAsync(string secretName, RequestContext context)
@@ -673,8 +576,6 @@ namespace Azure.Security.KeyVault.Secrets
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
-
                 using HttpMessage message = CreateGetDeletedSecretRequest(secretName, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -688,13 +589,9 @@ namespace Azure.Security.KeyVault.Secrets
         /// <summary> The Get Deleted Secret operation returns the specified deleted secret along with its attributes. This operation requires the secrets/get permission. </summary>
         /// <param name="secretName"> The name of the secret. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<DeletedSecretBundle> GetDeletedSecret(string secretName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
-
             Response result = GetDeletedSecret(secretName, cancellationToken.ToRequestContext());
             return Response.FromValue((DeletedSecretBundle)result, result);
         }
@@ -702,13 +599,9 @@ namespace Azure.Security.KeyVault.Secrets
         /// <summary> The Get Deleted Secret operation returns the specified deleted secret along with its attributes. This operation requires the secrets/get permission. </summary>
         /// <param name="secretName"> The name of the secret. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response<DeletedSecretBundle>> GetDeletedSecretAsync(string secretName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
-
             Response result = await GetDeletedSecretAsync(secretName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((DeletedSecretBundle)result, result);
         }
@@ -723,8 +616,6 @@ namespace Azure.Security.KeyVault.Secrets
         /// </summary>
         /// <param name="secretName"> The name of the secret. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response PurgeDeletedSecret(string secretName, RequestContext context)
@@ -733,8 +624,6 @@ namespace Azure.Security.KeyVault.Secrets
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
-
                 using HttpMessage message = CreatePurgeDeletedSecretRequest(secretName, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -755,8 +644,6 @@ namespace Azure.Security.KeyVault.Secrets
         /// </summary>
         /// <param name="secretName"> The name of the secret. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> PurgeDeletedSecretAsync(string secretName, RequestContext context)
@@ -765,8 +652,6 @@ namespace Azure.Security.KeyVault.Secrets
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
-
                 using HttpMessage message = CreatePurgeDeletedSecretRequest(secretName, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -780,26 +665,18 @@ namespace Azure.Security.KeyVault.Secrets
         /// <summary> The purge deleted secret operation removes the secret permanently, without the possibility of recovery. This operation can only be enabled on a soft-delete enabled vault. This operation requires the secrets/purge permission. </summary>
         /// <param name="secretName"> The name of the secret. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response PurgeDeletedSecret(string secretName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
-
             return PurgeDeletedSecret(secretName, cancellationToken.ToRequestContext());
         }
 
         /// <summary> The purge deleted secret operation removes the secret permanently, without the possibility of recovery. This operation can only be enabled on a soft-delete enabled vault. This operation requires the secrets/purge permission. </summary>
         /// <param name="secretName"> The name of the secret. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response> PurgeDeletedSecretAsync(string secretName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
-
             return await PurgeDeletedSecretAsync(secretName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
@@ -813,8 +690,6 @@ namespace Azure.Security.KeyVault.Secrets
         /// </summary>
         /// <param name="secretName"> The name of the deleted secret. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response RecoverDeletedSecret(string secretName, RequestContext context)
@@ -823,8 +698,6 @@ namespace Azure.Security.KeyVault.Secrets
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
-
                 using HttpMessage message = CreateRecoverDeletedSecretRequest(secretName, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -845,8 +718,6 @@ namespace Azure.Security.KeyVault.Secrets
         /// </summary>
         /// <param name="secretName"> The name of the deleted secret. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> RecoverDeletedSecretAsync(string secretName, RequestContext context)
@@ -855,8 +726,6 @@ namespace Azure.Security.KeyVault.Secrets
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
-
                 using HttpMessage message = CreateRecoverDeletedSecretRequest(secretName, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -870,13 +739,9 @@ namespace Azure.Security.KeyVault.Secrets
         /// <summary> Recovers the deleted secret in the specified vault. This operation can only be performed on a soft-delete enabled vault. This operation requires the secrets/recover permission. </summary>
         /// <param name="secretName"> The name of the deleted secret. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<SecretBundle> RecoverDeletedSecret(string secretName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
-
             Response result = RecoverDeletedSecret(secretName, cancellationToken.ToRequestContext());
             return Response.FromValue((SecretBundle)result, result);
         }
@@ -884,13 +749,9 @@ namespace Azure.Security.KeyVault.Secrets
         /// <summary> Recovers the deleted secret in the specified vault. This operation can only be performed on a soft-delete enabled vault. This operation requires the secrets/recover permission. </summary>
         /// <param name="secretName"> The name of the deleted secret. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response<SecretBundle>> RecoverDeletedSecretAsync(string secretName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
-
             Response result = await RecoverDeletedSecretAsync(secretName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((SecretBundle)result, result);
         }
@@ -905,8 +766,6 @@ namespace Azure.Security.KeyVault.Secrets
         /// </summary>
         /// <param name="secretName"> The name of the secret. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response BackupSecret(string secretName, RequestContext context)
@@ -915,8 +774,6 @@ namespace Azure.Security.KeyVault.Secrets
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
-
                 using HttpMessage message = CreateBackupSecretRequest(secretName, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -937,8 +794,6 @@ namespace Azure.Security.KeyVault.Secrets
         /// </summary>
         /// <param name="secretName"> The name of the secret. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> BackupSecretAsync(string secretName, RequestContext context)
@@ -947,8 +802,6 @@ namespace Azure.Security.KeyVault.Secrets
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
-
                 using HttpMessage message = CreateBackupSecretRequest(secretName, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -962,13 +815,9 @@ namespace Azure.Security.KeyVault.Secrets
         /// <summary> Requests that a backup of the specified secret be downloaded to the client. All versions of the secret will be downloaded. This operation requires the secrets/backup permission. </summary>
         /// <param name="secretName"> The name of the secret. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<BackupSecretResult> BackupSecret(string secretName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
-
             Response result = BackupSecret(secretName, cancellationToken.ToRequestContext());
             return Response.FromValue((BackupSecretResult)result, result);
         }
@@ -976,13 +825,9 @@ namespace Azure.Security.KeyVault.Secrets
         /// <summary> Requests that a backup of the specified secret be downloaded to the client. All versions of the secret will be downloaded. This operation requires the secrets/backup permission. </summary>
         /// <param name="secretName"> The name of the secret. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response<BackupSecretResult>> BackupSecretAsync(string secretName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
-
             Response result = await BackupSecretAsync(secretName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((BackupSecretResult)result, result);
         }
@@ -997,7 +842,6 @@ namespace Azure.Security.KeyVault.Secrets
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response RestoreSecret(RequestContent content, RequestContext context = null)
@@ -1006,8 +850,6 @@ namespace Azure.Security.KeyVault.Secrets
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
-
                 using HttpMessage message = CreateRestoreSecretRequest(content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -1028,7 +870,6 @@ namespace Azure.Security.KeyVault.Secrets
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> RestoreSecretAsync(RequestContent content, RequestContext context = null)
@@ -1037,8 +878,6 @@ namespace Azure.Security.KeyVault.Secrets
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
-
                 using HttpMessage message = CreateRestoreSecretRequest(content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -1052,12 +891,9 @@ namespace Azure.Security.KeyVault.Secrets
         /// <summary> Restores a backed up secret, and all its versions, to a vault. This operation requires the secrets/restore permission. </summary>
         /// <param name="parameters"> The parameters to restore the secret. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<SecretBundle> RestoreSecret(SecretRestoreParameters parameters, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(parameters, nameof(parameters));
-
             Response result = RestoreSecret(parameters, cancellationToken.ToRequestContext());
             return Response.FromValue((SecretBundle)result, result);
         }
@@ -1065,12 +901,9 @@ namespace Azure.Security.KeyVault.Secrets
         /// <summary> Restores a backed up secret, and all its versions, to a vault. This operation requires the secrets/restore permission. </summary>
         /// <param name="parameters"> The parameters to restore the secret. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response<SecretBundle>> RestoreSecretAsync(SecretRestoreParameters parameters, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(parameters, nameof(parameters));
-
             Response result = await RestoreSecretAsync(parameters, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((SecretBundle)result, result);
         }

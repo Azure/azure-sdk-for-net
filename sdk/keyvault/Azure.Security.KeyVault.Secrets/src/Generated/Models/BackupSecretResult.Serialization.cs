@@ -15,7 +15,7 @@ using Azure.Security.KeyVault.Secrets;
 namespace Azure.Security.KeyVault.Secrets.Models
 {
     /// <summary> The backup secret result, containing the backup blob. </summary>
-    public partial class BackupSecretResult : IJsonModel<BackupSecretResult>
+    internal partial class BackupSecretResult : IJsonModel<BackupSecretResult>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

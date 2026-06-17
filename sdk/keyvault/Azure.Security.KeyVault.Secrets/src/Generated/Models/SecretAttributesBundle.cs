@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Security.KeyVault.Secrets.Models
 {
     /// <summary> The secret management attributes. </summary>
-    public partial class SecretAttributesBundle
+    internal partial class SecretAttributesBundle
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
