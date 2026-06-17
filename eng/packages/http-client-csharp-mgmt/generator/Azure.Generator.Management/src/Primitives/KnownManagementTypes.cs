@@ -125,6 +125,21 @@ namespace Azure.Generator.Management.Primitives
 
         public static bool TryGetInheritableSystemType(string id, [MaybeNullWhen(false)] out CSharpType type) => _idToInheritableSystemTypeMap.TryGetValue(id, out type);
 
+        public static bool TryGetInheritableSystemType(CSharpType candidateType, [MaybeNullWhen(false)] out CSharpType type)
+        {
+            foreach (var knownType in _idToInheritableSystemTypeMap.Values.Distinct(new CSharpFullNameComparer()))
+            {
+                if (candidateType.AreNamesEqual(knownType))
+                {
+                    type = knownType;
+                    return true;
+                }
+            }
+
+            type = null;
+            return false;
+        }
+
         public static bool TryGetSystemType(string id, [MaybeNullWhen(false)] out CSharpType type) => _idToSystemTypeMap.TryGetValue(id, out type);
 
         public static bool TryGetFrameworkType(string fullyQualifiedTypeName, [MaybeNullWhen(false)] out Type frameworkType)
