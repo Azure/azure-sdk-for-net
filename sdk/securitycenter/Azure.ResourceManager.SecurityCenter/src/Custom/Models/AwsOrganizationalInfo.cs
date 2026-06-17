@@ -4,9 +4,8 @@
 #nullable disable
 
 // Custom partial for AwsOrganizationalInfo polymorphic base class.
-// TypeSpec generates this, but custom code provides additional constructors or helpers.
-// CS1591 disabled due to generator limitation tracked in https://github.com/Azure/azure-sdk-for-net/issues/59437.
-#pragma warning disable CS1591
+// Workaround for https://github.com/Azure/azure-sdk-for-net/issues/59437: the generator omits
+// serialization members required by generated derived models for this discriminated base type.
 
 using System;
 using System.ClientModel.Primitives;
@@ -15,6 +14,7 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
+    /// <summary> AWS organizational information. </summary>
     public abstract partial class AwsOrganizationalInfo
     {
         /// <summary> Initializes a new instance of <see cref="AwsOrganizationalInfo"/>. </summary>
@@ -32,6 +32,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         void IJsonModel<AwsOrganizationalInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => WriteJson(writer, options);
         AwsOrganizationalInfo IJsonModel<AwsOrganizationalInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
+        /// <summary> Writes the JSON representation of the model. </summary>
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             WriteAdditionalProperties(writer, options, _additionalBinaryDataProperties);
