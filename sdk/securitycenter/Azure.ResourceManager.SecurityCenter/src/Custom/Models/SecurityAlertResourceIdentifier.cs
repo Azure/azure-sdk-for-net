@@ -3,6 +3,9 @@
 
 #nullable disable
 
+// Custom partial for SecurityAlertResourceIdentifier polymorphic base class.
+// TypeSpec generates this, but custom code provides additional constructors or helpers.
+// CS1591 disabled due to generator limitation tracked in https://github.com/Azure/azure-sdk-for-net/issues/59437.
 #pragma warning disable CS1591
 
 using System;
