@@ -45,6 +45,7 @@
     <Compile Include="Shared\StorageExceptionExtensions.cs" />
     <Compile Include="Shared\StorageConnectionString.cs" />
     <Compile Include="Shared\StorageResponseClassifier.cs" />
+    <Compile Include="Shared\StorageResponseFormatExtensions.cs" />
     <Compile Include="Shared\StorageSharedKeyCredentialInternals.cs" />
     <Compile Include="Shared\StorageSharedKeyPipelinePolicy.cs" />
     <Compile Include="Shared\StorageCrc64Calculator.cs" />

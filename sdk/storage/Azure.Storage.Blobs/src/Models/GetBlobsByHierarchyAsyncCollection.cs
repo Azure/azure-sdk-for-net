@@ -13,7 +13,7 @@ namespace Azure.Storage.Blobs.Models
     internal class GetBlobsByHierarchyAsyncCollection : StorageCollectionEnumerator<BlobHierarchyItem>
     {
         private readonly BlobContainerClient _client;
-        private readonly bool _useApacheArrow;
+        private readonly StorageResponseFormat _responseFormat;
         private readonly BlobTraits _traits;
         private readonly BlobStates _states;
         private readonly string _delimiter;
@@ -23,7 +23,7 @@ namespace Azure.Storage.Blobs.Models
 
         public GetBlobsByHierarchyAsyncCollection(
             BlobContainerClient client,
-            bool useApacheArrow,
+            StorageResponseFormat responseFormat,
             string delimiter,
             BlobTraits traits,
             BlobStates states,
@@ -32,7 +32,7 @@ namespace Azure.Storage.Blobs.Models
             string endBefore)
         {
             _client = client;
-            _useApacheArrow = useApacheArrow;
+            _responseFormat = responseFormat;
             _delimiter = delimiter;
             _traits = traits;
             _states = states;
@@ -52,7 +52,7 @@ namespace Azure.Storage.Blobs.Models
             if (async)
             {
                 response = await _client.GetBlobsByHierarchyInternal(
-                    useApacheArrow: _useApacheArrow,
+                    responseFormat: _responseFormat,
                     marker: continuationToken,
                     delimiter: _delimiter,
                     traits: _traits,
@@ -68,7 +68,7 @@ namespace Azure.Storage.Blobs.Models
             else
             {
                 response = _client.GetBlobsByHierarchyInternal(
-                    useApacheArrow: _useApacheArrow,
+                    responseFormat: _responseFormat,
                     marker: continuationToken,
                     delimiter: _delimiter,
                     traits: _traits,

@@ -1469,7 +1469,7 @@ namespace Azure.Storage.Blobs
                 uri.AppendQuery("endBefore", endBefore, true);
             }
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/vnd.apache.arrow.stream");
+            request.Headers.Add("Accept", "application/vnd.apache.arrow.stream,application/xml");
             request.Headers.Add("x-ms-version", _version);
             return message;
         }
@@ -1673,7 +1673,7 @@ namespace Azure.Storage.Blobs
                 uri.AppendQuery("endBefore", endBefore, true);
             }
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/vnd.apache.arrow.stream");
+            request.Headers.Add("Accept", "application/vnd.apache.arrow.stream,application/xml");
             request.Headers.Add("x-ms-version", _version);
             return message;
         }
@@ -1972,7 +1972,7 @@ namespace Azure.Storage.Blobs
             uri.AppendRaw(_url, false);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/vnd.apache.arrow.stream");
+            request.Headers.Add("Accept", "application/vnd.apache.arrow.stream,application/xml");
             request.Headers.Add("x-ms-version", _version);
             return message;
         }

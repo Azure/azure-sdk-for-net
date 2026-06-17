@@ -35,14 +35,14 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Optional.  Specifies a fully qualified path within the container,
         /// ending the listing when all results before have been returned.
-        /// This is only supported if <see cref="UseApacheArrow"/> is set to true.
+        /// This is only supported if <see cref="ResponseFormat"/> is set to <see cref="StorageResponseFormat.Arrow"/>.
         /// </summary>
         public string EndBefore { get; set; }
 
         /// <summary>
-        /// Optional.  Specifies whether we are using Apache Arrow, rather than XML,
-        /// to list blobs. Defaults to false.
+        /// Optional.  Specifies the format the service should use to return list results.
+        /// Defaults to <see cref="StorageResponseFormat.Auto"/>.
         /// </summary>
-        public bool UseApacheArrow { get; set; }
+        public StorageResponseFormat ResponseFormat { get; set; } = StorageResponseFormat.Auto;
     }
 }

@@ -2527,7 +2527,7 @@ namespace Azure.Storage.Blobs
             CancellationToken cancellationToken = default) =>
             new GetBlobsAsyncCollection(
                 this,
-                useApacheArrow: options?.UseApacheArrow ?? false,
+                responseFormat: options?.ResponseFormat ?? StorageResponseFormat.Auto,
                 traits: options?.Traits ?? BlobTraits.None,
                 states: options?.States ?? BlobStates.None,
                 prefix: options?.Prefix,
@@ -2568,7 +2568,7 @@ namespace Azure.Storage.Blobs
             CancellationToken cancellationToken = default) =>
             new GetBlobsAsyncCollection(
                 this,
-                useApacheArrow: options?.UseApacheArrow ?? false,
+                responseFormat: options?.ResponseFormat ?? StorageResponseFormat.Auto,
                 traits: options?.Traits ?? BlobTraits.None,
                 states: options?.States ?? BlobStates.None,
                 prefix: options?.Prefix,
@@ -2619,7 +2619,7 @@ namespace Azure.Storage.Blobs
             BlobStates states,
             string prefix,
             CancellationToken cancellationToken) =>
-            new GetBlobsAsyncCollection(this, false, traits, states, prefix, startFrom: default, endBefore: default).ToSyncCollection(cancellationToken);
+            new GetBlobsAsyncCollection(this, StorageResponseFormat.Xml, traits, states, prefix, startFrom: default, endBefore: default).ToSyncCollection(cancellationToken);
 
         /// <summary>
         /// The <see cref="GetBlobsAsync(BlobTraits, BlobStates, string, CancellationToken)"/>
@@ -2664,7 +2664,7 @@ namespace Azure.Storage.Blobs
             BlobStates states,
             string prefix,
             CancellationToken cancellationToken) =>
-            new GetBlobsAsyncCollection(this, false, traits, states, prefix, startFrom: default, endBefore: default).ToAsyncCollection(cancellationToken);
+            new GetBlobsAsyncCollection(this, StorageResponseFormat.Xml, traits, states, prefix, startFrom: default, endBefore: default).ToAsyncCollection(cancellationToken);
 
         /// <summary>
         /// The <see cref="GetBlobsInternal"/> operation returns a
@@ -2680,8 +2680,8 @@ namespace Azure.Storage.Blobs
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/list-blobs">
         /// List Blobs</see>.
         /// </summary>
-        /// <param name="useApacheArrow">
-        /// Specifies whether to use Apache Arrow to list blobs.
+        /// <param name="responseFormat">
+        /// Specifies the format the service should use to return list results.
         /// </param>
         /// <param name="marker">
         /// An optional string value that identifies the segment of the list
@@ -2710,7 +2710,7 @@ namespace Azure.Storage.Blobs
         /// <param name="endBefore">
         /// Optional.  Specifies a fully qualified path within the container,
         /// ending the listing when all results before have been returned.
-        /// This is only supported if <paramref name="useApacheArrow"/> is set to true.
+        /// This is only supported if <paramref name="responseFormat"/> is set to Arrow.
         /// </param>
         /// <param name="pageSizeHint">
         /// Gets or sets a value indicating the size of the page that should be
@@ -2734,7 +2734,7 @@ namespace Azure.Storage.Blobs
         /// containing each failure instance.
         /// </remarks>
         internal async Task<Response<ListBlobsFlatSegmentResponse>> GetBlobsInternal(
-            bool useApacheArrow,
+            StorageResponseFormat responseFormat,
             string marker,
             BlobTraits traits,
             BlobStates states,
@@ -2760,6 +2760,8 @@ namespace Azure.Storage.Blobs
                 try
                 {
                     scope.Start();
+
+                    bool useApacheArrow = responseFormat.ResolveAuto() == StorageResponseFormat.Arrow;
 
                     ListBlobsFlatSegmentResponse listblobFlatResponse;
                     Response rawResponse;
@@ -3167,7 +3169,7 @@ namespace Azure.Storage.Blobs
             CancellationToken cancellationToken = default) =>
             new GetBlobsByHierarchyAsyncCollection(
                 this,
-                useApacheArrow: options?.UseApacheArrow ?? false,
+                responseFormat: options?.ResponseFormat ?? StorageResponseFormat.Auto,
                 options?.Delimiter,
                 options?.Traits ?? BlobTraits.None,
                 options?.States ?? BlobStates.None,
@@ -3211,7 +3213,7 @@ namespace Azure.Storage.Blobs
             CancellationToken cancellationToken = default) =>
             new GetBlobsByHierarchyAsyncCollection(
                 this,
-                useApacheArrow: options?.UseApacheArrow ?? false,
+                responseFormat: options?.ResponseFormat ?? StorageResponseFormat.Auto,
                 options?.Delimiter,
                 options?.Traits ?? BlobTraits.None,
                 options?.States ?? BlobStates.None,
@@ -3283,7 +3285,7 @@ namespace Azure.Storage.Blobs
             string delimiter,
             string prefix,
             CancellationToken cancellationToken = default) =>
-            new GetBlobsByHierarchyAsyncCollection(this, false, delimiter, traits, states, prefix, startFrom: default, endBefore: default).ToSyncCollection(cancellationToken);
+            new GetBlobsByHierarchyAsyncCollection(this, StorageResponseFormat.Xml, delimiter, traits, states, prefix, startFrom: default, endBefore: default).ToSyncCollection(cancellationToken);
 
         /// <summary>
         /// The <see cref="GetBlobsByHierarchyAsync(BlobTraits, BlobStates, string, string, CancellationToken)"/>
@@ -3348,7 +3350,7 @@ namespace Azure.Storage.Blobs
             string delimiter,
             string prefix,
             CancellationToken cancellationToken) =>
-            new GetBlobsByHierarchyAsyncCollection(this, false, delimiter, traits, states, prefix, startFrom: default, endBefore: default).ToAsyncCollection(cancellationToken);
+            new GetBlobsByHierarchyAsyncCollection(this, StorageResponseFormat.Xml, delimiter, traits, states, prefix, startFrom: default, endBefore: default).ToAsyncCollection(cancellationToken);
 
         /// <summary>
         /// The <see cref="GetBlobsByHierarchyInternal"/> operation returns
@@ -3366,8 +3368,8 @@ namespace Azure.Storage.Blobs
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/list-blobs">
         /// List Blobs</see>.
         /// </summary>
-        /// <param name="useApacheArrow">
-        /// Specifies whether to use Apache Arrow to list blobs.
+        /// <param name="responseFormat">
+        /// Specifies the format the service should use to return list results.
         /// </param>
         /// <param name="marker">
         /// An optional string value that identifies the segment of the list
@@ -3414,7 +3416,7 @@ namespace Azure.Storage.Blobs
         /// <param name="endBefore">
         /// Optional.  Specifies a fully qualified path within the container,
         /// ending the listing when all results before have been returned.
-        /// This is only supported if <paramref name="useApacheArrow"/> is set to true.
+        /// This is only supported if <paramref name="responseFormat"/> is set to Arrow.
         /// </param>
         /// <param name="pageSizeHint">
         /// Gets or sets a value indicating the size of the page that should be
@@ -3438,7 +3440,7 @@ namespace Azure.Storage.Blobs
         /// containing each failure instance.
         /// </remarks>
         internal async Task<Response<ListBlobsHierarchySegmentResponse>> GetBlobsByHierarchyInternal(
-            bool useApacheArrow,
+            StorageResponseFormat responseFormat,
             string marker,
             string delimiter,
             BlobTraits traits,
@@ -3466,6 +3468,8 @@ namespace Azure.Storage.Blobs
                 try
                 {
                     scope.Start();
+
+                    bool useApacheArrow = responseFormat.ResolveAuto() == StorageResponseFormat.Arrow;
 
                     ListBlobsHierarchySegmentResponse listblobHierachyResponse;
                     Response rawResponse;

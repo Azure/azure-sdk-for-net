@@ -15,7 +15,7 @@ namespace Azure.Storage.Blobs.Models
     internal class GetBlobsAsyncCollection : StorageCollectionEnumerator<BlobItem>
     {
         private readonly BlobContainerClient _client;
-        private readonly bool _useApacheArrow;
+        private readonly StorageResponseFormat _responseFormat;
         private readonly BlobTraits _traits;
         private readonly BlobStates _states;
         private readonly string _prefix;
@@ -24,7 +24,7 @@ namespace Azure.Storage.Blobs.Models
 
         public GetBlobsAsyncCollection(
             BlobContainerClient client,
-            bool useApacheArrow,
+            StorageResponseFormat responseFormat,
             BlobTraits traits,
             BlobStates states,
             string prefix,
@@ -32,7 +32,7 @@ namespace Azure.Storage.Blobs.Models
             string endBefore)
         {
             _client = client;
-            _useApacheArrow = useApacheArrow;
+            _responseFormat = responseFormat;
             _traits = traits;
             _states = states;
             _prefix = prefix;
@@ -51,7 +51,7 @@ namespace Azure.Storage.Blobs.Models
             if (async)
             {
                 response = await _client.GetBlobsInternal(
-                    useApacheArrow: _useApacheArrow,
+                    responseFormat: _responseFormat,
                     marker: continuationToken,
                     traits: _traits,
                     states: _states,
@@ -66,7 +66,7 @@ namespace Azure.Storage.Blobs.Models
             else
             {
                 response = _client.GetBlobsInternal(
-                    useApacheArrow: _useApacheArrow,
+                    responseFormat: _responseFormat,
                     marker: continuationToken,
                     traits: _traits,
                     states: _states,

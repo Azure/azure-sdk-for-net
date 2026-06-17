@@ -2839,7 +2839,7 @@ namespace Azure.Storage.Blobs.Test
             var blobs = new List<BlobItem>();
             GetBlobsOptions options = new GetBlobsOptions
             {
-                UseApacheArrow = true
+                ResponseFormat = StorageResponseFormat.Arrow
             };
             await foreach (Page<BlobItem> page in test.Container.GetBlobsAsync(options: options).AsPages())
             {
@@ -2870,7 +2870,7 @@ namespace Azure.Storage.Blobs.Test
 
             GetBlobsOptions getBlobsOptions = new GetBlobsOptions
             {
-                UseApacheArrow = true,
+                ResponseFormat = StorageResponseFormat.Arrow,
                 Traits = BlobTraits.Tags
             };
 
@@ -2911,7 +2911,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             GetBlobsOptions options = new GetBlobsOptions
             {
-                UseApacheArrow = true
+                ResponseFormat = StorageResponseFormat.Arrow
             };
             IList<BlobItem> blobItems = await test.Container.GetBlobsAsync(options: options).ToListAsync();
 
@@ -2931,7 +2931,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             GetBlobsOptions options = new GetBlobsOptions
             {
-                UseApacheArrow = true
+                ResponseFormat = StorageResponseFormat.Arrow
             };
 
             int numPages = 0;
@@ -2961,7 +2961,7 @@ namespace Azure.Storage.Blobs.Test
 
             GetBlobsOptions options = new GetBlobsOptions
             {
-                UseApacheArrow = true,
+                ResponseFormat = StorageResponseFormat.Arrow,
                 Traits = BlobTraits.Metadata
             };
 
@@ -2988,7 +2988,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             GetBlobsOptions options = new GetBlobsOptions
             {
-                UseApacheArrow = true
+                ResponseFormat = StorageResponseFormat.Arrow
             };
             IList<BlobItem> blobs = await test.Container.GetBlobsAsync(options: options).ToListAsync();
 
@@ -3010,7 +3010,7 @@ namespace Azure.Storage.Blobs.Test
 
             GetBlobsOptions options = new GetBlobsOptions
             {
-                UseApacheArrow = true,
+                ResponseFormat = StorageResponseFormat.Arrow,
                 States = BlobStates.Deleted
             };
 
@@ -3043,7 +3043,7 @@ namespace Azure.Storage.Blobs.Test
 
             GetBlobsOptions options = new GetBlobsOptions
             {
-                UseApacheArrow = true,
+                ResponseFormat = StorageResponseFormat.Arrow,
                 States = BlobStates.Uncommitted
             };
 
@@ -3068,7 +3068,7 @@ namespace Azure.Storage.Blobs.Test
 
             GetBlobsOptions options = new GetBlobsOptions
             {
-                UseApacheArrow = true,
+                ResponseFormat = StorageResponseFormat.Arrow,
                 States = BlobStates.Snapshots
             };
 
@@ -3091,7 +3091,7 @@ namespace Azure.Storage.Blobs.Test
 
             GetBlobsOptions options = new GetBlobsOptions
             {
-                UseApacheArrow = true,
+                ResponseFormat = StorageResponseFormat.Arrow,
                 Prefix = "foo"
             };
 
@@ -3114,7 +3114,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             GetBlobsOptions options = new GetBlobsOptions
             {
-                UseApacheArrow = true
+                ResponseFormat = StorageResponseFormat.Arrow
             };
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 container.GetBlobsAsync(options: options).ToListAsync(),
@@ -3137,7 +3137,7 @@ namespace Azure.Storage.Blobs.Test
 
                 GetBlobsOptions options = new GetBlobsOptions
                 {
-                    UseApacheArrow = true
+                    ResponseFormat = StorageResponseFormat.Arrow
                 };
                 BlobItem blobItem = await test.Container.GetBlobsAsync(options: options).FirstAsync();
                 Assert.AreEqual(blobName, blobItem.Name);
@@ -3158,7 +3158,7 @@ namespace Azure.Storage.Blobs.Test
 
             GetBlobsOptions options = new GetBlobsOptions
             {
-                UseApacheArrow = true,
+                ResponseFormat = StorageResponseFormat.Arrow,
                 States = BlobStates.Version
             };
 
@@ -3190,7 +3190,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             GetBlobsOptions options = new GetBlobsOptions
             {
-                UseApacheArrow = true
+                ResponseFormat = StorageResponseFormat.Arrow
             };
             IList<BlobItem> blobs = await sourceContainer.GetBlobsAsync(options: options).ToListAsync();
 
@@ -3213,7 +3213,7 @@ namespace Azure.Storage.Blobs.Test
             var blobs = new List<BlobItem>();
             GetBlobsOptions options = new GetBlobsOptions
             {
-                UseApacheArrow = true
+                ResponseFormat = StorageResponseFormat.Arrow
             };
             await foreach (Page<BlobItem> page in test.Container.GetBlobsAsync(options: options).AsPages())
             {
@@ -3240,7 +3240,7 @@ namespace Azure.Storage.Blobs.Test
 
             GetBlobsOptions options = new GetBlobsOptions
             {
-                UseApacheArrow = true,
+                ResponseFormat = StorageResponseFormat.Arrow,
                 States = BlobStates.DeletedWithVersions
             };
 
@@ -3270,7 +3270,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             GetBlobsOptions options = new GetBlobsOptions
             {
-                UseApacheArrow = true
+                ResponseFormat = StorageResponseFormat.Arrow
             };
             BlobItem blobItem = await test.Container.GetBlobsAsync(options: options).FirstAsync();
 
@@ -3289,7 +3289,7 @@ namespace Azure.Storage.Blobs.Test
 
             GetBlobsOptions options = new GetBlobsOptions
             {
-                UseApacheArrow = true,
+                ResponseFormat = StorageResponseFormat.Arrow,
                 StartFrom = "foo"
             };
 
@@ -3311,7 +3311,7 @@ namespace Azure.Storage.Blobs.Test
 
             GetBlobsOptions options = new GetBlobsOptions
             {
-                UseApacheArrow = true,
+                ResponseFormat = StorageResponseFormat.Arrow,
                 EndBefore = "foo"
             };
 
@@ -3333,7 +3333,7 @@ namespace Azure.Storage.Blobs.Test
 
             GetBlobsOptions options = new GetBlobsOptions
             {
-                UseApacheArrow = true,
+                ResponseFormat = StorageResponseFormat.Arrow,
                 StartFrom = "foo",
                 EndBefore = "foo/foo"
             };
@@ -3868,7 +3868,7 @@ namespace Azure.Storage.Blobs.Test
 
             GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
             {
-                UseApacheArrow = true,
+                ResponseFormat = StorageResponseFormat.Arrow,
                 Delimiter = delimiter
             };
 
@@ -3918,7 +3918,7 @@ namespace Azure.Storage.Blobs.Test
 
             GetBlobsByHierarchyOptions getBlobsByHierarchyOptions = new GetBlobsByHierarchyOptions
             {
-                UseApacheArrow = true,
+                ResponseFormat = StorageResponseFormat.Arrow,
                 Traits = BlobTraits.Tags
             };
 
@@ -3959,7 +3959,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
             {
-                UseApacheArrow = true
+                ResponseFormat = StorageResponseFormat.Arrow
             };
             IList<BlobHierarchyItem> blobItems = await test.Container.GetBlobsByHierarchyAsync(options: options).ToListAsync();
 
@@ -3978,7 +3978,7 @@ namespace Azure.Storage.Blobs.Test
 
             GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
             {
-                UseApacheArrow = true
+                ResponseFormat = StorageResponseFormat.Arrow
             };
 
             int numPages = 0;
@@ -4008,7 +4008,7 @@ namespace Azure.Storage.Blobs.Test
 
             GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
             {
-                UseApacheArrow = true,
+                ResponseFormat = StorageResponseFormat.Arrow,
                 Traits = BlobTraits.Metadata
             };
 
@@ -4031,7 +4031,7 @@ namespace Azure.Storage.Blobs.Test
 
             GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
             {
-                UseApacheArrow = true,
+                ResponseFormat = StorageResponseFormat.Arrow,
                 Traits = BlobTraits.Metadata
             };
 
@@ -4058,7 +4058,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
             {
-                UseApacheArrow = true
+                ResponseFormat = StorageResponseFormat.Arrow
             };
             BlobHierarchyItem item = await test.Container.GetBlobsByHierarchyAsync(options: options).FirstAsync();
 
@@ -4080,7 +4080,7 @@ namespace Azure.Storage.Blobs.Test
 
             GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
             {
-                UseApacheArrow = true,
+                ResponseFormat = StorageResponseFormat.Arrow,
                 States = BlobStates.Deleted
             };
 
@@ -4113,7 +4113,7 @@ namespace Azure.Storage.Blobs.Test
 
             GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
             {
-                UseApacheArrow = true,
+                ResponseFormat = StorageResponseFormat.Arrow,
                 States = BlobStates.Uncommitted
             };
 
@@ -4138,7 +4138,7 @@ namespace Azure.Storage.Blobs.Test
 
             GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
             {
-                UseApacheArrow = true,
+                ResponseFormat = StorageResponseFormat.Arrow,
                 States = BlobStates.Snapshots
             };
 
@@ -4165,7 +4165,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
             {
-                UseApacheArrow = true,
+                ResponseFormat = StorageResponseFormat.Arrow,
                 States = BlobStates.Version
             };
 
@@ -4192,7 +4192,7 @@ namespace Azure.Storage.Blobs.Test
 
             GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
             {
-                UseApacheArrow = true,
+                ResponseFormat = StorageResponseFormat.Arrow,
                 Prefix = "foo"
             };
 
@@ -4215,7 +4215,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
             {
-                UseApacheArrow = true
+                ResponseFormat = StorageResponseFormat.Arrow
             };
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 container.GetBlobsByHierarchyAsync(options: options).ToListAsync(),
@@ -4237,7 +4237,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
             {
-                UseApacheArrow = true
+                ResponseFormat = StorageResponseFormat.Arrow
             };
             BlobHierarchyItem item = await sourceContainer.GetBlobsByHierarchyAsync(options: options).FirstAsync();
 
@@ -4262,7 +4262,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
             {
-                UseApacheArrow = true
+                ResponseFormat = StorageResponseFormat.Arrow
             };
             BlobHierarchyItem item = await test.Container.GetBlobsByHierarchyAsync(options: options).FirstAsync();
 
@@ -4289,7 +4289,7 @@ namespace Azure.Storage.Blobs.Test
 
             GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
             {
-                UseApacheArrow = true,
+                ResponseFormat = StorageResponseFormat.Arrow,
                 States = BlobStates.DeletedWithVersions
             };
 
@@ -4322,7 +4322,7 @@ namespace Azure.Storage.Blobs.Test
             {
                 GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
                 {
-                    UseApacheArrow = true
+                    ResponseFormat = StorageResponseFormat.Arrow
                 };
                 item = await test.Container.GetBlobsByHierarchyAsync(options: options).FirstAsync();
 
@@ -4334,7 +4334,7 @@ namespace Azure.Storage.Blobs.Test
             {
                 GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
                 {
-                    UseApacheArrow = true,
+                    ResponseFormat = StorageResponseFormat.Arrow,
                     Delimiter = ".b"
                 };
 
@@ -4361,7 +4361,7 @@ namespace Azure.Storage.Blobs.Test
 
             GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
             {
-                UseApacheArrow = true,
+                ResponseFormat = StorageResponseFormat.Arrow,
                 States = BlobStates.Version,
                 Delimiter = "/",
                 Prefix = "baz"
@@ -4400,7 +4400,7 @@ namespace Azure.Storage.Blobs.Test
 
             GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
             {
-                UseApacheArrow = true,
+                ResponseFormat = StorageResponseFormat.Arrow,
                 StartFrom = "foo"
             };
 
@@ -4422,7 +4422,7 @@ namespace Azure.Storage.Blobs.Test
 
             GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
             {
-                UseApacheArrow = true,
+                ResponseFormat = StorageResponseFormat.Arrow,
                 EndBefore = "foo"
             };
 
@@ -4444,7 +4444,7 @@ namespace Azure.Storage.Blobs.Test
 
             GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
             {
-                UseApacheArrow = true,
+                ResponseFormat = StorageResponseFormat.Arrow,
                 StartFrom = "foo",
                 EndBefore = "foo/foo"
             };
