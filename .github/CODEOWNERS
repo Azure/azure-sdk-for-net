@@ -36,6 +36,16 @@
 # Catch all
 /sdk/                                                              @jsquire
 
+####################
+# End-to-End Samples
+####################
+
+# Samples catch-all
+/samples/                                                          @jsquire
+
+#PRLabel: Voice Live
+/samples/voicelive/                                                @emilyjiji @xitzhang @pankopon @amber-yujueWang
+
 # ######## Core Libraries ########
 
 # PRLabel: %Azure.Core
@@ -1245,7 +1255,6 @@
 /.vscode/                                                          @jsquire @m-redding
 /.devcontainer/                                                    @jsquire @m-redding
 /doc/                                                              @jsquire
-/samples/                                                          @jsquire @m-redding
 
 # Repository configuration that should not be overridden
 /sdk/**/NuGet.*                                                    @Azure/azure-sdk-write-net-core @jsquire
