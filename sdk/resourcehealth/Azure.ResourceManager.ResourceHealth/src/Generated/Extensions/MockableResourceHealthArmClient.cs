@@ -12,12 +12,15 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.ResourceHealth;
+using Azure.ResourceManager.ResourceHealth.Models;
 
 namespace Azure.ResourceManager.ResourceHealth.Mocking
 {
     /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableResourceHealthArmClient : ArmResource
     {
+        private ClientDiagnostics _availabilityStatusesClientDiagnostics;
+        private AvailabilityStatuses _availabilityStatusesRestClient;
         private ClientDiagnostics _childResourcesClientDiagnostics;
         private ChildResources _childResourcesRestClient;
 
@@ -33,43 +36,13 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         {
         }
 
+        private ClientDiagnostics AvailabilityStatusesClientDiagnostics => _availabilityStatusesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ResourceHealth.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private AvailabilityStatuses AvailabilityStatusesRestClient => _availabilityStatusesRestClient ??= new AvailabilityStatuses(AvailabilityStatusesClientDiagnostics, Pipeline, Endpoint, "2025-05-01");
+
         private ClientDiagnostics ChildResourcesClientDiagnostics => _childResourcesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ResourceHealth.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private ChildResources ChildResourcesRestClient => _childResourcesRestClient ??= new ChildResources(ChildResourcesClientDiagnostics, Pipeline, Endpoint, "2025-05-01");
-
-        /// <summary> Gets an object representing a <see cref="AvailabilityStatusResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AvailabilityStatusResource"/> object. </returns>
-        public virtual AvailabilityStatusResource GetAvailabilityStatusResource(ResourceIdentifier id)
-        {
-            AvailabilityStatusResource.ValidateResourceId(id);
-            return new AvailabilityStatusResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="AvailabilityStatusResource"/> along with the instance operations that can be performed on it in the ArmClient. </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> Returns a <see cref="AvailabilityStatusResource"/> object. </returns>
-        public virtual AvailabilityStatusResource GetAvailabilityStatus(ResourceIdentifier scope)
-        {
-            return new AvailabilityStatusResource(Client, scope.AppendProviderResource("Microsoft.ResourceHealth", "availabilityStatuses", "current"));
-        }
-
-        /// <summary> Gets an object representing a <see cref="ChildAvailabilityStatusResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ChildAvailabilityStatusResource"/> object. </returns>
-        public virtual ChildAvailabilityStatusResource GetChildAvailabilityStatusResource(ResourceIdentifier id)
-        {
-            ChildAvailabilityStatusResource.ValidateResourceId(id);
-            return new ChildAvailabilityStatusResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="ChildAvailabilityStatusResource"/> along with the instance operations that can be performed on it in the ArmClient. </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> Returns a <see cref="ChildAvailabilityStatusResource"/> object. </returns>
-        public virtual ChildAvailabilityStatusResource GetChildAvailabilityStatus(ResourceIdentifier scope)
-        {
-            return new ChildAvailabilityStatusResource(Client, scope.AppendProviderResource("Microsoft.ResourceHealth", "childAvailabilityStatuses", "current"));
-        }
 
         /// <summary> Gets an object representing a <see cref="TenantResourceHealthEventImpactedResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -126,6 +99,86 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         }
 
         /// <summary>
+        /// Lists all historical availability transitions and impacting events for a single resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.ResourceHealth/availabilityStatuses. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AvailabilityStatuses_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
+        /// <param name="expand"> Setting $expand=recommendedactions in url query expands the recommendedactions in the response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        /// <returns> A collection of <see cref="ResourceHealthAvailabilityStatus"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ResourceHealthAvailabilityStatus> GetAllAsync(ResourceIdentifier scope, string filter = default, string expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AvailabilityStatusesGetAllAsyncCollectionResultOfT(
+                AvailabilityStatusesRestClient,
+                scope.ToString(),
+                filter,
+                expand,
+                context,
+                "MockableResourceHealthArmClient.GetAll");
+        }
+
+        /// <summary>
+        /// Lists all historical availability transitions and impacting events for a single resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.ResourceHealth/availabilityStatuses. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AvailabilityStatuses_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
+        /// <param name="expand"> Setting $expand=recommendedactions in url query expands the recommendedactions in the response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        /// <returns> A collection of <see cref="ResourceHealthAvailabilityStatus"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ResourceHealthAvailabilityStatus> GetAll(ResourceIdentifier scope, string filter = default, string expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AvailabilityStatusesGetAllCollectionResultOfT(
+                AvailabilityStatusesRestClient,
+                scope.ToString(),
+                filter,
+                expand,
+                context,
+                "MockableResourceHealthArmClient.GetAll");
+        }
+
+        /// <summary>
         /// Lists the all the children and its current health status for a parent resource. Use the nextLink property in the response to get the next page of children current health
         /// <list type="bullet">
         /// <item>
@@ -147,8 +200,8 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         /// <param name="expand"> Setting $expand=recommendedactions in url query expands the recommendedactions in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <returns> A collection of <see cref="ResourceHealthAvailabilityStatusData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ResourceHealthAvailabilityStatusData> GetAvailabilityStatusOfChildResourceDataAsync(ResourceIdentifier scope, string filter = default, string expand = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ResourceHealthAvailabilityStatus"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ResourceHealthAvailabilityStatus> GetAvailabilityStatusOfChildResourceDataAsync(ResourceIdentifier scope, string filter = default, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -187,8 +240,8 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         /// <param name="expand"> Setting $expand=recommendedactions in url query expands the recommendedactions in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <returns> A collection of <see cref="ResourceHealthAvailabilityStatusData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ResourceHealthAvailabilityStatusData> GetAvailabilityStatusOfChildResourceData(ResourceIdentifier scope, string filter = default, string expand = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ResourceHealthAvailabilityStatus"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ResourceHealthAvailabilityStatus> GetAvailabilityStatusOfChildResourceData(ResourceIdentifier scope, string filter = default, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 

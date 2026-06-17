@@ -9,43 +9,34 @@ using Azure.ResourceManager.ResourceHealth.Models;
 
 namespace Azure.ResourceManager.ResourceHealth.Mocking
 {
-    // This file preserves the GA subscription availability status mockable APIs.
-    // It wraps generated Data pages as AvailabilityStatusResource pages and adapts them
-    // back to the old ResourceHealthAvailabilityStatus model where required.
+    // This file preserves the GA subscription availability status mockable API names
+    // and forwards them to the generated model-returning pageable results.
     public partial class MockableResourceHealthSubscriptionResource
     {
         /// <summary> Lists current availability status for resources in the subscription. </summary>
-        public virtual AsyncPageable<AvailabilityStatusResource> GetAvailabilityStatusResourcesBySubscriptionAsync(string filter = default, string expand = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ResourceHealthAvailabilityStatus> GetAvailabilityStatusResourcesBySubscriptionAsync(string filter = default, string expand = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = CreateRequestContext(cancellationToken);
-            return new AsyncPageableWrapper<ResourceHealthAvailabilityStatusData, AvailabilityStatusResource>(
-                new GetAvailabilityStatusResourcesBySubscriptionAsyncCollectionResult(AvailabilityStatusesRestClient, Id.SubscriptionId, filter, expand, context),
-                data => new AvailabilityStatusResource(Client, data));
+            return new GetAvailabilityStatusResourcesBySubscriptionAsyncCollectionResult(AvailabilityStatusesRestClient, Id.SubscriptionId, filter, expand, context);
         }
 
         /// <summary> Lists current availability status for resources in the subscription. </summary>
-        public virtual Pageable<AvailabilityStatusResource> GetAvailabilityStatusResourcesBySubscription(string filter = default, string expand = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<ResourceHealthAvailabilityStatus> GetAvailabilityStatusResourcesBySubscription(string filter = default, string expand = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = CreateRequestContext(cancellationToken);
-            return new PageableWrapper<ResourceHealthAvailabilityStatusData, AvailabilityStatusResource>(
-                new GetAvailabilityStatusResourcesBySubscriptionCollectionResult(AvailabilityStatusesRestClient, Id.SubscriptionId, filter, expand, context),
-                data => new AvailabilityStatusResource(Client, data));
+            return new GetAvailabilityStatusResourcesBySubscriptionCollectionResult(AvailabilityStatusesRestClient, Id.SubscriptionId, filter, expand, context);
         }
 
         /// <summary> Lists current availability status for resources in the subscription. </summary>
         public virtual AsyncPageable<ResourceHealthAvailabilityStatus> GetAvailabilityStatusesBySubscriptionAsync(string filter = default, string expand = default, CancellationToken cancellationToken = default)
         {
-            return new AsyncPageableWrapper<AvailabilityStatusResource, ResourceHealthAvailabilityStatus>(
-                GetAvailabilityStatusResourcesBySubscriptionAsync(filter, expand, cancellationToken),
-                resource => ResourceHealthAvailabilityStatus.FromData(resource.Data));
+            return GetAvailabilityStatusResourcesBySubscriptionAsync(filter, expand, cancellationToken);
         }
 
         /// <summary> Lists current availability status for resources in the subscription. </summary>
         public virtual Pageable<ResourceHealthAvailabilityStatus> GetAvailabilityStatusesBySubscription(string filter = default, string expand = default, CancellationToken cancellationToken = default)
         {
-            return new PageableWrapper<AvailabilityStatusResource, ResourceHealthAvailabilityStatus>(
-                GetAvailabilityStatusResourcesBySubscription(filter, expand, cancellationToken),
-                resource => ResourceHealthAvailabilityStatus.FromData(resource.Data));
+            return GetAvailabilityStatusResourcesBySubscription(filter, expand, cancellationToken);
         }
 
         private static RequestContext CreateRequestContext(CancellationToken cancellationToken)

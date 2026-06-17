@@ -24,21 +24,20 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         private ClientDiagnostics EventsClientDiagnostics => _eventsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ResourceHealth.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private Events EventsRestClient => _eventsRestClient ??= new Events(EventsClientDiagnostics, Pipeline, Endpoint, "2025-05-01");
 
-        // This customization preserves the GA GetAvailabilityStatus* mockable API by unwrapping the generated AvailabilityStatusResource and converting its Data to the old model type.
         /// <summary> Gets current availability status for a single resource. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<ResourceHealthAvailabilityStatus>> GetAvailabilityStatusAsync(ResourceIdentifier scope, string filter = default, string expand = default, CancellationToken cancellationToken = default)
         {
-            Response<AvailabilityStatusResource> response = await GetAvailabilityStatus(scope).GetAsync(filter, expand, cancellationToken).ConfigureAwait(false);
-            return Response.FromValue(ResourceHealthAvailabilityStatus.FromData(response.Value.Data), response.GetRawResponse());
+            Response response = await GetSingleResponseAsync(scope, filter, expand, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(ResourceHealthAvailabilityStatus.FromResponse(response), response);
         }
-        // This customization preserves the GA GetAvailabilityStatus* mockable API by unwrapping the generated AvailabilityStatusResource and converting its Data to the old model type.
+
         /// <summary> Gets current availability status for a single resource. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<ResourceHealthAvailabilityStatus> GetAvailabilityStatus(ResourceIdentifier scope, string filter = default, string expand = default, CancellationToken cancellationToken = default)
         {
-            Response<AvailabilityStatusResource> response = GetAvailabilityStatus(scope).Get(filter, expand, cancellationToken);
-            return Response.FromValue(ResourceHealthAvailabilityStatus.FromData(response.Value.Data), response.GetRawResponse());
+            Response response = GetSingleResponse(scope, filter, expand, cancellationToken);
+            return Response.FromValue(ResourceHealthAvailabilityStatus.FromResponse(response), response);
         }
         // This customization preserves the GA GetAvailabilityStatuses* mockable API while forwarding to the generated child-resource availability status list operation.
         /// <summary> Lists the all the children and its current health status for a parent resource. </summary>
@@ -72,70 +71,124 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
             return new GetHealthEventsOfSingleResourceCollectionResult(EventsRestClient, scope.ToString(), filter, CreateRequestContext(cancellationToken));
         }
 
-        // The REST layer returns ResourceHealthAvailabilityStatusData items, while the
-        // GA-compatible public API returns ResourceHealthAvailabilityStatus items.
-        // Wrap the generated pageable and convert each Data instance to the GA model.
         /// <summary> Lists child resource historical availability statuses. </summary>
         public virtual AsyncPageable<ResourceHealthAvailabilityStatus> GetHistoricalAvailabilityStatusesOfChildResourceAsync(ResourceIdentifier scope, string filter = default, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
-            AsyncPageable<ResourceHealthAvailabilityStatusData> statuses = new GetHistoricalAvailabilityStatusesOfChildResourceAsyncCollectionResult(ChildAvailabilityStatusesRestClient, scope.ToString(), filter, expand, CreateRequestContext(cancellationToken));
-            return new AsyncPageableWrapper<ResourceHealthAvailabilityStatusData, ResourceHealthAvailabilityStatus>(statuses, ResourceHealthAvailabilityStatus.FromData);
+            return new GetHistoricalAvailabilityStatusesOfChildResourceAsyncCollectionResult(ChildAvailabilityStatusesRestClient, scope.ToString(), filter, expand, CreateRequestContext(cancellationToken));
         }
 
-        // The REST layer returns ResourceHealthAvailabilityStatusData items, while the
-        // GA-compatible public API returns ResourceHealthAvailabilityStatus items.
-        // Wrap the generated pageable and convert each Data instance to the GA model.
         /// <summary> Lists child resource historical availability statuses. </summary>
         public virtual Pageable<ResourceHealthAvailabilityStatus> GetHistoricalAvailabilityStatusesOfChildResource(ResourceIdentifier scope, string filter = default, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
-            Pageable<ResourceHealthAvailabilityStatusData> statuses = new GetHistoricalAvailabilityStatusesOfChildResourceCollectionResult(ChildAvailabilityStatusesRestClient, scope.ToString(), filter, expand, CreateRequestContext(cancellationToken));
-            return new PageableWrapper<ResourceHealthAvailabilityStatusData, ResourceHealthAvailabilityStatus>(statuses, ResourceHealthAvailabilityStatus.FromData);
+            return new GetHistoricalAvailabilityStatusesOfChildResourceCollectionResult(ChildAvailabilityStatusesRestClient, scope.ToString(), filter, expand, CreateRequestContext(cancellationToken));
         }
 
-        // The generated child-resource list operation returns ResourceHealthAvailabilityStatusData
-        // and is intentionally named GetAvailabilityStatusOfChildResourceData* to avoid
-        // colliding with the GA-compatible GetAvailabilityStatusOfChildResources* methods.
+        // The generated child-resource list operation is intentionally named GetAvailabilityStatusOfChildResourceData*
+        // to avoid colliding with the GA-compatible GetAvailabilityStatusOfChildResources* methods.
         // C# cannot overload methods by return type only, so the compatibility methods keep
-        // the old public names and wrap the generated Data pageable into ResourceHealthAvailabilityStatus.
+        // the old public names and forward to the generated pageable.
         /// <summary> Lists child resources and their current health status for a parent resource. </summary>
         public virtual AsyncPageable<ResourceHealthAvailabilityStatus> GetAvailabilityStatusOfChildResourcesAsync(ResourceIdentifier scope, string filter = default, string expand = default, CancellationToken cancellationToken = default)
         {
-            AsyncPageable<ResourceHealthAvailabilityStatusData> statuses = GetAvailabilityStatusOfChildResourceDataAsync(scope, filter, expand, cancellationToken);
-            return new AsyncPageableWrapper<ResourceHealthAvailabilityStatusData, ResourceHealthAvailabilityStatus>(statuses, ResourceHealthAvailabilityStatus.FromData);
+            return GetAvailabilityStatusOfChildResourceDataAsync(scope, filter, expand, cancellationToken);
         }
 
-        // The generated child-resource list operation returns ResourceHealthAvailabilityStatusData
-        // and is intentionally named GetAvailabilityStatusOfChildResourceData* to avoid
-        // colliding with the GA-compatible GetAvailabilityStatusOfChildResources* methods.
+        // The generated child-resource list operation is intentionally named GetAvailabilityStatusOfChildResourceData*
+        // to avoid colliding with the GA-compatible GetAvailabilityStatusOfChildResources* methods.
         // C# cannot overload methods by return type only, so the compatibility methods keep
-        // the old public names and wrap the generated Data pageable into ResourceHealthAvailabilityStatus.
+        // the old public names and forward to the generated pageable.
         /// <summary> Lists child resources and their current health status for a parent resource. </summary>
         public virtual Pageable<ResourceHealthAvailabilityStatus> GetAvailabilityStatusOfChildResources(ResourceIdentifier scope, string filter = default, string expand = default, CancellationToken cancellationToken = default)
         {
-            Pageable<ResourceHealthAvailabilityStatusData> statuses = GetAvailabilityStatusOfChildResourceData(scope, filter, expand, cancellationToken);
-            return new PageableWrapper<ResourceHealthAvailabilityStatusData, ResourceHealthAvailabilityStatus>(statuses, ResourceHealthAvailabilityStatus.FromData);
+            return GetAvailabilityStatusOfChildResourceData(scope, filter, expand, cancellationToken);
         }
 
-        // The generated get operation returns a ChildAvailabilityStatusResource wrapper,
-        // but the GA-compatible API returns ResourceHealthAvailabilityStatus directly.
-        // Unwrap the resource Data and convert it to the GA model while preserving the raw response.
         /// <summary> Gets current availability status for a child resource. </summary>
         public virtual async Task<Response<ResourceHealthAvailabilityStatus>> GetAvailabilityStatusOfChildResourceAsync(ResourceIdentifier scope, string filter = default, string expand = default, CancellationToken cancellationToken = default)
         {
-            Response<ChildAvailabilityStatusResource> response = await GetChildAvailabilityStatus(scope).GetAsync(filter, expand, cancellationToken).ConfigureAwait(false);
-            return Response.FromValue(ResourceHealthAvailabilityStatus.FromData(response.Value.Data), response.GetRawResponse());
+            Response response = await GetChildResponseAsync(scope, filter, expand, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(ResourceHealthAvailabilityStatus.FromResponse(response), response);
         }
 
-        // The generated get operation returns a ChildAvailabilityStatusResource wrapper,
-        // but the GA-compatible API returns ResourceHealthAvailabilityStatus directly.
-        // Unwrap the resource Data and convert it to the GA model while preserving the raw response.
         /// <summary> Gets current availability status for a child resource. </summary>
         public virtual Response<ResourceHealthAvailabilityStatus> GetAvailabilityStatusOfChildResource(ResourceIdentifier scope, string filter = default, string expand = default, CancellationToken cancellationToken = default)
         {
-            Response<ChildAvailabilityStatusResource> response = GetChildAvailabilityStatus(scope).Get(filter, expand, cancellationToken);
-            return Response.FromValue(ResourceHealthAvailabilityStatus.FromData(response.Value.Data), response.GetRawResponse());
+            Response response = GetChildResponse(scope, filter, expand, cancellationToken);
+            return Response.FromValue(ResourceHealthAvailabilityStatus.FromResponse(response), response);
+        }
+
+        private async Task<Response> GetSingleResponseAsync(ResourceIdentifier scope, string filter, string expand, CancellationToken cancellationToken)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            RequestContext context = CreateRequestContext(cancellationToken);
+            HttpMessage message = AvailabilityStatusesRestClient.CreateGetAvailabilityStatusRequest(scope.ToString(), filter, expand, context);
+            using DiagnosticScope scopeDiagnostics = AvailabilityStatusesRestClient.ClientDiagnostics.CreateScope("MockableResourceHealthArmClient.GetAvailabilityStatus");
+            scopeDiagnostics.Start();
+            try
+            {
+                return await AvailabilityStatusesRestClient.Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scopeDiagnostics.Failed(e);
+                throw;
+            }
+        }
+
+        private Response GetSingleResponse(ResourceIdentifier scope, string filter, string expand, CancellationToken cancellationToken)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            RequestContext context = CreateRequestContext(cancellationToken);
+            HttpMessage message = AvailabilityStatusesRestClient.CreateGetAvailabilityStatusRequest(scope.ToString(), filter, expand, context);
+            using DiagnosticScope scopeDiagnostics = AvailabilityStatusesRestClient.ClientDiagnostics.CreateScope("MockableResourceHealthArmClient.GetAvailabilityStatus");
+            scopeDiagnostics.Start();
+            try
+            {
+                return AvailabilityStatusesRestClient.Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scopeDiagnostics.Failed(e);
+                throw;
+            }
+        }
+
+        private async Task<Response> GetChildResponseAsync(ResourceIdentifier scope, string filter, string expand, CancellationToken cancellationToken)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            RequestContext context = CreateRequestContext(cancellationToken);
+            HttpMessage message = ChildAvailabilityStatusesRestClient.CreateGetAvailabilityStatusOfChildResourceRequest(scope.ToString(), filter, expand, context);
+            using DiagnosticScope scopeDiagnostics = ChildAvailabilityStatusesRestClient.ClientDiagnostics.CreateScope("MockableResourceHealthArmClient.GetAvailabilityStatusOfChildResource");
+            scopeDiagnostics.Start();
+            try
+            {
+                return await ChildAvailabilityStatusesRestClient.Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scopeDiagnostics.Failed(e);
+                throw;
+            }
+        }
+
+        private Response GetChildResponse(ResourceIdentifier scope, string filter, string expand, CancellationToken cancellationToken)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            RequestContext context = CreateRequestContext(cancellationToken);
+            HttpMessage message = ChildAvailabilityStatusesRestClient.CreateGetAvailabilityStatusOfChildResourceRequest(scope.ToString(), filter, expand, context);
+            using DiagnosticScope scopeDiagnostics = ChildAvailabilityStatusesRestClient.ClientDiagnostics.CreateScope("MockableResourceHealthArmClient.GetAvailabilityStatusOfChildResource");
+            scopeDiagnostics.Start();
+            try
+            {
+                return ChildAvailabilityStatusesRestClient.Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scopeDiagnostics.Failed(e);
+                throw;
+            }
         }
 
         private static RequestContext CreateRequestContext(CancellationToken cancellationToken)

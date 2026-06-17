@@ -15,8 +15,6 @@ namespace Azure.ResourceManager.ResourceHealth
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
-    [ModelReaderWriterBuildable(typeof(AvailabilityStatusResource))]
-    [ModelReaderWriterBuildable(typeof(ChildAvailabilityStatusResource))]
     [ModelReaderWriterBuildable(typeof(EmergingIssue))]
     [ModelReaderWriterBuildable(typeof(EmergingIssueActiveEventType))]
     [ModelReaderWriterBuildable(typeof(EmergingIssueBannerType))]
@@ -32,10 +30,9 @@ namespace Azure.ResourceManager.ResourceHealth
     [ModelReaderWriterBuildable(typeof(OperationDisplay))]
     [ModelReaderWriterBuildable(typeof(OperationListResult))]
     [ModelReaderWriterBuildable(typeof(ResourceHealthAvailabilityStateRecentlyResolved))]
-    [ModelReaderWriterBuildable(typeof(ResourceHealthAvailabilityStatusData))]
+    [ModelReaderWriterBuildable(typeof(ResourceHealthAvailabilityStatus))]
     [ModelReaderWriterBuildable(typeof(ResourceHealthAvailabilityStatusListResult))]
     [ModelReaderWriterBuildable(typeof(ResourceHealthAvailabilityStatusProperties))]
-    [ModelReaderWriterBuildable(typeof(ResourceHealthAvailabilityStatusProxy))]
     [ModelReaderWriterBuildable(typeof(ResourceHealthEventAdditionalInformation))]
     [ModelReaderWriterBuildable(typeof(ResourceHealthEventArticle))]
     [ModelReaderWriterBuildable(typeof(ResourceHealthEventData))]

@@ -15,7 +15,7 @@ using Azure.ResourceManager.ResourceHealth.Models;
 
 namespace Azure.ResourceManager.ResourceHealth
 {
-    internal partial class ChildResourcesGetAvailabilityStatusOfChildResourceDataAsyncCollectionResultOfT : AsyncPageable<ResourceHealthAvailabilityStatusData>
+    internal partial class ChildResourcesGetAvailabilityStatusOfChildResourceDataAsyncCollectionResultOfT : AsyncPageable<ResourceHealthAvailabilityStatus>
     {
         private readonly ChildResources _client;
         private readonly string _resourceUri;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of ChildResourcesGetAvailabilityStatusOfChildResourceDataAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<ResourceHealthAvailabilityStatusData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<ResourceHealthAvailabilityStatus>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ResourceHealth
                     yield break;
                 }
                 ResourceHealthAvailabilityStatusListResult result = ResourceHealthAvailabilityStatusListResult.FromResponse(response);
-                yield return Page<ResourceHealthAvailabilityStatusData>.FromValues((IReadOnlyList<ResourceHealthAvailabilityStatusData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<ResourceHealthAvailabilityStatus>.FromValues((IReadOnlyList<ResourceHealthAvailabilityStatus>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 string nextPageString = result.NextLink;
                 if (string.IsNullOrEmpty(nextPageString))
                 {

@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (ResourceHealthAvailabilityStatusData item in Value)
+            foreach (ResourceHealthAvailabilityStatus item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             {
                 return null;
             }
-            IList<ResourceHealthAvailabilityStatusData> value = default;
+            IList<ResourceHealthAvailabilityStatus> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<ResourceHealthAvailabilityStatusData> array = new List<ResourceHealthAvailabilityStatusData>();
+                    List<ResourceHealthAvailabilityStatus> array = new List<ResourceHealthAvailabilityStatus>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ResourceHealthAvailabilityStatusData.DeserializeResourceHealthAvailabilityStatusData(item, options));
+                        array.Add(ResourceHealthAvailabilityStatus.DeserializeResourceHealthAvailabilityStatus(item, options));
                     }
                     value = array;
                     continue;

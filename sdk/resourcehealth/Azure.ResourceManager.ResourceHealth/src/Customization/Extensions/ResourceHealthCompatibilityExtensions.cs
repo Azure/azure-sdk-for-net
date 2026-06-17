@@ -164,9 +164,9 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="expand"> Setting $expand=recommendedactions in url query expands the recommendedactions in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AvailabilityStatusResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ResourceHealthAvailabilityStatus"/> that may take multiple service requests to iterate over. </returns>
         [ForwardsClientCalls]
-        public static AsyncPageable<AvailabilityStatusResource> GetAvailabilityStatusResourcesBySubscriptionAsync(this SubscriptionResource subscriptionResource, string filter = default, string expand = default, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ResourceHealthAvailabilityStatus> GetAvailabilityStatusResourcesBySubscriptionAsync(this SubscriptionResource subscriptionResource, string filter = default, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -178,9 +178,9 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="expand"> Setting $expand=recommendedactions in url query expands the recommendedactions in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AvailabilityStatusResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ResourceHealthAvailabilityStatus"/> that may take multiple service requests to iterate over. </returns>
         [ForwardsClientCalls]
-        public static Pageable<AvailabilityStatusResource> GetAvailabilityStatusResourcesBySubscription(this SubscriptionResource subscriptionResource, string filter = default, string expand = default, CancellationToken cancellationToken = default)
+        public static Pageable<ResourceHealthAvailabilityStatus> GetAvailabilityStatusResourcesBySubscription(this SubscriptionResource subscriptionResource, string filter = default, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 

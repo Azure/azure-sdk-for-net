@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.ResourceManager.ResourceHealth;
 
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
@@ -20,7 +19,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
 
         /// <summary> Initializes a new instance of <see cref="ResourceHealthAvailabilityStatusListResult"/>. </summary>
         /// <param name="value"> The list of availabilityStatuses. </param>
-        internal ResourceHealthAvailabilityStatusListResult(IEnumerable<ResourceHealthAvailabilityStatusData> value)
+        internal ResourceHealthAvailabilityStatusListResult(IEnumerable<ResourceHealthAvailabilityStatus> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +28,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         /// <param name="value"> The list of availabilityStatuses. </param>
         /// <param name="nextLink"> The URI to fetch the next page of availabilityStatuses. Call ListNext() with this URI to fetch the next page of availabilityStatuses. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceHealthAvailabilityStatusListResult(IList<ResourceHealthAvailabilityStatusData> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResourceHealthAvailabilityStatusListResult(IList<ResourceHealthAvailabilityStatus> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -37,7 +36,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         }
 
         /// <summary> The list of availabilityStatuses. </summary>
-        public IList<ResourceHealthAvailabilityStatusData> Value { get; }
+        public IList<ResourceHealthAvailabilityStatus> Value { get; }
 
         /// <summary> The URI to fetch the next page of availabilityStatuses. Call ListNext() with this URI to fetch the next page of availabilityStatuses. </summary>
         public string NextLink { get; }

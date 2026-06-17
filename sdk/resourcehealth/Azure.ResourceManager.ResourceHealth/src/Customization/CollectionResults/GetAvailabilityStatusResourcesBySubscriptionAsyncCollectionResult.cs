@@ -11,7 +11,7 @@ using Azure.ResourceManager.ResourceHealth.Models;
 
 namespace Azure.ResourceManager.ResourceHealth
 {
-    internal partial class GetAvailabilityStatusResourcesBySubscriptionAsyncCollectionResult : AsyncPageable<ResourceHealthAvailabilityStatusData>
+    internal partial class GetAvailabilityStatusResourcesBySubscriptionAsyncCollectionResult : AsyncPageable<ResourceHealthAvailabilityStatus>
     {
         private readonly AvailabilityStatuses _client;
         private readonly string _subscriptionId;
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ResourceHealth
             _context = context;
         }
 
-        public override async IAsyncEnumerable<Page<ResourceHealthAvailabilityStatusData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<ResourceHealthAvailabilityStatus>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 }
 
                 ResourceHealthAvailabilityStatusListResult result = ResourceHealthAvailabilityStatusListResult.FromResponse(response);
-                yield return Page<ResourceHealthAvailabilityStatusData>.FromValues((IReadOnlyList<ResourceHealthAvailabilityStatusData>)result.Value, result.NextLink, response);
+                yield return Page<ResourceHealthAvailabilityStatus>.FromValues((IReadOnlyList<ResourceHealthAvailabilityStatus>)result.Value, result.NextLink, response);
                 nextPage = string.IsNullOrEmpty(result.NextLink) ? null : new Uri(result.NextLink, UriKind.RelativeOrAbsolute);
                 if (nextPage == null)
                 {
