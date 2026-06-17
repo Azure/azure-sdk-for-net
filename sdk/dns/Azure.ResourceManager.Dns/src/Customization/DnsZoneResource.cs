@@ -391,6 +391,7 @@ namespace Azure.ResourceManager.Dns
         /// <param name="recordsetnamesuffix"> The suffix label of the record set name used to filter record set enumerations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DnsRecordData"/> that may take multiple service requests to iterate over. </returns>
+        [ForwardsClientCalls]
         public virtual AsyncPageable<DnsRecordData> GetAllRecordDataAsync(int? top = default, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
             => GetByDnsZoneAsync(top, recordsetnamesuffix, cancellationToken);
 
@@ -399,6 +400,7 @@ namespace Azure.ResourceManager.Dns
         /// <param name="recordsetnamesuffix"> The suffix label of the record set name used to filter record set enumerations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DnsRecordData"/> that may take multiple service requests to iterate over. </returns>
+        [ForwardsClientCalls]
         public virtual Pageable<DnsRecordData> GetAllRecordData(int? top = default, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
             => GetByDnsZone(top, recordsetnamesuffix, cancellationToken);
 
