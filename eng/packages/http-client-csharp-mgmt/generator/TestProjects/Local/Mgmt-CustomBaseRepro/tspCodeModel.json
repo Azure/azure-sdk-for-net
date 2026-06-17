@@ -1,0 +1,3788 @@
+{
+  "name": "Azure.Generator.MgmtCustomBaseRepro.Tests",
+  "apiVersions": [
+    "2024-04-01"
+  ],
+  "enums": [
+    {
+      "$id": "1",
+      "kind": "enum",
+      "name": "ResourceProvisioningState",
+      "crossLanguageDefinitionId": "Azure.ResourceManager.ResourceProvisioningState",
+      "valueType": {
+        "$id": "2",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "values": [
+        {
+          "$id": "3",
+          "kind": "enumvalue",
+          "name": "Succeeded",
+          "value": "Succeeded",
+          "valueType": {
+            "$ref": "2"
+          },
+          "enumType": {
+            "$ref": "1"
+          },
+          "doc": "Resource has been created.",
+          "decorators": [],
+          "isExactName": false
+        },
+        {
+          "$id": "4",
+          "kind": "enumvalue",
+          "name": "Failed",
+          "value": "Failed",
+          "valueType": {
+            "$ref": "2"
+          },
+          "enumType": {
+            "$ref": "1"
+          },
+          "doc": "Resource creation failed.",
+          "decorators": [],
+          "isExactName": false
+        },
+        {
+          "$id": "5",
+          "kind": "enumvalue",
+          "name": "Canceled",
+          "value": "Canceled",
+          "valueType": {
+            "$ref": "2"
+          },
+          "enumType": {
+            "$ref": "1"
+          },
+          "doc": "Resource creation was canceled.",
+          "decorators": [],
+          "isExactName": false
+        }
+      ],
+      "namespace": "Azure.Generator.MgmtCustomBaseRepro.Tests",
+      "doc": "The provisioning state of a resource type.",
+      "isFixed": false,
+      "isFlags": false,
+      "usage": "LroPolling",
+      "decorators": [],
+      "isExactName": false
+    },
+    {
+      "$id": "6",
+      "kind": "enum",
+      "name": "Versions",
+      "crossLanguageDefinitionId": "MgmtCustomBaseRepro.Versions",
+      "valueType": {
+        "$id": "7",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "values": [
+        {
+          "$id": "8",
+          "kind": "enumvalue",
+          "name": "v2024_04_01",
+          "value": "2024-04-01",
+          "valueType": {
+            "$ref": "7"
+          },
+          "enumType": {
+            "$ref": "6"
+          },
+          "decorators": [],
+          "isExactName": false
+        }
+      ],
+      "namespace": "Azure.Generator.MgmtCustomBaseRepro.Tests",
+      "isFixed": true,
+      "isFlags": false,
+      "usage": "ApiVersionEnum",
+      "decorators": [],
+      "isExactName": false
+    }
+  ],
+  "constants": [
+    {
+      "$id": "9",
+      "kind": "constant",
+      "name": "GetAccept",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "10",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": [],
+      "isExactName": false
+    },
+    {
+      "$id": "11",
+      "kind": "constant",
+      "name": "GetAccept1",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "12",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": [],
+      "isExactName": false
+    },
+    {
+      "$id": "13",
+      "kind": "constant",
+      "name": "GetAccept2",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "14",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": [],
+      "isExactName": false
+    },
+    {
+      "$id": "15",
+      "kind": "constant",
+      "name": "GetAccept3",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "16",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": [],
+      "isExactName": false
+    },
+    {
+      "$id": "17",
+      "kind": "constant",
+      "name": "GetAccept4",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "18",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": [],
+      "isExactName": false
+    },
+    {
+      "$id": "19",
+      "kind": "constant",
+      "name": "GetAccept5",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "20",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": [],
+      "isExactName": false
+    },
+    {
+      "$id": "21",
+      "kind": "constant",
+      "name": "GetAccept6",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "22",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": [],
+      "isExactName": false
+    },
+    {
+      "$id": "23",
+      "kind": "constant",
+      "name": "GetAccept7",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "24",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": [],
+      "isExactName": false
+    },
+    {
+      "$id": "25",
+      "kind": "constant",
+      "name": "GetAccept8",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "26",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": [],
+      "isExactName": false
+    }
+  ],
+  "models": [
+    {
+      "$id": "27",
+      "kind": "model",
+      "name": "CustomBaseTypeInheritedResource",
+      "namespace": "Azure.Generator.MgmtCustomBaseRepro.Tests",
+      "crossLanguageDefinitionId": "MgmtCustomBaseRepro.CustomBaseTypeInheritedResource",
+      "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
+      "decorators": [
+        {
+          "name": "Azure.ResourceManager.@armProviderNamespace",
+          "arguments": {}
+        }
+      ],
+      "serializationOptions": {
+        "json": {
+          "name": "CustomBaseTypeInheritedResource"
+        }
+      },
+      "isExactName": false,
+      "baseModel": {
+        "$id": "28",
+        "kind": "model",
+        "name": "ServiceDefinedTrackedResourceWithOptionalLocation",
+        "namespace": "Azure.Generator.MgmtCustomBaseRepro.Tests",
+        "crossLanguageDefinitionId": "MgmtCustomBaseRepro.ServiceDefinedTrackedResourceWithOptionalLocation",
+        "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
+        "decorators": [
+          {
+            "name": "Azure.ResourceManager.@armProviderNamespace",
+            "arguments": {}
+          },
+          {
+            "name": "Azure.ResourceManager.Legacy.@customAzureResource",
+            "arguments": {
+              "options": {
+                "isAzureResource": true
+              }
+            }
+          }
+        ],
+        "serializationOptions": {
+          "json": {
+            "name": "ServiceDefinedTrackedResourceWithOptionalLocation"
+          }
+        },
+        "isExactName": false,
+        "properties": [
+          {
+            "$id": "29",
+            "kind": "property",
+            "name": "id",
+            "serializedName": "id",
+            "type": {
+              "$id": "30",
+              "kind": "string",
+              "name": "armResourceIdentifier",
+              "crossLanguageDefinitionId": "Azure.Core.armResourceIdentifier",
+              "baseType": {
+                "$id": "31",
+                "kind": "string",
+                "name": "string",
+                "crossLanguageDefinitionId": "TypeSpec.string",
+                "decorators": []
+              },
+              "decorators": []
+            },
+            "optional": true,
+            "readOnly": true,
+            "discriminator": false,
+            "flatten": false,
+            "decorators": [],
+            "crossLanguageDefinitionId": "MgmtCustomBaseRepro.ServiceDefinedTrackedResourceWithOptionalLocation.id",
+            "serializationOptions": {
+              "json": {
+                "name": "id"
+              }
+            },
+            "isHttpMetadata": false,
+            "isExactName": false
+          },
+          {
+            "$id": "32",
+            "kind": "property",
+            "name": "name",
+            "serializedName": "name",
+            "type": {
+              "$id": "33",
+              "kind": "string",
+              "name": "string",
+              "crossLanguageDefinitionId": "TypeSpec.string",
+              "decorators": []
+            },
+            "optional": true,
+            "readOnly": true,
+            "discriminator": false,
+            "flatten": false,
+            "decorators": [],
+            "crossLanguageDefinitionId": "MgmtCustomBaseRepro.ServiceDefinedTrackedResourceWithOptionalLocation.name",
+            "serializationOptions": {
+              "json": {
+                "name": "name"
+              }
+            },
+            "isHttpMetadata": false,
+            "isExactName": false
+          },
+          {
+            "$id": "34",
+            "kind": "property",
+            "name": "type",
+            "serializedName": "type",
+            "type": {
+              "$id": "35",
+              "kind": "string",
+              "name": "string",
+              "crossLanguageDefinitionId": "TypeSpec.string",
+              "decorators": []
+            },
+            "optional": true,
+            "readOnly": true,
+            "discriminator": false,
+            "flatten": false,
+            "decorators": [],
+            "crossLanguageDefinitionId": "MgmtCustomBaseRepro.ServiceDefinedTrackedResourceWithOptionalLocation.type",
+            "serializationOptions": {
+              "json": {
+                "name": "type"
+              }
+            },
+            "isHttpMetadata": false,
+            "isExactName": false
+          },
+          {
+            "$id": "36",
+            "kind": "property",
+            "name": "tags",
+            "serializedName": "tags",
+            "type": {
+              "$id": "37",
+              "kind": "dict",
+              "keyType": {
+                "$id": "38",
+                "kind": "string",
+                "name": "string",
+                "crossLanguageDefinitionId": "TypeSpec.string",
+                "decorators": []
+              },
+              "valueType": {
+                "$id": "39",
+                "kind": "string",
+                "name": "string",
+                "crossLanguageDefinitionId": "TypeSpec.string",
+                "decorators": []
+              },
+              "decorators": []
+            },
+            "optional": true,
+            "readOnly": false,
+            "discriminator": false,
+            "flatten": false,
+            "decorators": [],
+            "crossLanguageDefinitionId": "MgmtCustomBaseRepro.ServiceDefinedTrackedResourceWithOptionalLocation.tags",
+            "serializationOptions": {
+              "json": {
+                "name": "tags"
+              }
+            },
+            "isHttpMetadata": false,
+            "isExactName": false
+          },
+          {
+            "$id": "40",
+            "kind": "property",
+            "name": "location",
+            "serializedName": "location",
+            "type": {
+              "$id": "41",
+              "kind": "string",
+              "name": "string",
+              "crossLanguageDefinitionId": "TypeSpec.string",
+              "decorators": []
+            },
+            "optional": true,
+            "readOnly": false,
+            "discriminator": false,
+            "flatten": false,
+            "decorators": [],
+            "crossLanguageDefinitionId": "MgmtCustomBaseRepro.ServiceDefinedTrackedResourceWithOptionalLocation.location",
+            "serializationOptions": {
+              "json": {
+                "name": "location"
+              }
+            },
+            "isHttpMetadata": false,
+            "isExactName": false
+          }
+        ]
+      },
+      "properties": [
+        {
+          "$id": "42",
+          "kind": "property",
+          "name": "properties",
+          "serializedName": "properties",
+          "type": {
+            "$id": "43",
+            "kind": "model",
+            "name": "CustomBaseTypeInheritedResourceProperties",
+            "namespace": "Azure.Generator.MgmtCustomBaseRepro.Tests",
+            "crossLanguageDefinitionId": "MgmtCustomBaseRepro.CustomBaseTypeInheritedResourceProperties",
+            "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
+            "decorators": [
+              {
+                "name": "Azure.ResourceManager.@armProviderNamespace",
+                "arguments": {}
+              }
+            ],
+            "serializationOptions": {
+              "json": {
+                "name": "CustomBaseTypeInheritedResourceProperties"
+              }
+            },
+            "isExactName": false,
+            "properties": [
+              {
+                "$id": "44",
+                "kind": "property",
+                "name": "description",
+                "serializedName": "description",
+                "type": {
+                  "$id": "45",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "optional": true,
+                "readOnly": false,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "MgmtCustomBaseRepro.CustomBaseTypeInheritedResourceProperties.description",
+                "serializationOptions": {
+                  "json": {
+                    "name": "description"
+                  }
+                },
+                "isHttpMetadata": false,
+                "isExactName": false
+              }
+            ]
+          },
+          "optional": true,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": true,
+          "decorators": [
+            {
+              "name": "Azure.ResourceManager.@flattenProperty",
+              "arguments": {}
+            }
+          ],
+          "crossLanguageDefinitionId": "MgmtCustomBaseRepro.CustomBaseTypeInheritedResource.properties",
+          "serializationOptions": {
+            "json": {
+              "name": "properties"
+            }
+          },
+          "isHttpMetadata": false,
+          "isExactName": false
+        },
+        {
+          "$id": "46",
+          "kind": "property",
+          "name": "name",
+          "serializedName": "name",
+          "type": {
+            "$id": "47",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+          },
+          "optional": false,
+          "readOnly": true,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "MgmtCustomBaseRepro.CustomBaseTypeInheritedResource.name",
+          "serializationOptions": {
+            "json": {
+              "name": "name"
+            }
+          },
+          "isHttpMetadata": true,
+          "isExactName": false
+        },
+        {
+          "$id": "48",
+          "kind": "property",
+          "name": "etag",
+          "serializedName": "etag",
+          "type": {
+            "$id": "49",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+          },
+          "optional": true,
+          "readOnly": true,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "MgmtCustomBaseRepro.CustomBaseTypeInheritedResource.etag",
+          "serializationOptions": {
+            "json": {
+              "name": "etag"
+            }
+          },
+          "isHttpMetadata": false,
+          "isExactName": false
+        }
+      ]
+    },
+    {
+      "$ref": "43"
+    },
+    {
+      "$ref": "28"
+    },
+    {
+      "$id": "50",
+      "kind": "model",
+      "name": "ErrorResponse",
+      "namespace": "Azure.Generator.MgmtCustomBaseRepro.Tests",
+      "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorResponse",
+      "usage": "Json,Exception",
+      "doc": "Common error response for all Azure Resource Manager APIs to return error details for failed operations.",
+      "summary": "Error response",
+      "decorators": [
+        {
+          "name": "Azure.ResourceManager.@armProviderNamespace",
+          "arguments": {}
+        }
+      ],
+      "serializationOptions": {
+        "json": {
+          "name": "ErrorResponse"
+        }
+      },
+      "isExactName": false,
+      "properties": [
+        {
+          "$id": "51",
+          "kind": "property",
+          "name": "error",
+          "serializedName": "error",
+          "doc": "The error object.",
+          "type": {
+            "$id": "52",
+            "kind": "model",
+            "name": "ErrorDetail",
+            "namespace": "Azure.Generator.MgmtCustomBaseRepro.Tests",
+            "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorDetail",
+            "usage": "Json,Exception,LroPolling",
+            "doc": "The error detail.",
+            "decorators": [
+              {
+                "name": "Azure.ResourceManager.@armProviderNamespace",
+                "arguments": {}
+              }
+            ],
+            "serializationOptions": {
+              "json": {
+                "name": "ErrorDetail"
+              }
+            },
+            "isExactName": false,
+            "properties": [
+              {
+                "$id": "53",
+                "kind": "property",
+                "name": "code",
+                "serializedName": "code",
+                "doc": "The error code.",
+                "type": {
+                  "$id": "54",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "optional": true,
+                "readOnly": true,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorDetail.code",
+                "serializationOptions": {
+                  "json": {
+                    "name": "code"
+                  }
+                },
+                "isHttpMetadata": false,
+                "isExactName": false
+              },
+              {
+                "$id": "55",
+                "kind": "property",
+                "name": "message",
+                "serializedName": "message",
+                "doc": "The error message.",
+                "type": {
+                  "$id": "56",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "optional": true,
+                "readOnly": true,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorDetail.message",
+                "serializationOptions": {
+                  "json": {
+                    "name": "message"
+                  }
+                },
+                "isHttpMetadata": false,
+                "isExactName": false
+              },
+              {
+                "$id": "57",
+                "kind": "property",
+                "name": "target",
+                "serializedName": "target",
+                "doc": "The error target.",
+                "type": {
+                  "$id": "58",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "optional": true,
+                "readOnly": true,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorDetail.target",
+                "serializationOptions": {
+                  "json": {
+                    "name": "target"
+                  }
+                },
+                "isHttpMetadata": false,
+                "isExactName": false
+              },
+              {
+                "$id": "59",
+                "kind": "property",
+                "name": "details",
+                "serializedName": "details",
+                "doc": "The error details.",
+                "type": {
+                  "$id": "60",
+                  "kind": "array",
+                  "name": "ArrayErrorDetail",
+                  "valueType": {
+                    "$ref": "52"
+                  },
+                  "crossLanguageDefinitionId": "TypeSpec.Array",
+                  "decorators": []
+                },
+                "optional": true,
+                "readOnly": true,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorDetail.details",
+                "serializationOptions": {
+                  "json": {
+                    "name": "details"
+                  }
+                },
+                "isHttpMetadata": false,
+                "isExactName": false
+              },
+              {
+                "$id": "61",
+                "kind": "property",
+                "name": "additionalInfo",
+                "serializedName": "additionalInfo",
+                "doc": "The error additional info.",
+                "type": {
+                  "$id": "62",
+                  "kind": "array",
+                  "name": "ArrayErrorAdditionalInfo",
+                  "valueType": {
+                    "$id": "63",
+                    "kind": "model",
+                    "name": "ErrorAdditionalInfo",
+                    "namespace": "Azure.Generator.MgmtCustomBaseRepro.Tests",
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorAdditionalInfo",
+                    "usage": "Json,Exception,LroPolling",
+                    "doc": "The resource management error additional info.",
+                    "decorators": [
+                      {
+                        "name": "Azure.ResourceManager.@armProviderNamespace",
+                        "arguments": {}
+                      }
+                    ],
+                    "serializationOptions": {
+                      "json": {
+                        "name": "ErrorAdditionalInfo"
+                      }
+                    },
+                    "isExactName": false,
+                    "properties": [
+                      {
+                        "$id": "64",
+                        "kind": "property",
+                        "name": "type",
+                        "serializedName": "type",
+                        "doc": "The additional info type.",
+                        "type": {
+                          "$id": "65",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "optional": true,
+                        "readOnly": true,
+                        "discriminator": false,
+                        "flatten": false,
+                        "decorators": [],
+                        "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorAdditionalInfo.type",
+                        "serializationOptions": {
+                          "json": {
+                            "name": "type"
+                          }
+                        },
+                        "isHttpMetadata": false,
+                        "isExactName": false
+                      },
+                      {
+                        "$id": "66",
+                        "kind": "property",
+                        "name": "info",
+                        "serializedName": "info",
+                        "doc": "The additional info.",
+                        "type": {
+                          "$id": "67",
+                          "kind": "unknown",
+                          "name": "unknown",
+                          "crossLanguageDefinitionId": "",
+                          "decorators": []
+                        },
+                        "optional": true,
+                        "readOnly": true,
+                        "discriminator": false,
+                        "flatten": false,
+                        "decorators": [],
+                        "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorAdditionalInfo.info",
+                        "serializationOptions": {
+                          "json": {
+                            "name": "info"
+                          }
+                        },
+                        "isHttpMetadata": false,
+                        "isExactName": false
+                      }
+                    ]
+                  },
+                  "crossLanguageDefinitionId": "TypeSpec.Array",
+                  "decorators": []
+                },
+                "optional": true,
+                "readOnly": true,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorDetail.additionalInfo",
+                "serializationOptions": {
+                  "json": {
+                    "name": "additionalInfo"
+                  }
+                },
+                "isHttpMetadata": false,
+                "isExactName": false
+              }
+            ]
+          },
+          "optional": true,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorResponse.error",
+          "serializationOptions": {
+            "json": {
+              "name": "error"
+            }
+          },
+          "isHttpMetadata": false,
+          "isExactName": false
+        }
+      ]
+    },
+    {
+      "$ref": "52"
+    },
+    {
+      "$ref": "63"
+    },
+    {
+      "$id": "68",
+      "kind": "model",
+      "name": "ArmOperationStatusResourceProvisioningState",
+      "namespace": "Azure.Generator.MgmtCustomBaseRepro.Tests",
+      "crossLanguageDefinitionId": "Azure.ResourceManager.ArmOperationStatus",
+      "usage": "LroPolling",
+      "doc": "Standard Azure Resource Manager operation status response, used as the response\nbody for `GetResourceOperationStatus`.",
+      "decorators": [
+        {
+          "name": "Azure.ResourceManager.@armProviderNamespace",
+          "arguments": {}
+        }
+      ],
+      "serializationOptions": {
+        "json": {
+          "name": "ArmOperationStatus"
+        }
+      },
+      "isExactName": false,
+      "properties": [
+        {
+          "$id": "69",
+          "kind": "property",
+          "name": "status",
+          "serializedName": "status",
+          "doc": "The operation status",
+          "type": {
+            "$ref": "1"
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.ResourceManager.ArmOperationStatus.status",
+          "serializationOptions": {
+            "json": {
+              "name": "status"
+            }
+          },
+          "isHttpMetadata": false,
+          "isExactName": false
+        },
+        {
+          "$id": "70",
+          "kind": "property",
+          "name": "id",
+          "serializedName": "id",
+          "doc": "The unique identifier for the operationStatus resource",
+          "type": {
+            "$id": "71",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.ResourceManager.ArmOperationStatus.id",
+          "serializationOptions": {
+            "json": {
+              "name": "id"
+            }
+          },
+          "isHttpMetadata": false,
+          "isExactName": false
+        },
+        {
+          "$id": "72",
+          "kind": "property",
+          "name": "name",
+          "serializedName": "name",
+          "doc": "The name of the operationStatus resource",
+          "type": {
+            "$id": "73",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+          },
+          "optional": true,
+          "readOnly": true,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.ResourceManager.ArmOperationStatus.name",
+          "serializationOptions": {
+            "json": {
+              "name": "name"
+            }
+          },
+          "isHttpMetadata": false,
+          "isExactName": false
+        },
+        {
+          "$id": "74",
+          "kind": "property",
+          "name": "startTime",
+          "serializedName": "startTime",
+          "doc": "Operation start time",
+          "type": {
+            "$id": "75",
+            "kind": "utcDateTime",
+            "name": "utcDateTime",
+            "encode": "rfc3339",
+            "wireType": {
+              "$id": "76",
+              "kind": "string",
+              "name": "string",
+              "crossLanguageDefinitionId": "TypeSpec.string",
+              "decorators": []
+            },
+            "crossLanguageDefinitionId": "TypeSpec.utcDateTime",
+            "decorators": []
+          },
+          "optional": true,
+          "readOnly": true,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.ResourceManager.ArmOperationStatus.startTime",
+          "serializationOptions": {
+            "json": {
+              "name": "startTime"
+            }
+          },
+          "isHttpMetadata": false,
+          "isExactName": false
+        },
+        {
+          "$id": "77",
+          "kind": "property",
+          "name": "endTime",
+          "serializedName": "endTime",
+          "doc": "Operation complete time",
+          "type": {
+            "$id": "78",
+            "kind": "utcDateTime",
+            "name": "utcDateTime",
+            "encode": "rfc3339",
+            "wireType": {
+              "$id": "79",
+              "kind": "string",
+              "name": "string",
+              "crossLanguageDefinitionId": "TypeSpec.string",
+              "decorators": []
+            },
+            "crossLanguageDefinitionId": "TypeSpec.utcDateTime",
+            "decorators": []
+          },
+          "optional": true,
+          "readOnly": true,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.ResourceManager.ArmOperationStatus.endTime",
+          "serializationOptions": {
+            "json": {
+              "name": "endTime"
+            }
+          },
+          "isHttpMetadata": false,
+          "isExactName": false
+        },
+        {
+          "$id": "80",
+          "kind": "property",
+          "name": "percentComplete",
+          "serializedName": "percentComplete",
+          "doc": "The progress made toward completing the operation",
+          "type": {
+            "$id": "81",
+            "kind": "float64",
+            "name": "float64",
+            "crossLanguageDefinitionId": "TypeSpec.float64",
+            "decorators": []
+          },
+          "optional": true,
+          "readOnly": true,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.ResourceManager.ArmOperationStatus.percentComplete",
+          "serializationOptions": {
+            "json": {
+              "name": "percentComplete"
+            }
+          },
+          "isHttpMetadata": false,
+          "isExactName": false
+        },
+        {
+          "$id": "82",
+          "kind": "property",
+          "name": "error",
+          "serializedName": "error",
+          "doc": "Errors that occurred if the operation ended with Canceled or Failed status",
+          "type": {
+            "$ref": "52"
+          },
+          "optional": true,
+          "readOnly": true,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.ResourceManager.ArmOperationStatus.error",
+          "serializationOptions": {
+            "json": {
+              "name": "error"
+            }
+          },
+          "isHttpMetadata": false,
+          "isExactName": false
+        }
+      ]
+    },
+    {
+      "$id": "83",
+      "kind": "model",
+      "name": "CustomBaseTypeInheritedResourceTagsPatch",
+      "namespace": "Azure.Generator.MgmtCustomBaseRepro.Tests",
+      "crossLanguageDefinitionId": "MgmtCustomBaseRepro.CustomBaseTypeInheritedResourceTagsPatch",
+      "usage": "Input,Json",
+      "decorators": [
+        {
+          "name": "Azure.ResourceManager.@armProviderNamespace",
+          "arguments": {}
+        }
+      ],
+      "serializationOptions": {
+        "json": {
+          "name": "CustomBaseTypeInheritedResourceTagsPatch"
+        }
+      },
+      "isExactName": false,
+      "properties": [
+        {
+          "$id": "84",
+          "kind": "property",
+          "name": "tags",
+          "serializedName": "tags",
+          "type": {
+            "$ref": "37"
+          },
+          "optional": true,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "MgmtCustomBaseRepro.CustomBaseTypeInheritedResourceTagsPatch.tags",
+          "serializationOptions": {
+            "json": {
+              "name": "tags"
+            }
+          },
+          "isHttpMetadata": false,
+          "isExactName": false
+        }
+      ]
+    },
+    {
+      "$id": "85",
+      "kind": "model",
+      "name": "CustomBaseTypeInheritedResourceListResult",
+      "namespace": "Azure.Generator.MgmtCustomBaseRepro.Tests",
+      "crossLanguageDefinitionId": "Azure.ResourceManager.ResourceListResult",
+      "usage": "Output,Json",
+      "doc": "The response of a CustomBaseTypeInheritedResource list operation.",
+      "decorators": [
+        {
+          "name": "Azure.ResourceManager.@armProviderNamespace",
+          "arguments": {}
+        }
+      ],
+      "serializationOptions": {
+        "json": {
+          "name": "ResourceListResult"
+        }
+      },
+      "isExactName": false,
+      "properties": [
+        {
+          "$id": "86",
+          "kind": "property",
+          "name": "value",
+          "serializedName": "value",
+          "doc": "The CustomBaseTypeInheritedResource items on this page",
+          "type": {
+            "$id": "87",
+            "kind": "array",
+            "name": "ArrayCustomBaseTypeInheritedResource",
+            "valueType": {
+              "$ref": "27"
+            },
+            "crossLanguageDefinitionId": "TypeSpec.Array",
+            "decorators": []
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.ResourceManager.ResourceListResult.value",
+          "serializationOptions": {
+            "json": {
+              "name": "value"
+            }
+          },
+          "isHttpMetadata": false,
+          "isExactName": false
+        },
+        {
+          "$id": "88",
+          "kind": "property",
+          "name": "nextLink",
+          "serializedName": "nextLink",
+          "doc": "The link to the next page of items",
+          "type": {
+            "$id": "89",
+            "kind": "url",
+            "name": "ResourceLocation",
+            "crossLanguageDefinitionId": "TypeSpec.Rest.ResourceLocation",
+            "baseType": {
+              "$id": "90",
+              "kind": "url",
+              "name": "url",
+              "crossLanguageDefinitionId": "TypeSpec.url",
+              "decorators": []
+            },
+            "decorators": []
+          },
+          "optional": true,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.ResourceManager.ResourceListResult.nextLink",
+          "serializationOptions": {
+            "json": {
+              "name": "nextLink"
+            }
+          },
+          "isHttpMetadata": false,
+          "isExactName": false
+        }
+      ]
+    }
+  ],
+  "clients": [
+    {
+      "$id": "91",
+      "kind": "client",
+      "name": "MgmtCustomBaseReproClient",
+      "isExactName": false,
+      "namespace": "Azure.Generator.MgmtCustomBaseRepro.Tests",
+      "methods": [],
+      "parameters": [
+        {
+          "$id": "92",
+          "kind": "endpoint",
+          "name": "endpoint",
+          "serializedName": "endpoint",
+          "doc": "Service host",
+          "type": {
+            "$id": "93",
+            "kind": "url",
+            "name": "endpoint",
+            "crossLanguageDefinitionId": "TypeSpec.url"
+          },
+          "isApiVersion": false,
+          "optional": false,
+          "scope": "Client",
+          "isEndpoint": true,
+          "defaultValue": {
+            "type": {
+              "$id": "94",
+              "kind": "string",
+              "name": "string",
+              "crossLanguageDefinitionId": "TypeSpec.string"
+            },
+            "value": "https://management.azure.com"
+          },
+          "serverUrlTemplate": "{endpoint}",
+          "skipUrlEncoding": false,
+          "readOnly": false,
+          "crossLanguageDefinitionId": "MgmtCustomBaseRepro.endpoint",
+          "isExactName": false
+        },
+        {
+          "$id": "95",
+          "kind": "method",
+          "name": "apiVersion",
+          "serializedName": "apiVersion",
+          "doc": "The API version to use for this operation.",
+          "type": {
+            "$id": "96",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+          },
+          "location": "",
+          "isApiVersion": true,
+          "defaultValue": {
+            "type": {
+              "$id": "97",
+              "kind": "string",
+              "name": "string",
+              "crossLanguageDefinitionId": "TypeSpec.string"
+            },
+            "value": "2024-04-01"
+          },
+          "optional": true,
+          "scope": "Method",
+          "crossLanguageDefinitionId": "MgmtCustomBaseRepro.CustomBaseTypeInheritedResources.get.apiVersion",
+          "readOnly": false,
+          "access": "public",
+          "decorators": [
+            {
+              "name": "TypeSpec.@minLength",
+              "arguments": {
+                "value": {
+                  "isInteger": true
+                }
+              }
+            }
+          ],
+          "isExactName": false
+        }
+      ],
+      "initializedBy": 1,
+      "decorators": [
+        {
+          "name": "Azure.ResourceManager.@armProviderNamespace",
+          "arguments": {}
+        },
+        {
+          "name": "Azure.ClientGenerator.Core.@armProviderSchema",
+          "arguments": {
+            "resources": [
+              {
+                "resourceModelId": "MgmtCustomBaseRepro.CustomBaseTypeInheritedResource",
+                "resourceIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtCustomBaseRepro/customBaseTypeInheritedResources/{customBaseTypeInheritedResourceName}",
+                "resourceType": "MgmtCustomBaseRepro/customBaseTypeInheritedResources",
+                "methods": [
+                  {
+                    "$id": "98",
+                    "methodId": "MgmtCustomBaseRepro.CustomBaseTypeInheritedResources.createOrUpdate",
+                    "kind": "Create",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtCustomBaseRepro/customBaseTypeInheritedResources/{customBaseTypeInheritedResourceName}",
+                    "scope": {
+                      "$id": "99",
+                      "kind": "ResourceGroup",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtCustomBaseRepro/customBaseTypeInheritedResources/{customBaseTypeInheritedResourceName}",
+                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                    }
+                  },
+                  {
+                    "$id": "100",
+                    "methodId": "MgmtCustomBaseRepro.CustomBaseTypeInheritedResources.get",
+                    "kind": "Read",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtCustomBaseRepro/customBaseTypeInheritedResources/{customBaseTypeInheritedResourceName}",
+                    "scope": {
+                      "$id": "101",
+                      "kind": "ResourceGroup",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtCustomBaseRepro/customBaseTypeInheritedResources/{customBaseTypeInheritedResourceName}",
+                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                    }
+                  },
+                  {
+                    "$id": "102",
+                    "methodId": "MgmtCustomBaseRepro.CustomBaseTypeInheritedResources.updateTags",
+                    "kind": "Update",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtCustomBaseRepro/customBaseTypeInheritedResources/{customBaseTypeInheritedResourceName}",
+                    "scope": {
+                      "$id": "103",
+                      "kind": "ResourceGroup",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtCustomBaseRepro/customBaseTypeInheritedResources/{customBaseTypeInheritedResourceName}",
+                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                    }
+                  },
+                  {
+                    "$id": "104",
+                    "methodId": "MgmtCustomBaseRepro.CustomBaseTypeInheritedResources.delete",
+                    "kind": "Delete",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtCustomBaseRepro/customBaseTypeInheritedResources/{customBaseTypeInheritedResourceName}",
+                    "scope": {
+                      "$id": "105",
+                      "kind": "ResourceGroup",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtCustomBaseRepro/customBaseTypeInheritedResources/{customBaseTypeInheritedResourceName}",
+                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                    }
+                  },
+                  {
+                    "$id": "106",
+                    "methodId": "MgmtCustomBaseRepro.CustomBaseTypeInheritedResources.list",
+                    "kind": "List",
+                    "operationPath": "/subscriptions/{subscriptionId}/providers/MgmtCustomBaseRepro/customBaseTypeInheritedResources",
+                    "scope": {
+                      "$id": "107",
+                      "kind": "Subscription",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}",
+                      "scopeResourceType": "Microsoft.Resources/subscriptions"
+                    }
+                  },
+                  {
+                    "$id": "108",
+                    "methodId": "MgmtCustomBaseRepro.CustomBaseTypeInheritedResources.listByResourceGroup",
+                    "kind": "List",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtCustomBaseRepro/customBaseTypeInheritedResources",
+                    "scope": {
+                      "$id": "109",
+                      "kind": "ResourceGroup",
+                      "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+                      "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                    }
+                  }
+                ],
+                "scope": {
+                  "$id": "110",
+                  "kind": "ResourceGroup",
+                  "scopeIdPattern": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}",
+                  "scopeResourceType": "Microsoft.Resources/resourceGroups"
+                },
+                "resourceName": "CustomBaseTypeInheritedResource",
+                "nameConstraints": {},
+                "apiVersions": [
+                  "2024-04-01"
+                ],
+                "rbacRoles": []
+              }
+            ],
+            "nonResourceMethods": []
+          }
+        }
+      ],
+      "crossLanguageDefinitionId": "MgmtCustomBaseRepro",
+      "apiVersions": [
+        "2024-04-01"
+      ],
+      "children": [
+        {
+          "$id": "111",
+          "kind": "client",
+          "name": "CustomBaseTypeInheritedResources",
+          "isExactName": false,
+          "namespace": "Azure.Generator.MgmtCustomBaseRepro.Tests",
+          "methods": [
+            {
+              "$id": "112",
+              "kind": "basic",
+              "name": "get",
+              "isExactName": false,
+              "accessibility": "public",
+              "apiVersions": [
+                "2024-04-01"
+              ],
+              "doc": "Get a CustomBaseTypeInheritedResource",
+              "operation": {
+                "$id": "113",
+                "name": "get",
+                "isExactName": false,
+                "resourceName": "CustomBaseTypeInheritedResource",
+                "doc": "Get a CustomBaseTypeInheritedResource",
+                "accessibility": "public",
+                "parameters": [
+                  {
+                    "$id": "114",
+                    "kind": "query",
+                    "name": "apiVersion",
+                    "serializedName": "api-version",
+                    "doc": "The API version to use for this operation.",
+                    "type": {
+                      "$id": "115",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": true,
+                    "explode": false,
+                    "defaultValue": {
+                      "type": {
+                        "$id": "116",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string"
+                      },
+                      "value": "2024-04-01"
+                    },
+                    "optional": false,
+                    "scope": "Client",
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
+                    "crossLanguageDefinitionId": "MgmtCustomBaseRepro.CustomBaseTypeInheritedResources.get.apiVersion",
+                    "readOnly": false,
+                    "methodParameterSegments": [
+                      {
+                        "$ref": "95"
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "117",
+                    "kind": "path",
+                    "name": "subscriptionId",
+                    "serializedName": "subscriptionId",
+                    "doc": "The ID of the target subscription. The value must be an UUID.",
+                    "type": {
+                      "$id": "118",
+                      "kind": "string",
+                      "name": "uuid",
+                      "crossLanguageDefinitionId": "Azure.Core.uuid",
+                      "baseType": {
+                        "$id": "119",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string",
+                        "decorators": []
+                      },
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "style": "simple",
+                    "allowReserved": false,
+                    "skipUrlEncoding": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "MgmtCustomBaseRepro.CustomBaseTypeInheritedResources.get.subscriptionId",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "120",
+                        "kind": "method",
+                        "name": "subscriptionId",
+                        "serializedName": "subscriptionId",
+                        "doc": "The ID of the target subscription. The value must be an UUID.",
+                        "type": {
+                          "$id": "121",
+                          "kind": "string",
+                          "name": "uuid",
+                          "crossLanguageDefinitionId": "Azure.Core.uuid",
+                          "baseType": {
+                            "$id": "122",
+                            "kind": "string",
+                            "name": "string",
+                            "crossLanguageDefinitionId": "TypeSpec.string",
+                            "decorators": []
+                          },
+                          "decorators": []
+                        },
+                        "location": "",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "MgmtCustomBaseRepro.CustomBaseTypeInheritedResources.get.subscriptionId",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [
+                          {
+                            "name": "TypeSpec.@minLength",
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
+                          }
+                        ],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "123",
+                    "kind": "path",
+                    "name": "resourceGroupName",
+                    "serializedName": "resourceGroupName",
+                    "doc": "The name of the resource group. The name is case insensitive.",
+                    "type": {
+                      "$id": "124",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "style": "simple",
+                    "allowReserved": false,
+                    "skipUrlEncoding": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@pattern",
+                        "arguments": {
+                          "pattern": "^[-\\w\\._\\(\\)]+$"
+                        }
+                      },
+                      {
+                        "name": "TypeSpec.@maxLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      },
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "MgmtCustomBaseRepro.CustomBaseTypeInheritedResources.get.resourceGroupName",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "125",
+                        "kind": "method",
+                        "name": "resourceGroupName",
+                        "serializedName": "resourceGroupName",
+                        "doc": "The name of the resource group. The name is case insensitive.",
+                        "type": {
+                          "$id": "126",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "location": "Path",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "MgmtCustomBaseRepro.CustomBaseTypeInheritedResources.get.resourceGroupName",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [
+                          {
+                            "name": "TypeSpec.@pattern",
+                            "arguments": {
+                              "pattern": "^[-\\w\\._\\(\\)]+$"
+                            }
+                          },
+                          {
+                            "name": "TypeSpec.@maxLength",
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
+                          },
+                          {
+                            "name": "TypeSpec.@minLength",
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
+                          }
+                        ],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "127",
+                    "kind": "path",
+                    "name": "customBaseTypeInheritedResourceName",
+                    "serializedName": "customBaseTypeInheritedResourceName",
+                    "type": {
+                      "$id": "128",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "style": "simple",
+                    "allowReserved": false,
+                    "skipUrlEncoding": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "MgmtCustomBaseRepro.CustomBaseTypeInheritedResources.get.customBaseTypeInheritedResourceName",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "129",
+                        "kind": "method",
+                        "name": "customBaseTypeInheritedResourceName",
+                        "serializedName": "customBaseTypeInheritedResourceName",
+                        "type": {
+                          "$id": "130",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "location": "Path",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "MgmtCustomBaseRepro.CustomBaseTypeInheritedResources.get.customBaseTypeInheritedResourceName",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "131",
+                    "kind": "header",
+                    "name": "accept",
+                    "serializedName": "Accept",
+                    "type": {
+                      "$ref": "9"
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": false,
+                    "scope": "Constant",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "MgmtCustomBaseRepro.CustomBaseTypeInheritedResources.get.accept",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "132",
+                        "kind": "method",
+                        "name": "accept",
+                        "serializedName": "Accept",
+                        "type": {
+                          "$ref": "9"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "MgmtCustomBaseRepro.CustomBaseTypeInheritedResources.get.accept",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
+                  }
+                ],
+                "responses": [
+                  {
+                    "statusCodes": [
+                      200
+                    ],
+                    "bodyType": {
+                      "$ref": "27"
+                    },
+                    "headers": [],
+                    "isErrorResponse": false,
+                    "contentTypes": [
+                      "application/json"
+                    ],
+                    "serializationOptions": {
+                      "json": {
+                        "name": ""
+                      }
+                    }
+                  }
+                ],
+                "httpMethod": "GET",
+                "uri": "{endpoint}",
+                "path": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtCustomBaseRepro/customBaseTypeInheritedResources/{customBaseTypeInheritedResourceName}",
+                "bufferResponse": true,
+                "generateProtocolMethod": true,
+                "generateConvenienceMethod": true,
+                "crossLanguageDefinitionId": "MgmtCustomBaseRepro.CustomBaseTypeInheritedResources.get",
+                "decorators": [
+                  {
+                    "name": "Azure.ResourceManager.@armResourceRead",
+                    "arguments": {}
+                  }
+                ],
+                "namespace": "Azure.Generator.MgmtCustomBaseRepro.Tests"
+              },
+              "parameters": [
+                {
+                  "$ref": "125"
+                },
+                {
+                  "$ref": "129"
+                },
+                {
+                  "$ref": "132"
+                },
+                {
+                  "$id": "133",
+                  "kind": "method",
+                  "name": "subscriptionId",
+                  "doc": "The ID of the target subscription. The value must be an UUID.",
+                  "type": {
+                    "$ref": "118"
+                  },
+                  "optional": false,
+                  "readOnly": false,
+                  "serializedName": "subscriptionId",
+                  "isApiVersion": false,
+                  "scope": "Method",
+                  "location": "Path",
+                  "crossLanguageDefinitionId": "MgmtCustomBaseRepro.CustomBaseTypeInheritedResources.get.subscriptionId"
+                }
+              ],
+              "response": {
+                "type": {
+                  "$ref": "27"
+                }
+              },
+              "isOverride": false,
+              "generateConvenient": true,
+              "generateProtocol": true,
+              "crossLanguageDefinitionId": "MgmtCustomBaseRepro.CustomBaseTypeInheritedResources.get"
+            },
+            {
+              "$id": "134",
+              "kind": "lro",
+              "name": "createOrUpdate",
+              "isExactName": false,
+              "accessibility": "public",
+              "apiVersions": [
+                "2024-04-01"
+              ],
+              "doc": "Create a CustomBaseTypeInheritedResource",
+              "operation": {
+                "$id": "135",
+                "name": "createOrUpdate",
+                "isExactName": false,
+                "resourceName": "CustomBaseTypeInheritedResource",
+                "doc": "Create a CustomBaseTypeInheritedResource",
+                "accessibility": "public",
+                "parameters": [
+                  {
+                    "$id": "136",
+                    "kind": "query",
+                    "name": "apiVersion",
+                    "serializedName": "api-version",
+                    "doc": "The API version to use for this operation.",
+                    "type": {
+                      "$id": "137",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": true,
+                    "explode": false,
+                    "defaultValue": {
+                      "type": {
+                        "$id": "138",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string"
+                      },
+                      "value": "2024-04-01"
+                    },
+                    "optional": false,
+                    "scope": "Client",
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
+                    "crossLanguageDefinitionId": "MgmtCustomBaseRepro.CustomBaseTypeInheritedResources.createOrUpdate.apiVersion",
+                    "readOnly": false,
+                    "methodParameterSegments": [
+                      {
+                        "$ref": "95"
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "139",
+                    "kind": "path",
+                    "name": "subscriptionId",
+                    "serializedName": "subscriptionId",
+                    "doc": "The ID of the target subscription. The value must be an UUID.",
+                    "type": {
+                      "$id": "140",
+                      "kind": "string",
+                      "name": "uuid",
+                      "crossLanguageDefinitionId": "Azure.Core.uuid",
+                      "baseType": {
+                        "$id": "141",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string",
+                        "decorators": []
+                      },
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "style": "simple",
+                    "allowReserved": false,
+                    "skipUrlEncoding": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "MgmtCustomBaseRepro.CustomBaseTypeInheritedResources.createOrUpdate.subscriptionId",
+                    "methodParameterSegments": [
+                      {
+                        "$ref": "120"
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "142",
+                    "kind": "path",
+                    "name": "resourceGroupName",
+                    "serializedName": "resourceGroupName",
+                    "doc": "The name of the resource group. The name is case insensitive.",
+                    "type": {
+                      "$id": "143",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "style": "simple",
+                    "allowReserved": false,
+                    "skipUrlEncoding": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@pattern",
+                        "arguments": {
+                          "pattern": "^[-\\w\\._\\(\\)]+$"
+                        }
+                      },
+                      {
+                        "name": "TypeSpec.@maxLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      },
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "MgmtCustomBaseRepro.CustomBaseTypeInheritedResources.createOrUpdate.resourceGroupName",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "144",
+                        "kind": "method",
+                        "name": "resourceGroupName",
+                        "serializedName": "resourceGroupName",
+                        "doc": "The name of the resource group. The name is case insensitive.",
+                        "type": {
+                          "$id": "145",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "location": "Path",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "MgmtCustomBaseRepro.CustomBaseTypeInheritedResources.createOrUpdate.resourceGroupName",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [
+                          {
+                            "name": "TypeSpec.@pattern",
+                            "arguments": {
+                              "pattern": "^[-\\w\\._\\(\\)]+$"
+                            }
+                          },
+                          {
+                            "name": "TypeSpec.@maxLength",
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
+                          },
+                          {
+                            "name": "TypeSpec.@minLength",
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
+                          }
+                        ],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "146",
+                    "kind": "path",
+                    "name": "customBaseTypeInheritedResourceName",
+                    "serializedName": "customBaseTypeInheritedResourceName",
+                    "type": {
+                      "$id": "147",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "style": "simple",
+                    "allowReserved": false,
+                    "skipUrlEncoding": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "MgmtCustomBaseRepro.CustomBaseTypeInheritedResources.createOrUpdate.customBaseTypeInheritedResourceName",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "148",
+                        "kind": "method",
+                        "name": "customBaseTypeInheritedResourceName",
+                        "serializedName": "customBaseTypeInheritedResourceName",
+                        "type": {
+                          "$id": "149",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "location": "Path",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "MgmtCustomBaseRepro.CustomBaseTypeInheritedResources.createOrUpdate.customBaseTypeInheritedResourceName",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "150",
+                    "kind": "header",
+                    "name": "contentType",
+                    "serializedName": "Content-Type",
+                    "doc": "Body parameter's content type. Known values are application/json",
+                    "type": {
+                      "$ref": "11"
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": true,
+                    "scope": "Constant",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "MgmtCustomBaseRepro.CustomBaseTypeInheritedResources.createOrUpdate.contentType",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "151",
+                        "kind": "method",
+                        "name": "contentType",
+                        "serializedName": "Content-Type",
+                        "doc": "Body parameter's content type. Known values are application/json",
+                        "type": {
+                          "$ref": "11"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "MgmtCustomBaseRepro.CustomBaseTypeInheritedResources.createOrUpdate.contentType",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "152",
+                    "kind": "header",
+                    "name": "accept",
+                    "serializedName": "Accept",
+                    "type": {
+                      "$ref": "15"
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": false,
+                    "scope": "Constant",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "MgmtCustomBaseRepro.CustomBaseTypeInheritedResources.createOrUpdate.accept",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "153",
+                        "kind": "method",
+                        "name": "accept",
+                        "serializedName": "Accept",
+                        "type": {
+                          "$ref": "17"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "MgmtCustomBaseRepro.CustomBaseTypeInheritedResources.createOrUpdate.accept",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "154",
+                    "kind": "body",
+                    "name": "resource",
+                    "serializedName": "resource",
+                    "doc": "Resource create parameters.",
+                    "type": {
+                      "$ref": "27"
+                    },
+                    "isApiVersion": false,
+                    "contentTypes": [
+                      "application/json"
+                    ],
+                    "defaultContentType": "application/json",
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "MgmtCustomBaseRepro.CustomBaseTypeInheritedResources.createOrUpdate.resource",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "155",
+                        "kind": "method",
+                        "name": "resource",
+                        "serializedName": "resource",
+                        "doc": "Resource create parameters.",
+                        "type": {
+                          "$ref": "27"
+                        },
+                        "location": "Body",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "MgmtCustomBaseRepro.CustomBaseTypeInheritedResources.createOrUpdate.resource",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false,
+                    "serializationOptions": {
+                      "json": {
+                        "name": "resource"
+                      }
+                    }
+                  }
+                ],
+                "responses": [
+                  {
+                    "statusCodes": [
+                      200
+                    ],
+                    "bodyType": {
+                      "$ref": "27"
+                    },
+                    "headers": [],
+                    "isErrorResponse": false,
+                    "contentTypes": [
+                      "application/json"
+                    ],
+                    "serializationOptions": {
+                      "json": {
+                        "name": ""
+                      }
+                    }
+                  },
+                  {
+                    "statusCodes": [
+                      201
+                    ],
+                    "bodyType": {
+                      "$ref": "27"
+                    },
+                    "headers": [
+                      {
+                        "name": "azureAsyncOperation",
+                        "nameInResponse": "Azure-AsyncOperation",
+                        "doc": "A link to the status monitor",
+                        "type": {
+                          "$id": "156",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        }
+                      },
+                      {
+                        "name": "retryAfter",
+                        "nameInResponse": "Retry-After",
+                        "doc": "The Retry-After header can indicate how long the client should wait before polling the operation status.",
+                        "type": {
+                          "$id": "157",
+                          "kind": "int32",
+                          "name": "int32",
+                          "crossLanguageDefinitionId": "TypeSpec.int32",
+                          "decorators": []
+                        }
+                      }
+                    ],
+                    "isErrorResponse": false,
+                    "contentTypes": [
+                      "application/json"
+                    ],
+                    "serializationOptions": {
+                      "json": {
+                        "name": ""
+                      }
+                    }
+                  }
+                ],
+                "httpMethod": "PUT",
+                "uri": "{endpoint}",
+                "path": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtCustomBaseRepro/customBaseTypeInheritedResources/{customBaseTypeInheritedResourceName}",
+                "requestMediaTypes": [
+                  "application/json"
+                ],
+                "bufferResponse": true,
+                "generateProtocolMethod": true,
+                "generateConvenienceMethod": true,
+                "crossLanguageDefinitionId": "MgmtCustomBaseRepro.CustomBaseTypeInheritedResources.createOrUpdate",
+                "decorators": [
+                  {
+                    "name": "Azure.ResourceManager.@armResourceCreateOrUpdate",
+                    "arguments": {}
+                  }
+                ],
+                "namespace": "Azure.Generator.MgmtCustomBaseRepro.Tests"
+              },
+              "parameters": [
+                {
+                  "$ref": "144"
+                },
+                {
+                  "$ref": "148"
+                },
+                {
+                  "$ref": "155"
+                },
+                {
+                  "$ref": "151"
+                },
+                {
+                  "$ref": "153"
+                },
+                {
+                  "$id": "158",
+                  "kind": "method",
+                  "name": "subscriptionId",
+                  "doc": "The ID of the target subscription. The value must be an UUID.",
+                  "type": {
+                    "$ref": "140"
+                  },
+                  "optional": false,
+                  "readOnly": false,
+                  "serializedName": "subscriptionId",
+                  "isApiVersion": false,
+                  "scope": "Method",
+                  "location": "Path",
+                  "crossLanguageDefinitionId": "MgmtCustomBaseRepro.CustomBaseTypeInheritedResources.createOrUpdate.subscriptionId"
+                }
+              ],
+              "response": {
+                "type": {
+                  "$ref": "27"
+                }
+              },
+              "isOverride": false,
+              "generateConvenient": true,
+              "generateProtocol": true,
+              "crossLanguageDefinitionId": "MgmtCustomBaseRepro.CustomBaseTypeInheritedResources.createOrUpdate",
+              "lroMetadata": {
+                "finalStateVia": 0,
+                "finalResponse": {
+                  "statusCodes": [
+                    200
+                  ],
+                  "bodyType": {
+                    "$ref": "27"
+                  }
+                }
+              }
+            },
+            {
+              "$id": "159",
+              "kind": "basic",
+              "name": "updateTags",
+              "isExactName": false,
+              "accessibility": "public",
+              "apiVersions": [
+                "2024-04-01"
+              ],
+              "doc": "Update a CustomBaseTypeInheritedResource",
+              "operation": {
+                "$id": "160",
+                "name": "updateTags",
+                "isExactName": false,
+                "resourceName": "CustomBaseTypeInheritedResource",
+                "doc": "Update a CustomBaseTypeInheritedResource",
+                "accessibility": "public",
+                "parameters": [
+                  {
+                    "$id": "161",
+                    "kind": "query",
+                    "name": "apiVersion",
+                    "serializedName": "api-version",
+                    "doc": "The API version to use for this operation.",
+                    "type": {
+                      "$id": "162",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": true,
+                    "explode": false,
+                    "defaultValue": {
+                      "type": {
+                        "$id": "163",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string"
+                      },
+                      "value": "2024-04-01"
+                    },
+                    "optional": false,
+                    "scope": "Client",
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
+                    "crossLanguageDefinitionId": "MgmtCustomBaseRepro.CustomBaseTypeInheritedResources.updateTags.apiVersion",
+                    "readOnly": false,
+                    "methodParameterSegments": [
+                      {
+                        "$ref": "95"
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "164",
+                    "kind": "path",
+                    "name": "subscriptionId",
+                    "serializedName": "subscriptionId",
+                    "doc": "The ID of the target subscription. The value must be an UUID.",
+                    "type": {
+                      "$id": "165",
+                      "kind": "string",
+                      "name": "uuid",
+                      "crossLanguageDefinitionId": "Azure.Core.uuid",
+                      "baseType": {
+                        "$id": "166",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string",
+                        "decorators": []
+                      },
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "style": "simple",
+                    "allowReserved": false,
+                    "skipUrlEncoding": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "MgmtCustomBaseRepro.CustomBaseTypeInheritedResources.updateTags.subscriptionId",
+                    "methodParameterSegments": [
+                      {
+                        "$ref": "120"
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "167",
+                    "kind": "path",
+                    "name": "resourceGroupName",
+                    "serializedName": "resourceGroupName",
+                    "doc": "The name of the resource group. The name is case insensitive.",
+                    "type": {
+                      "$id": "168",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "style": "simple",
+                    "allowReserved": false,
+                    "skipUrlEncoding": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@pattern",
+                        "arguments": {
+                          "pattern": "^[-\\w\\._\\(\\)]+$"
+                        }
+                      },
+                      {
+                        "name": "TypeSpec.@maxLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      },
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "MgmtCustomBaseRepro.CustomBaseTypeInheritedResources.updateTags.resourceGroupName",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "169",
+                        "kind": "method",
+                        "name": "resourceGroupName",
+                        "serializedName": "resourceGroupName",
+                        "doc": "The name of the resource group. The name is case insensitive.",
+                        "type": {
+                          "$id": "170",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "location": "Path",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "MgmtCustomBaseRepro.CustomBaseTypeInheritedResources.updateTags.resourceGroupName",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [
+                          {
+                            "name": "TypeSpec.@pattern",
+                            "arguments": {
+                              "pattern": "^[-\\w\\._\\(\\)]+$"
+                            }
+                          },
+                          {
+                            "name": "TypeSpec.@maxLength",
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
+                          },
+                          {
+                            "name": "TypeSpec.@minLength",
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
+                          }
+                        ],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "171",
+                    "kind": "path",
+                    "name": "customBaseTypeInheritedResourceName",
+                    "serializedName": "customBaseTypeInheritedResourceName",
+                    "type": {
+                      "$id": "172",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "style": "simple",
+                    "allowReserved": false,
+                    "skipUrlEncoding": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "MgmtCustomBaseRepro.CustomBaseTypeInheritedResources.updateTags.customBaseTypeInheritedResourceName",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "173",
+                        "kind": "method",
+                        "name": "customBaseTypeInheritedResourceName",
+                        "serializedName": "customBaseTypeInheritedResourceName",
+                        "type": {
+                          "$id": "174",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "location": "Path",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "MgmtCustomBaseRepro.CustomBaseTypeInheritedResources.updateTags.customBaseTypeInheritedResourceName",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "175",
+                    "kind": "header",
+                    "name": "contentType",
+                    "serializedName": "Content-Type",
+                    "doc": "Body parameter's content type. Known values are application/json",
+                    "type": {
+                      "$ref": "19"
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": true,
+                    "scope": "Constant",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "MgmtCustomBaseRepro.CustomBaseTypeInheritedResources.updateTags.contentType",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "176",
+                        "kind": "method",
+                        "name": "contentType",
+                        "serializedName": "Content-Type",
+                        "doc": "Body parameter's content type. Known values are application/json",
+                        "type": {
+                          "$ref": "19"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "MgmtCustomBaseRepro.CustomBaseTypeInheritedResources.updateTags.contentType",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "177",
+                    "kind": "header",
+                    "name": "accept",
+                    "serializedName": "Accept",
+                    "type": {
+                      "$ref": "21"
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": false,
+                    "scope": "Constant",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "MgmtCustomBaseRepro.CustomBaseTypeInheritedResources.updateTags.accept",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "178",
+                        "kind": "method",
+                        "name": "accept",
+                        "serializedName": "Accept",
+                        "type": {
+                          "$ref": "21"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "MgmtCustomBaseRepro.CustomBaseTypeInheritedResources.updateTags.accept",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "179",
+                    "kind": "body",
+                    "name": "properties",
+                    "serializedName": "properties",
+                    "doc": "The resource properties to be updated.",
+                    "type": {
+                      "$ref": "83"
+                    },
+                    "isApiVersion": false,
+                    "contentTypes": [
+                      "application/json"
+                    ],
+                    "defaultContentType": "application/json",
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "MgmtCustomBaseRepro.CustomBaseTypeInheritedResources.updateTags.properties",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "180",
+                        "kind": "method",
+                        "name": "properties",
+                        "serializedName": "properties",
+                        "doc": "The resource properties to be updated.",
+                        "type": {
+                          "$ref": "83"
+                        },
+                        "location": "Body",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "MgmtCustomBaseRepro.CustomBaseTypeInheritedResources.updateTags.properties",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false,
+                    "serializationOptions": {
+                      "json": {
+                        "name": "properties"
+                      }
+                    }
+                  }
+                ],
+                "responses": [
+                  {
+                    "statusCodes": [
+                      200
+                    ],
+                    "bodyType": {
+                      "$ref": "27"
+                    },
+                    "headers": [],
+                    "isErrorResponse": false,
+                    "contentTypes": [
+                      "application/json"
+                    ],
+                    "serializationOptions": {
+                      "json": {
+                        "name": ""
+                      }
+                    }
+                  }
+                ],
+                "httpMethod": "PATCH",
+                "uri": "{endpoint}",
+                "path": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtCustomBaseRepro/customBaseTypeInheritedResources/{customBaseTypeInheritedResourceName}",
+                "requestMediaTypes": [
+                  "application/json"
+                ],
+                "bufferResponse": true,
+                "generateProtocolMethod": true,
+                "generateConvenienceMethod": false,
+                "crossLanguageDefinitionId": "MgmtCustomBaseRepro.CustomBaseTypeInheritedResources.updateTags",
+                "decorators": [
+                  {
+                    "name": "Azure.ResourceManager.@armResourceUpdate",
+                    "arguments": {}
+                  }
+                ],
+                "namespace": "Azure.Generator.MgmtCustomBaseRepro.Tests"
+              },
+              "parameters": [
+                {
+                  "$ref": "169"
+                },
+                {
+                  "$ref": "173"
+                },
+                {
+                  "$ref": "180"
+                },
+                {
+                  "$ref": "176"
+                },
+                {
+                  "$ref": "178"
+                },
+                {
+                  "$id": "181",
+                  "kind": "method",
+                  "name": "subscriptionId",
+                  "doc": "The ID of the target subscription. The value must be an UUID.",
+                  "type": {
+                    "$ref": "165"
+                  },
+                  "optional": false,
+                  "readOnly": false,
+                  "serializedName": "subscriptionId",
+                  "isApiVersion": false,
+                  "scope": "Method",
+                  "location": "Path",
+                  "crossLanguageDefinitionId": "MgmtCustomBaseRepro.CustomBaseTypeInheritedResources.updateTags.subscriptionId"
+                }
+              ],
+              "response": {
+                "type": {
+                  "$ref": "27"
+                }
+              },
+              "isOverride": false,
+              "generateConvenient": true,
+              "generateProtocol": true,
+              "crossLanguageDefinitionId": "MgmtCustomBaseRepro.CustomBaseTypeInheritedResources.updateTags"
+            },
+            {
+              "$id": "182",
+              "kind": "lro",
+              "name": "delete",
+              "isExactName": false,
+              "accessibility": "public",
+              "apiVersions": [
+                "2024-04-01"
+              ],
+              "doc": "Delete a CustomBaseTypeInheritedResource",
+              "operation": {
+                "$id": "183",
+                "name": "delete",
+                "isExactName": false,
+                "resourceName": "CustomBaseTypeInheritedResource",
+                "doc": "Delete a CustomBaseTypeInheritedResource",
+                "accessibility": "public",
+                "parameters": [
+                  {
+                    "$id": "184",
+                    "kind": "query",
+                    "name": "apiVersion",
+                    "serializedName": "api-version",
+                    "doc": "The API version to use for this operation.",
+                    "type": {
+                      "$id": "185",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": true,
+                    "explode": false,
+                    "defaultValue": {
+                      "type": {
+                        "$id": "186",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string"
+                      },
+                      "value": "2024-04-01"
+                    },
+                    "optional": false,
+                    "scope": "Client",
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
+                    "crossLanguageDefinitionId": "MgmtCustomBaseRepro.CustomBaseTypeInheritedResources.delete.apiVersion",
+                    "readOnly": false,
+                    "methodParameterSegments": [
+                      {
+                        "$ref": "95"
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "187",
+                    "kind": "path",
+                    "name": "subscriptionId",
+                    "serializedName": "subscriptionId",
+                    "doc": "The ID of the target subscription. The value must be an UUID.",
+                    "type": {
+                      "$id": "188",
+                      "kind": "string",
+                      "name": "uuid",
+                      "crossLanguageDefinitionId": "Azure.Core.uuid",
+                      "baseType": {
+                        "$id": "189",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string",
+                        "decorators": []
+                      },
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "style": "simple",
+                    "allowReserved": false,
+                    "skipUrlEncoding": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "MgmtCustomBaseRepro.CustomBaseTypeInheritedResources.delete.subscriptionId",
+                    "methodParameterSegments": [
+                      {
+                        "$ref": "120"
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "190",
+                    "kind": "path",
+                    "name": "resourceGroupName",
+                    "serializedName": "resourceGroupName",
+                    "doc": "The name of the resource group. The name is case insensitive.",
+                    "type": {
+                      "$id": "191",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "style": "simple",
+                    "allowReserved": false,
+                    "skipUrlEncoding": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@pattern",
+                        "arguments": {
+                          "pattern": "^[-\\w\\._\\(\\)]+$"
+                        }
+                      },
+                      {
+                        "name": "TypeSpec.@maxLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      },
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "MgmtCustomBaseRepro.CustomBaseTypeInheritedResources.delete.resourceGroupName",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "192",
+                        "kind": "method",
+                        "name": "resourceGroupName",
+                        "serializedName": "resourceGroupName",
+                        "doc": "The name of the resource group. The name is case insensitive.",
+                        "type": {
+                          "$id": "193",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "location": "Path",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "MgmtCustomBaseRepro.CustomBaseTypeInheritedResources.delete.resourceGroupName",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [
+                          {
+                            "name": "TypeSpec.@pattern",
+                            "arguments": {
+                              "pattern": "^[-\\w\\._\\(\\)]+$"
+                            }
+                          },
+                          {
+                            "name": "TypeSpec.@maxLength",
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
+                          },
+                          {
+                            "name": "TypeSpec.@minLength",
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
+                          }
+                        ],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "194",
+                    "kind": "path",
+                    "name": "customBaseTypeInheritedResourceName",
+                    "serializedName": "customBaseTypeInheritedResourceName",
+                    "type": {
+                      "$id": "195",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "style": "simple",
+                    "allowReserved": false,
+                    "skipUrlEncoding": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "MgmtCustomBaseRepro.CustomBaseTypeInheritedResources.delete.customBaseTypeInheritedResourceName",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "196",
+                        "kind": "method",
+                        "name": "customBaseTypeInheritedResourceName",
+                        "serializedName": "customBaseTypeInheritedResourceName",
+                        "type": {
+                          "$id": "197",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "location": "Path",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "MgmtCustomBaseRepro.CustomBaseTypeInheritedResources.delete.customBaseTypeInheritedResourceName",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
+                  }
+                ],
+                "responses": [
+                  {
+                    "statusCodes": [
+                      200
+                    ],
+                    "headers": [],
+                    "isErrorResponse": false,
+                    "serializationOptions": {}
+                  },
+                  {
+                    "statusCodes": [
+                      202
+                    ],
+                    "headers": [
+                      {
+                        "name": "location",
+                        "nameInResponse": "Location",
+                        "doc": "The Location header contains the URL where the status of the long running operation can be checked.",
+                        "type": {
+                          "$id": "198",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        }
+                      },
+                      {
+                        "name": "retryAfter",
+                        "nameInResponse": "Retry-After",
+                        "doc": "The Retry-After header can indicate how long the client should wait before polling the operation status.",
+                        "type": {
+                          "$id": "199",
+                          "kind": "int32",
+                          "name": "int32",
+                          "crossLanguageDefinitionId": "TypeSpec.int32",
+                          "decorators": []
+                        }
+                      }
+                    ],
+                    "isErrorResponse": false,
+                    "serializationOptions": {}
+                  },
+                  {
+                    "statusCodes": [
+                      204
+                    ],
+                    "headers": [],
+                    "isErrorResponse": false,
+                    "serializationOptions": {}
+                  }
+                ],
+                "httpMethod": "DELETE",
+                "uri": "{endpoint}",
+                "path": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtCustomBaseRepro/customBaseTypeInheritedResources/{customBaseTypeInheritedResourceName}",
+                "bufferResponse": true,
+                "generateProtocolMethod": true,
+                "generateConvenienceMethod": true,
+                "crossLanguageDefinitionId": "MgmtCustomBaseRepro.CustomBaseTypeInheritedResources.delete",
+                "decorators": [
+                  {
+                    "name": "Azure.ResourceManager.@armResourceDelete",
+                    "arguments": {}
+                  }
+                ],
+                "namespace": "Azure.Generator.MgmtCustomBaseRepro.Tests"
+              },
+              "parameters": [
+                {
+                  "$ref": "192"
+                },
+                {
+                  "$ref": "196"
+                },
+                {
+                  "$id": "200",
+                  "kind": "method",
+                  "name": "subscriptionId",
+                  "doc": "The ID of the target subscription. The value must be an UUID.",
+                  "type": {
+                    "$ref": "188"
+                  },
+                  "optional": false,
+                  "readOnly": false,
+                  "serializedName": "subscriptionId",
+                  "isApiVersion": false,
+                  "scope": "Method",
+                  "location": "Path",
+                  "crossLanguageDefinitionId": "MgmtCustomBaseRepro.CustomBaseTypeInheritedResources.delete.subscriptionId"
+                }
+              ],
+              "response": {},
+              "isOverride": false,
+              "generateConvenient": true,
+              "generateProtocol": true,
+              "crossLanguageDefinitionId": "MgmtCustomBaseRepro.CustomBaseTypeInheritedResources.delete",
+              "lroMetadata": {
+                "finalStateVia": 1,
+                "finalResponse": {
+                  "statusCodes": [
+                    204
+                  ]
+                }
+              }
+            },
+            {
+              "$id": "201",
+              "kind": "paging",
+              "name": "listByResourceGroup",
+              "isExactName": false,
+              "accessibility": "public",
+              "apiVersions": [
+                "2024-04-01"
+              ],
+              "doc": "List CustomBaseTypeInheritedResource resources by resource group",
+              "operation": {
+                "$id": "202",
+                "name": "listByResourceGroup",
+                "isExactName": false,
+                "resourceName": "CustomBaseTypeInheritedResource",
+                "doc": "List CustomBaseTypeInheritedResource resources by resource group",
+                "accessibility": "public",
+                "parameters": [
+                  {
+                    "$id": "203",
+                    "kind": "query",
+                    "name": "apiVersion",
+                    "serializedName": "api-version",
+                    "doc": "The API version to use for this operation.",
+                    "type": {
+                      "$id": "204",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": true,
+                    "explode": false,
+                    "defaultValue": {
+                      "type": {
+                        "$id": "205",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string"
+                      },
+                      "value": "2024-04-01"
+                    },
+                    "optional": false,
+                    "scope": "Client",
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
+                    "crossLanguageDefinitionId": "MgmtCustomBaseRepro.CustomBaseTypeInheritedResources.listByResourceGroup.apiVersion",
+                    "readOnly": false,
+                    "methodParameterSegments": [
+                      {
+                        "$ref": "95"
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "206",
+                    "kind": "path",
+                    "name": "subscriptionId",
+                    "serializedName": "subscriptionId",
+                    "doc": "The ID of the target subscription. The value must be an UUID.",
+                    "type": {
+                      "$id": "207",
+                      "kind": "string",
+                      "name": "uuid",
+                      "crossLanguageDefinitionId": "Azure.Core.uuid",
+                      "baseType": {
+                        "$id": "208",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string",
+                        "decorators": []
+                      },
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "style": "simple",
+                    "allowReserved": false,
+                    "skipUrlEncoding": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "MgmtCustomBaseRepro.CustomBaseTypeInheritedResources.listByResourceGroup.subscriptionId",
+                    "methodParameterSegments": [
+                      {
+                        "$ref": "120"
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "209",
+                    "kind": "path",
+                    "name": "resourceGroupName",
+                    "serializedName": "resourceGroupName",
+                    "doc": "The name of the resource group. The name is case insensitive.",
+                    "type": {
+                      "$id": "210",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "style": "simple",
+                    "allowReserved": false,
+                    "skipUrlEncoding": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@pattern",
+                        "arguments": {
+                          "pattern": "^[-\\w\\._\\(\\)]+$"
+                        }
+                      },
+                      {
+                        "name": "TypeSpec.@maxLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      },
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "MgmtCustomBaseRepro.CustomBaseTypeInheritedResources.listByResourceGroup.resourceGroupName",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "211",
+                        "kind": "method",
+                        "name": "resourceGroupName",
+                        "serializedName": "resourceGroupName",
+                        "doc": "The name of the resource group. The name is case insensitive.",
+                        "type": {
+                          "$id": "212",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "location": "Path",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "MgmtCustomBaseRepro.CustomBaseTypeInheritedResources.listByResourceGroup.resourceGroupName",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [
+                          {
+                            "name": "TypeSpec.@pattern",
+                            "arguments": {
+                              "pattern": "^[-\\w\\._\\(\\)]+$"
+                            }
+                          },
+                          {
+                            "name": "TypeSpec.@maxLength",
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
+                          },
+                          {
+                            "name": "TypeSpec.@minLength",
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
+                          }
+                        ],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "213",
+                    "kind": "header",
+                    "name": "accept",
+                    "serializedName": "Accept",
+                    "type": {
+                      "$ref": "23"
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": false,
+                    "scope": "Constant",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "MgmtCustomBaseRepro.CustomBaseTypeInheritedResources.listByResourceGroup.accept",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "214",
+                        "kind": "method",
+                        "name": "accept",
+                        "serializedName": "Accept",
+                        "type": {
+                          "$ref": "23"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "MgmtCustomBaseRepro.CustomBaseTypeInheritedResources.listByResourceGroup.accept",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
+                  }
+                ],
+                "responses": [
+                  {
+                    "statusCodes": [
+                      200
+                    ],
+                    "bodyType": {
+                      "$ref": "85"
+                    },
+                    "headers": [],
+                    "isErrorResponse": false,
+                    "contentTypes": [
+                      "application/json"
+                    ],
+                    "serializationOptions": {
+                      "json": {
+                        "name": ""
+                      }
+                    }
+                  }
+                ],
+                "httpMethod": "GET",
+                "uri": "{endpoint}",
+                "path": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtCustomBaseRepro/customBaseTypeInheritedResources",
+                "bufferResponse": true,
+                "generateProtocolMethod": true,
+                "generateConvenienceMethod": true,
+                "crossLanguageDefinitionId": "MgmtCustomBaseRepro.CustomBaseTypeInheritedResources.listByResourceGroup",
+                "decorators": [
+                  {
+                    "name": "Azure.ResourceManager.@armResourceList",
+                    "arguments": {}
+                  }
+                ],
+                "namespace": "Azure.Generator.MgmtCustomBaseRepro.Tests"
+              },
+              "parameters": [
+                {
+                  "$ref": "211"
+                },
+                {
+                  "$ref": "214"
+                },
+                {
+                  "$id": "215",
+                  "kind": "method",
+                  "name": "subscriptionId",
+                  "doc": "The ID of the target subscription. The value must be an UUID.",
+                  "type": {
+                    "$ref": "207"
+                  },
+                  "optional": false,
+                  "readOnly": false,
+                  "serializedName": "subscriptionId",
+                  "isApiVersion": false,
+                  "scope": "Method",
+                  "location": "Path",
+                  "crossLanguageDefinitionId": "MgmtCustomBaseRepro.CustomBaseTypeInheritedResources.listByResourceGroup.subscriptionId"
+                }
+              ],
+              "response": {
+                "type": {
+                  "$ref": "87"
+                },
+                "resultSegments": [
+                  "value"
+                ]
+              },
+              "isOverride": false,
+              "generateConvenient": true,
+              "generateProtocol": true,
+              "crossLanguageDefinitionId": "MgmtCustomBaseRepro.CustomBaseTypeInheritedResources.listByResourceGroup",
+              "pagingMetadata": {
+                "itemPropertySegments": [
+                  "value"
+                ],
+                "nextLink": {
+                  "responseSegments": [
+                    "nextLink"
+                  ],
+                  "responseLocation": "Body"
+                },
+                "pageSizeParameterSegments": []
+              }
+            },
+            {
+              "$id": "216",
+              "kind": "paging",
+              "name": "list",
+              "isExactName": false,
+              "accessibility": "public",
+              "apiVersions": [
+                "2024-04-01"
+              ],
+              "doc": "List CustomBaseTypeInheritedResource resources by subscription ID",
+              "operation": {
+                "$id": "217",
+                "name": "list",
+                "isExactName": false,
+                "resourceName": "CustomBaseTypeInheritedResource",
+                "doc": "List CustomBaseTypeInheritedResource resources by subscription ID",
+                "accessibility": "public",
+                "parameters": [
+                  {
+                    "$id": "218",
+                    "kind": "query",
+                    "name": "apiVersion",
+                    "serializedName": "api-version",
+                    "doc": "The API version to use for this operation.",
+                    "type": {
+                      "$id": "219",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": true,
+                    "explode": false,
+                    "defaultValue": {
+                      "type": {
+                        "$id": "220",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string"
+                      },
+                      "value": "2024-04-01"
+                    },
+                    "optional": false,
+                    "scope": "Client",
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
+                    "crossLanguageDefinitionId": "MgmtCustomBaseRepro.CustomBaseTypeInheritedResources.list.apiVersion",
+                    "readOnly": false,
+                    "methodParameterSegments": [
+                      {
+                        "$ref": "95"
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "221",
+                    "kind": "path",
+                    "name": "subscriptionId",
+                    "serializedName": "subscriptionId",
+                    "doc": "The ID of the target subscription. The value must be an UUID.",
+                    "type": {
+                      "$id": "222",
+                      "kind": "string",
+                      "name": "uuid",
+                      "crossLanguageDefinitionId": "Azure.Core.uuid",
+                      "baseType": {
+                        "$id": "223",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string",
+                        "decorators": []
+                      },
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "style": "simple",
+                    "allowReserved": false,
+                    "skipUrlEncoding": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "MgmtCustomBaseRepro.CustomBaseTypeInheritedResources.list.subscriptionId",
+                    "methodParameterSegments": [
+                      {
+                        "$ref": "120"
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "224",
+                    "kind": "header",
+                    "name": "accept",
+                    "serializedName": "Accept",
+                    "type": {
+                      "$ref": "25"
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": false,
+                    "scope": "Constant",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "MgmtCustomBaseRepro.CustomBaseTypeInheritedResources.list.accept",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "225",
+                        "kind": "method",
+                        "name": "accept",
+                        "serializedName": "Accept",
+                        "type": {
+                          "$ref": "25"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "MgmtCustomBaseRepro.CustomBaseTypeInheritedResources.list.accept",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
+                  }
+                ],
+                "responses": [
+                  {
+                    "statusCodes": [
+                      200
+                    ],
+                    "bodyType": {
+                      "$ref": "85"
+                    },
+                    "headers": [],
+                    "isErrorResponse": false,
+                    "contentTypes": [
+                      "application/json"
+                    ],
+                    "serializationOptions": {
+                      "json": {
+                        "name": ""
+                      }
+                    }
+                  }
+                ],
+                "httpMethod": "GET",
+                "uri": "{endpoint}",
+                "path": "/subscriptions/{subscriptionId}/providers/MgmtCustomBaseRepro/customBaseTypeInheritedResources",
+                "bufferResponse": true,
+                "generateProtocolMethod": true,
+                "generateConvenienceMethod": true,
+                "crossLanguageDefinitionId": "MgmtCustomBaseRepro.CustomBaseTypeInheritedResources.list",
+                "decorators": [
+                  {
+                    "name": "Azure.ResourceManager.@armResourceList",
+                    "arguments": {}
+                  }
+                ],
+                "namespace": "Azure.Generator.MgmtCustomBaseRepro.Tests"
+              },
+              "parameters": [
+                {
+                  "$ref": "225"
+                },
+                {
+                  "$id": "226",
+                  "kind": "method",
+                  "name": "subscriptionId",
+                  "doc": "The ID of the target subscription. The value must be an UUID.",
+                  "type": {
+                    "$ref": "222"
+                  },
+                  "optional": false,
+                  "readOnly": false,
+                  "serializedName": "subscriptionId",
+                  "isApiVersion": false,
+                  "scope": "Method",
+                  "location": "Path",
+                  "crossLanguageDefinitionId": "MgmtCustomBaseRepro.CustomBaseTypeInheritedResources.list.subscriptionId"
+                }
+              ],
+              "response": {
+                "type": {
+                  "$ref": "87"
+                },
+                "resultSegments": [
+                  "value"
+                ]
+              },
+              "isOverride": false,
+              "generateConvenient": true,
+              "generateProtocol": true,
+              "crossLanguageDefinitionId": "MgmtCustomBaseRepro.CustomBaseTypeInheritedResources.list",
+              "pagingMetadata": {
+                "itemPropertySegments": [
+                  "value"
+                ],
+                "nextLink": {
+                  "responseSegments": [
+                    "nextLink"
+                  ],
+                  "responseLocation": "Body"
+                },
+                "pageSizeParameterSegments": []
+              }
+            }
+          ],
+          "parameters": [
+            {
+              "$id": "227",
+              "kind": "endpoint",
+              "name": "endpoint",
+              "serializedName": "endpoint",
+              "doc": "Service host",
+              "type": {
+                "$id": "228",
+                "kind": "url",
+                "name": "endpoint",
+                "crossLanguageDefinitionId": "TypeSpec.url"
+              },
+              "isApiVersion": false,
+              "optional": false,
+              "scope": "Client",
+              "isEndpoint": true,
+              "defaultValue": {
+                "type": {
+                  "$id": "229",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string"
+                },
+                "value": "https://management.azure.com"
+              },
+              "serverUrlTemplate": "{endpoint}",
+              "skipUrlEncoding": false,
+              "readOnly": false,
+              "crossLanguageDefinitionId": "MgmtCustomBaseRepro.CustomBaseTypeInheritedResources.endpoint",
+              "isExactName": false
+            },
+            {
+              "$ref": "95"
+            }
+          ],
+          "initializedBy": 0,
+          "decorators": [
+            {
+              "name": "Azure.ResourceManager.@armResourceOperations",
+              "arguments": {}
+            }
+          ],
+          "crossLanguageDefinitionId": "MgmtCustomBaseRepro.CustomBaseTypeInheritedResources",
+          "apiVersions": [
+            "2024-04-01"
+          ],
+          "parent": {
+            "$ref": "91"
+          },
+          "isMultiServiceClient": false
+        }
+      ],
+      "isMultiServiceClient": false
+    }
+  ],
+  "auth": {
+    "oAuth2": {
+      "flows": [
+        {
+          "scopes": [
+            "https://management.azure.com/.default"
+          ],
+          "authorizationUrl": "https://login.microsoftonline.com/common/oauth2/authorize"
+        }
+      ]
+    }
+  }
+}
