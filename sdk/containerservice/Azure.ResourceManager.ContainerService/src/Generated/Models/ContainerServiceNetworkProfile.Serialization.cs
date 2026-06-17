@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             ContainerServiceOutboundType? outboundType = default;
             ContainerServiceLoadBalancerSku? loadBalancerSku = default;
             ManagedClusterLoadBalancerProfile loadBalancerProfile = default;
-            BastionProfile bastionProfile = default;
+            ManagedClusterBastionProfile bastionProfile = default;
             ManagedClusterNatGatewayProfile natGatewayProfile = default;
             ManagedClusterStaticEgressGatewayProfile staticEgressGatewayProfile = default;
             IList<string> podCidrs = default;
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    bastionProfile = BastionProfile.DeserializeBastionProfile(prop.Value, options);
+                    bastionProfile = ManagedClusterBastionProfile.DeserializeManagedClusterBastionProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("natGatewayProfile"u8))

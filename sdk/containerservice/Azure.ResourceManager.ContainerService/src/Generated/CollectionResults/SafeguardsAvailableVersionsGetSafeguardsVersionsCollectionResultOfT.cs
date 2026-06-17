@@ -14,7 +14,7 @@ using Azure.ResourceManager.ContainerService.Models;
 
 namespace Azure.ResourceManager.ContainerService
 {
-    internal partial class SafeguardsAvailableVersionsGetSafeguardsVersionsCollectionResultOfT : Pageable<SafeguardsAvailableVersionData>
+    internal partial class SafeguardsAvailableVersionsGetSafeguardsVersionsCollectionResultOfT : Pageable<ContainerServiceSafeguardsAvailableVersionData>
     {
         private readonly SafeguardsAvailableVersions _client;
         private readonly Guid _subscriptionId;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of SafeguardsAvailableVersionsGetSafeguardsVersionsCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<SafeguardsAvailableVersionData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<ContainerServiceSafeguardsAvailableVersionData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerService
                     yield break;
                 }
                 SafeguardsAvailableVersionsList result = SafeguardsAvailableVersionsList.FromResponse(response);
-                yield return Page<SafeguardsAvailableVersionData>.FromValues((IReadOnlyList<SafeguardsAvailableVersionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<ContainerServiceSafeguardsAvailableVersionData>.FromValues((IReadOnlyList<ContainerServiceSafeguardsAvailableVersionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

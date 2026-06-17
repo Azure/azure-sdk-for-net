@@ -18,51 +18,51 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// Profile to enable managed Azure Bastion or reference to an existing Bastion for the managed cluster.
     /// See https://aka.ms/aks/BastionConnect for more details.
     /// </summary>
-    public partial class BastionProfile : IJsonModel<BastionProfile>
+    public partial class ManagedClusterBastionProfile : IJsonModel<ManagedClusterBastionProfile>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BastionProfile PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ManagedClusterBastionProfile PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BastionProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedClusterBastionProfile>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeBastionProfile(document.RootElement, options);
+                        return DeserializeManagedClusterBastionProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BastionProfile)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterBastionProfile)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BastionProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedClusterBastionProfile>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerServiceContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(BastionProfile)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterBastionProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BastionProfile>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ManagedClusterBastionProfile>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BastionProfile IPersistableModel<BastionProfile>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ManagedClusterBastionProfile IPersistableModel<ManagedClusterBastionProfile>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BastionProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ManagedClusterBastionProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<BastionProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ManagedClusterBastionProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -73,10 +73,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BastionProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedClusterBastionProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BastionProfile)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterBastionProfile)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Enabled))
             {
@@ -122,24 +122,24 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BastionProfile IJsonModel<BastionProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ManagedClusterBastionProfile IJsonModel<ManagedClusterBastionProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BastionProfile JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ManagedClusterBastionProfile JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BastionProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedClusterBastionProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BastionProfile)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterBastionProfile)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeBastionProfile(document.RootElement, options);
+            return DeserializeManagedClusterBastionProfile(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static BastionProfile DeserializeBastionProfile(JsonElement element, ModelReaderWriterOptions options)
+        internal static ManagedClusterBastionProfile DeserializeManagedClusterBastionProfile(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
             bool? enabled = default;
             ResourceIdentifier bastionId = default;
-            BastionSku? sku = default;
+            ManagedClusterBastionSku? sku = default;
             int? scaleUnits = default;
             ResourceIdentifier publicIpAddressId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    sku = new BastionSku(prop.Value.GetString());
+                    sku = new ManagedClusterBastionSku(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("scaleUnits"u8))
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BastionProfile(
+            return new ManagedClusterBastionProfile(
                 enabled,
                 bastionId,
                 sku,

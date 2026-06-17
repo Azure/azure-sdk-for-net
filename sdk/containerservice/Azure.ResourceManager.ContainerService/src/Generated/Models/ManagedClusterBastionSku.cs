@@ -12,7 +12,7 @@ using Azure.ResourceManager.ContainerService;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> The SKU of the managed Azure Bastion. The default is 'Standard'. See https://aka.ms/aks/BastionSKUs for more information about the differences between Azure Bastion SKUs. </summary>
-    public readonly partial struct BastionSku : IEquatable<BastionSku>
+    public readonly partial struct ManagedClusterBastionSku : IEquatable<ManagedClusterBastionSku>
     {
         private readonly string _value;
         /// <summary> Use the standard SKU of Azure Bastion. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Use the premium SKU of Azure Bastion. </summary>
         private const string PremiumValue = "Premium";
 
-        /// <summary> Initializes a new instance of <see cref="BastionSku"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterBastionSku"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public BastionSku(string value)
+        public ManagedClusterBastionSku(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Use the standard SKU of Azure Bastion. </summary>
-        public static BastionSku Standard { get; } = new BastionSku(StandardValue);
+        public static ManagedClusterBastionSku Standard { get; } = new ManagedClusterBastionSku(StandardValue);
 
         /// <summary> Use the premium SKU of Azure Bastion. </summary>
-        public static BastionSku Premium { get; } = new BastionSku(PremiumValue);
+        public static ManagedClusterBastionSku Premium { get; } = new ManagedClusterBastionSku(PremiumValue);
 
-        /// <summary> Determines if two <see cref="BastionSku"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="ManagedClusterBastionSku"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(BastionSku left, BastionSku right) => left.Equals(right);
+        public static bool operator ==(ManagedClusterBastionSku left, ManagedClusterBastionSku right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="BastionSku"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="ManagedClusterBastionSku"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(BastionSku left, BastionSku right) => !left.Equals(right);
+        public static bool operator !=(ManagedClusterBastionSku left, ManagedClusterBastionSku right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="BastionSku"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ManagedClusterBastionSku"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BastionSku(string value) => new BastionSku(value);
+        public static implicit operator ManagedClusterBastionSku(string value) => new ManagedClusterBastionSku(value);
 
-        /// <summary> Converts a string to a <see cref="BastionSku"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ManagedClusterBastionSku"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BastionSku?(string value) => value == null ? null : new BastionSku(value);
+        public static implicit operator ManagedClusterBastionSku?(string value) => value == null ? null : new ManagedClusterBastionSku(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is BastionSku other && Equals(other);
+        public override bool Equals(object obj) => obj is ManagedClusterBastionSku other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(BastionSku other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ManagedClusterBastionSku other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

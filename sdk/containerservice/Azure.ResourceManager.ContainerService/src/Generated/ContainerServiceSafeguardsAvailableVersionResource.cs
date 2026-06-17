@@ -18,40 +18,40 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.ContainerService
 {
     /// <summary>
-    /// A class representing a SafeguardsAvailableVersion along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SafeguardsAvailableVersionResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetSafeguardsAvailableVersions method.
+    /// A class representing a ContainerServiceSafeguardsAvailableVersion along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ContainerServiceSafeguardsAvailableVersionResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetContainerServiceSafeguardsAvailableVersions method.
     /// </summary>
-    public partial class SafeguardsAvailableVersionResource : ArmResource
+    public partial class ContainerServiceSafeguardsAvailableVersionResource : ArmResource
     {
         private readonly ClientDiagnostics _safeguardsAvailableVersionsClientDiagnostics;
         private readonly SafeguardsAvailableVersions _safeguardsAvailableVersionsRestClient;
-        private readonly SafeguardsAvailableVersionData _data;
+        private readonly ContainerServiceSafeguardsAvailableVersionData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ContainerService/locations/safeguardsVersions";
 
-        /// <summary> Initializes a new instance of SafeguardsAvailableVersionResource for mocking. </summary>
-        protected SafeguardsAvailableVersionResource()
+        /// <summary> Initializes a new instance of ContainerServiceSafeguardsAvailableVersionResource for mocking. </summary>
+        protected ContainerServiceSafeguardsAvailableVersionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SafeguardsAvailableVersionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceSafeguardsAvailableVersionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SafeguardsAvailableVersionResource(ArmClient client, SafeguardsAvailableVersionData data) : this(client, data.Id)
+        internal ContainerServiceSafeguardsAvailableVersionResource(ArmClient client, ContainerServiceSafeguardsAvailableVersionData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SafeguardsAvailableVersionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceSafeguardsAvailableVersionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SafeguardsAvailableVersionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ContainerServiceSafeguardsAvailableVersionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string safeguardsAvailableVersionApiVersion);
+            TryGetApiVersion(ResourceType, out string containerServiceSafeguardsAvailableVersionApiVersion);
             _safeguardsAvailableVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerService", ResourceType.Namespace, Diagnostics);
-            _safeguardsAvailableVersionsRestClient = new SafeguardsAvailableVersions(_safeguardsAvailableVersionsClientDiagnostics, Pipeline, Endpoint, safeguardsAvailableVersionApiVersion ?? "2026-04-02-preview");
+            _safeguardsAvailableVersionsRestClient = new SafeguardsAvailableVersions(_safeguardsAvailableVersionsClientDiagnostics, Pipeline, Endpoint, containerServiceSafeguardsAvailableVersionApiVersion ?? "2026-04-02-preview");
             ValidateResourceId(id);
         }
 
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ContainerService
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual SafeguardsAvailableVersionData Data
+        public virtual ContainerServiceSafeguardsAvailableVersionData Data
         {
             get
             {
@@ -108,14 +108,14 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="SafeguardsAvailableVersionResource"/>. </description>
+        /// <description> <see cref="ContainerServiceSafeguardsAvailableVersionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SafeguardsAvailableVersionResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerServiceSafeguardsAvailableVersionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _safeguardsAvailableVersionsClientDiagnostics.CreateScope("SafeguardsAvailableVersionResource.Get");
+            using DiagnosticScope scope = _safeguardsAvailableVersionsClientDiagnostics.CreateScope("ContainerServiceSafeguardsAvailableVersionResource.Get");
             scope.Start();
             try
             {
@@ -125,12 +125,12 @@ namespace Azure.ResourceManager.ContainerService
                 };
                 HttpMessage message = _safeguardsAvailableVersionsRestClient.CreateGetSafeguardsVersionsRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<SafeguardsAvailableVersionData> response = Response.FromValue(SafeguardsAvailableVersionData.FromResponse(result), result);
+                Response<ContainerServiceSafeguardsAvailableVersionData> response = Response.FromValue(ContainerServiceSafeguardsAvailableVersionData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new SafeguardsAvailableVersionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerServiceSafeguardsAvailableVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -156,14 +156,14 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="SafeguardsAvailableVersionResource"/>. </description>
+        /// <description> <see cref="ContainerServiceSafeguardsAvailableVersionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SafeguardsAvailableVersionResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<ContainerServiceSafeguardsAvailableVersionResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _safeguardsAvailableVersionsClientDiagnostics.CreateScope("SafeguardsAvailableVersionResource.Get");
+            using DiagnosticScope scope = _safeguardsAvailableVersionsClientDiagnostics.CreateScope("ContainerServiceSafeguardsAvailableVersionResource.Get");
             scope.Start();
             try
             {
@@ -173,12 +173,12 @@ namespace Azure.ResourceManager.ContainerService
                 };
                 HttpMessage message = _safeguardsAvailableVersionsRestClient.CreateGetSafeguardsVersionsRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<SafeguardsAvailableVersionData> response = Response.FromValue(SafeguardsAvailableVersionData.FromResponse(result), result);
+                Response<ContainerServiceSafeguardsAvailableVersionData> response = Response.FromValue(ContainerServiceSafeguardsAvailableVersionData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new SafeguardsAvailableVersionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerServiceSafeguardsAvailableVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

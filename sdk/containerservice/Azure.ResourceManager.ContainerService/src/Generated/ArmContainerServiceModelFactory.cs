@@ -1077,7 +1077,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="podLinkLocalAccess"> Defines access to special link local addresses (Azure Instance Metadata Service, aka IMDS) for pods with hostNetwork=false. if not specified, the default is 'IMDS'. </param>
         /// <param name="kubeProxyConfig"> Holds configuration customizations for kube-proxy. Any values not defined will use the kube-proxy defaulting behavior. See https://v&lt;version&gt;.docs.kubernetes.io/docs/reference/command-line-tools-reference/kube-proxy/ where &lt;version&gt; is represented by a &lt;major version&gt;-&lt;minor version&gt; string. Kubernetes version 1.23 would be '1-23'. </param>
         /// <returns> A new <see cref="Models.ContainerServiceNetworkProfile"/> instance for mocking. </returns>
-        public static ContainerServiceNetworkProfile ContainerServiceNetworkProfile(ContainerServiceNetworkPlugin? networkPlugin = default, ContainerServiceNetworkPluginMode? networkPluginMode = default, ContainerServiceNetworkPolicy? networkPolicy = default, ContainerServiceNetworkMode? networkMode = default, NetworkDataplane? networkDataplane = default, ManagedClusterAdvancedNetworking advancedNetworking = default, string podCidr = default, string serviceCidr = default, string dnsServiceIP = default, ContainerServiceOutboundType? outboundType = default, ContainerServiceLoadBalancerSku? loadBalancerSku = default, ManagedClusterLoadBalancerProfile loadBalancerProfile = default, BastionProfile bastionProfile = default, ManagedClusterNatGatewayProfile natGatewayProfile = default, bool? isStaticEgressGatewayAddonEnabled = default, IEnumerable<string> podCidrs = default, IEnumerable<string> serviceCidrs = default, IEnumerable<ContainerServiceIPFamily> networkIPFamilies = default, PodLinkLocalAccess? podLinkLocalAccess = default, ContainerServiceNetworkProfileKubeProxyConfig kubeProxyConfig = default)
+        public static ContainerServiceNetworkProfile ContainerServiceNetworkProfile(ContainerServiceNetworkPlugin? networkPlugin = default, ContainerServiceNetworkPluginMode? networkPluginMode = default, ContainerServiceNetworkPolicy? networkPolicy = default, ContainerServiceNetworkMode? networkMode = default, NetworkDataplane? networkDataplane = default, ManagedClusterAdvancedNetworking advancedNetworking = default, string podCidr = default, string serviceCidr = default, string dnsServiceIP = default, ContainerServiceOutboundType? outboundType = default, ContainerServiceLoadBalancerSku? loadBalancerSku = default, ManagedClusterLoadBalancerProfile loadBalancerProfile = default, ManagedClusterBastionProfile bastionProfile = default, ManagedClusterNatGatewayProfile natGatewayProfile = default, bool? isStaticEgressGatewayAddonEnabled = default, IEnumerable<string> podCidrs = default, IEnumerable<string> serviceCidrs = default, IEnumerable<ContainerServiceIPFamily> networkIPFamilies = default, PodLinkLocalAccess? podLinkLocalAccess = default, ContainerServiceNetworkProfileKubeProxyConfig kubeProxyConfig = default)
         {
             podCidrs ??= new ChangeTrackingList<string>();
             serviceCidrs ??= new ChangeTrackingList<string>();
@@ -1177,10 +1177,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// When not provided during creation, AKS will automatically create a new public IP address.
         /// This field cannot be updated. To change IP address after creation, please disable and re-enable the managed bastion with the new public IP address.
         /// </param>
-        /// <returns> A new <see cref="Models.BastionProfile"/> instance for mocking. </returns>
-        public static BastionProfile BastionProfile(bool? enabled = default, ResourceIdentifier bastionId = default, BastionSku? sku = default, int? scaleUnits = default, ResourceIdentifier publicIpAddressId = default)
+        /// <returns> A new <see cref="Models.ManagedClusterBastionProfile"/> instance for mocking. </returns>
+        public static ManagedClusterBastionProfile ManagedClusterBastionProfile(bool? enabled = default, ResourceIdentifier bastionId = default, ManagedClusterBastionSku? sku = default, int? scaleUnits = default, ResourceIdentifier publicIpAddressId = default)
         {
-            return new BastionProfile(
+            return new ManagedClusterBastionProfile(
                 enabled,
                 bastionId,
                 sku,
@@ -1966,10 +1966,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> Whether the version is default or not and support info. </param>
-        /// <returns> A new <see cref="ContainerService.SafeguardsAvailableVersionData"/> instance for mocking. </returns>
-        public static SafeguardsAvailableVersionData SafeguardsAvailableVersionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SafeguardsAvailableVersionsProperties properties = default)
+        /// <returns> A new <see cref="ContainerService.ContainerServiceSafeguardsAvailableVersionData"/> instance for mocking. </returns>
+        public static ContainerServiceSafeguardsAvailableVersionData ContainerServiceSafeguardsAvailableVersionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SafeguardsAvailableVersionsProperties properties = default)
         {
-            return new SafeguardsAvailableVersionData(
+            return new ContainerServiceSafeguardsAvailableVersionData(
                 id,
                 name,
                 resourceType,

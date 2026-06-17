@@ -111,21 +111,21 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SafeguardsAvailableVersionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="ContainerServiceSafeguardsAvailableVersionResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableContainerServiceArmClient.GetSafeguardsAvailableVersionResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableContainerServiceArmClient.GetContainerServiceSafeguardsAvailableVersionResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SafeguardsAvailableVersionResource"/> object. </returns>
-        public static SafeguardsAvailableVersionResource GetSafeguardsAvailableVersionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ContainerServiceSafeguardsAvailableVersionResource"/> object. </returns>
+        public static ContainerServiceSafeguardsAvailableVersionResource GetContainerServiceSafeguardsAvailableVersionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableContainerServiceArmClient(client).GetSafeguardsAvailableVersionResource(id);
+            return GetMockableContainerServiceArmClient(client).GetContainerServiceSafeguardsAvailableVersionResource(id);
         }
 
         /// <summary>
@@ -677,28 +677,28 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary>
-        /// Gets a collection of SafeguardsAvailableVersions in the <see cref="SubscriptionResource"/>
+        /// Gets a collection of ContainerServiceSafeguardsAvailableVersions in the <see cref="SubscriptionResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableContainerServiceSubscriptionResource.GetSafeguardsAvailableVersions(AzureLocation)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableContainerServiceSubscriptionResource.GetContainerServiceSafeguardsAvailableVersions(AzureLocation)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="location"> The location for the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An object representing collection of SafeguardsAvailableVersions and their operations over a SafeguardsAvailableVersionResource. </returns>
-        public static SafeguardsAvailableVersionCollection GetSafeguardsAvailableVersions(this SubscriptionResource subscriptionResource, AzureLocation location)
+        /// <returns> An object representing collection of ContainerServiceSafeguardsAvailableVersions and their operations over a ContainerServiceSafeguardsAvailableVersionResource. </returns>
+        public static ContainerServiceSafeguardsAvailableVersionCollection GetContainerServiceSafeguardsAvailableVersions(this SubscriptionResource subscriptionResource, AzureLocation location)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableContainerServiceSubscriptionResource(subscriptionResource).GetSafeguardsAvailableVersions(location);
+            return GetMockableContainerServiceSubscriptionResource(subscriptionResource).GetContainerServiceSafeguardsAvailableVersions(location);
         }
 
         /// <summary>
         /// Contains Safeguards version along with its support info and whether it is a default version.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableContainerServiceSubscriptionResource.GetSafeguardsAvailableVersionAsync(AzureLocation, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableContainerServiceSubscriptionResource.GetContainerServiceSafeguardsAvailableVersionAsync(AzureLocation, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -707,18 +707,18 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<SafeguardsAvailableVersionResource>> GetSafeguardsAvailableVersionAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string version, CancellationToken cancellationToken = default)
+        public static async Task<Response<ContainerServiceSafeguardsAvailableVersionResource>> GetContainerServiceSafeguardsAvailableVersionAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableContainerServiceSubscriptionResource(subscriptionResource).GetSafeguardsAvailableVersionAsync(location, version, cancellationToken).ConfigureAwait(false);
+            return await GetMockableContainerServiceSubscriptionResource(subscriptionResource).GetContainerServiceSafeguardsAvailableVersionAsync(location, version, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Contains Safeguards version along with its support info and whether it is a default version.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableContainerServiceSubscriptionResource.GetSafeguardsAvailableVersion(AzureLocation, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableContainerServiceSubscriptionResource.GetContainerServiceSafeguardsAvailableVersion(AzureLocation, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -727,11 +727,11 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<SafeguardsAvailableVersionResource> GetSafeguardsAvailableVersion(this SubscriptionResource subscriptionResource, AzureLocation location, string version, CancellationToken cancellationToken = default)
+        public static Response<ContainerServiceSafeguardsAvailableVersionResource> GetContainerServiceSafeguardsAvailableVersion(this SubscriptionResource subscriptionResource, AzureLocation location, string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableContainerServiceSubscriptionResource(subscriptionResource).GetSafeguardsAvailableVersion(location, version, cancellationToken);
+            return GetMockableContainerServiceSubscriptionResource(subscriptionResource).GetContainerServiceSafeguardsAvailableVersion(location, version, cancellationToken);
         }
 
         /// <summary>

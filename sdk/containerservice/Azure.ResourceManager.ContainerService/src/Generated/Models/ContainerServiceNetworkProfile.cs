@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="podLinkLocalAccess"> Defines access to special link local addresses (Azure Instance Metadata Service, aka IMDS) for pods with hostNetwork=false. if not specified, the default is 'IMDS'. </param>
         /// <param name="kubeProxyConfig"> Holds configuration customizations for kube-proxy. Any values not defined will use the kube-proxy defaulting behavior. See https://v&lt;version&gt;.docs.kubernetes.io/docs/reference/command-line-tools-reference/kube-proxy/ where &lt;version&gt; is represented by a &lt;major version&gt;-&lt;minor version&gt; string. Kubernetes version 1.23 would be '1-23'. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerServiceNetworkProfile(ContainerServiceNetworkPlugin? networkPlugin, ContainerServiceNetworkPluginMode? networkPluginMode, ContainerServiceNetworkPolicy? networkPolicy, ContainerServiceNetworkMode? networkMode, NetworkDataplane? networkDataplane, ManagedClusterAdvancedNetworking advancedNetworking, string podCidr, string serviceCidr, string dnsServiceIP, ContainerServiceOutboundType? outboundType, ContainerServiceLoadBalancerSku? loadBalancerSku, ManagedClusterLoadBalancerProfile loadBalancerProfile, BastionProfile bastionProfile, ManagedClusterNatGatewayProfile natGatewayProfile, ManagedClusterStaticEgressGatewayProfile staticEgressGatewayProfile, IList<string> podCidrs, IList<string> serviceCidrs, IList<ContainerServiceIPFamily> networkIPFamilies, PodLinkLocalAccess? podLinkLocalAccess, ContainerServiceNetworkProfileKubeProxyConfig kubeProxyConfig, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerServiceNetworkProfile(ContainerServiceNetworkPlugin? networkPlugin, ContainerServiceNetworkPluginMode? networkPluginMode, ContainerServiceNetworkPolicy? networkPolicy, ContainerServiceNetworkMode? networkMode, NetworkDataplane? networkDataplane, ManagedClusterAdvancedNetworking advancedNetworking, string podCidr, string serviceCidr, string dnsServiceIP, ContainerServiceOutboundType? outboundType, ContainerServiceLoadBalancerSku? loadBalancerSku, ManagedClusterLoadBalancerProfile loadBalancerProfile, ManagedClusterBastionProfile bastionProfile, ManagedClusterNatGatewayProfile natGatewayProfile, ManagedClusterStaticEgressGatewayProfile staticEgressGatewayProfile, IList<string> podCidrs, IList<string> serviceCidrs, IList<ContainerServiceIPFamily> networkIPFamilies, PodLinkLocalAccess? podLinkLocalAccess, ContainerServiceNetworkProfileKubeProxyConfig kubeProxyConfig, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NetworkPlugin = networkPlugin;
             NetworkPluginMode = networkPluginMode;
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// See https://aka.ms/aks/BastionConnect for more details.
         /// </summary>
         [WirePath("bastionProfile")]
-        public BastionProfile BastionProfile { get; set; }
+        public ManagedClusterBastionProfile BastionProfile { get; set; }
 
         /// <summary> Profile of the cluster NAT gateway. </summary>
         [WirePath("natGatewayProfile")]

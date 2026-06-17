@@ -150,12 +150,12 @@ namespace Azure.ResourceManager.ContainerService.Mocking
             return GetContainerServiceGuardrailsAvailableVersions(location).Get(version, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SafeguardsAvailableVersions in the <see cref="SubscriptionResource"/>. </summary>
+        /// <summary> Gets a collection of ContainerServiceSafeguardsAvailableVersions in the <see cref="SubscriptionResource"/>. </summary>
         /// <param name="location"> The location for the resource. </param>
-        /// <returns> An object representing collection of SafeguardsAvailableVersions and their operations over a SafeguardsAvailableVersionResource. </returns>
-        public virtual SafeguardsAvailableVersionCollection GetSafeguardsAvailableVersions(AzureLocation location)
+        /// <returns> An object representing collection of ContainerServiceSafeguardsAvailableVersions and their operations over a ContainerServiceSafeguardsAvailableVersionResource. </returns>
+        public virtual ContainerServiceSafeguardsAvailableVersionCollection GetContainerServiceSafeguardsAvailableVersions(AzureLocation location)
         {
-            return GetCachedClient(client => new SafeguardsAvailableVersionCollection(client, Id, location));
+            return GetCachedClient(client => new ContainerServiceSafeguardsAvailableVersionCollection(client, Id, location));
         }
 
         /// <summary>
@@ -181,11 +181,11 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SafeguardsAvailableVersionResource>> GetSafeguardsAvailableVersionAsync(AzureLocation location, string version, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerServiceSafeguardsAvailableVersionResource>> GetContainerServiceSafeguardsAvailableVersionAsync(AzureLocation location, string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            return await GetSafeguardsAvailableVersions(location).GetAsync(version, cancellationToken).ConfigureAwait(false);
+            return await GetContainerServiceSafeguardsAvailableVersions(location).GetAsync(version, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -211,11 +211,11 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SafeguardsAvailableVersionResource> GetSafeguardsAvailableVersion(AzureLocation location, string version, CancellationToken cancellationToken = default)
+        public virtual Response<ContainerServiceSafeguardsAvailableVersionResource> GetContainerServiceSafeguardsAvailableVersion(AzureLocation location, string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            return GetSafeguardsAvailableVersions(location).Get(version, cancellationToken);
+            return GetContainerServiceSafeguardsAvailableVersions(location).Get(version, cancellationToken);
         }
 
         /// <summary> Gets a collection of MeshRevisionProfiles in the <see cref="SubscriptionResource"/>. </summary>

@@ -62,13 +62,13 @@ namespace Azure.ResourceManager.ContainerService.Mocking
             return new ContainerServiceGuardrailsAvailableVersionResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="SafeguardsAvailableVersionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="ContainerServiceSafeguardsAvailableVersionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SafeguardsAvailableVersionResource"/> object. </returns>
-        public virtual SafeguardsAvailableVersionResource GetSafeguardsAvailableVersionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ContainerServiceSafeguardsAvailableVersionResource"/> object. </returns>
+        public virtual ContainerServiceSafeguardsAvailableVersionResource GetContainerServiceSafeguardsAvailableVersionResource(ResourceIdentifier id)
         {
-            SafeguardsAvailableVersionResource.ValidateResourceId(id);
-            return new SafeguardsAvailableVersionResource(Client, id);
+            ContainerServiceSafeguardsAvailableVersionResource.ValidateResourceId(id);
+            return new ContainerServiceSafeguardsAvailableVersionResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="MeshRevisionProfileResource"/> along with the instance operations that can be performed on it but with no data. </summary>
