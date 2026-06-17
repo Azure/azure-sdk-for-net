@@ -672,12 +672,26 @@ namespace Azure.ResourceManager.PolicyInsights
             throw new NotSupportedException("This overload is no longer supported. Use GetQueryResultsForResourceComponentPolicyStatesAsync(ArmClient, ResourceIdentifier, ComponentPolicyStatesResource, PolicyQuerySettings, CancellationToken) instead.");
         }
 
+        /// <summary> Queries component policy states for the resource. </summary>
+        public static AsyncPageable<ComponentPolicyState> GetQueryResultsForResourceComponentPolicyStatesAsync(this ArmClient client, ResourceIdentifier scope, ComponentPolicyStatesResource componentPolicyStatesResource, PolicyQuerySettings policyQuerySettings = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+            return GetMockablePolicyInsightsArmClient(client).GetQueryResultsForResourceComponentPolicyStatesAsync(scope, componentPolicyStatesResource, policyQuerySettings, cancellationToken);
+        }
+
         /// <summary> [Obsolete] Use the new GetQueryResultsForResourceComponentPolicyStates(ArmClient, ResourceIdentifier, ComponentPolicyStatesResource, PolicyQuerySettings, CancellationToken) overload instead. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This overload is no longer supported. Use GetQueryResultsForResourceComponentPolicyStates(ArmClient, ResourceIdentifier, ComponentPolicyStatesResource, PolicyQuerySettings, CancellationToken) instead.")]
         public static Pageable<ComponentPolicyState> GetQueryResultsForResourceComponentPolicyStates(this ArmClient client, ResourceIdentifier scope, ArmResourceGetQueryResultsForResourceComponentPolicyStatesOptions options, CancellationToken cancellationToken = default)
         {
             throw new NotSupportedException("This overload is no longer supported. Use GetQueryResultsForResourceComponentPolicyStates(ArmClient, ResourceIdentifier, ComponentPolicyStatesResource, PolicyQuerySettings, CancellationToken) instead.");
+        }
+
+        /// <summary> Queries component policy states for the resource. </summary>
+        public static Pageable<ComponentPolicyState> GetQueryResultsForResourceComponentPolicyStates(this ArmClient client, ResourceIdentifier scope, ComponentPolicyStatesResource componentPolicyStatesResource, PolicyQuerySettings policyQuerySettings = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+            return GetMockablePolicyInsightsArmClient(client).GetQueryResultsForResourceComponentPolicyStates(scope, componentPolicyStatesResource, policyQuerySettings, cancellationToken);
         }
 
         /// <summary> [Obsolete] Use the new GetQueryResultsForPolicyDefinitionComponentPolicyStatesAsync(ArmClient, ResourceIdentifier, ComponentPolicyStatesResource, PolicyQuerySettings, CancellationToken) overload instead. </summary>
@@ -758,6 +772,116 @@ namespace Azure.ResourceManager.PolicyInsights
         public static Pageable<ComponentPolicyState> GetQueryResultsForResourceGroupLevelPolicyAssignmentComponentPolicyStates(this ResourceGroupResource resourceGroupResource, ResourceGroupResourceGetQueryResultsForResourceGroupLevelPolicyAssignmentComponentPolicyStatesOptions options, CancellationToken cancellationToken = default)
         {
             throw new NotSupportedException("This overload is no longer supported. Use GetQueryResultsForResourceGroupLevelPolicyAssignmentComponentPolicyStates(ArmClient, ResourceIdentifier, ComponentPolicyStatesResource, PolicyQuerySettings, CancellationToken) instead.");
+        }
+
+        /// <summary>
+        /// Get a list of the policy metadata resources.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePolicyInsightsTenantResource.GetAllAsync(PolicyQuerySettings, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="queryOptions"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="SlimPolicyMetadata"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<SlimPolicyMetadata> GetAllAsync(this TenantResource tenantResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockablePolicyInsightsTenantResource(tenantResource).GetAllAsync(queryOptions, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get a list of the policy metadata resources.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePolicyInsightsTenantResource.GetAll(PolicyQuerySettings, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="queryOptions"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="SlimPolicyMetadata"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<SlimPolicyMetadata> GetAll(this TenantResource tenantResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockablePolicyInsightsTenantResource(tenantResource).GetAll(queryOptions, cancellationToken);
+        }
+
+        /// <summary> Queries component policy states under resource group scope. </summary>
+        public static AsyncPageable<ComponentPolicyState> GetQueryResultsForResourceGroupComponentPolicyStatesAsync(this ResourceGroupResource resourceGroupResource, ComponentPolicyStatesResource componentPolicyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockablePolicyInsightsResourceGroupResource(resourceGroupResource).GetQueryResultsForResourceGroupComponentPolicyStatesAsync(componentPolicyStatesResource, queryOptions, cancellationToken);
+        }
+
+        /// <summary> Queries component policy states under resource group scope. </summary>
+        public static Pageable<ComponentPolicyState> GetQueryResultsForResourceGroupComponentPolicyStates(this ResourceGroupResource resourceGroupResource, ComponentPolicyStatesResource componentPolicyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockablePolicyInsightsResourceGroupResource(resourceGroupResource).GetQueryResultsForResourceGroupComponentPolicyStates(componentPolicyStatesResource, queryOptions, cancellationToken);
+        }
+
+        /// <summary> Queries component policy states for the resource group level policy assignment. </summary>
+        public static AsyncPageable<ComponentPolicyState> GetQueryResultsForResourceGroupLevelPolicyAssignmentComponentPolicyStatesAsync(this ArmClient armClient, ResourceIdentifier scope, ComponentPolicyStatesResource componentPolicyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(armClient, nameof(armClient));
+            return GetMockablePolicyInsightsArmClient(armClient).GetQueryResultsForResourceGroupLevelPolicyAssignmentComponentPolicyStatesAsync(scope, componentPolicyStatesResource, queryOptions, cancellationToken);
+        }
+
+        /// <summary> Queries component policy states for the resource group level policy assignment. </summary>
+        public static Pageable<ComponentPolicyState> GetQueryResultsForResourceGroupLevelPolicyAssignmentComponentPolicyStates(this ArmClient armClient, ResourceIdentifier scope, ComponentPolicyStatesResource componentPolicyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(armClient, nameof(armClient));
+            return GetMockablePolicyInsightsArmClient(armClient).GetQueryResultsForResourceGroupLevelPolicyAssignmentComponentPolicyStates(scope, componentPolicyStatesResource, queryOptions, cancellationToken);
+        }
+
+        /// <summary> Queries component policy states for the subscription level policy assignment. </summary>
+        public static AsyncPageable<ComponentPolicyState> GetQueryResultsForSubscriptionComponentPolicyStatesAsync(this SubscriptionResource subscriptionResource, ComponentPolicyStatesResource componentPolicyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            return GetMockablePolicyInsightsSubscriptionResource(subscriptionResource).GetQueryResultsForSubscriptionComponentPolicyStatesAsync(componentPolicyStatesResource, queryOptions, cancellationToken);
+        }
+
+        /// <summary> Queries component policy states for the subscription level policy assignment. </summary>
+        public static Pageable<ComponentPolicyState> GetQueryResultsForSubscriptionComponentPolicyStates(this SubscriptionResource subscriptionResource, ComponentPolicyStatesResource componentPolicyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            return GetMockablePolicyInsightsSubscriptionResource(subscriptionResource).GetQueryResultsForSubscriptionComponentPolicyStates(componentPolicyStatesResource, queryOptions, cancellationToken);
+        }
+
+        /// <summary> Queries component policy states for the policy definition. </summary>
+        public static AsyncPageable<ComponentPolicyState> GetQueryResultsForPolicyDefinitionComponentPolicyStatesAsync(this ArmClient armClient, ResourceIdentifier scope, ComponentPolicyStatesResource componentPolicyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(armClient, nameof(armClient));
+            return GetMockablePolicyInsightsArmClient(armClient).GetQueryResultsForPolicyDefinitionComponentPolicyStatesAsync(scope, componentPolicyStatesResource, queryOptions, cancellationToken);
+        }
+
+        /// <summary> Queries component policy states for the policy definition. </summary>
+        public static Pageable<ComponentPolicyState> GetQueryResultsForPolicyDefinitionComponentPolicyStates(this ArmClient armClient, ResourceIdentifier scope, ComponentPolicyStatesResource componentPolicyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(armClient, nameof(armClient));
+            return GetMockablePolicyInsightsArmClient(armClient).GetQueryResultsForPolicyDefinitionComponentPolicyStates(scope, componentPolicyStatesResource, queryOptions, cancellationToken);
+        }
+
+        /// <summary> Queries component policy states for the subscription level policy assignment. </summary>
+        public static AsyncPageable<ComponentPolicyState> GetQueryResultsForSubscriptionLevelPolicyAssignmentComponentPolicyStatesAsync(this ArmClient armClient, ResourceIdentifier scope, ComponentPolicyStatesResource componentPolicyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(armClient, nameof(armClient));
+            return GetMockablePolicyInsightsArmClient(armClient).GetQueryResultsForSubscriptionLevelPolicyAssignmentComponentPolicyStatesAsync(scope, componentPolicyStatesResource, queryOptions, cancellationToken);
+        }
+
+        /// <summary> Queries component policy states for the subscription level policy assignment. </summary>
+        public static Pageable<ComponentPolicyState> GetQueryResultsForSubscriptionLevelPolicyAssignmentComponentPolicyStates(this ArmClient armClient, ResourceIdentifier scope, ComponentPolicyStatesResource componentPolicyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(armClient, nameof(armClient));
+            return GetMockablePolicyInsightsArmClient(armClient).GetQueryResultsForSubscriptionLevelPolicyAssignmentComponentPolicyStates(scope, componentPolicyStatesResource, queryOptions, cancellationToken);
         }
     }
 }
