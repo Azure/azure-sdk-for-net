@@ -233,7 +233,7 @@ Console.WriteLine(text);
 //       figure illustrating monthly values, and describes the AI Document
 //       Intelligence service...
 //   ---
-//   <!-- page 1 -->
+//   <!-- InputPageNumber: 1 -->
 //   # ==This is title==
 //   ## 1. Text
 //   [Latin](https://en.wikipedia.org/wiki/Latin) refers to an ancient Italic language...
@@ -244,6 +244,50 @@ Console.WriteLine(text);
 //   ![Values...](figures/1.1 "Bar chart with six bars: Jan=200, Feb=300...")
 //   ...
 ```
+
+> **About `<!-- InputPageNumber: N -->`**
+>
+> The helper emits `<!-- InputPageNumber: N -->` markers at page boundaries in
+> the markdown body. `N` is the **original 1-based page number from the source
+> document** (i.e., the page index in the analyzed PDF), not a counter that
+> restarts at 1 for each call. Downstream consumers (RAG indexers, page-citation
+> prompts) can rely on the marker value to cite the correct source page even
+> when only a subset of pages was analyzed.
+>
+> **Why this matters when a page range is specified**
+>
+> Use `ContentRange` on the analyze request to analyze only a subset of pages
+> in a multi-page document. The markers in the rendered output preserve the
+> original page identity:
+>
+> ```csharp
+> // Analyze pages 2-3 and page 5 of a 10-page PDF.
+> Operation<AnalysisResult> operation = await client.AnalyzeAsync(
+>     WaitUntil.Completed,
+>     "prebuilt-documentSearch",
+>     inputs: new[]
+>     {
+>         new AnalysisInput
+>         {
+>             Uri = multiPageUrl,
+>             ContentRange = new ContentRange("2-3,5"),
+>         },
+>     });
+>
+> string text = operation.Value.ToLlmInput();
+> // Output contains markers for the *original* page numbers, not 1, 2, 3:
+> //   pages: 2-3, 5
+> //   ...
+> //   <!-- InputPageNumber: 2 -->
+> //   ...page 2 content...
+> //   <!-- InputPageNumber: 3 -->
+> //   ...page 3 content...
+> //   <!-- InputPageNumber: 5 -->
+> //   ...page 5 content...
+> ```
+>
+> An LLM or RAG indexer can therefore cite "see page 5" with the correct page
+> number, even though page 5 is the *third* segment in the response.
 
 See the [advanced ToLlmInput sample][sample-advanced-to-llm-input] for output options (fields-only, markdown-only, custom metadata), multi-page content ranges, and multi-segment video.
 

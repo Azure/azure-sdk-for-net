@@ -17,10 +17,11 @@ namespace Azure.AI.Projects.Agents
             FoundryFeaturesOptInKeys.InsightsV1Preview => "Insights=V1Preview",
             FoundryFeaturesOptInKeys.MemoryStoresV1Preview => "MemoryStores=V1Preview",
             FoundryFeaturesOptInKeys.RoutinesV1Preview => "Routines=V1Preview",
+            FoundryFeaturesOptInKeys.ToolboxesV1Preview => "Toolboxes=V1Preview",
             FoundryFeaturesOptInKeys.SkillsV1Preview => "Skills=V1Preview",
             FoundryFeaturesOptInKeys.DataGenerationJobsV1Preview => "DataGenerationJobs=V1Preview",
             FoundryFeaturesOptInKeys.ModelsV1Preview => "Models=V1Preview",
-            FoundryFeaturesOptInKeys.AgentsOptimizationV1Preview => "AgentsOptimization=V1Preview",
+            FoundryFeaturesOptInKeys.AgentsOptimizationV2Preview => "AgentsOptimization=V2Preview",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FoundryFeaturesOptInKeys value.")
         };
 
@@ -51,6 +52,10 @@ namespace Azure.AI.Projects.Agents
             {
                 return FoundryFeaturesOptInKeys.RoutinesV1Preview;
             }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Toolboxes=V1Preview"))
+            {
+                return FoundryFeaturesOptInKeys.ToolboxesV1Preview;
+            }
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "Skills=V1Preview"))
             {
                 return FoundryFeaturesOptInKeys.SkillsV1Preview;
@@ -63,9 +68,9 @@ namespace Azure.AI.Projects.Agents
             {
                 return FoundryFeaturesOptInKeys.ModelsV1Preview;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AgentsOptimization=V1Preview"))
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AgentsOptimization=V2Preview"))
             {
-                return FoundryFeaturesOptInKeys.AgentsOptimizationV1Preview;
+                return FoundryFeaturesOptInKeys.AgentsOptimizationV2Preview;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FoundryFeaturesOptInKeys value.");
         }

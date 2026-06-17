@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.DataMigration.Models
     public readonly partial struct DataMigrationProjectSourcePlatform : IEquatable<DataMigrationProjectSourcePlatform>
     {
         private readonly string _value;
+        /// <summary> SQL. </summary>
+        private const string SqlValue = "SQL";
+        /// <summary> MySQL. </summary>
+        private const string MySqlValue = "MySQL";
+        /// <summary> PostgreSql. </summary>
+        private const string PostgreSqlValue = "PostgreSql";
+        /// <summary> MongoDb. </summary>
+        private const string MongoDBValue = "MongoDb";
+        /// <summary> Unknown. </summary>
+        private const string UnknownValue = "Unknown";
 
         /// <summary> Initializes a new instance of <see cref="DataMigrationProjectSourcePlatform"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataMigrationProjectSourcePlatform(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SqlValue = "SQL";
-        private const string MySqlValue = "MySQL";
-        private const string PostgreSqlValue = "PostgreSql";
-        private const string MongoDBValue = "MongoDb";
-        private const string UnknownValue = "Unknown";
+            _value = value;
+        }
 
         /// <summary> SQL. </summary>
         public static DataMigrationProjectSourcePlatform Sql { get; } = new DataMigrationProjectSourcePlatform(SqlValue);
+
         /// <summary> MySQL. </summary>
         public static DataMigrationProjectSourcePlatform MySql { get; } = new DataMigrationProjectSourcePlatform(MySqlValue);
+
         /// <summary> PostgreSql. </summary>
         public static DataMigrationProjectSourcePlatform PostgreSql { get; } = new DataMigrationProjectSourcePlatform(PostgreSqlValue);
+
         /// <summary> MongoDb. </summary>
         public static DataMigrationProjectSourcePlatform MongoDB { get; } = new DataMigrationProjectSourcePlatform(MongoDBValue);
+
         /// <summary> Unknown. </summary>
         public static DataMigrationProjectSourcePlatform Unknown { get; } = new DataMigrationProjectSourcePlatform(UnknownValue);
+
         /// <summary> Determines if two <see cref="DataMigrationProjectSourcePlatform"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataMigrationProjectSourcePlatform left, DataMigrationProjectSourcePlatform right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataMigrationProjectSourcePlatform"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataMigrationProjectSourcePlatform left, DataMigrationProjectSourcePlatform right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataMigrationProjectSourcePlatform"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataMigrationProjectSourcePlatform"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataMigrationProjectSourcePlatform(string value) => new DataMigrationProjectSourcePlatform(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataMigrationProjectSourcePlatform"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataMigrationProjectSourcePlatform?(string value) => value == null ? null : new DataMigrationProjectSourcePlatform(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataMigrationProjectSourcePlatform other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataMigrationProjectSourcePlatform other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

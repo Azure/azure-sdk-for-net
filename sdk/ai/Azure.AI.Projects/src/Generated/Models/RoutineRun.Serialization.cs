@@ -12,11 +12,6 @@ namespace Azure.AI.Projects
     /// <summary> A single routine run returned from the run history API. </summary>
     public partial class RoutineRun : IJsonModel<RoutineRun>
     {
-        /// <summary> Initializes a new instance of <see cref="RoutineRun"/> for deserialization. </summary>
-        internal RoutineRun()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual RoutineRun PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -75,17 +70,38 @@ namespace Azure.AI.Projects
             {
                 throw new FormatException($"The model {nameof(RoutineRun)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("id"u8);
-            writer.WriteStringValue(Id);
-            writer.WritePropertyName("status"u8);
-            writer.WriteStringValue(Status);
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (Optional.IsDefined(StatusInternal))
+            {
+                writer.WritePropertyName("status"u8);
+#if NET6_0_OR_GREATER
+                writer.WriteRawValue(StatusInternal);
+#else
+                using (JsonDocument document = JsonDocument.Parse(StatusInternal))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
+            }
             if (Optional.IsDefined(Phase))
             {
                 writer.WritePropertyName("phase"u8);
                 writer.WriteStringValue(Phase.Value.ToString());
             }
-            writer.WritePropertyName("trigger_type"u8);
-            writer.WriteStringValue(TriggerType.ToString());
+            if (Optional.IsDefined(TriggerType))
+            {
+                writer.WritePropertyName("trigger_type"u8);
+                writer.WriteStringValue(TriggerType.Value.ToString());
+            }
+            if (Optional.IsDefined(TriggerName))
+            {
+                writer.WritePropertyName("trigger_name"u8);
+                writer.WriteStringValue(TriggerName);
+            }
             if (Optional.IsDefined(AttemptSource))
             {
                 writer.WritePropertyName("attempt_source"u8);
@@ -96,13 +112,41 @@ namespace Azure.AI.Projects
                 writer.WritePropertyName("action_type"u8);
                 writer.WriteStringValue(ActionType.Value.ToString());
             }
+            if (Optional.IsDefined(AgentId))
+            {
+                writer.WritePropertyName("agent_id"u8);
+                writer.WriteStringValue(AgentId);
+            }
+            if (Optional.IsDefined(AgentEndpointId))
+            {
+                writer.WritePropertyName("agent_endpoint_id"u8);
+                writer.WriteStringValue(AgentEndpointId);
+            }
+            if (Optional.IsDefined(ConversationId))
+            {
+                writer.WritePropertyName("conversation_id"u8);
+                writer.WriteStringValue(ConversationId);
+            }
+            if (Optional.IsDefined(SessionId))
+            {
+                writer.WritePropertyName("session_id"u8);
+                writer.WriteStringValue(SessionId);
+            }
             if (Optional.IsDefined(TriggeredAt))
             {
                 writer.WritePropertyName("triggered_at"u8);
                 writer.WriteNumberValue(TriggeredAt.Value, "U");
             }
-            writer.WritePropertyName("started_at"u8);
-            writer.WriteNumberValue(StartedAt, "U");
+            if (Optional.IsDefined(ScheduledFireAt))
+            {
+                writer.WritePropertyName("scheduled_fire_at"u8);
+                writer.WriteNumberValue(ScheduledFireAt.Value, "U");
+            }
+            if (Optional.IsDefined(StartedAt))
+            {
+                writer.WritePropertyName("started_at"u8);
+                writer.WriteNumberValue(StartedAt.Value, "U");
+            }
             if (Optional.IsDefined(EndedAt))
             {
                 writer.WritePropertyName("ended_at"u8);
@@ -128,6 +172,11 @@ namespace Azure.AI.Projects
                 writer.WritePropertyName("task_id"u8);
                 writer.WriteStringValue(TaskId);
             }
+            if (Optional.IsDefined(ErrorStatusCode))
+            {
+                writer.WritePropertyName("error_status_code"u8);
+                writer.WriteNumberValue(ErrorStatusCode.Value);
+            }
             if (Optional.IsDefined(ErrorType))
             {
                 writer.WritePropertyName("error_type"u8);
@@ -137,11 +186,6 @@ namespace Azure.AI.Projects
             {
                 writer.WritePropertyName("error_message"u8);
                 writer.WriteStringValue(ErrorMessage);
-            }
-            if (Optional.IsDefined(Diagnostics))
-            {
-                writer.WritePropertyName("diagnostics"u8);
-                writer.WriteObjectValue(Diagnostics, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -186,21 +230,27 @@ namespace Azure.AI.Projects
                 return null;
             }
             string id = default;
-            string status = default;
+            BinaryData statusInternal = default;
             RoutineRunPhase? phase = default;
-            RoutineTriggerType triggerType = default;
+            RoutineTriggerType? triggerType = default;
+            string triggerName = default;
             RoutineAttemptSource? attemptSource = default;
             RoutineActionType? actionType = default;
+            string agentId = default;
+            string agentEndpointId = default;
+            string conversationId = default;
+            string sessionId = default;
             DateTimeOffset? triggeredAt = default;
-            DateTimeOffset startedAt = default;
+            DateTimeOffset? scheduledFireAt = default;
+            DateTimeOffset? startedAt = default;
             DateTimeOffset? endedAt = default;
             string dispatchId = default;
             string actionCorrelationId = default;
             string responseId = default;
             string taskId = default;
+            int? errorStatusCode = default;
             string errorType = default;
             string errorMessage = default;
-            RoutineRunDiagnostics diagnostics = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -211,7 +261,11 @@ namespace Azure.AI.Projects
                 }
                 if (prop.NameEquals("status"u8))
                 {
-                    status = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    statusInternal = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("phase"u8))
@@ -225,7 +279,16 @@ namespace Azure.AI.Projects
                 }
                 if (prop.NameEquals("trigger_type"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     triggerType = new RoutineTriggerType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("trigger_name"u8))
+                {
+                    triggerName = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("attempt_source"u8))
@@ -246,6 +309,26 @@ namespace Azure.AI.Projects
                     actionType = new RoutineActionType(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("agent_id"u8))
+                {
+                    agentId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("agent_endpoint_id"u8))
+                {
+                    agentEndpointId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("conversation_id"u8))
+                {
+                    conversationId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("session_id"u8))
+                {
+                    sessionId = prop.Value.GetString();
+                    continue;
+                }
                 if (prop.NameEquals("triggered_at"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -255,8 +338,21 @@ namespace Azure.AI.Projects
                     triggeredAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
+                if (prop.NameEquals("scheduled_fire_at"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    scheduledFireAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    continue;
+                }
                 if (prop.NameEquals("started_at"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     startedAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
@@ -289,6 +385,15 @@ namespace Azure.AI.Projects
                     taskId = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("error_status_code"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    errorStatusCode = prop.Value.GetInt32();
+                    continue;
+                }
                 if (prop.NameEquals("error_type"u8))
                 {
                     errorType = prop.Value.GetString();
@@ -299,15 +404,6 @@ namespace Azure.AI.Projects
                     errorMessage = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("diagnostics"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    diagnostics = RoutineRunDiagnostics.DeserializeRoutineRunDiagnostics(prop.Value, options);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -315,21 +411,27 @@ namespace Azure.AI.Projects
             }
             return new RoutineRun(
                 id,
-                status,
+                statusInternal,
                 phase,
                 triggerType,
+                triggerName,
                 attemptSource,
                 actionType,
+                agentId,
+                agentEndpointId,
+                conversationId,
+                sessionId,
                 triggeredAt,
+                scheduledFireAt,
                 startedAt,
                 endedAt,
                 dispatchId,
                 actionCorrelationId,
                 responseId,
                 taskId,
+                errorStatusCode,
                 errorType,
                 errorMessage,
-                diagnostics,
                 additionalBinaryDataProperties);
         }
     }

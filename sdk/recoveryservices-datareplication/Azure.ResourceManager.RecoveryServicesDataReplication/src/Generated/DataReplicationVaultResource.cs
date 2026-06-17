@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 HttpMessage message = _vaultRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DataReplicationVaultPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesDataReplicationArmOperation<DataReplicationVaultResource> operation = new RecoveryServicesDataReplicationArmOperation<DataReplicationVaultResource>(
-                    new DataReplicationVaultOperationSource(Client),
+                    new DataReplicationVaultResourceOperationSource(Client),
                     _vaultClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 HttpMessage message = _vaultRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DataReplicationVaultPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesDataReplicationArmOperation<DataReplicationVaultResource> operation = new RecoveryServicesDataReplicationArmOperation<DataReplicationVaultResource>(
-                    new DataReplicationVaultOperationSource(Client),
+                    new DataReplicationVaultResourceOperationSource(Client),
                     _vaultClientDiagnostics,
                     Pipeline,
                     message.Request,

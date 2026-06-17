@@ -11,17 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    /// <summary>
-    /// Database Migration Resource properties.
-    /// Please note <see cref="DatabaseMigrationProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="DatabaseMigrationSqlDBProperties"/>, <see cref="DatabaseMigrationSqlMIProperties"/> and <see cref="DatabaseMigrationSqlVmProperties"/>.
-    /// </summary>
+    /// <summary> Database Migration Resource properties. </summary>
     public partial class DatabaseMigrationProperties : DatabaseMigrationBaseProperties
     {
         /// <summary> Initializes a new instance of <see cref="DatabaseMigrationProperties"/>. </summary>
-        public DatabaseMigrationProperties()
+        public DatabaseMigrationProperties() : base("DatabaseMigrationProperties")
         {
-            Kind = new ResourceType("DatabaseMigrationProperties");
         }
 
         /// <summary> Initializes a new instance of <see cref="DatabaseMigrationProperties"/>. </summary>
@@ -35,27 +30,40 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="migrationOperationId"> ID for current migration operation. </param>
         /// <param name="migrationFailureError"> Error details in case of migration failure. </param>
         /// <param name="provisioningError"> Error message for migration provisioning failure, if any. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="sourceSqlConnection"> Source SQL Server connection details. </param>
         /// <param name="sourceDatabaseName"> Name of the source database. </param>
         /// <param name="sourceServerName"> Name of the source sql server. </param>
         /// <param name="targetDatabaseCollation"> Database collation to be used for the target database. </param>
-        internal DatabaseMigrationProperties(ResourceType kind, string scope, DataMigrationProvisioningState? provisioningState, string migrationStatus, DateTimeOffset? startedOn, DateTimeOffset? endedOn, ResourceIdentifier migrationService, string migrationOperationId, SqlMigrationErrorInfo migrationFailureError, string provisioningError, IDictionary<string, BinaryData> serializedAdditionalRawData, DataMigrationSqlConnectionInformation sourceSqlConnection, string sourceDatabaseName, string sourceServerName, string targetDatabaseCollation) : base(kind, scope, provisioningState, migrationStatus, startedOn, endedOn, migrationService, migrationOperationId, migrationFailureError, provisioningError, serializedAdditionalRawData)
+        /// <param name="sqlServerInstanceId"> Optional property - Resource Id for the source Sql server instance. Validations are performed on this property to ensure that it follows the correct format. </param>
+        internal DatabaseMigrationProperties(ResourceType kind, string scope, DataMigrationProvisioningState? provisioningState, string migrationStatus, DateTimeOffset? startedOn, DateTimeOffset? endedOn, ResourceIdentifier migrationService, string migrationOperationId, SqlMigrationErrorInfo migrationFailureError, string provisioningError, IDictionary<string, BinaryData> additionalBinaryDataProperties, DataMigrationSqlConnectionInformation sourceSqlConnection, string sourceDatabaseName, string sourceServerName, string targetDatabaseCollation, string sqlServerInstanceId) : base(kind, scope, provisioningState, migrationStatus, startedOn, endedOn, migrationService, migrationOperationId, migrationFailureError, provisioningError, additionalBinaryDataProperties)
         {
             SourceSqlConnection = sourceSqlConnection;
             SourceDatabaseName = sourceDatabaseName;
             SourceServerName = sourceServerName;
             TargetDatabaseCollation = targetDatabaseCollation;
-            Kind = kind;
+            SqlServerInstanceId = sqlServerInstanceId;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DatabaseMigrationProperties"/>. </summary>
+        /// <param name="kind"></param>
+        private protected DatabaseMigrationProperties(ResourceType kind) : base(kind)
+        {
         }
 
         /// <summary> Source SQL Server connection details. </summary>
         public DataMigrationSqlConnectionInformation SourceSqlConnection { get; set; }
+
         /// <summary> Name of the source database. </summary>
         public string SourceDatabaseName { get; set; }
+
         /// <summary> Name of the source sql server. </summary>
         public string SourceServerName { get; }
+
         /// <summary> Database collation to be used for the target database. </summary>
         public string TargetDatabaseCollation { get; set; }
+
+        /// <summary> Optional property - Resource Id for the source Sql server instance. Validations are performed on this property to ensure that it follows the correct format. </summary>
+        public string SqlServerInstanceId { get; set; }
     }
 }

@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.StorageCache;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    public partial class AmlFileSystemClientInfo : IUtf8JsonSerializable, IJsonModel<AmlFileSystemClientInfo>
+    /// <summary> AML file system client information. </summary>
+    public partial class AmlFileSystemClientInfo : IJsonModel<AmlFileSystemClientInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AmlFileSystemClientInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AmlFileSystemClientInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AmlFileSystemClientInfo>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAmlFileSystemClientInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AmlFileSystemClientInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AmlFileSystemClientInfo>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageCacheContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AmlFileSystemClientInfo)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AmlFileSystemClientInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AmlFileSystemClientInfo IPersistableModel<AmlFileSystemClientInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AmlFileSystemClientInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AmlFileSystemClientInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AmlFileSystemClientInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AmlFileSystemClientInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AmlFileSystemClientInfo)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(MgsAddress))
             {
                 writer.WritePropertyName("mgsAddress"u8);
@@ -54,15 +94,15 @@ namespace Azure.ResourceManager.StorageCache.Models
                 writer.WritePropertyName("containerStorageInterface"u8);
                 writer.WriteObjectValue(ContainerStorageInterface, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -71,22 +111,27 @@ namespace Azure.ResourceManager.StorageCache.Models
             }
         }
 
-        AmlFileSystemClientInfo IJsonModel<AmlFileSystemClientInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AmlFileSystemClientInfo IJsonModel<AmlFileSystemClientInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AmlFileSystemClientInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AmlFileSystemClientInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AmlFileSystemClientInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AmlFileSystemClientInfo)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAmlFileSystemClientInfo(document.RootElement, options);
         }
 
-        internal static AmlFileSystemClientInfo DeserializeAmlFileSystemClientInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static AmlFileSystemClientInfo DeserializeAmlFileSystemClientInfo(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -95,72 +140,39 @@ namespace Azure.ResourceManager.StorageCache.Models
             string mountCommand = default;
             string lustreVersion = default;
             AmlFileSystemContainerStorageInterface containerStorageInterface = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("mgsAddress"u8))
+                if (prop.NameEquals("mgsAddress"u8))
                 {
-                    mgsAddress = property.Value.GetString();
+                    mgsAddress = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("mountCommand"u8))
+                if (prop.NameEquals("mountCommand"u8))
                 {
-                    mountCommand = property.Value.GetString();
+                    mountCommand = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lustreVersion"u8))
+                if (prop.NameEquals("lustreVersion"u8))
                 {
-                    lustreVersion = property.Value.GetString();
+                    lustreVersion = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("containerStorageInterface"u8))
+                if (prop.NameEquals("containerStorageInterface"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    containerStorageInterface = AmlFileSystemContainerStorageInterface.DeserializeAmlFileSystemContainerStorageInterface(property.Value, options);
+                    containerStorageInterface = AmlFileSystemContainerStorageInterface.DeserializeAmlFileSystemContainerStorageInterface(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new AmlFileSystemClientInfo(mgsAddress, mountCommand, lustreVersion, containerStorageInterface, serializedAdditionalRawData);
+            return new AmlFileSystemClientInfo(mgsAddress, mountCommand, lustreVersion, containerStorageInterface, additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<AmlFileSystemClientInfo>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AmlFileSystemClientInfo>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageCacheContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(AmlFileSystemClientInfo)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        AmlFileSystemClientInfo IPersistableModel<AmlFileSystemClientInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AmlFileSystemClientInfo>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeAmlFileSystemClientInfo(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AmlFileSystemClientInfo)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<AmlFileSystemClientInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

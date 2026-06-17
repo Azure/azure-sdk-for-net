@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.HDInsight
                 HttpMessage message = _hdInsightClusterRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, HDInsightClusterCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HDInsightArmOperation<HDInsightClusterResource> operation = new HDInsightArmOperation<HDInsightClusterResource>(
-                    new HDInsightClusterOperationSource(Client),
+                    new HDInsightClusterResourceOperationSource(Client),
                     _hdInsightClusterClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.HDInsight
                 HttpMessage message = _hdInsightClusterRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, clusterName, HDInsightClusterCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HDInsightArmOperation<HDInsightClusterResource> operation = new HDInsightArmOperation<HDInsightClusterResource>(
-                    new HDInsightClusterOperationSource(Client),
+                    new HDInsightClusterResourceOperationSource(Client),
                     _hdInsightClusterClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -28,6 +28,7 @@ namespace Azure.AI.Projects.Evaluation
             Metadata = new ChangeTrackingDictionary<string, string>();
             EvaluatorType = evaluatorType;
             Categories = categories.ToList();
+            SupportedEvaluationLevels = new ChangeTrackingList<EvaluationLevel>();
             Definition = definition;
             Tags = new ChangeTrackingDictionary<string, string>();
         }
@@ -37,6 +38,7 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="metadata"> Metadata about the evaluator. </param>
         /// <param name="evaluatorType"> The type of the evaluator. </param>
         /// <param name="categories"> The categories of the evaluator. </param>
+        /// <param name="supportedEvaluationLevels"> Evaluation levels this evaluator supports (e.g., `turn`, `conversation`). When omitted on create, the service defaults to `["turn"]`. On update, omitting this field leaves it unchanged; an empty list is rejected. Custom code-based evaluators support only `turn`; custom prompt-based evaluators support exactly one level (`turn` or `conversation`). </param>
         /// <param name="definition"> Definition of the evaluator. </param>
         /// <param name="generationArtifacts"> Provenance artifacts from the generation pipeline. Read-only; present only on evaluator versions created via an EvaluatorGenerationJob. Each artifact resolves to a versioned Foundry Dataset. </param>
         /// <param name="createdBy"> Creator of the evaluator. </param>
@@ -48,12 +50,13 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="description"> The asset description text. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EvaluatorVersion(string displayName, IDictionary<string, string> metadata, EvaluatorType evaluatorType, IList<EvaluatorCategory> categories, EvaluatorDefinition definition, EvaluatorGenerationArtifacts generationArtifacts, string createdBy, string createdAt, string modifiedAt, string id, string name, string version, string description, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EvaluatorVersion(string displayName, IDictionary<string, string> metadata, EvaluatorType evaluatorType, IList<EvaluatorCategory> categories, IList<EvaluationLevel> supportedEvaluationLevels, EvaluatorDefinition definition, EvaluatorGenerationArtifacts generationArtifacts, string createdBy, string createdAt, string modifiedAt, string id, string name, string version, string description, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisplayName = displayName;
             Metadata = metadata;
             EvaluatorType = evaluatorType;
             Categories = categories;
+            SupportedEvaluationLevels = supportedEvaluationLevels;
             Definition = definition;
             GenerationArtifacts = generationArtifacts;
             CreatedBy = createdBy;
@@ -78,6 +81,9 @@ namespace Azure.AI.Projects.Evaluation
 
         /// <summary> The categories of the evaluator. </summary>
         public IList<EvaluatorCategory> Categories { get; }
+
+        /// <summary> Evaluation levels this evaluator supports (e.g., `turn`, `conversation`). When omitted on create, the service defaults to `["turn"]`. On update, omitting this field leaves it unchanged; an empty list is rejected. Custom code-based evaluators support only `turn`; custom prompt-based evaluators support exactly one level (`turn` or `conversation`). </summary>
+        public IList<EvaluationLevel> SupportedEvaluationLevels { get; }
 
         /// <summary> Definition of the evaluator. </summary>
         public EvaluatorDefinition Definition { get; set; }

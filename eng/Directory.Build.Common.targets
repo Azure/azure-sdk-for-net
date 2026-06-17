@@ -132,6 +132,7 @@
     <PackageReference Condition="'$(GenerateAPIListing)' == 'true'" Include="Microsoft.DotNet.GenAPI" PrivateAssets="All" />
     <PackageReference Condition="'$(EnableClientSdkAnalyzers)' == 'true'" Include="Azure.ClientSdk.Analyzers" PrivateAssets="All" />
     <ProjectReference Condition="'$(EnableClientSdkAnalyzers)' == 'true' and '$(MSBuildProjectName)' != 'Azure.SdkAnalyzers'" Include="$(RepoRoot)\sdk\tools\Azure.SdkAnalyzers\src\Azure.SdkAnalyzers.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" PrivateAssets="All" />
+    <ProjectReference Condition="'$(EnableClientSdkAnalyzers)' == 'true' and '$(MSBuildProjectName)' != 'Azure.SdkAnalyzers' and '$(MSBuildProjectName)' != 'Azure.SdkAnalyzers.CodeFixes'" Include="$(RepoRoot)\sdk\tools\Azure.SdkAnalyzers.CodeFixes\src\Azure.SdkAnalyzers.CodeFixes.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" PrivateAssets="All" />
     <PackageReference Condition="'$(EnableMicrosoftCodeAnalysisNetAnalyzers)' == 'true'" Include="Microsoft.CodeAnalysis.NetAnalyzers" PrivateAssets="All" />
     <PackageReference Condition="'$(EnableBannedApiAnalyzers)' == 'true'" Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" PrivateAssets="All" />
   </ItemGroup>
@@ -531,6 +532,9 @@
     entry to eng/centralpackagemanagement/Directory.Packages.props with
     appropriate conditions. See eng/centralpackagemanagement/README.md.
   -->
+  <Import Project="AnalyzerAllowList.targets" />
+  <Import Project="NoWarnValidation.targets" />
+
   <Target Name="EnforceCentralPackageManagement" BeforeTargets="Restore;Build;CollectPackageReferences">
     <!-- Block re-enabling VersionOverride -->
     <Error

@@ -19,7 +19,6 @@ namespace Azure.ResourceManager.PineconeVectorDB.Models
     public static partial class ArmPineconeVectorDBModelFactory
     {
 
-        /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -38,11 +37,11 @@ namespace Azure.ResourceManager.PineconeVectorDB.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
-                identity);
+                identity,
+                default);
         }
 
         /// <param name="marketplace"> Marketplace details of the resource. </param>
@@ -57,22 +56,56 @@ namespace Azure.ResourceManager.PineconeVectorDB.Models
                 marketplace,
                 user,
                 provisioningState,
-                partnerDisplayName is null ? default : new PineconeVectorDBPartnerProperties(partnerDisplayName, null),
+                partnerDisplayName is null ? default : new PineconeVectorDBPartnerProperties(partnerDisplayName, default),
                 singleSignOnProperties,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> Marketplace details for an organization. </summary>
         /// <param name="subscriptionId"> Azure subscription id for the the marketplace offer is purchased from. </param>
         /// <param name="subscriptionStatus"> Marketplace subscription status. </param>
         /// <param name="offerDetails"> Offer details for the marketplace that is selected by the user. </param>
         /// <returns> A new <see cref="Models.PineconeVectorDBMarketplaceDetails"/> instance for mocking. </returns>
         public static PineconeVectorDBMarketplaceDetails PineconeVectorDBMarketplaceDetails(string subscriptionId = default, PineconeVectorDBMarketplaceSubscriptionStatus? subscriptionStatus = default, PineconeVectorDBOfferDetails offerDetails = default)
         {
-            return new PineconeVectorDBMarketplaceDetails(subscriptionId, subscriptionStatus, offerDetails, additionalBinaryDataProperties: null);
+            return new PineconeVectorDBMarketplaceDetails(subscriptionId, subscriptionStatus, offerDetails, default);
         }
 
-        /// <summary> Properties specific to Single Sign On Resource. </summary>
+        /// <param name="publisherId"> Publisher Id for the marketplace offer. </param>
+        /// <param name="offerId"> Offer Id for the marketplace offer. </param>
+        /// <param name="planId"> Plan Id for the marketplace offer. </param>
+        /// <param name="planName"> Plan Name for the marketplace offer. </param>
+        /// <param name="termUnit"> Plan Display Name for the marketplace offer. </param>
+        /// <param name="termId"> Plan Display Name for the marketplace offer. </param>
+        /// <returns> A new <see cref="Models.PineconeVectorDBOfferDetails"/> instance for mocking. </returns>
+        public static PineconeVectorDBOfferDetails PineconeVectorDBOfferDetails(string publisherId = default, string offerId = default, string planId = default, string planName = default, string termUnit = default, string termId = default)
+        {
+            return new PineconeVectorDBOfferDetails(
+                publisherId,
+                offerId,
+                planId,
+                planName,
+                termUnit,
+                termId,
+                default);
+        }
+
+        /// <param name="firstName"> First name of the user. </param>
+        /// <param name="lastName"> Last name of the user. </param>
+        /// <param name="emailAddress"> Email address of the user. </param>
+        /// <param name="upn"> User's principal name. </param>
+        /// <param name="phoneNumber"> User's phone number. </param>
+        /// <returns> A new <see cref="Models.PineconeVectorDBUserDetails"/> instance for mocking. </returns>
+        public static PineconeVectorDBUserDetails PineconeVectorDBUserDetails(string firstName = default, string lastName = default, string emailAddress = default, string upn = default, string phoneNumber = default)
+        {
+            return new PineconeVectorDBUserDetails(
+                firstName,
+                lastName,
+                emailAddress,
+                upn,
+                phoneNumber,
+                default);
+        }
+
         /// <param name="type"> Type of Single Sign-On mechanism being used. </param>
         /// <param name="state"> State of the Single Sign On for the resource. </param>
         /// <param name="enterpriseAppId"> AAD enterprise application Id used to setup SSO. </param>
@@ -88,11 +121,10 @@ namespace Azure.ResourceManager.PineconeVectorDB.Models
                 state,
                 enterpriseAppId,
                 uri,
-                aadDomains.ToList(),
-                additionalBinaryDataProperties: null);
+                (aadDomains ?? new ChangeTrackingList<string>()).ToList(),
+                default);
         }
 
-        /// <summary> The type used for update operations of the Organization Resource. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="Models.PineconeVectorDBOrganizationPatch"/> instance for mocking. </returns>
@@ -100,7 +132,7 @@ namespace Azure.ResourceManager.PineconeVectorDB.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new PineconeVectorDBOrganizationPatch(tags, identity, additionalBinaryDataProperties: null);
+            return new PineconeVectorDBOrganizationPatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, default);
         }
     }
 }

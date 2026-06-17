@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.OperationalInsights;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
@@ -14,35 +15,52 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     public readonly partial struct OperationalInsightsClusterSkuName : IEquatable<OperationalInsightsClusterSkuName>
     {
         private readonly string _value;
+        /// <summary> CapacityReservation. </summary>
+        private const string CapacityReservationValue = "CapacityReservation";
 
         /// <summary> Initializes a new instance of <see cref="OperationalInsightsClusterSkuName"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public OperationalInsightsClusterSkuName(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string CapacityReservationValue = "CapacityReservation";
+            _value = value;
+        }
 
         /// <summary> CapacityReservation. </summary>
         public static OperationalInsightsClusterSkuName CapacityReservation { get; } = new OperationalInsightsClusterSkuName(CapacityReservationValue);
+
         /// <summary> Determines if two <see cref="OperationalInsightsClusterSkuName"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(OperationalInsightsClusterSkuName left, OperationalInsightsClusterSkuName right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="OperationalInsightsClusterSkuName"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(OperationalInsightsClusterSkuName left, OperationalInsightsClusterSkuName right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="OperationalInsightsClusterSkuName"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="OperationalInsightsClusterSkuName"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator OperationalInsightsClusterSkuName(string value) => new OperationalInsightsClusterSkuName(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="OperationalInsightsClusterSkuName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator OperationalInsightsClusterSkuName?(string value) => value == null ? null : new OperationalInsightsClusterSkuName(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is OperationalInsightsClusterSkuName other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(OperationalInsightsClusterSkuName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

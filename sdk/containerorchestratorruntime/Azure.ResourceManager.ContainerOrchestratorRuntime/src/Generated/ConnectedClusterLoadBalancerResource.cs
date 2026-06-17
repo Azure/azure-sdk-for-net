@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
                 HttpMessage message = _loadBalancersRestClient.CreateCreateOrUpdateRequest(Id.Parent.ToString(), Id.Name, ConnectedClusterLoadBalancerData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerOrchestratorRuntimeArmOperation<ConnectedClusterLoadBalancerResource> operation = new ContainerOrchestratorRuntimeArmOperation<ConnectedClusterLoadBalancerResource>(
-                    new ConnectedClusterLoadBalancerOperationSource(Client),
+                    new ConnectedClusterLoadBalancerResourceOperationSource(Client),
                     _loadBalancersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
                 HttpMessage message = _loadBalancersRestClient.CreateCreateOrUpdateRequest(Id.Parent.ToString(), Id.Name, ConnectedClusterLoadBalancerData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerOrchestratorRuntimeArmOperation<ConnectedClusterLoadBalancerResource> operation = new ContainerOrchestratorRuntimeArmOperation<ConnectedClusterLoadBalancerResource>(
-                    new ConnectedClusterLoadBalancerOperationSource(Client),
+                    new ConnectedClusterLoadBalancerResourceOperationSource(Client),
                     _loadBalancersClientDiagnostics,
                     Pipeline,
                     message.Request,

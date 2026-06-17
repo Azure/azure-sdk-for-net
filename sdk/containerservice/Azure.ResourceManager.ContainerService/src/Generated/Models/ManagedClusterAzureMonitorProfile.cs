@@ -24,13 +24,11 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterAzureMonitorProfile"/>. </summary>
         /// <param name="metrics"> Metrics profile for the Azure Monitor managed service for Prometheus addon. Collect out-of-the-box Kubernetes infrastructure metrics to send to an Azure Monitor Workspace and configure additional scraping for custom targets. See aka.ms/AzureManagedPrometheus for an overview. </param>
-        /// <param name="containerInsights"> Azure Monitor Container Insights Profile for Kubernetes Events, Inventory and Container stdout &amp; stderr logs etc. See aka.ms/AzureMonitorContainerInsights for an overview. </param>
         /// <param name="appMonitoring"> Application Monitoring Profile for Kubernetes Application Container. Collects application logs, metrics and traces through auto-instrumentation of the application using Azure Monitor OpenTelemetry based SDKs. See aka.ms/AzureMonitorApplicationMonitoring for an overview. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterAzureMonitorProfile(ManagedClusterMonitorProfileMetrics metrics, ManagedClusterAzureMonitorProfileContainerInsights containerInsights, ManagedClusterAzureMonitorProfileAppMonitoring appMonitoring, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedClusterAzureMonitorProfile(ManagedClusterMonitorProfileMetrics metrics, ManagedClusterAzureMonitorProfileAppMonitoring appMonitoring, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Metrics = metrics;
-            ContainerInsights = containerInsights;
             AppMonitoring = appMonitoring;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -39,12 +37,26 @@ namespace Azure.ResourceManager.ContainerService.Models
         [WirePath("metrics")]
         public ManagedClusterMonitorProfileMetrics Metrics { get; set; }
 
-        /// <summary> Azure Monitor Container Insights Profile for Kubernetes Events, Inventory and Container stdout &amp; stderr logs etc. See aka.ms/AzureMonitorContainerInsights for an overview. </summary>
-        [WirePath("containerInsights")]
-        public ManagedClusterAzureMonitorProfileContainerInsights ContainerInsights { get; set; }
-
         /// <summary> Application Monitoring Profile for Kubernetes Application Container. Collects application logs, metrics and traces through auto-instrumentation of the application using Azure Monitor OpenTelemetry based SDKs. See aka.ms/AzureMonitorApplicationMonitoring for an overview. </summary>
         [WirePath("appMonitoring")]
-        public ManagedClusterAzureMonitorProfileAppMonitoring AppMonitoring { get; set; }
+        internal ManagedClusterAzureMonitorProfileAppMonitoring AppMonitoring { get; set; }
+
+        /// <summary> Indicates if Application Monitoring Auto-instrumentation is enabled or not. </summary>
+        [WirePath("appMonitoring.autoInstrumentation.enabled")]
+        public bool? IsAppMonitoringAutoInstrumentationEnabled
+        {
+            get
+            {
+                return AppMonitoring is null ? default : AppMonitoring.IsAppMonitoringAutoInstrumentationEnabled;
+            }
+            set
+            {
+                if (AppMonitoring is null)
+                {
+                    AppMonitoring = new ManagedClusterAzureMonitorProfileAppMonitoring();
+                }
+                AppMonitoring.IsAppMonitoringAutoInstrumentationEnabled = value;
+            }
+        }
     }
 }

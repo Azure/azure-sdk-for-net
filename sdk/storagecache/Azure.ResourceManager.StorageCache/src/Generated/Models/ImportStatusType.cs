@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.StorageCache;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
@@ -14,50 +15,77 @@ namespace Azure.ResourceManager.StorageCache.Models
     public readonly partial struct ImportStatusType : IEquatable<ImportStatusType>
     {
         private readonly string _value;
+        /// <summary> InProgress. </summary>
+        private const string InProgressValue = "InProgress";
+        /// <summary> Cancelling. </summary>
+        private const string CancellingValue = "Cancelling";
+        /// <summary> Canceled. </summary>
+        private const string CanceledValue = "Canceled";
+        /// <summary> Completed. </summary>
+        private const string CompletedValue = "Completed";
+        /// <summary> CompletedPartial. </summary>
+        private const string CompletedPartialValue = "CompletedPartial";
+        /// <summary> Failed. </summary>
+        private const string FailedValue = "Failed";
 
         /// <summary> Initializes a new instance of <see cref="ImportStatusType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ImportStatusType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string InProgressValue = "InProgress";
-        private const string CancellingValue = "Cancelling";
-        private const string CanceledValue = "Canceled";
-        private const string CompletedValue = "Completed";
-        private const string CompletedPartialValue = "CompletedPartial";
-        private const string FailedValue = "Failed";
+            _value = value;
+        }
 
         /// <summary> InProgress. </summary>
         public static ImportStatusType InProgress { get; } = new ImportStatusType(InProgressValue);
+
         /// <summary> Cancelling. </summary>
         public static ImportStatusType Cancelling { get; } = new ImportStatusType(CancellingValue);
+
         /// <summary> Canceled. </summary>
         public static ImportStatusType Canceled { get; } = new ImportStatusType(CanceledValue);
+
         /// <summary> Completed. </summary>
         public static ImportStatusType Completed { get; } = new ImportStatusType(CompletedValue);
+
         /// <summary> CompletedPartial. </summary>
         public static ImportStatusType CompletedPartial { get; } = new ImportStatusType(CompletedPartialValue);
+
         /// <summary> Failed. </summary>
         public static ImportStatusType Failed { get; } = new ImportStatusType(FailedValue);
+
         /// <summary> Determines if two <see cref="ImportStatusType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ImportStatusType left, ImportStatusType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ImportStatusType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ImportStatusType left, ImportStatusType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ImportStatusType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ImportStatusType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ImportStatusType(string value) => new ImportStatusType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ImportStatusType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ImportStatusType?(string value) => value == null ? null : new ImportStatusType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ImportStatusType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ImportStatusType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

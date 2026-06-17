@@ -8,23 +8,36 @@
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
-    internal class InternalNetworkUpdateBfdAdministrativeStateResultOperationSource : IOperationSource<InternalNetworkUpdateBfdAdministrativeStateResult>
+    /// <summary></summary>
+    internal partial class InternalNetworkUpdateBfdAdministrativeStateResultOperationSource : IOperationSource<InternalNetworkUpdateBfdAdministrativeStateResult>
     {
-        InternalNetworkUpdateBfdAdministrativeStateResult IOperationSource<InternalNetworkUpdateBfdAdministrativeStateResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        /// <summary></summary>
+        internal InternalNetworkUpdateBfdAdministrativeStateResultOperationSource()
         {
-            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            return InternalNetworkUpdateBfdAdministrativeStateResult.DeserializeInternalNetworkUpdateBfdAdministrativeStateResult(document.RootElement);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        InternalNetworkUpdateBfdAdministrativeStateResult IOperationSource<InternalNetworkUpdateBfdAdministrativeStateResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            return InternalNetworkUpdateBfdAdministrativeStateResult.DeserializeInternalNetworkUpdateBfdAdministrativeStateResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<InternalNetworkUpdateBfdAdministrativeStateResult> IOperationSource<InternalNetworkUpdateBfdAdministrativeStateResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            return InternalNetworkUpdateBfdAdministrativeStateResult.DeserializeInternalNetworkUpdateBfdAdministrativeStateResult(document.RootElement);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            return InternalNetworkUpdateBfdAdministrativeStateResult.DeserializeInternalNetworkUpdateBfdAdministrativeStateResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

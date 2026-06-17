@@ -26,8 +26,12 @@ namespace Azure.AI.Projects.Agents;
 [CodeGenSuppress("CreateAgentVersionFromManifestAsync", typeof(string), typeof(string), typeof(IDictionary<string, BinaryData>), typeof(IDictionary<string, string>), typeof(string), typeof(CancellationToken))]
 [CodeGenSuppress("CreateAgentFromCode", typeof(string), typeof(string), typeof(BinaryContent), typeof(string), typeof(string), typeof(RequestOptions))]
 [CodeGenSuppress("CreateAgentFromCodeAsync", typeof(string), typeof(string), typeof(BinaryContent), typeof(string), typeof(string), typeof(RequestOptions))]
+[CodeGenSuppress("CreateAgentFromCode", typeof(string), typeof(string), typeof(CreateAgentFromCodeOptions), typeof(AgentDefinitionOptInKeys?), typeof(CancellationToken))]
+[CodeGenSuppress("CreateAgentFromCodeAsync", typeof(string), typeof(string), typeof(CreateAgentFromCodeOptions), typeof(AgentDefinitionOptInKeys?), typeof(CancellationToken))]
 [CodeGenSuppress("UpdateAgentFromCode", typeof(string), typeof(string), typeof(BinaryContent), typeof(string), typeof(string), typeof(RequestOptions))]
 [CodeGenSuppress("UpdateAgentFromCodeAsync", typeof(string), typeof(string), typeof(BinaryContent), typeof(string), typeof(string), typeof(RequestOptions))]
+[CodeGenSuppress("UpdateAgentFromCode", typeof(string), typeof(string), typeof(CreateAgentVersionFromCodeContent), typeof(AgentDefinitionOptInKeys?), typeof(CancellationToken))]
+[CodeGenSuppress("UpdateAgentFromCodeAsync", typeof(string), typeof(string), typeof(CreateAgentVersionFromCodeContent), typeof(AgentDefinitionOptInKeys?), typeof(CancellationToken))]
 [CodeGenSuppress("GetAgents", typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
 [CodeGenSuppress("GetAgentsAsync", typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
 [CodeGenSuppress("GetAgentVersions", typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
@@ -56,7 +60,14 @@ public partial class AgentAdministrationClient
     private AgentToolboxes _cachedAgentsToolboxes;
     private ProjectAgentSkills _cachedAgentSkills;
     private AgentSessionFiles _cachedAgentSessionFiles;
-
+    private AgentOptimizationJobs _cachedAgentOptimizationJobs;
+    /// <summary>
+    /// Initializes a new <see cref="AgentAdministrationClient"/> with the specified
+    /// service endpoint and authentication token provider.
+    /// </summary>
+    /// <param name="endpoint">The service endpoint to target.</param>
+    /// <param name="tokenProvider">The token provider used to authenticate requests.</param>
+    /// <param name="options">Optional client configuration options.</param>
     public AgentAdministrationClient(Uri endpoint, AuthenticationTokenProvider tokenProvider, AgentAdministrationClientOptions options =null)
     {
         Argument.AssertNotNull(endpoint, nameof(endpoint));
@@ -162,6 +173,11 @@ public partial class AgentAdministrationClient
         return result.ToProjectAgentsResult<ProjectsAgentVersion>();
     }
 
+    /// <summary> Creates a new version of an agent from an agent manifest. </summary>
+    /// <param name="agentName">The name of the agent to create a version for.</param>
+    /// <param name="manifestId">The identifier of the agent manifest to use.</param>
+    /// <param name="options">Options describing the manifest-based creation request.</param>
+    /// <param name="cancellationToken">The cancellation token to use.</param>
     public virtual ClientResult<ProjectsAgentVersion> CreateAgentVersionFromManifest(string agentName, string manifestId, AgentManifestOptions options = null, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
@@ -174,6 +190,11 @@ public partial class AgentAdministrationClient
         return result.ToProjectAgentsResult<ProjectsAgentVersion>();
     }
 
+    /// <summary> Creates a new version of an agent from an agent manifest. </summary>
+    /// <param name="agentName">The name of the agent to create a version for.</param>
+    /// <param name="manifestId">The identifier of the agent manifest to use.</param>
+    /// <param name="options">Options describing the manifest-based creation request.</param>
+    /// <param name="cancellationToken">The cancellation token to use.</param>
     public virtual async Task<ClientResult<ProjectsAgentVersion>> CreateAgentVersionFromManifestAsync(string agentName, string manifestId, AgentManifestOptions options = null, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
@@ -691,6 +712,36 @@ public partial class AgentAdministrationClient
     }
 
     /// <summary>
+    /// Stops a session.
+    /// Returns 204 No Content when the stop succeeds.
+    /// </summary>
+    /// <param name="agentName"> The name of the agent. </param>
+    /// <param name="sessionId"> The session identifier. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="sessionId"/> is null. </exception>
+    /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="sessionId"/> is an empty string, and was expected to be non-empty. </exception>
+    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    public virtual ClientResult StopSession(string agentName, string sessionId, CancellationToken cancellationToken = default)
+    {
+        return StopSession(agentName, sessionId, default, cancellationToken);
+    }
+
+    /// <summary>
+    /// Stops a session.
+    /// Returns 204 No Content when the stop succeeds.
+    /// </summary>
+    /// <param name="agentName"> The name of the agent. </param>
+    /// <param name="sessionId"> The session identifier. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="sessionId"/> is null. </exception>
+    /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="sessionId"/> is an empty string, and was expected to be non-empty. </exception>
+    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    public virtual async Task<ClientResult> StopSessionAsync(string agentName, string sessionId, CancellationToken cancellationToken = default)
+    {
+        return await StopSessionAsync(agentName, sessionId, default, cancellationToken).ConfigureAwait(false);
+    }
+
+    /// <summary>
     /// Updates an agent endpoint.
     /// <list type="bullet">
     /// <item>
@@ -952,18 +1003,27 @@ public partial class AgentAdministrationClient
         return result;
     }
 
+    /// <summary> Gets the lazily-initialized agent toolboxes sub-client. </summary>
     public virtual AgentToolboxes GetAgentToolboxes()
     {
         return Volatile.Read(ref _cachedAgentsToolboxes) ?? Interlocked.CompareExchange(ref _cachedAgentsToolboxes, new AgentToolboxes(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentsToolboxes;
     }
 
+    /// <summary> Gets the lazily-initialized project agent skills sub-client. </summary>
     public virtual ProjectAgentSkills GetAgentSkills()
     {
         return Volatile.Read(ref _cachedAgentSkills) ?? Interlocked.CompareExchange(ref _cachedAgentSkills, new ProjectAgentSkills(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentSkills;
     }
 
+    /// <summary> Gets the lazily-initialized agent session files sub-client. </summary>
     public virtual AgentSessionFiles GetAgentSessionFiles()
     {
         return Volatile.Read(ref _cachedAgentSessionFiles) ?? Interlocked.CompareExchange(ref _cachedAgentSessionFiles, new AgentSessionFiles(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentSessionFiles;
+    }
+
+    /// <summary> Gets the lazily-initialized agent optimization jobs sub-client. </summary>
+    public virtual AgentOptimizationJobs GetAgentOptimizationJobs()
+    {
+        return Volatile.Read(ref _cachedAgentOptimizationJobs) ?? Interlocked.CompareExchange(ref _cachedAgentOptimizationJobs, new AgentOptimizationJobs(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentOptimizationJobs;
     }
 }

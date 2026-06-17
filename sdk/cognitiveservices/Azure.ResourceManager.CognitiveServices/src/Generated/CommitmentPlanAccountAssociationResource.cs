@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 HttpMessage message = _commitmentPlanAccountAssociationsRestClient.CreateCreateOrUpdateAssociationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, CommitmentPlanAccountAssociationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CognitiveServicesArmOperation<CommitmentPlanAccountAssociationResource> operation = new CognitiveServicesArmOperation<CommitmentPlanAccountAssociationResource>(
-                    new CommitmentPlanAccountAssociationOperationSource(Client),
+                    new CommitmentPlanAccountAssociationResourceOperationSource(Client),
                     _commitmentPlanAccountAssociationsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 HttpMessage message = _commitmentPlanAccountAssociationsRestClient.CreateCreateOrUpdateAssociationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, CommitmentPlanAccountAssociationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CognitiveServicesArmOperation<CommitmentPlanAccountAssociationResource> operation = new CognitiveServicesArmOperation<CommitmentPlanAccountAssociationResource>(
-                    new CommitmentPlanAccountAssociationOperationSource(Client),
+                    new CommitmentPlanAccountAssociationResourceOperationSource(Client),
                     _commitmentPlanAccountAssociationsClientDiagnostics,
                     Pipeline,
                     message.Request,

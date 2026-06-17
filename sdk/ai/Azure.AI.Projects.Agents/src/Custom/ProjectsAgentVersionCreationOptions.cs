@@ -13,6 +13,7 @@ public partial class ProjectsAgentVersionCreationOptions
     [CodeGenMember("Description")]
     public string Description { get; set; }
 
+    /// <summary> The agent definition that this version represents. </summary>
     [CodeGenMember("Definition")]
     public ProjectsAgentDefinition Definition { get; set; }
 

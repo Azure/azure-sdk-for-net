@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Grafana
                 HttpMessage message = _managedDashboardsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, dashboardName, ManagedDashboardData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 GrafanaArmOperation<ManagedDashboardResource> operation = new GrafanaArmOperation<ManagedDashboardResource>(
-                    new ManagedDashboardOperationSource(Client),
+                    new ManagedDashboardResourceOperationSource(Client),
                     _managedDashboardsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Grafana
                 HttpMessage message = _managedDashboardsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, dashboardName, ManagedDashboardData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 GrafanaArmOperation<ManagedDashboardResource> operation = new GrafanaArmOperation<ManagedDashboardResource>(
-                    new ManagedDashboardOperationSource(Client),
+                    new ManagedDashboardResourceOperationSource(Client),
                     _managedDashboardsClientDiagnostics,
                     Pipeline,
                     message.Request,

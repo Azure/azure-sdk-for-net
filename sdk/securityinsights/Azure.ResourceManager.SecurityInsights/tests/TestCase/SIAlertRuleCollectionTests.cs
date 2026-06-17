@@ -70,9 +70,9 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
             var sOS = await GetSentinelOnboardingStateResourceAsync(operationalInsights);
             //1.CreateOrUpdate
             var collection = GetSecurityInsightsAlertRuleCollectionAsync(operationalInsights);
-            var name = Recording.GenerateAssetName("AlertRules-");
-            var name2 = Recording.GenerateAssetName("AlertRules-");
-            var name3 = Recording.GenerateAssetName("AlertRules-");
+            var name = GenerateAssetNameFromRecording("AlertRules-", "alertRules");
+            var name2 = GenerateAssetNameFromRecording("AlertRules-", "alertRules");
+            var name3 = GenerateAssetNameFromRecording("AlertRules-", "alertRules");
             var input = ResourceDataHelpers.GetSecurityInsightsAlertRuleData();
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
             SecurityInsightsAlertRuleResource alertRules1 = lro.Value;

@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DependencyMap
                 HttpMessage message = _mapsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, mapName, DependencyMapData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DependencyMapArmOperation<DependencyMapResource> operation = new DependencyMapArmOperation<DependencyMapResource>(
-                    new DependencyMapOperationSource(Client),
+                    new DependencyMapResourceOperationSource(Client),
                     _mapsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.DependencyMap
                 HttpMessage message = _mapsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, mapName, DependencyMapData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DependencyMapArmOperation<DependencyMapResource> operation = new DependencyMapArmOperation<DependencyMapResource>(
-                    new DependencyMapOperationSource(Client),
+                    new DependencyMapResourceOperationSource(Client),
                     _mapsClientDiagnostics,
                     Pipeline,
                     message.Request,
