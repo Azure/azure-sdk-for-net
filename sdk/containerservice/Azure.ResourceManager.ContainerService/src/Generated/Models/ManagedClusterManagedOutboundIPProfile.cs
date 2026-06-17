@@ -12,7 +12,7 @@ using Azure.ResourceManager.ContainerService;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> Profile of the managed outbound IP resources of the managed cluster. </summary>
-    internal partial class ManagedClusterManagedOutboundIPProfile
+    public partial class ManagedClusterManagedOutboundIPProfile
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -24,15 +24,21 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterManagedOutboundIPProfile"/>. </summary>
         /// <param name="count"> The desired number of outbound IPs created/managed by Azure. Allowed values must be in the range of 1 to 16 (inclusive). The default value is 1. </param>
+        /// <param name="countIPv6"> The desired number of IPv6 outbound IPs created/managed by Azure. Allowed values must be in the range of 1 to 16 (inclusive). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterManagedOutboundIPProfile(int? count, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedClusterManagedOutboundIPProfile(int? count, int? countIPv6, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Count = count;
+            CountIPv6 = countIPv6;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The desired number of outbound IPs created/managed by Azure. Allowed values must be in the range of 1 to 16 (inclusive). The default value is 1. </summary>
         [WirePath("count")]
         public int? Count { get; set; }
+
+        /// <summary> The desired number of IPv6 outbound IPs created/managed by Azure. Allowed values must be in the range of 1 to 16 (inclusive). </summary>
+        [WirePath("countIPv6")]
+        public int? CountIPv6 { get; set; }
     }
 }
