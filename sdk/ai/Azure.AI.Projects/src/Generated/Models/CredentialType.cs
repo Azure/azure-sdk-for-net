@@ -4,10 +4,12 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> The credential type used by the connection. </summary>
+    [Experimental("AAIP001")]
     internal readonly partial struct CredentialType : IEquatable<CredentialType>
     {
         private readonly string _value;

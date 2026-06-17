@@ -4,11 +4,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Message. </summary>
+    [Experimental("AAIP001")]
     internal partial class ItemFieldMessage : ItemField
     {
         /// <summary> Initializes a new instance of <see cref="ItemFieldMessage"/>. </summary>

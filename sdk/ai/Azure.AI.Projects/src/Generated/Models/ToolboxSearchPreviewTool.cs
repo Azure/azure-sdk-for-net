@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
@@ -12,6 +13,7 @@ namespace Azure.AI.Projects
     /// When present, deferred tools are hidden from `tools/list` and only
     /// discoverable via `search_tools` queries at runtime.
     /// </summary>
+    [Experimental("AAIP001")]
     internal partial class ToolboxSearchPreviewTool : InternalTool
     {
         /// <summary> Initializes a new instance of <see cref="ToolboxSearchPreviewTool"/>. </summary>

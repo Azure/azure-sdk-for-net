@@ -10,7 +10,7 @@ using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.Projects.Tests.Samples;
-
+#pragma warning disable AAIP001
 public class Sample_RedTeam : SamplesBase
 {
     [Test]

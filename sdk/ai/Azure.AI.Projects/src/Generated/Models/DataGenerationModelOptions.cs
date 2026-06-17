@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> LLM model options for data generation jobs. </summary>
+    [Experimental("AAIP001")]
     public partial class DataGenerationModelOptions
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

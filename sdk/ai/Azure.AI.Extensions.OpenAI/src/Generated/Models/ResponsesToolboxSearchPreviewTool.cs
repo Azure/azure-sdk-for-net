@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Extensions.OpenAI
 {
@@ -12,6 +13,7 @@ namespace Azure.AI.Extensions.OpenAI
     /// When present, deferred tools are hidden from `tools/list` and only
     /// discoverable via `search_tools` queries at runtime.
     /// </summary>
+    [Experimental("AAIP001")]
     public partial class ResponsesToolboxSearchPreviewTool : ResponsesTool
     {
         /// <summary> Initializes a new instance of <see cref="ResponsesToolboxSearchPreviewTool"/>. </summary>

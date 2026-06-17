@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
@@ -11,6 +12,7 @@ namespace Azure.AI.Projects
     /// The OutputMessageContent.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OutputMessageContentOutputTextContent"/> and <see cref="OutputMessageContentRefusalContent"/>.
     /// </summary>
+    [Experimental("AAIP001")]
     internal abstract partial class OutputMessageContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

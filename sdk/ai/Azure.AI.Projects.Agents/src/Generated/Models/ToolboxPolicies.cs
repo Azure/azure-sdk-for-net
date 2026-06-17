@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Policy configuration for a toolbox, including content safety and other governance settings. </summary>
+    [Experimental("AAIP001")]
     public partial class ToolboxPolicies
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

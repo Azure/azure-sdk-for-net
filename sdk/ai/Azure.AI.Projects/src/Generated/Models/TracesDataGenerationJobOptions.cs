@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> The options for a data generation job with Traces type. </summary>
+    [Experimental("AAIP001")]
     public partial class TracesDataGenerationJobOptions : DataGenerationJobOptions
     {
         /// <summary> Initializes a new instance of <see cref="TracesDataGenerationJobOptions"/>. </summary>

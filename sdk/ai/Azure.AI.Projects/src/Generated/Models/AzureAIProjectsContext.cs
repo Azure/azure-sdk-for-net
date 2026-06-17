@@ -3,6 +3,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using System.Diagnostics.CodeAnalysis;
 using Azure.AI.Projects.Evaluation;
 using Azure.AI.Projects.Memory;
 using Azure.Core;
@@ -160,9 +161,7 @@ namespace Azure.AI.Projects
     [ModelReaderWriterBuildable(typeof(FunctionShellToolParamEnvironmentLocalEnvironmentParam))]
     [ModelReaderWriterBuildable(typeof(GitHubIssueRoutineTrigger))]
     [ModelReaderWriterBuildable(typeof(HourlyRecurrenceSchedule))]
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.Evaluation.HumanEvaluationPreviewRuleAction is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(HumanEvaluationPreviewRuleAction))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.Evaluation.HumanEvaluationPreviewRuleAction is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(HybridSearchOptions))]
     [ModelReaderWriterBuildable(typeof(InlineSkillParam))]
     [ModelReaderWriterBuildable(typeof(InlineSkillSourceParam))]
@@ -419,6 +418,7 @@ namespace Azure.AI.Projects
     [ModelReaderWriterBuildable(typeof(WebSearchToolFilters))]
     [ModelReaderWriterBuildable(typeof(WeeklyRecurrenceSchedule))]
     [ModelReaderWriterBuildable(typeof(WorkIQPreviewTool))]
+    [Experimental("AAIP001")]
     public partial class AzureAIProjectsContext : ModelReaderWriterContext
     {
     }

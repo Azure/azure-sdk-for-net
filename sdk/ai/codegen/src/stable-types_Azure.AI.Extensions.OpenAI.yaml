@@ -1,0 +1,109 @@
+# Stable types for Azure.AI.Extensions.OpenAI
+# Sources: 5 stable tools (AzureFunctionTool, AzureAISearchTool, BingGroundingTool,
+# CaptureStructuredOutputsTool, OpenApiTool) and their dependencies,
+# plus OpenAI-derived tools not renamed to Internal and not preview.
+
+stableTypes:
+# Core response types used by tools
+- Azure.AI.Extensions.OpenAI.AgentReference
+- Azure.AI.Extensions.OpenAI.AgentResponseItem
+- Azure.AI.Extensions.OpenAI.AgentResponseItemKind
+- Azure.AI.Extensions.OpenAI.AgentStructuredOutputsResponseItem
+# Shared tool infrastructure
+- Azure.AI.Extensions.OpenAI.ResponsesTool
+- Azure.AI.Extensions.OpenAI.ToolCallStatus
+- Azure.AI.Extensions.OpenAI.ToolConfig
+# Stable tool - AzureAISearchTool
+- Azure.AI.Extensions.OpenAI.AzureAISearchToolCall
+- Azure.AI.Extensions.OpenAI.AzureAISearchToolCallOutput
+- Azure.AI.Extensions.OpenAI.ResponsesAISearchIndexResource
+- Azure.AI.Extensions.OpenAI.ResponsesAzureAISearchQueryType
+- Azure.AI.Extensions.OpenAI.ResponsesAzureAISearchTool
+- Azure.AI.Extensions.OpenAI.ResponsesAzureAISearchToolResource
+# Stable tool - AzureFunctionTool
+- Azure.AI.Extensions.OpenAI.AzureFunctionToolCall
+- Azure.AI.Extensions.OpenAI.AzureFunctionToolCallOutput
+- Azure.AI.Extensions.OpenAI.ResponsesAzureFunctionBinding
+- Azure.AI.Extensions.OpenAI.ResponsesAzureFunctionDefinition
+- Azure.AI.Extensions.OpenAI.ResponsesAzureFunctionDefinitionFunction
+- Azure.AI.Extensions.OpenAI.ResponsesAzureFunctionStorageQueue
+- Azure.AI.Extensions.OpenAI.ResponsesAzureFunctionTool
+# Stable tool - BingGroundingTool
+- Azure.AI.Extensions.OpenAI.BingGroundingToolCall
+- Azure.AI.Extensions.OpenAI.BingGroundingToolCallOutput
+- Azure.AI.Extensions.OpenAI.ResponsesBingGroundingSearchConfiguration
+- Azure.AI.Extensions.OpenAI.ResponsesBingGroundingSearchToolParameters
+- Azure.AI.Extensions.OpenAI.ResponsesBingGroundingTool
+# Stable tool - CaptureStructuredOutputsTool
+- Azure.AI.Extensions.OpenAI.ResponsesCaptureStructuredOutputsTool
+- Azure.AI.Extensions.OpenAI.ResponsesStructuredOutputDefinition
+# Stable tool - OpenApiTool
+- Azure.AI.Extensions.OpenAI.OpenApiToolCall
+- Azure.AI.Extensions.OpenAI.OpenApiToolCallOutput
+- Azure.AI.Extensions.OpenAI.ResponsesOpenApiAnonymousAuthDetails
+- Azure.AI.Extensions.OpenAI.ResponsesOpenApiAuthDetails
+- Azure.AI.Extensions.OpenAI.ResponsesOpenApiFunctionDefinition
+- Azure.AI.Extensions.OpenAI.ResponsesOpenApiFunctionDefinitionFunction
+- Azure.AI.Extensions.OpenAI.ResponsesOpenApiManagedAuthDetails
+- Azure.AI.Extensions.OpenAI.ResponsesOpenApiManagedSecurityScheme
+- Azure.AI.Extensions.OpenAI.ResponsesOpenApiProjectConnectionAuthDetails
+- Azure.AI.Extensions.OpenAI.ResponsesOpenApiProjectConnectionSecurityScheme
+- Azure.AI.Extensions.OpenAI.ResponsesOpenApiTool
+- Azure.AI.Extensions.OpenAI.ResponsesToolProjectConnection
+# OpenAI-derived tool - AutoCodeInterpreter
+- Azure.AI.Extensions.OpenAI.ResponsesAutoCodeInterpreterToolParam
+# OpenAI-derived tool - ComputerTool
+- Azure.AI.Extensions.OpenAI.ComputerCallSafetyCheckParam
+- Azure.AI.Extensions.OpenAI.ComputerScreenshotImage
+- Azure.AI.Extensions.OpenAI.ItemFieldComputerToolCallOutputStatus
+- Azure.AI.Extensions.OpenAI.OutputItemComputerToolCallOutput
+- Azure.AI.Extensions.OpenAI.ResponsesComputerTool
+# OpenAI-derived tool - Container params
+- Azure.AI.Extensions.OpenAI.ResponsesContainerAutoParam
+- Azure.AI.Extensions.OpenAI.ResponsesContainerMemoryLimit
+- Azure.AI.Extensions.OpenAI.ResponsesContainerNetworkPolicyAllowlistParam
+- Azure.AI.Extensions.OpenAI.ResponsesContainerNetworkPolicyDisabledParam
+- Azure.AI.Extensions.OpenAI.ResponsesContainerNetworkPolicyDomainSecretParam
+- Azure.AI.Extensions.OpenAI.ResponsesContainerNetworkPolicyParam
+# OpenAI-derived tool - CustomTool
+- Azure.AI.Extensions.OpenAI.OutputItemCustomToolCallOutputResource
+- Azure.AI.Extensions.OpenAI.ResponsesCustomTextFormatParam
+- Azure.AI.Extensions.OpenAI.ResponsesCustomToolParam
+- Azure.AI.Extensions.OpenAI.ResponsesCustomToolParamFormat
+# OpenAI-derived tool - FunctionTool
+- Azure.AI.Extensions.OpenAI.ItemFieldFunctionToolCallOutputStatus
+- Azure.AI.Extensions.OpenAI.OutputItemFunctionToolCallOutput
+- Azure.AI.Extensions.OpenAI.ResponsesFunctionCallOutputStatus
+- Azure.AI.Extensions.OpenAI.ResponsesFunctionCallStatus
+- Azure.AI.Extensions.OpenAI.ResponsesFunctionToolParam
+# OpenAI-derived tool - FunctionShellTool
+- Azure.AI.Extensions.OpenAI.ResponsesFunctionShellToolParam
+- Azure.AI.Extensions.OpenAI.ResponsesFunctionShellToolParamEnvironment
+- Azure.AI.Extensions.OpenAI.ResponsesFunctionShellToolParamEnvironmentContainerReferenceParam
+- Azure.AI.Extensions.OpenAI.ResponsesFunctionShellToolParamEnvironmentLocalEnvironmentParam
+# OpenAI-derived tool - LocalShellTool
+- Azure.AI.Extensions.OpenAI.ItemLocalShellToolCallOutputStatus
+- Azure.AI.Extensions.OpenAI.OutputItemLocalShellToolCallOutput
+- Azure.AI.Extensions.OpenAI.ResponsesLocalShellToolParam
+# OpenAI-derived tool - MCPTool
+- Azure.AI.Extensions.OpenAI.OutputItemMcpApprovalResponseResource
+- Azure.AI.Extensions.OpenAI.ResponsesMCPToolFilter
+- Azure.AI.Extensions.OpenAI.ResponsesMCPToolRequireApproval
+# OpenAI-derived tool - ToolSearchTool
+- Azure.AI.Extensions.OpenAI.OutputItemToolSearchCall
+- Azure.AI.Extensions.OpenAI.OutputItemToolSearchOutput
+- Azure.AI.Extensions.OpenAI.ResponsesEmptyModelParam
+- Azure.AI.Extensions.OpenAI.ResponsesToolSearchExecutionType
+- Azure.AI.Extensions.OpenAI.ResponsesToolSearchToolParam
+# OpenAI-derived tool - WebSearchTool
+- Azure.AI.Extensions.OpenAI.ResponsesWebSearchApproximateLocation
+- Azure.AI.Extensions.OpenAI.ResponsesWebSearchConfiguration
+- Azure.AI.Extensions.OpenAI.ResponsesWebSearchTool
+- Azure.AI.Extensions.OpenAI.WebSearchToolFilters
+# OpenAI-derived tool - Misc params
+- Azure.AI.Extensions.OpenAI.ResponsesNamespaceToolParam
+# Manually added entries
+- Azure.AI.Extensions.OpenAI.ProjectConversation
+- Azure.AI.Extensions.OpenAI.ProjectConversationCreationOptions
+- Azure.AI.Extensions.OpenAI.ProjectConversationUpdateOptions
+- Azure.AI.Extensions.OpenAI.ExtensionsOpenAIModelFactory

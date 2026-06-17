@@ -4,10 +4,12 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The type of version indicator used to determine the agent version backing a session. </summary>
+    [Experimental("AAIP001")]
     internal readonly partial struct VersionIndicatorType : IEquatable<VersionIndicatorType>
     {
         private readonly string _value;

@@ -4,6 +4,7 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -11,6 +12,7 @@ namespace Azure.AI.Projects.Agents
     /// Known SSE event types emitted by the hosted agent session log stream.
     /// Additional event types may be introduced in future versions.
     /// </summary>
+    [Experimental("AAIP001")]
     public readonly partial struct SessionLogEventType : IEquatable<SessionLogEventType>
     {
         private readonly string _value;

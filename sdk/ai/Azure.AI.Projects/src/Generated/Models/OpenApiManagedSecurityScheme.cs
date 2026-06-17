@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> Security scheme for OpenApi managed_identity authentication. </summary>
+    [Experimental("AAIP001")]
     internal partial class OpenApiManagedSecurityScheme
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

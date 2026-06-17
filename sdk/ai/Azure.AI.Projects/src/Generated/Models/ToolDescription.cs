@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> Description of a tool that can be used by an agent. </summary>
+    [Experimental("AAIP001")]
     public partial class ToolDescription
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

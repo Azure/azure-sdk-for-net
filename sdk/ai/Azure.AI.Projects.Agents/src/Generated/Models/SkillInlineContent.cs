@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Inline content for defining a simple skill without uploading files. Follows the agentskills.io SKILL.md specification. </summary>
+    [Experimental("AAIP001")]
     public partial class SkillInlineContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

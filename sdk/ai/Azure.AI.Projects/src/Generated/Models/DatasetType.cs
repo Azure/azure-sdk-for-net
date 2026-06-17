@@ -4,10 +4,12 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> Enum to determine the type of data. </summary>
+    [Experimental("AAIP001")]
     internal readonly partial struct DatasetType : IEquatable<DatasetType>
     {
         private readonly string _value;

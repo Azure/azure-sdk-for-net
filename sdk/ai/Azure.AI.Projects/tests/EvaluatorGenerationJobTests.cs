@@ -13,6 +13,7 @@ using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.Projects.Tests;
+#pragma warning disable AAIP001
 
 /// <summary>
 /// Asynchronous recorded tests for evaluator generation job operations using test-proxy.

@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Reference to a named evaluator, optionally pinned to a version. </summary>
+    [Experimental("AAIP001")]
     public partial class OptimizationEvaluatorRef
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

@@ -2,9 +2,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary></summary>
+    [Experimental("AAIP001")]
     internal enum FileSearchToolFiltersType1
     {
         /// <summary> And. </summary>

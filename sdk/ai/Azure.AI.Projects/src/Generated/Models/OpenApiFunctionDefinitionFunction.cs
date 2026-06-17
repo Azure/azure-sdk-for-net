@@ -4,11 +4,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 
 namespace Azure.AI.Projects
 {
     /// <summary> The OpenApiFunctionDefinitionFunction. </summary>
+    [Experimental("AAIP001")]
     internal partial class OpenApiFunctionDefinitionFunction
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

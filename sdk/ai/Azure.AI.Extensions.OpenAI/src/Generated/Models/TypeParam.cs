@@ -4,11 +4,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using OpenAI;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Type. </summary>
+    [Experimental("AAIP001")]
     internal partial class TypeParam : InternalComputerAction
     {
         /// <summary> Initializes a new instance of <see cref="TypeParam"/>. </summary>

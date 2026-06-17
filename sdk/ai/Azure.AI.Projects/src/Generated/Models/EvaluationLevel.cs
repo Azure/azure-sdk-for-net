@@ -4,10 +4,12 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> The level at which evaluation is performed. </summary>
+    [Experimental("AAIP001")]
     public readonly partial struct EvaluationLevel : IEquatable<EvaluationLevel>
     {
         private readonly string _value;

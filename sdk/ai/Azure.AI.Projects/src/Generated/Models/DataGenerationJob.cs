@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> Data Generation Job resource. </summary>
+    [Experimental("AAIP001")]
     public partial class DataGenerationJob
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

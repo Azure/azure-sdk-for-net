@@ -4,10 +4,12 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The kind of telemetry export endpoint. </summary>
+    [Experimental("AAIP001")]
     internal readonly partial struct TelemetryEndpointKind : IEquatable<TelemetryEndpointKind>
     {
         private readonly string _value;

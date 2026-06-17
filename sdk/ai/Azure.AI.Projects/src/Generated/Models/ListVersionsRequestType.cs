@@ -4,11 +4,13 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using Azure.AI.Projects;
 
 namespace Azure.AI.Projects.Evaluation
 {
     /// <summary></summary>
+    [Experimental("AAIP001")]
     public readonly partial struct ListVersionsRequestType : IEquatable<ListVersionsRequestType>
     {
         private readonly string _value;

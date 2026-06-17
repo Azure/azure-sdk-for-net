@@ -4,11 +4,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The ItemFieldToolSearchOutput. </summary>
+    [Experimental("AAIP001")]
     internal partial class ItemFieldToolSearchOutput : ItemField
     {
         /// <summary> Initializes a new instance of <see cref="ItemFieldToolSearchOutput"/>. </summary>

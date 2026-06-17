@@ -1,0 +1,102 @@
+# Stable types for Azure.AI.Projects.Agents
+# Sources: agents/models.tsp (stable client folder),
+# 5 stable tools and their dependencies,
+# plus OpenAI-derived tools not renamed to Internal and not preview.
+
+stableTypes:
+# agents/models.tsp - agent definitions
+- Azure.AI.Projects.Agents.AgentBlueprintReference
+- Azure.AI.Projects.Agents.AgentCard
+- Azure.AI.Projects.Agents.AgentCardSkill
+- Azure.AI.Projects.Agents.AgentEndpointAuthorizationScheme
+- Azure.AI.Projects.Agents.AgentEndpointConfiguration
+- Azure.AI.Projects.Agents.AgentEndpointProtocol
+- Azure.AI.Projects.Agents.AgentIdentity
+- Azure.AI.Projects.Agents.AgentSessionStatus
+- Azure.AI.Projects.Agents.AgentVersionStatus
+- Azure.AI.Projects.Agents.BotServiceAuthorizationScheme
+- Azure.AI.Projects.Agents.BotServiceRbacAuthorizationScheme
+- Azure.AI.Projects.Agents.CodeConfiguration
+- Azure.AI.Projects.Agents.CodeDependencyResolution
+- Azure.AI.Projects.Agents.ContainerConfiguration
+- Azure.AI.Projects.Agents.ContentFilterConfiguration
+- Azure.AI.Projects.Agents.CreateAgentFromCodeOptions
+- Azure.AI.Projects.Agents.CreateAgentVersionFromCodeMetadata
+- Azure.AI.Projects.Agents.CreateAgentVersionFromManifestRequest
+- Azure.AI.Projects.Agents.DeclarativeAgentDefinition
+- Azure.AI.Projects.Agents.EntraAuthorizationScheme
+- Azure.AI.Projects.Agents.EntraIsolationKeySource
+- Azure.AI.Projects.Agents.ExportedDataTypes
+- Azure.AI.Projects.Agents.FixedRatioVersionSelectionRule
+- Azure.AI.Projects.Agents.HeaderIsolationKeySource
+- Azure.AI.Projects.Agents.HeaderTelemetryEndpointAuth
+- Azure.AI.Projects.Agents.HostedAgentDefinition
+- Azure.AI.Projects.Agents.IsolationKeySource
+- Azure.AI.Projects.Agents.ManagedAgentIdentityBlueprintReference
+- Azure.AI.Projects.Agents.OtlpTelemetryEndpoint
+- Azure.AI.Projects.Agents.ProjectsAgentDefinition
+- Azure.AI.Projects.Agents.ProjectsAgentKind
+- Azure.AI.Projects.Agents.ProjectsAgentProtocol
+- Azure.AI.Projects.Agents.ProjectsAgentRecord
+- Azure.AI.Projects.Agents.ProjectsAgentVersion
+- Azure.AI.Projects.Agents.ProjectsAgentVersionCreationOptions
+- Azure.AI.Projects.Agents.ProtocolVersionRecord
+- Azure.AI.Projects.Agents.StructuredInputDefinition
+- Azure.AI.Projects.Agents.TelemetryConfig
+- Azure.AI.Projects.Agents.TelemetryEndpoint
+- Azure.AI.Projects.Agents.TelemetryEndpointAuthentication
+- Azure.AI.Projects.Agents.TelemetryTransportProtocol
+- Azure.AI.Projects.Agents.VersionIndicator
+- Azure.AI.Projects.Agents.VersionRefIndicator
+- Azure.AI.Projects.Agents.VersionSelectionRule
+- Azure.AI.Projects.Agents.VersionSelector
+# Shared tool infrastructure
+- Azure.AI.Projects.Agents.ProjectsAgentTool
+- Azure.AI.Projects.Agents.ToolConfig
+- Azure.AI.Projects.Agents.ToolProjectConnection
+# Stable tool - AzureAISearchTool
+- Azure.AI.Projects.Agents.AzureAISearchQueryType
+- Azure.AI.Projects.Agents.AzureAISearchTool
+- Azure.AI.Projects.Agents.AzureAISearchToolIndex
+- Azure.AI.Projects.Agents.AzureAISearchToolOptions
+# Stable tool - AzureFunctionTool
+- Azure.AI.Projects.Agents.AzureFunctionBinding
+- Azure.AI.Projects.Agents.AzureFunctionDefinition
+- Azure.AI.Projects.Agents.AzureFunctionDefinitionFunction
+- Azure.AI.Projects.Agents.AzureFunctionStorageQueue
+- Azure.AI.Projects.Agents.AzureFunctionTool
+# Stable tool - BingGroundingTool
+- Azure.AI.Projects.Agents.BingGroundingSearchConfiguration
+- Azure.AI.Projects.Agents.BingGroundingSearchToolOptions
+- Azure.AI.Projects.Agents.BingGroundingTool
+# Stable tool - CaptureStructuredOutputsTool
+- Azure.AI.Projects.Agents.CaptureStructuredOutputsTool
+- Azure.AI.Projects.Agents.StructuredOutputDefinition
+# Stable tool - OpenApiTool (OpenAPITool in this project)
+- Azure.AI.Projects.Agents.OpenAPIAnonymousAuthenticationDetails
+- Azure.AI.Projects.Agents.OpenApiAuthenticationDetails
+- Azure.AI.Projects.Agents.OpenApiFunctionDefinition
+- Azure.AI.Projects.Agents.OpenAPIFunctionEntry
+- Azure.AI.Projects.Agents.OpenAPIManagedAuthenticationDetails
+- Azure.AI.Projects.Agents.OpenAPIManagedSecurityScheme
+- Azure.AI.Projects.Agents.OpenApiProjectConnectionAuthenticationDetails
+- Azure.AI.Projects.Agents.OpenApiProjectConnectionSecurityScheme
+- Azure.AI.Projects.Agents.OpenAPITool
+# OpenAI-derived tools not renamed to Internal, not preview
+- Azure.AI.Projects.Agents.ToolSearchTool
+- OpenAI.EmptyModelParam
+- OpenAI.ToolSearchExecutionType
+# Manually commented entries
+# - Azure.AI.Projects.Agents.ExternalAgentDefinition
+# - Azure.AI.Projects.Agents.PatchAgentOptions
+# - Azure.AI.Projects.Agents.ProjectAgentSession
+# - Azure.AI.Projects.Agents.SessionLogEvent
+# - Azure.AI.Projects.Agents.SessionLogEventType
+# - Azure.AI.Projects.Agents.WorkflowAgentDefinition
+# Manually added entries
+- Azure.AI.Projects.Agents.ToolType
+- Azure.AI.Projects.Agents.AgentAdministrationClient
+- Azure.AI.Projects.Agents.AgentAdministrationClientOptions
+- Azure.AI.Projects.Agents.AgentListOrder
+- Azure.AI.Projects.Agents.AgentAdministrationClientOptions.ServiceVersion
+- Azure.AI.Projects.Agents.ProjectsAgentsModelFactory

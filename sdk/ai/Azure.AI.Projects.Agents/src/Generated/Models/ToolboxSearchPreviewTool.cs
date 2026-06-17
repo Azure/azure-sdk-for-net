@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using OpenAI;
 
 namespace Azure.AI.Projects.Agents
@@ -13,6 +14,7 @@ namespace Azure.AI.Projects.Agents
     /// When present, deferred tools are hidden from `tools/list` and only
     /// discoverable via `search_tools` queries at runtime.
     /// </summary>
+    [Experimental("AAIP001")]
     public partial class ToolboxSearchPreviewTool : ProjectsAgentTool
     {
         /// <summary> Initializes a new instance of <see cref="ToolboxSearchPreviewTool"/>. </summary>

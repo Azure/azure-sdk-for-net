@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Summary of the error cluster analysis. </summary>
+    [Experimental("AAIP001")]
     public partial class InsightSummary
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

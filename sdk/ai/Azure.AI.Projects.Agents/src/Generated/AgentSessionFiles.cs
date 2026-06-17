@@ -5,6 +5,7 @@
 using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -18,6 +19,7 @@ namespace Azure.AI.Projects.Agents
     /// Sessions are scoped to agent endpoints (not individual versions), allowing
     /// the endpoint to evolve the backing agent version independently of the session lifecycle.
     /// </summary>
+    [Experimental("AAIP001")]
     public partial class AgentSessionFiles
     {
         private readonly Uri _endpoint;

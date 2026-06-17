@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The ResponsesInlineSkillParam. </summary>
+    [Experimental("AAIP001")]
     public partial class ResponsesInlineSkillParam : ContainerSkill
     {
         /// <summary> Initializes a new instance of <see cref="ResponsesInlineSkillParam"/>. </summary>

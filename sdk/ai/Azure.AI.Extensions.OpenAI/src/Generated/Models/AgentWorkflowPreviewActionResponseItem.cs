@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The AgentWorkflowPreviewActionResponseItem. </summary>
+    [Experimental("AAIP001")]
     public partial class AgentWorkflowPreviewActionResponseItem : AgentResponseItem
     {
         /// <summary> Initializes a new instance of <see cref="AgentWorkflowPreviewActionResponseItem"/>. </summary>

@@ -3,6 +3,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using System.Diagnostics.CodeAnalysis;
 using OpenAI;
 
 namespace Azure.AI.Projects.Agents
@@ -77,9 +78,7 @@ namespace Azure.AI.Projects.Agents
     [ModelReaderWriterBuildable(typeof(FunctionShellToolParamEnvironmentLocalEnvironmentParam))]
     [ModelReaderWriterBuildable(typeof(HeaderIsolationKeySource))]
     [ModelReaderWriterBuildable(typeof(HeaderTelemetryEndpointAuth))]
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.HostedAgentDefinition is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(HostedAgentDefinition))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.HostedAgentDefinition is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(HybridSearchOptions))]
     [ModelReaderWriterBuildable(typeof(InlineSkillParam))]
     [ModelReaderWriterBuildable(typeof(InlineSkillSourceParam))]
@@ -209,10 +208,9 @@ namespace Azure.AI.Projects.Agents
     [ModelReaderWriterBuildable(typeof(VersionSelector))]
     [ModelReaderWriterBuildable(typeof(WebSearchApproximateLocation))]
     [ModelReaderWriterBuildable(typeof(WebSearchToolFilters))]
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.WorkflowAgentDefinition is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(WorkflowAgentDefinition))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.WorkflowAgentDefinition is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(WorkIQPreviewTool))]
+    [Experimental("AAIP001")]
     public partial class AzureAIProjectsAgentsContext : ModelReaderWriterContext
     {
     }

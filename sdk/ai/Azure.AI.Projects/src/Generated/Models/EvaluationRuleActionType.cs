@@ -4,10 +4,12 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> Type of the evaluation action. </summary>
+    [Experimental("AAIP001")]
     public readonly partial struct EvaluationRuleActionType : IEquatable<EvaluationRuleActionType>
     {
         private readonly string _value;
