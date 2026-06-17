@@ -37,28 +37,30 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         }
 
         [RecordedTest]
+        [Ignore("Needs re-recording because the migrated API now only exposes the subscription-level list operation.")]
         public async Task Get()
         {
-            var allowedConnections = await _resourceGroup.GetAllowedConnectionsResourceAsync(AzureLocation.CentralUS.ToString(), ConnectionType.Internal);
-            ValidateAllowedConnections(allowedConnections);
-        }
-
-        [RecordedTest]
-        [Ignore("Needs re-recording because the migrated list operation now includes the home-region segment in the request path.")]
-        public async Task GetAll()
-        {
-            var list = await DefaultSubscription.GetAllowedConnectionsResourcesAsync(AzureLocation.CentralUS.ToString()).ToEnumerableAsync();
+            var list = await DefaultSubscription.GetAllowedConnectionsAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
             ValidateAllowedConnections(list.FirstOrDefault());
         }
 
-        private void ValidateAllowedConnections(AllowedConnectionsResource allowedConnections)
+        [RecordedTest]
+        [Ignore("Needs re-recording because the migrated API now only exposes the subscription-level list operation.")]
+        public async Task GetAll()
+        {
+            var list = await DefaultSubscription.GetAllowedConnectionsAsync().ToEnumerableAsync();
+            Assert.IsNotEmpty(list);
+            ValidateAllowedConnections(list.FirstOrDefault());
+        }
+
+        private void ValidateAllowedConnections(SecurityCenterAllowedConnection allowedConnections)
         {
             Assert.IsNotNull(allowedConnections);
             Assert.IsNotNull(allowedConnections.Id);
-            Assert.AreEqual("Internal", allowedConnections.Data.Name);
-            Assert.AreEqual("centralus", allowedConnections.Data.Location.ToString());
-            Assert.AreEqual("Microsoft.Security/locations/allowedConnections", allowedConnections.Data.ResourceType.ToString());
+            Assert.AreEqual("Internal", allowedConnections.Name);
+            Assert.AreEqual("centralus", allowedConnections.Location.ToString());
+            Assert.AreEqual("Microsoft.Security/locations/allowedConnections", allowedConnections.ResourceType.ToString());
         }
     }
 }
