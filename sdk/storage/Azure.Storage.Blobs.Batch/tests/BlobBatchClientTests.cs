@@ -815,6 +815,7 @@ namespace Azure.Storage.Blobs.Test
 
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_02_06)]
+        [LiveOnly] // No playback recording available for the Smart access tier.
         public async Task SetBlobAccessTier_Smart()
         {
             await using TestScenario scenario = Scenario();
