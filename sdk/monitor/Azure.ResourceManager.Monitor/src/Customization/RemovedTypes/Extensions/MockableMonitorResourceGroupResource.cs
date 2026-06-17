@@ -29,6 +29,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <returns> The alert rule resource. </returns>
         [Obsolete("This API is no longer supported.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
         public virtual Response<AlertRuleResource> GetAlertRule(string ruleName, CancellationToken cancellationToken = default) => throw new NotSupportedException("This API is no longer supported.");
 
         /// <summary> Gets an alert rule. </summary>
@@ -37,6 +38,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <returns> The alert rule resource. </returns>
         [Obsolete("This API is no longer supported.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
         public virtual Task<Response<AlertRuleResource>> GetAlertRuleAsync(string ruleName, CancellationToken cancellationToken = default) => throw new NotSupportedException("This API is no longer supported.");
 
         /// <summary> Gets a collection of <see cref="MonitorWorkspaceResource"/> objects in the resource group. </summary>
@@ -51,6 +53,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <returns> The MonitorWorkspace resource. </returns>
         [Obsolete("This API has moved to Azure.ResourceManager.Monitor.Workspaces. Use Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceResource, Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceCollection, or Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceData instead.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
         public virtual Response<MonitorWorkspaceResource> GetMonitorWorkspaceResource(string azureMonitorWorkspaceName, CancellationToken cancellationToken = default) => throw new NotSupportedException("This API has moved to Azure.ResourceManager.Monitor.Workspaces. Use Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceResource, Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceCollection, or Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceData instead.");
 
         /// <summary> Gets a MonitorWorkspace resource. </summary>
@@ -59,6 +62,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <returns> The MonitorWorkspace resource. </returns>
         [Obsolete("This API has moved to Azure.ResourceManager.Monitor.Workspaces. Use Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceResource, Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceCollection, or Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceData instead.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
         public virtual Task<Response<MonitorWorkspaceResource>> GetMonitorWorkspaceResourceAsync(string azureMonitorWorkspaceName, CancellationToken cancellationToken = default) => throw new NotSupportedException("This API has moved to Azure.ResourceManager.Monitor.Workspaces. Use Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceResource, Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceCollection, or Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceData instead.");
 
         /// <summary> Gets private link scope operation status. </summary>
