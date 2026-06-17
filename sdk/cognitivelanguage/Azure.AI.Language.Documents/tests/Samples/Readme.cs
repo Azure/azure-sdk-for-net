@@ -12,12 +12,14 @@ using Azure.AI.Language.Documents;
 
 #region Snippet:DocumentsService_Identity_Namespace
 using Azure.Identity;
+using NUnit.Framework;
 #endregion
 
 namespace Azure.AI.Language.Documents.Tests.Samples
 {
     public partial class DocumentsServiceClientSamples : DocumentServiceTestBase<DocumentsServiceClient>
     {
+        [Test]
         public void CreateConversationClient()
         {
             #region Snippet:DocumentsServiceClient_Create
@@ -28,6 +30,7 @@ namespace Azure.AI.Language.Documents.Tests.Samples
             #endregion
         }
 
+        [Test]
         public void CreateConversationClientWithSpecificApiVersion()
         {
             #region Snippet:CreateDocumentsServiceClientForSpecificApiVersion
@@ -38,6 +41,7 @@ namespace Azure.AI.Language.Documents.Tests.Samples
             #endregion
         }
 
+        [Test]
         public void CreateConversationClientWithDefaultAzureCredential()
         {
             #region Snippet:DocumentsServiceClient_CreateWithDefaultAzureCredential
@@ -48,8 +52,7 @@ namespace Azure.AI.Language.Documents.Tests.Samples
             #endregion
         }
 
-        [RecordedTest]
-        [SyncOnly]
+        [Test]
         public void BadArgument()
         {
             DocumentsServiceClient client = Client;

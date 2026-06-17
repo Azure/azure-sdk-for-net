@@ -13,7 +13,7 @@ namespace Azure.AI.Language.Documents.Tests.Samples
     public partial class DocumentsServiceClientSamples
     {
         [SyncOnly]
-        [RecordedTest]
+        [Test]
         public void SubmitJob()
         {
             DocumentsServiceClient client = Client;
@@ -66,7 +66,7 @@ namespace Azure.AI.Language.Documents.Tests.Samples
         }
 
         [AsyncOnly]
-        [RecordedTest]
+        [Test]
         public async Task SubmitJobAsync()
         {
             DocumentsServiceClient client = Client;

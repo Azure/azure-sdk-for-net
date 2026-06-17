@@ -14,7 +14,7 @@ namespace Azure.AI.Language.Documents.Tests.Samples
     public partial class DocumentsServiceClientSamples
     {
         [SyncOnly]
-        [RecordedTest]
+        [Test]
         public void GetJobState()
         {
             DocumentsServiceClient client = Client;
@@ -76,7 +76,7 @@ namespace Azure.AI.Language.Documents.Tests.Samples
         }
 
         [AsyncOnly]
-        [RecordedTest]
+        [Test]
         public async Task GetJobStateAsync()
         {
             DocumentsServiceClient client = Client;
