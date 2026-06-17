@@ -3970,7 +3970,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     }
     public partial class AllowlistCustomAlertRule : Azure.ResourceManager.SecurityCenter.Models.ListCustomAlertRule, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.Models.AllowlistCustomAlertRule>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.Models.AllowlistCustomAlertRule>
     {
-        public AllowlistCustomAlertRule(bool isEnabled, System.Collections.Generic.IEnumerable<string> allowlistValues) : base (default(bool)) { }
+        public AllowlistCustomAlertRule(bool isEnabled, System.Collections.Generic.IEnumerable<string> allowlistValues) : base (default(string), default(bool)) { }
         public System.Collections.Generic.IList<string> AllowlistValues { get { throw null; } }
         protected override Azure.ResourceManager.SecurityCenter.Models.CustomAlertRule JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -5829,7 +5829,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     }
     public partial class DenylistCustomAlertRule : Azure.ResourceManager.SecurityCenter.Models.ListCustomAlertRule, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.Models.DenylistCustomAlertRule>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.Models.DenylistCustomAlertRule>
     {
-        public DenylistCustomAlertRule(bool isEnabled, System.Collections.Generic.IEnumerable<string> denylistValues) : base (default(bool)) { }
+        public DenylistCustomAlertRule(bool isEnabled, System.Collections.Generic.IEnumerable<string> denylistValues) : base (default(string), default(bool)) { }
         public System.Collections.Generic.IList<string> DenylistValues { get { throw null; } }
         protected override Azure.ResourceManager.SecurityCenter.Models.CustomAlertRule JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -7217,6 +7217,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     public partial class ListCustomAlertRule : Azure.ResourceManager.SecurityCenter.Models.CustomAlertRule, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.Models.ListCustomAlertRule>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.Models.ListCustomAlertRule>
     {
         public ListCustomAlertRule(bool isEnabled) : base (default(string), default(bool)) { }
+        protected ListCustomAlertRule(string ruleType, bool isEnabled) : base (default(string), default(bool)) { }
         public Azure.ResourceManager.SecurityCenter.Models.SecurityValueType? ValueType { get { throw null; } }
         protected override Azure.ResourceManager.SecurityCenter.Models.CustomAlertRule JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -9970,6 +9971,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     public partial class ThresholdCustomAlertRule : Azure.ResourceManager.SecurityCenter.Models.CustomAlertRule, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.Models.ThresholdCustomAlertRule>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.Models.ThresholdCustomAlertRule>
     {
         public ThresholdCustomAlertRule(bool isEnabled, int minThreshold, int maxThreshold) : base (default(string), default(bool)) { }
+        protected ThresholdCustomAlertRule(string ruleType, bool isEnabled, int minThreshold, int maxThreshold) : base (default(string), default(bool)) { }
         public int MaxThreshold { get { throw null; } set { } }
         public int MinThreshold { get { throw null; } set { } }
         protected override Azure.ResourceManager.SecurityCenter.Models.CustomAlertRule JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -9984,7 +9986,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     }
     public partial class TimeWindowCustomAlertRule : Azure.ResourceManager.SecurityCenter.Models.ThresholdCustomAlertRule, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.Models.TimeWindowCustomAlertRule>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.Models.TimeWindowCustomAlertRule>
     {
-        public TimeWindowCustomAlertRule(bool isEnabled, int minThreshold, int maxThreshold, System.TimeSpan timeWindowSize) : base (default(bool), default(int), default(int)) { }
+        public TimeWindowCustomAlertRule(bool isEnabled, int minThreshold, int maxThreshold, System.TimeSpan timeWindowSize) : base (default(string), default(bool), default(int), default(int)) { }
         public System.TimeSpan TimeWindowSize { get { throw null; } set { } }
         protected override Azure.ResourceManager.SecurityCenter.Models.CustomAlertRule JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
