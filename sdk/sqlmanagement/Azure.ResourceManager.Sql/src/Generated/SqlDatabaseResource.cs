@@ -2903,7 +2903,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="vulnerabilityAssessmentName"> The name of the vulnerability assessment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SqlDatabaseSqlVulnerabilityAssessmentResource>> GetSqlDatabaseSqlVulnerabilityAssessmentAsync(SqlVulnerabilityAssessmentName vulnerabilityAssessmentName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SqlDatabaseSqlVulnerabilityAssessmentResource>> GetSqlDatabaseSqlVulnerabilityAssessmentAsync(VulnerabilityAssessmentName vulnerabilityAssessmentName, CancellationToken cancellationToken = default)
         {
             return await GetSqlDatabaseSqlVulnerabilityAssessments().GetAsync(vulnerabilityAssessmentName, cancellationToken).ConfigureAwait(false);
         }
@@ -2912,7 +2912,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="vulnerabilityAssessmentName"> The name of the vulnerability assessment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<SqlDatabaseSqlVulnerabilityAssessmentResource> GetSqlDatabaseSqlVulnerabilityAssessment(SqlVulnerabilityAssessmentName vulnerabilityAssessmentName, CancellationToken cancellationToken = default)
+        public virtual Response<SqlDatabaseSqlVulnerabilityAssessmentResource> GetSqlDatabaseSqlVulnerabilityAssessment(VulnerabilityAssessmentName vulnerabilityAssessmentName, CancellationToken cancellationToken = default)
         {
             return GetSqlDatabaseSqlVulnerabilityAssessments().Get(vulnerabilityAssessmentName, cancellationToken);
         }
