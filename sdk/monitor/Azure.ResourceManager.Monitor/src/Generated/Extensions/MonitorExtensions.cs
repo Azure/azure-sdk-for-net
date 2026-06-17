@@ -1038,80 +1038,76 @@ namespace Azure.ResourceManager.Monitor
         /// Gets an incident associated to an alert rule
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMonitorResourceGroupResource.GetAsync(string, string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorResourceGroupResource.GetAsync(string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="ruleName"> The name of the rule. </param>
         /// <param name="incidentName"> The name of the incident to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static async Task<Response<Incident>> GetAsync(this ResourceGroupResource resourceGroupResource, string resourceGroupName, string ruleName, string incidentName, CancellationToken cancellationToken = default)
+        public static async Task<Response<Incident>> GetAsync(this ResourceGroupResource resourceGroupResource, string ruleName, string incidentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableMonitorResourceGroupResource(resourceGroupResource).GetAsync(resourceGroupName, ruleName, incidentName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableMonitorResourceGroupResource(resourceGroupResource).GetAsync(ruleName, incidentName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets an incident associated to an alert rule
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMonitorResourceGroupResource.Get(string, string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorResourceGroupResource.Get(string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="ruleName"> The name of the rule. </param>
         /// <param name="incidentName"> The name of the incident to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static Response<Incident> Get(this ResourceGroupResource resourceGroupResource, string resourceGroupName, string ruleName, string incidentName, CancellationToken cancellationToken = default)
+        public static Response<Incident> Get(this ResourceGroupResource resourceGroupResource, string ruleName, string incidentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableMonitorResourceGroupResource(resourceGroupResource).Get(resourceGroupName, ruleName, incidentName, cancellationToken);
+            return GetMockableMonitorResourceGroupResource(resourceGroupResource).Get(ruleName, incidentName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a list of incidents associated to an alert rule
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMonitorResourceGroupResource.GetByAlertRuleAsync(string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorResourceGroupResource.GetByAlertRuleAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="ruleName"> The name of the rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> A collection of <see cref="Incident"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<Incident> GetByAlertRuleAsync(this ResourceGroupResource resourceGroupResource, string resourceGroupName, string ruleName, CancellationToken cancellationToken = default)
+        public static AsyncPageable<Incident> GetByAlertRuleAsync(this ResourceGroupResource resourceGroupResource, string ruleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableMonitorResourceGroupResource(resourceGroupResource).GetByAlertRuleAsync(resourceGroupName, ruleName, cancellationToken);
+            return GetMockableMonitorResourceGroupResource(resourceGroupResource).GetByAlertRuleAsync(ruleName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a list of incidents associated to an alert rule
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMonitorResourceGroupResource.GetByAlertRule(string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorResourceGroupResource.GetByAlertRule(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="ruleName"> The name of the rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> A collection of <see cref="Incident"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<Incident> GetByAlertRule(this ResourceGroupResource resourceGroupResource, string resourceGroupName, string ruleName, CancellationToken cancellationToken = default)
+        public static Pageable<Incident> GetByAlertRule(this ResourceGroupResource resourceGroupResource, string ruleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableMonitorResourceGroupResource(resourceGroupResource).GetByAlertRule(resourceGroupName, ruleName, cancellationToken);
+            return GetMockableMonitorResourceGroupResource(resourceGroupResource).GetByAlertRule(ruleName, cancellationToken);
         }
 
         /// <summary>

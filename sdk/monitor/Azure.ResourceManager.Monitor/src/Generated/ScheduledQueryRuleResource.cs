@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scheduledQueryRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _scheduledQueryRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ScheduledQueryRuleData> response = Response.FromValue(ScheduledQueryRuleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scheduledQueryRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _scheduledQueryRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ScheduledQueryRuleData> response = Response.FromValue(ScheduledQueryRuleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scheduledQueryRulesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, ScheduledQueryRulePatch.ToRequestContent(patch), context);
+                HttpMessage message = _scheduledQueryRulesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ScheduledQueryRulePatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ScheduledQueryRuleData> response = Response.FromValue(ScheduledQueryRuleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scheduledQueryRulesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, ScheduledQueryRulePatch.ToRequestContent(patch), context);
+                HttpMessage message = _scheduledQueryRulesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ScheduledQueryRulePatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ScheduledQueryRuleData> response = Response.FromValue(ScheduledQueryRuleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scheduledQueryRulesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _scheduledQueryRulesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scheduledQueryRulesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _scheduledQueryRulesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scheduledQueryRuleRestClient.CreateGetNSPRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, networkSecurityPerimeterConfigurationName, context);
+                HttpMessage message = _scheduledQueryRuleRestClient.CreateGetNSPRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, networkSecurityPerimeterConfigurationName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NetworkSecurityPerimeterConfiguration> response = Response.FromValue(NetworkSecurityPerimeterConfiguration.FromResponse(result), result);
                 if (response.Value == null)
@@ -489,7 +489,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scheduledQueryRuleRestClient.CreateGetNSPRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, networkSecurityPerimeterConfigurationName, context);
+                HttpMessage message = _scheduledQueryRuleRestClient.CreateGetNSPRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, networkSecurityPerimeterConfigurationName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NetworkSecurityPerimeterConfiguration> response = Response.FromValue(NetworkSecurityPerimeterConfiguration.FromResponse(result), result);
                 if (response.Value == null)
@@ -537,7 +537,7 @@ namespace Azure.ResourceManager.Monitor
             return new ScheduledQueryRuleGetNSPAsyncCollectionResultOfT(
                 _scheduledQueryRuleRestClient,
                 Guid.Parse(Id.SubscriptionId),
-                Id.Parent.Name,
+                Id.ResourceGroupName,
                 Id.Name,
                 context,
                 "ScheduledQueryRuleResource.GetNSP");
@@ -575,7 +575,7 @@ namespace Azure.ResourceManager.Monitor
             return new ScheduledQueryRuleGetNSPCollectionResultOfT(
                 _scheduledQueryRuleRestClient,
                 Guid.Parse(Id.SubscriptionId),
-                Id.Parent.Name,
+                Id.ResourceGroupName,
                 Id.Name,
                 context,
                 "ScheduledQueryRuleResource.GetNSP");
@@ -619,7 +619,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scheduledQueryRuleRestClient.CreateReconcileNSPRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, networkSecurityPerimeterConfigurationName, context);
+                HttpMessage message = _scheduledQueryRuleRestClient.CreateReconcileNSPRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, networkSecurityPerimeterConfigurationName, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 MonitorArmOperation operation = new MonitorArmOperation(_scheduledQueryRuleClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -673,7 +673,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scheduledQueryRuleRestClient.CreateReconcileNSPRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, networkSecurityPerimeterConfigurationName, context);
+                HttpMessage message = _scheduledQueryRuleRestClient.CreateReconcileNSPRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, networkSecurityPerimeterConfigurationName, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 MonitorArmOperation operation = new MonitorArmOperation(_scheduledQueryRuleClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -712,7 +712,7 @@ namespace Azure.ResourceManager.Monitor
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _scheduledQueryRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                    HttpMessage message = _scheduledQueryRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ScheduledQueryRuleData> response = Response.FromValue(ScheduledQueryRuleData.FromResponse(result), result);
                     return Response.FromValue(new ScheduledQueryRuleResource(Client, response.Value), response.GetRawResponse());
@@ -760,7 +760,7 @@ namespace Azure.ResourceManager.Monitor
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _scheduledQueryRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                    HttpMessage message = _scheduledQueryRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ScheduledQueryRuleData> response = Response.FromValue(ScheduledQueryRuleData.FromResponse(result), result);
                     return Response.FromValue(new ScheduledQueryRuleResource(Client, response.Value), response.GetRawResponse());
@@ -807,7 +807,7 @@ namespace Azure.ResourceManager.Monitor
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _scheduledQueryRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                    HttpMessage message = _scheduledQueryRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ScheduledQueryRuleData> response = Response.FromValue(ScheduledQueryRuleData.FromResponse(result), result);
                     return Response.FromValue(new ScheduledQueryRuleResource(Client, response.Value), response.GetRawResponse());
@@ -850,7 +850,7 @@ namespace Azure.ResourceManager.Monitor
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _scheduledQueryRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                    HttpMessage message = _scheduledQueryRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ScheduledQueryRuleData> response = Response.FromValue(ScheduledQueryRuleData.FromResponse(result), result);
                     return Response.FromValue(new ScheduledQueryRuleResource(Client, response.Value), response.GetRawResponse());
@@ -892,7 +892,7 @@ namespace Azure.ResourceManager.Monitor
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _scheduledQueryRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                    HttpMessage message = _scheduledQueryRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ScheduledQueryRuleData> response = Response.FromValue(ScheduledQueryRuleData.FromResponse(result), result);
                     return Response.FromValue(new ScheduledQueryRuleResource(Client, response.Value), response.GetRawResponse());
@@ -938,7 +938,7 @@ namespace Azure.ResourceManager.Monitor
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _scheduledQueryRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                    HttpMessage message = _scheduledQueryRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ScheduledQueryRuleData> response = Response.FromValue(ScheduledQueryRuleData.FromResponse(result), result);
                     return Response.FromValue(new ScheduledQueryRuleResource(Client, response.Value), response.GetRawResponse());

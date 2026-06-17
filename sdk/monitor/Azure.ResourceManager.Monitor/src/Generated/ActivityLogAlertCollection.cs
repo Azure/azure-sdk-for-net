@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _activityLogAlertsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, activityLogAlertName, ActivityLogAlertData.ToRequestContent(data), context);
+                HttpMessage message = _activityLogAlertsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, activityLogAlertName, ActivityLogAlertData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ActivityLogAlertData> response = Response.FromValue(ActivityLogAlertData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _activityLogAlertsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, activityLogAlertName, ActivityLogAlertData.ToRequestContent(data), context);
+                HttpMessage message = _activityLogAlertsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, activityLogAlertName, ActivityLogAlertData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ActivityLogAlertData> response = Response.FromValue(ActivityLogAlertData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _activityLogAlertsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, activityLogAlertName, context);
+                HttpMessage message = _activityLogAlertsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, activityLogAlertName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ActivityLogAlertData> response = Response.FromValue(ActivityLogAlertData.FromResponse(result), result);
                 if (response.Value == null)
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _activityLogAlertsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, activityLogAlertName, context);
+                HttpMessage message = _activityLogAlertsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, activityLogAlertName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ActivityLogAlertData> response = Response.FromValue(ActivityLogAlertData.FromResponse(result), result);
                 if (response.Value == null)
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ActivityLogAlertData, ActivityLogAlertResource>(new ActivityLogAlertsGetByResourceGroupAsyncCollectionResultOfT(_activityLogAlertsRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "ActivityLogAlertCollection.GetAll"), data => new ActivityLogAlertResource(Client, data));
+            return new AsyncPageableWrapper<ActivityLogAlertData, ActivityLogAlertResource>(new ActivityLogAlertsGetByResourceGroupAsyncCollectionResultOfT(_activityLogAlertsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ActivityLogAlertCollection.GetAll"), data => new ActivityLogAlertResource(Client, data));
         }
 
         /// <summary>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ActivityLogAlertData, ActivityLogAlertResource>(new ActivityLogAlertsGetByResourceGroupCollectionResultOfT(_activityLogAlertsRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "ActivityLogAlertCollection.GetAll"), data => new ActivityLogAlertResource(Client, data));
+            return new PageableWrapper<ActivityLogAlertData, ActivityLogAlertResource>(new ActivityLogAlertsGetByResourceGroupCollectionResultOfT(_activityLogAlertsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ActivityLogAlertCollection.GetAll"), data => new ActivityLogAlertResource(Client, data));
         }
 
         /// <summary>
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _activityLogAlertsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, activityLogAlertName, context);
+                HttpMessage message = _activityLogAlertsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, activityLogAlertName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ActivityLogAlertData> response = default;
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _activityLogAlertsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, activityLogAlertName, context);
+                HttpMessage message = _activityLogAlertsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, activityLogAlertName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ActivityLogAlertData> response = default;
@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _activityLogAlertsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, activityLogAlertName, context);
+                HttpMessage message = _activityLogAlertsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, activityLogAlertName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ActivityLogAlertData> response = default;
@@ -527,7 +527,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _activityLogAlertsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, activityLogAlertName, context);
+                HttpMessage message = _activityLogAlertsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, activityLogAlertName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ActivityLogAlertData> response = default;

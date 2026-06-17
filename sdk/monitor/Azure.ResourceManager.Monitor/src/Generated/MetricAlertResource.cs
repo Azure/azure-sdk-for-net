@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _metricAlertsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _metricAlertsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MetricAlertData> response = Response.FromValue(MetricAlertData.FromResponse(result), result);
                 if (response.Value == null)
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _metricAlertsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _metricAlertsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MetricAlertData> response = Response.FromValue(MetricAlertData.FromResponse(result), result);
                 if (response.Value == null)
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _metricAlertsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, MetricAlertPatch.ToRequestContent(patch), context);
+                HttpMessage message = _metricAlertsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MetricAlertPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MetricAlertData> response = Response.FromValue(MetricAlertData.FromResponse(result), result);
                 if (response.Value == null)
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _metricAlertsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, MetricAlertPatch.ToRequestContent(patch), context);
+                HttpMessage message = _metricAlertsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MetricAlertPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MetricAlertData> response = Response.FromValue(MetricAlertData.FromResponse(result), result);
                 if (response.Value == null)
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _metricAlertsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _metricAlertsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _metricAlertsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _metricAlertsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -421,30 +421,20 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<MetricAlertStatusCollection>> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MetricAlertStatus"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MetricAlertStatus> GetAllMetricAlertsStatusAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _metricAlertsStatusClientDiagnostics.CreateScope("MetricAlertResource.GetAll");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _metricAlertsStatusRestClient.CreateGetAllRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<MetricAlertStatusCollection> response = Response.FromValue(MetricAlertStatusCollection.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new MetricAlertsStatusGetAllMetricAlertsStatusAsyncCollectionResultOfT(
+                _metricAlertsStatusRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "MetricAlertResource.GetAllMetricAlertsStatus");
         }
 
         /// <summary>
@@ -469,30 +459,20 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<MetricAlertStatusCollection> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MetricAlertStatus"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MetricAlertStatus> GetAllMetricAlertsStatus(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _metricAlertsStatusClientDiagnostics.CreateScope("MetricAlertResource.GetAll");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _metricAlertsStatusRestClient.CreateGetAllRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<MetricAlertStatusCollection> response = Response.FromValue(MetricAlertStatusCollection.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new MetricAlertsStatusGetAllMetricAlertsStatusCollectionResultOfT(
+                _metricAlertsStatusRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "MetricAlertResource.GetAllMetricAlertsStatus");
         }
 
         /// <summary>
@@ -516,40 +496,27 @@ namespace Azure.ResourceManager.Monitor
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="ruleName"> The name of the rule. </param>
         /// <param name="statusName"> The name of the status. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="ruleName"/> or <paramref name="statusName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="ruleName"/> or <paramref name="statusName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<MetricAlertStatusCollection>> GetByNameAsync(string resourceGroupName, string ruleName, string statusName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="statusName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="statusName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="MetricAlertStatus"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MetricAlertStatus> GetAllMetricAlertsStatusByNameAsync(string statusName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
             Argument.AssertNotNullOrEmpty(statusName, nameof(statusName));
 
-            using DiagnosticScope scope = _metricAlertsStatusClientDiagnostics.CreateScope("MetricAlertResource.GetByName");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _metricAlertsStatusRestClient.CreateGetByNameRequest(Guid.Parse(Id.SubscriptionId), resourceGroupName, ruleName, statusName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<MetricAlertStatusCollection> response = Response.FromValue(MetricAlertStatusCollection.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new MetricAlertsStatusGetAllMetricAlertsStatusByNameAsyncCollectionResultOfT(
+                _metricAlertsStatusRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                statusName,
+                context,
+                "MetricAlertResource.GetAllMetricAlertsStatusByName");
         }
 
         /// <summary>
@@ -573,40 +540,27 @@ namespace Azure.ResourceManager.Monitor
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="ruleName"> The name of the rule. </param>
         /// <param name="statusName"> The name of the status. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="ruleName"/> or <paramref name="statusName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="ruleName"/> or <paramref name="statusName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<MetricAlertStatusCollection> GetByName(string resourceGroupName, string ruleName, string statusName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="statusName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="statusName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="MetricAlertStatus"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MetricAlertStatus> GetAllMetricAlertsStatusByName(string statusName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
             Argument.AssertNotNullOrEmpty(statusName, nameof(statusName));
 
-            using DiagnosticScope scope = _metricAlertsStatusClientDiagnostics.CreateScope("MetricAlertResource.GetByName");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _metricAlertsStatusRestClient.CreateGetByNameRequest(Guid.Parse(Id.SubscriptionId), resourceGroupName, ruleName, statusName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<MetricAlertStatusCollection> response = Response.FromValue(MetricAlertStatusCollection.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new MetricAlertsStatusGetAllMetricAlertsStatusByNameCollectionResultOfT(
+                _metricAlertsStatusRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                statusName,
+                context,
+                "MetricAlertResource.GetAllMetricAlertsStatusByName");
         }
 
         /// <summary> Add a tag to the current resource. </summary>
@@ -632,7 +586,7 @@ namespace Azure.ResourceManager.Monitor
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _metricAlertsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                    HttpMessage message = _metricAlertsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<MetricAlertData> response = Response.FromValue(MetricAlertData.FromResponse(result), result);
                     return Response.FromValue(new MetricAlertResource(Client, response.Value), response.GetRawResponse());
@@ -680,7 +634,7 @@ namespace Azure.ResourceManager.Monitor
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _metricAlertsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                    HttpMessage message = _metricAlertsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<MetricAlertData> response = Response.FromValue(MetricAlertData.FromResponse(result), result);
                     return Response.FromValue(new MetricAlertResource(Client, response.Value), response.GetRawResponse());
@@ -727,7 +681,7 @@ namespace Azure.ResourceManager.Monitor
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _metricAlertsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                    HttpMessage message = _metricAlertsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<MetricAlertData> response = Response.FromValue(MetricAlertData.FromResponse(result), result);
                     return Response.FromValue(new MetricAlertResource(Client, response.Value), response.GetRawResponse());
@@ -770,7 +724,7 @@ namespace Azure.ResourceManager.Monitor
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _metricAlertsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                    HttpMessage message = _metricAlertsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<MetricAlertData> response = Response.FromValue(MetricAlertData.FromResponse(result), result);
                     return Response.FromValue(new MetricAlertResource(Client, response.Value), response.GetRawResponse());
@@ -812,7 +766,7 @@ namespace Azure.ResourceManager.Monitor
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _metricAlertsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                    HttpMessage message = _metricAlertsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<MetricAlertData> response = Response.FromValue(MetricAlertData.FromResponse(result), result);
                     return Response.FromValue(new MetricAlertResource(Client, response.Value), response.GetRawResponse());
@@ -858,7 +812,7 @@ namespace Azure.ResourceManager.Monitor
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _metricAlertsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                    HttpMessage message = _metricAlertsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<MetricAlertData> response = Response.FromValue(MetricAlertData.FromResponse(result), result);
                     return Response.FromValue(new MetricAlertResource(Client, response.Value), response.GetRawResponse());

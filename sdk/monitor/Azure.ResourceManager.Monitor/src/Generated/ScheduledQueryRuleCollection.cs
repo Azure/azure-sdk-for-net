@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scheduledQueryRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, ruleName, ScheduledQueryRuleData.ToRequestContent(data), context);
+                HttpMessage message = _scheduledQueryRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, ruleName, ScheduledQueryRuleData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ScheduledQueryRuleData> response = Response.FromValue(ScheduledQueryRuleData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scheduledQueryRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, ruleName, ScheduledQueryRuleData.ToRequestContent(data), context);
+                HttpMessage message = _scheduledQueryRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, ruleName, ScheduledQueryRuleData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ScheduledQueryRuleData> response = Response.FromValue(ScheduledQueryRuleData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scheduledQueryRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, ruleName, context);
+                HttpMessage message = _scheduledQueryRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, ruleName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ScheduledQueryRuleData> response = Response.FromValue(ScheduledQueryRuleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scheduledQueryRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, ruleName, context);
+                HttpMessage message = _scheduledQueryRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, ruleName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ScheduledQueryRuleData> response = Response.FromValue(ScheduledQueryRuleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ScheduledQueryRuleData, ScheduledQueryRuleResource>(new ScheduledQueryRulesGetByResourceGroupAsyncCollectionResultOfT(_scheduledQueryRulesRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "ScheduledQueryRuleCollection.GetAll"), data => new ScheduledQueryRuleResource(Client, data));
+            return new AsyncPageableWrapper<ScheduledQueryRuleData, ScheduledQueryRuleResource>(new ScheduledQueryRulesGetByResourceGroupAsyncCollectionResultOfT(_scheduledQueryRulesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ScheduledQueryRuleCollection.GetAll"), data => new ScheduledQueryRuleResource(Client, data));
         }
 
         /// <summary>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ScheduledQueryRuleData, ScheduledQueryRuleResource>(new ScheduledQueryRulesGetByResourceGroupCollectionResultOfT(_scheduledQueryRulesRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "ScheduledQueryRuleCollection.GetAll"), data => new ScheduledQueryRuleResource(Client, data));
+            return new PageableWrapper<ScheduledQueryRuleData, ScheduledQueryRuleResource>(new ScheduledQueryRulesGetByResourceGroupCollectionResultOfT(_scheduledQueryRulesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ScheduledQueryRuleCollection.GetAll"), data => new ScheduledQueryRuleResource(Client, data));
         }
 
         /// <summary>
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scheduledQueryRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, ruleName, context);
+                HttpMessage message = _scheduledQueryRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, ruleName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ScheduledQueryRuleData> response = default;
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scheduledQueryRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, ruleName, context);
+                HttpMessage message = _scheduledQueryRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, ruleName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ScheduledQueryRuleData> response = default;
@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scheduledQueryRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, ruleName, context);
+                HttpMessage message = _scheduledQueryRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, ruleName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ScheduledQueryRuleData> response = default;
@@ -527,7 +527,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scheduledQueryRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, ruleName, context);
+                HttpMessage message = _scheduledQueryRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, ruleName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ScheduledQueryRuleData> response = default;

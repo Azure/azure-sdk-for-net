@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateLinkScopedResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, name, MonitorPrivateLinkScopedResourceData.ToRequestContent(data), context);
+                HttpMessage message = _privateLinkScopedResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, MonitorPrivateLinkScopedResourceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 MonitorArmOperation<MonitorPrivateLinkScopedResource> operation = new MonitorArmOperation<MonitorPrivateLinkScopedResource>(
                     new MonitorPrivateLinkScopedResourceOperationSource(Client),
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateLinkScopedResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, name, MonitorPrivateLinkScopedResourceData.ToRequestContent(data), context);
+                HttpMessage message = _privateLinkScopedResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, MonitorPrivateLinkScopedResourceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 MonitorArmOperation<MonitorPrivateLinkScopedResource> operation = new MonitorArmOperation<MonitorPrivateLinkScopedResource>(
                     new MonitorPrivateLinkScopedResourceOperationSource(Client),
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateLinkScopedResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, name, context);
+                HttpMessage message = _privateLinkScopedResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<MonitorPrivateLinkScopedResourceData> response = Response.FromValue(MonitorPrivateLinkScopedResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateLinkScopedResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, name, context);
+                HttpMessage message = _privateLinkScopedResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<MonitorPrivateLinkScopedResourceData> response = Response.FromValue(MonitorPrivateLinkScopedResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.Monitor
             return new AsyncPageableWrapper<MonitorPrivateLinkScopedResourceData, MonitorPrivateLinkScopedResource>(new PrivateLinkScopedResourcesGetByPrivateLinkScopeAsyncCollectionResultOfT(
                 _privateLinkScopedResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
-                Id.Parent.Name,
+                Id.ResourceGroupName,
                 Id.Name,
                 kind,
                 context,
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.Monitor
             return new PageableWrapper<MonitorPrivateLinkScopedResourceData, MonitorPrivateLinkScopedResource>(new PrivateLinkScopedResourcesGetByPrivateLinkScopeCollectionResultOfT(
                 _privateLinkScopedResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
-                Id.Parent.Name,
+                Id.ResourceGroupName,
                 Id.Name,
                 kind,
                 context,
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateLinkScopedResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, name, context);
+                HttpMessage message = _privateLinkScopedResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<MonitorPrivateLinkScopedResourceData> response = default;
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateLinkScopedResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, name, context);
+                HttpMessage message = _privateLinkScopedResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<MonitorPrivateLinkScopedResourceData> response = default;
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateLinkScopedResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, name, context);
+                HttpMessage message = _privateLinkScopedResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<MonitorPrivateLinkScopedResourceData> response = default;
@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateLinkScopedResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, name, context);
+                HttpMessage message = _privateLinkScopedResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<MonitorPrivateLinkScopedResourceData> response = default;

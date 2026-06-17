@@ -15,7 +15,7 @@ using Azure.ResourceManager.Monitor;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Represents a collection of alert rule resources. </summary>
-    public partial class MetricAlertStatusCollection : IJsonModel<MetricAlertStatusCollection>
+    internal partial class MetricAlertStatusCollection : IJsonModel<MetricAlertStatusCollection>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

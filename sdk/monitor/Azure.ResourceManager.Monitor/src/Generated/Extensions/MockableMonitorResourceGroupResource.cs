@@ -577,15 +577,13 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="ruleName"> The name of the rule. </param>
         /// <param name="incidentName"> The name of the incident to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="ruleName"/> or <paramref name="incidentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="ruleName"/> or <paramref name="incidentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<Incident>> GetAsync(string resourceGroupName, string ruleName, string incidentName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> or <paramref name="incidentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> or <paramref name="incidentName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<Incident>> GetAsync(string ruleName, string incidentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
             Argument.AssertNotNullOrEmpty(incidentName, nameof(incidentName));
 
@@ -597,7 +595,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = AlertRuleIncidentsRestClient.CreateGetRequest(resourceGroupName, ruleName, incidentName, Guid.Parse(Id.SubscriptionId), context);
+                HttpMessage message = AlertRuleIncidentsRestClient.CreateGetRequest(Id.ResourceGroupName, ruleName, incidentName, Guid.Parse(Id.SubscriptionId), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<Incident> response = Response.FromValue(Incident.FromResponse(result), result);
                 if (response.Value == null)
@@ -630,15 +628,13 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="ruleName"> The name of the rule. </param>
         /// <param name="incidentName"> The name of the incident to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="ruleName"/> or <paramref name="incidentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="ruleName"/> or <paramref name="incidentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<Incident> Get(string resourceGroupName, string ruleName, string incidentName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> or <paramref name="incidentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> or <paramref name="incidentName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<Incident> Get(string ruleName, string incidentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
             Argument.AssertNotNullOrEmpty(incidentName, nameof(incidentName));
 
@@ -650,7 +646,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = AlertRuleIncidentsRestClient.CreateGetRequest(resourceGroupName, ruleName, incidentName, Guid.Parse(Id.SubscriptionId), context);
+                HttpMessage message = AlertRuleIncidentsRestClient.CreateGetRequest(Id.ResourceGroupName, ruleName, incidentName, Guid.Parse(Id.SubscriptionId), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<Incident> response = Response.FromValue(Incident.FromResponse(result), result);
                 if (response.Value == null)
@@ -683,15 +679,13 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="ruleName"> The name of the rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="ruleName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="Incident"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Incident> GetByAlertRuleAsync(string resourceGroupName, string ruleName, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<Incident> GetByAlertRuleAsync(string ruleName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
 
             RequestContext context = new RequestContext
@@ -701,7 +695,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
             return new AlertRuleIncidentsGetByAlertRuleAsyncCollectionResultOfT(
                 AlertRuleIncidentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
-                resourceGroupName,
+                Id.ResourceGroupName,
                 ruleName,
                 context,
                 "MockableMonitorResourceGroupResource.GetByAlertRule");
@@ -724,15 +718,13 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="ruleName"> The name of the rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="ruleName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="Incident"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Incident> GetByAlertRule(string resourceGroupName, string ruleName, CancellationToken cancellationToken = default)
+        public virtual Pageable<Incident> GetByAlertRule(string ruleName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
 
             RequestContext context = new RequestContext
@@ -742,7 +734,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
             return new AlertRuleIncidentsGetByAlertRuleCollectionResultOfT(
                 AlertRuleIncidentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
-                resourceGroupName,
+                Id.ResourceGroupName,
                 ruleName,
                 context,
                 "MockableMonitorResourceGroupResource.GetByAlertRule");
