@@ -34,25 +34,5 @@ namespace Azure.ResourceManager.ResourceHealth
 
             return GetMockableResourceHealthArmClient(client).GetAvailabilityStatusesAsync(scope, filter, expand, cancellationToken);
         }
-
-        /// <summary> Gets current availability status for a single resource. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [ForwardsClientCalls]
-        public static Response<ResourceHealthAvailabilityStatus> GetAvailabilityStatus(this ArmClient client, ResourceIdentifier scope, string filter = null, string expand = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableResourceHealthArmClient(client).GetAvailabilityStatus(scope, filter, expand, cancellationToken);
-        }
-
-        /// <summary> Gets current availability status for a single resource. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [ForwardsClientCalls]
-        public static async Task<Response<ResourceHealthAvailabilityStatus>> GetAvailabilityStatusAsync(this ArmClient client, ResourceIdentifier scope, string filter = null, string expand = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return await GetMockableResourceHealthArmClient(client).GetAvailabilityStatusAsync(scope, filter, expand, cancellationToken).ConfigureAwait(false);
-        }
     }
 }
