@@ -9,7 +9,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 // These base-type declarations preserve the previous GA inheritance hierarchy during the MPG migration.
 // Regeneration consumes these partial declarations and updates generated base types accordingly.
@@ -37,78 +36,12 @@ namespace Azure.ResourceManager.Network
     public partial class NetworkManagerSecurityUserConfigurationData : ResourceData { }
     public partial class NetworkManagerSecurityUserRuleData : ResourceData { }
     public partial class NetworkManagerSecurityUserRulesData : ResourceData { }
-    [CodeGenSuppress("NetworkSecurityPerimeterAccessRuleData", typeof(NspAccessRuleProperties), typeof(string), typeof(IDictionary<string, BinaryData>))]
-    public partial class NetworkSecurityPerimeterAccessRuleData : ResourceData
-    {
-        // TODO: Remove when the generator custom-base serialization fix is available in this branch.
-        internal NetworkSecurityPerimeterAccessRuleData(NspAccessRuleProperties properties, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-            : base(NetworkResourceDataSerializationCompatibility.GetId(additionalBinaryDataProperties), name ?? NetworkResourceDataSerializationCompatibility.GetName(additionalBinaryDataProperties), NetworkResourceDataSerializationCompatibility.GetResourceType(additionalBinaryDataProperties), NetworkResourceDataSerializationCompatibility.GetSystemData(additionalBinaryDataProperties))
-        {
-            Properties = properties;
-            Name = name ?? NetworkResourceDataSerializationCompatibility.GetName(additionalBinaryDataProperties);
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
-    }
-    [CodeGenSuppress("NetworkSecurityPerimeterAssociationData", typeof(NspAssociationProperties), typeof(string), typeof(IDictionary<string, BinaryData>))]
-    public partial class NetworkSecurityPerimeterAssociationData : ResourceData
-    {
-        // TODO: Remove when the generator custom-base serialization fix is available in this branch.
-        internal NetworkSecurityPerimeterAssociationData(NspAssociationProperties properties, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-            : base(NetworkResourceDataSerializationCompatibility.GetId(additionalBinaryDataProperties), name ?? NetworkResourceDataSerializationCompatibility.GetName(additionalBinaryDataProperties), NetworkResourceDataSerializationCompatibility.GetResourceType(additionalBinaryDataProperties), NetworkResourceDataSerializationCompatibility.GetSystemData(additionalBinaryDataProperties))
-        {
-            Properties = properties;
-            Name = name ?? NetworkResourceDataSerializationCompatibility.GetName(additionalBinaryDataProperties);
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
-    }
-    [CodeGenSuppress("NetworkSecurityPerimeterLinkData", typeof(NspLinkProperties), typeof(string), typeof(IDictionary<string, BinaryData>))]
-    public partial class NetworkSecurityPerimeterLinkData : ResourceData
-    {
-        // TODO: Remove when the generator custom-base serialization fix is available in this branch.
-        internal NetworkSecurityPerimeterLinkData(NspLinkProperties properties, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-            : base(NetworkResourceDataSerializationCompatibility.GetId(additionalBinaryDataProperties), name ?? NetworkResourceDataSerializationCompatibility.GetName(additionalBinaryDataProperties), NetworkResourceDataSerializationCompatibility.GetResourceType(additionalBinaryDataProperties), NetworkResourceDataSerializationCompatibility.GetSystemData(additionalBinaryDataProperties))
-        {
-            Properties = properties;
-            Name = name ?? NetworkResourceDataSerializationCompatibility.GetName(additionalBinaryDataProperties);
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
-    }
-    [CodeGenSuppress("NetworkSecurityPerimeterLinkReferenceData", typeof(NspLinkReferenceProperties), typeof(string), typeof(IDictionary<string, BinaryData>))]
-    public partial class NetworkSecurityPerimeterLinkReferenceData : ResourceData
-    {
-        // TODO: Remove when the generator custom-base serialization fix is available in this branch.
-        internal NetworkSecurityPerimeterLinkReferenceData(NspLinkReferenceProperties properties, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-            : base(NetworkResourceDataSerializationCompatibility.GetId(additionalBinaryDataProperties), name ?? NetworkResourceDataSerializationCompatibility.GetName(additionalBinaryDataProperties), NetworkResourceDataSerializationCompatibility.GetResourceType(additionalBinaryDataProperties), NetworkResourceDataSerializationCompatibility.GetSystemData(additionalBinaryDataProperties))
-        {
-            Properties = properties;
-            Name = name ?? NetworkResourceDataSerializationCompatibility.GetName(additionalBinaryDataProperties);
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
-    }
-    [CodeGenSuppress("NetworkSecurityPerimeterLoggingConfigurationData", typeof(NspLoggingConfigurationProperties), typeof(string), typeof(IDictionary<string, BinaryData>))]
-    public partial class NetworkSecurityPerimeterLoggingConfigurationData : ResourceData
-    {
-        // TODO: Remove when the generator custom-base serialization fix is available in this branch.
-        internal NetworkSecurityPerimeterLoggingConfigurationData(NspLoggingConfigurationProperties properties, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-            : base(NetworkResourceDataSerializationCompatibility.GetId(additionalBinaryDataProperties), name ?? NetworkResourceDataSerializationCompatibility.GetName(additionalBinaryDataProperties), NetworkResourceDataSerializationCompatibility.GetResourceType(additionalBinaryDataProperties), NetworkResourceDataSerializationCompatibility.GetSystemData(additionalBinaryDataProperties))
-        {
-            Properties = properties;
-            Name = name ?? NetworkResourceDataSerializationCompatibility.GetName(additionalBinaryDataProperties);
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
-    }
-    [CodeGenSuppress("NetworkSecurityPerimeterProfileData", typeof(NspProfileProperties), typeof(string), typeof(IDictionary<string, BinaryData>))]
-    public partial class NetworkSecurityPerimeterProfileData : ResourceData
-    {
-        // TODO: Remove when the generator custom-base serialization fix is available in this branch.
-        internal NetworkSecurityPerimeterProfileData(NspProfileProperties properties, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-            : base(NetworkResourceDataSerializationCompatibility.GetId(additionalBinaryDataProperties), name ?? NetworkResourceDataSerializationCompatibility.GetName(additionalBinaryDataProperties), NetworkResourceDataSerializationCompatibility.GetResourceType(additionalBinaryDataProperties), NetworkResourceDataSerializationCompatibility.GetSystemData(additionalBinaryDataProperties))
-        {
-            Properties = properties;
-            Name = name ?? NetworkResourceDataSerializationCompatibility.GetName(additionalBinaryDataProperties);
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
-    }
+    public partial class NetworkSecurityPerimeterAccessRuleData : ResourceData { }
+    public partial class NetworkSecurityPerimeterAssociationData : ResourceData { }
+    public partial class NetworkSecurityPerimeterLinkData : ResourceData { }
+    public partial class NetworkSecurityPerimeterLinkReferenceData : ResourceData { }
+    public partial class NetworkSecurityPerimeterLoggingConfigurationData : ResourceData { }
+    public partial class NetworkSecurityPerimeterProfileData : ResourceData { }
     /// <summary> A class representing packet capture data. </summary>
     public partial class PacketCaptureData : ResourceData { }
     public partial class ReachabilityAnalysisIntentData : ResourceData { }
@@ -125,33 +58,10 @@ namespace Azure.ResourceManager.Network
     public partial class VpnServerConfigurationData : NetworkTrackedResourceData { }
     public partial class VpnSiteData : NetworkTrackedResourceData { }
 
-    [CodeGenSuppress("DdosProtectionPlanData", typeof(DdosProtectionPlanPropertiesFormat), typeof(string), typeof(ETag?), typeof(IDictionary<string, BinaryData>))]
-    public partial class DdosProtectionPlanData : TrackedResourceData
-    {
-        // TODO: Remove when the generator custom-base serialization fix is available in this branch.
-        internal DdosProtectionPlanData(DdosProtectionPlanPropertiesFormat properties, string name, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-            : base(NetworkResourceDataSerializationCompatibility.GetId(additionalBinaryDataProperties), name ?? NetworkResourceDataSerializationCompatibility.GetName(additionalBinaryDataProperties), NetworkResourceDataSerializationCompatibility.GetResourceType(additionalBinaryDataProperties), NetworkResourceDataSerializationCompatibility.GetSystemData(additionalBinaryDataProperties), NetworkResourceDataSerializationCompatibility.GetTags(additionalBinaryDataProperties), NetworkResourceDataSerializationCompatibility.GetLocation(additionalBinaryDataProperties))
-        {
-            Properties = properties;
-            Name = name ?? NetworkResourceDataSerializationCompatibility.GetName(additionalBinaryDataProperties);
-            ETag = eTag;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
-    }
+    public partial class DdosProtectionPlanData : TrackedResourceData { }
     public partial class ExpressRouteProviderPortData : TrackedResourceData { }
     public partial class IpamPoolData : TrackedResourceData { }
-    [CodeGenSuppress("NetworkSecurityPerimeterData", typeof(NetworkSecurityPerimeterProperties), typeof(string), typeof(IDictionary<string, BinaryData>))]
-    public partial class NetworkSecurityPerimeterData : TrackedResourceData
-    {
-        // TODO: Remove when the generator custom-base serialization fix is available in this branch.
-        internal NetworkSecurityPerimeterData(NetworkSecurityPerimeterProperties properties, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-            : base(NetworkResourceDataSerializationCompatibility.GetId(additionalBinaryDataProperties), name ?? NetworkResourceDataSerializationCompatibility.GetName(additionalBinaryDataProperties), NetworkResourceDataSerializationCompatibility.GetResourceType(additionalBinaryDataProperties), NetworkResourceDataSerializationCompatibility.GetSystemData(additionalBinaryDataProperties), NetworkResourceDataSerializationCompatibility.GetTags(additionalBinaryDataProperties), NetworkResourceDataSerializationCompatibility.GetLocation(additionalBinaryDataProperties))
-        {
-            Properties = properties;
-            Name = name ?? NetworkResourceDataSerializationCompatibility.GetName(additionalBinaryDataProperties);
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
-    }
+    public partial class NetworkSecurityPerimeterData : TrackedResourceData { }
     public partial class NetworkVerifierWorkspaceData : TrackedResourceData { }
     public partial class ServiceGatewayData : TrackedResourceData { }
 

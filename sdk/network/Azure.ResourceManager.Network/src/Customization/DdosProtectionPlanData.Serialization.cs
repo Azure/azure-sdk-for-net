@@ -9,16 +9,34 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
 using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
+    /// <summary> A DDoS protection plan in a resource group. </summary>
+    [CodeGenSuppress("DdosProtectionPlanData", typeof(DdosProtectionPlanPropertiesFormat), typeof(string), typeof(ETag?), typeof(IDictionary<string, BinaryData>))]
     [CodeGenSuppress("JsonModelWriteCore", typeof(Utf8JsonWriter), typeof(ModelReaderWriterOptions))]
     [CodeGenSuppress("DeserializeDdosProtectionPlanData", typeof(JsonElement), typeof(ModelReaderWriterOptions))]
     public partial class DdosProtectionPlanData
     {
-        // TODO: Remove when the generator custom-base serialization fix is available in this branch.
+        // The migration customizes this model to inherit TrackedResourceData, but the current generator
+        // still emits serialization against the service-defined base shape. Preserve inherited ARM fields
+        // from the raw payload until the generator custom-base serialization fix is available.
+        // TODO: Remove this SDK-side workaround after adopting the generator custom-base serialization fix.
+        internal DdosProtectionPlanData(DdosProtectionPlanPropertiesFormat properties, string name, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+            : base(NetworkResourceDataSerializationCompatibility.GetId(additionalBinaryDataProperties), name ?? NetworkResourceDataSerializationCompatibility.GetName(additionalBinaryDataProperties), NetworkResourceDataSerializationCompatibility.GetResourceType(additionalBinaryDataProperties), NetworkResourceDataSerializationCompatibility.GetSystemData(additionalBinaryDataProperties), NetworkResourceDataSerializationCompatibility.GetTags(additionalBinaryDataProperties), NetworkResourceDataSerializationCompatibility.GetLocation(additionalBinaryDataProperties))
+        {
+            Properties = properties;
+            Name = name ?? NetworkResourceDataSerializationCompatibility.GetName(additionalBinaryDataProperties);
+            ETag = eTag;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        // The generated writer does not call TrackedResourceData.JsonModelWriteCore after the custom base
+        // replacement, so request bodies miss inherited fields such as location.
+        // TODO: Remove this SDK-side workaround after adopting the generator custom-base serialization fix.
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -60,7 +78,9 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        // TODO: Remove when the generator custom-base serialization fix is available in this branch.
+        // The generated deserializer ignores inherited ARM fields in wire format; keep them in the raw
+        // metadata bag so the custom constructor can initialize TrackedResourceData.
+        // TODO: Remove this SDK-side workaround after adopting the generator custom-base serialization fix.
         internal static DdosProtectionPlanData DeserializeDdosProtectionPlanData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
