@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                 HttpMessage message = _schemaRegistriesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DeviceRegistrySchemaRegistryPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DeviceRegistryArmOperation<DeviceRegistrySchemaRegistryResource> operation = new DeviceRegistryArmOperation<DeviceRegistrySchemaRegistryResource>(
-                    new DeviceRegistrySchemaRegistryOperationSource(Client),
+                    new DeviceRegistrySchemaRegistryResourceOperationSource(Client),
                     _schemaRegistriesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                 HttpMessage message = _schemaRegistriesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DeviceRegistrySchemaRegistryPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DeviceRegistryArmOperation<DeviceRegistrySchemaRegistryResource> operation = new DeviceRegistryArmOperation<DeviceRegistrySchemaRegistryResource>(
-                    new DeviceRegistrySchemaRegistryOperationSource(Client),
+                    new DeviceRegistrySchemaRegistryResourceOperationSource(Client),
                     _schemaRegistriesClientDiagnostics,
                     Pipeline,
                     message.Request,

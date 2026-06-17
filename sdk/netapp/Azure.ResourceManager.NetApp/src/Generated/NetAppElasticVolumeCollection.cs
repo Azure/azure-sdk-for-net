@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.NetApp
                 HttpMessage message = _elasticVolumesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, volumeName, NetAppElasticVolumeData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetAppArmOperation<NetAppElasticVolumeResource> operation = new NetAppArmOperation<NetAppElasticVolumeResource>(
-                    new NetAppElasticVolumeOperationSource(Client),
+                    new NetAppElasticVolumeResourceOperationSource(Client),
                     _elasticVolumesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.NetApp
                 HttpMessage message = _elasticVolumesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, volumeName, NetAppElasticVolumeData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetAppArmOperation<NetAppElasticVolumeResource> operation = new NetAppArmOperation<NetAppElasticVolumeResource>(
-                    new NetAppElasticVolumeOperationSource(Client),
+                    new NetAppElasticVolumeResourceOperationSource(Client),
                     _elasticVolumesClientDiagnostics,
                     Pipeline,
                     message.Request,

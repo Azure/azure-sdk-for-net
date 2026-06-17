@@ -39,7 +39,7 @@
     <PackageVersion Include="Azure.Messaging.EventHubs.Processor" Version="5.12.2" />
     <PackageVersion Include="Azure.ResourceManager.Compute" Version="1.13.0" />
     <PackageVersion Include="Azure.ResourceManager.ExtendedLocations" Version="1.1.2" />
-    <PackageVersion Include="Azure.ResourceManager.PrivateDns" Version="1.2.2" />
+    <PackageVersion Include="Azure.ResourceManager.PrivateDns" Version="1.2.3" />
     <PackageVersion Include="Azure.ResourceManager.RecoveryServices" Version="1.2.0" />
     <PackageVersion Include="Castle.Core" Version="$(CastleCoreVersion)" />
     <PackageVersion Include="CloudNative.CloudEvents.SystemTextJson" Version="$(CloudNativeCloudEventsSystemTextJsonVersion)" />
@@ -126,7 +126,7 @@
     <PackageVersion Include="System.IO.Compression" Version="4.3.0" />
     <PackageVersion Include="System.IO.FileSystem.AccessControl" Version="5.0.0" />
     <PackageVersion Include="System.IO.Pipelines" Version="$(SystemIOPipelinesVersion)" />
-    <PackageVersion Include="System.Linq.AsyncEnumerable" Version="10.0.1" />
+    <PackageVersion Include="System.Linq.AsyncEnumerable" Version="10.0.9" />
     <PackageVersion Include="System.Net.WebSockets.Client" Version="4.3.2" />
     <PackageVersion Include="System.Reflection.Emit" Version="4.7.0" />
     <PackageVersion Include="System.Runtime.InteropServices" Version="4.3.0" />

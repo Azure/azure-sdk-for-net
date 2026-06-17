@@ -20,7 +20,6 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
     public static partial class ArmAgriculturePlatformModelFactory
     {
 
-        /// <summary> Schema of the AgriService resource from Microsoft.AgriculturePlatform resource provider. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -40,12 +39,12 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
                 identity,
-                sku);
+                sku,
+                default);
         }
 
         /// <param name="provisioningState"> The status of the last operation. </param>
@@ -62,13 +61,12 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
             return new AgricultureServiceProperties(
                 provisioningState,
                 config,
-                managedOnBehalfOfMoboBrokerResources is null ? default : new ManagedOnBehalfOfConfiguration((managedOnBehalfOfMoboBrokerResources ?? new ChangeTrackingList<SubResource>()).ToList(), null),
-                dataConnectorCredentials.ToList(),
-                installedSolutions.ToList(),
-                additionalBinaryDataProperties: null);
+                managedOnBehalfOfMoboBrokerResources is null ? default : new ManagedOnBehalfOfConfiguration((managedOnBehalfOfMoboBrokerResources ?? new ChangeTrackingList<SubResource>()).ToList(), default),
+                (dataConnectorCredentials ?? new ChangeTrackingList<DataConnectorCredentialMap>()).ToList(),
+                (installedSolutions ?? new ChangeTrackingList<InstalledSolutionMap>()).ToList(),
+                default);
         }
 
-        /// <summary> Config of the AgriService resource instance. </summary>
         /// <param name="instanceUri"> Instance URI of the AgriService instance. </param>
         /// <param name="version"> Version of AgriService instance. </param>
         /// <param name="appServiceResourceId"> App service resource Id. </param>
@@ -87,10 +85,78 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
                 storageAccountResourceId,
                 keyVaultResourceId,
                 redisCacheResourceId,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> The type used for update operations of the AgriServiceResource. </summary>
+        /// <param name="key"> The key representing the credential. </param>
+        /// <param name="value"> The data connector credential value. </param>
+        /// <returns> A new <see cref="Models.DataConnectorCredentialMap"/> instance for mocking. </returns>
+        public static DataConnectorCredentialMap DataConnectorCredentialMap(string key = default, DataConnectorCredentials value = default)
+        {
+            return new DataConnectorCredentialMap(key, value, default);
+        }
+
+        /// <param name="kind"> Type of credential. </param>
+        /// <param name="clientId"> Client Id associated with the provider, if type of credentials is OAuthClientCredentials. </param>
+        /// <param name="keyVaultUri"> Uri of the key vault. </param>
+        /// <param name="keyName"> Name of the key vault key. </param>
+        /// <param name="keyVersion"> Version of the key vault key. </param>
+        /// <returns> A new <see cref="Models.DataConnectorCredentials"/> instance for mocking. </returns>
+        public static DataConnectorCredentials DataConnectorCredentials(AuthCredentialsKind? kind = default, string clientId = default, string keyVaultUri = default, string keyName = default, string keyVersion = default)
+        {
+            return new DataConnectorCredentials(
+                kind,
+                clientId,
+                keyVaultUri,
+                keyName,
+                keyVersion,
+                default);
+        }
+
+        /// <param name="key"> The key representing the installed solution. </param>
+        /// <param name="value"> The installed solution value. </param>
+        /// <returns> A new <see cref="Models.InstalledSolutionMap"/> instance for mocking. </returns>
+        public static InstalledSolutionMap InstalledSolutionMap(string key = default, AgricultureSolution value = default)
+        {
+            return new InstalledSolutionMap(key, value, default);
+        }
+
+        /// <param name="applicationName"> Application name of the solution. </param>
+        /// <param name="partnerId"> Partner Id. </param>
+        /// <param name="marketPlacePublisherId"> Marketplace publisher Id. </param>
+        /// <param name="saasSubscriptionId"> Saas subscription Id. </param>
+        /// <param name="saasSubscriptionName"> Saas subscription name. </param>
+        /// <param name="planId"> Plan Id. </param>
+        /// <returns> A new <see cref="Models.AgricultureSolution"/> instance for mocking. </returns>
+        public static AgricultureSolution AgricultureSolution(string applicationName = default, string partnerId = default, string marketPlacePublisherId = default, string saasSubscriptionId = default, string saasSubscriptionName = default, string planId = default)
+        {
+            return new AgricultureSolution(
+                applicationName,
+                partnerId,
+                marketPlacePublisherId,
+                saasSubscriptionId,
+                saasSubscriptionName,
+                planId,
+                default);
+        }
+
+        /// <param name="name"> The name of the SKU. Ex - P3. It is typically a letter+number code. </param>
+        /// <param name="tier"> This field is required to be implemented by the Resource Provider if the service has more than one tier, but is not required on a PUT. </param>
+        /// <param name="size"> The SKU size. When the name field is the combination of tier and some other value, this would be the standalone code. </param>
+        /// <param name="family"> If the service has different generations of hardware, for the same SKU, then that can be captured here. </param>
+        /// <param name="capacity"> If the SKU supports scale out/in then the capacity integer should be included. If scale out/in is not possible for the resource this may be omitted. </param>
+        /// <returns> A new <see cref="Models.AgriculturePlatformSku"/> instance for mocking. </returns>
+        public static AgriculturePlatformSku AgriculturePlatformSku(string name = default, AgriculturePlatformSkuTier? tier = default, string size = default, string family = default, int? capacity = default)
+        {
+            return new AgriculturePlatformSku(
+                name,
+                tier,
+                size,
+                family,
+                capacity,
+                default);
+        }
+
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="sku"> The SKU (Stock Keeping Unit) assigned to this resource. </param>
         /// <param name="tags"> Resource tags. </param>
@@ -100,10 +166,9 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new AgricultureServicePatch(identity, sku, tags, properties, additionalBinaryDataProperties: null);
+            return new AgricultureServicePatch(identity, sku, tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
         }
 
-        /// <summary> The updatable properties of the AgriServiceResource. </summary>
         /// <param name="config"> Config of the AgriService instance. </param>
         /// <param name="dataConnectorCredentials"> Data connector credentials of AgriService instance. </param>
         /// <param name="installedSolutions"> AgriService installed solutions. </param>
@@ -113,20 +178,18 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
             dataConnectorCredentials ??= new ChangeTrackingList<DataConnectorCredentialMap>();
             installedSolutions ??= new ChangeTrackingList<InstalledSolutionMap>();
 
-            return new AgricultureServicePatchProperties(config, dataConnectorCredentials.ToList(), installedSolutions.ToList(), additionalBinaryDataProperties: null);
+            return new AgricultureServicePatchProperties(config, (dataConnectorCredentials ?? new ChangeTrackingList<DataConnectorCredentialMap>()).ToList(), (installedSolutions ?? new ChangeTrackingList<InstalledSolutionMap>()).ToList(), default);
         }
 
-        /// <summary> The list of available agri solutions. </summary>
         /// <param name="solutions"> Agri solutions list. </param>
         /// <returns> A new <see cref="Models.AvailableAgriSolutionListResult"/> instance for mocking. </returns>
         public static AvailableAgriSolutionListResult AvailableAgriSolutionListResult(IEnumerable<DataManagerForAgricultureSolution> solutions = default)
         {
             solutions ??= new ChangeTrackingList<DataManagerForAgricultureSolution>();
 
-            return new AvailableAgriSolutionListResult(solutions.ToList(), additionalBinaryDataProperties: null);
+            return new AvailableAgriSolutionListResult((solutions ?? new ChangeTrackingList<DataManagerForAgricultureSolution>()).ToList(), default);
         }
 
-        /// <summary> Data Manager for Agriculture solution. </summary>
         /// <param name="partnerId"> Partner Id. </param>
         /// <param name="solutionId"> Solution Id. </param>
         /// <param name="partnerTenantId"> Partner tenant Id. </param>
@@ -145,22 +208,21 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
                 partnerId,
                 solutionId,
                 partnerTenantId,
-                dataAccessScopes.ToList(),
+                (dataAccessScopes ?? new ChangeTrackingList<string>()).ToList(),
                 marketPlaceOfferDetails,
                 saasApplicationId,
                 accessAzureDataManagerForAgricultureApplicationId,
                 accessAzureDataManagerForAgricultureApplicationName,
                 isValidateInput,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> Marketplace offer details of Agri solution. </summary>
         /// <param name="saasOfferId"> Saas offer Id. </param>
         /// <param name="publisherId"> Publisher Id. </param>
         /// <returns> A new <see cref="Models.MarketPlaceOfferDetails"/> instance for mocking. </returns>
         public static MarketPlaceOfferDetails MarketPlaceOfferDetails(string saasOfferId = default, string publisherId = default)
         {
-            return new MarketPlaceOfferDetails(saasOfferId, publisherId, additionalBinaryDataProperties: null);
+            return new MarketPlaceOfferDetails(saasOfferId, publisherId, default);
         }
     }
 }

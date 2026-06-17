@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.EventHubs
                 HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 EventHubsArmOperation<EventHubsNetworkSecurityPerimeterConfigurationResource> operation = new EventHubsArmOperation<EventHubsNetworkSecurityPerimeterConfigurationResource>(
-                    new EventHubsNetworkSecurityPerimeterConfigurationOperationSource(Client),
+                    new EventHubsNetworkSecurityPerimeterConfigurationResourceOperationSource(Client),
                     _networkSecurityPerimeterConfigurationsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.EventHubs
                 HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 EventHubsArmOperation<EventHubsNetworkSecurityPerimeterConfigurationResource> operation = new EventHubsArmOperation<EventHubsNetworkSecurityPerimeterConfigurationResource>(
-                    new EventHubsNetworkSecurityPerimeterConfigurationOperationSource(Client),
+                    new EventHubsNetworkSecurityPerimeterConfigurationResourceOperationSource(Client),
                     _networkSecurityPerimeterConfigurationsClientDiagnostics,
                     Pipeline,
                     message.Request,

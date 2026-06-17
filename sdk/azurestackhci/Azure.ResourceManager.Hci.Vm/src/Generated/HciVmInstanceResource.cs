@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 HttpMessage message = _virtualMachineInstancesRestClient.CreateCreateOrUpdateRequest(Id.Parent.ToString(), HciVmInstanceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 VmArmOperation<HciVmInstanceResource> operation = new VmArmOperation<HciVmInstanceResource>(
-                    new HciVmInstanceOperationSource(Client),
+                    new HciVmInstanceResourceOperationSource(Client),
                     _virtualMachineInstancesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 HttpMessage message = _virtualMachineInstancesRestClient.CreateCreateOrUpdateRequest(Id.Parent.ToString(), HciVmInstanceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 VmArmOperation<HciVmInstanceResource> operation = new VmArmOperation<HciVmInstanceResource>(
-                    new HciVmInstanceOperationSource(Client),
+                    new HciVmInstanceResourceOperationSource(Client),
                     _virtualMachineInstancesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 HttpMessage message = _virtualMachineInstancesRestClient.CreateUpdateRequest(Id.Parent.ToString(), HciVmInstancePatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 VmArmOperation<HciVmInstanceResource> operation = new VmArmOperation<HciVmInstanceResource>(
-                    new HciVmInstanceOperationSource(Client),
+                    new HciVmInstanceResourceOperationSource(Client),
                     _virtualMachineInstancesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 HttpMessage message = _virtualMachineInstancesRestClient.CreateUpdateRequest(Id.Parent.ToString(), HciVmInstancePatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 VmArmOperation<HciVmInstanceResource> operation = new VmArmOperation<HciVmInstanceResource>(
-                    new HciVmInstanceOperationSource(Client),
+                    new HciVmInstanceResourceOperationSource(Client),
                     _virtualMachineInstancesClientDiagnostics,
                     Pipeline,
                     message.Request,

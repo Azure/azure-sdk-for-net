@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     public readonly partial struct NetworkFabricExtendedVlan : IEquatable<NetworkFabricExtendedVlan>
     {
         private readonly string _value;
+        /// <summary> Extended VLAN is enabled. </summary>
+        private const string EnabledValue = "Enabled";
+        /// <summary> Extended VLAN is disabled. </summary>
+        private const string DisabledValue = "Disabled";
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricExtendedVlan"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NetworkFabricExtendedVlan(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string EnabledValue = "Enabled";
-        private const string DisabledValue = "Disabled";
+            _value = value;
+        }
 
         /// <summary> Extended VLAN is enabled. </summary>
         public static NetworkFabricExtendedVlan Enabled { get; } = new NetworkFabricExtendedVlan(EnabledValue);
+
         /// <summary> Extended VLAN is disabled. </summary>
         public static NetworkFabricExtendedVlan Disabled { get; } = new NetworkFabricExtendedVlan(DisabledValue);
+
         /// <summary> Determines if two <see cref="NetworkFabricExtendedVlan"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NetworkFabricExtendedVlan left, NetworkFabricExtendedVlan right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NetworkFabricExtendedVlan"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NetworkFabricExtendedVlan left, NetworkFabricExtendedVlan right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NetworkFabricExtendedVlan"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NetworkFabricExtendedVlan"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NetworkFabricExtendedVlan(string value) => new NetworkFabricExtendedVlan(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NetworkFabricExtendedVlan"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NetworkFabricExtendedVlan?(string value) => value == null ? null : new NetworkFabricExtendedVlan(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NetworkFabricExtendedVlan other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NetworkFabricExtendedVlan other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

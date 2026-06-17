@@ -68,7 +68,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             }
         }
 
-        [Test]
         [RecordedTest]
         public async Task GremlinGraphCreateAndUpdate()
         {
@@ -103,7 +102,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             VerifyGremlinGraphs(grpah, graph2);
         }
 
-        [Test]
         [RecordedTest]
         public async Task GremlinGraphList()
         {
@@ -116,7 +114,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             VerifyGremlinGraphs(praphs[0], graph);
         }
 
-        [Test]
         [RecordedTest]
         public async Task GremlinGraphThroughput()
         {
@@ -134,9 +131,9 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.AreEqual(TestThroughput2, throughput2.Data.Resource.Throughput);
         }
 
-        [Test]
         [RecordedTest]
-        [Ignore("Need to diagnose The operation has not completed yet.")]
+
+        [Ignore("MPG migration WIP: ResourceIdentifier strict-validation rejects action segment in LRO response id.")]
         public async Task GremlinGraphMigrateToAutoscale()
         {
             var graph = await CreateGremlinGraph(null);
@@ -148,9 +145,9 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             AssertAutoscale(throughputData);
         }
 
-        [Test]
         [RecordedTest]
-        [Ignore("Need to diagnose The operation has not completed yet.")]
+
+        [Ignore("MPG migration WIP: ResourceIdentifier strict-validation rejects action segment in LRO response id.")]
         public async Task GremlinGraphMigrateToManual()
         {
             var parameters = BuildCreateUpdateOptions(new AutoscaleSettings()
@@ -166,7 +163,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             AssertManualThroughput(throughputData);
         }
 
-        [Test]
         [RecordedTest]
         public async Task GremlinGraphDelete()
         {

@@ -78,9 +78,9 @@ public class Sample_SessionFiles : SamplesBase
         File.Delete(filePath);
         #endregion
         #region Snippet:Sample_List_SessionFiles_Async
-        SessionDirectoryListResponse response = await sessionClient.GetSessionFilesAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId, sessionStoragePath: ".");
-        Console.WriteLine($"The path {response.Path} contains the next files:");
-        foreach (SessionDirectoryEntry entry in response.Entries)
+        AsyncCollectionResult<SessionDirectoryEntry> response = sessionClient.GetSessionFilesAsync(agentName: agentVersion.Name, agentSessionId: session.AgentSessionId, sessionStoragePath: ".");
+        Console.WriteLine($"The path contains the next files:");
+        await foreach (SessionDirectoryEntry entry in response)
         {
             Console.WriteLine($"    - {entry.Name}, size {entry.Size}");
         }
@@ -167,9 +167,9 @@ public class Sample_SessionFiles : SamplesBase
         File.Delete(filePath);
         #endregion
         #region Snippet:Sample_List_SessionFiles_Sync
-        SessionDirectoryListResponse response = sessionClient.GetSessionFiles(agentName: agentVersion.Name, sessionId: session.AgentSessionId, sessionStoragePath: ".");
-        Console.WriteLine($"The path {response.Path} contains the next files:");
-        foreach (SessionDirectoryEntry entry in response.Entries)
+        CollectionResult<SessionDirectoryEntry> response = sessionClient.GetSessionFiles(agentName: agentVersion.Name, agentSessionId: session.AgentSessionId, sessionStoragePath: ".");
+        Console.WriteLine($"The path contains the next files:");
+        foreach (SessionDirectoryEntry entry in response)
         {
             Console.WriteLine($"    - {entry.Name}, size {entry.Size}");
         }

@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Storage
                 HttpMessage message = _connectorsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectorName, StorageConnectorData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 StorageArmOperation<StorageConnectorResource> operation = new StorageArmOperation<StorageConnectorResource>(
-                    new StorageConnectorOperationSource(Client),
+                    new StorageConnectorResourceOperationSource(Client),
                     _connectorsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Storage
                 HttpMessage message = _connectorsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectorName, StorageConnectorData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 StorageArmOperation<StorageConnectorResource> operation = new StorageArmOperation<StorageConnectorResource>(
-                    new StorageConnectorOperationSource(Client),
+                    new StorageConnectorResourceOperationSource(Client),
                     _connectorsClientDiagnostics,
                     Pipeline,
                     message.Request,

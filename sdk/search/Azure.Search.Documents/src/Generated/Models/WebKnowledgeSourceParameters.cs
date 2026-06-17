@@ -23,14 +23,34 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Initializes a new instance of <see cref="WebKnowledgeSourceParameters"/>. </summary>
         /// <param name="domains"> Domain allow/block configuration for web results. </param>
+        /// <param name="language"> The default language for web results. Can be overridden at query time via knowledge source runtime parameters. </param>
+        /// <param name="market"> The default market for web results. Can be overridden at query time via knowledge source runtime parameters. </param>
+        /// <param name="count"> The default number of web results to return. Can be overridden at query time via knowledge source runtime parameters. </param>
+        /// <param name="freshness"> The default freshness filter for web results. Can be overridden at query time via knowledge source runtime parameters. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WebKnowledgeSourceParameters(WebKnowledgeSourceDomains domains, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WebKnowledgeSourceParameters(WebKnowledgeSourceDomains domains, string language, string market, int? count, string freshness, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Domains = domains;
+            Language = language;
+            Market = market;
+            Count = count;
+            Freshness = freshness;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Domain allow/block configuration for web results. </summary>
         public WebKnowledgeSourceDomains Domains { get; set; }
+
+        /// <summary> The default language for web results. Can be overridden at query time via knowledge source runtime parameters. </summary>
+        public string Language { get; set; }
+
+        /// <summary> The default market for web results. Can be overridden at query time via knowledge source runtime parameters. </summary>
+        public string Market { get; set; }
+
+        /// <summary> The default number of web results to return. Can be overridden at query time via knowledge source runtime parameters. </summary>
+        public int? Count { get; set; }
+
+        /// <summary> The default freshness filter for web results. Can be overridden at query time via knowledge source runtime parameters. </summary>
+        public string Freshness { get; set; }
     }
 }

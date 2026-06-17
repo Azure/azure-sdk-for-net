@@ -4,17 +4,18 @@
 import {
   DecoratedType,
   getClientOptions,
+  SdkEnumType,
   SdkHttpOperation,
-  SdkMethod
+  SdkMethod,
+  SdkPathParameter
 } from "@azure-tools/typespec-client-generator-core";
 import { NoTarget, Program } from "@typespec/compiler";
 import pluralize from "pluralize";
 import { $lib } from "./lib/lib.js";
 
 type SdkHttpOperationParameter = SdkHttpOperation["parameters"][number];
-type SdkHttpOperationEnumPathParameter = SdkHttpOperationParameter & {
-  kind: "path";
-  type: { kind: "enum"; values: { value: unknown }[] };
+type SdkHttpOperationEnumPathParameter = SdkPathParameter & {
+  type: SdkEnumType;
 };
 
 // ─── Path utilities ─────────────────────────────────────────────────────────
@@ -25,6 +26,17 @@ type SdkHttpOperationEnumPathParameter = SdkHttpOperationParameter & {
  */
 export function isVariableSegment(segment: string): boolean {
   return segment.startsWith("{") && segment.endsWith("}");
+}
+
+/**
+ * Gets the parameter name from a variable segment like {resourceName}.
+ */
+export function getVariableSegmentName(segment: string): string {
+  return segment.slice(1, -1);
+}
+
+function literalSegmentsEqual(left: string, right: string): boolean {
+  return left.toLowerCase() === right.toLowerCase();
 }
 
 /**
@@ -99,7 +111,7 @@ export class RequestPath {
         isVariableSegment(other.segments[i])
       ) {
         count++;
-      } else if (this.segments[i] === other.segments[i]) {
+      } else if (literalSegmentsEqual(this.segments[i], other.segments[i])) {
         count++;
       } else {
         break;
@@ -135,7 +147,8 @@ export class RequestPath {
       ) {
         continue;
       }
-      if (this.segments[i] !== other.segments[i]) return false;
+      if (!literalSegmentsEqual(this.segments[i], other.segments[i]))
+        return false;
     }
     return true;
   }
@@ -182,7 +195,7 @@ export class RequestPath {
     return (
       this.length === 0 ||
       (this.length === 2 &&
-        this.segments[0] === "tenants" &&
+        literalSegmentsEqual(this.segments[0], "tenants") &&
         isVariableSegment(this.segments[1]))
     );
   }
@@ -190,7 +203,7 @@ export class RequestPath {
   isSubscriptionPath(): boolean {
     return (
       this.length === 2 &&
-      this.segments[0] === "subscriptions" &&
+      literalSegmentsEqual(this.segments[0], "subscriptions") &&
       isVariableSegment(this.segments[1])
     );
   }
@@ -198,9 +211,9 @@ export class RequestPath {
   isResourceGroupPath(): boolean {
     return (
       this.length === 4 &&
-      this.segments[0] === "subscriptions" &&
+      literalSegmentsEqual(this.segments[0], "subscriptions") &&
       isVariableSegment(this.segments[1]) &&
-      this.segments[2] === "resourceGroups" &&
+      literalSegmentsEqual(this.segments[2], "resourceGroups") &&
       isVariableSegment(this.segments[3])
     );
   }
@@ -208,9 +221,9 @@ export class RequestPath {
   isManagementGroupPath(): boolean {
     return (
       this.length === 4 &&
-      this.segments[0] === "providers" &&
-      this.segments[1] === "Microsoft.Management" &&
-      this.segments[2] === "managementGroups" &&
+      literalSegmentsEqual(this.segments[0], "providers") &&
+      literalSegmentsEqual(this.segments[1], "Microsoft.Management") &&
+      literalSegmentsEqual(this.segments[2], "managementGroups") &&
       isVariableSegment(this.segments[3])
     );
   }
@@ -265,7 +278,7 @@ export class RequestPath {
         return "Microsoft.Resources/subscriptions";
       } else if (this.isResourceGroupPath()) {
         return "Microsoft.Resources/resourceGroups";
-      } else if (this.segments[0] === "tenants") {
+      } else if (literalSegmentsEqual(this.segments[0], "tenants")) {
         return "Microsoft.Resources/tenants";
       }
       return undefined;
@@ -618,6 +631,7 @@ export interface ResourceMethod {
 export enum ResourceOperationKind {
   Action = "Action",
   CheckExistence = "CheckExistence",
+  CollectionAction = "CollectionAction",
   Create = "Create",
   Delete = "Delete",
   Read = "Read",
@@ -660,6 +674,8 @@ function getKindSortOrder(kind: ResourceOperationKind): number {
       return 2;
     case ResourceOperationKind.CheckExistence:
       return 3;
+    case ResourceOperationKind.CollectionAction:
+      return 7;
     case ResourceOperationKind.Update:
       return 4;
     case ResourceOperationKind.Delete:
@@ -667,7 +683,7 @@ function getKindSortOrder(kind: ResourceOperationKind): number {
     case ResourceOperationKind.List:
       return 6;
     case ResourceOperationKind.Action:
-      return 7;
+      return 8;
     default:
       return 99;
   }
@@ -801,9 +817,11 @@ function operationPathEndsWithResourceType(
   resourceType: string
 ): boolean {
   const lastTypeSegment = resourceType.split("/").at(-1);
+  const lastOperationSegment = operationPath.segments.at(-1);
   return (
     lastTypeSegment !== undefined &&
-    operationPath.segments[operationPath.length - 1] === lastTypeSegment
+    lastOperationSegment !== undefined &&
+    literalSegmentsEqual(lastOperationSegment, lastTypeSegment)
   );
 }
 
@@ -826,6 +844,37 @@ export function isResourceInstancePath(
     }
   }
   return true;
+}
+
+/**
+ * Treats name path parameters with fixed one-value enum types as constants.
+ */
+export function resolveFixedEnumNameSegments(
+  method: SdkMethod<SdkHttpOperation>,
+  path: RequestPath
+): RequestPath {
+  let changed = false;
+  const segments = [...path.segments];
+  const providerIndex = path.lastProvidersSegmentIndex;
+  if (providerIndex < 0) return path;
+
+  // The provider tail starts as /providers/<namespace>/<type>/{name};
+  // providerIndex + 3 is the first name segment, then type/name pairs repeat.
+  for (let i = providerIndex + 3; i < segments.length; i += 2) {
+    const segment = segments[i];
+    if (!isVariableSegment(segment)) continue;
+
+    const fixedValue = getSingleFixedEnumValueForPathParam(
+      method,
+      getVariableSegmentName(segment)
+    );
+    if (!fixedValue) continue;
+
+    segments[i] = fixedValue;
+    changed = true;
+  }
+
+  return changed ? RequestPath.fromSegments(segments) : path;
 }
 
 /**
@@ -1160,7 +1209,7 @@ function postProcessExpandedArmResources(
     const validCandidates: RequestPath[] = [];
 
     for (const candidatePath of resourceInstancePaths) {
-      if (canBeListResourceScope(listOp.operationPath, candidatePath)) {
+      if (candidatePath.isPrefixOf(listOp.operationPath)) {
         validCandidates.push(candidatePath);
       }
     }
@@ -1250,42 +1299,6 @@ function postProcessExpandedArmResources(
   }
 
   return filteredResources;
-}
-
-/**
- * Helper function to determine if a resource path can be the scope for a list operation.
- * The resource path must be a prefix of the list operation path.
- */
-function canBeListResourceScope(
-  listPath: RequestPath,
-  resourceInstancePath: RequestPath
-): boolean {
-  // Check if resourceInstancePath is a prefix of listPath
-  if (listPath.length < resourceInstancePath.length) {
-    return false;
-  }
-  for (let i = 0; i < resourceInstancePath.length; i++) {
-    // if both segments are variables, we consider it as a match
-    if (
-      isVariableSegment(listPath.segments[i]) &&
-      isVariableSegment(resourceInstancePath.segments[i])
-    ) {
-      continue;
-    }
-    // if one of them is a variable, the other is not, we consider it as not a match
-    if (
-      isVariableSegment(listPath.segments[i]) ||
-      isVariableSegment(resourceInstancePath.segments[i])
-    ) {
-      return false;
-    }
-    // both are fixed strings, they must match
-    if (listPath.segments[i] !== resourceInstancePath.segments[i]) {
-      return false;
-    }
-  }
-  // here it means every segment in resourceInstancePath matches the corresponding segment in listPath
-  return true;
 }
 
 /**
@@ -1569,9 +1582,11 @@ export function detectDynamicTypeSegments(
 
   for (let i = providerIndex + 2; i < path.length - 1; i += 2) {
     if (isVariableSegment(path.segments[i])) {
-      const typeParamName = path.segments[i].slice(1, -1);
+      const typeParamName = getVariableSegmentName(path.segments[i]);
       const nameParamName =
-        i + 1 < path.length ? path.segments[i + 1].slice(1, -1) : "";
+        i + 1 < path.length && isVariableSegment(path.segments[i + 1])
+          ? getVariableSegmentName(path.segments[i + 1])
+          : "";
       results.push({
         typeParamName,
         nameParamName,
@@ -1642,4 +1657,17 @@ function getEnumValuesForPathParam(
   return param?.type.values
     .map((v) => v.value)
     .filter((v): v is string => typeof v === "string");
+}
+
+function getSingleFixedEnumValueForPathParam(
+  method: SdkMethod<SdkHttpOperation>,
+  paramName: string
+): string | undefined {
+  const param = findEnumPathParam(method, paramName);
+  if (!param?.type.isFixed || param.type.values.length !== 1) {
+    return undefined;
+  }
+
+  const value = param.type.values[0].value;
+  return typeof value === "string" ? value : undefined;
 }

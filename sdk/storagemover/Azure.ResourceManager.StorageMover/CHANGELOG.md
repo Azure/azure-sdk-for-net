@@ -1,14 +1,14 @@
 # Release History
 
-## 1.5.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.4.1 (2026-06-15)
 
 ### Bugs Fixed
 
+- Fixed `JobRunProperties` deserialization to handle empty-string `AgentResourceId`, `SourceResourceId`, and `TargetResourceId` values returned by the service (for example, for cloud-to-cloud jobs that have no agent, or resources in transient states). These previously threw an `ArgumentException` while polling job runs.
+
 ### Other Changes
+
+- Added model factory methods in `ArmStorageMoverModelFactory` for existing models (for example, `JobDefinitionPatch`, `ScheduleRecurrence`, `StorageMoverCredentials`, and the endpoint update-property models) to support mocking.
 
 ## 1.4.0 (2026-04-17)
 

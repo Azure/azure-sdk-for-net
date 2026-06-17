@@ -68,7 +68,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             }
         }
 
-        [Test]
         [RecordedTest]
         [LiveOnly]
         public async Task SqlRoleAssignmentCreateAndUpdate()
@@ -103,7 +102,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             VerifySqlRoleAssignments(assignment, assignment2);
         }
 
-        [Test]
         [RecordedTest]
         [LiveOnly]
         public async Task SqlRoleAssignmentList()
@@ -117,7 +115,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             VerifySqlRoleAssignments(assignments[0], assignment);
         }
 
-        [Test]
         [RecordedTest]
         [LiveOnly]
         public async Task SqlRoleAssignmentDelete()

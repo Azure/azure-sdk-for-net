@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DnsResolver
                 HttpMessage message = _dnsResolversRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, dnsResolverName, DnsResolverData.ToRequestContent(data), matchConditions, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DnsResolverArmOperation<DnsResolverResource> operation = new DnsResolverArmOperation<DnsResolverResource>(
-                    new DnsResolverOperationSource(Client),
+                    new DnsResolverResourceOperationSource(Client),
                     _dnsResolversClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.DnsResolver
                 HttpMessage message = _dnsResolversRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, dnsResolverName, DnsResolverData.ToRequestContent(data), matchConditions, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DnsResolverArmOperation<DnsResolverResource> operation = new DnsResolverArmOperation<DnsResolverResource>(
-                    new DnsResolverOperationSource(Client),
+                    new DnsResolverResourceOperationSource(Client),
                     _dnsResolversClientDiagnostics,
                     Pipeline,
                     message.Request,
