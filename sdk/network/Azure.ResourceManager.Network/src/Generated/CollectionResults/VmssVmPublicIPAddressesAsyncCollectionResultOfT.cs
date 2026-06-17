@@ -15,7 +15,7 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    internal partial class VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressesGetVirtualMachineScaleSetVMPublicIPAddressesAsyncCollectionResultOfT : AsyncPageable<PublicIPAddressData>
+    internal partial class VmssVmPublicIPAddressesAsyncCollectionResultOfT : AsyncPageable<PublicIPAddressData>
     {
         private readonly VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddresses _client;
         private readonly Guid _subscriptionId;
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Network
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressesGetVirtualMachineScaleSetVMPublicIPAddressesAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of VmssVmPublicIPAddressesAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddresses client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="ipConfigurationName"></param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressesGetVirtualMachineScaleSetVMPublicIPAddressesAsyncCollectionResultOfT(VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddresses client, Guid subscriptionId, string resourceGroupName, string virtualMachineScaleSetName, string virtualmachineIndex, string networkInterfaceName, string ipConfigurationName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public VmssVmPublicIPAddressesAsyncCollectionResultOfT(VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddresses client, Guid subscriptionId, string resourceGroupName, string virtualMachineScaleSetName, string virtualmachineIndex, string networkInterfaceName, string ipConfigurationName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -50,10 +50,10 @@ namespace Azure.ResourceManager.Network
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressesGetVirtualMachineScaleSetVMPublicIPAddressesAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of VmssVmPublicIPAddressesAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressesGetVirtualMachineScaleSetVMPublicIPAddressesAsyncCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of VmssVmPublicIPAddressesAsyncCollectionResultOfT as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<PublicIPAddressData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;

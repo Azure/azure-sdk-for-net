@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PublicIPAddressData, VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressResource>(new VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressesGetVirtualMachineScaleSetVMPublicIPAddressesAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<PublicIPAddressData, VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressResource>(new VmssVmPublicIPAddressesAsyncCollectionResultOfT(
                 _virtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PublicIPAddressData, VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressResource>(new VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressesGetVirtualMachineScaleSetVMPublicIPAddressesCollectionResultOfT(
+            return new PageableWrapper<PublicIPAddressData, VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressResource>(new VmssVmPublicIPAddressesCollectionResultOfT(
                 _virtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
