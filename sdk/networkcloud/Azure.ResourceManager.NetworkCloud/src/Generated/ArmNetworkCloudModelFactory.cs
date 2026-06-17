@@ -426,10 +426,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         }
 
         /// <param name="safeguardMode"> The safeguard mode to use for the reimage action, where None indicates to bypass safeguards and All indicates to utilize all safeguards. If not specified, the default is All. </param>
-        /// <returns> A new <see cref="Models.BareMetalMachineReimageParameters"/> instance for mocking. </returns>
-        public static BareMetalMachineReimageParameters BareMetalMachineReimageParameters(BareMetalMachineReimageSafeguardMode? safeguardMode = default)
+        /// <returns> A new <see cref="Models.BareMetalMachineReimageContent"/> instance for mocking. </returns>
+        public static BareMetalMachineReimageContent BareMetalMachineReimageContent(BareMetalMachineReimageSafeguardMode? safeguardMode = default)
         {
-            return new BareMetalMachineReimageParameters(safeguardMode, default);
+            return new BareMetalMachineReimageContent(safeguardMode, default);
         }
 
         /// <param name="bmcCredentials"> The credentials of the baseboard management controller on this bare metal machine. The password field is expected to be an Azure Key Vault key URL. Until the cluster is converted to utilize managed identity by setting the secret archive settings, the actual password value should be provided instead. </param>
@@ -1066,12 +1066,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         }
 
         /// <param name="credentials"> The list of credential names for the credentials to rotate. </param>
-        /// <returns> A new <see cref="Models.ClusterRotateCredentialParameters"/> instance for mocking. </returns>
-        public static ClusterRotateCredentialParameters ClusterRotateCredentialParameters(IEnumerable<string> credentials = default)
+        /// <returns> A new <see cref="Models.ClusterRotateCredentialContent"/> instance for mocking. </returns>
+        public static ClusterRotateCredentialContent ClusterRotateCredentialContent(IEnumerable<string> credentials = default)
         {
             credentials ??= new ChangeTrackingList<string>();
 
-            return new ClusterRotateCredentialParameters((credentials ?? new ChangeTrackingList<string>()).ToList(), default);
+            return new ClusterRotateCredentialContent((credentials ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
         /// <param name="scanActivity"> The choice of if the scan operation should run the scan. </param>

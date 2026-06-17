@@ -782,7 +782,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<NetworkCloudOperationStatusResult>> RotateCredentialAsync(WaitUntil waitUntil, ClusterRotateCredentialParameters content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NetworkCloudOperationStatusResult>> RotateCredentialAsync(WaitUntil waitUntil, ClusterRotateCredentialContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -794,7 +794,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clustersRestClient.CreateRotateCredentialRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ClusterRotateCredentialParameters.ToRequestContent(content), context);
+                HttpMessage message = _clustersRestClient.CreateRotateCredentialRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ClusterRotateCredentialContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkCloudArmOperation<NetworkCloudOperationStatusResult> operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(
                     new NetworkCloudOperationStatusResultOperationSource(),
@@ -841,7 +841,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<NetworkCloudOperationStatusResult> RotateCredential(WaitUntil waitUntil, ClusterRotateCredentialParameters content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NetworkCloudOperationStatusResult> RotateCredential(WaitUntil waitUntil, ClusterRotateCredentialContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -853,7 +853,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _clustersRestClient.CreateRotateCredentialRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ClusterRotateCredentialParameters.ToRequestContent(content), context);
+                HttpMessage message = _clustersRestClient.CreateRotateCredentialRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ClusterRotateCredentialContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkCloudArmOperation<NetworkCloudOperationStatusResult> operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(
                     new NetworkCloudOperationStatusResultOperationSource(),
