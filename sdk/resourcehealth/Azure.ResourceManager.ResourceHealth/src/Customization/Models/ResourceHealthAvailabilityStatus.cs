@@ -3,8 +3,8 @@
 
 using System.ComponentModel;
 using Azure.Core;
-using Azure.ResourceManager.ResourceHealth;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.ResourceHealth;
 
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
