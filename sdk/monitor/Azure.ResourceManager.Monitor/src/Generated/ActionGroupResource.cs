@@ -612,6 +612,112 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary>
+        /// Get the test notifications by the notification id
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/actionGroups/{actionGroupName}/notificationStatus/{notificationId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ActionGroupResources_GetTestNotificationsAtActionGroupResourceLevel. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ActionGroupResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="notificationId"> The notification id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="notificationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="notificationId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<NotificationStatus>> GetNotificationStatusAsync(string notificationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(notificationId, nameof(notificationId));
+
+            using DiagnosticScope scope = _actionGroupsClientDiagnostics.CreateScope("ActionGroupResource.GetNotificationStatus");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _actionGroupsRestClient.CreateGetNotificationStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, notificationId, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<NotificationStatus> response = Response.FromValue(NotificationStatus.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get the test notifications by the notification id
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/actionGroups/{actionGroupName}/notificationStatus/{notificationId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ActionGroupResources_GetTestNotificationsAtActionGroupResourceLevel. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ActionGroupResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="notificationId"> The notification id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="notificationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="notificationId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<NotificationStatus> GetNotificationStatus(string notificationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(notificationId, nameof(notificationId));
+
+            using DiagnosticScope scope = _actionGroupsClientDiagnostics.CreateScope("ActionGroupResource.GetNotificationStatus");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _actionGroupsRestClient.CreateGetNotificationStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, notificationId, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<NotificationStatus> response = Response.FromValue(NotificationStatus.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Gets a specified NSP configuration for specified action group.
         /// <list type="bullet">
         /// <item>
