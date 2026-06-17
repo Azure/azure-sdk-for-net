@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Returned when the WebRTC SDP negotiation completes successfully. </summary>
-    public partial class ServerEventRtcCallSdpCreated : SessionUpdate, IJsonModel<ServerEventRtcCallSdpCreated>
+    internal partial class ServerEventRtcCallSdpCreated : SessionUpdate, IJsonModel<ServerEventRtcCallSdpCreated>
     {
         /// <summary> Initializes a new instance of <see cref="ServerEventRtcCallSdpCreated"/> for deserialization. </summary>
         internal ServerEventRtcCallSdpCreated()

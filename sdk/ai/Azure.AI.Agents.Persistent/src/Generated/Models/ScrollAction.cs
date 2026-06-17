@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> A scroll action. </summary>
-    public partial class ScrollAction : ComputerUseAction
+    internal partial class ScrollAction : ComputerUseAction
     {
         /// <summary> Initializes a new instance of <see cref="ScrollAction"/>. </summary>
         /// <param name="x"> The x-coordinate where the scroll occurred. </param>

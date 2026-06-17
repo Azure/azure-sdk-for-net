@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> Represents the Bing Custom Search tool call in a streaming run step. </summary>
-    public partial class RunStepDeltaCustomBingGroundingToolCall : RunStepDeltaToolCall, IJsonModel<RunStepDeltaCustomBingGroundingToolCall>
+    internal partial class RunStepDeltaCustomBingGroundingToolCall : RunStepDeltaToolCall, IJsonModel<RunStepDeltaCustomBingGroundingToolCall>
     {
         /// <summary> Initializes a new instance of <see cref="RunStepDeltaCustomBingGroundingToolCall"/> for deserialization. </summary>
         internal RunStepDeltaCustomBingGroundingToolCall()

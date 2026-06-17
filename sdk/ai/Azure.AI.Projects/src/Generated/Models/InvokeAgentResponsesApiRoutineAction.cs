@@ -9,7 +9,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> Dispatches a routine through the responses API. Exactly one of agent_name or agent_endpoint_id must be provided. </summary>
-    public partial class InvokeAgentResponsesApiRoutineAction : RoutineAction
+    internal partial class InvokeAgentResponsesApiRoutineAction : RoutineAction
     {
         /// <summary> Initializes a new instance of <see cref="InvokeAgentResponsesApiRoutineAction"/>. </summary>
         public InvokeAgentResponsesApiRoutineAction() : base(RoutineActionType.InvokeAgentResponsesApi)

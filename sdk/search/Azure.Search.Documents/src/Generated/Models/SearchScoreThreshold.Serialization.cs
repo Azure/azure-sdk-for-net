@@ -14,7 +14,7 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Models
 {
     /// <summary> The results of the vector query will filter based on the '. </summary>
-    public partial class SearchScoreThreshold : VectorThreshold, IJsonModel<SearchScoreThreshold>
+    internal partial class SearchScoreThreshold : VectorThreshold, IJsonModel<SearchScoreThreshold>
     {
         /// <summary> Initializes a new instance of <see cref="SearchScoreThreshold"/> for deserialization. </summary>
         internal SearchScoreThreshold()

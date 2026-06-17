@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.ContentUnderstanding
 {
     /// <summary> Figure containing a diagram, such as a flowchart or network diagram. </summary>
-    public partial class DocumentMermaidFigure : DocumentFigure
+    internal partial class DocumentMermaidFigure : DocumentFigure
     {
         /// <summary> Initializes a new instance of <see cref="DocumentMermaidFigure"/>. </summary>
         /// <param name="id"> Figure identifier. </param>

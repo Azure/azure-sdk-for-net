@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> A manual payload used to test a responses API routine dispatch. </summary>
-    public partial class InvokeAgentResponsesApiDispatchPayload : RoutineDispatchPayload, IJsonModel<InvokeAgentResponsesApiDispatchPayload>
+    internal partial class InvokeAgentResponsesApiDispatchPayload : RoutineDispatchPayload, IJsonModel<InvokeAgentResponsesApiDispatchPayload>
     {
         /// <summary> Initializes a new instance of <see cref="InvokeAgentResponsesApiDispatchPayload"/> for deserialization. </summary>
         internal InvokeAgentResponsesApiDispatchPayload()

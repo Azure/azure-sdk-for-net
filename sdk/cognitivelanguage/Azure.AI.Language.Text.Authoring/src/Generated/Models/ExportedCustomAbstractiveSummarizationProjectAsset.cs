@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Text.Authoring
 {
     /// <summary> Represents the exported assets for an abstractive summarization project. </summary>
-    public partial class ExportedCustomAbstractiveSummarizationProjectAsset : TextAuthoringExportedProjectAsset
+    internal partial class ExportedCustomAbstractiveSummarizationProjectAsset : TextAuthoringExportedProjectAsset
     {
         /// <summary> Initializes a new instance of <see cref="ExportedCustomAbstractiveSummarizationProjectAsset"/>. </summary>
         public ExportedCustomAbstractiveSummarizationProjectAsset() : base(TextAuthoringProjectKind.CustomAbstractiveSummarization)

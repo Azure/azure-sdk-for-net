@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Text
 {
     /// <summary> Represents the Currency ) entity Metadata model. </summary>
-    public partial class CurrencyMetadata : BaseMetadata
+    internal partial class CurrencyMetadata : BaseMetadata
     {
         /// <summary> Initializes a new instance of <see cref="CurrencyMetadata"/>. </summary>
         /// <param name="value"> The numeric value that the extracted text denotes. </param>

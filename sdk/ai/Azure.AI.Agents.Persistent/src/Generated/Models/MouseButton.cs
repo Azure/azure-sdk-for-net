@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> The mouse button types supported by click actions. </summary>
-    public readonly partial struct MouseButton : IEquatable<MouseButton>
+    internal readonly partial struct MouseButton : IEquatable<MouseButton>
     {
         private readonly string _value;
         /// <summary> Left mouse button. </summary>

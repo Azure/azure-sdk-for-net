@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.Language.Text
 {
     /// <summary> Represents the Speed entity Metadata model. </summary>
-    public partial class SpeedMetadata : BaseMetadata, IJsonModel<SpeedMetadata>
+    internal partial class SpeedMetadata : BaseMetadata, IJsonModel<SpeedMetadata>
     {
         /// <summary> Initializes a new instance of <see cref="SpeedMetadata"/> for deserialization. </summary>
         internal SpeedMetadata()

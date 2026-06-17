@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Text
 {
     /// <summary> Represents the Volume entity Metadata model. </summary>
-    public partial class VolumeMetadata : BaseMetadata
+    internal partial class VolumeMetadata : BaseMetadata
     {
         /// <summary> Initializes a new instance of <see cref="VolumeMetadata"/>. </summary>
         /// <param name="value"> The numeric value that the extracted text denotes. </param>

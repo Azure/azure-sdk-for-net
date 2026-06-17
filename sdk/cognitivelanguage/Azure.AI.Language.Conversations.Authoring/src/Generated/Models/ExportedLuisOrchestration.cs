@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Conversations.Authoring
 {
     /// <summary> Defines the orchestration details for a LUIS application target. </summary>
-    public partial class ExportedLuisOrchestration
+    internal partial class ExportedLuisOrchestration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

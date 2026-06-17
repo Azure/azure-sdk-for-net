@@ -72,7 +72,7 @@ namespace Azure.Communication.Messages
 
         /// <summary>
         /// The message content object used to create interactive messages components.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Messages.TextMessageContent"/>, <see cref="Messages.DocumentMessageContent"/>, <see cref="Messages.ImageMessageContent"/>, <see cref="Messages.VideoMessageContent"/>, <see cref="Messages.ButtonSetContent"/>, <see cref="Messages.LinkContent"/>, and <see cref="Messages.ActionGroupContent"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Messages.TextMessageContent"/>, <see cref="DocumentMessageContent"/>, <see cref="ImageMessageContent"/>, <see cref="VideoMessageContent"/>, <see cref="Messages.ButtonSetContent"/>, <see cref="Messages.LinkContent"/>, and <see cref="Messages.ActionGroupContent"/>.
         /// </summary>
         /// <param name="kind"> Kind of MessageContent. </param>
         /// <returns> A new <see cref="Messages.MessageContent"/> instance for mocking. </returns>
@@ -87,30 +87,6 @@ namespace Azure.Communication.Messages
         public static TextMessageContent TextMessageContent(string text = default)
         {
             return new TextMessageContent(MessageContentKind.Text, additionalBinaryDataProperties: null, text);
-        }
-
-        /// <summary> The message content of type document information. </summary>
-        /// <param name="mediaUri"> MediaUri of the media content. </param>
-        /// <returns> A new <see cref="Messages.DocumentMessageContent"/> instance for mocking. </returns>
-        public static DocumentMessageContent DocumentMessageContent(Uri mediaUri = default)
-        {
-            return new DocumentMessageContent(MessageContentKind.Document, additionalBinaryDataProperties: null, mediaUri);
-        }
-
-        /// <summary> The message content of type image information. </summary>
-        /// <param name="mediaUri"> MediaUri of the media content. </param>
-        /// <returns> A new <see cref="Messages.ImageMessageContent"/> instance for mocking. </returns>
-        public static ImageMessageContent ImageMessageContent(Uri mediaUri = default)
-        {
-            return new ImageMessageContent(MessageContentKind.Image, additionalBinaryDataProperties: null, mediaUri);
-        }
-
-        /// <summary> The message content of type video information. </summary>
-        /// <param name="mediaUri"> MediaUri of the media content. </param>
-        /// <returns> A new <see cref="Messages.VideoMessageContent"/> instance for mocking. </returns>
-        public static VideoMessageContent VideoMessageContent(Uri mediaUri = default)
-        {
-            return new VideoMessageContent(MessageContentKind.Video, additionalBinaryDataProperties: null, mediaUri);
         }
 
         /// <summary> The message content of type ButtonSet/ List of buttons information. </summary>
@@ -314,7 +290,7 @@ namespace Azure.Communication.Messages
 
         /// <summary>
         /// Details of an external platform contact.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Messages.CommunicationContact"/>, <see cref="Messages.BotContact"/>, and <see cref="Models.Channels.WhatsAppContact"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CommunicationContact"/>, <see cref="BotContact"/>, and <see cref="Models.Channels.WhatsAppContact"/>.
         /// </summary>
         /// <param name="id"> External platform identifier. </param>
         /// <param name="kind"> Type of message platform (e.g., WhatsApp). </param>
@@ -322,23 +298,6 @@ namespace Azure.Communication.Messages
         public static ConversationContact ConversationContact(string id = default, string kind = default)
         {
             return new UnknownConversationContact(id, new MessagePlatformKind(kind), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Communication Contact. </summary>
-        /// <param name="id"> External platform identifier. </param>
-        /// <returns> A new <see cref="Messages.CommunicationContact"/> instance for mocking. </returns>
-        public static CommunicationContact CommunicationContact(string id = default)
-        {
-            return new CommunicationContact(id, MessagePlatformKind.Communication, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Bot Contact. </summary>
-        /// <param name="id"> External platform identifier. </param>
-        /// <param name="botAppId"> Bot App Id of the Bot Contact. </param>
-        /// <returns> A new <see cref="Messages.BotContact"/> instance for mocking. </returns>
-        public static BotContact BotContact(string id = default, string botAppId = default)
-        {
-            return new BotContact(id, MessagePlatformKind.Bot, additionalBinaryDataProperties: null, botAppId);
         }
 
         /// <summary> WhatsApp Contact. </summary>

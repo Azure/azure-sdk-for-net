@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Automatically detect the output format and parse accordingly. </summary>
-    public partial class McpServerAutoOutputParsing : McpServerOutputParsing
+    internal partial class McpServerAutoOutputParsing : McpServerOutputParsing
     {
         /// <summary> Initializes a new instance of <see cref="McpServerAutoOutputParsing"/>. </summary>
         public McpServerAutoOutputParsing() : base(McpServerOutputParsingKind.Auto)

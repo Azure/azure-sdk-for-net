@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The output of a Fabric data agent tool call. </summary>
-    public partial class FabricDataAgentToolCallOutput : AgentResponseItem, IJsonModel<FabricDataAgentToolCallOutput>
+    internal partial class FabricDataAgentToolCallOutput : AgentResponseItem, IJsonModel<FabricDataAgentToolCallOutput>
     {
         /// <summary> Initializes a new instance of <see cref="FabricDataAgentToolCallOutput"/> for deserialization. </summary>
         internal FabricDataAgentToolCallOutput()

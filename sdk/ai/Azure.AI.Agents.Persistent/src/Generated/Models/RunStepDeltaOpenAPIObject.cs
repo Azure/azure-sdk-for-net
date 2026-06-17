@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> Represents an invocation of openapi as part of a streaming run step. </summary>
-    public partial class RunStepDeltaOpenAPIObject : RunStepDeltaDetail
+    internal partial class RunStepDeltaOpenAPIObject : RunStepDeltaDetail
     {
         /// <summary> Initializes a new instance of <see cref="RunStepDeltaOpenAPIObject"/>. </summary>
         internal RunStepDeltaOpenAPIObject() : base("openapi")

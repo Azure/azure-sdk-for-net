@@ -12,7 +12,7 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Returned when a hosted agent invocation produces a non-speech SSE event, passed through as-is. </summary>
-    public partial class ServerEventResponseInvocationDelta : SessionUpdate
+    internal partial class ServerEventResponseInvocationDelta : SessionUpdate
     {
         /// <summary> Initializes a new instance of <see cref="ServerEventResponseInvocationDelta"/>. </summary>
         /// <param name="delta"> The raw event data from the hosted agent invocation. </param>

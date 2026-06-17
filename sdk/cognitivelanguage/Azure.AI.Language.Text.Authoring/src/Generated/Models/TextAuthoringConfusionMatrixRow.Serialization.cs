@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.Language.Text.Authoring
 {
     /// <summary> The TextAuthoringConfusionMatrixRow. </summary>
-    public partial class TextAuthoringConfusionMatrixRow : IJsonModel<TextAuthoringConfusionMatrixRow>
+    internal partial class TextAuthoringConfusionMatrixRow : IJsonModel<TextAuthoringConfusionMatrixRow>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

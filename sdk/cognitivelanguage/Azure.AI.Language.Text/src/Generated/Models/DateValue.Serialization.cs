@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.Language.Text
 {
     /// <summary> Represents the date value. </summary>
-    public partial class DateValue : IJsonModel<DateValue>
+    internal partial class DateValue : IJsonModel<DateValue>
     {
         /// <summary> Initializes a new instance of <see cref="DateValue"/> for deserialization. </summary>
         internal DateValue()

@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> A content filter detection result that includes a reason description. </summary>
-    internal partial class AzureContentFilterDetectionWithReasonResult : IJsonModel<AzureContentFilterDetectionWithReasonResult>
+    public partial class AzureContentFilterDetectionWithReasonResult : IJsonModel<AzureContentFilterDetectionWithReasonResult>
     {
         /// <summary> Initializes a new instance of <see cref="AzureContentFilterDetectionWithReasonResult"/> for deserialization. </summary>
         internal AzureContentFilterDetectionWithReasonResult()

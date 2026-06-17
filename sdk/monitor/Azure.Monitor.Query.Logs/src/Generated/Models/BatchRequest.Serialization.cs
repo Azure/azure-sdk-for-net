@@ -15,7 +15,7 @@ using Azure.Monitor.Query.Logs;
 namespace Azure.Monitor.Query.Logs.Models
 {
     /// <summary> An array of requests. </summary>
-    internal partial class BatchRequest : IJsonModel<BatchRequest>
+    public partial class BatchRequest : IJsonModel<BatchRequest>
     {
         /// <summary> Initializes a new instance of <see cref="BatchRequest"/> for deserialization. </summary>
         internal BatchRequest()

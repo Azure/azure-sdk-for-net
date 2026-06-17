@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> Represents the invocation of connected agent as a part of a streaming run step. </summary>
-    public partial class RunStepDeltaConnectedAgentToolCall : RunStepDeltaToolCall
+    internal partial class RunStepDeltaConnectedAgentToolCall : RunStepDeltaToolCall
     {
         /// <summary> Initializes a new instance of <see cref="RunStepDeltaConnectedAgentToolCall"/>. </summary>
         /// <param name="index"> The index of the tool call detail in the run step's tool_calls array. </param>

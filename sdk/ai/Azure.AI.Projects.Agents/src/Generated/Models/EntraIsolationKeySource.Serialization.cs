@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The EntraIsolationKeySource. </summary>
-    public partial class EntraIsolationKeySource : IsolationKeySource, IJsonModel<EntraIsolationKeySource>
+    internal partial class EntraIsolationKeySource : IsolationKeySource, IJsonModel<EntraIsolationKeySource>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Evaluation criterion: a name + instruction pair used for per-item scoring. </summary>
-    public partial class OptimizationDatasetCriterion : IJsonModel<OptimizationDatasetCriterion>
+    internal partial class OptimizationDatasetCriterion : IJsonModel<OptimizationDatasetCriterion>
     {
         /// <summary> Initializes a new instance of <see cref="OptimizationDatasetCriterion"/> for deserialization. </summary>
         internal OptimizationDatasetCriterion()

@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.Language.Text
 {
     /// <summary> represents the Metadata of a date and/or time span. </summary>
-    public partial class TemporalSpanMetadata : BaseMetadata, IJsonModel<TemporalSpanMetadata>
+    internal partial class TemporalSpanMetadata : BaseMetadata, IJsonModel<TemporalSpanMetadata>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

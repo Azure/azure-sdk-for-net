@@ -14,7 +14,7 @@ using Azure.AI.Language.Conversations;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> Represents the weight entity resolution model. </summary>
-    public partial class WeightResolution : ResolutionBase, IJsonModel<WeightResolution>
+    internal partial class WeightResolution : ResolutionBase, IJsonModel<WeightResolution>
     {
         /// <summary> Initializes a new instance of <see cref="WeightResolution"/> for deserialization. </summary>
         internal WeightResolution()

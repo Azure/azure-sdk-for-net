@@ -14,7 +14,7 @@ namespace Azure.AI.VoiceLive
     /// Returned when a content part is done streaming in an assistant message item.
     /// Also emitted when a Response is interrupted, incomplete, or cancelled.
     /// </summary>
-    public partial class SessionUpdateResponseContentPartDone : SessionUpdate
+    internal partial class SessionUpdateResponseContentPartDone : SessionUpdate
     {
         /// <summary> Initializes a new instance of <see cref="SessionUpdateResponseContentPartDone"/>. </summary>
         /// <param name="responseId"> The ID of the response. </param>

@@ -16,7 +16,7 @@ namespace Azure.AI.Agents.Persistent
     /// A record of a call to a SharePoint tool, issued by the model in evaluation of a defined tool, that represents
     /// executed SharePoint actions.
     /// </summary>
-    public partial class RunStepSharepointToolCall : RunStepToolCall, IJsonModel<RunStepSharepointToolCall>
+    internal partial class RunStepSharepointToolCall : RunStepToolCall, IJsonModel<RunStepSharepointToolCall>
     {
         /// <summary> Initializes a new instance of <see cref="RunStepSharepointToolCall"/> for deserialization. </summary>
         internal RunStepSharepointToolCall()

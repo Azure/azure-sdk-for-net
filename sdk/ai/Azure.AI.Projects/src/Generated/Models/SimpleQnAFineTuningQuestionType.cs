@@ -8,7 +8,7 @@ using System.ComponentModel;
 namespace Azure.AI.Projects
 {
     /// <summary> The supported question types for SimpleQnA data generation jobs used for fine-tuning scenarios. </summary>
-    public readonly partial struct SimpleQnAFineTuningQuestionType : IEquatable<SimpleQnAFineTuningQuestionType>
+    internal readonly partial struct SimpleQnAFineTuningQuestionType : IEquatable<SimpleQnAFineTuningQuestionType>
     {
         private readonly string _value;
         /// <summary> Short answer question type. </summary>

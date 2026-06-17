@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The EntraIsolationKeySource. </summary>
-    public partial class EntraIsolationKeySource : IsolationKeySource
+    internal partial class EntraIsolationKeySource : IsolationKeySource
     {
         /// <summary> Initializes a new instance of <see cref="EntraIsolationKeySource"/>. </summary>
         public EntraIsolationKeySource() : base(IsolationKeySourceKind.Entra)

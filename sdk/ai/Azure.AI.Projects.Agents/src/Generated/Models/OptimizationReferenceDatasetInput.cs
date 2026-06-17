@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Reference to a registered Foundry dataset. </summary>
-    public partial class OptimizationReferenceDatasetInput : OptimizationDatasetInput
+    internal partial class OptimizationReferenceDatasetInput : OptimizationDatasetInput
     {
         /// <summary> Initializes a new instance of <see cref="OptimizationReferenceDatasetInput"/>. </summary>
         /// <param name="name"> Registered dataset name. </param>

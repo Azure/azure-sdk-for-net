@@ -14,7 +14,7 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Authentication using stored HTTP headers. </summary>
-    public partial class McpServerStoredHeadersAuthentication : McpServerAuthentication, IJsonModel<McpServerStoredHeadersAuthentication>
+    internal partial class McpServerStoredHeadersAuthentication : McpServerAuthentication, IJsonModel<McpServerStoredHeadersAuthentication>
     {
         /// <summary> Initializes a new instance of <see cref="McpServerStoredHeadersAuthentication"/> for deserialization. </summary>
         internal McpServerStoredHeadersAuthentication()

@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.Language.Text.Authoring
 {
     /// <summary> Represents the evaluation summary of a class in a multi-label classification project. </summary>
-    public partial class MultiLabelClassEvalSummary : IJsonModel<MultiLabelClassEvalSummary>
+    internal partial class MultiLabelClassEvalSummary : IJsonModel<MultiLabelClassEvalSummary>
     {
         /// <summary> Initializes a new instance of <see cref="MultiLabelClassEvalSummary"/> for deserialization. </summary>
         internal MultiLabelClassEvalSummary()

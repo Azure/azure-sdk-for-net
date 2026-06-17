@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> A drag action. </summary>
-    public partial class DragAction : ComputerUseAction, IJsonModel<DragAction>
+    internal partial class DragAction : ComputerUseAction, IJsonModel<DragAction>
     {
         /// <summary> Initializes a new instance of <see cref="DragAction"/> for deserialization. </summary>
         internal DragAction()

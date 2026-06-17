@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> Per-tool configuration that controls tool visibility and search behavior. </summary>
-    internal partial class ToolConfig : IJsonModel<ToolConfig>
+    public partial class ToolConfig : IJsonModel<ToolConfig>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

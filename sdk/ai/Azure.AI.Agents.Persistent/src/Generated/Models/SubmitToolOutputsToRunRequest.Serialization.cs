@@ -14,7 +14,7 @@ using Azure.Core;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> The SubmitToolOutputsToRunRequest. </summary>
-    internal partial class SubmitToolOutputsToRunRequest : IJsonModel<SubmitToolOutputsToRunRequest>
+    public partial class SubmitToolOutputsToRunRequest : IJsonModel<SubmitToolOutputsToRunRequest>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

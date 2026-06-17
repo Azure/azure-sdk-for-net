@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> An A2A (Agent-to-Agent) tool call. </summary>
-    public partial class A2AToolCall : AgentResponseItem, IJsonModel<A2AToolCall>
+    internal partial class A2AToolCall : AgentResponseItem, IJsonModel<A2AToolCall>
     {
         /// <summary> Initializes a new instance of <see cref="A2AToolCall"/> for deserialization. </summary>
         internal A2AToolCall()

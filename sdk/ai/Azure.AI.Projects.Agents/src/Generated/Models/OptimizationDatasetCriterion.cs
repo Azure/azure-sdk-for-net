@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Evaluation criterion: a name + instruction pair used for per-item scoring. </summary>
-    public partial class OptimizationDatasetCriterion
+    internal partial class OptimizationDatasetCriterion
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

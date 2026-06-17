@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Header-based secret authentication for a telemetry endpoint. The resolved secret value is injected as an HTTP header. </summary>
-    public partial class HeaderTelemetryEndpointAuth : TelemetryEndpointAuthentication, IJsonModel<HeaderTelemetryEndpointAuth>
+    internal partial class HeaderTelemetryEndpointAuth : TelemetryEndpointAuthentication, IJsonModel<HeaderTelemetryEndpointAuth>
     {
         /// <summary> Initializes a new instance of <see cref="HeaderTelemetryEndpointAuth"/> for deserialization. </summary>
         internal HeaderTelemetryEndpointAuth()

@@ -14,7 +14,7 @@ using Azure.AI.Language.Conversations;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> The option to set to call a Conversation project. </summary>
-    public partial class ConversationCallingConfig : IJsonModel<ConversationCallingConfig>
+    internal partial class ConversationCallingConfig : IJsonModel<ConversationCallingConfig>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

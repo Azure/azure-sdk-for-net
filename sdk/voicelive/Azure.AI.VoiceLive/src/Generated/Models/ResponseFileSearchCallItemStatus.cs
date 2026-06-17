@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.VoiceLive
 {
     /// <summary></summary>
-    public readonly partial struct ResponseFileSearchCallItemStatus : IEquatable<ResponseFileSearchCallItemStatus>
+    internal readonly partial struct ResponseFileSearchCallItemStatus : IEquatable<ResponseFileSearchCallItemStatus>
     {
         private readonly string _value;
         private const string InProgressValue = "in_progress";

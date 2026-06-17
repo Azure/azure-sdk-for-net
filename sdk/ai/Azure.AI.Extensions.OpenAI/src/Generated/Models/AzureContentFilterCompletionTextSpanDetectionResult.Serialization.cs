@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> A content filter detection result with completion text span details. </summary>
-    internal partial class AzureContentFilterCompletionTextSpanDetectionResult : IJsonModel<AzureContentFilterCompletionTextSpanDetectionResult>
+    public partial class AzureContentFilterCompletionTextSpanDetectionResult : IJsonModel<AzureContentFilterCompletionTextSpanDetectionResult>
     {
         /// <summary> Initializes a new instance of <see cref="AzureContentFilterCompletionTextSpanDetectionResult"/> for deserialization. </summary>
         internal AzureContentFilterCompletionTextSpanDetectionResult()

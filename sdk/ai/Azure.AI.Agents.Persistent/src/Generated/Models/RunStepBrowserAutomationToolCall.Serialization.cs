@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> A record of a call to a Browser Automation tool issued by the Agent. </summary>
-    public partial class RunStepBrowserAutomationToolCall : RunStepToolCall, IJsonModel<RunStepBrowserAutomationToolCall>
+    internal partial class RunStepBrowserAutomationToolCall : RunStepToolCall, IJsonModel<RunStepBrowserAutomationToolCall>
     {
         /// <summary> Initializes a new instance of <see cref="RunStepBrowserAutomationToolCall"/> for deserialization. </summary>
         internal RunStepBrowserAutomationToolCall()

@@ -14,7 +14,7 @@ using Azure.AI.Language.Conversations;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> Represents the currency entity resolution model. </summary>
-    public partial class CurrencyResolution : ResolutionBase, IJsonModel<CurrencyResolution>
+    internal partial class CurrencyResolution : ResolutionBase, IJsonModel<CurrencyResolution>
     {
         /// <summary> Initializes a new instance of <see cref="CurrencyResolution"/> for deserialization. </summary>
         internal CurrencyResolution()

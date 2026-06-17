@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Error details from the content filtering system. </summary>
-    internal partial class AzureContentFilterError : IJsonModel<AzureContentFilterError>
+    public partial class AzureContentFilterError : IJsonModel<AzureContentFilterError>
     {
         /// <summary> Initializes a new instance of <see cref="AzureContentFilterError"/> for deserialization. </summary>
         internal AzureContentFilterError()

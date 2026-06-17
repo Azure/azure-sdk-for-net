@@ -12,7 +12,7 @@ using Azure.AI.Language.Conversations;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> Set to 'OR' or 'AND' for using corresponding logical operation. </summary>
-    public readonly partial struct LogicalOperationKind : IEquatable<LogicalOperationKind>
+    internal readonly partial struct LogicalOperationKind : IEquatable<LogicalOperationKind>
     {
         private readonly string _value;
         /// <summary> Logical AND. </summary>

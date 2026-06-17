@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects
 {
     /// <summary> The options for a data generation job with SimpleQnA type. </summary>
-    public partial class SimpleQnADataGenerationJobOptions : DataGenerationJobOptions
+    internal partial class SimpleQnADataGenerationJobOptions : DataGenerationJobOptions
     {
         /// <summary> Initializes a new instance of <see cref="SimpleQnADataGenerationJobOptions"/>. </summary>
         /// <param name="maxSamples"> Maximum number of samples to generate. </param>

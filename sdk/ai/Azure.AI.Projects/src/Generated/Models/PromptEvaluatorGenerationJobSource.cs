@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects
 {
     /// <summary> Prompt source for evaluator generation jobs — inline text provided by the user. </summary>
-    public partial class PromptEvaluatorGenerationJobSource : EvaluatorGenerationJobSource
+    internal partial class PromptEvaluatorGenerationJobSource : EvaluatorGenerationJobSource
     {
         /// <summary> Initializes a new instance of <see cref="PromptEvaluatorGenerationJobSource"/>. </summary>
         /// <param name="prompt"> Inline prompt text (e.g., agent description, policy text, supplementary context). </param>

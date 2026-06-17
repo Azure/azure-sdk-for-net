@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Search.Documents.Models
 {
     /// <summary> The results of the vector query will filter based on the '. </summary>
-    public partial class SearchScoreThreshold : VectorThreshold
+    internal partial class SearchScoreThreshold : VectorThreshold
     {
         /// <summary> Initializes a new instance of <see cref="SearchScoreThreshold"/>. </summary>
         /// <param name="value"> The threshold will filter based on the '. </param>

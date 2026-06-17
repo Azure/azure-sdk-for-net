@@ -14,7 +14,7 @@ namespace Azure.AI.Agents.Persistent
     /// A record of a call to a MCP tool, issued by the model in evaluation of a defined tool, that represents
     /// executed MCP actions.
     /// </summary>
-    public partial class RunStepMcpToolCall : RunStepToolCall
+    internal partial class RunStepMcpToolCall : RunStepToolCall
     {
         /// <summary> Initializes a new instance of <see cref="RunStepMcpToolCall"/>. </summary>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>

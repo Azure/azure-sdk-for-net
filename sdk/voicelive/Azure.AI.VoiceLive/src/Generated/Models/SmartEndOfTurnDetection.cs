@@ -15,7 +15,7 @@ namespace Azure.AI.VoiceLive
     /// stream rather than text. Use `threshold_level` and `timeout_ms` to tune
     /// detection.
     /// </summary>
-    public partial class SmartEndOfTurnDetection : EouDetection
+    internal partial class SmartEndOfTurnDetection : EouDetection
     {
         /// <summary> Initializes a new instance of <see cref="SmartEndOfTurnDetection"/>. </summary>
         public SmartEndOfTurnDetection() : base(EouDetectionModel.SmartEndOfTurnDetection)

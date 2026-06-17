@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> A record of a call to an Azure Function tool. </summary>
-    public partial class RunStepAzureFunctionToolCall : RunStepToolCall
+    internal partial class RunStepAzureFunctionToolCall : RunStepToolCall
     {
         /// <summary> Initializes a new instance of <see cref="RunStepAzureFunctionToolCall"/>. </summary>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>

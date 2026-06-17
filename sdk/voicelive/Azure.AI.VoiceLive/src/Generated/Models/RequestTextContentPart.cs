@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> A text content part for a request. </summary>
-    public partial class RequestTextContentPart : VoiceLiveContentPart
+    internal partial class RequestTextContentPart : VoiceLiveContentPart
     {
         /// <summary> Initializes a new instance of <see cref="RequestTextContentPart"/>. </summary>
         public RequestTextContentPart() : base(ContentPartType.InputText)

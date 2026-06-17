@@ -14,7 +14,7 @@ using Azure.AI.Language.Conversations;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> This is a set of request parameters for LUIS Generally Available projects. </summary>
-    public partial class LuisConfig : AnalysisConfig, IJsonModel<LuisConfig>
+    internal partial class LuisConfig : AnalysisConfig, IJsonModel<LuisConfig>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> A representation of a requested call to a Computer Use tool, needed by the model to continue evaluation of a run. </summary>
-    public partial class RequiredComputerUseToolCall : RequiredToolCall, IJsonModel<RequiredComputerUseToolCall>
+    internal partial class RequiredComputerUseToolCall : RequiredToolCall, IJsonModel<RequiredComputerUseToolCall>
     {
         /// <summary> Initializes a new instance of <see cref="RequiredComputerUseToolCall"/> for deserialization. </summary>
         internal RequiredComputerUseToolCall()

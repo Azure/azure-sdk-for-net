@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Text
 {
     /// <summary> A Metadata for time entity instances. </summary>
-    public partial class TimeMetadata : BaseMetadata
+    internal partial class TimeMetadata : BaseMetadata
     {
         /// <summary> Initializes a new instance of <see cref="TimeMetadata"/>. </summary>
         internal TimeMetadata() : base(MetadataKind.TimeMetadata)

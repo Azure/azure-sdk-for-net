@@ -12,7 +12,7 @@ using Azure.AI.Language.Conversations;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> The kind of range that the resolution object represents. </summary>
-    public readonly partial struct RangeKind : IEquatable<RangeKind>
+    internal readonly partial struct RangeKind : IEquatable<RangeKind>
     {
         private readonly string _value;
         /// <summary> Number range. </summary>

@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> A response item that represents a file search call. </summary>
-    public partial class ResponseFileSearchCallItem : SessionResponseItem, IJsonModel<ResponseFileSearchCallItem>
+    internal partial class ResponseFileSearchCallItem : SessionResponseItem, IJsonModel<ResponseFileSearchCallItem>
     {
         /// <summary> Initializes a new instance of <see cref="ResponseFileSearchCallItem"/> for deserialization. </summary>
         internal ResponseFileSearchCallItem()

@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Local shell call output. </summary>
-    public partial class OutputItemLocalShellToolCallOutput : AgentResponseItem
+    internal partial class OutputItemLocalShellToolCallOutput : AgentResponseItem
     {
         /// <summary> Initializes a new instance of <see cref="OutputItemLocalShellToolCallOutput"/>. </summary>
         /// <param name="output"> A JSON string of the output of the local shell tool call. </param>

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Text.Authoring
 {
     /// <summary> Represents the comparison between the expected and predicted class that result from an evaluation operation. </summary>
-    public partial class DocumentSingleLabelClassificationEvalResult
+    internal partial class DocumentSingleLabelClassificationEvalResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

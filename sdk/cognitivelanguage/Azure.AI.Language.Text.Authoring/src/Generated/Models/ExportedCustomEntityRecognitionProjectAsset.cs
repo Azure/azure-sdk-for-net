@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Text.Authoring
 {
     /// <summary> Represents the exported assets for a entity recognition project. </summary>
-    public partial class ExportedCustomEntityRecognitionProjectAsset : TextAuthoringExportedProjectAsset
+    internal partial class ExportedCustomEntityRecognitionProjectAsset : TextAuthoringExportedProjectAsset
     {
         /// <summary> Initializes a new instance of <see cref="ExportedCustomEntityRecognitionProjectAsset"/>. </summary>
         public ExportedCustomEntityRecognitionProjectAsset() : base(TextAuthoringProjectKind.CustomEntityRecognition)

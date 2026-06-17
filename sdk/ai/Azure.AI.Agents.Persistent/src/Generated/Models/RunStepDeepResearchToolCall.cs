@@ -14,7 +14,7 @@ namespace Azure.AI.Agents.Persistent
     /// A record of a call to a Deep Research tool, issued by the model in evaluation of a defined tool, that represents
     /// executed deep research operations.
     /// </summary>
-    public partial class RunStepDeepResearchToolCall : RunStepToolCall
+    internal partial class RunStepDeepResearchToolCall : RunStepToolCall
     {
         /// <summary> Initializes a new instance of <see cref="RunStepDeepResearchToolCall"/>. </summary>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>

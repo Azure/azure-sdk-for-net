@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Returned when a WebRTC call operation fails. </summary>
-    public partial class ServerEventRtcCallError : SessionUpdate, IJsonModel<ServerEventRtcCallError>
+    internal partial class ServerEventRtcCallError : SessionUpdate, IJsonModel<ServerEventRtcCallError>
     {
         /// <summary> Initializes a new instance of <see cref="ServerEventRtcCallError"/> for deserialization. </summary>
         internal ServerEventRtcCallError()

@@ -100,27 +100,13 @@ namespace Azure.AI.Language.Text
 
         /// <summary>
         /// The abstract base class for entity OverlapPolicy.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Text.MatchLongestEntityPolicyType"/> and <see cref="Text.AllowOverlapEntityPolicyType"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MatchLongestEntityPolicyType"/> and <see cref="AllowOverlapEntityPolicyType"/>.
         /// </summary>
         /// <param name="policyKind"> The entity OverlapPolicy object kind. </param>
         /// <returns> A new <see cref="Text.EntityOverlapPolicy"/> instance for mocking. </returns>
         public static EntityOverlapPolicy EntityOverlapPolicy(string policyKind = default)
         {
             return new UnknownEntityOverlapPolicy(new PolicyKind(policyKind), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Represents the Match longest overlap policy. No overlapping entities as far as it is possible. 1. If there are overlapping entities, the longest one will be returned. 2. If the set of characters predicted for 2 or more entities are exactly the same, select the entity that has the higher confidence score.3. If the entity scores are identical, return all entities that are still present after applying the previous rules. 3. If there is partial overlap (as in Hello Text Analytics) follow the above steps starting from 1. </summary>
-        /// <returns> A new <see cref="Text.MatchLongestEntityPolicyType"/> instance for mocking. </returns>
-        public static MatchLongestEntityPolicyType MatchLongestEntityPolicyType()
-        {
-            return new MatchLongestEntityPolicyType(PolicyKind.MatchLongest, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Represents the allow overlap policy. Will apply no post processing logic for the entities. Whatever the model predicts is what will be returned to the user. This allows the user to get a full view of every single model's possible values and apply their own custom logic on entity selection. </summary>
-        /// <returns> A new <see cref="Text.AllowOverlapEntityPolicyType"/> instance for mocking. </returns>
-        public static AllowOverlapEntityPolicyType AllowOverlapEntityPolicyType()
-        {
-            return new AllowOverlapEntityPolicyType(PolicyKind.AllowOverlap, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The class that houses the inference options allowed for named entity recognition. </summary>
@@ -264,7 +250,7 @@ namespace Azure.AI.Language.Text
 
         /// <summary>
         /// The abstract base class for RedactionPolicy.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Text.CharacterMaskPolicyType"/>, <see cref="Text.SyntheticReplacementPolicyType"/>, <see cref="Text.NoMaskPolicyType"/>, and <see cref="Text.EntityMaskPolicyType"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CharacterMaskPolicyType"/>, <see cref="SyntheticReplacementPolicyType"/>, <see cref="NoMaskPolicyType"/>, and <see cref="EntityMaskPolicyType"/>.
         /// </summary>
         /// <param name="policyKind"> The entity RedactionPolicy object kind. </param>
         /// <param name="entityTypes"> (Optional) describes the PII categories to which the redaction policy will be applied. If not specified, the redaction policy will be applied to all PII categories. </param>
@@ -276,72 +262,6 @@ namespace Azure.AI.Language.Text
             entityTypes ??= new ChangeTrackingList<PiiCategoriesExclude>();
 
             return new UnknownBaseRedactionPolicy(new RedactionPolicyKind(policyKind), entityTypes.ToList(), policyName, isDefaultPolicy, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Represents the policy of redacting with a redaction character. </summary>
-        /// <param name="entityTypes"> (Optional) describes the PII categories to which the redaction policy will be applied. If not specified, the redaction policy will be applied to all PII categories. </param>
-        /// <param name="policyName"> (Optional) name of the redaction policy for identification purposes. </param>
-        /// <param name="isDefaultPolicy"> (Optional) flag to indicate whether this redaction policy is the default policy to be applied when no specific policy is defined for a PII category. Only one policy can be marked as default. </param>
-        /// <param name="redactionCharacter"> Optional parameter to use a Custom Character to be used for redaction in PII responses. Default character will bce * as before. We allow specific ascii characters for redaction. </param>
-        /// <param name="unmaskLength"> Optional parameter to indicate the length of unmasked characters at the end of the redacted PII entity. Default is 0. </param>
-        /// <param name="unmaskFromEnd"> Optional parameter to indicate whether to unmask characters from the end of the redacted PII entity. Default is true. </param>
-        /// <returns> A new <see cref="Text.CharacterMaskPolicyType"/> instance for mocking. </returns>
-        public static CharacterMaskPolicyType CharacterMaskPolicyType(IEnumerable<PiiCategoriesExclude> entityTypes = default, string policyName = default, bool? isDefaultPolicy = default, RedactionCharacter? redactionCharacter = default, int? unmaskLength = default, bool? unmaskFromEnd = default)
-        {
-            entityTypes ??= new ChangeTrackingList<PiiCategoriesExclude>();
-
-            return new CharacterMaskPolicyType(
-                RedactionPolicyKind.CharacterMask,
-                entityTypes.ToList(),
-                policyName,
-                isDefaultPolicy,
-                additionalBinaryDataProperties: null,
-                redactionCharacter,
-                unmaskLength,
-                unmaskFromEnd);
-        }
-
-        /// <summary> Represents the policy of replacing detected PII with synthetic values. </summary>
-        /// <param name="entityTypes"> (Optional) describes the PII categories to which the redaction policy will be applied. If not specified, the redaction policy will be applied to all PII categories. </param>
-        /// <param name="policyName"> (Optional) name of the redaction policy for identification purposes. </param>
-        /// <param name="isDefaultPolicy"> (Optional) flag to indicate whether this redaction policy is the default policy to be applied when no specific policy is defined for a PII category. Only one policy can be marked as default. </param>
-        /// <param name="preserveDataFormat"> Optional flag to indicate whether to preserve the original data format in the synthetic replacement. Default is false. </param>
-        /// <returns> A new <see cref="Text.SyntheticReplacementPolicyType"/> instance for mocking. </returns>
-        public static SyntheticReplacementPolicyType SyntheticReplacementPolicyType(IEnumerable<PiiCategoriesExclude> entityTypes = default, string policyName = default, bool? isDefaultPolicy = default, bool? preserveDataFormat = default)
-        {
-            entityTypes ??= new ChangeTrackingList<PiiCategoriesExclude>();
-
-            return new SyntheticReplacementPolicyType(
-                RedactionPolicyKind.SyntheticReplacement,
-                entityTypes.ToList(),
-                policyName,
-                isDefaultPolicy,
-                additionalBinaryDataProperties: null,
-                preserveDataFormat);
-        }
-
-        /// <summary> Represents the policy of not redacting found PII. </summary>
-        /// <param name="entityTypes"> (Optional) describes the PII categories to which the redaction policy will be applied. If not specified, the redaction policy will be applied to all PII categories. </param>
-        /// <param name="policyName"> (Optional) name of the redaction policy for identification purposes. </param>
-        /// <param name="isDefaultPolicy"> (Optional) flag to indicate whether this redaction policy is the default policy to be applied when no specific policy is defined for a PII category. Only one policy can be marked as default. </param>
-        /// <returns> A new <see cref="Text.NoMaskPolicyType"/> instance for mocking. </returns>
-        public static NoMaskPolicyType NoMaskPolicyType(IEnumerable<PiiCategoriesExclude> entityTypes = default, string policyName = default, bool? isDefaultPolicy = default)
-        {
-            entityTypes ??= new ChangeTrackingList<PiiCategoriesExclude>();
-
-            return new NoMaskPolicyType(RedactionPolicyKind.NoMask, entityTypes.ToList(), policyName, isDefaultPolicy, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Represents the policy of redacting PII with the entity type. </summary>
-        /// <param name="entityTypes"> (Optional) describes the PII categories to which the redaction policy will be applied. If not specified, the redaction policy will be applied to all PII categories. </param>
-        /// <param name="policyName"> (Optional) name of the redaction policy for identification purposes. </param>
-        /// <param name="isDefaultPolicy"> (Optional) flag to indicate whether this redaction policy is the default policy to be applied when no specific policy is defined for a PII category. Only one policy can be marked as default. </param>
-        /// <returns> A new <see cref="Text.EntityMaskPolicyType"/> instance for mocking. </returns>
-        public static EntityMaskPolicyType EntityMaskPolicyType(IEnumerable<PiiCategoriesExclude> entityTypes = default, string policyName = default, bool? isDefaultPolicy = default)
-        {
-            entityTypes ??= new ChangeTrackingList<PiiCategoriesExclude>();
-
-            return new EntityMaskPolicyType(RedactionPolicyKind.EntityMask, entityTypes.ToList(), policyName, isDefaultPolicy, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Configuration for confidence score threshold for PII entity recognition. </summary>
@@ -653,232 +573,13 @@ namespace Azure.AI.Language.Text
 
         /// <summary>
         /// The abstract base class for entity Metadata.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Text.AgeMetadata"/>, <see cref="Text.VolumeMetadata"/>, <see cref="Text.SpeedMetadata"/>, <see cref="Text.AreaMetadata"/>, <see cref="Text.LengthMetadata"/>, <see cref="Text.InformationMetadata"/>, <see cref="Text.TemperatureMetadata"/>, <see cref="Text.WeightMetadata"/>, <see cref="Text.CurrencyMetadata"/>, <see cref="Text.AddressMetadata"/>, <see cref="Text.DateMetadata"/>, <see cref="Text.DateTimeMetadata"/>, <see cref="Text.TemporalSetMetadata"/>, <see cref="Text.TimeMetadata"/>, <see cref="Text.NumberMetadata"/>, <see cref="Text.OrdinalMetadata"/>, <see cref="Text.TemporalSpanMetadata"/>, and <see cref="Text.NumericRangeMetadata"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AgeMetadata"/>, <see cref="VolumeMetadata"/>, <see cref="SpeedMetadata"/>, <see cref="AreaMetadata"/>, <see cref="LengthMetadata"/>, <see cref="InformationMetadata"/>, <see cref="TemperatureMetadata"/>, <see cref="WeightMetadata"/>, <see cref="CurrencyMetadata"/>, <see cref="AddressMetadata"/>, <see cref="DateMetadata"/>, <see cref="DateTimeMetadata"/>, <see cref="TemporalSetMetadata"/>, <see cref="TimeMetadata"/>, <see cref="NumberMetadata"/>, <see cref="OrdinalMetadata"/>, <see cref="TemporalSpanMetadata"/>, and <see cref="NumericRangeMetadata"/>.
         /// </summary>
         /// <param name="metadataKind"> The entity Metadata object kind. </param>
         /// <returns> A new <see cref="Text.BaseMetadata"/> instance for mocking. </returns>
         public static BaseMetadata BaseMetadata(string metadataKind = default)
         {
             return new UnknownBaseMetadata(new MetadataKind(metadataKind), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Represents the Age entity Metadata model. </summary>
-        /// <param name="value"> The numeric value that the extracted text denotes. </param>
-        /// <param name="unit"> Unit of measure for age. </param>
-        /// <returns> A new <see cref="Text.AgeMetadata"/> instance for mocking. </returns>
-        public static AgeMetadata AgeMetadata(double value = default, AgeUnit unit = default)
-        {
-            return new AgeMetadata(MetadataKind.AgeMetadata, additionalBinaryDataProperties: null, value, unit);
-        }
-
-        /// <summary> Represents the Volume entity Metadata model. </summary>
-        /// <param name="value"> The numeric value that the extracted text denotes. </param>
-        /// <param name="unit"> Unit of measure for volume. </param>
-        /// <returns> A new <see cref="Text.VolumeMetadata"/> instance for mocking. </returns>
-        public static VolumeMetadata VolumeMetadata(double value = default, VolumeUnit unit = default)
-        {
-            return new VolumeMetadata(MetadataKind.VolumeMetadata, additionalBinaryDataProperties: null, value, unit);
-        }
-
-        /// <summary> Represents the Speed entity Metadata model. </summary>
-        /// <param name="value"> The numeric value that the extracted text denotes. </param>
-        /// <param name="unit"> Unit of measure for speed. </param>
-        /// <returns> A new <see cref="Text.SpeedMetadata"/> instance for mocking. </returns>
-        public static SpeedMetadata SpeedMetadata(double value = default, SpeedUnit unit = default)
-        {
-            return new SpeedMetadata(MetadataKind.SpeedMetadata, additionalBinaryDataProperties: null, value, unit);
-        }
-
-        /// <summary> Represents the Area entity Metadata model. </summary>
-        /// <param name="value"> The numeric value that the extracted text denotes. </param>
-        /// <param name="unit"> Unit of measure for area. </param>
-        /// <returns> A new <see cref="Text.AreaMetadata"/> instance for mocking. </returns>
-        public static AreaMetadata AreaMetadata(double value = default, AreaUnit unit = default)
-        {
-            return new AreaMetadata(MetadataKind.AreaMetadata, additionalBinaryDataProperties: null, value, unit);
-        }
-
-        /// <summary> Represents the Length entity Metadata model. </summary>
-        /// <param name="value"> The numeric value that the extracted text denotes. </param>
-        /// <param name="unit"> Unit of measure for length. </param>
-        /// <returns> A new <see cref="Text.LengthMetadata"/> instance for mocking. </returns>
-        public static LengthMetadata LengthMetadata(double value = default, LengthUnit unit = default)
-        {
-            return new LengthMetadata(MetadataKind.LengthMetadata, additionalBinaryDataProperties: null, value, unit);
-        }
-
-        /// <summary> Represents the Information (data) entity Metadata model. </summary>
-        /// <param name="value"> The numeric value that the extracted text denotes. </param>
-        /// <param name="unit"> Unit of measure for information. </param>
-        /// <returns> A new <see cref="Text.InformationMetadata"/> instance for mocking. </returns>
-        public static InformationMetadata InformationMetadata(double value = default, InformationUnit unit = default)
-        {
-            return new InformationMetadata(MetadataKind.InformationMetadata, additionalBinaryDataProperties: null, value, unit);
-        }
-
-        /// <summary> Represents the Information entity Metadata model. </summary>
-        /// <param name="value"> The numeric value that the extracted text denotes. </param>
-        /// <param name="unit"> Unit of measure for temperature. </param>
-        /// <returns> A new <see cref="Text.TemperatureMetadata"/> instance for mocking. </returns>
-        public static TemperatureMetadata TemperatureMetadata(double value = default, TemperatureUnit unit = default)
-        {
-            return new TemperatureMetadata(MetadataKind.TemperatureMetadata, additionalBinaryDataProperties: null, value, unit);
-        }
-
-        /// <summary> Represents the Weight ) entity Metadata model. </summary>
-        /// <param name="value"> The numeric value that the extracted text denotes. </param>
-        /// <param name="unit"> Unit of measure for weight. </param>
-        /// <returns> A new <see cref="Text.WeightMetadata"/> instance for mocking. </returns>
-        public static WeightMetadata WeightMetadata(double value = default, WeightUnit unit = default)
-        {
-            return new WeightMetadata(MetadataKind.WeightMetadata, additionalBinaryDataProperties: null, value, unit);
-        }
-
-        /// <summary> Represents the Currency ) entity Metadata model. </summary>
-        /// <param name="value"> The numeric value that the extracted text denotes. </param>
-        /// <param name="unit"> Currency unit. </param>
-        /// <param name="iso4217"> The alphabetic code based on another ISO standard, ISO 3166, which lists the codes for country names. The first two letters of the ISO 4217 three-letter code are the same as the code for the country name, and, where possible, the third letter corresponds to the first letter of the currency name. </param>
-        /// <returns> A new <see cref="Text.CurrencyMetadata"/> instance for mocking. </returns>
-        public static CurrencyMetadata CurrencyMetadata(double value = default, string unit = default, string iso4217 = default)
-        {
-            return new CurrencyMetadata(MetadataKind.CurrencyMetadata, additionalBinaryDataProperties: null, value, unit, iso4217);
-        }
-
-        /// <summary> Represents the Address entity Metadata model. </summary>
-        /// <param name="formatedAddress"> The fully formatted address string following postal conventions for the address's country/region. </param>
-        /// <param name="addressLines"> The full address string as recognized from the input text. </param>
-        /// <param name="city"> The city name of the address. </param>
-        /// <param name="state"> The state or province name of the address. </param>
-        /// <param name="postalCode"> The postal or ZIP code of the address. </param>
-        /// <param name="countryOrRegion"> The country or region name of the address. </param>
-        /// <returns> A new <see cref="Text.AddressMetadata"/> instance for mocking. </returns>
-        public static AddressMetadata AddressMetadata(string formatedAddress = default, IEnumerable<string> addressLines = default, string city = default, string state = default, string postalCode = default, string countryOrRegion = default)
-        {
-            addressLines ??= new ChangeTrackingList<string>();
-
-            return new AddressMetadata(
-                MetadataKind.AddressMetadata,
-                additionalBinaryDataProperties: null,
-                formatedAddress,
-                addressLines.ToList(),
-                city,
-                state,
-                postalCode,
-                countryOrRegion);
-        }
-
-        /// <summary> A Metadata for date entity instances. </summary>
-        /// <param name="dates"> List of date values. </param>
-        /// <returns> A new <see cref="Text.DateMetadata"/> instance for mocking. </returns>
-        public static DateMetadata DateMetadata(IEnumerable<DateValue> dates = default)
-        {
-            dates ??= new ChangeTrackingList<DateValue>();
-
-            return new DateMetadata(MetadataKind.DateMetadata, additionalBinaryDataProperties: null, dates.ToList());
-        }
-
-        /// <summary> Represents the date value. </summary>
-        /// <param name="timex"> An extended ISO 8601 date/time representation as described in (https://github.com/Microsoft/Recognizers-Text/blob/master/Patterns/English/English-DateTime.yaml). </param>
-        /// <param name="value"> The actual time that the extracted text denote. </param>
-        /// <param name="modifier"> Modifier for datetime to indicate point of reference like before, after etc. </param>
-        /// <returns> A new <see cref="Text.DateValue"/> instance for mocking. </returns>
-        public static DateValue DateValue(string timex = default, string value = default, TemporalModifier? modifier = default)
-        {
-            return new DateValue(timex, value, modifier, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> A Metadata for datetime entity instances. </summary>
-        /// <param name="dates"> List of date values. </param>
-        /// <returns> A new <see cref="Text.DateTimeMetadata"/> instance for mocking. </returns>
-        public static DateTimeMetadata DateTimeMetadata(IEnumerable<DateValue> dates = default)
-        {
-            dates ??= new ChangeTrackingList<DateValue>();
-
-            return new DateTimeMetadata(MetadataKind.DateTimeMetadata, additionalBinaryDataProperties: null, dates.ToList());
-        }
-
-        /// <summary> A Metadata for temporal set entity instances. </summary>
-        /// <param name="dates"> List of date values. </param>
-        /// <returns> A new <see cref="Text.TemporalSetMetadata"/> instance for mocking. </returns>
-        public static TemporalSetMetadata TemporalSetMetadata(IEnumerable<DateValue> dates = default)
-        {
-            dates ??= new ChangeTrackingList<DateValue>();
-
-            return new TemporalSetMetadata(MetadataKind.TemporalSetMetadata, additionalBinaryDataProperties: null, dates.ToList());
-        }
-
-        /// <summary> A Metadata for time entity instances. </summary>
-        /// <param name="dates"> List of date values. </param>
-        /// <returns> A new <see cref="Text.TimeMetadata"/> instance for mocking. </returns>
-        public static TimeMetadata TimeMetadata(IEnumerable<DateValue> dates = default)
-        {
-            dates ??= new ChangeTrackingList<DateValue>();
-
-            return new TimeMetadata(MetadataKind.TimeMetadata, additionalBinaryDataProperties: null, dates.ToList());
-        }
-
-        /// <summary> A metadata for numeric entity instances. </summary>
-        /// <param name="numberKind"> Kind of the number type. </param>
-        /// <param name="value"> A numeric representation of what the extracted text denotes. </param>
-        /// <returns> A new <see cref="Text.NumberMetadata"/> instance for mocking. </returns>
-        public static NumberMetadata NumberMetadata(NumberKind numberKind = default, double value = default)
-        {
-            return new NumberMetadata(MetadataKind.NumberMetadata, additionalBinaryDataProperties: null, numberKind, value);
-        }
-
-        /// <summary> A metadata for numeric entity instances. </summary>
-        /// <param name="offset"> The offset with respect to the reference (e.g., offset = -1 indicates the second to last). </param>
-        /// <param name="relativeTo"> The reference point that the ordinal number denotes. </param>
-        /// <param name="value"> A simple arithmetic expression that the ordinal denotes. </param>
-        /// <returns> A new <see cref="Text.OrdinalMetadata"/> instance for mocking. </returns>
-        public static OrdinalMetadata OrdinalMetadata(string offset = default, RelativeTo relativeTo = default, string value = default)
-        {
-            return new OrdinalMetadata(MetadataKind.OrdinalMetadata, additionalBinaryDataProperties: null, offset, relativeTo, value);
-        }
-
-        /// <summary> represents the Metadata of a date and/or time span. </summary>
-        /// <param name="spanValues"> List of temporal spans detected. </param>
-        /// <returns> A new <see cref="Text.TemporalSpanMetadata"/> instance for mocking. </returns>
-        public static TemporalSpanMetadata TemporalSpanMetadata(IEnumerable<TemporalSpanValues> spanValues = default)
-        {
-            spanValues ??= new ChangeTrackingList<TemporalSpanValues>();
-
-            return new TemporalSpanMetadata(MetadataKind.TemporalSpanMetadata, additionalBinaryDataProperties: null, spanValues.ToList());
-        }
-
-        /// <summary> Temporal span object. </summary>
-        /// <param name="begin"> Start value for the span. </param>
-        /// <param name="end"> End value for the span. </param>
-        /// <param name="duration"> An optional duration value formatted based on the ISO 8601 (https://en.wikipedia.org/wiki/ISO_8601#Durations). </param>
-        /// <param name="modifier"> Modifier for datetime to indicate point of reference like before, after etc. </param>
-        /// <param name="timex"> An optional triplet containing the beginning, the end, and the duration all stated as ISO 8601 formatted strings. </param>
-        /// <returns> A new <see cref="Text.TemporalSpanValues"/> instance for mocking. </returns>
-        public static TemporalSpanValues TemporalSpanValues(string begin = default, string end = default, string duration = default, TemporalModifier? modifier = default, string timex = default)
-        {
-            return new TemporalSpanValues(
-                begin,
-                end,
-                duration,
-                modifier,
-                timex,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> represents the Metadata of numeric intervals. </summary>
-        /// <param name="rangeKind"> Kind of numeric ranges supported - like Number, Speed, etc. </param>
-        /// <param name="minimum"> The beginning value of  the interval. </param>
-        /// <param name="maximum"> The ending value of the interval. </param>
-        /// <param name="rangeInclusivity"> The inclusiveness of this range. </param>
-        /// <returns> A new <see cref="Text.NumericRangeMetadata"/> instance for mocking. </returns>
-        public static NumericRangeMetadata NumericRangeMetadata(RangeKind rangeKind = default, double minimum = default, double maximum = default, RangeInclusivity? rangeInclusivity = default)
-        {
-            return new NumericRangeMetadata(
-                MetadataKind.NumericRangeMetadata,
-                additionalBinaryDataProperties: null,
-                rangeKind,
-                minimum,
-                maximum,
-                rangeInclusivity);
         }
 
         /// <summary> Contains the analyze text KeyPhraseExtraction task result. </summary>
@@ -1788,6 +1489,26 @@ namespace Azure.AI.Language.Text
         public static SummaryContext SummaryContext(int offset = default, int length = default)
         {
             return new SummaryContext(offset, length, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The AnalyzeTextSubmitJobRequest. </summary>
+        /// <param name="displayName"> Name for the task. </param>
+        /// <param name="textInput"> Contains the input to be analyzed. </param>
+        /// <param name="actions"> List of tasks to be performed as part of the LRO. </param>
+        /// <param name="defaultLanguage"> Default language to use for records requesting automatic language detection. </param>
+        /// <param name="cancelAfter"> Optional duration in seconds after which the job will be canceled if not completed. </param>
+        /// <returns> A new <see cref="Text.AnalyzeTextSubmitJobRequest"/> instance for mocking. </returns>
+        public static AnalyzeTextSubmitJobRequest AnalyzeTextSubmitJobRequest(string displayName = default, MultiLanguageTextInput textInput = default, IEnumerable<AnalyzeTextOperationAction> actions = default, string defaultLanguage = default, float? cancelAfter = default)
+        {
+            actions ??= new ChangeTrackingList<AnalyzeTextOperationAction>();
+
+            return new AnalyzeTextSubmitJobRequest(
+                displayName,
+                textInput,
+                actions.ToList(),
+                defaultLanguage,
+                cancelAfter,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary>

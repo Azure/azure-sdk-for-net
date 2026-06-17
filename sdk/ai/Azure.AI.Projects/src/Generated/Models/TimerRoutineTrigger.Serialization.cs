@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> A one-shot timer routine trigger. </summary>
-    public partial class TimerRoutineTrigger : RoutineTrigger, IJsonModel<TimerRoutineTrigger>
+    internal partial class TimerRoutineTrigger : RoutineTrigger, IJsonModel<TimerRoutineTrigger>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

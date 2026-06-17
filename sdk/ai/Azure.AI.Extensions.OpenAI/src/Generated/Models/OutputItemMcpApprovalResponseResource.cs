@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> MCP approval response. </summary>
-    public partial class OutputItemMcpApprovalResponseResource : AgentResponseItem
+    internal partial class OutputItemMcpApprovalResponseResource : AgentResponseItem
     {
         /// <summary> Initializes a new instance of <see cref="OutputItemMcpApprovalResponseResource"/>. </summary>
         /// <param name="approvalRequestId"> The ID of the approval request being answered. </param>

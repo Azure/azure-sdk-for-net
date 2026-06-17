@@ -11,7 +11,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The CreateSessionRequest. </summary>
-    internal partial class CreateSessionRequest : IJsonModel<CreateSessionRequest>
+    public partial class CreateSessionRequest : IJsonModel<CreateSessionRequest>
     {
         /// <summary> Initializes a new instance of <see cref="CreateSessionRequest"/> for deserialization. </summary>
         internal CreateSessionRequest()

@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.Language.Text
 {
     /// <summary> Represents the Age entity Metadata model. </summary>
-    public partial class AgeMetadata : BaseMetadata, IJsonModel<AgeMetadata>
+    internal partial class AgeMetadata : BaseMetadata, IJsonModel<AgeMetadata>
     {
         /// <summary> Initializes a new instance of <see cref="AgeMetadata"/> for deserialization. </summary>
         internal AgeMetadata()

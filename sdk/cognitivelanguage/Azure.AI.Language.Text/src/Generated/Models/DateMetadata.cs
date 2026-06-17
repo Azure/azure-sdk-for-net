@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Text
 {
     /// <summary> A Metadata for date entity instances. </summary>
-    public partial class DateMetadata : BaseMetadata
+    internal partial class DateMetadata : BaseMetadata
     {
         /// <summary> Initializes a new instance of <see cref="DateMetadata"/>. </summary>
         internal DateMetadata() : base(MetadataKind.DateMetadata)

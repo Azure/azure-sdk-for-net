@@ -14,7 +14,7 @@ namespace Azure.AI.VoiceLive
     /// Returned when a warning occurs that does not interrupt the conversation flow.
     /// Warnings are informational and the session will continue normally.
     /// </summary>
-    public partial class ServerEventWarning : SessionUpdate
+    internal partial class ServerEventWarning : SessionUpdate
     {
         /// <summary> Initializes a new instance of <see cref="ServerEventWarning"/>. </summary>
         /// <param name="warning"> Details of the warning. </param>

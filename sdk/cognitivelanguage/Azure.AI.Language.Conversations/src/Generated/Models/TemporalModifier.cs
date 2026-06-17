@@ -12,7 +12,7 @@ using Azure.AI.Language.Conversations;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> An optional modifier of a date/time instance. </summary>
-    public readonly partial struct TemporalModifier : IEquatable<TemporalModifier>
+    internal readonly partial struct TemporalModifier : IEquatable<TemporalModifier>
     {
         private readonly string _value;
         /// <summary> AfterApprox temporal modifier. </summary>

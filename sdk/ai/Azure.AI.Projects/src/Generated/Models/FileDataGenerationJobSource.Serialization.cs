@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> File source for data generation jobs — Azure OpenAI file input. </summary>
-    public partial class FileDataGenerationJobSource : DataGenerationJobSource, IJsonModel<FileDataGenerationJobSource>
+    internal partial class FileDataGenerationJobSource : DataGenerationJobSource, IJsonModel<FileDataGenerationJobSource>
     {
         /// <summary> Initializes a new instance of <see cref="FileDataGenerationJobSource"/> for deserialization. </summary>
         internal FileDataGenerationJobSource()

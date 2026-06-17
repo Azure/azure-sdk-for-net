@@ -13,7 +13,7 @@ namespace Azure.AI.Projects.Agents
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="EntraIsolationKeySource"/> and <see cref="HeaderIsolationKeySource"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownIsolationKeySource))]
-    public abstract partial class IsolationKeySource : IJsonModel<IsolationKeySource>
+    internal abstract partial class IsolationKeySource : IJsonModel<IsolationKeySource>
     {
         /// <summary> Initializes a new instance of <see cref="IsolationKeySource"/> for deserialization. </summary>
         internal IsolationKeySource()

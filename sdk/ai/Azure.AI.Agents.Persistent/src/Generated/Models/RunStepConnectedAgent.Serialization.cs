@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> The detailed information about connected agent tool call. </summary>
-    public partial class RunStepConnectedAgent : IJsonModel<RunStepConnectedAgent>
+    internal partial class RunStepConnectedAgent : IJsonModel<RunStepConnectedAgent>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

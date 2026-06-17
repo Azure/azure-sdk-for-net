@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Communication.Messages
 {
     /// <summary> The message content of type video information. </summary>
-    public partial class VideoMessageContent : MessageContent
+    internal partial class VideoMessageContent : MessageContent
     {
         /// <summary> Initializes a new instance of <see cref="VideoMessageContent"/>. </summary>
         /// <param name="mediaUri"> MediaUri of the media content. </param>

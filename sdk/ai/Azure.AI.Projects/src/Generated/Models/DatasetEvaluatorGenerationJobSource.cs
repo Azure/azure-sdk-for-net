@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects
 {
     /// <summary> Dataset source for evaluator generation jobs — reference to a dataset. </summary>
-    public partial class DatasetEvaluatorGenerationJobSource : EvaluatorGenerationJobSource
+    internal partial class DatasetEvaluatorGenerationJobSource : EvaluatorGenerationJobSource
     {
         /// <summary> Initializes a new instance of <see cref="DatasetEvaluatorGenerationJobSource"/>. </summary>
         /// <param name="name"> The name of the dataset. </param>

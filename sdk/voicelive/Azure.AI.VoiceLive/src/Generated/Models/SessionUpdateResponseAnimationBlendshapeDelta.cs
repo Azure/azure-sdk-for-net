@@ -12,7 +12,7 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Represents a delta update of blendshape animation frames for a specific output of a response. </summary>
-    public partial class SessionUpdateResponseAnimationBlendshapeDelta : SessionUpdate
+    internal partial class SessionUpdateResponseAnimationBlendshapeDelta : SessionUpdate
     {
         /// <summary> Initializes a new instance of <see cref="SessionUpdateResponseAnimationBlendshapeDelta"/>. </summary>
         /// <param name="responseId"></param>

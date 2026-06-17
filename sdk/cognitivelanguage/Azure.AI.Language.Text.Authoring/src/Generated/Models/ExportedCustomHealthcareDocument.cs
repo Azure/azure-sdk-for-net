@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Text.Authoring
 {
     /// <summary> Represents an exported document for a CustomHealthcare project. </summary>
-    public partial class ExportedCustomHealthcareDocument
+    internal partial class ExportedCustomHealthcareDocument
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

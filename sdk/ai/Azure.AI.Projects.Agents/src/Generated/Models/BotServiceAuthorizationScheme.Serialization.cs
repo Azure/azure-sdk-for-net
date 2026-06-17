@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The BotServiceAuthorizationScheme. </summary>
-    public partial class BotServiceAuthorizationScheme : AgentEndpointAuthorizationScheme, IJsonModel<BotServiceAuthorizationScheme>
+    internal partial class BotServiceAuthorizationScheme : AgentEndpointAuthorizationScheme, IJsonModel<BotServiceAuthorizationScheme>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

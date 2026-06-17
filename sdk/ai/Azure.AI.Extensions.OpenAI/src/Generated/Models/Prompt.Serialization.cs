@@ -13,7 +13,7 @@ namespace Azure.AI.Extensions.OpenAI
     /// Reference to a prompt template and its variables.
     /// [Learn more](/docs/guides/text?api-mode=responses#reusable-prompts).
     /// </summary>
-    internal partial class Prompt : IJsonModel<Prompt>
+    public partial class Prompt : IJsonModel<Prompt>
     {
         /// <summary> Initializes a new instance of <see cref="Prompt"/> for deserialization. </summary>
         internal Prompt()

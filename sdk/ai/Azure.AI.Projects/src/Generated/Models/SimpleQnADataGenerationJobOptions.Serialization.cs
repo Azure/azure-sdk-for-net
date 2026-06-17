@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> The options for a data generation job with SimpleQnA type. </summary>
-    public partial class SimpleQnADataGenerationJobOptions : DataGenerationJobOptions, IJsonModel<SimpleQnADataGenerationJobOptions>
+    internal partial class SimpleQnADataGenerationJobOptions : DataGenerationJobOptions, IJsonModel<SimpleQnADataGenerationJobOptions>
     {
         /// <summary> Initializes a new instance of <see cref="SimpleQnADataGenerationJobOptions"/> for deserialization. </summary>
         internal SimpleQnADataGenerationJobOptions()

@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects
 {
     /// <summary> Prompt source for data generation jobs — inline text provided by the user. </summary>
-    public partial class PromptDataGenerationJobSource : DataGenerationJobSource
+    internal partial class PromptDataGenerationJobSource : DataGenerationJobSource
     {
         /// <summary> Initializes a new instance of <see cref="PromptDataGenerationJobSource"/>. </summary>
         /// <param name="prompt"> Inline prompt text (e.g., agent description, policy text, supplementary context). </param>

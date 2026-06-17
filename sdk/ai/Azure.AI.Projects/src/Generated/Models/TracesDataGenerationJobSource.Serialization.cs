@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> Traces source for data generation jobs — conversation traces from Application Insights. </summary>
-    public partial class TracesDataGenerationJobSource : DataGenerationJobSource, IJsonModel<TracesDataGenerationJobSource>
+    internal partial class TracesDataGenerationJobSource : DataGenerationJobSource, IJsonModel<TracesDataGenerationJobSource>
     {
         /// <summary> Initializes a new instance of <see cref="TracesDataGenerationJobSource"/> for deserialization. </summary>
         internal TracesDataGenerationJobSource()

@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> Agent source for evaluator generation jobs — references an agent to fetch instructions and metadata from. </summary>
-    public partial class AgentEvaluatorGenerationJobSource : EvaluatorGenerationJobSource, IJsonModel<AgentEvaluatorGenerationJobSource>
+    internal partial class AgentEvaluatorGenerationJobSource : EvaluatorGenerationJobSource, IJsonModel<AgentEvaluatorGenerationJobSource>
     {
         /// <summary> Initializes a new instance of <see cref="AgentEvaluatorGenerationJobSource"/> for deserialization. </summary>
         internal AgentEvaluatorGenerationJobSource()

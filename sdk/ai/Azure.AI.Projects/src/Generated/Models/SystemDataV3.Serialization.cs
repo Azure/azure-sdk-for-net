@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> System metadata for a resource. </summary>
-    internal partial class SystemDataV3 : IJsonModel<SystemDataV3>
+    public partial class SystemDataV3 : IJsonModel<SystemDataV3>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

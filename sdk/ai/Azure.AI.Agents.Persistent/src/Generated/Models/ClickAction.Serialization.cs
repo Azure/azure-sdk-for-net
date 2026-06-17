@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> A click action. </summary>
-    public partial class ClickAction : ComputerUseAction, IJsonModel<ClickAction>
+    internal partial class ClickAction : ComputerUseAction, IJsonModel<ClickAction>
     {
         /// <summary> Initializes a new instance of <see cref="ClickAction"/> for deserialization. </summary>
         internal ClickAction()

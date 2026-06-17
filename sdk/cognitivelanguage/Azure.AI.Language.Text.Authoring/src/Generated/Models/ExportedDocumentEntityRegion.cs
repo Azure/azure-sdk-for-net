@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Text.Authoring
 {
     /// <summary> Represents a region in a document for entity labeling. </summary>
-    public partial class ExportedDocumentEntityRegion
+    internal partial class ExportedDocumentEntityRegion
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects
 {
     /// <summary> A recurring cron-based routine trigger. </summary>
-    public partial class ScheduleRoutineTrigger : RoutineTrigger
+    internal partial class ScheduleRoutineTrigger : RoutineTrigger
     {
         /// <summary> Initializes a new instance of <see cref="ScheduleRoutineTrigger"/>. </summary>
         /// <param name="cronExpression"> A 5-field cron expression. The service enforces a minimum interval of five minutes by default. </param>

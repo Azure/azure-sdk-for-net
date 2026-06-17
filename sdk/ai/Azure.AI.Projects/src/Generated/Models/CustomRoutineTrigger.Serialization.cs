@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> A custom event routine trigger. </summary>
-    public partial class CustomRoutineTrigger : RoutineTrigger, IJsonModel<CustomRoutineTrigger>
+    internal partial class CustomRoutineTrigger : RoutineTrigger, IJsonModel<CustomRoutineTrigger>
     {
         /// <summary> Initializes a new instance of <see cref="CustomRoutineTrigger"/> for deserialization. </summary>
         internal CustomRoutineTrigger()

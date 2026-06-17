@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Version indicator that references a specific agent version by name. </summary>
-    public partial class VersionRefIndicator : VersionIndicator, IJsonModel<VersionRefIndicator>
+    internal partial class VersionRefIndicator : VersionIndicator, IJsonModel<VersionRefIndicator>
     {
         /// <summary> Initializes a new instance of <see cref="VersionRefIndicator"/> for deserialization. </summary>
         internal VersionRefIndicator()

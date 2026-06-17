@@ -14,7 +14,7 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Models
 {
     /// <summary> The query parameters to use for vector search when a raw vector value is provided. </summary>
-    public partial class VectorizedQuery : VectorQuery, IJsonModel<VectorizedQuery>
+    internal partial class VectorizedQuery : VectorQuery, IJsonModel<VectorizedQuery>
     {
         /// <summary> Initializes a new instance of <see cref="VectorizedQuery"/> for deserialization. </summary>
         internal VectorizedQuery()

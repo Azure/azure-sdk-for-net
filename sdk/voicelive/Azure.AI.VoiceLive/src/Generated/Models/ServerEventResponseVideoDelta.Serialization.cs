@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Returned when avatar video frame data is streamed. </summary>
-    public partial class ServerEventResponseVideoDelta : SessionUpdate, IJsonModel<ServerEventResponseVideoDelta>
+    internal partial class ServerEventResponseVideoDelta : SessionUpdate, IJsonModel<ServerEventResponseVideoDelta>
     {
         /// <summary> Initializes a new instance of <see cref="ServerEventResponseVideoDelta"/> for deserialization. </summary>
         internal ServerEventResponseVideoDelta()

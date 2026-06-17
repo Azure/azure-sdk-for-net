@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.Language.Text.Authoring
 {
     /// <summary> Represents the evaluation summary for a custom entity recognition project. </summary>
-    public partial class EntityRecognitionEvalSummary : IJsonModel<EntityRecognitionEvalSummary>
+    internal partial class EntityRecognitionEvalSummary : IJsonModel<EntityRecognitionEvalSummary>
     {
         /// <summary> Initializes a new instance of <see cref="EntityRecognitionEvalSummary"/> for deserialization. </summary>
         internal EntityRecognitionEvalSummary()

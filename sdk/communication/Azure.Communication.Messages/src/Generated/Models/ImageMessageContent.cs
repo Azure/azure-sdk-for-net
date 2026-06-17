@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Communication.Messages
 {
     /// <summary> The message content of type image information. </summary>
-    public partial class ImageMessageContent : MessageContent
+    internal partial class ImageMessageContent : MessageContent
     {
         /// <summary> Initializes a new instance of <see cref="ImageMessageContent"/>. </summary>
         /// <param name="mediaUri"> MediaUri of the media content. </param>

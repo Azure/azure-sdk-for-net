@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Inline dataset — items supplied directly in the request body. </summary>
-    public partial class OptimizationInlineDatasetInput : OptimizationDatasetInput, IJsonModel<OptimizationInlineDatasetInput>
+    internal partial class OptimizationInlineDatasetInput : OptimizationDatasetInput, IJsonModel<OptimizationInlineDatasetInput>
     {
         /// <summary> Initializes a new instance of <see cref="OptimizationInlineDatasetInput"/> for deserialization. </summary>
         internal OptimizationInlineDatasetInput()

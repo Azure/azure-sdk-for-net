@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> Represents the policy of masking PII with the entity type. </summary>
-    public partial class EntityMaskTypePolicyType : BaseRedactionPolicy
+    internal partial class EntityMaskTypePolicyType : BaseRedactionPolicy
     {
         /// <summary> Initializes a new instance of <see cref="EntityMaskTypePolicyType"/>. </summary>
         public EntityMaskTypePolicyType() : base(RedactionPolicyKind.EntityMask)

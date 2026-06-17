@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.Language.Text.Authoring
 {
     /// <summary> Represents an exported document for a custom text sentiment project. </summary>
-    public partial class ExportedCustomTextSentimentDocument : IJsonModel<ExportedCustomTextSentimentDocument>
+    internal partial class ExportedCustomTextSentimentDocument : IJsonModel<ExportedCustomTextSentimentDocument>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

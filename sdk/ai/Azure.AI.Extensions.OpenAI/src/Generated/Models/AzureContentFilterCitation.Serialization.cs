@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Citation details for protected material detection. </summary>
-    internal partial class AzureContentFilterCitation : IJsonModel<AzureContentFilterCitation>
+    public partial class AzureContentFilterCitation : IJsonModel<AzureContentFilterCitation>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

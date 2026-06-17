@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> A response item that lists the tools available on an MCP server. </summary>
-    public partial class SessionResponseMcpListToolItem : SessionResponseItem
+    internal partial class SessionResponseMcpListToolItem : SessionResponseItem
     {
         /// <summary> Initializes a new instance of <see cref="SessionResponseMcpListToolItem"/>. </summary>
         /// <param name="tools"> The tools available on the server. </param>

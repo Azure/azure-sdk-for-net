@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> Specifies the kind of content block within a message. Could be text, an image file, an external image URL, or an unknown future type. </summary>
-    internal readonly partial struct MessageBlockType : IEquatable<MessageBlockType>
+    public readonly partial struct MessageBlockType : IEquatable<MessageBlockType>
     {
         private readonly string _value;
         /// <summary> Indicates a block containing text content. </summary>

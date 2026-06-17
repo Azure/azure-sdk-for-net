@@ -14,7 +14,7 @@ namespace Azure.AI.VoiceLive
     /// Returned when the model-generated function call arguments are done streaming.
     /// Also emitted when a Response is interrupted, incomplete, or cancelled.
     /// </summary>
-    public partial class SessionUpdateResponseFunctionCallArgumentsDone : SessionUpdate
+    internal partial class SessionUpdateResponseFunctionCallArgumentsDone : SessionUpdate
     {
         /// <summary> Initializes a new instance of <see cref="SessionUpdateResponseFunctionCallArgumentsDone"/>. </summary>
         /// <param name="responseId"> The ID of the response. </param>

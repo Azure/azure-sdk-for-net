@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Base type for message item within a conversation. </summary>
-    public partial class SessionResponseMessageItem : SessionResponseItem
+    internal partial class SessionResponseMessageItem : SessionResponseItem
     {
         /// <summary> Initializes a new instance of <see cref="SessionResponseMessageItem"/>. </summary>
         /// <param name="role"></param>

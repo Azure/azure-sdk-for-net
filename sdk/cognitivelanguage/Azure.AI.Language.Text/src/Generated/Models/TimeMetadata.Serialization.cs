@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.Language.Text
 {
     /// <summary> A Metadata for time entity instances. </summary>
-    public partial class TimeMetadata : BaseMetadata, IJsonModel<TimeMetadata>
+    internal partial class TimeMetadata : BaseMetadata, IJsonModel<TimeMetadata>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

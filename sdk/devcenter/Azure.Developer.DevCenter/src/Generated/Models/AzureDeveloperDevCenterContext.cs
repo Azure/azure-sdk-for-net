@@ -27,6 +27,7 @@ namespace Azure.Developer.DevCenter
     [ModelReaderWriterBuildable(typeof(DevCenterCatalog))]
     [ModelReaderWriterBuildable(typeof(DevCenterEnvironment))]
     [ModelReaderWriterBuildable(typeof(DevCenterEnvironmentType))]
+    [ModelReaderWriterBuildable(typeof(DevCenterOperationDetails))]
     [ModelReaderWriterBuildable(typeof(DevCenterProject))]
     [ModelReaderWriterBuildable(typeof(EnvironmentDefinition))]
     [ModelReaderWriterBuildable(typeof(EnvironmentDefinitionParameter))]

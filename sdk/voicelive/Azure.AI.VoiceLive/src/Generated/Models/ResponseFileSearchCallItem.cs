@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> A response item that represents a file search call. </summary>
-    public partial class ResponseFileSearchCallItem : SessionResponseItem
+    internal partial class ResponseFileSearchCallItem : SessionResponseItem
     {
         /// <summary> Initializes a new instance of <see cref="ResponseFileSearchCallItem"/>. </summary>
         /// <param name="status"> The status of the file search tool call. </param>

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> A click action. </summary>
-    public partial class ClickAction : ComputerUseAction
+    internal partial class ClickAction : ComputerUseAction
     {
         /// <summary> Initializes a new instance of <see cref="ClickAction"/>. </summary>
         /// <param name="x"> The x-coordinate where the click occurred. </param>

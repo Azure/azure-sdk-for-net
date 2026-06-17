@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> A recurring cron-based routine trigger. </summary>
-    public partial class ScheduleRoutineTrigger : RoutineTrigger, IJsonModel<ScheduleRoutineTrigger>
+    internal partial class ScheduleRoutineTrigger : RoutineTrigger, IJsonModel<ScheduleRoutineTrigger>
     {
         /// <summary> Initializes a new instance of <see cref="ScheduleRoutineTrigger"/> for deserialization. </summary>
         internal ScheduleRoutineTrigger()
