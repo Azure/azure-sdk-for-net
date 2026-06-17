@@ -3,7 +3,10 @@
 
 using System;
 using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
+using Azure.Core.TestFramework.Models;
 using NUnit.Framework;
 
 namespace Azure.Security.CodeTransparency.Tests
@@ -19,21 +22,53 @@ namespace Azure.Security.CodeTransparency.Tests
         }
 
         [SetUp]
-        public void Setup()
+        public async Task Setup()
         {
             var options = InstrumentClientOptions(new CodeTransparencyClientOptions());
 
-            // Support canary/custom identity service endpoints
-            string identityEndpoint = TestEnvironment.IdentityClientEndpoint;
-            if (!string.IsNullOrEmpty(identityEndpoint))
+            if (Mode == RecordedTestMode.Playback)
             {
-                options.IdentityClientEndpoint = identityEndpoint;
+                // In Playback mode, skip TLS cert download by using the internal
+                // constructor that doesn't call CreateTlsCertAndTrustVerifier.
+                Client = InstrumentClient(
+                    new CodeTransparencyClient(
+                        authenticationPolicy: null,
+                        TestEnvironment.Endpoint,
+                        options));
             }
+            else
+            {
+                // In Live/Record mode, use the full constructor with TLS cert download.
+                string identityEndpoint = TestEnvironment.IdentityClientEndpoint;
+                if (!string.IsNullOrEmpty(identityEndpoint))
+                {
+                    options.IdentityClientEndpoint = identityEndpoint;
+                }
 
-            Client = InstrumentClient(
-                new CodeTransparencyClient(
-                    TestEnvironment.Endpoint,
-                    options));
+                // Fetch TLS cert and configure the test proxy to trust it (for Record mode).
+                var certClient = new CodeTransparencyCertificateClient(
+                    new Uri(options.IdentityClientEndpoint));
+                string ledgerName = TestEnvironment.Endpoint.Host.Split('.')[0];
+                var certResponse = certClient.GetServiceIdentity(ledgerName);
+                string pem = certResponse.Value.TlsCertificatePem;
+
+                if (Mode == RecordedTestMode.Record && !string.IsNullOrEmpty(pem))
+                {
+                    await SetProxyOptionsAsync(new ProxyOptions
+                    {
+                        Transport = new ProxyOptionsTransport
+                        {
+                            TLSValidationCert = pem,
+                            AllowAutoRedirect = false
+                        }
+                    });
+                }
+
+                Client = InstrumentClient(
+                    new CodeTransparencyClient(
+                        TestEnvironment.Endpoint,
+                        options));
+            }
         }
     }
 }

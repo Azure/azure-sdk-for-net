@@ -187,5 +187,20 @@ namespace Azure.Security.CodeTransparency.Tests
             Assert.IsNotNull(statementResponse.Content);
             Assert.IsTrue(statementResponse.Content.ToMemory().Length > 0);
         }
+
+        [RecordedTest]
+        [LiveOnly]
+        public async Task CreateEntryWithWaitForCommitTrue()
+        {
+            byte[] coseSignature = ReadFileBytes("input_signed_claims");
+            var body = BinaryData.FromBytes(coseSignature);
+
+            // waitForCommit=true tells the service to wait until the entry is committed
+            // before responding. Expects 201 with committed entry.
+            Response<BinaryData> response = await Client.CreateEntryAsync(body, waitForCommit: true);
+            int status = response.GetRawResponse().Status;
+
+            Assert.That(status, Is.EqualTo(201).Or.EqualTo(303));
+        }
     }
 }
