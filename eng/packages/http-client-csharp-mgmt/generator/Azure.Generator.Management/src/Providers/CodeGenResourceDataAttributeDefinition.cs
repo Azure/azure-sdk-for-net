@@ -53,6 +53,9 @@ internal sealed class CodeGenResourceDataAttributeDefinition : TypeProvider
 
     private void SuppressSourceInputView(string fieldName)
     {
+        // TODO: Remove this reflection workaround when the base generator provides a supported
+        // source-input-view opt-out for contributed custom-code attribute providers.
+        // https://github.com/microsoft/typespec/issues/10993
         var currentType = typeof(TypeProvider);
         while (currentType is not null)
         {
