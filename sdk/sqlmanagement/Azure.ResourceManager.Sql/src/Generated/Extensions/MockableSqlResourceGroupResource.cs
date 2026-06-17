@@ -616,13 +616,13 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="LongTermRetentionBackupData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsWithLocationAsync(AzureLocation locationName, bool? onlyLatestPerDatabase = default, SqlDatabaseState? databaseState = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsWithResourceGroupLocationAsync(AzureLocation locationName, bool? onlyLatestPerDatabase = default, SqlDatabaseState? databaseState = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new LongTermRetentionBackupsGetLongTermRetentionBackupsWithLocationAsyncCollectionResultOfT(
+            return new LongTermRetentionBackupsGetLongTermRetentionBackupsWithResourceGroupLocationAsyncCollectionResultOfT(
                 LongTermRetentionBackupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -630,7 +630,7 @@ namespace Azure.ResourceManager.Sql.Mocking
                 onlyLatestPerDatabase,
                 databaseState?.ToString(),
                 context,
-                "MockableSqlResourceGroupResource.GetLongTermRetentionBackupsWithLocation");
+                "MockableSqlResourceGroupResource.GetLongTermRetentionBackupsWithResourceGroupLocation");
         }
 
         /// <summary>
@@ -655,13 +655,13 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="LongTermRetentionBackupData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsWithLocation(AzureLocation locationName, bool? onlyLatestPerDatabase = default, SqlDatabaseState? databaseState = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsWithResourceGroupLocation(AzureLocation locationName, bool? onlyLatestPerDatabase = default, SqlDatabaseState? databaseState = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new LongTermRetentionBackupsGetLongTermRetentionBackupsWithLocationCollectionResultOfT(
+            return new LongTermRetentionBackupsGetLongTermRetentionBackupsWithResourceGroupLocationCollectionResultOfT(
                 LongTermRetentionBackupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -669,7 +669,7 @@ namespace Azure.ResourceManager.Sql.Mocking
                 onlyLatestPerDatabase,
                 databaseState?.ToString(),
                 context,
-                "MockableSqlResourceGroupResource.GetLongTermRetentionBackupsWithLocation");
+                "MockableSqlResourceGroupResource.GetLongTermRetentionBackupsWithResourceGroupLocation");
         }
 
         /// <summary>
@@ -697,7 +697,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="longTermRetentionServerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="longTermRetentionServerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="LongTermRetentionBackupData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsWithServerAsync(AzureLocation locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = default, SqlDatabaseState? databaseState = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsWithResourceGroupServerAsync(AzureLocation locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = default, SqlDatabaseState? databaseState = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
 
@@ -705,7 +705,7 @@ namespace Azure.ResourceManager.Sql.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new LongTermRetentionBackupsGetLongTermRetentionBackupsWithServerAsyncCollectionResultOfT(
+            return new LongTermRetentionBackupsGetLongTermRetentionBackupsWithResourceGroupServerAsyncCollectionResultOfT(
                 LongTermRetentionBackupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -714,7 +714,7 @@ namespace Azure.ResourceManager.Sql.Mocking
                 onlyLatestPerDatabase,
                 databaseState?.ToString(),
                 context,
-                "MockableSqlResourceGroupResource.GetLongTermRetentionBackupsWithServer");
+                "MockableSqlResourceGroupResource.GetLongTermRetentionBackupsWithResourceGroupServer");
         }
 
         /// <summary>
@@ -742,7 +742,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="longTermRetentionServerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="longTermRetentionServerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="LongTermRetentionBackupData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsWithServer(AzureLocation locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = default, SqlDatabaseState? databaseState = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsWithResourceGroupServer(AzureLocation locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = default, SqlDatabaseState? databaseState = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
 
@@ -750,7 +750,7 @@ namespace Azure.ResourceManager.Sql.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new LongTermRetentionBackupsGetLongTermRetentionBackupsWithServerCollectionResultOfT(
+            return new LongTermRetentionBackupsGetLongTermRetentionBackupsWithResourceGroupServerCollectionResultOfT(
                 LongTermRetentionBackupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -759,7 +759,7 @@ namespace Azure.ResourceManager.Sql.Mocking
                 onlyLatestPerDatabase,
                 databaseState?.ToString(),
                 context,
-                "MockableSqlResourceGroupResource.GetLongTermRetentionBackupsWithServer");
+                "MockableSqlResourceGroupResource.GetLongTermRetentionBackupsWithResourceGroupServer");
         }
 
         /// <summary>
@@ -787,13 +787,13 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ManagedInstanceLongTermRetentionBackupData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithLocationAsync(AzureLocation locationName, bool? onlyLatestPerDatabase = default, SqlDatabaseState? databaseState = default, long? skip = default, long? top = default, string filter = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithResourceGroupLocationAsync(AzureLocation locationName, bool? onlyLatestPerDatabase = default, SqlDatabaseState? databaseState = default, long? skip = default, long? top = default, string filter = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new LongTermRetentionManagedInstanceBackupsGetLongTermRetentionManagedInstanceBackupsWithLocationAsyncCollectionResultOfT(
+            return new LongTermRetentionManagedInstanceBackupsGetLongTermRetentionManagedInstanceBackupsWithResourceGroupLocationAsyncCollectionResultOfT(
                 LongTermRetentionManagedInstanceBackupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -804,7 +804,7 @@ namespace Azure.ResourceManager.Sql.Mocking
                 top,
                 filter,
                 context,
-                "MockableSqlResourceGroupResource.GetLongTermRetentionManagedInstanceBackupsWithLocation");
+                "MockableSqlResourceGroupResource.GetLongTermRetentionManagedInstanceBackupsWithResourceGroupLocation");
         }
 
         /// <summary>
@@ -832,13 +832,13 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ManagedInstanceLongTermRetentionBackupData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithLocation(AzureLocation locationName, bool? onlyLatestPerDatabase = default, SqlDatabaseState? databaseState = default, long? skip = default, long? top = default, string filter = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithResourceGroupLocation(AzureLocation locationName, bool? onlyLatestPerDatabase = default, SqlDatabaseState? databaseState = default, long? skip = default, long? top = default, string filter = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new LongTermRetentionManagedInstanceBackupsGetLongTermRetentionManagedInstanceBackupsWithLocationCollectionResultOfT(
+            return new LongTermRetentionManagedInstanceBackupsGetLongTermRetentionManagedInstanceBackupsWithResourceGroupLocationCollectionResultOfT(
                 LongTermRetentionManagedInstanceBackupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -849,7 +849,7 @@ namespace Azure.ResourceManager.Sql.Mocking
                 top,
                 filter,
                 context,
-                "MockableSqlResourceGroupResource.GetLongTermRetentionManagedInstanceBackupsWithLocation");
+                "MockableSqlResourceGroupResource.GetLongTermRetentionManagedInstanceBackupsWithResourceGroupLocation");
         }
 
         /// <summary>
@@ -877,7 +877,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="managedInstanceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="managedInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="ManagedInstanceLongTermRetentionBackupData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithInstanceAsync(AzureLocation locationName, string managedInstanceName, bool? onlyLatestPerDatabase = default, SqlDatabaseState? databaseState = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithResourceGroupInstanceAsync(AzureLocation locationName, string managedInstanceName, bool? onlyLatestPerDatabase = default, SqlDatabaseState? databaseState = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
 
@@ -885,7 +885,7 @@ namespace Azure.ResourceManager.Sql.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new LongTermRetentionManagedInstanceBackupsGetLongTermRetentionManagedInstanceBackupsWithInstanceAsyncCollectionResultOfT(
+            return new LongTermRetentionManagedInstanceBackupsGetLongTermRetentionManagedInstanceBackupsWithResourceGroupInstanceAsyncCollectionResultOfT(
                 LongTermRetentionManagedInstanceBackupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -894,7 +894,7 @@ namespace Azure.ResourceManager.Sql.Mocking
                 onlyLatestPerDatabase,
                 databaseState?.ToString(),
                 context,
-                "MockableSqlResourceGroupResource.GetLongTermRetentionManagedInstanceBackupsWithInstance");
+                "MockableSqlResourceGroupResource.GetLongTermRetentionManagedInstanceBackupsWithResourceGroupInstance");
         }
 
         /// <summary>
@@ -922,7 +922,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="managedInstanceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="managedInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="ManagedInstanceLongTermRetentionBackupData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithInstance(AzureLocation locationName, string managedInstanceName, bool? onlyLatestPerDatabase = default, SqlDatabaseState? databaseState = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithResourceGroupInstance(AzureLocation locationName, string managedInstanceName, bool? onlyLatestPerDatabase = default, SqlDatabaseState? databaseState = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
 
@@ -930,7 +930,7 @@ namespace Azure.ResourceManager.Sql.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new LongTermRetentionManagedInstanceBackupsGetLongTermRetentionManagedInstanceBackupsWithInstanceCollectionResultOfT(
+            return new LongTermRetentionManagedInstanceBackupsGetLongTermRetentionManagedInstanceBackupsWithResourceGroupInstanceCollectionResultOfT(
                 LongTermRetentionManagedInstanceBackupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -939,7 +939,7 @@ namespace Azure.ResourceManager.Sql.Mocking
                 onlyLatestPerDatabase,
                 databaseState?.ToString(),
                 context,
-                "MockableSqlResourceGroupResource.GetLongTermRetentionManagedInstanceBackupsWithInstance");
+                "MockableSqlResourceGroupResource.GetLongTermRetentionManagedInstanceBackupsWithResourceGroupInstance");
         }
     }
 }

@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        internal HttpMessage CreateGetByLocationRequest(Guid subscriptionId, AzureLocation locationName, bool? onlyLatestPerDatabase, string databaseState, long? skip, long? top, string filter, RequestContext context)
+        internal HttpMessage CreateGetLongTermRetentionManagedInstanceBackupsWithLocationRequest(Guid subscriptionId, AzureLocation locationName, bool? onlyLatestPerDatabase, string databaseState, long? skip, long? top, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        internal HttpMessage CreateNextGetByLocationRequest(Uri nextPage, Guid subscriptionId, AzureLocation locationName, bool? onlyLatestPerDatabase, string databaseState, long? skip, long? top, string filter, RequestContext context)
+        internal HttpMessage CreateNextGetLongTermRetentionManagedInstanceBackupsWithLocationRequest(Uri nextPage, Guid subscriptionId, AzureLocation locationName, bool? onlyLatestPerDatabase, string databaseState, long? skip, long? top, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        internal HttpMessage CreateGetByInstanceRequest(Guid subscriptionId, AzureLocation locationName, string managedInstanceName, bool? onlyLatestPerDatabase, string databaseState, RequestContext context)
+        internal HttpMessage CreateGetLongTermRetentionManagedInstanceBackupsWithInstanceRequest(Guid subscriptionId, AzureLocation locationName, string managedInstanceName, bool? onlyLatestPerDatabase, string databaseState, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        internal HttpMessage CreateNextGetByInstanceRequest(Uri nextPage, Guid subscriptionId, AzureLocation locationName, string managedInstanceName, bool? onlyLatestPerDatabase, string databaseState, RequestContext context)
+        internal HttpMessage CreateNextGetLongTermRetentionManagedInstanceBackupsWithInstanceRequest(Uri nextPage, Guid subscriptionId, AzureLocation locationName, string managedInstanceName, bool? onlyLatestPerDatabase, string databaseState, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        internal HttpMessage CreateGetLongTermRetentionManagedInstanceBackupsWithLocationRequest(Guid subscriptionId, string resourceGroupName, AzureLocation locationName, bool? onlyLatestPerDatabase, string databaseState, long? skip, long? top, string filter, RequestContext context)
+        internal HttpMessage CreateGetLongTermRetentionManagedInstanceBackupsWithResourceGroupLocationRequest(Guid subscriptionId, string resourceGroupName, AzureLocation locationName, bool? onlyLatestPerDatabase, string databaseState, long? skip, long? top, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        internal HttpMessage CreateNextGetLongTermRetentionManagedInstanceBackupsWithLocationRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, AzureLocation locationName, bool? onlyLatestPerDatabase, string databaseState, long? skip, long? top, string filter, RequestContext context)
+        internal HttpMessage CreateNextGetLongTermRetentionManagedInstanceBackupsWithResourceGroupLocationRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, AzureLocation locationName, bool? onlyLatestPerDatabase, string databaseState, long? skip, long? top, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        internal HttpMessage CreateGetLongTermRetentionManagedInstanceBackupsWithInstanceRequest(Guid subscriptionId, string resourceGroupName, AzureLocation locationName, string managedInstanceName, bool? onlyLatestPerDatabase, string databaseState, RequestContext context)
+        internal HttpMessage CreateGetLongTermRetentionManagedInstanceBackupsWithResourceGroupInstanceRequest(Guid subscriptionId, string resourceGroupName, AzureLocation locationName, string managedInstanceName, bool? onlyLatestPerDatabase, string databaseState, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -478,7 +478,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        internal HttpMessage CreateNextGetLongTermRetentionManagedInstanceBackupsWithInstanceRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, AzureLocation locationName, string managedInstanceName, bool? onlyLatestPerDatabase, string databaseState, RequestContext context)
+        internal HttpMessage CreateNextGetLongTermRetentionManagedInstanceBackupsWithResourceGroupInstanceRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, AzureLocation locationName, string managedInstanceName, bool? onlyLatestPerDatabase, string databaseState, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

@@ -15,28 +15,31 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    internal partial class LongTermRetentionBackupsGetByLocationAsyncCollectionResultOfT : AsyncPageable<LongTermRetentionBackupData>
+    internal partial class LongTermRetentionBackupsGetLongTermRetentionBackupsWithResourceGroupLocationAsyncCollectionResultOfT : AsyncPageable<LongTermRetentionBackupData>
     {
         private readonly LongTermRetentionBackups _client;
         private readonly Guid _subscriptionId;
+        private readonly string _resourceGroupName;
         private readonly AzureLocation _locationName;
         private readonly bool? _onlyLatestPerDatabase;
         private readonly string _databaseState;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of LongTermRetentionBackupsGetByLocationAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of LongTermRetentionBackupsGetLongTermRetentionBackupsWithResourceGroupLocationAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The LongTermRetentionBackups client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="locationName"> The location of the database. </param>
         /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public LongTermRetentionBackupsGetByLocationAsyncCollectionResultOfT(LongTermRetentionBackups client, Guid subscriptionId, AzureLocation locationName, bool? onlyLatestPerDatabase, string databaseState, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public LongTermRetentionBackupsGetLongTermRetentionBackupsWithResourceGroupLocationAsyncCollectionResultOfT(LongTermRetentionBackups client, Guid subscriptionId, string resourceGroupName, AzureLocation locationName, bool? onlyLatestPerDatabase, string databaseState, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
+            _resourceGroupName = resourceGroupName;
             _locationName = locationName;
             _onlyLatestPerDatabase = onlyLatestPerDatabase;
             _databaseState = databaseState;
@@ -44,10 +47,10 @@ namespace Azure.ResourceManager.Sql
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of LongTermRetentionBackupsGetByLocationAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of LongTermRetentionBackupsGetLongTermRetentionBackupsWithResourceGroupLocationAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of LongTermRetentionBackupsGetByLocationAsyncCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of LongTermRetentionBackupsGetLongTermRetentionBackupsWithResourceGroupLocationAsyncCollectionResultOfT as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<LongTermRetentionBackupData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
@@ -74,7 +77,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetByLocationRequest(nextLink, _subscriptionId, _locationName, _onlyLatestPerDatabase, _databaseState, _context) : _client.CreateGetByLocationRequest(_subscriptionId, _locationName, _onlyLatestPerDatabase, _databaseState, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetLongTermRetentionBackupsWithResourceGroupLocationRequest(nextLink, _subscriptionId, _resourceGroupName, _locationName, _onlyLatestPerDatabase, _databaseState, _context) : _client.CreateGetLongTermRetentionBackupsWithResourceGroupLocationRequest(_subscriptionId, _resourceGroupName, _locationName, _onlyLatestPerDatabase, _databaseState, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

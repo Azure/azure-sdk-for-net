@@ -14,43 +14,46 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    internal partial class LongTermRetentionManagedInstanceBackupsGetByInstanceCollectionResultOfT : Pageable<ManagedInstanceLongTermRetentionBackupData>
+    internal partial class LongTermRetentionBackupsGetLongTermRetentionBackupsWithResourceGroupServerCollectionResultOfT : Pageable<LongTermRetentionBackupData>
     {
-        private readonly LongTermRetentionManagedInstanceBackups _client;
+        private readonly LongTermRetentionBackups _client;
         private readonly Guid _subscriptionId;
+        private readonly string _resourceGroupName;
         private readonly AzureLocation _locationName;
-        private readonly string _managedInstanceName;
+        private readonly string _longTermRetentionServerName;
         private readonly bool? _onlyLatestPerDatabase;
         private readonly string _databaseState;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of LongTermRetentionManagedInstanceBackupsGetByInstanceCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The LongTermRetentionManagedInstanceBackups client used to send requests. </param>
+        /// <summary> Initializes a new instance of LongTermRetentionBackupsGetLongTermRetentionBackupsWithResourceGroupServerCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The LongTermRetentionBackups client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="locationName"> The location of the database. </param>
-        /// <param name="managedInstanceName"> The name of the managed instance. </param>
+        /// <param name="longTermRetentionServerName"> The name of the server. </param>
         /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public LongTermRetentionManagedInstanceBackupsGetByInstanceCollectionResultOfT(LongTermRetentionManagedInstanceBackups client, Guid subscriptionId, AzureLocation locationName, string managedInstanceName, bool? onlyLatestPerDatabase, string databaseState, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public LongTermRetentionBackupsGetLongTermRetentionBackupsWithResourceGroupServerCollectionResultOfT(LongTermRetentionBackups client, Guid subscriptionId, string resourceGroupName, AzureLocation locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase, string databaseState, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
+            _resourceGroupName = resourceGroupName;
             _locationName = locationName;
-            _managedInstanceName = managedInstanceName;
+            _longTermRetentionServerName = longTermRetentionServerName;
             _onlyLatestPerDatabase = onlyLatestPerDatabase;
             _databaseState = databaseState;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of LongTermRetentionManagedInstanceBackupsGetByInstanceCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of LongTermRetentionBackupsGetLongTermRetentionBackupsWithResourceGroupServerCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of LongTermRetentionManagedInstanceBackupsGetByInstanceCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<ManagedInstanceLongTermRetentionBackupData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of LongTermRetentionBackupsGetLongTermRetentionBackupsWithResourceGroupServerCollectionResultOfT as an enumerable collection. </returns>
+        public override IEnumerable<Page<LongTermRetentionBackupData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -60,13 +63,14 @@ namespace Azure.ResourceManager.Sql
                 {
                     yield break;
                 }
-                ManagedInstanceLongTermRetentionBackupListResult result = ManagedInstanceLongTermRetentionBackupListResult.FromResponse(response);
-                yield return Page<ManagedInstanceLongTermRetentionBackupData>.FromValues((IReadOnlyList<ManagedInstanceLongTermRetentionBackupData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
-                nextPage = result.NextLink;
-                if (nextPage == null)
+                LongTermRetentionBackupListResult result = LongTermRetentionBackupListResult.FromResponse(response);
+                yield return Page<LongTermRetentionBackupData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                string nextPageString = result.NextLink;
+                if (string.IsNullOrEmpty(nextPageString))
                 {
                     yield break;
                 }
+                nextPage = new Uri(nextPageString, UriKind.RelativeOrAbsolute);
             }
         }
 
@@ -75,7 +79,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetByInstanceRequest(nextLink, _subscriptionId, _locationName, _managedInstanceName, _onlyLatestPerDatabase, _databaseState, _context) : _client.CreateGetByInstanceRequest(_subscriptionId, _locationName, _managedInstanceName, _onlyLatestPerDatabase, _databaseState, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetLongTermRetentionBackupsWithResourceGroupServerRequest(nextLink, _subscriptionId, _resourceGroupName, _locationName, _longTermRetentionServerName, _onlyLatestPerDatabase, _databaseState, _context) : _client.CreateGetLongTermRetentionBackupsWithResourceGroupServerRequest(_subscriptionId, _resourceGroupName, _locationName, _longTermRetentionServerName, _onlyLatestPerDatabase, _databaseState, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
