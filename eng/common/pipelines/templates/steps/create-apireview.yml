@@ -57,7 +57,7 @@ steps:
             -BuildId '$(Build.BuildId)'
             -RepoName '$(Build.Repository.Name)'
             -MarkPackageAsShipped $${{parameters.MarkPackageAsShipped}}
-        displayName: Create API Review
+        displayName: Create and Validate API Review
         condition: >-
           and(
             succeededOrFailed(),
@@ -71,7 +71,8 @@ steps:
                   'djurek@microsoft.com',
                   'chononiw@microsoft.com',
                   'raychen@microsoft.com',
-                  'trpresco@microsoft.com'
+                  'trpresco@microsoft.com',
+                  'prmarott@microsoft.com'
                 )
               )
             )
