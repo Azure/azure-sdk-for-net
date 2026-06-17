@@ -105,7 +105,7 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Initializes a new instance of AgentOptimizationJobs. </summary>
         public virtual AgentOptimizationJobs GetAgentOptimizationJobsClient()
         {
-            return Volatile.Read(ref _cachedAgentOptimizationJobs) ?? Interlocked.CompareExchange(ref _cachedAgentOptimizationJobs, new AgentOptimizationJobs(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentOptimizationJobs;
+            return Volatile.Read(ref _cachedAgentOptimizationJobs) ?? Interlocked.CompareExchange(ref _cachedAgentOptimizationJobs, new AgentOptimizationJobs(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentOptimizationJobs;
         }
     }
 }

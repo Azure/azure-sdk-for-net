@@ -1105,6 +1105,6 @@ public partial class AgentAdministrationClient
     /// <summary> Gets the lazily-initialized agent optimization jobs sub-client. </summary>
     public virtual AgentOptimizationJobs GetAgentOptimizationJobs()
     {
-        return Volatile.Read(ref _cachedAgentOptimizationJobs) ?? Interlocked.CompareExchange(ref _cachedAgentOptimizationJobs, new AgentOptimizationJobs(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentOptimizationJobs;
+           return Volatile.Read(ref _cachedAgentOptimizationJobs) ?? Interlocked.CompareExchange(ref _cachedAgentOptimizationJobs, new AgentOptimizationJobs(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentOptimizationJobs;
     }
 }
