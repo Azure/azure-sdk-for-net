@@ -7,23 +7,13 @@
       ongoing forward compatibility.
     </Description>
     <AssemblyTitle>Microsoft Azure.AI.Projects.Agents client library</AssemblyTitle>
-    <Version>2.1.0-beta.3</Version>
+    <Version>2.1.0-beta.4</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>2.0.0</ApiCompatVersion>
     <PackageTags>Azure.AI.Projects.Agents</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
-  </PropertyGroup>
-
-  <PropertyGroup>
-    <!-- Acknowledge experimental OpenAI features -->
-    <NoWarn>$(NoWarn);OPENAI001</NoWarn>
-    <!-- Ignore warnings about the experimental features -->
-    <NoWarn>$(NoWarn);AAIP001</NoWarn>
-  </PropertyGroup>
-
-  <PropertyGroup>
     <IncludeSystemClientModelSharedSourceForTracing>true</IncludeSystemClientModelSharedSourceForTracing>
   </PropertyGroup>
 
