@@ -31,8 +31,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="keyType"> Data encryption type used by a server. </param>
         /// <param name="primaryEncryptionKeyStatus"> Status of key used by a server configured with data encryption based on customer managed key, to encrypt the primary storage associated to the server. </param>
         /// <param name="geoBackupEncryptionKeyStatus"> Status of key used by a server configured with data encryption based on customer managed key, to encrypt the geographically redundant storage associated to the server when it is configured to support geographically redundant backups. </param>
+        /// <param name="primaryFederatedIdentityClientId"> Client id of multi-tenant Microsoft Entra application. </param>
+        /// <param name="geoBackupFederatedIdentityClientId"> Client id of multi-tenant Microsoft Entra application for when it is configured to support geographically redundant backups. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PostgreSqlFlexibleServerDataEncryption(Uri primaryKeyUri, ResourceIdentifier primaryUserAssignedIdentityId, Uri geoBackupKeyUri, string geoBackupUserAssignedIdentityId, PostgreSqlFlexibleServerKeyType? keyType, PostgreSqlKeyStatus? primaryEncryptionKeyStatus, PostgreSqlKeyStatus? geoBackupEncryptionKeyStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PostgreSqlFlexibleServerDataEncryption(Uri primaryKeyUri, ResourceIdentifier primaryUserAssignedIdentityId, Uri geoBackupKeyUri, string geoBackupUserAssignedIdentityId, PostgreSqlFlexibleServerKeyType? keyType, PostgreSqlKeyStatus? primaryEncryptionKeyStatus, PostgreSqlKeyStatus? geoBackupEncryptionKeyStatus, Guid? primaryFederatedIdentityClientId, Guid? geoBackupFederatedIdentityClientId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PrimaryKeyUri = primaryKeyUri;
             PrimaryUserAssignedIdentityId = primaryUserAssignedIdentityId;
@@ -41,6 +43,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             KeyType = keyType;
             PrimaryEncryptionKeyStatus = primaryEncryptionKeyStatus;
             GeoBackupEncryptionKeyStatus = geoBackupEncryptionKeyStatus;
+            PrimaryFederatedIdentityClientId = primaryFederatedIdentityClientId;
+            GeoBackupFederatedIdentityClientId = geoBackupFederatedIdentityClientId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -63,5 +67,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Data encryption type used by a server. </summary>
         [WirePath("type")]
         public PostgreSqlFlexibleServerKeyType? KeyType { get; set; }
+
+        /// <summary> Client id of multi-tenant Microsoft Entra application. </summary>
+        [WirePath("primaryFederatedIdentityClientId")]
+        public Guid? PrimaryFederatedIdentityClientId { get; set; }
+
+        /// <summary> Client id of multi-tenant Microsoft Entra application for when it is configured to support geographically redundant backups. </summary>
+        [WirePath("geoBackupFederatedIdentityClientId")]
+        public Guid? GeoBackupFederatedIdentityClientId { get; set; }
     }
 }

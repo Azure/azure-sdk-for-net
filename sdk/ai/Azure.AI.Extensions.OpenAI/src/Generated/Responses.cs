@@ -32,7 +32,7 @@ namespace Azure.AI.Extensions.OpenAI
         public ClientPipeline Pipeline { get; }
 
         /// <summary>
-        /// [Protocol Method] Produces a compaction of a responses conversation.
+        /// [Protocol Method] Compacts a conversation into a response object suitable for long-running and zero-data-retention scenarios.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -50,7 +50,7 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary>
-        /// [Protocol Method] Produces a compaction of a responses conversation.
+        /// [Protocol Method] Compacts a conversation into a response object suitable for long-running and zero-data-retention scenarios.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -67,7 +67,7 @@ namespace Azure.AI.Extensions.OpenAI
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
-        /// <summary> Produces a compaction of a responses conversation. </summary>
+        /// <summary> Compacts a conversation into a response object suitable for long-running and zero-data-retention scenarios. </summary>
         /// <param name="model"></param>
         /// <param name="input"></param>
         /// <param name="previousResponseId"></param>
@@ -88,7 +88,7 @@ namespace Azure.AI.Extensions.OpenAI
             return ClientResult.FromValue((CompactResource)result, result.GetRawResponse());
         }
 
-        /// <summary> Produces a compaction of a responses conversation. </summary>
+        /// <summary> Compacts a conversation into a response object suitable for long-running and zero-data-retention scenarios. </summary>
         /// <param name="model"></param>
         /// <param name="input"></param>
         /// <param name="previousResponseId"></param>

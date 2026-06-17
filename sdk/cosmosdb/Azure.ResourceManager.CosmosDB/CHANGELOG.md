@@ -10,6 +10,8 @@
 
 ### Other Changes
 
+- Migrated from Swagger to TypeSpec-based generation
+
 ## 1.4.1 (2026-06-03)
 
 ### Other Changes

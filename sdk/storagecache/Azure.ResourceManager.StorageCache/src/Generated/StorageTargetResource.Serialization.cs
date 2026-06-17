@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.StorageCache
 {
+    /// <summary></summary>
     public partial class StorageTargetResource : IJsonModel<StorageTargetData>
     {
-        private static StorageTargetData s_dataDeserializationInstance;
-        private static StorageTargetData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<StorageTargetData> s_dataDeserializationInstance;
 
+        private static IJsonModel<StorageTargetData> DataDeserializationInstance => s_dataDeserializationInstance ??= new StorageTargetData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<StorageTargetData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<StorageTargetData>)Data).Write(writer, options);
 
-        StorageTargetData IJsonModel<StorageTargetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StorageTargetData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        StorageTargetData IJsonModel<StorageTargetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<StorageTargetData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<StorageTargetData>(Data, options, AzureResourceManagerStorageCacheContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         StorageTargetData IPersistableModel<StorageTargetData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StorageTargetData>(data, options, AzureResourceManagerStorageCacheContext.Default);
 
-        string IPersistableModel<StorageTargetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StorageTargetData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<StorageTargetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

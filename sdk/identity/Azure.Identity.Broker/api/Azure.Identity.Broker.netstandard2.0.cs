@@ -17,6 +17,10 @@ namespace Azure.Identity.Broker
         public bool? IsLegacyMsaPassthroughEnabled { get { throw null; } set { } }
         public bool UseDefaultBrokerAccount { get { throw null; } set { } }
     }
+    public partial class ManagedIdentityCredentialAttestationOptions : Azure.Identity.ManagedIdentityCredentialOptions
+    {
+        public ManagedIdentityCredentialAttestationOptions(Azure.Identity.ManagedIdentityId managedIdentityId = null) : base (default(Azure.Identity.ManagedIdentityId)) { }
+    }
     [System.ObsoleteAttribute("SharedTokenCacheCredential is deprecated. For brokered authentication, consider using InteractiveBrowserCredential.")]
     public partial class SharedTokenCacheCredentialBrokerOptions : Azure.Identity.SharedTokenCacheCredentialOptions
     {

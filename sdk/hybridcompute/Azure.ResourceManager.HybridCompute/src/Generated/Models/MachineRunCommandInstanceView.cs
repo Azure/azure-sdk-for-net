@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
     /// <summary> The instance view of a machine run command. </summary>
     public partial class MachineRunCommandInstanceView
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MachineRunCommandInstanceView"/>. </summary>
         internal MachineRunCommandInstanceView()
@@ -60,8 +32,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="startOn"> Script start time. </param>
         /// <param name="endOn"> Script end time. </param>
         /// <param name="statuses"> The  status information. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MachineRunCommandInstanceView(HybridComputeExecutionState? executionState, string executionMessage, int? exitCode, string output, string error, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<ExtensionsResourceStatus> statuses, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MachineRunCommandInstanceView(HybridComputeExecutionState? executionState, string executionMessage, int? exitCode, string output, string error, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<ExtensionsResourceStatus> statuses, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ExecutionState = executionState;
             ExecutionMessage = executionMessage;
@@ -71,32 +43,35 @@ namespace Azure.ResourceManager.HybridCompute.Models
             StartOn = startOn;
             EndOn = endOn;
             Statuses = statuses;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Script execution status. </summary>
         [WirePath("executionState")]
         public HybridComputeExecutionState? ExecutionState { get; }
+
         /// <summary> Communicate script configuration errors or execution messages. </summary>
         [WirePath("executionMessage")]
         public string ExecutionMessage { get; }
+
         /// <summary> Exit code returned from script execution. </summary>
         [WirePath("exitCode")]
         public int? ExitCode { get; }
+
         /// <summary> Script output stream. </summary>
         [WirePath("output")]
         public string Output { get; }
+
         /// <summary> Script error stream. </summary>
         [WirePath("error")]
         public string Error { get; }
+
         /// <summary> Script start time. </summary>
         [WirePath("startTime")]
         public DateTimeOffset? StartOn { get; }
+
         /// <summary> Script end time. </summary>
         [WirePath("endTime")]
         public DateTimeOffset? EndOn { get; }
-        /// <summary> The  status information. </summary>
-        [WirePath("statuses")]
-        public IReadOnlyList<ExtensionsResourceStatus> Statuses { get; }
     }
 }

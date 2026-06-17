@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
+    /// <summary></summary>
     public partial class NetworkFabricSkuResource : IJsonModel<NetworkFabricSkuData>
     {
-        private static NetworkFabricSkuData s_dataDeserializationInstance;
-        private static NetworkFabricSkuData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<NetworkFabricSkuData> s_dataDeserializationInstance;
 
+        private static IJsonModel<NetworkFabricSkuData> DataDeserializationInstance => s_dataDeserializationInstance ??= new NetworkFabricSkuData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NetworkFabricSkuData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetworkFabricSkuData>)Data).Write(writer, options);
 
-        NetworkFabricSkuData IJsonModel<NetworkFabricSkuData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkFabricSkuData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NetworkFabricSkuData IJsonModel<NetworkFabricSkuData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<NetworkFabricSkuData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkFabricSkuData>(Data, options, AzureResourceManagerManagedNetworkFabricContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         NetworkFabricSkuData IPersistableModel<NetworkFabricSkuData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkFabricSkuData>(data, options, AzureResourceManagerManagedNetworkFabricContext.Default);
 
-        string IPersistableModel<NetworkFabricSkuData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkFabricSkuData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<NetworkFabricSkuData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

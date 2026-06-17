@@ -10,6 +10,8 @@
 
 ### Other Changes
 
+- Migrated SDK generation from Swagger/AutoRest to TypeSpec.
+
 ## 1.3.1 (2025-07-28)
 
 ### Features Added
