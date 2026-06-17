@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Compute
         // Backward compatibility: the generated Compute-local property is named ExcludedDisks and uses
         // ComputeApiEntityReference. Restore the old ExcludeDisks property with ARM common WritableSubResource.
         /// <summary> List of disk resource ids that the customer wishes to exclude from the restore point. </summary>
-        [Obsolete("Use ExcludedDisks instead. This compatibility property cannot be used for mutation.", false)]
+        [Obsolete("This property is obsolete and no longer works. Use ExcludedDisks instead.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public IList<WritableSubResource> ExcludeDisks => throw new NotSupportedException("Use ExcludedDisks instead.");
+        public IList<WritableSubResource> ExcludeDisks { get; set; }
     }
 }

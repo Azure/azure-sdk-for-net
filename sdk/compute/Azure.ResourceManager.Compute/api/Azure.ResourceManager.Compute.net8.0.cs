@@ -27,8 +27,8 @@ namespace Azure.ResourceManager.Compute
         public Azure.ResourceManager.Compute.Models.ComputeSku Sku { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.InstanceViewStatus> Statuses { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.ComputeWriteableSubResourceData> VirtualMachineResources { get { throw null; } }
-        [System.ObsoleteAttribute("Use VirtualMachineResources instead. This compatibility property cannot be used for mutation.", false)]
-        public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> VirtualMachines { get { throw null; } }
+        [System.ObsoleteAttribute("This property is obsolete and no longer works. Use VirtualMachineResources instead.", false)]
+        public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> VirtualMachines { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetMigrationInfo VirtualMachineScaleSetMigrationInfo { get { throw null; } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -150,8 +150,8 @@ namespace Azure.ResourceManager.Compute
         public Azure.ResourceManager.Compute.Models.CapacityReservationGroupInstanceView InstanceView { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.CapacityReservationInstanceViewWithName> InstanceViewCapacityReservations { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.CapacityReservationType? ReservationType { get { throw null; } set { } }
-        [System.ObsoleteAttribute("Use SharingSubscriptionResources instead. This compatibility property cannot be used for mutation.", false)]
-        public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> SharingSubscriptionIds { get { throw null; } }
+        [System.ObsoleteAttribute("This property is obsolete and no longer works. Use SharingSubscriptionResources instead.", false)]
+        public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> SharingSubscriptionIds { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.ComputeWriteableSubResourceData> SharingSubscriptionResources { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> VirtualMachinesAssociated { get { throw null; } }
         public System.Collections.Generic.IList<string> Zones { get { throw null; } }
@@ -2111,8 +2111,8 @@ namespace Azure.ResourceManager.Compute
         public RestorePointData() { }
         public Azure.ResourceManager.Compute.Models.ConsistencyModeType? ConsistencyMode { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.ComputeApiEntityReference> ExcludedDisks { get { throw null; } }
-        [System.ObsoleteAttribute("Use ExcludedDisks instead. This compatibility property cannot be used for mutation.", false)]
-        public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> ExcludeDisks { get { throw null; } }
+        [System.ObsoleteAttribute("This property is obsolete and no longer works. Use ExcludedDisks instead.", false)]
+        public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> ExcludeDisks { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.RestorePointInstanceView InstanceView { get { throw null; } }
         public int? InstantAccessDurationMinutes { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
@@ -4362,8 +4362,8 @@ namespace Azure.ResourceManager.Compute.Models
         public Azure.ResourceManager.Compute.Models.ComputeSku Sku { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.InstanceViewStatus> Statuses { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.ComputeWriteableSubResourceData> VirtualMachineResources { get { throw null; } }
-        [System.ObsoleteAttribute("Use VirtualMachineResources instead. This compatibility property cannot be used for mutation.", false)]
-        public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> VirtualMachines { get { throw null; } }
+        [System.ObsoleteAttribute("This property is obsolete and no longer works. Use VirtualMachineResources instead.", false)]
+        public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> VirtualMachines { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetMigrationInfo VirtualMachineScaleSetMigrationInfo { get { throw null; } }
         protected override Azure.ResourceManager.Compute.Models.ComputeResourcePatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -4490,8 +4490,8 @@ namespace Azure.ResourceManager.Compute.Models
         public Azure.ResourceManager.Compute.Models.CapacityReservationGroupInstanceView InstanceView { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.CapacityReservationInstanceViewWithName> InstanceViewCapacityReservations { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.CapacityReservationType? ReservationType { get { throw null; } set { } }
-        [System.ObsoleteAttribute("Use SharingSubscriptionResources instead. This compatibility property cannot be used for mutation.", false)]
-        public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> SharingSubscriptionIds { get { throw null; } }
+        [System.ObsoleteAttribute("This property is obsolete and no longer works. Use SharingSubscriptionResources instead.", false)]
+        public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> SharingSubscriptionIds { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.ComputeWriteableSubResourceData> SharingSubscriptionResources { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> VirtualMachinesAssociated { get { throw null; } }
         protected override Azure.ResourceManager.Compute.Models.ComputeResourcePatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -10929,14 +10929,14 @@ namespace Azure.ResourceManager.Compute.Models
     {
         public VirtualMachineNetworkInterfaceIPConfiguration(string name) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.ComputeWriteableSubResourceData> ApplicationGatewayBackendAddressPoolResources { get { throw null; } }
-        [System.ObsoleteAttribute("Use ApplicationGatewayBackendAddressPoolResources instead. This compatibility property cannot be used for mutation.", false)]
-        public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> ApplicationGatewayBackendAddressPools { get { throw null; } }
+        [System.ObsoleteAttribute("This property is obsolete and no longer works. Use ApplicationGatewayBackendAddressPoolResources instead.", false)]
+        public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> ApplicationGatewayBackendAddressPools { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.ComputeWriteableSubResourceData> ApplicationSecurityGroupResources { get { throw null; } }
-        [System.ObsoleteAttribute("Use ApplicationSecurityGroupResources instead. This compatibility property cannot be used for mutation.", false)]
-        public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> ApplicationSecurityGroups { get { throw null; } }
+        [System.ObsoleteAttribute("This property is obsolete and no longer works. Use ApplicationSecurityGroupResources instead.", false)]
+        public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> ApplicationSecurityGroups { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.ComputeWriteableSubResourceData> LoadBalancerBackendAddressPoolResources { get { throw null; } }
-        [System.ObsoleteAttribute("Use LoadBalancerBackendAddressPoolResources instead. This compatibility property cannot be used for mutation.", false)]
-        public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> LoadBalancerBackendAddressPools { get { throw null; } }
+        [System.ObsoleteAttribute("This property is obsolete and no longer works. Use LoadBalancerBackendAddressPoolResources instead.", false)]
+        public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> LoadBalancerBackendAddressPools { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public bool? Primary { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.IPVersion? PrivateIPAddressVersion { get { throw null; } set { } }
@@ -11379,21 +11379,17 @@ namespace Azure.ResourceManager.Compute.Models
     {
         public VirtualMachineScaleSetIPConfiguration(string name) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.ComputeWriteableSubResourceData> ApplicationGatewayBackendAddressPoolResources { get { throw null; } }
-        [System.ObsoleteAttribute("Use ApplicationGatewayBackendAddressPoolResources instead. This compatibility property cannot be used for mutation.", false)]
-        [System.Text.Json.Serialization.JsonIgnoreAttribute]
-        public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> ApplicationGatewayBackendAddressPools { get { throw null; } }
+        [System.ObsoleteAttribute("This property is obsolete and no longer works. Use ApplicationGatewayBackendAddressPoolResources instead.", false)]
+        public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> ApplicationGatewayBackendAddressPools { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.ComputeWriteableSubResourceData> ApplicationSecurityGroupResources { get { throw null; } }
-        [System.ObsoleteAttribute("Use ApplicationSecurityGroupResources instead. This compatibility property cannot be used for mutation.", false)]
-        [System.Text.Json.Serialization.JsonIgnoreAttribute]
-        public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> ApplicationSecurityGroups { get { throw null; } }
+        [System.ObsoleteAttribute("This property is obsolete and no longer works. Use ApplicationSecurityGroupResources instead.", false)]
+        public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> ApplicationSecurityGroups { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.ComputeWriteableSubResourceData> LoadBalancerBackendAddressPoolResources { get { throw null; } }
-        [System.ObsoleteAttribute("Use LoadBalancerBackendAddressPoolResources instead. This compatibility property cannot be used for mutation.", false)]
-        [System.Text.Json.Serialization.JsonIgnoreAttribute]
-        public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> LoadBalancerBackendAddressPools { get { throw null; } }
+        [System.ObsoleteAttribute("This property is obsolete and no longer works. Use LoadBalancerBackendAddressPoolResources instead.", false)]
+        public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> LoadBalancerBackendAddressPools { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.ComputeWriteableSubResourceData> LoadBalancerInboundNatPoolResources { get { throw null; } }
-        [System.ObsoleteAttribute("Use LoadBalancerInboundNatPoolResources instead. This compatibility property cannot be used for mutation.", false)]
-        [System.Text.Json.Serialization.JsonIgnoreAttribute]
-        public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> LoadBalancerInboundNatPools { get { throw null; } }
+        [System.ObsoleteAttribute("This property is obsolete and no longer works. Use LoadBalancerInboundNatPoolResources instead.", false)]
+        public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> LoadBalancerInboundNatPools { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public bool? Primary { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.IPVersion? PrivateIPAddressVersion { get { throw null; } set { } }
@@ -11841,17 +11837,17 @@ namespace Azure.ResourceManager.Compute.Models
     {
         public VirtualMachineScaleSetUpdateIPConfiguration() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.ComputeWriteableSubResourceData> ApplicationGatewayBackendAddressPoolResources { get { throw null; } }
-        [System.ObsoleteAttribute("Use ApplicationGatewayBackendAddressPoolResources instead. This compatibility property cannot be used for mutation.", false)]
-        public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> ApplicationGatewayBackendAddressPools { get { throw null; } }
+        [System.ObsoleteAttribute("This property is obsolete and no longer works. Use ApplicationGatewayBackendAddressPoolResources instead.", false)]
+        public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> ApplicationGatewayBackendAddressPools { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.ComputeWriteableSubResourceData> ApplicationSecurityGroupResources { get { throw null; } }
-        [System.ObsoleteAttribute("Use ApplicationSecurityGroupResources instead. This compatibility property cannot be used for mutation.", false)]
-        public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> ApplicationSecurityGroups { get { throw null; } }
+        [System.ObsoleteAttribute("This property is obsolete and no longer works. Use ApplicationSecurityGroupResources instead.", false)]
+        public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> ApplicationSecurityGroups { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.ComputeWriteableSubResourceData> LoadBalancerBackendAddressPoolResources { get { throw null; } }
-        [System.ObsoleteAttribute("Use LoadBalancerBackendAddressPoolResources instead. This compatibility property cannot be used for mutation.", false)]
-        public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> LoadBalancerBackendAddressPools { get { throw null; } }
+        [System.ObsoleteAttribute("This property is obsolete and no longer works. Use LoadBalancerBackendAddressPoolResources instead.", false)]
+        public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> LoadBalancerBackendAddressPools { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.ComputeWriteableSubResourceData> LoadBalancerInboundNatPoolResources { get { throw null; } }
-        [System.ObsoleteAttribute("Use LoadBalancerInboundNatPoolResources instead. This compatibility property cannot be used for mutation.", false)]
-        public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> LoadBalancerInboundNatPools { get { throw null; } }
+        [System.ObsoleteAttribute("This property is obsolete and no longer works. Use LoadBalancerInboundNatPoolResources instead.", false)]
+        public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> LoadBalancerInboundNatPools { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public bool? Primary { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.IPVersion? PrivateIPAddressVersion { get { throw null; } set { } }

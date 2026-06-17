@@ -6,7 +6,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Text.Json.Serialization;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -18,33 +17,29 @@ namespace Azure.ResourceManager.Compute.Models
         // Backward compatibility: the generated Compute-local property is named ApplicationGatewayBackendAddressPoolResources
         // and uses ComputeWriteableSubResourceData. Restore the old property with ARM common WritableSubResource.
         /// <summary> Specifies an array of references to backend address pools of application gateways. </summary>
-        [Obsolete("Use ApplicationGatewayBackendAddressPoolResources instead. This compatibility property cannot be used for mutation.", false)]
+        [Obsolete("This property is obsolete and no longer works. Use ApplicationGatewayBackendAddressPoolResources instead.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [JsonIgnore]
-        public IList<WritableSubResource> ApplicationGatewayBackendAddressPools => throw new NotSupportedException("Use ApplicationGatewayBackendAddressPoolResources instead.");
+        public IList<WritableSubResource> ApplicationGatewayBackendAddressPools { get; set; }
 
         // Backward compatibility: the generated Compute-local property is named ApplicationSecurityGroupResources
         // and uses ComputeWriteableSubResourceData. Restore the old property with ARM common WritableSubResource.
         /// <summary> Specifies an array of references to application security group. </summary>
-        [Obsolete("Use ApplicationSecurityGroupResources instead. This compatibility property cannot be used for mutation.", false)]
+        [Obsolete("This property is obsolete and no longer works. Use ApplicationSecurityGroupResources instead.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [JsonIgnore]
-        public IList<WritableSubResource> ApplicationSecurityGroups => throw new NotSupportedException("Use ApplicationSecurityGroupResources instead.");
+        public IList<WritableSubResource> ApplicationSecurityGroups { get; set; }
 
         // Backward compatibility: the generated Compute-local property is named LoadBalancerBackendAddressPoolResources
         // and uses ComputeWriteableSubResourceData. Restore the old property with ARM common WritableSubResource.
         /// <summary> Specifies an array of references to backend address pools of load balancers. </summary>
-        [Obsolete("Use LoadBalancerBackendAddressPoolResources instead. This compatibility property cannot be used for mutation.", false)]
+        [Obsolete("This property is obsolete and no longer works. Use LoadBalancerBackendAddressPoolResources instead.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [JsonIgnore]
-        public IList<WritableSubResource> LoadBalancerBackendAddressPools => throw new NotSupportedException("Use LoadBalancerBackendAddressPoolResources instead.");
+        public IList<WritableSubResource> LoadBalancerBackendAddressPools { get; set; }
 
         // Backward compatibility: the generated Compute-local property is named LoadBalancerInboundNatPoolResources
         // and uses ComputeWriteableSubResourceData. Restore the old property with ARM common WritableSubResource.
         /// <summary> Specifies an array of references to inbound Nat pools of the load balancers. </summary>
-        [Obsolete("Use LoadBalancerInboundNatPoolResources instead. This compatibility property cannot be used for mutation.", false)]
+        [Obsolete("This property is obsolete and no longer works. Use LoadBalancerInboundNatPoolResources instead.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [JsonIgnore]
-        public IList<WritableSubResource> LoadBalancerInboundNatPools => throw new NotSupportedException("Use LoadBalancerInboundNatPoolResources instead.");
+        public IList<WritableSubResource> LoadBalancerInboundNatPools { get; set; }
     }
 }
