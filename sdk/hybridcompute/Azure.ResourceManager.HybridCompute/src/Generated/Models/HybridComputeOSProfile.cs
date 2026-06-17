@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
     /// <summary> Specifies the operating system settings for the hybrid machine. </summary>
     public partial class HybridComputeOSProfile
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HybridComputeOSProfile"/>. </summary>
         public HybridComputeOSProfile()
@@ -54,21 +26,23 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="computerName"> Specifies the host OS name of the hybrid machine. </param>
         /// <param name="windowsConfiguration"> Specifies the windows configuration for update management. </param>
         /// <param name="linuxConfiguration"> Specifies the linux configuration for update management. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HybridComputeOSProfile(string computerName, HybridComputeWindowsConfiguration windowsConfiguration, HybridComputeLinuxConfiguration linuxConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal HybridComputeOSProfile(string computerName, HybridComputeWindowsConfiguration windowsConfiguration, HybridComputeLinuxConfiguration linuxConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ComputerName = computerName;
             WindowsConfiguration = windowsConfiguration;
             LinuxConfiguration = linuxConfiguration;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Specifies the host OS name of the hybrid machine. </summary>
         [WirePath("computerName")]
         public string ComputerName { get; }
+
         /// <summary> Specifies the windows configuration for update management. </summary>
         [WirePath("windowsConfiguration")]
         public HybridComputeWindowsConfiguration WindowsConfiguration { get; set; }
+
         /// <summary> Specifies the linux configuration for update management. </summary>
         [WirePath("linuxConfiguration")]
         public HybridComputeLinuxConfiguration LinuxConfiguration { get; set; }

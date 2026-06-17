@@ -1,13 +1,13 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.HybridCompute;
-using NUnit.Framework;
-using Azure.Core;
 using Azure.ResourceManager.HybridCompute.Models;
-using System.Diagnostics;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.HybridCompute.Tests.Scenario
 {

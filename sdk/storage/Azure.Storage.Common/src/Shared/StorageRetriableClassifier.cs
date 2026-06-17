@@ -32,9 +32,8 @@ namespace Azure.Storage
             }
 
             // The inner classifier considers this an error. For 409, let the
-            // storage classifier decide.
-            if (message.Response.Status == 409
-                && !StorageResponseClassifier.IsConditionalAlreadyExistsConflict(message))
+            // storage classifier decide (handles conditional AlreadyExists).
+            if (message.Response.Status == 409)
             {
                 return _storageClassifier.IsErrorResponse(message);
             }

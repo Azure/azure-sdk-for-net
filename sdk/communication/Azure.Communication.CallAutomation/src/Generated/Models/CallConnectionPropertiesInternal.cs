@@ -22,19 +22,16 @@ namespace Azure.Communication.CallAutomation
         /// <param name="callConnectionId"> The call connection id. </param>
         /// <param name="serverCallId"> The server call id. </param>
         /// <param name="targets"> The targets of the call. </param>
-        /// <param name="callConnectionState"> The state of the call connection. </param>
+        /// <param name="callConnectionState"> The states of a call connection. </param>
         /// <param name="callbackUri"> The callback URI. </param>
-        /// <param name="sourceCallerIdNumber">
-        /// The source caller Id, a phone number, that's shown to the PSTN participant being invited.
-        /// Required only when calling a PSTN callee.
-        /// </param>
+        /// <param name="sourceCallerIdNumber"> A phone number. </param>
         /// <param name="sourceDisplayName"> Display name of the call if dialing out to a pstn number. </param>
-        /// <param name="source"> Source identity. </param>
+        /// <param name="source"> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model is polymorphic: Apart from kind and rawId, at most one further property may be set which must match the kind enum value. </param>
         /// <param name="correlationId"> The correlation ID. </param>
-        /// <param name="answeredBy"> Identity of the answering entity. Only populated when identity is provided in the request. </param>
-        /// <param name="mediaStreamingSubscription"> The state of media streaming subscription for the call. </param>
-        /// <param name="transcriptionSubscription"> Transcription Subscription. </param>
-        /// <param name="answeredFor"> Identity of the original Pstn target of an incoming Call. Only populated when the original target is a Pstn number. </param>
+        /// <param name="answeredBy"> A user that got created with an Azure Communication Services resource. </param>
+        /// <param name="mediaStreamingSubscription"> Media streaming Subscription Object. </param>
+        /// <param name="transcriptionSubscription"> Transcription Subscription Object. </param>
+        /// <param name="answeredFor"> A phone number. </param>
         internal CallConnectionPropertiesInternal(string callConnectionId, string serverCallId, IReadOnlyList<CommunicationIdentifierModel> targets, CallConnectionState? callConnectionState, string callbackUri, PhoneNumberIdentifierModel sourceCallerIdNumber, string sourceDisplayName, CommunicationIdentifierModel source, string correlationId, CommunicationUserIdentifierModel answeredBy, MediaStreamingSubscriptionInternal mediaStreamingSubscription, TranscriptionSubscriptionInternal transcriptionSubscription, PhoneNumberIdentifierModel answeredFor)
         {
             CallConnectionId = callConnectionId;
@@ -58,28 +55,25 @@ namespace Azure.Communication.CallAutomation
         public string ServerCallId { get; }
         /// <summary> The targets of the call. </summary>
         public IReadOnlyList<CommunicationIdentifierModel> Targets { get; }
-        /// <summary> The state of the call connection. </summary>
+        /// <summary> The states of a call connection. </summary>
         public CallConnectionState? CallConnectionState { get; }
         /// <summary> The callback URI. </summary>
         public string CallbackUri { get; }
-        /// <summary>
-        /// The source caller Id, a phone number, that's shown to the PSTN participant being invited.
-        /// Required only when calling a PSTN callee.
-        /// </summary>
+        /// <summary> A phone number. </summary>
         public PhoneNumberIdentifierModel SourceCallerIdNumber { get; }
         /// <summary> Display name of the call if dialing out to a pstn number. </summary>
         public string SourceDisplayName { get; }
-        /// <summary> Source identity. </summary>
+        /// <summary> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model is polymorphic: Apart from kind and rawId, at most one further property may be set which must match the kind enum value. </summary>
         public CommunicationIdentifierModel Source { get; }
         /// <summary> The correlation ID. </summary>
         public string CorrelationId { get; }
-        /// <summary> Identity of the answering entity. Only populated when identity is provided in the request. </summary>
+        /// <summary> A user that got created with an Azure Communication Services resource. </summary>
         public CommunicationUserIdentifierModel AnsweredBy { get; }
-        /// <summary> The state of media streaming subscription for the call. </summary>
+        /// <summary> Media streaming Subscription Object. </summary>
         public MediaStreamingSubscriptionInternal MediaStreamingSubscription { get; }
-        /// <summary> Transcription Subscription. </summary>
+        /// <summary> Transcription Subscription Object. </summary>
         public TranscriptionSubscriptionInternal TranscriptionSubscription { get; }
-        /// <summary> Identity of the original Pstn target of an incoming Call. Only populated when the original target is a Pstn number. </summary>
+        /// <summary> A phone number. </summary>
         public PhoneNumberIdentifierModel AnsweredFor { get; }
     }
 }
