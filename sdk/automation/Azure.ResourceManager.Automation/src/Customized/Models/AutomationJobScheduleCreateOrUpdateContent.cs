@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 using Azure.ResourceManager.Automation;
 using Microsoft.TypeSpec.Generator.Customizations;
 
@@ -27,6 +28,7 @@ namespace Azure.ResourceManager.Automation.Models
         public string RunOn
         {
             get => Properties.RunOn;
+            [EditorBrowsable(EditorBrowsableState.Never)]
             set => Properties.RunOn = value;
         }
     }

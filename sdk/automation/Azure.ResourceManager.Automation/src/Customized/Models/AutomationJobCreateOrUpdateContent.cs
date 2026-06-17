@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ComponentModel;
 using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Automation.Models
@@ -19,6 +20,7 @@ namespace Azure.ResourceManager.Automation.Models
         public string RunbookName
         {
             get => Properties is null ? default : Properties.RunbookName;
+            [EditorBrowsable(EditorBrowsableState.Never)]
             set => Properties.RunbookName = value;
         }
 
@@ -26,6 +28,7 @@ namespace Azure.ResourceManager.Automation.Models
         public string RunOn
         {
             get => Properties is null ? default : Properties.RunOn;
+            [EditorBrowsable(EditorBrowsableState.Never)]
             set => Properties.RunOn = value;
         }
     }

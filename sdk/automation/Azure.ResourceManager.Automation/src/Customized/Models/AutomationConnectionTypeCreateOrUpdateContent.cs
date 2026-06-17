@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ComponentModel;
 using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Automation.Models
@@ -13,6 +14,7 @@ namespace Azure.ResourceManager.Automation.Models
         public bool? IsGlobal
         {
             get => Properties.IsGlobal;
+            [EditorBrowsable(EditorBrowsableState.Never)]
             set => Properties.IsGlobal = value;
         }
     }

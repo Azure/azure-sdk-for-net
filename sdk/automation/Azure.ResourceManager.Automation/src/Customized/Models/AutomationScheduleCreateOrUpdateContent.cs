@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Automation.Models
@@ -14,6 +15,7 @@ namespace Azure.ResourceManager.Automation.Models
         public string Description
         {
             get => Properties.Description;
+            [EditorBrowsable(EditorBrowsableState.Never)]
             set => Properties.Description = value;
         }
 
@@ -21,6 +23,7 @@ namespace Azure.ResourceManager.Automation.Models
         public DateTimeOffset? ExpireOn
         {
             get => Properties.ExpireOn;
+            [EditorBrowsable(EditorBrowsableState.Never)]
             set => Properties.ExpireOn = value;
         }
 
@@ -28,6 +31,7 @@ namespace Azure.ResourceManager.Automation.Models
         public BinaryData Interval
         {
             get => Properties.Interval;
+            [EditorBrowsable(EditorBrowsableState.Never)]
             set => Properties.Interval = value;
         }
 
@@ -35,6 +39,7 @@ namespace Azure.ResourceManager.Automation.Models
         public string TimeZone
         {
             get => Properties.TimeZone;
+            [EditorBrowsable(EditorBrowsableState.Never)]
             set => Properties.TimeZone = value;
         }
 
@@ -42,6 +47,7 @@ namespace Azure.ResourceManager.Automation.Models
         public AutomationAdvancedSchedule AdvancedSchedule
         {
             get => Properties.AdvancedSchedule;
+            [EditorBrowsable(EditorBrowsableState.Never)]
             set => Properties.AdvancedSchedule = value;
         }
     }

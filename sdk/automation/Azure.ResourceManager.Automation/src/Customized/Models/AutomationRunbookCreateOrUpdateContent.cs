@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ComponentModel;
 using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Automation.Models
@@ -13,6 +14,7 @@ namespace Azure.ResourceManager.Automation.Models
         public bool? IsLogVerboseEnabled
         {
             get => Properties.IsLogVerboseEnabled;
+            [EditorBrowsable(EditorBrowsableState.Never)]
             set => Properties.IsLogVerboseEnabled = value;
         }
 
@@ -20,6 +22,7 @@ namespace Azure.ResourceManager.Automation.Models
         public bool? IsLogProgressEnabled
         {
             get => Properties.IsLogProgressEnabled;
+            [EditorBrowsable(EditorBrowsableState.Never)]
             set => Properties.IsLogProgressEnabled = value;
         }
 
@@ -27,6 +30,7 @@ namespace Azure.ResourceManager.Automation.Models
         public AutomationRunbookDraft Draft
         {
             get => Properties.Draft;
+            [EditorBrowsable(EditorBrowsableState.Never)]
             set => Properties.Draft = value;
         }
 
@@ -34,6 +38,7 @@ namespace Azure.ResourceManager.Automation.Models
         public AutomationContentLink PublishContentLink
         {
             get => Properties.PublishContentLink;
+            [EditorBrowsable(EditorBrowsableState.Never)]
             set => Properties.PublishContentLink = value;
         }
 
@@ -41,6 +46,7 @@ namespace Azure.ResourceManager.Automation.Models
         public string Description
         {
             get => Properties.Description;
+            [EditorBrowsable(EditorBrowsableState.Never)]
             set => Properties.Description = value;
         }
 
@@ -48,6 +54,7 @@ namespace Azure.ResourceManager.Automation.Models
         public int? LogActivityTrace
         {
             get => Properties.LogActivityTrace;
+            [EditorBrowsable(EditorBrowsableState.Never)]
             set => Properties.LogActivityTrace = value;
         }
     }

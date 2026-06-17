@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ComponentModel;
 using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Automation.Models
@@ -13,6 +14,7 @@ namespace Azure.ResourceManager.Automation.Models
         public AutomationContentSource Source
         {
             get => Properties is null ? default : Properties.Source;
+            [EditorBrowsable(EditorBrowsableState.Never)]
             set
             {
                 Properties = new DscNodeConfigurationCreateOrUpdateParametersProperties(
@@ -27,6 +29,7 @@ namespace Azure.ResourceManager.Automation.Models
         public string ConfigurationName
         {
             get => Properties?.Configuration?.ConfigurationName;
+            [EditorBrowsable(EditorBrowsableState.Never)]
             set
             {
                 var configuration = Properties?.Configuration ?? new DscConfigurationAssociationProperty();

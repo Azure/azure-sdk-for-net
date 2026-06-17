@@ -3,25 +3,96 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Text.Json;
 using Azure.Core;
-using Microsoft.TypeSpec.Generator.Customizations;
+using System.ClientModel.Primitives;
+
+#pragma warning disable CS0618
+#pragma warning disable CS1591
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    // The SDK-only generated DSC compilation job content has the new parameterless/ConfigurationName shape.
-    // Keep the GA constructor that accepts DscConfigurationAssociationProperty and initializes tags/parameters.
-    public partial class DscCompilationJobCreateOrUpdateContent
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete(Azure.ResourceManager.Automation.DscCompilationJobCompatibilityHelpers.ObsoleteMessage)]
+    public partial class DscCompilationJobCreateOrUpdateContent : IJsonModel<DscCompilationJobCreateOrUpdateContent>, IPersistableModel<DscCompilationJobCreateOrUpdateContent>
     {
-        /// <summary> Initializes a new instance of <see cref="DscCompilationJobCreateOrUpdateContent"/>. </summary>
-        /// <param name="configuration"> Gets or sets the configuration. </param>
-        /// <exception cref="System.ArgumentNullException"> <paramref name="configuration"/> is null. </exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete(Azure.ResourceManager.Automation.DscCompilationJobCompatibilityHelpers.ObsoleteMessage)]
         public DscCompilationJobCreateOrUpdateContent(DscConfigurationAssociationProperty configuration)
         {
-            Argument.AssertNotNull(configuration, nameof(configuration));
+            throw Azure.ResourceManager.Automation.DscCompilationJobCompatibilityHelpers.CreateException();
+        }
 
-            Properties = new DscCompilationJobCreateOrUpdateProperties(configuration, new ChangeTrackingDictionary<string, string>(), default, default);
-            Tags = new ChangeTrackingDictionary<string, string>();
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete(Azure.ResourceManager.Automation.DscCompilationJobCompatibilityHelpers.ObsoleteMessage)]
+        public string ConfigurationName => throw Azure.ResourceManager.Automation.DscCompilationJobCompatibilityHelpers.CreateException();
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete(Azure.ResourceManager.Automation.DscCompilationJobCompatibilityHelpers.ObsoleteMessage)]
+        public bool? IsIncrementNodeConfigurationBuildRequired
+        {
+            get => throw Azure.ResourceManager.Automation.DscCompilationJobCompatibilityHelpers.CreateException();
+            set => throw Azure.ResourceManager.Automation.DscCompilationJobCompatibilityHelpers.CreateException();
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete(Azure.ResourceManager.Automation.DscCompilationJobCompatibilityHelpers.ObsoleteMessage)]
+        public AzureLocation? Location
+        {
+            get => throw Azure.ResourceManager.Automation.DscCompilationJobCompatibilityHelpers.CreateException();
+            set => throw Azure.ResourceManager.Automation.DscCompilationJobCompatibilityHelpers.CreateException();
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete(Azure.ResourceManager.Automation.DscCompilationJobCompatibilityHelpers.ObsoleteMessage)]
+        public string Name
+        {
+            get => throw Azure.ResourceManager.Automation.DscCompilationJobCompatibilityHelpers.CreateException();
+            set => throw Azure.ResourceManager.Automation.DscCompilationJobCompatibilityHelpers.CreateException();
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete(Azure.ResourceManager.Automation.DscCompilationJobCompatibilityHelpers.ObsoleteMessage)]
+        public IDictionary<string, string> Parameters => throw Azure.ResourceManager.Automation.DscCompilationJobCompatibilityHelpers.CreateException();
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete(Azure.ResourceManager.Automation.DscCompilationJobCompatibilityHelpers.ObsoleteMessage)]
+        public IDictionary<string, string> Tags => throw Azure.ResourceManager.Automation.DscCompilationJobCompatibilityHelpers.CreateException();
+
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            throw Azure.ResourceManager.Automation.DscCompilationJobCompatibilityHelpers.CreateException();
+        }
+
+        DscCompilationJobCreateOrUpdateContent IJsonModel<DscCompilationJobCreateOrUpdateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            throw Azure.ResourceManager.Automation.DscCompilationJobCompatibilityHelpers.CreateException();
+        }
+
+        void IJsonModel<DscCompilationJobCreateOrUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            throw Azure.ResourceManager.Automation.DscCompilationJobCompatibilityHelpers.CreateException();
+        }
+
+        DscCompilationJobCreateOrUpdateContent IPersistableModel<DscCompilationJobCreateOrUpdateContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            throw Azure.ResourceManager.Automation.DscCompilationJobCompatibilityHelpers.CreateException();
+        }
+
+        string IPersistableModel<DscCompilationJobCreateOrUpdateContent>.GetFormatFromOptions(ModelReaderWriterOptions options)
+        {
+            throw Azure.ResourceManager.Automation.DscCompilationJobCompatibilityHelpers.CreateException();
+        }
+
+        BinaryData IPersistableModel<DscCompilationJobCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)
+        {
+            throw Azure.ResourceManager.Automation.DscCompilationJobCompatibilityHelpers.CreateException();
         }
     }
 }
+
+#pragma warning restore CS0618
+#pragma warning restore CS1591

@@ -2326,39 +2326,6 @@ namespace Azure.ResourceManager.Automation
             }
         }
 
-        /// <summary> Gets a collection of DscCompilationJobs in the <see cref="AutomationAccountResource"/>. </summary>
-        /// <returns> An object representing collection of DscCompilationJobs and their operations over a DscCompilationJobResource. </returns>
-        public virtual DscCompilationJobCollection GetDscCompilationJobs()
-        {
-            return GetCachedClient(client => new DscCompilationJobCollection(client, Id));
-        }
-
-        /// <summary> Retrieve the Dsc configuration compilation job identified by job id. </summary>
-        /// <param name="compilationJobName"> The name of the DscCompilationJob. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="compilationJobName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="compilationJobName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<DscCompilationJobResource>> GetDscCompilationJobAsync(string compilationJobName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(compilationJobName, nameof(compilationJobName));
-
-            return await GetDscCompilationJobs().GetAsync(compilationJobName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Retrieve the Dsc configuration compilation job identified by job id. </summary>
-        /// <param name="compilationJobName"> The name of the DscCompilationJob. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="compilationJobName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="compilationJobName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<DscCompilationJobResource> GetDscCompilationJob(string compilationJobName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(compilationJobName, nameof(compilationJobName));
-
-            return GetDscCompilationJobs().Get(compilationJobName, cancellationToken);
-        }
-
         /// <summary> Gets a collection of SoftwareUpdateConfigurations in the <see cref="AutomationAccountResource"/>. </summary>
         /// <returns> An object representing collection of SoftwareUpdateConfigurations and their operations over a SoftwareUpdateConfigurationResource. </returns>
         public virtual SoftwareUpdateConfigurationCollection GetSoftwareUpdateConfigurations()

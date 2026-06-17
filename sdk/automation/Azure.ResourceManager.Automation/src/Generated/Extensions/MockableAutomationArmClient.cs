@@ -26,15 +26,6 @@ namespace Azure.ResourceManager.Automation.Mocking
         {
         }
 
-        /// <summary> Gets an object representing a <see cref="DscCompilationJobResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DscCompilationJobResource"/> object. </returns>
-        public virtual DscCompilationJobResource GetDscCompilationJobResource(ResourceIdentifier id)
-        {
-            DscCompilationJobResource.ValidateResourceId(id);
-            return new DscCompilationJobResource(Client, id);
-        }
-
         /// <summary> Gets an object representing a <see cref="SoftwareUpdateConfigurationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SoftwareUpdateConfigurationResource"/> object. </returns>

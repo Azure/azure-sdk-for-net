@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ComponentModel;
 using Azure.Core;
 using Microsoft.TypeSpec.Generator.Customizations;
 
@@ -14,6 +15,7 @@ namespace Azure.ResourceManager.Automation.Models
         public AutomationContentSource Source
         {
             get => Properties is null ? default : Properties.Source;
+            [EditorBrowsable(EditorBrowsableState.Never)]
             set
             {
                 Properties = new DscConfigurationCreateOrUpdateProperties(

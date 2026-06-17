@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 using Azure.ResourceManager.Automation;
 using Microsoft.TypeSpec.Generator.Customizations;
 
@@ -26,6 +27,7 @@ namespace Azure.ResourceManager.Automation.Models
         public string Description
         {
             get => Properties.Description;
+            [EditorBrowsable(EditorBrowsableState.Never)]
             set => Properties.Description = value;
         }
 
@@ -33,6 +35,7 @@ namespace Azure.ResourceManager.Automation.Models
         public bool? IsEncrypted
         {
             get => Properties.IsEncrypted;
+            [EditorBrowsable(EditorBrowsableState.Never)]
             set => Properties.IsEncrypted = value;
         }
 
@@ -40,6 +43,7 @@ namespace Azure.ResourceManager.Automation.Models
         public string Value
         {
             get => Properties.Value;
+            [EditorBrowsable(EditorBrowsableState.Never)]
             set => Properties.Value = value;
         }
     }

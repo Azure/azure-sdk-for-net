@@ -19,71 +19,6 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmAutomationModelFactory
     {
-        /// <param name="parameters"> Gets or sets the parameters of the job. </param>
-        /// <param name="isIncrementNodeConfigurationBuildRequired"> If a new build version of NodeConfiguration is required. </param>
-        /// <param name="configurationName"> Gets or sets the name of the Dsc configuration. </param>
-        /// <param name="name"> Gets or sets name of the resource. </param>
-        /// <param name="location"> Gets or sets the location of the resource. </param>
-        /// <param name="tags"> Gets or sets the tags attached to the resource. </param>
-        /// <returns> A new <see cref="Models.DscCompilationJobCreateOrUpdateContent"/> instance for mocking. </returns>
-        public static DscCompilationJobCreateOrUpdateContent DscCompilationJobCreateOrUpdateContent(IDictionary<string, string> parameters = default, bool? isIncrementNodeConfigurationBuildRequired = default, string configurationName = default, string name = default, AzureLocation? location = default, IDictionary<string, string> tags = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new DscCompilationJobCreateOrUpdateContent(configurationName is null && parameters is null && isIncrementNodeConfigurationBuildRequired is null ? default : new DscCompilationJobCreateOrUpdateProperties(new DscConfigurationAssociationProperty(configurationName, default), parameters ?? new ChangeTrackingDictionary<string, string>(), isIncrementNodeConfigurationBuildRequired, default), name, location, tags ?? new ChangeTrackingDictionary<string, string>(), default);
-        }
-
-        /// <param name="configurationName"> Gets or sets the name of the Dsc configuration. </param>
-        /// <returns> A new <see cref="Models.DscConfigurationAssociationProperty"/> instance for mocking. </returns>
-        public static DscConfigurationAssociationProperty DscConfigurationAssociationProperty(string configurationName = default)
-        {
-            return new DscConfigurationAssociationProperty(configurationName, default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="startedBy"> Gets the compilation job started by. </param>
-        /// <param name="jobId"> Gets the id of the job. </param>
-        /// <param name="createdOn"> Gets the creation time of the job. </param>
-        /// <param name="provisioningState"> The current provisioning state of the job. </param>
-        /// <param name="runOn"> Gets or sets the runOn which specifies the group name where the job is to be executed. </param>
-        /// <param name="status"> Gets or sets the status of the job. </param>
-        /// <param name="statusDetails"> Gets or sets the status details of the job. </param>
-        /// <param name="startOn"> Gets the start time of the job. </param>
-        /// <param name="endOn"> Gets the end time of the job. </param>
-        /// <param name="exception"> Gets the exception of the job. </param>
-        /// <param name="lastModifiedOn"> Gets the last modified time of the job. </param>
-        /// <param name="lastStatusModifiedOn"> Gets the last status modified time of the job. </param>
-        /// <param name="parameters"> Gets or sets the parameters of the job. </param>
-        /// <param name="configurationName"> Gets or sets the name of the Dsc configuration. </param>
-        /// <returns> A new <see cref="Automation.DscCompilationJobData"/> instance for mocking. </returns>
-        public static DscCompilationJobData DscCompilationJobData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string startedBy = default, Guid? jobId = default, DateTimeOffset? createdOn = default, JobProvisioningState? provisioningState = default, string runOn = default, AutomationJobStatus? status = default, string statusDetails = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, string exception = default, DateTimeOffset? lastModifiedOn = default, DateTimeOffset? lastStatusModifiedOn = default, IDictionary<string, string> parameters = default, string configurationName = default)
-        {
-            return new DscCompilationJobData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                configurationName is null && startedBy is null && jobId is null && createdOn is null && provisioningState is null && runOn is null && status is null && statusDetails is null && startOn is null && endOn is null && exception is null && lastModifiedOn is null && lastStatusModifiedOn is null && parameters is null ? default : new DscCompilationJobProperties(
-                    new DscConfigurationAssociationProperty(configurationName, default),
-                    startedBy,
-                    jobId,
-                    createdOn,
-                    provisioningState,
-                    runOn,
-                    status,
-                    statusDetails,
-                    startOn,
-                    endOn,
-                    exception,
-                    lastModifiedOn,
-                    lastStatusModifiedOn,
-                    parameters ?? new ChangeTrackingDictionary<string, string>(),
-                    default),
-                default);
-        }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -522,26 +457,6 @@ namespace Azure.ResourceManager.Automation.Models
         public static AutomationPrivateLinkServiceConnectionStateProperty AutomationPrivateLinkServiceConnectionStateProperty(string status = default, string description = default, string actionsRequired = default)
         {
             return new AutomationPrivateLinkServiceConnectionStateProperty(status, description, actionsRequired, default);
-        }
-
-        /// <param name="id"> Gets or sets the id of the resource. </param>
-        /// <param name="jobStreamId"> Gets or sets the id of the job stream. </param>
-        /// <param name="time"> Gets or sets the creation time of the job. </param>
-        /// <param name="streamType"> Gets or sets the stream type. </param>
-        /// <param name="streamText"> Gets or sets the stream text. </param>
-        /// <param name="summary"> Gets or sets the summary. </param>
-        /// <param name="value"> Gets or sets the values of the job stream. </param>
-        /// <returns> A new <see cref="Models.AutomationJobStream"/> instance for mocking. </returns>
-        public static AutomationJobStream AutomationJobStream(ResourceIdentifier id = default, string jobStreamId = default, DateTimeOffset? time = default, AutomationJobStreamType? streamType = default, string streamText = default, string summary = default, IDictionary<string, BinaryData> value = default)
-        {
-            return new AutomationJobStream(id, jobStreamId is null && time is null && streamType is null && streamText is null && summary is null && value is null ? default : new JobStreamProperties(
-                jobStreamId,
-                time,
-                streamType,
-                streamText,
-                summary,
-                value ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                default), default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1556,6 +1471,13 @@ namespace Azure.ResourceManager.Automation.Models
                 default);
         }
 
+        /// <param name="configurationName"> Gets or sets the name of the Dsc configuration. </param>
+        /// <returns> A new <see cref="Models.DscConfigurationAssociationProperty"/> instance for mocking. </returns>
+        public static DscConfigurationAssociationProperty DscConfigurationAssociationProperty(string configurationName = default)
+        {
+            return new DscConfigurationAssociationProperty(configurationName, default);
+        }
+
         /// <param name="source"> Gets or sets the source. </param>
         /// <param name="isIncrementNodeConfigurationBuildRequired"> If a new build version of NodeConfiguration is required. </param>
         /// <param name="configurationName"> Gets or sets the name of the Dsc configuration. </param>
@@ -1593,6 +1515,26 @@ namespace Azure.ResourceManager.Automation.Models
         public static HybridRunbookWorkerGroupCreateOrUpdateContent HybridRunbookWorkerGroupCreateOrUpdateContent(string credentialName = default, string name = default)
         {
             return new HybridRunbookWorkerGroupCreateOrUpdateContent(credentialName is null ? default : new HybridRunbookWorkerGroupCreateOrUpdateProperties(new RunAsCredentialAssociationProperty(credentialName, default), default), name, default);
+        }
+
+        /// <param name="id"> Gets or sets the id of the resource. </param>
+        /// <param name="jobStreamId"> Gets or sets the id of the job stream. </param>
+        /// <param name="time"> Gets or sets the creation time of the job. </param>
+        /// <param name="streamType"> Gets or sets the stream type. </param>
+        /// <param name="streamText"> Gets or sets the stream text. </param>
+        /// <param name="summary"> Gets or sets the summary. </param>
+        /// <param name="value"> Gets or sets the values of the job stream. </param>
+        /// <returns> A new <see cref="Models.AutomationJobStream"/> instance for mocking. </returns>
+        public static AutomationJobStream AutomationJobStream(ResourceIdentifier id = default, string jobStreamId = default, DateTimeOffset? time = default, AutomationJobStreamType? streamType = default, string streamText = default, string summary = default, IDictionary<string, BinaryData> value = default)
+        {
+            return new AutomationJobStream(id, jobStreamId is null && time is null && streamType is null && streamText is null && summary is null && value is null ? default : new JobStreamProperties(
+                jobStreamId,
+                time,
+                streamType,
+                streamText,
+                summary,
+                value ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                default), default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -2459,67 +2401,6 @@ namespace Azure.ResourceManager.Automation.Models
                     source,
                     nodeCount,
                     isIncrementNodeConfigurationBuildRequired,
-                    default),
-                default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DscCompilationJobCreateOrUpdateContent"/>. </summary>
-        /// <param name="name"> Gets or sets name of the resource. </param>
-        /// <param name="location"> Gets or sets the location of the resource. </param>
-        /// <param name="tags"> Gets or sets the tags attached to the resource. </param>
-        /// <param name="configurationName"> Gets or sets the configuration. </param>
-        /// <param name="parameters"> Gets or sets the parameters of the job. </param>
-        /// <param name="isIncrementNodeConfigurationBuildRequired"> If a new build version of NodeConfiguration is required. </param>
-        /// <returns> A new <see cref="Models.DscCompilationJobCreateOrUpdateContent"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DscCompilationJobCreateOrUpdateContent DscCompilationJobCreateOrUpdateContent(string name = default, AzureLocation? location = default, IDictionary<string, string> tags = default, string configurationName = default, IDictionary<string, string> parameters = default, bool? isIncrementNodeConfigurationBuildRequired = default)
-        {
-            return new DscCompilationJobCreateOrUpdateContent(configurationName is null && parameters is null && isIncrementNodeConfigurationBuildRequired is null ? default : new DscCompilationJobCreateOrUpdateProperties(new DscConfigurationAssociationProperty(configurationName, default), parameters ?? new ChangeTrackingDictionary<string, string>(), isIncrementNodeConfigurationBuildRequired, default), name, location, tags ?? new ChangeTrackingDictionary<string, string>(), default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Automation.DscCompilationJobData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="configurationName"> Gets or sets the configuration. </param>
-        /// <param name="startedBy"> Gets the compilation job started by. </param>
-        /// <param name="jobId"> Gets the id of the job. </param>
-        /// <param name="createdOn"> Gets the creation time of the job. </param>
-        /// <param name="provisioningState"> The current provisioning state of the job. </param>
-        /// <param name="runOn"> Gets or sets the runOn which specifies the group name where the job is to be executed. </param>
-        /// <param name="status"> Gets or sets the status of the job. </param>
-        /// <param name="statusDetails"> Gets or sets the status details of the job. </param>
-        /// <param name="startOn"> Gets the start time of the job. </param>
-        /// <param name="endOn"> Gets the end time of the job. </param>
-        /// <param name="exception"> Gets the exception of the job. </param>
-        /// <param name="lastModifiedOn"> Gets the last modified time of the job. </param>
-        /// <param name="lastStatusModifiedOn"> Gets the last status modified time of the job. </param>
-        /// <param name="parameters"> Gets or sets the parameters of the job. </param>
-        /// <returns> A new <see cref="Automation.DscCompilationJobData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DscCompilationJobData DscCompilationJobData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string configurationName = default, string startedBy = default, Guid? jobId = default, DateTimeOffset? createdOn = default, JobProvisioningState? provisioningState = default, string runOn = default, AutomationJobStatus? status = default, string statusDetails = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, string exception = default, DateTimeOffset? lastModifiedOn = default, DateTimeOffset? lastStatusModifiedOn = default, IDictionary<string, string> parameters = default)
-        {
-            return new DscCompilationJobData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                configurationName is null && startedBy is null && jobId is null && createdOn is null && provisioningState is null && runOn is null && status is null && statusDetails is null && startOn is null && endOn is null && exception is null && lastModifiedOn is null && lastStatusModifiedOn is null && parameters is null ? default : new DscCompilationJobProperties(
-                    new DscConfigurationAssociationProperty(configurationName, default),
-                    startedBy,
-                    jobId,
-                    createdOn,
-                    provisioningState,
-                    runOn,
-                    status,
-                    statusDetails,
-                    startOn,
-                    endOn,
-                    exception,
-                    lastModifiedOn,
-                    lastStatusModifiedOn,
-                    parameters ?? new ChangeTrackingDictionary<string, string>(),
                     default),
                 default);
         }

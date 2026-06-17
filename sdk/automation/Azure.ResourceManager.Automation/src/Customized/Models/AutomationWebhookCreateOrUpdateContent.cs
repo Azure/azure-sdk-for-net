@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 using Azure.ResourceManager.Automation;
 using Microsoft.TypeSpec.Generator.Customizations;
 
@@ -26,6 +27,7 @@ namespace Azure.ResourceManager.Automation.Models
         public DateTimeOffset? ExpireOn
         {
             get => Properties.ExpireOn;
+            [EditorBrowsable(EditorBrowsableState.Never)]
             set => Properties.ExpireOn = value;
         }
 
@@ -33,6 +35,7 @@ namespace Azure.ResourceManager.Automation.Models
         public bool? IsEnabled
         {
             get => Properties.IsEnabled;
+            [EditorBrowsable(EditorBrowsableState.Never)]
             set => Properties.IsEnabled = value;
         }
 
@@ -40,6 +43,7 @@ namespace Azure.ResourceManager.Automation.Models
         public string RunbookName
         {
             get => Properties.RunbookName;
+            [EditorBrowsable(EditorBrowsableState.Never)]
             set => Properties.RunbookName = value;
         }
 
@@ -47,6 +51,7 @@ namespace Azure.ResourceManager.Automation.Models
         public string RunOn
         {
             get => Properties.RunOn;
+            [EditorBrowsable(EditorBrowsableState.Never)]
             set => Properties.RunOn = value;
         }
 
@@ -54,6 +59,7 @@ namespace Azure.ResourceManager.Automation.Models
         public Uri Uri
         {
             get => Properties.Uri;
+            [EditorBrowsable(EditorBrowsableState.Never)]
             set => Properties.Uri = value;
         }
     }

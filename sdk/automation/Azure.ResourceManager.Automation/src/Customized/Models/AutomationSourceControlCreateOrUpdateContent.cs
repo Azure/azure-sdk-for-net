@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Automation.Models
@@ -20,6 +21,7 @@ namespace Azure.ResourceManager.Automation.Models
         public string Branch
         {
             get => Properties.Branch;
+            [EditorBrowsable(EditorBrowsableState.Never)]
             set => Properties.Branch = value;
         }
 
@@ -27,6 +29,7 @@ namespace Azure.ResourceManager.Automation.Models
         public string Description
         {
             get => Properties.Description;
+            [EditorBrowsable(EditorBrowsableState.Never)]
             set => Properties.Description = value;
         }
 
@@ -34,6 +37,7 @@ namespace Azure.ResourceManager.Automation.Models
         public string FolderPath
         {
             get => Properties.FolderPath;
+            [EditorBrowsable(EditorBrowsableState.Never)]
             set => Properties.FolderPath = value;
         }
 
@@ -41,6 +45,7 @@ namespace Azure.ResourceManager.Automation.Models
         public bool? IsAutoPublishRunbookEnabled
         {
             get => Properties.IsAutoPublishRunbookEnabled;
+            [EditorBrowsable(EditorBrowsableState.Never)]
             set => Properties.IsAutoPublishRunbookEnabled = value;
         }
 
@@ -48,6 +53,7 @@ namespace Azure.ResourceManager.Automation.Models
         public bool? IsAutoSyncEnabled
         {
             get => Properties.IsAutoSyncEnabled;
+            [EditorBrowsable(EditorBrowsableState.Never)]
             set => Properties.IsAutoSyncEnabled = value;
         }
 
@@ -55,6 +61,7 @@ namespace Azure.ResourceManager.Automation.Models
         public Uri RepoUri
         {
             get => Properties.RepoUri;
+            [EditorBrowsable(EditorBrowsableState.Never)]
             set => Properties.RepoUri = value;
         }
 
@@ -62,6 +69,7 @@ namespace Azure.ResourceManager.Automation.Models
         public SourceControlSecurityTokenProperties SecurityToken
         {
             get => Properties.SecurityToken;
+            [EditorBrowsable(EditorBrowsableState.Never)]
             set => Properties.SecurityToken = value;
         }
 
@@ -69,6 +77,7 @@ namespace Azure.ResourceManager.Automation.Models
         public SourceControlSourceType? SourceType
         {
             get => Properties.SourceType;
+            [EditorBrowsable(EditorBrowsableState.Never)]
             set => Properties.SourceType = value;
         }
     }

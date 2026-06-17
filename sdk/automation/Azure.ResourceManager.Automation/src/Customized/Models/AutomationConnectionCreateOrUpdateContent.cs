@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 using Azure.Core;
 using Azure.ResourceManager.Automation;
 using Microsoft.TypeSpec.Generator.Customizations;
@@ -40,6 +41,7 @@ namespace Azure.ResourceManager.Automation.Models
         public string Description
         {
             get => Properties.Description;
+            [EditorBrowsable(EditorBrowsableState.Never)]
             set => Properties.Description = value;
         }
     }

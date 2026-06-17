@@ -5,6 +5,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using Azure.Core;
 using Azure.ResourceManager.Automation;
 using Microsoft.TypeSpec.Generator.Customizations;
 
@@ -38,5 +40,23 @@ namespace Azure.ResourceManager.Automation.Models
                         default),
                 default);
         }
+
+#pragma warning disable CS0618
+#pragma warning disable CS1591
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete(Azure.ResourceManager.Automation.DscCompilationJobCompatibilityHelpers.ObsoleteMessage)]
+        public static DscCompilationJobCreateOrUpdateContent DscCompilationJobCreateOrUpdateContent(string name = null, AzureLocation? location = default, IDictionary<string, string> tags = null, string configurationName = null, IDictionary<string, string> parameters = null, bool? isIncrementNodeConfigurationBuildRequired = default)
+        {
+            throw Azure.ResourceManager.Automation.DscCompilationJobCompatibilityHelpers.CreateException();
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete(Azure.ResourceManager.Automation.DscCompilationJobCompatibilityHelpers.ObsoleteMessage)]
+        public static DscCompilationJobData DscCompilationJobData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, Azure.ResourceManager.Models.SystemData systemData = null, string configurationName = null, string startedBy = null, Guid? jobId = default, DateTimeOffset? createdOn = default, JobProvisioningState? provisioningState = default, string runOn = null, AutomationJobStatus? status = default, string statusDetails = null, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, string exception = null, DateTimeOffset? lastModifiedOn = default, DateTimeOffset? lastStatusModifiedOn = default, IDictionary<string, string> parameters = null)
+        {
+            throw Azure.ResourceManager.Automation.DscCompilationJobCompatibilityHelpers.CreateException();
+        }
+#pragma warning restore CS0618
+#pragma warning restore CS1591
     }
 }

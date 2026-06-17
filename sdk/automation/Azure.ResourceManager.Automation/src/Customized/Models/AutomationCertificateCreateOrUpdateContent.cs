@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.Automation.Models
         public string Description
         {
             get => Properties.Description;
+            [EditorBrowsable(EditorBrowsableState.Never)]
             set => Properties.Description = value;
         }
 
@@ -22,6 +23,7 @@ namespace Azure.ResourceManager.Automation.Models
         public string ThumbprintString
         {
             get => Properties.ThumbprintString;
+            [EditorBrowsable(EditorBrowsableState.Never)]
             set => Properties.ThumbprintString = value;
         }
 
@@ -29,6 +31,7 @@ namespace Azure.ResourceManager.Automation.Models
         public bool? IsExportable
         {
             get => Properties.IsExportable;
+            [EditorBrowsable(EditorBrowsableState.Never)]
             set => Properties.IsExportable = value;
         }
 
@@ -66,8 +69,9 @@ namespace Azure.ResourceManager.Automation.Models
         [Obsolete("This property is obsolete and will be removed in a future release. Please use `ThumbprintString` instead.", false)]
         public BinaryData Thumbprint
         {
-            get => throw new NotSupportedException("This property is obsolete and will be removed in a future release. Please use `ThumbprintString` instead.");
-            set => throw new NotSupportedException("This property is obsolete and will be removed in a future release. Please use `ThumbprintString` instead.");
+            get { return BinaryData.FromString(ThumbprintString); }
+            [EditorBrowsable(EditorBrowsableState.Never)]
+            set { ThumbprintString = value.ToString(); }
         }
     }
 }
