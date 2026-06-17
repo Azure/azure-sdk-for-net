@@ -13,45 +13,44 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ComputeLimit
 {
     /// <summary>
-    /// A class representing a ComputeLimitSharedLimit along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ComputeLimitSharedLimitResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetComputeLimitSharedLimits method.
+    /// A class representing a MemberCapOverride along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MemberCapOverrideResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SharedLimitCapResource"/> using the GetMemberCapOverrides method.
     /// </summary>
-    public partial class ComputeLimitSharedLimitResource : ArmResource
+    public partial class MemberCapOverrideResource : ArmResource
     {
-        private readonly ClientDiagnostics _sharedLimitsClientDiagnostics;
-        private readonly SharedLimits _sharedLimitsRestClient;
-        private readonly ComputeLimitSharedLimitData _data;
+        private readonly ClientDiagnostics _memberCapOverridesClientDiagnostics;
+        private readonly MemberCapOverrides _memberCapOverridesRestClient;
+        private readonly MemberCapOverrideData _data;
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ComputeLimit/locations/sharedLimits";
+        public static readonly ResourceType ResourceType = "Microsoft.ComputeLimit/locations/sharedLimitCaps/memberCapOverrides";
 
-        /// <summary> Initializes a new instance of ComputeLimitSharedLimitResource for mocking. </summary>
-        protected ComputeLimitSharedLimitResource()
+        /// <summary> Initializes a new instance of MemberCapOverrideResource for mocking. </summary>
+        protected MemberCapOverrideResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ComputeLimitSharedLimitResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MemberCapOverrideResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ComputeLimitSharedLimitResource(ArmClient client, ComputeLimitSharedLimitData data) : this(client, data.Id)
+        internal MemberCapOverrideResource(ArmClient client, MemberCapOverrideData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ComputeLimitSharedLimitResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MemberCapOverrideResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ComputeLimitSharedLimitResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal MemberCapOverrideResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string computeLimitSharedLimitApiVersion);
-            _sharedLimitsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ComputeLimit", ResourceType.Namespace, Diagnostics);
-            _sharedLimitsRestClient = new SharedLimits(_sharedLimitsClientDiagnostics, Pipeline, Endpoint, computeLimitSharedLimitApiVersion ?? "2026-07-01");
+            TryGetApiVersion(ResourceType, out string memberCapOverrideApiVersion);
+            _memberCapOverridesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ComputeLimit", ResourceType.Namespace, Diagnostics);
+            _memberCapOverridesRestClient = new MemberCapOverrides(_memberCapOverridesClientDiagnostics, Pipeline, Endpoint, memberCapOverrideApiVersion ?? "2026-07-01");
             ValidateResourceId(id);
         }
 
@@ -59,7 +58,7 @@ namespace Azure.ResourceManager.ComputeLimit
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual ComputeLimitSharedLimitData Data
+        public virtual MemberCapOverrideData Data
         {
             get
             {
@@ -74,10 +73,11 @@ namespace Azure.ResourceManager.ComputeLimit
         /// <summary> Generate the resource identifier for this resource. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="name"> The name. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation location, string name)
+        /// <param name="vmFamilyName"> The vmFamilyName. </param>
+        /// <param name="memberSubscriptionId"> The memberSubscriptionId. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation location, string vmFamilyName, string memberSubscriptionId)
         {
-            string resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.ComputeLimit/locations/{location}/sharedLimits/{name}";
+            string resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.ComputeLimit/locations/{location}/sharedLimitCaps/{vmFamilyName}/memberCapOverrides/{memberSubscriptionId}";
             return new ResourceIdentifier(resourceId);
         }
 
@@ -92,15 +92,15 @@ namespace Azure.ResourceManager.ComputeLimit
         }
 
         /// <summary>
-        /// Gets the properties of a compute limit shared by the host subscription with its guest subscriptions.
+        /// Gets the cap override configured for a single member subscription.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ComputeLimit/locations/{location}/sharedLimits/{name}. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ComputeLimit/locations/{location}/sharedLimitCaps/{vmFamilyName}/memberCapOverrides/{memberSubscriptionId}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> SharedLimits_Get. </description>
+        /// <description> MemberCapOverrides_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -108,14 +108,14 @@ namespace Azure.ResourceManager.ComputeLimit
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ComputeLimitSharedLimitResource"/>. </description>
+        /// <description> <see cref="MemberCapOverrideResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ComputeLimitSharedLimitResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MemberCapOverrideResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _sharedLimitsClientDiagnostics.CreateScope("ComputeLimitSharedLimitResource.Get");
+            using DiagnosticScope scope = _memberCapOverridesClientDiagnostics.CreateScope("MemberCapOverrideResource.Get");
             scope.Start();
             try
             {
@@ -123,14 +123,14 @@ namespace Azure.ResourceManager.ComputeLimit
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sharedLimitsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _memberCapOverridesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ComputeLimitSharedLimitData> response = Response.FromValue(ComputeLimitSharedLimitData.FromResponse(result), result);
+                Response<MemberCapOverrideData> response = Response.FromValue(MemberCapOverrideData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ComputeLimitSharedLimitResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MemberCapOverrideResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -140,15 +140,15 @@ namespace Azure.ResourceManager.ComputeLimit
         }
 
         /// <summary>
-        /// Gets the properties of a compute limit shared by the host subscription with its guest subscriptions.
+        /// Gets the cap override configured for a single member subscription.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ComputeLimit/locations/{location}/sharedLimits/{name}. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ComputeLimit/locations/{location}/sharedLimitCaps/{vmFamilyName}/memberCapOverrides/{memberSubscriptionId}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> SharedLimits_Get. </description>
+        /// <description> MemberCapOverrides_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -156,14 +156,14 @@ namespace Azure.ResourceManager.ComputeLimit
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ComputeLimitSharedLimitResource"/>. </description>
+        /// <description> <see cref="MemberCapOverrideResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ComputeLimitSharedLimitResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<MemberCapOverrideResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _sharedLimitsClientDiagnostics.CreateScope("ComputeLimitSharedLimitResource.Get");
+            using DiagnosticScope scope = _memberCapOverridesClientDiagnostics.CreateScope("MemberCapOverrideResource.Get");
             scope.Start();
             try
             {
@@ -171,14 +171,14 @@ namespace Azure.ResourceManager.ComputeLimit
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sharedLimitsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _memberCapOverridesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ComputeLimitSharedLimitData> response = Response.FromValue(ComputeLimitSharedLimitData.FromResponse(result), result);
+                Response<MemberCapOverrideData> response = Response.FromValue(MemberCapOverrideData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ComputeLimitSharedLimitResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MemberCapOverrideResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -188,15 +188,15 @@ namespace Azure.ResourceManager.ComputeLimit
         }
 
         /// <summary>
-        /// Disables sharing of a compute limit by the host subscription with its guest subscriptions.
+        /// Removes the per-member cap override for a member subscription.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ComputeLimit/locations/{location}/sharedLimits/{name}. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ComputeLimit/locations/{location}/sharedLimitCaps/{vmFamilyName}/memberCapOverrides/{memberSubscriptionId}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> SharedLimits_Delete. </description>
+        /// <description> MemberCapOverrides_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.ComputeLimit
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ComputeLimitSharedLimitResource"/>. </description>
+        /// <description> <see cref="MemberCapOverrideResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.ComputeLimit
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _sharedLimitsClientDiagnostics.CreateScope("ComputeLimitSharedLimitResource.Delete");
+            using DiagnosticScope scope = _memberCapOverridesClientDiagnostics.CreateScope("MemberCapOverrideResource.Delete");
             scope.Start();
             try
             {
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.ComputeLimit
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sharedLimitsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _memberCapOverridesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -239,15 +239,15 @@ namespace Azure.ResourceManager.ComputeLimit
         }
 
         /// <summary>
-        /// Disables sharing of a compute limit by the host subscription with its guest subscriptions.
+        /// Removes the per-member cap override for a member subscription.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ComputeLimit/locations/{location}/sharedLimits/{name}. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ComputeLimit/locations/{location}/sharedLimitCaps/{vmFamilyName}/memberCapOverrides/{memberSubscriptionId}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> SharedLimits_Delete. </description>
+        /// <description> MemberCapOverrides_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.ComputeLimit
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ComputeLimitSharedLimitResource"/>. </description>
+        /// <description> <see cref="MemberCapOverrideResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.ComputeLimit
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _sharedLimitsClientDiagnostics.CreateScope("ComputeLimitSharedLimitResource.Delete");
+            using DiagnosticScope scope = _memberCapOverridesClientDiagnostics.CreateScope("MemberCapOverrideResource.Delete");
             scope.Start();
             try
             {
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.ComputeLimit
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sharedLimitsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _memberCapOverridesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -290,15 +290,15 @@ namespace Azure.ResourceManager.ComputeLimit
         }
 
         /// <summary>
-        /// Update a ComputeLimitSharedLimit.
+        /// Update a MemberCapOverride.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ComputeLimit/locations/{location}/sharedLimits/{name}. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ComputeLimit/locations/{location}/sharedLimitCaps/{vmFamilyName}/memberCapOverrides/{memberSubscriptionId}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> SharedLimits_Create. </description>
+        /// <description> MemberCapOverrides_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.ComputeLimit
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ComputeLimitSharedLimitResource"/>. </description>
+        /// <description> <see cref="MemberCapOverrideResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -314,11 +314,11 @@ namespace Azure.ResourceManager.ComputeLimit
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<ComputeLimitSharedLimitResource>> UpdateAsync(WaitUntil waitUntil, ComputeLimitSharedLimitData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<MemberCapOverrideResource>> UpdateAsync(WaitUntil waitUntil, MemberCapOverrideData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _sharedLimitsClientDiagnostics.CreateScope("ComputeLimitSharedLimitResource.Update");
+            using DiagnosticScope scope = _memberCapOverridesClientDiagnostics.CreateScope("MemberCapOverrideResource.Update");
             scope.Start();
             try
             {
@@ -326,12 +326,12 @@ namespace Azure.ResourceManager.ComputeLimit
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sharedLimitsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, ComputeLimitSharedLimitData.ToRequestContent(data), context);
+                HttpMessage message = _memberCapOverridesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, MemberCapOverrideData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ComputeLimitSharedLimitData> response = Response.FromValue(ComputeLimitSharedLimitData.FromResponse(result), result);
+                Response<MemberCapOverrideData> response = Response.FromValue(MemberCapOverrideData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                ComputeLimitArmOperation<ComputeLimitSharedLimitResource> operation = new ComputeLimitArmOperation<ComputeLimitSharedLimitResource>(Response.FromValue(new ComputeLimitSharedLimitResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                ComputeLimitArmOperation<MemberCapOverrideResource> operation = new ComputeLimitArmOperation<MemberCapOverrideResource>(Response.FromValue(new MemberCapOverrideResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -346,15 +346,15 @@ namespace Azure.ResourceManager.ComputeLimit
         }
 
         /// <summary>
-        /// Update a ComputeLimitSharedLimit.
+        /// Update a MemberCapOverride.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ComputeLimit/locations/{location}/sharedLimits/{name}. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ComputeLimit/locations/{location}/sharedLimitCaps/{vmFamilyName}/memberCapOverrides/{memberSubscriptionId}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> SharedLimits_Create. </description>
+        /// <description> MemberCapOverrides_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.ComputeLimit
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ComputeLimitSharedLimitResource"/>. </description>
+        /// <description> <see cref="MemberCapOverrideResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -370,11 +370,11 @@ namespace Azure.ResourceManager.ComputeLimit
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<ComputeLimitSharedLimitResource> Update(WaitUntil waitUntil, ComputeLimitSharedLimitData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<MemberCapOverrideResource> Update(WaitUntil waitUntil, MemberCapOverrideData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _sharedLimitsClientDiagnostics.CreateScope("ComputeLimitSharedLimitResource.Update");
+            using DiagnosticScope scope = _memberCapOverridesClientDiagnostics.CreateScope("MemberCapOverrideResource.Update");
             scope.Start();
             try
             {
@@ -382,12 +382,12 @@ namespace Azure.ResourceManager.ComputeLimit
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sharedLimitsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, ComputeLimitSharedLimitData.ToRequestContent(data), context);
+                HttpMessage message = _memberCapOverridesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, MemberCapOverrideData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ComputeLimitSharedLimitData> response = Response.FromValue(ComputeLimitSharedLimitData.FromResponse(result), result);
+                Response<MemberCapOverrideData> response = Response.FromValue(MemberCapOverrideData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                ComputeLimitArmOperation<ComputeLimitSharedLimitResource> operation = new ComputeLimitArmOperation<ComputeLimitSharedLimitResource>(Response.FromValue(new ComputeLimitSharedLimitResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                ComputeLimitArmOperation<MemberCapOverrideResource> operation = new ComputeLimitArmOperation<MemberCapOverrideResource>(Response.FromValue(new MemberCapOverrideResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);
