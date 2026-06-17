@@ -4,6 +4,9 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -29,7 +32,7 @@ namespace Azure.ResourceManager.Dns
     [CodeGenSuppressAttribute("Exists", typeof(string), typeof(DnsRecordType), typeof(CancellationToken))]
     [CodeGenSuppressAttribute("GetIfExistsAsync", typeof(string), typeof(DnsRecordType), typeof(CancellationToken))]
     [CodeGenSuppressAttribute("GetIfExists", typeof(string), typeof(DnsRecordType), typeof(CancellationToken))]
-    public partial class DnsNSRecordCollection : ArmCollection
+    public partial class DnsNSRecordCollection : ArmCollection, IEnumerable<DnsNSRecordResource>, IAsyncEnumerable<DnsNSRecordResource>
     {
         private readonly ClientDiagnostics _recordSetsClientDiagnostics;
         private readonly RecordSets _recordSetsRestClient;
@@ -59,6 +62,54 @@ namespace Azure.ResourceManager.Dns
                 throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DnsZoneResource.ResourceType), nameof(id));
             }
         }
+
+        /// <summary> Creates or updates a DNS NS record set. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. </param>
+        /// <param name="nsRecordName"> The name of the NS record set. </param>
+        /// <param name="data"> Parameters supplied to the CreateOrUpdate operation. </param>
+        /// <param name="ifMatch"> The etag of the record set. Omit this value to always overwrite the current record set. Specify the last-seen etag value to prevent accidentally overwriting any concurrent changes. </param>
+        /// <param name="ifNoneMatch"> Set to '*' to allow a new record set to be created, but to prevent updating an existing record set. Other values will be ignored. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An <see cref="ArmOperation{T}"/> that tracks the operation. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<ArmOperation<DnsNSRecordResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string nsRecordName, DnsNSRecordData data, ETag? ifMatch = default, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+            => await CreateOrUpdateAsync(waitUntil, nsRecordName, data, new MatchConditions() { IfMatch = ifMatch, IfNoneMatch = new ETag(ifNoneMatch) }, cancellationToken).ConfigureAwait(false);
+
+        /// <summary> Creates or updates a DNS NS record set. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. </param>
+        /// <param name="nsRecordName"> The name of the NS record set. </param>
+        /// <param name="data"> Parameters supplied to the CreateOrUpdate operation. </param>
+        /// <param name="ifMatch"> The etag of the record set. Omit this value to always overwrite the current record set. Specify the last-seen etag value to prevent accidentally overwriting any concurrent changes. </param>
+        /// <param name="ifNoneMatch"> Set to '*' to allow a new record set to be created, but to prevent updating an existing record set. Other values will be ignored. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An <see cref="ArmOperation{T}"/> that tracks the operation. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual ArmOperation<DnsNSRecordResource> CreateOrUpdate(WaitUntil waitUntil, string nsRecordName, DnsNSRecordData data, ETag? ifMatch = default, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+            => CreateOrUpdate(waitUntil, nsRecordName, data, new MatchConditions() { IfMatch = ifMatch, IfNoneMatch = new ETag(ifNoneMatch) }, cancellationToken);
+
+        /// <summary> Lists the NS record sets in a DNS zone. </summary>
+        /// <param name="top"> The maximum number of record sets to return. </param>
+        /// <param name="recordsetnamesuffix"> The suffix label of the record set name used to filter record set enumerations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DnsNSRecordResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DnsNSRecordResource> GetAllAsync(int? top = default, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
+            => DnsRecordData.GetAllAsync(_recordSetsRestClient, Client, Id, "NS", top, recordsetnamesuffix, cancellationToken, "DnsNSRecordCollection.GetAll", (client, id) => new DnsNSRecordResource(client, id));
+
+        /// <summary> Lists the NS record sets in a DNS zone. </summary>
+        /// <param name="top"> The maximum number of record sets to return. </param>
+        /// <param name="recordsetnamesuffix"> The suffix label of the record set name used to filter record set enumerations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DnsNSRecordResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DnsNSRecordResource> GetAll(int? top = default, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
+            => DnsRecordData.GetAll(_recordSetsRestClient, Client, Id, "NS", top, recordsetnamesuffix, cancellationToken, "DnsNSRecordCollection.GetAll", (client, id) => new DnsNSRecordResource(client, id));
+
+        IEnumerator<DnsNSRecordResource> IEnumerable<DnsNSRecordResource>.GetEnumerator() => GetAll().GetEnumerator();
+
+        IEnumerator IEnumerable.GetEnumerator() => GetAll().GetEnumerator();
+
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        IAsyncEnumerator<DnsNSRecordResource> IAsyncEnumerable<DnsNSRecordResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+            => GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
 
         /// <summary>
         /// Creates or updates a record set within a DNS zone. Record sets of type SOA can be updated but not created (they are created when the DNS zone is created).

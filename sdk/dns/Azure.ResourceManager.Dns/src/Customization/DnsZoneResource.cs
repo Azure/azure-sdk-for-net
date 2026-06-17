@@ -386,6 +386,22 @@ namespace Azure.ResourceManager.Dns
             return GetDnsNaptrRecords().Get(relativeRecordSetName, cancellationToken);
         }
 
+        /// <summary> Lists all record sets in a DNS zone. </summary>
+        /// <param name="top"> The maximum number of record sets to return. </param>
+        /// <param name="recordsetnamesuffix"> The suffix label of the record set name used to filter record set enumerations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DnsRecordData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DnsRecordData> GetAllRecordDataAsync(int? top = default, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
+            => GetByDnsZoneAsync(top, recordsetnamesuffix, cancellationToken);
+
+        /// <summary> Lists all record sets in a DNS zone. </summary>
+        /// <param name="top"> The maximum number of record sets to return. </param>
+        /// <param name="recordsetnamesuffix"> The suffix label of the record set name used to filter record set enumerations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DnsRecordData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DnsRecordData> GetAllRecordData(int? top = default, string recordsetnamesuffix = null, CancellationToken cancellationToken = default)
+            => GetByDnsZone(top, recordsetnamesuffix, cancellationToken);
+
         /// <summary>
         /// Updates a DNS zone. Does not modify DNS records within the zone.
         /// <list type="bullet">

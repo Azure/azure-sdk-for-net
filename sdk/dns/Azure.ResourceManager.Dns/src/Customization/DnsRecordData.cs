@@ -224,5 +224,29 @@ namespace Azure.ResourceManager.Dns
                 Properties.Cname = value;
             }
         }
+
+        internal static AsyncPageable<TResource> GetAllAsync<TResource>(RecordSets recordSetsRestClient, ArmClient client, ResourceIdentifier zoneId, string recordType, int? top, string recordsetnamesuffix, CancellationToken cancellationToken, string diagnosticScope, Func<ArmClient, ResourceIdentifier, TResource> createResource)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+
+            return new AsyncPageableWrapper<DnsRecordData, TResource>(
+                new RecordSetsGetByTypeAsyncCollectionResultOfT(recordSetsRestClient, zoneId.SubscriptionId, zoneId.ResourceGroupName, zoneId.Name, recordType, top, recordsetnamesuffix, context, diagnosticScope),
+                data => createResource(client, data.Id));
+        }
+
+        internal static Pageable<TResource> GetAll<TResource>(RecordSets recordSetsRestClient, ArmClient client, ResourceIdentifier zoneId, string recordType, int? top, string recordsetnamesuffix, CancellationToken cancellationToken, string diagnosticScope, Func<ArmClient, ResourceIdentifier, TResource> createResource)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+
+            return new PageableWrapper<DnsRecordData, TResource>(
+                new RecordSetsGetByTypeCollectionResultOfT(recordSetsRestClient, zoneId.SubscriptionId, zoneId.ResourceGroupName, zoneId.Name, recordType, top, recordsetnamesuffix, context, diagnosticScope),
+                data => createResource(client, data.Id));
+        }
     }
 }
