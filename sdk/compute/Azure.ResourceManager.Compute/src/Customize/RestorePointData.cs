@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> List of disk resource ids that the customer wishes to exclude from the restore point. </summary>
         [Obsolete("This property is obsolete and no longer works. Use ExcludedDisks instead.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
+        // Compatibility placeholder only; this property is not wired to ExcludedDisks.
         public IList<WritableSubResource> ExcludeDisks { get; set; }
     }
 }

@@ -9,11 +9,13 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a reference to Key Vault Secret. </summary>
+    [JsonConverter(typeof(KeyVaultSecretReferenceConverter))]
     public partial class KeyVaultSecretReference : IJsonModel<KeyVaultSecretReference>
     {
         /// <summary> Initializes a new instance of <see cref="KeyVaultSecretReference"/> for deserialization. </summary>
@@ -146,6 +148,28 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             return new KeyVaultSecretReference(secretUri, sourceVault, additionalBinaryDataProperties);
+        }
+
+        internal partial class KeyVaultSecretReferenceConverter : JsonConverter<KeyVaultSecretReference>
+        {
+            /// <summary> Writes the JSON representation of the model. </summary>
+            /// <param name="writer"> The writer. </param>
+            /// <param name="model"> The model to write. </param>
+            /// <param name="options"> The serialization options. </param>
+            public override void Write(Utf8JsonWriter writer, KeyVaultSecretReference model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue<IJsonModel<KeyVaultSecretReference>>(model, ModelSerializationExtensions.WireOptions);
+            }
+
+            /// <summary> Reads the JSON representation and converts into the model. </summary>
+            /// <param name="reader"> The reader. </param>
+            /// <param name="typeToConvert"> The type to convert. </param>
+            /// <param name="options"> The serialization options. </param>
+            public override KeyVaultSecretReference Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using JsonDocument document = JsonDocument.ParseValue(ref reader);
+                return DeserializeKeyVaultSecretReference(document.RootElement, ModelSerializationExtensions.WireOptions);
+            }
         }
     }
 }

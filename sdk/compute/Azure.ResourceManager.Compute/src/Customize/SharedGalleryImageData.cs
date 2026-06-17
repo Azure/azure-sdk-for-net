@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Compute
         {
             get
             {
-                return Properties is null ? new ChangeTrackingDictionary<string, string>() : (IReadOnlyDictionary<string, string>)Properties.ArtifactTags;
+                return Properties is null ? new ChangeTrackingDictionary<string, string>() : Properties.ArtifactTags as IReadOnlyDictionary<string, string>;
             }
         }
 
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Compute
         {
             get
             {
-                return Properties is null ? new ChangeTrackingList<GalleryImageFeature>() : (IReadOnlyList<GalleryImageFeature>)Properties.Features;
+                return Properties is null ? new ChangeTrackingList<GalleryImageFeature>() : Properties.Features as IReadOnlyList<GalleryImageFeature>;
             }
         }
     }

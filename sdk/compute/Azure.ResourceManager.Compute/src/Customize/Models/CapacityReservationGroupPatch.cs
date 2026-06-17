@@ -40,6 +40,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Specifies an array of subscription resource IDs that capacity reservation group is shared with. </summary>
         [Obsolete("This property is obsolete and no longer works. Use SharingSubscriptionResources instead.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
+        // Compatibility placeholder only; this property is not wired to SharingSubscriptionResources.
         public IList<WritableSubResource> SharingSubscriptionIds { get; set; }
     }
 }

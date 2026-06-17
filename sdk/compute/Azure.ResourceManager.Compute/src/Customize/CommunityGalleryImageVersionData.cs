@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Compute
         {
             get
             {
-                return Properties is null ? new ChangeTrackingDictionary<string, string>() : (IReadOnlyDictionary<string, string>)Properties.ArtifactTags;
+                return Properties is null ? new ChangeTrackingDictionary<string, string>() : Properties.ArtifactTags as IReadOnlyDictionary<string, string>;
             }
         }
     }

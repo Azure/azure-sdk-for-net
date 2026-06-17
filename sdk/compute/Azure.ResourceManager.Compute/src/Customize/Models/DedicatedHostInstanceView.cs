@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Compute.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public IReadOnlyList<DedicatedHostAllocatableVm> AvailableCapacityAllocatableVms
         {
-            get => AvailableCapacity?.AllocatableVMs is { } list ? (IReadOnlyList<DedicatedHostAllocatableVm>)list : null;
+            get => AvailableCapacity?.AllocatableVMs as IReadOnlyList<DedicatedHostAllocatableVm>;
         }
     }
 }

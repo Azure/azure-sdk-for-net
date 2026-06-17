@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             get
             {
-                return Properties is null ? new ChangeTrackingList<DedicatedHostInstanceViewWithName>() : (IReadOnlyList<DedicatedHostInstanceViewWithName>)Properties.InstanceViewHosts;
+                return Properties is null ? new ChangeTrackingList<DedicatedHostInstanceViewWithName>() : Properties.InstanceViewHosts as IReadOnlyList<DedicatedHostInstanceViewWithName>;
             }
         }
     }

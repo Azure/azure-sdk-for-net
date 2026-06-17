@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Compute.Models
         {
             get
             {
-                return Properties is null ? new ChangeTrackingList<string>() : (IReadOnlyList<string>)Properties.RequiredZoneNames;
+                return Properties is null ? new ChangeTrackingList<string>() : Properties.RequiredZoneNames as IReadOnlyList<string>;
             }
         }
     }

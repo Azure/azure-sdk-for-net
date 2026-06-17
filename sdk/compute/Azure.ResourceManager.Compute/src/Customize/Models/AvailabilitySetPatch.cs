@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> A list of references to all virtual machines in the availability set. </summary>
         [Obsolete("This property is obsolete and no longer works. Use VirtualMachineResources instead.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
+        // Compatibility placeholder only; this property is not wired to VirtualMachineResources.
         public IList<WritableSubResource> VirtualMachines { get; set; }
     }
 }
