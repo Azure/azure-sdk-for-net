@@ -10,13 +10,70 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
-    public partial class MachineInstallPatchesContent : IUtf8JsonSerializable, IJsonModel<MachineInstallPatchesContent>
+    /// <summary> Input for InstallPatches as directly received by the API. </summary>
+    public partial class MachineInstallPatchesContent : IJsonModel<MachineInstallPatchesContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineInstallPatchesContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="MachineInstallPatchesContent"/> for deserialization. </summary>
+        internal MachineInstallPatchesContent()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual MachineInstallPatchesContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MachineInstallPatchesContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeMachineInstallPatchesContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MachineInstallPatchesContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MachineInstallPatchesContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHybridComputeContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(MachineInstallPatchesContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<MachineInstallPatchesContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MachineInstallPatchesContent IPersistableModel<MachineInstallPatchesContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<MachineInstallPatchesContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="machineInstallPatchesContent"> The <see cref="MachineInstallPatchesContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(MachineInstallPatchesContent machineInstallPatchesContent)
+        {
+            if (machineInstallPatchesContent == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(machineInstallPatchesContent, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MachineInstallPatchesContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +85,11 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MachineInstallPatchesContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MachineInstallPatchesContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MachineInstallPatchesContent)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("maximumDuration"u8);
             writer.WriteStringValue(MaximumDuration, "P");
             writer.WritePropertyName("rebootSetting"u8);
@@ -48,15 +104,15 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WritePropertyName("linuxParameters"u8);
                 writer.WriteObjectValue(LinuxParameters, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -65,22 +121,27 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
         }
 
-        MachineInstallPatchesContent IJsonModel<MachineInstallPatchesContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MachineInstallPatchesContent IJsonModel<MachineInstallPatchesContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual MachineInstallPatchesContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MachineInstallPatchesContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MachineInstallPatchesContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MachineInstallPatchesContent)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeMachineInstallPatchesContent(document.RootElement, options);
         }
 
-        internal static MachineInstallPatchesContent DeserializeMachineInstallPatchesContent(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static MachineInstallPatchesContent DeserializeMachineInstallPatchesContent(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -89,76 +150,43 @@ namespace Azure.ResourceManager.HybridCompute.Models
             VmGuestPatchRebootSetting rebootSetting = default;
             HybridComputeWindowsParameters windowsParameters = default;
             HybridComputeLinuxParameters linuxParameters = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("maximumDuration"u8))
+                if (prop.NameEquals("maximumDuration"u8))
                 {
-                    maximumDuration = property.Value.GetTimeSpan("P");
+                    maximumDuration = prop.Value.GetTimeSpan("P");
                     continue;
                 }
-                if (property.NameEquals("rebootSetting"u8))
+                if (prop.NameEquals("rebootSetting"u8))
                 {
-                    rebootSetting = new VmGuestPatchRebootSetting(property.Value.GetString());
+                    rebootSetting = new VmGuestPatchRebootSetting(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("windowsParameters"u8))
+                if (prop.NameEquals("windowsParameters"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    windowsParameters = HybridComputeWindowsParameters.DeserializeHybridComputeWindowsParameters(property.Value, options);
+                    windowsParameters = HybridComputeWindowsParameters.DeserializeHybridComputeWindowsParameters(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("linuxParameters"u8))
+                if (prop.NameEquals("linuxParameters"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    linuxParameters = HybridComputeLinuxParameters.DeserializeHybridComputeLinuxParameters(property.Value, options);
+                    linuxParameters = HybridComputeLinuxParameters.DeserializeHybridComputeLinuxParameters(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new MachineInstallPatchesContent(maximumDuration, rebootSetting, windowsParameters, linuxParameters, serializedAdditionalRawData);
+            return new MachineInstallPatchesContent(maximumDuration, rebootSetting, windowsParameters, linuxParameters, additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<MachineInstallPatchesContent>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MachineInstallPatchesContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHybridComputeContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(MachineInstallPatchesContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        MachineInstallPatchesContent IPersistableModel<MachineInstallPatchesContent>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MachineInstallPatchesContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeMachineInstallPatchesContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(MachineInstallPatchesContent)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<MachineInstallPatchesContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

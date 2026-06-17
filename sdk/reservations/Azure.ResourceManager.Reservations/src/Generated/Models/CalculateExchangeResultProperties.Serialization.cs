@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Reservations;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    public partial class CalculateExchangeResultProperties : IUtf8JsonSerializable, IJsonModel<CalculateExchangeResultProperties>
+    /// <summary> CalculateExchange response properties. </summary>
+    public partial class CalculateExchangeResultProperties : IJsonModel<CalculateExchangeResultProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CalculateExchangeResultProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual CalculateExchangeResultProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CalculateExchangeResultProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeCalculateExchangeResultProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CalculateExchangeResultProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CalculateExchangeResultProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerReservationsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(CalculateExchangeResultProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<CalculateExchangeResultProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CalculateExchangeResultProperties IPersistableModel<CalculateExchangeResultProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CalculateExchangeResultProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CalculateExchangeResultProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CalculateExchangeResultProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CalculateExchangeResultProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CalculateExchangeResultProperties)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(SessionId))
             {
                 writer.WritePropertyName("sessionId"u8);
@@ -58,7 +98,7 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 writer.WritePropertyName("reservationsToPurchase"u8);
                 writer.WriteStartArray();
-                foreach (var item in ReservationsToPurchase)
+                foreach (ReservationToPurchaseCalculateExchange item in ReservationsToPurchase)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -68,7 +108,7 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 writer.WritePropertyName("savingsPlansToPurchase"u8);
                 writer.WriteStartArray();
-                foreach (var item in SavingsPlansToPurchase)
+                foreach (SavingsPlanToPurchaseCalculateExchange item in SavingsPlansToPurchase)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -78,7 +118,7 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 writer.WritePropertyName("reservationsToExchange"u8);
                 writer.WriteStartArray();
-                foreach (var item in ReservationsToExchange)
+                foreach (ReservationToExchange item in ReservationsToExchange)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -89,15 +129,15 @@ namespace Azure.ResourceManager.Reservations.Models
                 writer.WritePropertyName("policyResult"u8);
                 writer.WriteObjectValue(PolicyResult, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -106,22 +146,27 @@ namespace Azure.ResourceManager.Reservations.Models
             }
         }
 
-        CalculateExchangeResultProperties IJsonModel<CalculateExchangeResultProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CalculateExchangeResultProperties IJsonModel<CalculateExchangeResultProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual CalculateExchangeResultProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CalculateExchangeResultProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CalculateExchangeResultProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CalculateExchangeResultProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeCalculateExchangeResultProperties(document.RootElement, options);
         }
 
-        internal static CalculateExchangeResultProperties DeserializeCalculateExchangeResultProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static CalculateExchangeResultProperties DeserializeCalculateExchangeResultProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -134,103 +179,101 @@ namespace Azure.ResourceManager.Reservations.Models
             IReadOnlyList<SavingsPlanToPurchaseCalculateExchange> savingsPlansToPurchase = default;
             IReadOnlyList<ReservationToExchange> reservationsToExchange = default;
             ExchangePolicyErrors policyResult = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("sessionId"u8))
+                if (prop.NameEquals("sessionId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    sessionId = property.Value.GetGuid();
+                    sessionId = new Guid(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("netPayable"u8))
+                if (prop.NameEquals("netPayable"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    netPayable = PurchasePrice.DeserializePurchasePrice(property.Value, options);
+                    netPayable = PurchasePrice.DeserializePurchasePrice(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("refundsTotal"u8))
+                if (prop.NameEquals("refundsTotal"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    refundsTotal = PurchasePrice.DeserializePurchasePrice(property.Value, options);
+                    refundsTotal = PurchasePrice.DeserializePurchasePrice(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("purchasesTotal"u8))
+                if (prop.NameEquals("purchasesTotal"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    purchasesTotal = PurchasePrice.DeserializePurchasePrice(property.Value, options);
+                    purchasesTotal = PurchasePrice.DeserializePurchasePrice(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("reservationsToPurchase"u8))
+                if (prop.NameEquals("reservationsToPurchase"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ReservationToPurchaseCalculateExchange> array = new List<ReservationToPurchaseCalculateExchange>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(ReservationToPurchaseCalculateExchange.DeserializeReservationToPurchaseCalculateExchange(item, options));
                     }
                     reservationsToPurchase = array;
                     continue;
                 }
-                if (property.NameEquals("savingsPlansToPurchase"u8))
+                if (prop.NameEquals("savingsPlansToPurchase"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<SavingsPlanToPurchaseCalculateExchange> array = new List<SavingsPlanToPurchaseCalculateExchange>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(SavingsPlanToPurchaseCalculateExchange.DeserializeSavingsPlanToPurchaseCalculateExchange(item, options));
                     }
                     savingsPlansToPurchase = array;
                     continue;
                 }
-                if (property.NameEquals("reservationsToExchange"u8))
+                if (prop.NameEquals("reservationsToExchange"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ReservationToExchange> array = new List<ReservationToExchange>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(ReservationToExchange.DeserializeReservationToExchange(item, options));
                     }
                     reservationsToExchange = array;
                     continue;
                 }
-                if (property.NameEquals("policyResult"u8))
+                if (prop.NameEquals("policyResult"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    policyResult = ExchangePolicyErrors.DeserializeExchangePolicyErrors(property.Value, options);
+                    policyResult = ExchangePolicyErrors.DeserializeExchangePolicyErrors(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new CalculateExchangeResultProperties(
                 sessionId,
                 netPayable,
@@ -240,38 +283,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 savingsPlansToPurchase ?? new ChangeTrackingList<SavingsPlanToPurchaseCalculateExchange>(),
                 reservationsToExchange ?? new ChangeTrackingList<ReservationToExchange>(),
                 policyResult,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<CalculateExchangeResultProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CalculateExchangeResultProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerReservationsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(CalculateExchangeResultProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        CalculateExchangeResultProperties IPersistableModel<CalculateExchangeResultProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CalculateExchangeResultProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeCalculateExchangeResultProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(CalculateExchangeResultProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<CalculateExchangeResultProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

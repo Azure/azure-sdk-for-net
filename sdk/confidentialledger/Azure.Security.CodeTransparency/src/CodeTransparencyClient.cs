@@ -63,7 +63,7 @@ namespace Azure.Security.CodeTransparency
             ClientDiagnostics = new ClientDiagnostics(options, true);
             Pipeline = HttpPipelineBuilder.Build(
                 options,
-                new HttpPipelinePolicy[] { new CodeTransparencyRedirectPolicy() },
+                new HttpPipelinePolicy[] { new CodeTransparencyRedirectPolicy(endpoint) },
                 credential == null ?
                     Array.Empty<HttpPipelinePolicy>() :
                     new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(credential, AuthorizationHeader, AuthorizationApiKeyPrefix) },

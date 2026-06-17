@@ -3,384 +3,453 @@
 
 #nullable disable
 
-#pragma warning disable CS0618 // Type or member is obsolete
-#pragma warning disable CS0419 // Ambiguous reference in cref attribute
-
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Net;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager.ManagedNetworkFabric;
 using Azure.ResourceManager.Models;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    // Backward compatibility overloads for the swagger upgrade from package-2023-06-15 to package-2025-07-15.
-    // The new API version added parameters to several model factory methods. These overloads preserve
-    // the v1.1.2 method signatures by delegating to the new methods with default values for new parameters.
-    /// <summary> Model factory for models. </summary>
+#pragma warning disable CS0618 // Suppress generated overloads that would otherwise reference obsolete compatibility types.
+    [CodeGenSuppress("NetworkFabricData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(IDictionary<string, string>), typeof(AzureLocation), typeof(ManagedServiceIdentity), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<string>), typeof(StorageAccountConfiguration), typeof(IEnumerable<NetworkFabricLock>), typeof(ResourceIdentifier), typeof(int?), typeof(int), typeof(string), typeof(string), typeof(long), typeof(TerminalServerConfiguration), typeof(ManagementNetworkConfigurationProperties), typeof(IEnumerable<string>), typeof(IEnumerable<string>), typeof(IEnumerable<string>), typeof(int?), typeof(IEnumerable<ResourceIdentifier>), typeof(IEnumerable<NetworkFabricFeatureFlag>), typeof(IEnumerable<ResourceIdentifier>), typeof(UniqueRouteDistinguisherProperties), typeof(int?), typeof(IEnumerable<string>), typeof(long?), typeof(string), typeof(AuthorizedTransceiverProperties), typeof(NetworkFabricConfigurationState?), typeof(NetworkFabricProvisioningState?), typeof(NetworkFabricAdministrativeState?), typeof(NetworkFabricQosConfigurationState?))]
+    [CodeGenSuppress("NetworkTapData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(IDictionary<string, string>), typeof(AzureLocation), typeof(ManagedServiceIdentity), typeof(string), typeof(ResourceIdentifier), typeof(ResourceIdentifier), typeof(IEnumerable<ResourceIdentifier>), typeof(IEnumerable<NetworkTapPropertiesDestinationsItem>), typeof(NetworkTapPollingType?), typeof(string), typeof(NetworkFabricConfigurationState?), typeof(NetworkFabricProvisioningState?), typeof(NetworkFabricAdministrativeState?))]
+    [CodeGenSuppress("NetworkFabricInternalNetworkData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(string), typeof(StaticRouteConfigurationExtension?), typeof(int?), typeof(IEnumerable<ConnectedSubnet>), typeof(IEnumerable<ConnectedSubnet>), typeof(ImportRoutePolicy), typeof(ExportRoutePolicy), typeof(ResourceIdentifier), typeof(ResourceIdentifier), typeof(IsMonitoringEnabled?), typeof(int), typeof(InternalNetworkBgpConfiguration), typeof(InternalNetworkStaticRouteConfiguration), typeof(IEnumerable<PrefixLimitProperties>), typeof(IEnumerable<PrefixLimitProperties>), typeof(string), typeof(ResourceIdentifier), typeof(NetworkFabricConfigurationState?), typeof(NetworkFabricProvisioningState?), typeof(NetworkFabricAdministrativeState?))]
+    [CodeGenSuppress("NetworkToNetworkInterconnectData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(NniType?), typeof(IsManagementType?), typeof(NetworkFabricBooleanValue), typeof(Layer2Configuration), typeof(NetworkToNetworkInterconnectOptionBLayer3Configuration), typeof(NpbStaticRouteConfiguration), typeof(NniStaticRouteConfiguration), typeof(ImportRoutePolicyInformation), typeof(ExportRoutePolicyInformation), typeof(ResourceIdentifier), typeof(ResourceIdentifier), typeof(NetworkFabricMicroBfdState?), typeof(ConditionalDefaultRouteProperties), typeof(string), typeof(NetworkFabricConfigurationState?), typeof(NetworkFabricProvisioningState?), typeof(NetworkFabricAdministrativeState?))]
+#pragma warning restore CS0618
     public static partial class ArmManagedNetworkFabricModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="NetworkFabricInternetGatewayData"/>. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetworkFabricInternetGatewayData NetworkFabricInternetGatewayData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, ResourceIdentifier internetGatewayRuleId, IPAddress ipv4Address, int? port, InternetGatewayType typePropertiesType, ResourceIdentifier networkFabricControllerId, NetworkFabricProvisioningState? provisioningState)
-        {
-            return NetworkFabricInternetGatewayData(id, name, resourceType, systemData, tags, location, annotation, internetGatewayRuleId, ipv4Address?.ToString(), port, typePropertiesType, networkFabricControllerId, provisioningState);
-        }
+        /// <summary> Initializes a new instance of <see cref="Models.NetworkFabricOperationStatusResult"/>. </summary>
+        /// <returns> A new <see cref="Models.NetworkFabricOperationStatusResult"/> instance for mocking. </returns>
+        public static NetworkFabricOperationStatusResult NetworkFabricOperationStatusResult(ResourceIdentifier id, ResourceIdentifier resourceId, string name, string status, float? percentComplete, DateTimeOffset? startOn, DateTimeOffset? endOn, IEnumerable<NetworkFabricOperationStatusResult> operations, ResponseError error)
+            => new NetworkFabricOperationStatusResult(
+                id,
+                name,
+                status,
+                percentComplete,
+                startOn,
+                endOn,
+                (operations ?? new ChangeTrackingList<NetworkFabricOperationStatusResult>()).ToList(),
+                error,
+                resourceId);
 
-        /// <summary> Initializes a new instance of <see cref="NetworkFabricInternetGatewayData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.InternalNetworkBgpConfiguration"/>. </summary>
+        /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="bfdConfiguration"> BFD configuration properties. </param>
+        /// <param name="defaultRouteOriginate"> Originate a defaultRoute. Ex: "True" | "False". </param>
+        /// <param name="allowAS"> Allows for routes to be received and processed even if the router detects its own ASN in the AS-Path. 0 is disable, Possible values are 1-10, default is 2. </param>
+        /// <param name="allowASOverride"> Enable Or Disable state. </param>
+        /// <param name="fabricAsn"> ASN of Network Fabric. Example: 65048. </param>
+        /// <param name="peerAsn"> Peer ASN. Example: 65047. </param>
+        /// <param name="ipv4ListenRangePrefixes"> List of BGP IPv4 Listen Range prefixes. </param>
+        /// <param name="ipv6ListenRangePrefixes"> List of BGP IPv6 Listen Ranges prefixes. </param>
+        /// <param name="ipv4NeighborAddress"> List with stringified IPv4 Neighbor Addresses. </param>
+        /// <param name="ipv6NeighborAddress"> List with stringified IPv6 Neighbor Address. </param>
+        /// <returns> A new <see cref="Models.InternalNetworkBgpConfiguration"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetworkFabricInternetGatewayData NetworkFabricInternetGatewayData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string annotation = null, ResourceIdentifier internetGatewayRuleId = null, IPAddress iPv4Address = null, int? port = null, InternetGatewayType typePropertiesType = default, InternetGatewayType? internetGatewayType = null, ResourceIdentifier networkFabricControllerId = null, string lastOperationDetails = null, NetworkFabricProvisioningState? provisioningState = null)
+        [Obsolete("This method is obsolete and will be removed in a future version. Use BgpConfiguration instead.")]
+        public static InternalNetworkBgpConfiguration InternalNetworkBgpConfiguration(string annotation, BfdConfiguration bfdConfiguration, NetworkFabricBooleanValue? defaultRouteOriginate, int? allowAS, AllowASOverride? allowASOverride, long? fabricAsn, long? peerAsn, IEnumerable<string> ipv4ListenRangePrefixes, IEnumerable<string> ipv6ListenRangePrefixes, IEnumerable<NeighborAddress> ipv4NeighborAddress, IEnumerable<NeighborAddress> ipv6NeighborAddress)
         {
-            return NetworkFabricInternetGatewayData(
-                id: id,
-                name: name,
-                resourceType: resourceType,
-                systemData: systemData,
-                tags: tags,
-                location: location,
-                annotation: annotation,
-                internetGatewayRuleId: internetGatewayRuleId,
-                ipV4Address: iPv4Address?.ToString(),
-                port: port,
-                typePropertiesType: typePropertiesType,
-                internetGatewayType: internetGatewayType,
-                networkFabricControllerId: networkFabricControllerId,
-                lastOperationDetails: lastOperationDetails,
-                provisioningState: provisioningState);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="NetworkFabricInternetGatewayData"/>. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetworkFabricInternetGatewayData NetworkFabricInternetGatewayData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, ResourceIdentifier internetGatewayRuleId, string iPV4Address, int? port, InternetGatewayType typePropertiesType, ResourceIdentifier networkFabricControllerId, NetworkFabricProvisioningState? provisioningState)
-        {
-            return NetworkFabricInternetGatewayData(
-                id: id,
-                name: name,
-                resourceType: resourceType,
-                systemData: systemData,
-                tags: tags,
-                location: location,
-                annotation: annotation,
-                internetGatewayRuleId: internetGatewayRuleId,
-                ipV4Address: iPV4Address,
-                port: port,
-                typePropertiesType: typePropertiesType,
-                internetGatewayType: default,
-                networkFabricControllerId: networkFabricControllerId,
-                lastOperationDetails: default,
-                provisioningState: provisioningState);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ExternalNetworkPatchOptionAProperties"/>. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ExternalNetworkPatchOptionAProperties ExternalNetworkPatchOptionAProperties(string primaryIPv4Prefix, string primaryIPv6Prefix, string secondaryIPv4Prefix, string secondaryIPv6Prefix, int? mtu, int? vlanId, long? fabricAsn, long? peerAsn, BfdConfiguration bfdConfiguration, ResourceIdentifier ingressAclId, ResourceIdentifier egressAclId)
-        {
-            return ExternalNetworkPatchOptionAProperties(
-                primaryIPv4Prefix: primaryIPv4Prefix,
-                primaryIPv6Prefix: primaryIPv6Prefix,
-                secondaryIPv4Prefix: secondaryIPv4Prefix,
-                secondaryIPv6Prefix: secondaryIPv6Prefix,
-                mtu: mtu,
-                vlanId: vlanId,
-                fabricAsn: fabricAsn,
-                peerAsn: peerAsn,
-                bfdConfiguration: default,
-                ingressAclId: ingressAclId,
-                egressAclId: egressAclId,
-                bmpConfigurationState: default,
-                v4OverV6BgpSession: default,
-                v6OverV4BgpSession: default,
-                nativeIPv4PrefixLimits: default,
-                nativeIPv6PrefixLimits: default);
+            throw new NotSupportedException("This method is obsolete and will be removed in a future version. Use BgpConfiguration instead.");
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.InternalNetworkBgpConfiguration"/>. </summary>
+        /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="bfdConfiguration"> BFD configuration properties. </param>
+        /// <param name="defaultRouteOriginate"> Originate a defaultRoute. Ex: "True" | "False". </param>
+        /// <param name="allowAS"> Allows for routes to be received and processed even if the router detects its own ASN in the AS-Path. 0 is disable, Possible values are 1-10, default is 2. </param>
+        /// <param name="allowASOverride"> Enable Or Disable state. </param>
+        /// <param name="fabricAsn"> ASN of Network Fabric. Example: 65048. </param>
+        /// <param name="peerAsn"> Peer ASN. Example: 65047. </param>
+        /// <param name="iPv4ListenRangePrefixes"> List of BGP IPv4 Listen Range prefixes. </param>
+        /// <param name="iPv6ListenRangePrefixes"> List of BGP IPv6 Listen Ranges prefixes. </param>
+        /// <param name="iPv4NeighborAddress"> List with stringified IPv4 Neighbor Addresses. </param>
+        /// <param name="iPv6NeighborAddress"> List with stringified IPv6 Neighbor Address. </param>
+        /// <param name="bmpConfiguration"> Bmp configuration properties. </param>
+        /// <param name="v4OverV6BgpSession"> State. </param>
+        /// <param name="v6OverV4BgpSession"> State. </param>
+        /// <returns> A new <see cref="Models.InternalNetworkBgpConfiguration"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static InternalNetworkBgpConfiguration InternalNetworkBgpConfiguration(string annotation, BfdConfiguration bfdConfiguration, NetworkFabricBooleanValue? defaultRouteOriginate, int? allowAS, AllowASOverride? allowASOverride, long? fabricAsn, long? peerAsn, IEnumerable<string> ipv4ListenRangePrefixes, IEnumerable<string> ipv6ListenRangePrefixes, IEnumerable<NeighborAddress> ipv4NeighborAddress, IEnumerable<NeighborAddress> ipv6NeighborAddress)
+        [Obsolete("This method is obsolete and will be removed in a future version. Use BgpConfiguration instead.")]
+        public static InternalNetworkBgpConfiguration InternalNetworkBgpConfiguration(string annotation = default, BfdConfiguration bfdConfiguration = default, NetworkFabricBooleanValue? defaultRouteOriginate = default, int? allowAS = default, AllowASOverride? allowASOverride = default, long? fabricAsn = default, long? peerAsn = default, IEnumerable<string> iPv4ListenRangePrefixes = default, IEnumerable<string> iPv6ListenRangePrefixes = default, IEnumerable<NeighborAddress> iPv4NeighborAddress = default, IEnumerable<NeighborAddress> iPv6NeighborAddress = default, InternalNetworkBmpProperties bmpConfiguration = default, NetworkFabricV4OverV6BgpSessionState? v4OverV6BgpSession = default, NetworkFabricV6OverV4BgpSessionState? v6OverV4BgpSession = default)
         {
-            BgpConfiguration result = BgpConfiguration(
-                annotation: annotation,
-                bfdConfiguration: bfdConfiguration,
-                defaultRouteOriginate: defaultRouteOriginate,
-                allowAS: allowAS,
-                allowASOverride: allowASOverride,
-                fabricAsn: fabricAsn,
-                peerAsn: peerAsn,
-                ipv4ListenRangePrefixes: ipv4ListenRangePrefixes,
-                ipv6ListenRangePrefixes: ipv6ListenRangePrefixes,
-                ipv4NeighborAddress: ipv4NeighborAddress,
-                ipv6NeighborAddress: ipv6NeighborAddress);
+            throw new NotSupportedException("This method is obsolete and will be removed in a future version. Use BgpConfiguration instead.");
+        }
 
-            return new InternalNetworkBgpConfiguration();
+        /// <summary> Network and credential configuration currently applied on terminal server. </summary>
+        /// <param name="networkToNetworkInterconnectId"> ARM Resource ID of the Network To Network Interconnect. </param>
+        /// <param name="administrativeState"> Administrative state of the resource. </param>
+        /// <param name="peeringOption"> Peering option list. </param>
+        /// <param name="optionBProperties"> option B properties. </param>
+        /// <param name="optionAProperties"> option A properties. </param>
+        /// <returns> A new <see cref="Models.VpnConfigurationProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete and will be removed in a future version. Use the overload with VpnOptionAProperties instead.")]
+        public static VpnConfigurationProperties VpnConfigurationProperties(ResourceIdentifier networkToNetworkInterconnectId = default, NetworkFabricAdministrativeState? administrativeState = default, PeeringOption peeringOption = default, OptionBProperties optionBProperties = default, VpnConfigurationOptionAProperties optionAProperties = default)
+        {
+            throw new NotSupportedException("This method is obsolete and will be removed in a future version. Use the overload with VpnOptionAProperties instead.");
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.InternalNetworkStaticRouteConfiguration"/>. </summary>
+        /// <param name="bfdConfiguration"> BFD configuration properties. </param>
+        /// <param name="iPv4Routes"> List of IPv4 Routes. </param>
+        /// <param name="iPv6Routes"> List of IPv6 Routes. </param>
+        /// <param name="extension"> Extension. Example: NoExtension | NPB. </param>
+        /// <returns> A new <see cref="Models.InternalNetworkStaticRouteConfiguration"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete and will be removed in a future version. Use StaticRouteConfiguration instead.")]
+        public static InternalNetworkStaticRouteConfiguration InternalNetworkStaticRouteConfiguration(BfdConfiguration bfdConfiguration = default, IEnumerable<StaticRouteProperties> iPv4Routes = default, IEnumerable<StaticRouteProperties> iPv6Routes = default, StaticRouteConfigurationExtension? extension = default)
+        {
+            throw new NotSupportedException("This method is obsolete and will be removed in a future version. Use StaticRouteConfiguration instead.");
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricInternalNetworkData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="mtu"> Maximum transmission unit. Default value is 1500. </param>
+        /// <param name="connectedIPv4Subnets"> List of Connected IPv4 Subnets. </param>
+        /// <param name="connectedIPv6Subnets"> List of connected IPv6 Subnets. </param>
+        /// <param name="importRoutePolicyId"> ARM Resource ID of the RoutePolicy. This is used for the backward compatibility. </param>
+        /// <param name="exportRoutePolicyId"> ARM Resource ID of the RoutePolicy. This is used for the backward compatibility. </param>
+        /// <param name="importRoutePolicy"> Import Route Policy either IPv4 or IPv6. </param>
+        /// <param name="exportRoutePolicy"> Export Route Policy either IPv4 or IPv6. </param>
+        /// <param name="ingressAclId"> Ingress Acl. ARM resource ID of Access Control Lists. </param>
+        /// <param name="egressAclId"> Egress Acl. ARM resource ID of Access Control Lists. </param>
+        /// <param name="isMonitoringEnabled"> To check whether monitoring of internal network is enabled or not. </param>
+        /// <param name="extension"> Extension. Example: NoExtension | NPB. </param>
+        /// <param name="vlanId"> Vlan identifier. Example: 1001. </param>
+        /// <param name="bgpConfiguration"> BGP configuration properties. </param>
+        /// <param name="staticRouteConfiguration"> Static Route Configuration properties. </param>
+        /// <param name="configurationState"> Configuration state of the resource. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="administrativeState"> Administrative state of the resource. </param>
+        /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricInternalNetworkData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete and will be removed in a future version. Use the overload with BgpConfiguration bgpSettings instead.")]
+        public static NetworkFabricInternalNetworkData NetworkFabricInternalNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string annotation, int? mtu, IEnumerable<ConnectedSubnet> connectedIPv4Subnets, IEnumerable<ConnectedSubnet> connectedIPv6Subnets, ResourceIdentifier importRoutePolicyId, ResourceIdentifier exportRoutePolicyId, ImportRoutePolicy importRoutePolicy, ExportRoutePolicy exportRoutePolicy, ResourceIdentifier ingressAclId, ResourceIdentifier egressAclId, IsMonitoringEnabled? isMonitoringEnabled, StaticRouteConfigurationExtension? extension, int vlanId, InternalNetworkBgpConfiguration bgpConfiguration, InternalNetworkStaticRouteConfiguration staticRouteConfiguration, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState)
+        {
+            throw new NotSupportedException("This method is obsolete and will be removed in a future version. Use the overload with BgpConfiguration bgpSettings instead.");
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricInternalNetworkData"/>. </summary>
+        /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricInternalNetworkData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete and will be removed in a future version. Use the overload with BgpConfiguration bgpSettings instead.")]
+        public static NetworkFabricInternalNetworkData NetworkFabricInternalNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string annotation, StaticRouteConfigurationExtension? extension, int? mtu, IEnumerable<ConnectedSubnet> connectedIPv4Subnets, IEnumerable<ConnectedSubnet> connectedIPv6Subnets, ImportRoutePolicy importRoutePolicy, ExportRoutePolicy exportRoutePolicy, ResourceIdentifier ingressAclId, ResourceIdentifier egressAclId, IsMonitoringEnabled? isMonitoringEnabled, int vlanId, InternalNetworkBgpConfiguration bgpConfiguration, InternalNetworkStaticRouteConfiguration staticRouteConfiguration, IEnumerable<PrefixLimitProperties> nativeIPv4PrefixLimits, IEnumerable<PrefixLimitProperties> nativeIPv6PrefixLimits, string lastOperationDetails, ResourceIdentifier networkFabricId, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState)
+        {
+            throw new NotSupportedException("This method is obsolete and will be removed in a future version. Use the overload with BgpConfiguration bgpSettings instead.");
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NetworkToNetworkInterconnectOptionBLayer3Configuration"/>. </summary>
+        /// <param name="primaryIPv4Prefix"> IPv4 Address Prefix. </param>
+        /// <param name="primaryIPv6Prefix"> IPv6 Address Prefix. </param>
+        /// <param name="secondaryIPv4Prefix"> Secondary IPv4 Address Prefix. </param>
+        /// <param name="secondaryIPv6Prefix"> Secondary IPv6 Address Prefix. </param>
+        /// <param name="peerAsn"> ASN of PE devices for CE/PE connectivity.Example : 28. </param>
+        /// <param name="vlanId"> VLAN for CE/PE Layer 3 connectivity.Example : 501. </param>
+        /// <param name="fabricAsn"> ASN of CE devices for CE/PE connectivity. </param>
+        /// <returns> A new <see cref="Models.NetworkToNetworkInterconnectOptionBLayer3Configuration"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete and will be removed in a future version. Use OptionBLayer3Configuration instead.")]
         public static NetworkToNetworkInterconnectOptionBLayer3Configuration NetworkToNetworkInterconnectOptionBLayer3Configuration(string primaryIPv4Prefix, string primaryIPv6Prefix, string secondaryIPv4Prefix, string secondaryIPv6Prefix, long? peerAsn, int? vlanId, long? fabricAsn)
         {
-            OptionBLayer3Configuration result = OptionBLayer3Configuration(
-                primaryIPv4Prefix: primaryIPv4Prefix,
-                primaryIPv6Prefix: primaryIPv6Prefix,
-                secondaryIPv4Prefix: secondaryIPv4Prefix,
-                secondaryIPv6Prefix: secondaryIPv6Prefix,
-                peerAsn: peerAsn,
-                vlanId: vlanId,
-                fabricAsn: fabricAsn);
-
-            return new NetworkToNetworkInterconnectOptionBLayer3Configuration();
+            throw new NotSupportedException("This method is obsolete and will be removed in a future version. Use OptionBLayer3Configuration instead.");
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.NetworkToNetworkInterconnectPatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NetworkToNetworkInterconnectOptionBLayer3Configuration"/>. </summary>
+        /// <returns> A new <see cref="Models.NetworkToNetworkInterconnectOptionBLayer3Configuration"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetworkToNetworkInterconnectPatch NetworkToNetworkInterconnectPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Layer2Configuration layer2Configuration, OptionBLayer3Configuration optionBLayer3Configuration, NpbStaticRouteConfiguration npbStaticRouteConfiguration, ImportRoutePolicyInformation importRoutePolicy, ExportRoutePolicyInformation exportRoutePolicy, ResourceIdentifier egressAclId, ResourceIdentifier ingressAclId)
+        [Obsolete("This method is obsolete and will be removed in a future version. Use OptionBLayer3Configuration instead.")]
+        public static NetworkToNetworkInterconnectOptionBLayer3Configuration NetworkToNetworkInterconnectOptionBLayer3Configuration(string primaryIPv4Prefix, string primaryIPv6Prefix, string secondaryIPv4Prefix, string secondaryIPv6Prefix, long? peerAsn, int? vlanId, long? fabricAsn, IEnumerable<string> peLoopbackIPAddress, BmpConfigurationState? bmpConfigurationState, IEnumerable<OptionBLayer3PrefixLimitProperties> prefixLimits)
         {
-            return NetworkToNetworkInterconnectPatch(
-                id: id,
-                name: name,
-                resourceType: resourceType,
-                systemData: systemData,
-                layer2Configuration: default,
-                optionBLayer3Configuration: default,
-                npbStaticRouteConfiguration: default,
-                staticRouteConfiguration: default,
-                importRoutePolicy: default,
-                exportRoutePolicy: default,
-                egressAclId: egressAclId,
-                ingressAclId: ingressAclId,
-                microBfdState: default);
+            throw new NotSupportedException("This method is obsolete and will be removed in a future version. Use OptionBLayer3Configuration instead.");
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkDeviceInterfaceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkToNetworkInterconnectData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="nniType"> Type of NNI used. Example: CE | NPB. </param>
+        /// <param name="isManagementType"> Configuration to use NNI for Infrastructure Management. Example: True/False. </param>
+        /// <param name="useOptionB"> Based on this option layer3 parameters are mandatory. Example: True/False. </param>
+        /// <param name="layer2Configuration"> Common properties for Layer2 Configuration. </param>
+        /// <param name="optionBLayer3Configuration"> Common properties for Layer3Configuration. </param>
+        /// <param name="npbStaticRouteConfiguration"> NPB Static Route Configuration properties. </param>
+        /// <param name="importRoutePolicy"> Import Route Policy configuration. </param>
+        /// <param name="exportRoutePolicy"> Export Route Policy configuration. </param>
+        /// <param name="egressAclId"> Egress Acl. ARM resource ID of Access Control Lists. </param>
+        /// <param name="ingressAclId"> Ingress Acl. ARM resource ID of Access Control Lists. </param>
+        /// <param name="configurationState"> Configuration state of the resource. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="administrativeState"> Administrative state of the resource. </param>
+        /// <returns> A new <see cref="ManagedNetworkFabric.NetworkToNetworkInterconnectData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetworkDeviceInterfaceData NetworkDeviceInterfaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string annotation, string physicalIdentifier, string connectedTo, NetworkDeviceInterfaceType? interfaceType, IPAddress iPv4Address, string ipv6Address, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState)
-        {
-            return NetworkDeviceInterfaceData(
-                id: id,
-                name: name,
-                resourceType: resourceType,
-                systemData: systemData,
-                identity: default,
-                annotation: annotation,
-                physicalIdentifier: physicalIdentifier,
-                connectedTo: connectedTo,
-                interfaceType: interfaceType,
-                ipv4Address: iPv4Address,
-                ipv6Address: ipv6Address,
-                description: default,
-                additionalDescription: default,
-                lastOperationDetails: default,
-                networkFabricId: default,
-                provisioningState: provisioningState,
-                administrativeState: administrativeState,
-                configurationState: default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.VpnConfigurationProperties"/>. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static VpnConfigurationProperties VpnConfigurationProperties(ResourceIdentifier networkToNetworkInterconnectId, NetworkFabricAdministrativeState? administrativeState, PeeringOption peeringOption, OptionBProperties optionBProperties, VpnConfigurationOptionAProperties optionAProperties)
-        {
-            return VpnConfigurationProperties(
-                networkToNetworkInterconnectId: networkToNetworkInterconnectId,
-                administrativeState: administrativeState,
-                peeringOption: peeringOption,
-                optionBProperties: (OptionBProperties)default,
-                optionAProperties: (VpnConfigurationOptionAProperties)default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="NetworkFabricControllerData"/>. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetworkFabricControllerData NetworkFabricControllerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, IEnumerable<ExpressRouteConnectionInformation> infrastructureExpressRouteConnections, IEnumerable<ExpressRouteConnectionInformation> workloadExpressRouteConnections, NetworkFabricControllerServices infrastructureServices, NetworkFabricControllerServices workloadServices, ManagedResourceGroupConfiguration managedResourceGroupConfiguration, IEnumerable<ResourceIdentifier> networkFabricIds, bool? isWorkloadManagementNetwork, IsWorkloadManagementNetworkEnabled? isWorkloadManagementNetworkEnabled, IEnumerable<ResourceIdentifier> tenantInternetGatewayIds, string ipv4AddressSpace, string ipv6AddressSpace, NetworkFabricControllerSKU? nfcSku, NetworkFabricProvisioningState? provisioningState)
-        {
-            return NetworkFabricControllerData(
-                id: id,
-                name: name,
-                resourceType: resourceType,
-                systemData: systemData,
-                tags: tags,
-                location: location,
-                identity: default,
-                annotation: annotation,
-                infrastructureExpressRouteConnections: infrastructureExpressRouteConnections,
-                workloadExpressRouteConnections: workloadExpressRouteConnections,
-                infrastructureServices: infrastructureServices,
-                workloadServices: workloadServices,
-                managedResourceGroupConfiguration: managedResourceGroupConfiguration,
-                networkFabricIds: networkFabricIds,
-                isWorkloadManagementNetworkEnabled: isWorkloadManagementNetworkEnabled,
-                tenantInternetGatewayIds: tenantInternetGatewayIds,
-                ipv4AddressSpace: ipv4AddressSpace,
-                ipv6AddressSpace: ipv6AddressSpace,
-                nfcSku: nfcSku,
-                lastOperationDetails: default,
-                provisioningState: provisioningState);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="NetworkFabricExternalNetworkData"/>. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetworkFabricExternalNetworkData NetworkFabricExternalNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string annotation, ResourceIdentifier importRoutePolicyId, ResourceIdentifier exportRoutePolicyId, ImportRoutePolicy importRoutePolicy, ExportRoutePolicy exportRoutePolicy, ResourceIdentifier networkToNetworkInterconnectId, PeeringOption peeringOption, L3OptionBProperties optionBProperties, ExternalNetworkOptionAProperties optionAProperties, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState)
-        {
-            return NetworkFabricExternalNetworkData(
-                id: id,
-                name: name,
-                resourceType: resourceType,
-                systemData: systemData,
-                annotation: annotation,
-                networkToNetworkInterconnectId: networkToNetworkInterconnectId,
-                importRoutePolicy: importRoutePolicy,
-                exportRoutePolicy: exportRoutePolicy,
-                peeringOption: peeringOption,
-                optionBProperties: optionBProperties,
-                optionAProperties: optionAProperties,
-                staticRouteConfiguration: default,
-                lastOperationDetails: default,
-                networkFabricId: default,
-                configurationState: configurationState,
-                provisioningState: provisioningState,
-                administrativeState: administrativeState);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="NetworkFabricInternalNetworkData"/>. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetworkFabricInternalNetworkData NetworkFabricInternalNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string annotation, int? mtu, IEnumerable<ConnectedSubnet> connectedIPv4Subnets, IEnumerable<ConnectedSubnet> connectedIPv6Subnets, ResourceIdentifier importRoutePolicyId, ResourceIdentifier exportRoutePolicyId, ImportRoutePolicy importRoutePolicy, ExportRoutePolicy exportRoutePolicy, ResourceIdentifier ingressAclId, ResourceIdentifier egressAclId, IsMonitoringEnabled? isMonitoringEnabled, StaticRouteConfigurationExtension? extension, int vlanId, InternalNetworkBgpConfiguration bgpConfiguration, InternalNetworkStaticRouteConfiguration staticRouteConfiguration, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState)
-        {
-            return NetworkFabricInternalNetworkData(
-                id: id,
-                name: name,
-                resourceType: resourceType,
-                systemData: systemData,
-                annotation: annotation,
-                extension: extension,
-                mtu: mtu,
-                connectedIPv4Subnets: connectedIPv4Subnets,
-                connectedIPv6Subnets: connectedIPv6Subnets,
-                importRoutePolicy: importRoutePolicy,
-                exportRoutePolicy: exportRoutePolicy,
-                ingressAclId: ingressAclId,
-                egressAclId: egressAclId,
-                isMonitoringEnabled: isMonitoringEnabled,
-                vlanId: vlanId,
-                bgpConfiguration: bgpConfiguration,
-                staticRouteConfiguration: staticRouteConfiguration,
-                nativeIPv4PrefixLimits: default,
-                nativeIPv6PrefixLimits: default,
-                lastOperationDetails: default,
-                networkFabricId: default,
-                configurationState: configurationState,
-                provisioningState: provisioningState,
-                administrativeState: administrativeState);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="NetworkFabricL3IsolationDomainData"/>. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetworkFabricL3IsolationDomainData NetworkFabricL3IsolationDomainData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, RedistributeConnectedSubnet? redistributeConnectedSubnets, RedistributeStaticRoute? redistributeStaticRoutes, AggregateRouteConfiguration aggregateRouteConfiguration, ConnectedSubnetRoutePolicy connectedSubnetRoutePolicy, ResourceIdentifier networkFabricId, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState)
-        {
-            return NetworkFabricL3IsolationDomainData(
-                id: id,
-                name: name,
-                resourceType: resourceType,
-                systemData: systemData,
-                tags: tags,
-                location: location,
-                identity: default,
-                annotation: annotation,
-                redistributeConnectedSubnets: redistributeConnectedSubnets,
-                redistributeStaticRoutes: redistributeStaticRoutes,
-                aggregateRouteConfiguration: aggregateRouteConfiguration,
-                connectedSubnetRoutePolicy: connectedSubnetRoutePolicy,
-                networkFabricId: networkFabricId,
-                staticRouteExportRoutePolicy: default,
-                uniqueRds: default,
-                v4RoutePrefixLimit: default,
-                v6RoutePrefixLimit: default,
-                lastOperationDetails: default,
-                exportPolicies: default,
-                configurationState: configurationState,
-                provisioningState: provisioningState,
-                administrativeState: administrativeState);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="NetworkTapData"/>. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetworkTapData NetworkTapData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, ResourceIdentifier networkPacketBrokerId, ResourceIdentifier sourceTapRuleId, IEnumerable<NetworkTapPropertiesDestinationsItem> destinations, NetworkTapPollingType? pollingType, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState)
-        {
-            return NetworkTapData(
-                id: id,
-                name: name,
-                resourceType: resourceType,
-                systemData: systemData,
-                tags: tags,
-                location: location,
-                identity: default,
-                annotation: annotation,
-                networkPacketBrokerId: networkPacketBrokerId,
-                sourceTapRuleId: sourceTapRuleId,
-                networkFabricIds: default,
-                destinations: destinations,
-                pollingType: pollingType,
-                lastOperationDetails: default,
-                configurationState: configurationState,
-                provisioningState: provisioningState,
-                administrativeState: administrativeState);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="NetworkTapRuleData"/>. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetworkTapRuleData NetworkTapRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, NetworkFabricConfigurationType? configurationType, Uri tapRulesUri, IEnumerable<NetworkTapRuleMatchConfiguration> matchConfigurations, IEnumerable<CommonDynamicMatchConfiguration> dynamicMatchConfigurations, ResourceIdentifier networkTapId, PollingIntervalInSecond? pollingIntervalInSeconds, DateTimeOffset? lastSyncedOn, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState)
-        {
-            return NetworkTapRuleData(
-                id: id,
-                name: name,
-                resourceType: resourceType,
-                systemData: systemData,
-                tags: tags,
-                location: location,
-                identity: default,
-                annotation: annotation,
-                configurationType: configurationType ?? default,
-                tapRulesUri: tapRulesUri,
-                identitySelector: default,
-                matchConfigurations: matchConfigurations,
-                dynamicMatchConfigurations: dynamicMatchConfigurations,
-                networkTapId: networkTapId,
-                networkTapIds: default,
-                pollingIntervalInSeconds: pollingIntervalInSeconds.HasValue ? (int?)int.Parse(pollingIntervalInSeconds.Value.ToString()) : default,
-                lastSyncedOn: lastSyncedOn,
-                globalNetworkTapRuleActions: default,
-                lastOperationDetails: default,
-                networkFabricIds: default,
-                configurationState: configurationState,
-                provisioningState: provisioningState,
-                administrativeState: administrativeState);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="NetworkToNetworkInterconnectData"/>. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete and will be removed in a future version. Use the overload with OptionBLayer3Configuration optionBLayer3Settings instead.")]
         public static NetworkToNetworkInterconnectData NetworkToNetworkInterconnectData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NniType? nniType, IsManagementType? isManagementType, NetworkFabricBooleanValue useOptionB, Layer2Configuration layer2Configuration, NetworkToNetworkInterconnectOptionBLayer3Configuration optionBLayer3Configuration, NpbStaticRouteConfiguration npbStaticRouteConfiguration, ImportRoutePolicyInformation importRoutePolicy, ExportRoutePolicyInformation exportRoutePolicy, ResourceIdentifier egressAclId, ResourceIdentifier ingressAclId, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState)
         {
-            return NetworkToNetworkInterconnectData(
-                id: id,
-                name: name,
-                resourceType: resourceType,
-                systemData: systemData,
-                nniType: nniType,
-                isManagementType: isManagementType,
-                useOptionB: useOptionB,
-                layer2Configuration: layer2Configuration,
-                optionBLayer3Configuration: optionBLayer3Configuration,
-                npbStaticRouteConfiguration: npbStaticRouteConfiguration,
-                staticRouteConfiguration: default,
-                importRoutePolicy: importRoutePolicy,
-                exportRoutePolicy: exportRoutePolicy,
-                egressAclId: egressAclId,
-                ingressAclId: ingressAclId,
-                microBfdState: default,
-                conditionalDefaultRouteConfiguration: default,
-                lastOperationDetails: default,
-                configurationState: configurationState,
-                provisioningState: provisioningState,
-                administrativeState: administrativeState);
+            throw new NotSupportedException("This method is obsolete and will be removed in a future version. Use the overload with OptionBLayer3Configuration optionBLayer3Settings instead.");
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkToNetworkInterconnectData"/>. </summary>
+        /// <returns> A new <see cref="ManagedNetworkFabric.NetworkToNetworkInterconnectData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete and will be removed in a future version. Use the overload with OptionBLayer3Configuration optionBLayer3Settings instead.")]
+        public static NetworkToNetworkInterconnectData NetworkToNetworkInterconnectData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NniType? nniType, IsManagementType? isManagementType, NetworkFabricBooleanValue useOptionB, Layer2Configuration layer2Configuration, NetworkToNetworkInterconnectOptionBLayer3Configuration optionBLayer3Configuration, NpbStaticRouteConfiguration npbStaticRouteConfiguration, NniStaticRouteConfiguration staticRouteConfiguration, ImportRoutePolicyInformation importRoutePolicy, ExportRoutePolicyInformation exportRoutePolicy, ResourceIdentifier egressAclId, ResourceIdentifier ingressAclId, NetworkFabricMicroBfdState? microBfdState, ConditionalDefaultRouteProperties conditionalDefaultRouteConfiguration, string lastOperationDetails, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState)
+        {
+            throw new NotSupportedException("This method is obsolete and will be removed in a future version. Use the overload with OptionBLayer3Configuration optionBLayer3Settings instead.");
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricAccessControlListData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="configurationType"> Input method to configure Access Control List. </param>
+        /// <param name="aclsUri"> Access Control List file URL. </param>
+        /// <param name="defaultAction"> Default action that needs to be applied when no condition is matched. Example: Permit | Deny. </param>
+        /// <param name="matchConfigurations"> List of match configurations. </param>
+        /// <param name="dynamicMatchConfigurations"> List of dynamic match configurations. </param>
+        /// <param name="lastSyncedOn"> The last synced timestamp. </param>
+        /// <param name="configurationState"> Configuration state of the resource. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="administrativeState"> Administrative state of the resource. </param>
+        /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricAccessControlListData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkFabricAccessControlListData NetworkFabricAccessControlListData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, NetworkFabricConfigurationType? configurationType, Uri aclsUri, CommunityActionType? defaultAction, IEnumerable<AccessControlListMatchConfiguration> matchConfigurations, IEnumerable<CommonDynamicMatchConfiguration> dynamicMatchConfigurations, DateTimeOffset? lastSyncedOn, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState)
+        {
+            return NetworkFabricAccessControlListData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, annotation: annotation, configurationType: configurationType.GetValueOrDefault(), aclsUri: aclsUri, defaultAction: defaultAction, matchConfigurations: matchConfigurations, dynamicMatchConfigurations: dynamicMatchConfigurations, lastSyncedOn: lastSyncedOn, aclType: default, deviceRole: default, networkFabricIds: default, controlPlaneAclConfiguration: default, configurationState: configurationState, provisioningState: provisioningState, administrativeState: administrativeState, globalAccessControlListActionsEnableCount: default, lastOperationDetails: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricAccessControlListData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="configurationType"> Input method to configure Access Control List. </param>
+        /// <param name="aclsUri"> Access Control List file URL. </param>
+        /// <param name="matchConfigurations"> List of match configurations. </param>
+        /// <param name="dynamicMatchConfigurations"> List of dynamic match configurations. </param>
+        /// <param name="lastSyncedOn"> The last synced timestamp. </param>
+        /// <param name="configurationState"> Configuration state of the resource. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="administrativeState"> Administrative state of the resource. </param>
+        /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricAccessControlListData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkFabricAccessControlListData NetworkFabricAccessControlListData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, NetworkFabricConfigurationType? configurationType, Uri aclsUri, IEnumerable<AccessControlListMatchConfiguration> matchConfigurations, IEnumerable<CommonDynamicMatchConfiguration> dynamicMatchConfigurations, DateTimeOffset? lastSyncedOn, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState)
+        {
+            return NetworkFabricAccessControlListData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, annotation: annotation, configurationType: configurationType.GetValueOrDefault(), aclsUri: aclsUri, defaultAction: default, matchConfigurations: matchConfigurations, dynamicMatchConfigurations: dynamicMatchConfigurations, lastSyncedOn: lastSyncedOn, aclType: default, deviceRole: default, networkFabricIds: default, controlPlaneAclConfiguration: default, configurationState: configurationState, provisioningState: provisioningState, administrativeState: administrativeState, globalAccessControlListActionsEnableCount: default, lastOperationDetails: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.IPMatchCondition"/>. </summary>
+        /// <param name="type"> IP Address type that needs to be matched. </param>
+        /// <param name="prefixType"> IP Prefix Type that needs to be matched. </param>
+        /// <param name="ipPrefixValues"> The list of IP Prefixes that need to be matched. </param>
+        /// <param name="ipGroupNames"> The List of IP Group Names that need to be matched. </param>
+        /// <returns> A new <see cref="Models.IPMatchCondition"/> instance for mocking. </returns>
+        public static IPMatchCondition IPMatchCondition(SourceDestinationType? type = default, IPMatchConditionPrefixType? prefixType = default, IEnumerable<string> ipPrefixValues = default, IEnumerable<string> ipGroupNames = default)
+        {
+            ipPrefixValues ??= new ChangeTrackingList<string>();
+            ipGroupNames ??= new ChangeTrackingList<string>();
+            return new IPMatchCondition(type, prefixType, ipPrefixValues.ToList(), ipGroupNames.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="infrastructureExpressRouteConnections"> As part of an update, the Infrastructure ExpressRoute CircuitID should be provided to create and Provision a NFC. This Express route is dedicated for Infrastructure services. (This is a Mandatory attribute). </param>
+        /// <param name="workloadExpressRouteConnections"> As part of an update, the workload ExpressRoute CircuitID should be provided to create and Provision a NFC. This Express route is dedicated for Workload services. (This is a Mandatory attribute). </param>
+        /// <param name="infrastructureServices"> InfrastructureServices IP ranges. </param>
+        /// <param name="workloadServices"> WorkloadServices IP ranges. </param>
+        /// <param name="managedResourceGroupConfiguration"> Managed Resource Group configuration properties. </param>
+        /// <param name="networkFabricIds"> The NF-ID will be an input parameter used by the NF to link and get associated with the parent NFC Service. </param>
+        /// <param name="isWorkloadManagementNetworkEnabled"> A workload management network is required for all the tenant (workload) traffic. This traffic is only dedicated for Tenant workloads which are required to access internet or any other MSFT/Public endpoints. </param>
+        /// <param name="tenantInternetGatewayIds"> List of tenant InternetGateway resource IDs. </param>
+        /// <param name="ipv4AddressSpace"> IPv4 Network Fabric Controller Address Space. </param>
+        /// <param name="ipv6AddressSpace"> IPv6 Network Fabric Controller Address Space. </param>
+        /// <param name="nfcSku"> Network Fabric Controller SKU. </param>
+        /// <param name="provisioningState"> Provides you the latest status of the NFC service, whether it is Accepted, updating, Succeeded or Failed. During this process, the states keep changing based on the status of NFC provisioning. </param>
+        /// <param name="lastOperationDetails"> Details status of the last operation performed on the resource. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricControllerData"/> instance for mocking. </returns>
+        public static NetworkFabricControllerData NetworkFabricControllerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string annotation = default, IEnumerable<ExpressRouteConnectionInformation> infrastructureExpressRouteConnections = default, IEnumerable<ExpressRouteConnectionInformation> workloadExpressRouteConnections = default, NetworkFabricControllerServices infrastructureServices = default, NetworkFabricControllerServices workloadServices = default, ManagedResourceGroupConfiguration managedResourceGroupConfiguration = default, IEnumerable<ResourceIdentifier> networkFabricIds = default, IsWorkloadManagementNetworkEnabled? isWorkloadManagementNetworkEnabled = default, IEnumerable<ResourceIdentifier> tenantInternetGatewayIds = default, string ipv4AddressSpace = default, string ipv6AddressSpace = default, NetworkFabricControllerSKU? nfcSku = default, NetworkFabricProvisioningState? provisioningState = default, string lastOperationDetails = default, ManagedServiceIdentity identity = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            return new NetworkFabricControllerData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                new NetworkFabricControllerProperties(
+                    annotation,
+                    (infrastructureExpressRouteConnections ?? new ChangeTrackingList<ExpressRouteConnectionInformation>()).ToList(),
+                    (workloadExpressRouteConnections ?? new ChangeTrackingList<ExpressRouteConnectionInformation>()).ToList(),
+                    infrastructureServices,
+                    workloadServices,
+                    managedResourceGroupConfiguration,
+                    (networkFabricIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
+                    isWorkloadManagementNetworkEnabled,
+                    (tenantInternetGatewayIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
+                    ipv4AddressSpace,
+                    ipv6AddressSpace,
+                    nfcSku,
+                    new LastOperationProperties(lastOperationDetails, null),
+                    provisioningState,
+                    null),
+                identity,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.TerminalServerConfiguration"/>. </summary>
+        /// <param name="username"> Username for the terminal server connection. </param>
+        /// <param name="password"> Password for the terminal server connection. </param>
+        /// <param name="serialNumber"> Serial Number of Terminal server. </param>
+        /// <param name="primaryIpv4Prefix"> IPv4 Address Prefix. </param>
+        /// <param name="primaryIpv6Prefix"> IPv6 Address Prefix. </param>
+        /// <param name="secondaryIpv4Prefix"> Secondary IPv4 Address Prefix. </param>
+        /// <param name="secondaryIpv6Prefix"> Secondary IPv6 Address Prefix. </param>
+        /// <param name="networkDeviceId"> ARM Resource ID used for the NetworkDevice. </param>
+        /// <param name="secretRotationStatus"> Secret rotation status for the terminal server's secrets. </param>
+        /// <returns> A new <see cref="Models.TerminalServerConfiguration"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete and will be removed in a future version. Use NetworkFabricTerminalServerConfiguration instead.")]
+        public static TerminalServerConfiguration TerminalServerConfiguration(string username = default, string password = default, string serialNumber = default, string primaryIpv4Prefix = default, string primaryIpv6Prefix = default, string secondaryIpv4Prefix = default, string secondaryIpv6Prefix = default, ResourceIdentifier networkDeviceId = default, IEnumerable<NetworkFabricSecretRotationStatus> secretRotationStatus = default)
+        {
+            throw new NotSupportedException("This method is obsolete and will be removed in a future version. Use NetworkFabricTerminalServerConfiguration instead.");
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.TerminalServerConfiguration"/>. </summary>
+        /// <param name="username"> Username for the terminal server connection. </param>
+        /// <param name="password"> Password for the terminal server connection. </param>
+        /// <param name="serialNumber"> Serial Number of Terminal server. </param>
+        /// <param name="networkDeviceId"> ARM Resource ID used for the NetworkDevice. </param>
+        /// <param name="primaryIPv4Prefix"> IPv4 Address Prefix. </param>
+        /// <param name="primaryIPv6Prefix"> IPv6 Address Prefix. </param>
+        /// <param name="secondaryIPv4Prefix"> Secondary IPv4 Address Prefix. </param>
+        /// <param name="secondaryIPv6Prefix"> Secondary IPv6 Address Prefix. </param>
+        /// <returns> A new <see cref="Models.TerminalServerConfiguration"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete and will be removed in a future version. Use NetworkFabricTerminalServerConfiguration instead.")]
+        public static TerminalServerConfiguration TerminalServerConfiguration(string username, string password, string serialNumber, ResourceIdentifier networkDeviceId, string primaryIPv4Prefix, string primaryIPv6Prefix, string secondaryIPv4Prefix, string secondaryIPv6Prefix)
+        {
+            throw new NotSupportedException("This method is obsolete and will be removed in a future version. Use NetworkFabricTerminalServerConfiguration instead.");
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkDeviceInterfaceData"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkDeviceInterfaceData NetworkDeviceInterfaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string annotation, string physicalIdentifier, string connectedTo, NetworkDeviceInterfaceType? interfaceType, System.Net.IPAddress ipv4Address, string ipv6Address, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState)
+        {
+            return new NetworkDeviceInterfaceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                new NetworkInterfaceProperties(annotation, null, physicalIdentifier, connectedTo, interfaceType, ipv4Address, ipv6Address, default, default, default, default, provisioningState, administrativeState, default),
+                identity: default,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricData"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete and will be removed in a future version. Use the overload with NetworkFabricTerminalServerConfiguration instead.")]
+        public static NetworkFabricData NetworkFabricData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, string networkFabricSku, string fabricVersion, IEnumerable<string> routerIds, ResourceIdentifier networkFabricControllerId, int? rackCount, int serverCountPerRack, string ipv4Prefix, string ipv6Prefix, long fabricAsn, TerminalServerConfiguration terminalServerConfiguration, ManagementNetworkConfigurationProperties managementNetworkConfiguration, IEnumerable<string> racks, IEnumerable<string> l2IsolationDomains, IEnumerable<string> l3IsolationDomains, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState)
+        {
+            throw new NotSupportedException("This method is obsolete and will be removed in a future version. Use the overload with NetworkFabricTerminalServerConfiguration instead.");
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricData"/>. </summary>
+        /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete and will be removed in a future version. Use the overload with NetworkFabricTerminalServerConfiguration instead.")]
+        public static NetworkFabricData NetworkFabricData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string annotation, string networkFabricSku, string fabricVersion, IEnumerable<string> routerIds, StorageAccountConfiguration storageAccountConfiguration, IEnumerable<NetworkFabricLock> fabricLocks, ResourceIdentifier networkFabricControllerId, int? rackCount, int serverCountPerRack, string ipv4Prefix, string ipv6Prefix, long fabricAsn, TerminalServerConfiguration terminalServerConfiguration, ManagementNetworkConfigurationProperties managementNetworkConfiguration, IEnumerable<string> racks, IEnumerable<string> l2IsolationDomains, IEnumerable<string> l3IsolationDomains, int? hardwareAlertThreshold, IEnumerable<ResourceIdentifier> controlPlaneAcls, IEnumerable<NetworkFabricFeatureFlag> featureFlags, IEnumerable<ResourceIdentifier> trustedIPPrefixes, UniqueRouteDistinguisherProperties uniqueRdConfiguration, int? storageArrayCount, IEnumerable<string> activeCommitBatches, long? secretRotationSummaryActivePasswordSetCount, string lastOperationDetails, AuthorizedTransceiverProperties authorizedTransceiver, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, NetworkFabricQosConfigurationState? qosConfigurationState)
+        {
+            throw new NotSupportedException("This method is obsolete and will be removed in a future version. Use the overload with NetworkFabricTerminalServerConfiguration instead.");
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricInternetGatewayRuleData"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkFabricInternetGatewayRuleData NetworkFabricInternetGatewayRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, InternetGatewayRules ruleProperties, NetworkFabricProvisioningState? provisioningState, IEnumerable<ResourceIdentifier> internetGatewayIds)
+        {
+            return new NetworkFabricInternetGatewayRuleData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                new InternetGatewayRuleProperties(annotation, null, ruleProperties, default, provisioningState, (internetGatewayIds ?? new ChangeTrackingList<ResourceIdentifier>()).Select(id => id?.ToString()).ToList()),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricL2IsolationDomainData"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkFabricL2IsolationDomainData NetworkFabricL2IsolationDomainData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, ResourceIdentifier networkFabricId, int vlanId, int? mtu, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState)
+        {
+            return new NetworkFabricL2IsolationDomainData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                new L2IsolationDomainProperties(annotation, null, networkFabricId, vlanId, mtu, default, default, default, configurationState, provisioningState, administrativeState),
+                identity: default,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkRackData"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkRackData NetworkRackData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, NetworkRackType? networkRackType, ResourceIdentifier networkFabricId, IEnumerable<ResourceIdentifier> networkDevices, NetworkFabricProvisioningState? provisioningState)
+        {
+            return new NetworkRackData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                new NetworkRackProperties(annotation, null, networkRackType, networkFabricId, (networkDevices ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default, provisioningState, default),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkTapData"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable CS0618 // Preserve obsolete compatibility overload.
+        [Obsolete("This method is obsolete and will be removed in a future version. Use the overload with NetworkTapDestinationProperties destinations instead.")]
+        public static NetworkTapData NetworkTapData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, ResourceIdentifier networkPacketBrokerId, ResourceIdentifier sourceTapRuleId, IEnumerable<NetworkTapPropertiesDestinationsItem> destinations, NetworkTapPollingType? pollingType, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState)
+#pragma warning restore CS0618
+        {
+            throw new NotSupportedException("This method is obsolete and will be removed in a future version. Use the overload with NetworkTapDestinationProperties destinations instead.");
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkTapData"/>. </summary>
+        /// <returns> A new <see cref="ManagedNetworkFabric.NetworkTapData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable CS0618 // Preserve obsolete compatibility overload.
+        [Obsolete("This method is obsolete and will be removed in a future version. Use the overload with NetworkTapDestinationProperties destinations instead.")]
+        public static NetworkTapData NetworkTapData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string annotation, ResourceIdentifier networkPacketBrokerId, ResourceIdentifier sourceTapRuleId, IEnumerable<ResourceIdentifier> networkFabricIds, IEnumerable<NetworkTapPropertiesDestinationsItem> destinations, NetworkTapPollingType? pollingType, string lastOperationDetails, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState)
+#pragma warning restore CS0618
+        {
+            throw new NotSupportedException("This method is obsolete and will be removed in a future version. Use the overload with NetworkTapDestinationProperties destinations instead.");
         }
     }
 }

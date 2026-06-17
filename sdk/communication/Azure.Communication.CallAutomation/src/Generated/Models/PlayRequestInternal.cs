@@ -32,7 +32,7 @@ namespace Azure.Communication.CallAutomation
         /// Plays to everyone in the call when not provided.
         /// </param>
         /// <param name="interruptCallMediaOperation"> If set play can barge into other existing queued-up/currently-processing requests. </param>
-        /// <param name="playOptions"> Defines options for playing the audio. </param>
+        /// <param name="playOptions"></param>
         /// <param name="operationContext"> The value to identify context of the operation. </param>
         /// <param name="operationCallbackUri">
         /// Set a callback URI that overrides the default callback URI set by CreateCall/AnswerCall for this operation.
@@ -52,7 +52,7 @@ namespace Azure.Communication.CallAutomation
         public IList<PlaySourceInternal> PlaySources { get; }
         /// <summary> If set play can barge into other existing queued-up/currently-processing requests. </summary>
         public bool? InterruptCallMediaOperation { get; set; }
-        /// <summary> Defines options for playing the audio. </summary>
+        /// <summary> Gets or sets the play options. </summary>
         public PlayOptionsInternal PlayOptions { get; set; }
         /// <summary> The value to identify context of the operation. </summary>
         public string OperationContext { get; set; }

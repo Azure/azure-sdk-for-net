@@ -73,12 +73,12 @@ namespace Azure.AI.Projects.Agents
             if (Optional.IsDefined(Baseline))
             {
                 writer.WritePropertyName("baseline"u8);
-                writer.WriteObjectValue(Baseline, options);
+                writer.WriteStringValue(Baseline);
             }
             if (Optional.IsDefined(Best))
             {
                 writer.WritePropertyName("best"u8);
-                writer.WriteObjectValue(Best, options);
+                writer.WriteStringValue(Best);
             }
             if (Optional.IsCollectionDefined(Candidates))
             {
@@ -89,31 +89,6 @@ namespace Azure.AI.Projects.Agents
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(Options))
-            {
-                writer.WritePropertyName("options"u8);
-                writer.WriteObjectValue(Options, options);
-            }
-            if (Optional.IsCollectionDefined(Warnings))
-            {
-                writer.WritePropertyName("warnings"u8);
-                writer.WriteStartArray();
-                foreach (string item in Warnings)
-                {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(AllTargetAttributesFailed))
-            {
-                writer.WritePropertyName("all_target_attributes_failed"u8);
-                writer.WriteBooleanValue(AllTargetAttributesFailed.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -157,31 +132,20 @@ namespace Azure.AI.Projects.Agents
             {
                 return null;
             }
-            OptimizationCandidate baseline = default;
-            OptimizationCandidate best = default;
+            string baseline = default;
+            string best = default;
             IList<OptimizationCandidate> candidates = default;
-            OptimizationOptions options0 = default;
-            IList<string> warnings = default;
-            bool? allTargetAttributesFailed = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("baseline"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    baseline = OptimizationCandidate.DeserializeOptimizationCandidate(prop.Value, options);
+                    baseline = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("best"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    best = OptimizationCandidate.DeserializeOptimizationCandidate(prop.Value, options);
+                    best = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("candidates"u8))
@@ -198,58 +162,12 @@ namespace Azure.AI.Projects.Agents
                     candidates = array;
                     continue;
                 }
-                if (prop.NameEquals("options"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    options0 = OptimizationOptions.DeserializeOptimizationOptions(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("warnings"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
-                    }
-                    warnings = array;
-                    continue;
-                }
-                if (prop.NameEquals("all_target_attributes_failed"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    allTargetAttributesFailed = prop.Value.GetBoolean();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new OptimizationJobResult(
-                baseline,
-                best,
-                candidates ?? new ChangeTrackingList<OptimizationCandidate>(),
-                options0,
-                warnings ?? new ChangeTrackingList<string>(),
-                allTargetAttributesFailed,
-                additionalBinaryDataProperties);
+            return new OptimizationJobResult(baseline, best, candidates ?? new ChangeTrackingList<OptimizationCandidate>(), additionalBinaryDataProperties);
         }
     }
 }

@@ -28,6 +28,21 @@ namespace Azure.AI.ContentUnderstanding
             "rai_warnings"
         };
 
+        // Marker emitted by ToLlmInput at each page boundary. Future Content
+        // Understanding service versions emit this same marker directly in the
+        // returned markdown (per ContentUnderstanding-Docs#249). When the helper
+        // sees any occurrence of this prefix in the input markdown it treats
+        // the service as having already paginated the content and skips its own
+        // injection to avoid duplicate markers.
+        private const string InputPageMarkerPrefix = "<!-- InputPageNumber:";
+
+        // Message prefixes the Content Understanding service has been observed
+        // to emit into the warnings collection that are not real Responsible-AI
+        // warnings (they are internal telemetry counters). The helper drops any
+        // warning whose message starts with one of these prefixes before
+        // rendering the rai_warnings block, so the noise never reaches the LLM.
+        private static readonly string[] s_telemetryMessagePrefixes = { "LLMStats:" };
+
         // ---------------------------------------------------------------
         // Public API
         // ---------------------------------------------------------------
@@ -51,8 +66,23 @@ namespace Azure.AI.ContentUnderstanding
         /// </para>
         /// <para>
         /// The markdown body contains the extracted text with page-break markers
-        /// (<c>&lt;!-- page N --&gt;</c>) inserted at page boundaries so downstream
-        /// consumers can locate content by page number.
+        /// (<c>&lt;!-- InputPageNumber: N --&gt;</c>) inserted at page boundaries so
+        /// downstream consumers can locate content by page number. <c>N</c> is the
+        /// <strong>original 1-based page number from the source document</strong>
+        /// (i.e., the page index in the analyzed PDF), not a counter that restarts
+        /// at 1 for each call. This matters when the analyze request specifies a
+        /// <see cref="ContentRange"/> (e.g., <c>"2-3,5"</c>): the markers in the
+        /// output will read <c>InputPageNumber: 2</c>, <c>3</c>, <c>5</c> &#8212;
+        /// not <c>1</c>, <c>2</c>, <c>3</c>. Downstream consumers (RAG indexers,
+        /// page-citation prompts) can rely on the marker value to cite the
+        /// correct source page even when only a subset of pages was analyzed.
+        /// If the service markdown already contains <c>&lt;!-- InputPageNumber:</c>
+        /// markers, the helper passes the markdown through unchanged to avoid
+        /// duplicate markers.
+        /// </para>
+        /// <para>
+        /// Internal telemetry messages such as <c>LLMStats: ...</c> are filtered
+        /// from the rendered <c>rai_warnings</c> front matter.
         /// </para>
         /// </summary>
         /// <param name="result">The <see cref="AnalysisResult"/> from a Content Understanding analyze operation.</param>
@@ -462,6 +492,15 @@ namespace Azure.AI.ContentUnderstanding
 
         internal static string AddPageMarkers(DocumentContent content, string markdown)
         {
+            // If the service markdown already includes InputPageNumber markers
+            // (e.g., because the service paginated the content itself per
+            // ContentUnderstanding-Docs#249), pass it through unchanged to
+            // avoid duplicate markers.
+            if (HasInputPageMarker(markdown))
+            {
+                return markdown;
+            }
+
             if (content.Pages != null && content.Pages.Count > 0)
             {
                 string result = PageMarkersFromSpans(markdown, content.Pages);
@@ -472,6 +511,9 @@ namespace Azure.AI.ContentUnderstanding
             }
             return PageMarkersFromBreaks(markdown, content);
         }
+
+        private static bool HasInputPageMarker(string markdown)
+            => !string.IsNullOrEmpty(markdown) && markdown.IndexOf(InputPageMarkerPrefix, StringComparison.Ordinal) >= 0;
 
         private static readonly Regex s_pageBreakPattern = new Regex(@"\n*<!-- PageBreak -->\n*", RegexOptions.Compiled);
 
@@ -528,7 +570,7 @@ namespace Azure.AI.ContentUnderstanding
                 {
                     sb.Append(cleaned, prev, adj - prev);
                 }
-                sb.Append($"<!-- page {marker.PageNumber} -->\n\n");
+                sb.Append($"{InputPageMarkerPrefix} {marker.PageNumber} -->\n\n");
                 prev = adj;
             }
             if (prev < cleaned.Length)
@@ -551,7 +593,7 @@ namespace Azure.AI.ContentUnderstanding
                 string text = chunks[i].Trim();
                 if (!string.IsNullOrEmpty(text))
                 {
-                    parts.Add($"<!-- page {pageNum} -->\n\n{text}");
+                    parts.Add($"{InputPageMarkerPrefix} {pageNum} -->\n\n{text}");
                 }
             }
             return string.Join("\n\n", parts);
@@ -650,14 +692,24 @@ namespace Azure.AI.ContentUnderstanding
             var items = new List<Dictionary<string, string>>();
             foreach (var w in warnings)
             {
+                string? message = w.Message;
+                // Skip internal service telemetry strings (e.g. "LLMStats: ...")
+                // that occasionally leak into the warnings collection. These are
+                // not Responsible-AI warnings and would otherwise be rendered
+                // into the LLM-facing rai_warnings block.
+                if (!string.IsNullOrEmpty(message) && IsTelemetryMessage(message!))
+                {
+                    continue;
+                }
+
                 var entry = new Dictionary<string, string>();
                 if (!string.IsNullOrEmpty(w.Code))
                 {
                     entry["code"] = w.Code!;
                 }
-                if (!string.IsNullOrEmpty(w.Message))
+                if (!string.IsNullOrEmpty(message))
                 {
-                    entry["message"] = w.Message!;
+                    entry["message"] = message!;
                 }
                 if (entry.Count > 0)
                 {
@@ -665,6 +717,19 @@ namespace Azure.AI.ContentUnderstanding
                 }
             }
             return items;
+        }
+
+        private static bool IsTelemetryMessage(string message)
+        {
+            string trimmed = message.TrimStart();
+            foreach (string prefix in s_telemetryMessagePrefixes)
+            {
+                if (trimmed.StartsWith(prefix, StringComparison.Ordinal))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         // ---------------------------------------------------------------
