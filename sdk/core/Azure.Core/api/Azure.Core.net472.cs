@@ -1557,7 +1557,6 @@ namespace Azure.Identity
     public partial class ManagedIdentityCredentialOptions : Azure.Identity.TokenCredentialOptions
     {
         public ManagedIdentityCredentialOptions(Azure.Identity.ManagedIdentityId managedIdentityId = null) { }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZID0004")]
         public bool DisableMtlsProofOfPossession { get { throw null; } set { } }
     }
     [System.Runtime.CompilerServices.TypeForwardedFromAttribute("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
