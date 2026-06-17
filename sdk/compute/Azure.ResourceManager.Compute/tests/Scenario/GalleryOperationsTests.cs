@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Compute.Tests
 
         [TestCase]
         [RecordedTest]
-        public async Task CreateGalleryWithPublisherUri()
+        public async Task CreateGallerywithPublisherUri()
         {
             _resourceGroup = await CreateResourceGroupAsync();
             var collection = _resourceGroup.GetGalleries();
