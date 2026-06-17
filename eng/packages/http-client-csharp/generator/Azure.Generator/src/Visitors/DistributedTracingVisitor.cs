@@ -211,7 +211,12 @@ namespace Azure.Generator.Visitors
                 return;
             }
 
-            string scopeName = method.GetScopeName();
+            string scopeName = $"{method.EnclosingType.Name}.{method.Signature.Name}";
+            const string asyncSuffix = "Async";
+            if (scopeName.EndsWith(asyncSuffix))
+            {
+                scopeName = scopeName[..^asyncSuffix.Length];
+            }
 
             PropertyProvider clientDiagnosticsProperty = ((ClientProvider)method.EnclosingType).CanonicalView.Properties
                 .First(p => p.Name == ClientDiagnosticsPropertyName || p.OriginalName?.Equals(ClientDiagnosticsPropertyName) == true);
@@ -374,7 +379,12 @@ namespace Azure.Generator.Visitors
 
         private static void UpdatePagingMethodWithScope(ScmMethodProvider method)
         {
-            string scopeName = method.GetScopeName();
+            string scopeName = $"{method.EnclosingType.Name}.{method.Signature.Name}";
+            const string asyncSuffix = "Async";
+            if (scopeName.EndsWith(asyncSuffix))
+            {
+                scopeName = scopeName[..^asyncSuffix.Length];
+            }
 
             if (method.BodyExpression is NewInstanceExpression newInstance)
             {

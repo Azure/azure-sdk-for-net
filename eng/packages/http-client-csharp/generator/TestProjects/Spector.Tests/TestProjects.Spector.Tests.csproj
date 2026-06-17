@@ -16,10 +16,8 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Azure.Generator\test\common\Azure.Generator.Tests.Common.csproj" />
     <ProjectReference Include="..\Spector\http\azure\client-generator-core\access\src\_Specs_.Azure.ClientGenerator.Core.Access.csproj" />
-    <ProjectReference Include="..\Spector\http\azure\client-generator-core\api-version\header\src\_Specs_.Azure.ClientGenerator.Core.ApiVersion.Header.csproj" />
     <ProjectReference Include="..\Spector\http\azure\client-generator-core\api-version\path\src\_Specs_.Azure.ClientGenerator.Core.ApiVersion.Path.csproj" />
     <ProjectReference Include="..\Spector\http\azure\client-generator-core\api-version\query\src\_Specs_.Azure.ClientGenerator.Core.ApiVersion.Query.csproj" />
-    <ProjectReference Include="..\Spector\http\azure\client-generator-core\client-default-value\src\_Specs_.Azure.ClientGenerator.Core.ClientDefaultValue.csproj" />
     <ProjectReference Include="..\Spector\http\azure\client-generator-core\client-doc\src\_Specs_.Azure.ClientGenerator.Core.ClientDoc.csproj" />
     <ProjectReference Include="..\Spector\http\azure\client-generator-core\client-initialization\default\src\Specs.Azure.Tcgc.ClientInit.Default.csproj" />
     <ProjectReference Include="..\Spector\http\azure\client-generator-core\client-initialization\individually\src\Specs.Azure.Tcgc.ClientInit.Individually.csproj" />
@@ -29,12 +27,9 @@
     <ProjectReference Include="..\Spector\http\azure\client-generator-core\usage\src\_Specs_.Azure.ClientGenerator.Core.Usage.csproj" />
     <ProjectReference Include="..\Spector\http\azure\client-generator-core\client-location\move-method-parameter-to-client\src\Specs.Azure.Tcgc.ClientLo.Param.csproj" />
     <ProjectReference Include="..\Spector\http\azure\client-generator-core\client-location\move-to-existing-sub-client\src\Specs.Azure.Tcgc.ClientLo.Sub.csproj" />
-    <ProjectReference Include="..\Spector\http\azure\client-generator-core\client-location\move-to-new-sub-client\src\Specs.Azure.Tcgc.ClientLo.NewSub.csproj" />
-    <ProjectReference Include="..\Spector\http\azure\client-generator-core\client-location\move-to-root-client\src\Specs.Azure.Tcgc.ClientLo.Root.csproj" />
     <ProjectReference Include="..\Spector\http\azure\client-generator-core\hierarchy-building\src\_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.csproj" />
     <ProjectReference Include="..\Spector\http\azure\client-generator-core\override\src\_Specs_.Azure.ClientGenerator.Core.Override.csproj" />
     <ProjectReference Include="..\Spector\http\azure\special-headers\client-request-id\src\Azure.SpecialHeaders.XmsClientRequestId.csproj" />
-    <ProjectReference Include="..\Spector\http\azure\core\lro\standard\src\_Specs_.Azure.Core.Lro.Standard.csproj" />
     <ProjectReference Include="..\Spector\http\azure\core\lro\rpc\src\_Specs_.Azure.Core.Lro.Rpc.csproj" />
     <ProjectReference Include="..\Spector\http\azure\core\basic\src\_Specs_.Azure.Core.Basic.csproj" />
     <ProjectReference Include="..\Spector\http\azure\core\page\src\_Specs_.Azure.Core.Page.csproj" />
@@ -53,7 +48,6 @@
     <ProjectReference Include="..\Spector\http\authentication\union\src\Authentication.Union.csproj" />
     <ProjectReference Include="..\Spector\http\client\namespace\src\Client.ClientNamespace.csproj" />
     <ProjectReference Include="..\Spector\http\client\naming\src\Client.Naming.csproj" />
-    <ProjectReference Include="..\Spector\http\client\naming\enum-conflict\src\Client.Naming.EnumConflict.csproj" />
     <ProjectReference Include="..\Spector\http\client\overload\src\Client.Overload.csproj" />
     <ProjectReference Include="..\Spector\http\client\structure\client-operation-group\src\Client.Structure.Service.csproj" Aliases="ClientStructureClientOperationGroup" />
     <ProjectReference Include="..\Spector\http\client\structure\default\src\Client.Structure.Service.Default.csproj" Aliases="ClientStructureDefault" />
@@ -88,7 +82,6 @@
     <ProjectReference Include="..\Spector\http\server\versions\not-versioned\src\Server.Versions.NotVersioned.csproj" />
     <ProjectReference Include="..\Spector\http\server\versions\versioned\src\Server.Versions.Versioned.csproj" />
     <ProjectReference Include="..\Spector\http\service\multi-service\src\Service.MultiService.Combined.csproj" />
-    <ProjectReference Include="..\Spector\http\service\multiple-services\src\Service.MultipleServices.csproj" />
     <ProjectReference Include="..\Spector\http\special-headers\conditional-request\src\SpecialHeaders.ConditionalRequest.csproj" />
     <ProjectReference Include="..\Spector\http\special-headers\repeatability\src\SpecialHeaders.Repeatability.csproj" />
     <ProjectReference Include="..\Spector\http\special-words\src\SpecialWords.csproj" />
