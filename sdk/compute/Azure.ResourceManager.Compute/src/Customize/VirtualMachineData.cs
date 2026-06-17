@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute
     // Backward compatibility: flatten ScheduledEventsTerminateNotificationProfile from ScheduledEventsProfile.
     // In this library, some identities are v3 and some are not. The generator currently treats all identities
     // as v3 and serializes the combined identity type without a space, but VM identity uses the non-v3 wire value.
-    [CodeGenSerialization(nameof(Identity), SerializationValueHook = nameof(SerializeIdentityValue))]
+    [CodeGenSerialization(nameof(Identity), "identity", SerializationValueHook = nameof(SerializeIdentityValue))]
     public partial class VirtualMachineData
     {
         private void SerializeIdentityValue(Utf8JsonWriter writer, ModelReaderWriterOptions options)
