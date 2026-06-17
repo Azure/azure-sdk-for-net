@@ -75,12 +75,19 @@ namespace Azure.Identity
                     types: [typeof(AcquireTokenForManagedIdentityParameterBuilder)],
                     modifiers: null);
 
-                return withAttestationSupport == null
-                    ? null
-                    : (Func<AcquireTokenForManagedIdentityParameterBuilder, AcquireTokenForManagedIdentityParameterBuilder>)withAttestationSupport.CreateDelegate(typeof(Func<AcquireTokenForManagedIdentityParameterBuilder, AcquireTokenForManagedIdentityParameterBuilder>));
+                if (withAttestationSupport == null)
+                {
+                    AzureIdentityEventSource.Singleton.LogMsalInformational(
+                        "Managed identity attestation extension not available. Token binding will not be used.");
+                    return null;
+                }
+
+                return (Func<AcquireTokenForManagedIdentityParameterBuilder, AcquireTokenForManagedIdentityParameterBuilder>)withAttestationSupport.CreateDelegate(typeof(Func<AcquireTokenForManagedIdentityParameterBuilder, AcquireTokenForManagedIdentityParameterBuilder>));
             }
-            catch
+            catch (Exception ex)
             {
+                AzureIdentityEventSource.Singleton.LogMsalInformational(
+                    $"Exception occurred while resolving managed identity attestation extension: {ex.Message}");
                 return null;
             }
         }
