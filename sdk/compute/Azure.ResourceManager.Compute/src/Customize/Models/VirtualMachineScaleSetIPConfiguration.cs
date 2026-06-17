@@ -6,6 +6,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Text.Json.Serialization;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -19,6 +20,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Specifies an array of references to backend address pools of application gateways. </summary>
         [Obsolete("Use ApplicationGatewayBackendAddressPoolResources instead. This compatibility property cannot be used for mutation.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [JsonIgnore]
         public IList<WritableSubResource> ApplicationGatewayBackendAddressPools => throw new NotSupportedException("Use ApplicationGatewayBackendAddressPoolResources instead.");
 
         // Backward compatibility: the generated Compute-local property is named ApplicationSecurityGroupResources
@@ -26,6 +28,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Specifies an array of references to application security group. </summary>
         [Obsolete("Use ApplicationSecurityGroupResources instead. This compatibility property cannot be used for mutation.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [JsonIgnore]
         public IList<WritableSubResource> ApplicationSecurityGroups => throw new NotSupportedException("Use ApplicationSecurityGroupResources instead.");
 
         // Backward compatibility: the generated Compute-local property is named LoadBalancerBackendAddressPoolResources
@@ -33,6 +36,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Specifies an array of references to backend address pools of load balancers. </summary>
         [Obsolete("Use LoadBalancerBackendAddressPoolResources instead. This compatibility property cannot be used for mutation.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [JsonIgnore]
         public IList<WritableSubResource> LoadBalancerBackendAddressPools => throw new NotSupportedException("Use LoadBalancerBackendAddressPoolResources instead.");
 
         // Backward compatibility: the generated Compute-local property is named LoadBalancerInboundNatPoolResources
@@ -40,6 +44,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Specifies an array of references to inbound Nat pools of the load balancers. </summary>
         [Obsolete("Use LoadBalancerInboundNatPoolResources instead. This compatibility property cannot be used for mutation.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [JsonIgnore]
         public IList<WritableSubResource> LoadBalancerInboundNatPools => throw new NotSupportedException("Use LoadBalancerInboundNatPoolResources instead.");
     }
 }

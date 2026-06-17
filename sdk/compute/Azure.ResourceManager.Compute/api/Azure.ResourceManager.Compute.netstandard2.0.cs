@@ -11380,15 +11380,19 @@ namespace Azure.ResourceManager.Compute.Models
         public VirtualMachineScaleSetIPConfiguration(string name) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.ComputeWriteableSubResourceData> ApplicationGatewayBackendAddressPoolResources { get { throw null; } }
         [System.ObsoleteAttribute("Use ApplicationGatewayBackendAddressPoolResources instead. This compatibility property cannot be used for mutation.", false)]
+        [System.Text.Json.Serialization.JsonIgnoreAttribute]
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> ApplicationGatewayBackendAddressPools { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.ComputeWriteableSubResourceData> ApplicationSecurityGroupResources { get { throw null; } }
         [System.ObsoleteAttribute("Use ApplicationSecurityGroupResources instead. This compatibility property cannot be used for mutation.", false)]
+        [System.Text.Json.Serialization.JsonIgnoreAttribute]
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> ApplicationSecurityGroups { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.ComputeWriteableSubResourceData> LoadBalancerBackendAddressPoolResources { get { throw null; } }
         [System.ObsoleteAttribute("Use LoadBalancerBackendAddressPoolResources instead. This compatibility property cannot be used for mutation.", false)]
+        [System.Text.Json.Serialization.JsonIgnoreAttribute]
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> LoadBalancerBackendAddressPools { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.ComputeWriteableSubResourceData> LoadBalancerInboundNatPoolResources { get { throw null; } }
         [System.ObsoleteAttribute("Use LoadBalancerInboundNatPoolResources instead. This compatibility property cannot be used for mutation.", false)]
+        [System.Text.Json.Serialization.JsonIgnoreAttribute]
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> LoadBalancerInboundNatPools { get { throw null; } }
         public string Name { get { throw null; } set { } }
         public bool? Primary { get { throw null; } set { } }
