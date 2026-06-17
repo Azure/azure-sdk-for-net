@@ -11,14 +11,11 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Models;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
     // TODO: Remove after https://github.com/Azure/azure-sdk-for-net/issues/59425.
-    // Suppress generated operation-result helpers and replace them with AOT-safe deserialization below.
-    [CodeGenSuppress("GetAsync", typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress("Get", typeof(string), typeof(CancellationToken))]
+    // Custom operation-result helpers use AOT-safe deserialization until the generator emits them correctly.
     public partial class DevOpsConfigurationResource
     {
         /// <summary>
