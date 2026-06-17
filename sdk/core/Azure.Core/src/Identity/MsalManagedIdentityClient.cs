@@ -74,7 +74,7 @@ namespace Azure.Identity
             return withAttestationSupport;
         }
 
-        private static bool TryCreateWithAttestationSupport(out Func<AcquireTokenForManagedIdentityParameterBuilder, AcquireTokenForManagedIdentityParameterBuilder> withAttestationSupport)
+        internal static bool TryCreateWithAttestationSupport(out Func<AcquireTokenForManagedIdentityParameterBuilder, AcquireTokenForManagedIdentityParameterBuilder> withAttestationSupport)
         {
             withAttestationSupport = null;
 
