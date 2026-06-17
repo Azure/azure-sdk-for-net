@@ -8,51 +8,24 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.HybridNetwork;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary>
     /// Network function properties.
-    /// Please note <see cref="NetworkFunctionPropertiesFormat"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="NetworkFunctionValueWithoutSecrets"/> and <see cref="NetworkFunctionValueWithSecrets"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="NetworkFunctionValueWithSecrets"/> and <see cref="NetworkFunctionValueWithoutSecrets"/>.
     /// </summary>
     public abstract partial class NetworkFunctionPropertiesFormat
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkFunctionPropertiesFormat"/>. </summary>
-        protected NetworkFunctionPropertiesFormat()
+        /// <param name="configurationType"> The value which indicates if NF  values are secrets. </param>
+        private protected NetworkFunctionPropertiesFormat(NetworkFunctionConfigurationType configurationType)
         {
+            ConfigurationType = configurationType;
             RoleOverrideValues = new ChangeTrackingList<string>();
         }
 
@@ -63,18 +36,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="networkFunctionDefinitionGroupName"> The network function definition group name for the network function. </param>
         /// <param name="networkFunctionDefinitionVersion"> The network function definition version for the network function. </param>
         /// <param name="networkFunctionDefinitionOfferingLocation"> The location of the network function definition offering. </param>
-        /// <param name="networkFunctionDefinitionVersionResourceReference">
-        /// The network function definition version resource reference.
-        /// Please note <see cref="DeploymentResourceIdReference"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="OpenDeploymentResourceReference"/> and <see cref="SecretDeploymentResourceReference"/>.
-        /// </param>
+        /// <param name="networkFunctionDefinitionVersionResourceReference"> The network function definition version resource reference. </param>
         /// <param name="nfviType"> The nfvi type for the network function. </param>
         /// <param name="nfviId"> The nfviId for the network function. </param>
         /// <param name="allowSoftwareUpdate"> Indicates if software updates are allowed during deployment. </param>
         /// <param name="configurationType"> The value which indicates if NF  values are secrets. </param>
         /// <param name="roleOverrideValues"> The role configuration override values from the user. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkFunctionPropertiesFormat(ProvisioningState? provisioningState, string publisherName, PublisherScope? publisherScope, string networkFunctionDefinitionGroupName, string networkFunctionDefinitionVersion, string networkFunctionDefinitionOfferingLocation, DeploymentResourceIdReference networkFunctionDefinitionVersionResourceReference, NfviType? nfviType, ResourceIdentifier nfviId, bool? allowSoftwareUpdate, NetworkFunctionConfigurationType configurationType, IList<string> roleOverrideValues, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkFunctionPropertiesFormat(ProvisioningState? provisioningState, string publisherName, PublisherScope? publisherScope, string networkFunctionDefinitionGroupName, string networkFunctionDefinitionVersion, string networkFunctionDefinitionOfferingLocation, DeploymentResourceIdReference networkFunctionDefinitionVersionResourceReference, NfviType? nfviType, ResourceIdentifier nfviId, bool? allowSoftwareUpdate, NetworkFunctionConfigurationType configurationType, IList<string> roleOverrideValues, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             PublisherName = publisherName;
@@ -88,35 +57,42 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             AllowSoftwareUpdate = allowSoftwareUpdate;
             ConfigurationType = configurationType;
             RoleOverrideValues = roleOverrideValues;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The provisioning state of the network function resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
+
         /// <summary> The publisher name for the network function. </summary>
-        public string PublisherName { get; }
+        public string PublisherName { get; set; }
+
         /// <summary> The scope of the publisher. </summary>
-        public PublisherScope? PublisherScope { get; }
+        public PublisherScope? PublisherScope { get; set; }
+
         /// <summary> The network function definition group name for the network function. </summary>
-        public string NetworkFunctionDefinitionGroupName { get; }
+        public string NetworkFunctionDefinitionGroupName { get; set; }
+
         /// <summary> The network function definition version for the network function. </summary>
-        public string NetworkFunctionDefinitionVersion { get; }
+        public string NetworkFunctionDefinitionVersion { get; set; }
+
         /// <summary> The location of the network function definition offering. </summary>
-        public string NetworkFunctionDefinitionOfferingLocation { get; }
-        /// <summary>
-        /// The network function definition version resource reference.
-        /// Please note <see cref="DeploymentResourceIdReference"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="OpenDeploymentResourceReference"/> and <see cref="SecretDeploymentResourceReference"/>.
-        /// </summary>
+        public string NetworkFunctionDefinitionOfferingLocation { get; set; }
+
+        /// <summary> The network function definition version resource reference. </summary>
         public DeploymentResourceIdReference NetworkFunctionDefinitionVersionResourceReference { get; set; }
+
         /// <summary> The nfvi type for the network function. </summary>
         public NfviType? NfviType { get; set; }
+
         /// <summary> The nfviId for the network function. </summary>
         public ResourceIdentifier NfviId { get; set; }
+
         /// <summary> Indicates if software updates are allowed during deployment. </summary>
         public bool? AllowSoftwareUpdate { get; set; }
+
         /// <summary> The value which indicates if NF  values are secrets. </summary>
         internal NetworkFunctionConfigurationType ConfigurationType { get; set; }
+
         /// <summary> The role configuration override values from the user. </summary>
         public IList<string> RoleOverrideValues { get; }
     }

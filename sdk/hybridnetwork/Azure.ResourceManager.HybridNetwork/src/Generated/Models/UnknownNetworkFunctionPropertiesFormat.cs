@@ -11,7 +11,6 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> Unknown version of NetworkFunctionPropertiesFormat. </summary>
     internal partial class UnknownNetworkFunctionPropertiesFormat : NetworkFunctionPropertiesFormat
     {
         /// <summary> Initializes a new instance of <see cref="UnknownNetworkFunctionPropertiesFormat"/>. </summary>
@@ -21,24 +20,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="networkFunctionDefinitionGroupName"> The network function definition group name for the network function. </param>
         /// <param name="networkFunctionDefinitionVersion"> The network function definition version for the network function. </param>
         /// <param name="networkFunctionDefinitionOfferingLocation"> The location of the network function definition offering. </param>
-        /// <param name="networkFunctionDefinitionVersionResourceReference">
-        /// The network function definition version resource reference.
-        /// Please note <see cref="DeploymentResourceIdReference"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="OpenDeploymentResourceReference"/> and <see cref="SecretDeploymentResourceReference"/>.
-        /// </param>
+        /// <param name="networkFunctionDefinitionVersionResourceReference"> The network function definition version resource reference. </param>
         /// <param name="nfviType"> The nfvi type for the network function. </param>
         /// <param name="nfviId"> The nfviId for the network function. </param>
         /// <param name="allowSoftwareUpdate"> Indicates if software updates are allowed during deployment. </param>
         /// <param name="configurationType"> The value which indicates if NF  values are secrets. </param>
         /// <param name="roleOverrideValues"> The role configuration override values from the user. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownNetworkFunctionPropertiesFormat(ProvisioningState? provisioningState, string publisherName, PublisherScope? publisherScope, string networkFunctionDefinitionGroupName, string networkFunctionDefinitionVersion, string networkFunctionDefinitionOfferingLocation, DeploymentResourceIdReference networkFunctionDefinitionVersionResourceReference, NfviType? nfviType, ResourceIdentifier nfviId, bool? allowSoftwareUpdate, NetworkFunctionConfigurationType configurationType, IList<string> roleOverrideValues, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(provisioningState, publisherName, publisherScope, networkFunctionDefinitionGroupName, networkFunctionDefinitionVersion, networkFunctionDefinitionOfferingLocation, networkFunctionDefinitionVersionResourceReference, nfviType, nfviId, allowSoftwareUpdate, configurationType, roleOverrideValues, serializedAdditionalRawData)
-        {
-            ConfigurationType = configurationType;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownNetworkFunctionPropertiesFormat"/> for deserialization. </summary>
-        internal UnknownNetworkFunctionPropertiesFormat()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownNetworkFunctionPropertiesFormat(ProvisioningState? provisioningState, string publisherName, PublisherScope? publisherScope, string networkFunctionDefinitionGroupName, string networkFunctionDefinitionVersion, string networkFunctionDefinitionOfferingLocation, DeploymentResourceIdReference networkFunctionDefinitionVersionResourceReference, NfviType? nfviType, ResourceIdentifier nfviId, bool? allowSoftwareUpdate, NetworkFunctionConfigurationType configurationType, IList<string> roleOverrideValues, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(provisioningState, publisherName, publisherScope, networkFunctionDefinitionGroupName, networkFunctionDefinitionVersion, networkFunctionDefinitionOfferingLocation, networkFunctionDefinitionVersionResourceReference, nfviType, nfviId, allowSoftwareUpdate, configurationType != default ? configurationType : "unknown", roleOverrideValues, additionalBinaryDataProperties)
         {
         }
     }

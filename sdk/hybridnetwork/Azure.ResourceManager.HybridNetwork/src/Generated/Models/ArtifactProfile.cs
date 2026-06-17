@@ -8,44 +8,14 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary> Artifact profile properties. </summary>
     public partial class ArtifactProfile
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ArtifactProfile"/>. </summary>
         public ArtifactProfile()
@@ -54,23 +24,29 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 
         /// <summary> Initializes a new instance of <see cref="ArtifactProfile"/>. </summary>
         /// <param name="artifactStore"> The reference to artifact store. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ArtifactProfile(WritableSubResource artifactStore, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ArtifactProfile(ReferencedResource artifactStore, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ArtifactStore = artifactStore;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The reference to artifact store. </summary>
-        internal WritableSubResource ArtifactStore { get; set; }
-        /// <summary> Gets or sets Id. </summary>
+        internal ReferencedResource ArtifactStore { get; set; }
+
+        /// <summary> Resource ID. </summary>
         public ResourceIdentifier ArtifactStoreId
         {
-            get => ArtifactStore is null ? default : ArtifactStore.Id;
+            get
+            {
+                return ArtifactStore is null ? default : ArtifactStore.Id;
+            }
             set
             {
                 if (ArtifactStore is null)
-                    ArtifactStore = new WritableSubResource();
+                {
+                    ArtifactStore = new ReferencedResource();
+                }
                 ArtifactStore.Id = value;
             }
         }

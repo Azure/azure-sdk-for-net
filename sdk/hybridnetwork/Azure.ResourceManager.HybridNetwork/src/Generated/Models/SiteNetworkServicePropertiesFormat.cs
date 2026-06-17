@@ -8,50 +8,21 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.HybridNetwork;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary> Site network service properties. </summary>
     public partial class SiteNetworkServicePropertiesFormat
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SiteNetworkServicePropertiesFormat"/>. </summary>
         public SiteNetworkServicePropertiesFormat()
         {
-            DesiredStateConfigurationGroupValueReferences = new ChangeTrackingDictionary<string, WritableSubResource>();
-            LastStateConfigurationGroupValueReferences = new ChangeTrackingDictionary<string, WritableSubResource>();
+            DesiredStateConfigurationGroupValueReferencedResources = new ChangeTrackingDictionary<string, ReferencedResource>();
+            LastStateConfigurationGroupValueReferencedResources = new ChangeTrackingDictionary<string, ReferencedResource>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SiteNetworkServicePropertiesFormat"/>. </summary>
@@ -63,16 +34,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="networkServiceDesignGroupName"> The network service design group name for the site network service. </param>
         /// <param name="networkServiceDesignVersionName"> The network service design version for the site network service. </param>
         /// <param name="networkServiceDesignVersionOfferingLocation"> The location of the network service design offering. </param>
-        /// <param name="networkServiceDesignVersionResourceReference">
-        /// The network service design version resource reference.
-        /// Please note <see cref="DeploymentResourceIdReference"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="OpenDeploymentResourceReference"/> and <see cref="SecretDeploymentResourceReference"/>.
-        /// </param>
-        /// <param name="desiredStateConfigurationGroupValueReferences"> The goal state of the site network service resource. This has references to the configuration group value objects that describe the desired state of the site network service. </param>
+        /// <param name="networkServiceDesignVersionResourceReference"> The network service design version resource reference. </param>
+        /// <param name="desiredStateConfigurationGroupValueReferencedResources"> The goal state of the site network service resource. This has references to the configuration group value objects that describe the desired state of the site network service. </param>
         /// <param name="lastStateNetworkServiceDesignVersionName"> The network service design version for the site network service. </param>
-        /// <param name="lastStateConfigurationGroupValueReferences"> The last state of the site network service resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SiteNetworkServicePropertiesFormat(ProvisioningState? provisioningState, ManagedResourceGroupConfiguration managedResourceGroupConfiguration, WritableSubResource siteReference, string publisherName, PublisherScope? publisherScope, string networkServiceDesignGroupName, string networkServiceDesignVersionName, string networkServiceDesignVersionOfferingLocation, DeploymentResourceIdReference networkServiceDesignVersionResourceReference, IDictionary<string, WritableSubResource> desiredStateConfigurationGroupValueReferences, string lastStateNetworkServiceDesignVersionName, IReadOnlyDictionary<string, WritableSubResource> lastStateConfigurationGroupValueReferences, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="lastStateConfigurationGroupValueReferencedResources"> The last state of the site network service resource. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SiteNetworkServicePropertiesFormat(ProvisioningState? provisioningState, ManagedResourceGroupConfiguration managedResourceGroupConfiguration, ReferencedResource siteReference, string publisherName, PublisherScope? publisherScope, string networkServiceDesignGroupName, string networkServiceDesignVersionName, string networkServiceDesignVersionOfferingLocation, DeploymentResourceIdReference networkServiceDesignVersionResourceReference, IDictionary<string, ReferencedResource> desiredStateConfigurationGroupValueReferencedResources, string lastStateNetworkServiceDesignVersionName, IReadOnlyDictionary<string, ReferencedResource> lastStateConfigurationGroupValueReferencedResources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             ManagedResourceGroupConfiguration = managedResourceGroupConfiguration;
@@ -83,51 +50,63 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             NetworkServiceDesignVersionName = networkServiceDesignVersionName;
             NetworkServiceDesignVersionOfferingLocation = networkServiceDesignVersionOfferingLocation;
             NetworkServiceDesignVersionResourceReference = networkServiceDesignVersionResourceReference;
-            DesiredStateConfigurationGroupValueReferences = desiredStateConfigurationGroupValueReferences;
+            DesiredStateConfigurationGroupValueReferencedResources = desiredStateConfigurationGroupValueReferencedResources;
             LastStateNetworkServiceDesignVersionName = lastStateNetworkServiceDesignVersionName;
-            LastStateConfigurationGroupValueReferences = lastStateConfigurationGroupValueReferences;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            LastStateConfigurationGroupValueReferencedResources = lastStateConfigurationGroupValueReferencedResources;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The provisioning state of the site network service resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
+
         /// <summary> Managed resource group configuration. </summary>
         public ManagedResourceGroupConfiguration ManagedResourceGroupConfiguration { get; set; }
+
         /// <summary> The site details. </summary>
-        internal WritableSubResource SiteReference { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        public ResourceIdentifier SiteReferenceId
-        {
-            get => SiteReference is null ? default : SiteReference.Id;
-            set
-            {
-                if (SiteReference is null)
-                    SiteReference = new WritableSubResource();
-                SiteReference.Id = value;
-            }
-        }
+        internal ReferencedResource SiteReference { get; set; }
 
         /// <summary> The publisher name for the site network service. </summary>
         public string PublisherName { get; }
+
         /// <summary> The scope of the publisher. </summary>
         public PublisherScope? PublisherScope { get; }
+
         /// <summary> The network service design group name for the site network service. </summary>
         public string NetworkServiceDesignGroupName { get; }
+
         /// <summary> The network service design version for the site network service. </summary>
         public string NetworkServiceDesignVersionName { get; }
+
         /// <summary> The location of the network service design offering. </summary>
         public string NetworkServiceDesignVersionOfferingLocation { get; }
-        /// <summary>
-        /// The network service design version resource reference.
-        /// Please note <see cref="DeploymentResourceIdReference"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="OpenDeploymentResourceReference"/> and <see cref="SecretDeploymentResourceReference"/>.
-        /// </summary>
+
+        /// <summary> The network service design version resource reference. </summary>
         public DeploymentResourceIdReference NetworkServiceDesignVersionResourceReference { get; set; }
+
         /// <summary> The goal state of the site network service resource. This has references to the configuration group value objects that describe the desired state of the site network service. </summary>
-        public IDictionary<string, WritableSubResource> DesiredStateConfigurationGroupValueReferences { get; }
+        public IDictionary<string, ReferencedResource> DesiredStateConfigurationGroupValueReferencedResources { get; }
+
         /// <summary> The network service design version for the site network service. </summary>
         public string LastStateNetworkServiceDesignVersionName { get; }
+
         /// <summary> The last state of the site network service resource. </summary>
-        public IReadOnlyDictionary<string, WritableSubResource> LastStateConfigurationGroupValueReferences { get; }
+        public IReadOnlyDictionary<string, ReferencedResource> LastStateConfigurationGroupValueReferencedResources { get; }
+
+        /// <summary> Resource ID. </summary>
+        public ResourceIdentifier SiteReferenceId
+        {
+            get
+            {
+                return SiteReference is null ? default : SiteReference.Id;
+            }
+            set
+            {
+                if (SiteReference is null)
+                {
+                    SiteReference = new ReferencedResource();
+                }
+                SiteReference.Id = value;
+            }
+        }
     }
 }

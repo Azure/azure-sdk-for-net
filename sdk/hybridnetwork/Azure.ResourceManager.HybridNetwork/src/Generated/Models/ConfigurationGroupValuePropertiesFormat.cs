@@ -12,46 +12,18 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary>
     /// Hybrid configuration group value properties.
-    /// Please note <see cref="ConfigurationGroupValuePropertiesFormat"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="ConfigurationValueWithoutSecrets"/> and <see cref="ConfigurationValueWithSecrets"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ConfigurationValueWithSecrets"/> and <see cref="ConfigurationValueWithoutSecrets"/>.
     /// </summary>
     public abstract partial class ConfigurationGroupValuePropertiesFormat
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ConfigurationGroupValuePropertiesFormat"/>. </summary>
-        protected ConfigurationGroupValuePropertiesFormat()
+        /// <param name="configurationType"> The value which indicates if configuration values are secrets. </param>
+        private protected ConfigurationGroupValuePropertiesFormat(ConfigurationGroupValueConfigurationType configurationType)
         {
+            ConfigurationType = configurationType;
         }
 
         /// <summary> Initializes a new instance of <see cref="ConfigurationGroupValuePropertiesFormat"/>. </summary>
@@ -60,14 +32,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="publisherScope"> The scope of the publisher. </param>
         /// <param name="configurationGroupSchemaName"> The configuration group schema name. </param>
         /// <param name="configurationGroupSchemaOfferingLocation"> The location of the configuration group schema offering. </param>
-        /// <param name="configurationGroupSchemaResourceReference">
-        /// The configuration group schema resource reference.
-        /// Please note <see cref="DeploymentResourceIdReference"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="OpenDeploymentResourceReference"/> and <see cref="SecretDeploymentResourceReference"/>.
-        /// </param>
+        /// <param name="configurationGroupSchemaResourceReference"> The configuration group schema resource reference. </param>
         /// <param name="configurationType"> The value which indicates if configuration values are secrets. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConfigurationGroupValuePropertiesFormat(ProvisioningState? provisioningState, string publisherName, PublisherScope? publisherScope, string configurationGroupSchemaName, string configurationGroupSchemaOfferingLocation, DeploymentResourceIdReference configurationGroupSchemaResourceReference, ConfigurationGroupValueConfigurationType configurationType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ConfigurationGroupValuePropertiesFormat(ProvisioningState? provisioningState, string publisherName, PublisherScope? publisherScope, string configurationGroupSchemaName, string configurationGroupSchemaOfferingLocation, DeploymentResourceIdReference configurationGroupSchemaResourceReference, ConfigurationGroupValueConfigurationType configurationType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             PublisherName = publisherName;
@@ -76,25 +44,27 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             ConfigurationGroupSchemaOfferingLocation = configurationGroupSchemaOfferingLocation;
             ConfigurationGroupSchemaResourceReference = configurationGroupSchemaResourceReference;
             ConfigurationType = configurationType;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The provisioning state of the site resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
+
         /// <summary> The publisher name for the configuration group schema. </summary>
         public string PublisherName { get; }
+
         /// <summary> The scope of the publisher. </summary>
         public PublisherScope? PublisherScope { get; }
+
         /// <summary> The configuration group schema name. </summary>
         public string ConfigurationGroupSchemaName { get; }
+
         /// <summary> The location of the configuration group schema offering. </summary>
         public string ConfigurationGroupSchemaOfferingLocation { get; }
-        /// <summary>
-        /// The configuration group schema resource reference.
-        /// Please note <see cref="DeploymentResourceIdReference"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="OpenDeploymentResourceReference"/> and <see cref="SecretDeploymentResourceReference"/>.
-        /// </summary>
+
+        /// <summary> The configuration group schema resource reference. </summary>
         public DeploymentResourceIdReference ConfigurationGroupSchemaResourceReference { get; set; }
+
         /// <summary> The value which indicates if configuration values are secrets. </summary>
         internal ConfigurationGroupValueConfigurationType ConfigurationType { get; set; }
     }

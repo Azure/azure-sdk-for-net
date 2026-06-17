@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.HybridNetwork
 {
-    internal class ArtifactStoreOperationSource : IOperationSource<ArtifactStoreResource>
+    /// <summary></summary>
+    internal partial class ArtifactStoreOperationSource : IOperationSource<ArtifactStoreResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal ArtifactStoreOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         ArtifactStoreResource IOperationSource<ArtifactStoreResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ArtifactStoreData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHybridNetworkContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            ArtifactStoreData data = ArtifactStoreData.DeserializeArtifactStoreData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new ArtifactStoreResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<ArtifactStoreResource> IOperationSource<ArtifactStoreResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ArtifactStoreData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHybridNetworkContext.Default);
-            return await Task.FromResult(new ArtifactStoreResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            ArtifactStoreData data = ArtifactStoreData.DeserializeArtifactStoreData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ArtifactStoreResource(_client, data);
         }
     }
 }

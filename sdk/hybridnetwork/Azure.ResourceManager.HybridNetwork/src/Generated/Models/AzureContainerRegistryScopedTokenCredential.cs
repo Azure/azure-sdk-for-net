@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.HybridNetwork;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
@@ -14,38 +15,40 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     public partial class AzureContainerRegistryScopedTokenCredential : ArtifactAccessCredential
     {
         /// <summary> Initializes a new instance of <see cref="AzureContainerRegistryScopedTokenCredential"/>. </summary>
-        internal AzureContainerRegistryScopedTokenCredential()
+        internal AzureContainerRegistryScopedTokenCredential() : base(CredentialType.AzureContainerRegistryScopedToken)
         {
             Repositories = new ChangeTrackingList<string>();
-            CredentialType = CredentialType.AzureContainerRegistryScopedToken;
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureContainerRegistryScopedTokenCredential"/>. </summary>
         /// <param name="credentialType"> The credential type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="username"> The username of the credential. </param>
         /// <param name="acrToken"> The credential value. </param>
         /// <param name="acrServerUri"> The Acr server url. </param>
         /// <param name="repositories"> The repositories that could be accessed using the current credential. </param>
         /// <param name="expiry"> The UTC time when credential will expire. </param>
-        internal AzureContainerRegistryScopedTokenCredential(CredentialType credentialType, IDictionary<string, BinaryData> serializedAdditionalRawData, string username, string acrToken, Uri acrServerUri, IReadOnlyList<string> repositories, DateTimeOffset? expiry) : base(credentialType, serializedAdditionalRawData)
+        internal AzureContainerRegistryScopedTokenCredential(CredentialType credentialType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string username, string acrToken, Uri acrServerUri, IList<string> repositories, DateTimeOffset? expiry) : base(credentialType, additionalBinaryDataProperties)
         {
             Username = username;
             AcrToken = acrToken;
             AcrServerUri = acrServerUri;
             Repositories = repositories;
             Expiry = expiry;
-            CredentialType = credentialType;
         }
 
         /// <summary> The username of the credential. </summary>
         public string Username { get; }
+
         /// <summary> The credential value. </summary>
         public string AcrToken { get; }
+
         /// <summary> The Acr server url. </summary>
         public Uri AcrServerUri { get; }
+
         /// <summary> The repositories that could be accessed using the current credential. </summary>
-        public IReadOnlyList<string> Repositories { get; }
+        public IList<string> Repositories { get; }
+
         /// <summary> The UTC time when credential will expire. </summary>
         public DateTimeOffset? Expiry { get; }
     }
