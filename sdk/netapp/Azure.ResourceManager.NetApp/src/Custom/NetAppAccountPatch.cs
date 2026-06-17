@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Azure lifecycle management. </summary>
         [Obsolete("This property is obsolete and will be removed in a future release. Read the provisioning state from NetAppAccountData instead.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public string ProvisioningState { get; set; }
+        public string ProvisioningState { get; }
 
         /// <summary> Shows the status of disableShowmount for all volumes under the subscription, null equals false. </summary>
         [Obsolete("This property is obsolete and will be removed in a future release. Read DisableShowmount from NetAppAccountData instead.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public bool? DisableShowmount { get; set; }
+        public bool? DisableShowmount { get; }
 
         /// <summary> MultiAD Status for the account. </summary>
         [Obsolete("This property is obsolete and will be removed in a future release. Read MultiAdStatus from NetAppAccountData instead.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public MultiAdStatus? MultiAdStatus { get; set; }
+        public MultiAdStatus? MultiAdStatus { get; }
     }
 }

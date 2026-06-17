@@ -30,6 +30,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <summary> Specifies the protection status error of the resource. </summary>
         [Obsolete("This property is deprecated and not supported. Retrieve the error details from the new ProtectionStatusErrorDetails property.", true)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public ResponseError ErrorDetails { get; set; }
+        public ResponseError ErrorDetails { get; }
     }
 }
