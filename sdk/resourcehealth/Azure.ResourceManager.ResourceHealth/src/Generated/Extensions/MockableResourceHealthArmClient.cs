@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> A collection of <see cref="ResourceHealthAvailabilityStatus"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ResourceHealthAvailabilityStatus> GetAvailabilityStatusOfChildResourceDataAsync(ResourceIdentifier scope, string filter = default, string expand = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ResourceHealthAvailabilityStatus> GetAvailabilityStatusOfChildResourcesAsync(ResourceIdentifier scope, string filter = default, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -310,13 +310,13 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ChildResourcesGetAvailabilityStatusOfChildResourceDataAsyncCollectionResultOfT(
+            return new ChildResourcesGetAvailabilityStatusOfChildResourcesAsyncCollectionResultOfT(
                 ChildResourcesRestClient,
                 scope.ToString(),
                 filter,
                 expand,
                 context,
-                "MockableResourceHealthArmClient.GetAvailabilityStatusOfChildResourceData");
+                "MockableResourceHealthArmClient.GetAvailabilityStatusOfChildResources");
         }
 
         /// <summary>
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> A collection of <see cref="ResourceHealthAvailabilityStatus"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ResourceHealthAvailabilityStatus> GetAvailabilityStatusOfChildResourceData(ResourceIdentifier scope, string filter = default, string expand = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<ResourceHealthAvailabilityStatus> GetAvailabilityStatusOfChildResources(ResourceIdentifier scope, string filter = default, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -350,13 +350,13 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ChildResourcesGetAvailabilityStatusOfChildResourceDataCollectionResultOfT(
+            return new ChildResourcesGetAvailabilityStatusOfChildResourcesCollectionResultOfT(
                 ChildResourcesRestClient,
                 scope.ToString(),
                 filter,
                 expand,
                 context,
-                "MockableResourceHealthArmClient.GetAvailabilityStatusOfChildResourceData");
+                "MockableResourceHealthArmClient.GetAvailabilityStatusOfChildResources");
         }
     }
 }

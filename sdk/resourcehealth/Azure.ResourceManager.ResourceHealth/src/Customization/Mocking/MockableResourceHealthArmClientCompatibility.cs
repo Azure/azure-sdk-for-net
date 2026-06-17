@@ -70,26 +70,6 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
             return new GetHistoricalAvailabilityStatusesOfChildResourceCollectionResult(ChildAvailabilityStatusesRestClient, scope.ToString(), filter, expand, CreateRequestContext(cancellationToken));
         }
 
-        // The generated child-resource list operation is intentionally named GetAvailabilityStatusOfChildResourceData*
-        // to avoid colliding with the GA-compatible GetAvailabilityStatusOfChildResources* methods.
-        // C# cannot overload methods by return type only, so the compatibility methods keep
-        // the old public names and forward to the generated pageable.
-        /// <summary> Lists child resources and their current health status for a parent resource. </summary>
-        public virtual AsyncPageable<ResourceHealthAvailabilityStatus> GetAvailabilityStatusOfChildResourcesAsync(ResourceIdentifier scope, string filter = default, string expand = default, CancellationToken cancellationToken = default)
-        {
-            return GetAvailabilityStatusOfChildResourceDataAsync(scope, filter, expand, cancellationToken);
-        }
-
-        // The generated child-resource list operation is intentionally named GetAvailabilityStatusOfChildResourceData*
-        // to avoid colliding with the GA-compatible GetAvailabilityStatusOfChildResources* methods.
-        // C# cannot overload methods by return type only, so the compatibility methods keep
-        // the old public names and forward to the generated pageable.
-        /// <summary> Lists child resources and their current health status for a parent resource. </summary>
-        public virtual Pageable<ResourceHealthAvailabilityStatus> GetAvailabilityStatusOfChildResources(ResourceIdentifier scope, string filter = default, string expand = default, CancellationToken cancellationToken = default)
-        {
-            return GetAvailabilityStatusOfChildResourceData(scope, filter, expand, cancellationToken);
-        }
-
         /// <summary> Gets current availability status for a child resource. </summary>
         public virtual async Task<Response<ResourceHealthAvailabilityStatus>> GetAvailabilityStatusOfChildResourceAsync(ResourceIdentifier scope, string filter = default, string expand = default, CancellationToken cancellationToken = default)
         {
