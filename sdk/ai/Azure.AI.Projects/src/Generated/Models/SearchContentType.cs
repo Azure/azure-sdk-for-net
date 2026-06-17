@@ -5,7 +5,7 @@
 namespace Azure.AI.Projects
 {
     /// <summary></summary>
-    internal enum SearchContentType
+    public enum SearchContentType
     {
         /// <summary> Text. </summary>
         Text,

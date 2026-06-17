@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.Language.Text
 {
     /// <summary> A Metadata for temporal set entity instances. </summary>
-    public partial class TemporalSetMetadata : BaseMetadata, IJsonModel<TemporalSetMetadata>
+    internal partial class TemporalSetMetadata : BaseMetadata, IJsonModel<TemporalSetMetadata>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

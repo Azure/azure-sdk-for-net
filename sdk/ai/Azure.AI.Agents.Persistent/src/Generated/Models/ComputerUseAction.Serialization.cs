@@ -16,7 +16,7 @@ namespace Azure.AI.Agents.Persistent
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ClickAction"/>, <see cref="DoubleClickAction"/>, <see cref="DragAction"/>, <see cref="KeyPressAction"/>, <see cref="MoveAction"/>, <see cref="ScreenshotAction"/>, <see cref="ScrollAction"/>, <see cref="TypeAction"/>, and <see cref="WaitAction"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownComputerUseAction))]
-    public abstract partial class ComputerUseAction : IJsonModel<ComputerUseAction>
+    internal abstract partial class ComputerUseAction : IJsonModel<ComputerUseAction>
     {
         /// <summary> Initializes a new instance of <see cref="ComputerUseAction"/> for deserialization. </summary>
         internal ComputerUseAction()

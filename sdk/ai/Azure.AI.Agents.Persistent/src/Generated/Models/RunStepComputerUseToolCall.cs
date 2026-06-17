@@ -14,7 +14,7 @@ namespace Azure.AI.Agents.Persistent
     /// A record of a call to a Computer Use tool, issued by the model in evaluation of a defined tool, that represents
     /// executed computer automation actions.
     /// </summary>
-    public partial class RunStepComputerUseToolCall : RunStepToolCall
+    internal partial class RunStepComputerUseToolCall : RunStepToolCall
     {
         /// <summary> Initializes a new instance of <see cref="RunStepComputerUseToolCall"/>. </summary>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>

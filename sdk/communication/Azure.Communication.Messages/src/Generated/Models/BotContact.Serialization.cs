@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.Communication.Messages
 {
     /// <summary> Bot Contact. </summary>
-    public partial class BotContact : ConversationContact, IJsonModel<BotContact>
+    internal partial class BotContact : ConversationContact, IJsonModel<BotContact>
     {
         /// <summary> Initializes a new instance of <see cref="BotContact"/> for deserialization. </summary>
         internal BotContact()

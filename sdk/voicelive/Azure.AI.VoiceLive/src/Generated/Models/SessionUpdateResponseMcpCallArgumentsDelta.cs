@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Represents a delta update of the arguments for an MCP tool call. </summary>
-    public partial class SessionUpdateResponseMcpCallArgumentsDelta : SessionUpdate
+    internal partial class SessionUpdateResponseMcpCallArgumentsDelta : SessionUpdate
     {
         /// <summary> Initializes a new instance of <see cref="SessionUpdateResponseMcpCallArgumentsDelta"/>. </summary>
         /// <param name="delta"> The delta of the arguments. </param>

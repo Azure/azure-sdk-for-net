@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> A file search result entry. </summary>
-    public partial class FileSearchResult : IJsonModel<FileSearchResult>
+    internal partial class FileSearchResult : IJsonModel<FileSearchResult>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

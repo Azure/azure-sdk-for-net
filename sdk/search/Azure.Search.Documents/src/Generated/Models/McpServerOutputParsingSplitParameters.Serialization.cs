@@ -14,7 +14,7 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Parameters for split output parsing. </summary>
-    public partial class McpServerOutputParsingSplitParameters : IJsonModel<McpServerOutputParsingSplitParameters>
+    internal partial class McpServerOutputParsingSplitParameters : IJsonModel<McpServerOutputParsingSplitParameters>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

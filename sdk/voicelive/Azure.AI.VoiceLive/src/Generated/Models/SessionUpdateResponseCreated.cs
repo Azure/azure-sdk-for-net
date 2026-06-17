@@ -14,7 +14,7 @@ namespace Azure.AI.VoiceLive
     /// Returned when a new Response is created. The first event of response creation,
     /// where the response is in an initial state of `in_progress`.
     /// </summary>
-    public partial class SessionUpdateResponseCreated : SessionUpdate
+    internal partial class SessionUpdateResponseCreated : SessionUpdate
     {
         /// <summary> Initializes a new instance of <see cref="SessionUpdateResponseCreated"/>. </summary>
         /// <param name="response"></param>

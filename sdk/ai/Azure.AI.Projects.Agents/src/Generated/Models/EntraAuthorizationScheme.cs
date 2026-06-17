@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The EntraAuthorizationScheme. </summary>
-    public partial class EntraAuthorizationScheme : AgentEndpointAuthorizationScheme
+    internal partial class EntraAuthorizationScheme : AgentEndpointAuthorizationScheme
     {
         /// <summary> Initializes a new instance of <see cref="EntraAuthorizationScheme"/>. </summary>
         public EntraAuthorizationScheme() : base(AgentEndpointAuthorizationSchemeType.Entra)

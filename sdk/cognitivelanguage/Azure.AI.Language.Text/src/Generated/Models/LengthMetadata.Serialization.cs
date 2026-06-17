@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.Language.Text
 {
     /// <summary> Represents the Length entity Metadata model. </summary>
-    public partial class LengthMetadata : BaseMetadata, IJsonModel<LengthMetadata>
+    internal partial class LengthMetadata : BaseMetadata, IJsonModel<LengthMetadata>
     {
         /// <summary> Initializes a new instance of <see cref="LengthMetadata"/> for deserialization. </summary>
         internal LengthMetadata()

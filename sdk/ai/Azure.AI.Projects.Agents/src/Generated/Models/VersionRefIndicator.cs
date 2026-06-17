@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Version indicator that references a specific agent version by name. </summary>
-    public partial class VersionRefIndicator : VersionIndicator
+    internal partial class VersionRefIndicator : VersionIndicator
     {
         /// <summary> Initializes a new instance of <see cref="VersionRefIndicator"/>. </summary>
         /// <param name="agentVersion"> The agent version identifier returned by the agent version APIs. </param>

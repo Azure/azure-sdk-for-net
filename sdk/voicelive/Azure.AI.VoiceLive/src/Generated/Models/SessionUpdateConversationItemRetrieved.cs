@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Returned when a conversation item is retrieved with `conversation.item.retrieve`. </summary>
-    public partial class SessionUpdateConversationItemRetrieved : SessionUpdate
+    internal partial class SessionUpdateConversationItemRetrieved : SessionUpdate
     {
         /// <summary> Initializes a new instance of <see cref="SessionUpdateConversationItemRetrieved"/>. </summary>
         internal SessionUpdateConversationItemRetrieved() : base(ServerEventType.ConversationItemRetrieved)

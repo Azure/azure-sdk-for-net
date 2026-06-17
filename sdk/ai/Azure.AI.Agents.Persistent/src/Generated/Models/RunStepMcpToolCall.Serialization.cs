@@ -16,7 +16,7 @@ namespace Azure.AI.Agents.Persistent
     /// A record of a call to a MCP tool, issued by the model in evaluation of a defined tool, that represents
     /// executed MCP actions.
     /// </summary>
-    public partial class RunStepMcpToolCall : RunStepToolCall, IJsonModel<RunStepMcpToolCall>
+    internal partial class RunStepMcpToolCall : RunStepToolCall, IJsonModel<RunStepMcpToolCall>
     {
         /// <summary> Initializes a new instance of <see cref="RunStepMcpToolCall"/> for deserialization. </summary>
         internal RunStepMcpToolCall()

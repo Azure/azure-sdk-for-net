@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.Translation.Document
 {
     /// <summary> Document filter. </summary>
-    internal partial class DocumentFilter : IJsonModel<DocumentFilter>
+    public partial class DocumentFilter : IJsonModel<DocumentFilter>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

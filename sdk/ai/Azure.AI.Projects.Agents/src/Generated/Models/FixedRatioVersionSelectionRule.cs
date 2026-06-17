@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The FixedRatioVersionSelectionRule. </summary>
-    public partial class FixedRatioVersionSelectionRule : VersionSelectionRule
+    internal partial class FixedRatioVersionSelectionRule : VersionSelectionRule
     {
         /// <summary> Initializes a new instance of <see cref="FixedRatioVersionSelectionRule"/>. </summary>
         /// <param name="agentVersion"> The agent version to route traffic to. </param>

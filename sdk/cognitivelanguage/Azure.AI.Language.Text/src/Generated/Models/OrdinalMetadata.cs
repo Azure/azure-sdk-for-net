@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Text
 {
     /// <summary> A metadata for numeric entity instances. </summary>
-    public partial class OrdinalMetadata : BaseMetadata
+    internal partial class OrdinalMetadata : BaseMetadata
     {
         /// <summary> Initializes a new instance of <see cref="OrdinalMetadata"/>. </summary>
         /// <param name="offset"> The offset with respect to the reference (e.g., offset = -1 indicates the second to last). </param>

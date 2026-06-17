@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.Communication.Messages
 {
     /// <summary> The message content of type image information. </summary>
-    public partial class ImageMessageContent : MessageContent, IJsonModel<ImageMessageContent>
+    internal partial class ImageMessageContent : MessageContent, IJsonModel<ImageMessageContent>
     {
         /// <summary> Initializes a new instance of <see cref="ImageMessageContent"/> for deserialization. </summary>
         internal ImageMessageContent()

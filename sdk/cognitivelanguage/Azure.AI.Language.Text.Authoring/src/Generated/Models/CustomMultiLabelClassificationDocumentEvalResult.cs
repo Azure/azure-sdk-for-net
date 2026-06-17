@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Text.Authoring
 {
     /// <summary> Represents the document evaluation result for a custom multi-label classification project. </summary>
-    public partial class CustomMultiLabelClassificationDocumentEvalResult : TextAuthoringDocumentEvalResult
+    internal partial class CustomMultiLabelClassificationDocumentEvalResult : TextAuthoringDocumentEvalResult
     {
         /// <summary> Initializes a new instance of <see cref="CustomMultiLabelClassificationDocumentEvalResult"/>. </summary>
         /// <param name="location"> Represents the document path. </param>

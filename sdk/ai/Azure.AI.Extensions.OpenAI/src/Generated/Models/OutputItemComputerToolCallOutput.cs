@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Computer tool call output. </summary>
-    public partial class OutputItemComputerToolCallOutput : AgentResponseItem
+    internal partial class OutputItemComputerToolCallOutput : AgentResponseItem
     {
         /// <summary> Initializes a new instance of <see cref="OutputItemComputerToolCallOutput"/>. </summary>
         /// <param name="callId"> The ID of the computer tool call that produced the output. </param>

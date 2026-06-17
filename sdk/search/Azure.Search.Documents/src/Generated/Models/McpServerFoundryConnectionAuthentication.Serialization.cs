@@ -14,7 +14,7 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Authentication using an Azure AI Foundry connection. </summary>
-    public partial class McpServerFoundryConnectionAuthentication : McpServerAuthentication, IJsonModel<McpServerFoundryConnectionAuthentication>
+    internal partial class McpServerFoundryConnectionAuthentication : McpServerAuthentication, IJsonModel<McpServerFoundryConnectionAuthentication>
     {
         /// <summary> Initializes a new instance of <see cref="McpServerFoundryConnectionAuthentication"/> for deserialization. </summary>
         internal McpServerFoundryConnectionAuthentication()

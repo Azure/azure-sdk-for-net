@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.Language.Text.Authoring
 {
     /// <summary> Represents the comparison between the expected and predicted sentiment that result from an evaluation operation. </summary>
-    public partial class DocumentTextSentimentEvalResult : IJsonModel<DocumentTextSentimentEvalResult>
+    internal partial class DocumentTextSentimentEvalResult : IJsonModel<DocumentTextSentimentEvalResult>
     {
         /// <summary> Initializes a new instance of <see cref="DocumentTextSentimentEvalResult"/> for deserialization. </summary>
         internal DocumentTextSentimentEvalResult()

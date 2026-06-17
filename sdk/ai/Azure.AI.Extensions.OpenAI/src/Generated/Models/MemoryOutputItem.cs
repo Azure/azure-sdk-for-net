@@ -11,7 +11,7 @@ namespace Azure.AI.Extensions.OpenAI
     /// A single memory item stored in the memory store, containing content and metadata.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="UserProfileMemoryItem"/>, <see cref="ChatSummaryMemoryItem"/>, and <see cref="ProceduralMemoryItem"/>.
     /// </summary>
-    public abstract partial class MemoryOutputItem
+    internal abstract partial class MemoryOutputItem
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

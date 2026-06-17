@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The HeaderIsolationKeySource. </summary>
-    public partial class HeaderIsolationKeySource : IsolationKeySource
+    internal partial class HeaderIsolationKeySource : IsolationKeySource
     {
         /// <summary> Initializes a new instance of <see cref="HeaderIsolationKeySource"/>. </summary>
         public HeaderIsolationKeySource() : base(IsolationKeySourceKind.Header)

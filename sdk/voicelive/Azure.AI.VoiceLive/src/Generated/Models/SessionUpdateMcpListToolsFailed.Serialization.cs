@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> MCP list tools failed message. </summary>
-    public partial class SessionUpdateMcpListToolsFailed : SessionUpdate, IJsonModel<SessionUpdateMcpListToolsFailed>
+    internal partial class SessionUpdateMcpListToolsFailed : SessionUpdate, IJsonModel<SessionUpdateMcpListToolsFailed>
     {
         /// <summary> Initializes a new instance of <see cref="SessionUpdateMcpListToolsFailed"/> for deserialization. </summary>
         internal SessionUpdateMcpListToolsFailed()

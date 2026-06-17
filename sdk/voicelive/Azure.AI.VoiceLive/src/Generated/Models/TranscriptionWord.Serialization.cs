@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> A time-stamped word in the transcription. </summary>
-    public partial class TranscriptionWord : IJsonModel<TranscriptionWord>
+    internal partial class TranscriptionWord : IJsonModel<TranscriptionWord>
     {
         /// <summary> Initializes a new instance of <see cref="TranscriptionWord"/> for deserialization. </summary>
         internal TranscriptionWord()

@@ -14,7 +14,7 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Treat the output as a single block without any parsing. </summary>
-    public partial class McpServerNoneOutputParsing : McpServerOutputParsing, IJsonModel<McpServerNoneOutputParsing>
+    internal partial class McpServerNoneOutputParsing : McpServerOutputParsing, IJsonModel<McpServerNoneOutputParsing>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

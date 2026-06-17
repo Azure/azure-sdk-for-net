@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> An OpenAPI tool call. </summary>
-    public partial class OpenApiToolCall : AgentResponseItem, IJsonModel<OpenApiToolCall>
+    internal partial class OpenApiToolCall : AgentResponseItem, IJsonModel<OpenApiToolCall>
     {
         /// <summary> Initializes a new instance of <see cref="OpenApiToolCall"/> for deserialization. </summary>
         internal OpenApiToolCall()

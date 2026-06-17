@@ -16,7 +16,7 @@ namespace Azure.AI.Agents.Persistent
     /// A record of a call to a Computer Use tool, issued by the model in evaluation of a defined tool, that represents
     /// executed computer automation actions.
     /// </summary>
-    public partial class RunStepComputerUseToolCall : RunStepToolCall, IJsonModel<RunStepComputerUseToolCall>
+    internal partial class RunStepComputerUseToolCall : RunStepToolCall, IJsonModel<RunStepComputerUseToolCall>
     {
         /// <summary> Initializes a new instance of <see cref="RunStepComputerUseToolCall"/> for deserialization. </summary>
         internal RunStepComputerUseToolCall()

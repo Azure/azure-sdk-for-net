@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> Represents the Microsoft Fabric tool call in a streaming run step. </summary>
-    public partial class RunStepDeltaMicrosoftFabricToolCall : RunStepDeltaToolCall, IJsonModel<RunStepDeltaMicrosoftFabricToolCall>
+    internal partial class RunStepDeltaMicrosoftFabricToolCall : RunStepDeltaToolCall, IJsonModel<RunStepDeltaMicrosoftFabricToolCall>
     {
         /// <summary> Initializes a new instance of <see cref="RunStepDeltaMicrosoftFabricToolCall"/> for deserialization. </summary>
         internal RunStepDeltaMicrosoftFabricToolCall()

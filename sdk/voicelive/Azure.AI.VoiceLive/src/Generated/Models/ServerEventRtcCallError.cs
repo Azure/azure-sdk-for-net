@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Returned when a WebRTC call operation fails. </summary>
-    public partial class ServerEventRtcCallError : SessionUpdate
+    internal partial class ServerEventRtcCallError : SessionUpdate
     {
         /// <summary> Initializes a new instance of <see cref="ServerEventRtcCallError"/>. </summary>
         /// <param name="error"> The error details. </param>

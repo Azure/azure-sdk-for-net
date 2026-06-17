@@ -14,7 +14,7 @@ using Azure.Core;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> The CreateRunRequest. </summary>
-    internal partial class CreateRunRequest : IJsonModel<CreateRunRequest>
+    public partial class CreateRunRequest : IJsonModel<CreateRunRequest>
     {
         /// <summary> Initializes a new instance of <see cref="CreateRunRequest"/> for deserialization. </summary>
         internal CreateRunRequest()

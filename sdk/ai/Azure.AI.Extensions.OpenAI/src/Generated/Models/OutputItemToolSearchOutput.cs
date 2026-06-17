@@ -9,7 +9,7 @@ using System.Linq;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The OutputItemToolSearchOutput. </summary>
-    public partial class OutputItemToolSearchOutput : AgentResponseItem
+    internal partial class OutputItemToolSearchOutput : AgentResponseItem
     {
         /// <summary> Initializes a new instance of <see cref="OutputItemToolSearchOutput"/>. </summary>
         /// <param name="callId"></param>

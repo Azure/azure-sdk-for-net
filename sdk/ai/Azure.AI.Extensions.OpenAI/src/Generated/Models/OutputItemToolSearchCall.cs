@@ -9,7 +9,7 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The OutputItemToolSearchCall. </summary>
-    public partial class OutputItemToolSearchCall : AgentResponseItem
+    internal partial class OutputItemToolSearchCall : AgentResponseItem
     {
         /// <summary> Initializes a new instance of <see cref="OutputItemToolSearchCall"/>. </summary>
         /// <param name="callId"></param>

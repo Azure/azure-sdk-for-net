@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.Language.Text
 {
     /// <summary> Represents the Volume entity Metadata model. </summary>
-    public partial class VolumeMetadata : BaseMetadata, IJsonModel<VolumeMetadata>
+    internal partial class VolumeMetadata : BaseMetadata, IJsonModel<VolumeMetadata>
     {
         /// <summary> Initializes a new instance of <see cref="VolumeMetadata"/> for deserialization. </summary>
         internal VolumeMetadata()

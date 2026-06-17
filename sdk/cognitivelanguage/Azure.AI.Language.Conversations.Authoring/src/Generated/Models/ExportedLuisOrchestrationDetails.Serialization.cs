@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.Language.Conversations.Authoring
 {
     /// <summary> Represents the orchestration options for a LUIS application target. </summary>
-    public partial class ExportedLuisOrchestrationDetails : ExportedOrchestrationDetails, IJsonModel<ExportedLuisOrchestrationDetails>
+    internal partial class ExportedLuisOrchestrationDetails : ExportedOrchestrationDetails, IJsonModel<ExportedLuisOrchestrationDetails>
     {
         /// <summary> Initializes a new instance of <see cref="ExportedLuisOrchestrationDetails"/> for deserialization. </summary>
         internal ExportedLuisOrchestrationDetails()

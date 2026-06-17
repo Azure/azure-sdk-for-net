@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.AI.Language.Text.Authoring
 {
     /// <summary> Represents the comparison between the expected and predicted classes that are result from the evaluation operation. </summary>
-    public partial class DocumentMultiLabelClassificationEvalResult
+    internal partial class DocumentMultiLabelClassificationEvalResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

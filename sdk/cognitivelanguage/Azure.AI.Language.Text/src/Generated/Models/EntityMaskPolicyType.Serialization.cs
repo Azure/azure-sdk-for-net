@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.Language.Text
 {
     /// <summary> Represents the policy of redacting PII with the entity type. </summary>
-    public partial class EntityMaskPolicyType : BaseRedactionPolicy, IJsonModel<EntityMaskPolicyType>
+    internal partial class EntityMaskPolicyType : BaseRedactionPolicy, IJsonModel<EntityMaskPolicyType>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

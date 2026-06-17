@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Returned when a web search call has completed. </summary>
-    public partial class ServerEventResponseWebSearchCallCompleted : SessionUpdate
+    internal partial class ServerEventResponseWebSearchCallCompleted : SessionUpdate
     {
         /// <summary> Initializes a new instance of <see cref="ServerEventResponseWebSearchCallCompleted"/>. </summary>
         /// <param name="responseId"> The ID of the response. </param>

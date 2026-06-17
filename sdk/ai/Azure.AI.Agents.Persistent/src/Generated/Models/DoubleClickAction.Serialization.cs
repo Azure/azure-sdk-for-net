@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> A double click action. </summary>
-    public partial class DoubleClickAction : ComputerUseAction, IJsonModel<DoubleClickAction>
+    internal partial class DoubleClickAction : ComputerUseAction, IJsonModel<DoubleClickAction>
     {
         /// <summary> Initializes a new instance of <see cref="DoubleClickAction"/> for deserialization. </summary>
         internal DoubleClickAction()

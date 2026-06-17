@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.Communication.Messages
 {
     /// <summary> The message content of type document information. </summary>
-    public partial class DocumentMessageContent : MessageContent, IJsonModel<DocumentMessageContent>
+    internal partial class DocumentMessageContent : MessageContent, IJsonModel<DocumentMessageContent>
     {
         /// <summary> Initializes a new instance of <see cref="DocumentMessageContent"/> for deserialization. </summary>
         internal DocumentMessageContent()

@@ -9,7 +9,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> A custom event routine trigger. </summary>
-    public partial class CustomRoutineTrigger : RoutineTrigger
+    internal partial class CustomRoutineTrigger : RoutineTrigger
     {
         /// <summary> Initializes a new instance of <see cref="CustomRoutineTrigger"/>. </summary>
         /// <param name="provider"> The external provider that emits the custom event. </param>

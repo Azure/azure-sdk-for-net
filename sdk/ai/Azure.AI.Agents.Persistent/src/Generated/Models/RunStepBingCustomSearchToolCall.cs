@@ -14,7 +14,7 @@ namespace Azure.AI.Agents.Persistent
     /// A record of a call to a Bing Custom Search tool, issued by the model in evaluation of a defined tool, that represents
     /// executed search with Bing Custom Search.
     /// </summary>
-    public partial class RunStepBingCustomSearchToolCall : RunStepToolCall
+    internal partial class RunStepBingCustomSearchToolCall : RunStepToolCall
     {
         /// <summary> Initializes a new instance of <see cref="RunStepBingCustomSearchToolCall"/>. </summary>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>

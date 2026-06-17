@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.Language.Text
 {
     /// <summary> Represents the Address entity Metadata model. </summary>
-    public partial class AddressMetadata : BaseMetadata, IJsonModel<AddressMetadata>
+    internal partial class AddressMetadata : BaseMetadata, IJsonModel<AddressMetadata>
     {
         /// <summary> Initializes a new instance of <see cref="AddressMetadata"/> for deserialization. </summary>
         internal AddressMetadata()

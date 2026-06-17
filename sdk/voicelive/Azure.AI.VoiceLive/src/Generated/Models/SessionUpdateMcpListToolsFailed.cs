@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> MCP list tools failed message. </summary>
-    public partial class SessionUpdateMcpListToolsFailed : SessionUpdate
+    internal partial class SessionUpdateMcpListToolsFailed : SessionUpdate
     {
         /// <summary> Initializes a new instance of <see cref="SessionUpdateMcpListToolsFailed"/>. </summary>
         /// <param name="itemId"> The item ID. </param>

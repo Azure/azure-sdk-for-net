@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Text
 {
     /// <summary> Represents the policy of replacing detected PII with synthetic values. </summary>
-    public partial class SyntheticReplacementPolicyType : BaseRedactionPolicy
+    internal partial class SyntheticReplacementPolicyType : BaseRedactionPolicy
     {
         /// <summary> Initializes a new instance of <see cref="SyntheticReplacementPolicyType"/>. </summary>
         public SyntheticReplacementPolicyType() : base(RedactionPolicyKind.SyntheticReplacement)

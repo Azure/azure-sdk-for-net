@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.Language.Text
 {
     /// <summary> Represents the policy of replacing detected PII with synthetic values. </summary>
-    public partial class SyntheticReplacementPolicyType : BaseRedactionPolicy, IJsonModel<SyntheticReplacementPolicyType>
+    internal partial class SyntheticReplacementPolicyType : BaseRedactionPolicy, IJsonModel<SyntheticReplacementPolicyType>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

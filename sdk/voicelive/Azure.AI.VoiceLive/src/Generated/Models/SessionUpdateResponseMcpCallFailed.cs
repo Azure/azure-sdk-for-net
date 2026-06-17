@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Indicates the MCP call has failed. </summary>
-    public partial class SessionUpdateResponseMcpCallFailed : SessionUpdate
+    internal partial class SessionUpdateResponseMcpCallFailed : SessionUpdate
     {
         /// <summary> Initializes a new instance of <see cref="SessionUpdateResponseMcpCallFailed"/>. </summary>
         /// <param name="itemId"> The ID of the item associated with the event. </param>

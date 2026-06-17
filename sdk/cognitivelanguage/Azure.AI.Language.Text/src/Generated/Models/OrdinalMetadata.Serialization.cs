@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.Language.Text
 {
     /// <summary> A metadata for numeric entity instances. </summary>
-    public partial class OrdinalMetadata : BaseMetadata, IJsonModel<OrdinalMetadata>
+    internal partial class OrdinalMetadata : BaseMetadata, IJsonModel<OrdinalMetadata>
     {
         /// <summary> Initializes a new instance of <see cref="OrdinalMetadata"/> for deserialization. </summary>
         internal OrdinalMetadata()

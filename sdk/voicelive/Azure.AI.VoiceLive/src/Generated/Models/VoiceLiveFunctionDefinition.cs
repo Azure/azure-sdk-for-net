@@ -12,7 +12,7 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> The definition of a function tool as used by the voicelive endpoint. </summary>
-    public partial class VoiceLiveFunctionDefinition : VoiceLiveToolDefinition
+    internal partial class VoiceLiveFunctionDefinition : VoiceLiveToolDefinition
     {
         /// <summary> Initializes a new instance of <see cref="VoiceLiveFunctionDefinition"/>. </summary>
         /// <param name="name"></param>

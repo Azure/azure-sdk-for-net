@@ -14,7 +14,7 @@ namespace Azure.AI.Projects.Agents
     /// Registration is metadata-only: Foundry records the agent definition to light up observability experiences (traces, evaluations)
     /// over customer-emitted OpenTelemetry data.
     /// </summary>
-    public partial class ExternalAgentDefinition : ProjectsAgentDefinition, IJsonModel<ExternalAgentDefinition>
+    internal partial class ExternalAgentDefinition : ProjectsAgentDefinition, IJsonModel<ExternalAgentDefinition>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

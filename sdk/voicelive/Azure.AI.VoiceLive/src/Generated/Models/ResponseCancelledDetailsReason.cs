@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.VoiceLive
 {
     /// <summary></summary>
-    public readonly partial struct ResponseCancelledDetailsReason : IEquatable<ResponseCancelledDetailsReason>
+    internal readonly partial struct ResponseCancelledDetailsReason : IEquatable<ResponseCancelledDetailsReason>
     {
         private readonly string _value;
         private const string TurnDetectedValue = "turn_detected";

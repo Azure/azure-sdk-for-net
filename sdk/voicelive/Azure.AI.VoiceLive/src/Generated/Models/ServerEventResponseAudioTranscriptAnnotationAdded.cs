@@ -12,7 +12,7 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Returned when an audio transcript annotation is added to a response. </summary>
-    public partial class ServerEventResponseAudioTranscriptAnnotationAdded : SessionUpdate
+    internal partial class ServerEventResponseAudioTranscriptAnnotationAdded : SessionUpdate
     {
         /// <summary> Initializes a new instance of <see cref="ServerEventResponseAudioTranscriptAnnotationAdded"/>. </summary>
         /// <param name="responseId"> The ID of the response. </param>

@@ -14,7 +14,7 @@ using Azure.AI.Language.Conversations;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> This represents the prediction result of an Orchestration project. </summary>
-    public partial class OrchestrationPrediction : PredictionBase, IJsonModel<OrchestrationPrediction>
+    internal partial class OrchestrationPrediction : PredictionBase, IJsonModel<OrchestrationPrediction>
     {
         /// <summary> Initializes a new instance of <see cref="OrchestrationPrediction"/> for deserialization. </summary>
         internal OrchestrationPrediction()

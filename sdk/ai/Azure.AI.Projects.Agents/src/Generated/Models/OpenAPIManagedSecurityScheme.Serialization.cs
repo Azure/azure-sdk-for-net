@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Security scheme for OpenApi managed_identity authentication. </summary>
-    public partial class OpenAPIManagedSecurityScheme : IJsonModel<OpenAPIManagedSecurityScheme>
+    internal partial class OpenAPIManagedSecurityScheme : IJsonModel<OpenAPIManagedSecurityScheme>
     {
         /// <summary> Initializes a new instance of <see cref="OpenAPIManagedSecurityScheme"/> for deserialization. </summary>
         internal OpenAPIManagedSecurityScheme()

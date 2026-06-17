@@ -21,7 +21,7 @@ namespace Azure.AI.VoiceLive
     /// <list type="bullet"><item><description>The client has sent a `conversation.item.create` event to add a new Item</description></item></list>
     /// to the Conversation.
     /// </summary>
-    public partial class SessionUpdateConversationItemCreated : SessionUpdate
+    internal partial class SessionUpdateConversationItemCreated : SessionUpdate
     {
         /// <summary> Initializes a new instance of <see cref="SessionUpdateConversationItemCreated"/>. </summary>
         internal SessionUpdateConversationItemCreated() : base(ServerEventType.ConversationItemCreated)

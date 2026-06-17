@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> A transcribed phrase with timing information. </summary>
-    public partial class TranscriptionPhrase : IJsonModel<TranscriptionPhrase>
+    internal partial class TranscriptionPhrase : IJsonModel<TranscriptionPhrase>
     {
         /// <summary> Initializes a new instance of <see cref="TranscriptionPhrase"/> for deserialization. </summary>
         internal TranscriptionPhrase()

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Text
 {
     /// <summary> A metadata for numeric entity instances. </summary>
-    public partial class NumberMetadata : BaseMetadata
+    internal partial class NumberMetadata : BaseMetadata
     {
         /// <summary> Initializes a new instance of <see cref="NumberMetadata"/>. </summary>
         /// <param name="numberKind"> Kind of the number type. </param>

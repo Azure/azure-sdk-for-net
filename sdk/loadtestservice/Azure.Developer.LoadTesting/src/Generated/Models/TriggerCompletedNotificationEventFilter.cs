@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Developer.LoadTesting
 {
     /// <summary> The notification event filter when the event type is TriggerCompleted. </summary>
-    public partial class TriggerCompletedNotificationEventFilter : TestsNotificationEventFilter
+    internal partial class TriggerCompletedNotificationEventFilter : TestsNotificationEventFilter
     {
         /// <summary> Initializes a new instance of <see cref="TriggerCompletedNotificationEventFilter"/>. </summary>
         public TriggerCompletedNotificationEventFilter() : base(NotificationEventType.TriggerCompleted)

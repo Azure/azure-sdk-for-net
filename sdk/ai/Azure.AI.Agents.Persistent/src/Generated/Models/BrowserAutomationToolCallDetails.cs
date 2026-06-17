@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> Details of a Browser Automation tool call. </summary>
-    public partial class BrowserAutomationToolCallDetails
+    internal partial class BrowserAutomationToolCallDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

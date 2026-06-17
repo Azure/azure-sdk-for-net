@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> Security scheme for OpenApi managed_identity authentication. </summary>
-    public partial class OpenApiConnectionSecurityScheme : IJsonModel<OpenApiConnectionSecurityScheme>
+    internal partial class OpenApiConnectionSecurityScheme : IJsonModel<OpenApiConnectionSecurityScheme>
     {
         /// <summary> Initializes a new instance of <see cref="OpenApiConnectionSecurityScheme"/> for deserialization. </summary>
         internal OpenApiConnectionSecurityScheme()

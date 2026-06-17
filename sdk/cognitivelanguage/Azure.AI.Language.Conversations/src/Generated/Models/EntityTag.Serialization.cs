@@ -14,7 +14,7 @@ using Azure.AI.Language.Conversations;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> Tags express similarities between entity categories for the extracted entity type. </summary>
-    public partial class EntityTag : IJsonModel<EntityTag>
+    internal partial class EntityTag : IJsonModel<EntityTag>
     {
         /// <summary> Initializes a new instance of <see cref="EntityTag"/> for deserialization. </summary>
         internal EntityTag()

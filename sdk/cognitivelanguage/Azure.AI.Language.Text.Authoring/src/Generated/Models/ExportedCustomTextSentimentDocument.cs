@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Text.Authoring
 {
     /// <summary> Represents an exported document for a custom text sentiment project. </summary>
-    public partial class ExportedCustomTextSentimentDocument
+    internal partial class ExportedCustomTextSentimentDocument
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

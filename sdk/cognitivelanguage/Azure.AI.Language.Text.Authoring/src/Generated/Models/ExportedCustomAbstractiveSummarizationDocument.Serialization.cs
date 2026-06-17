@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.Language.Text.Authoring
 {
     /// <summary> Represents an exported document for a custom abstractive summarization project. </summary>
-    public partial class ExportedCustomAbstractiveSummarizationDocument : IJsonModel<ExportedCustomAbstractiveSummarizationDocument>
+    internal partial class ExportedCustomAbstractiveSummarizationDocument : IJsonModel<ExportedCustomAbstractiveSummarizationDocument>
     {
         /// <summary> Initializes a new instance of <see cref="ExportedCustomAbstractiveSummarizationDocument"/> for deserialization. </summary>
         internal ExportedCustomAbstractiveSummarizationDocument()

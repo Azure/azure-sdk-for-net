@@ -11,7 +11,7 @@ namespace Azure.AI.Projects.Agents
     /// The IsolationKeySource.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="EntraIsolationKeySource"/> and <see cref="HeaderIsolationKeySource"/>.
     /// </summary>
-    public abstract partial class IsolationKeySource
+    internal abstract partial class IsolationKeySource
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

@@ -5,7 +5,7 @@
 namespace Azure.AI.Projects
 {
     /// <summary></summary>
-    internal enum SearchContextSize
+    public enum SearchContextSize
     {
         /// <summary> Low. </summary>
         Low,

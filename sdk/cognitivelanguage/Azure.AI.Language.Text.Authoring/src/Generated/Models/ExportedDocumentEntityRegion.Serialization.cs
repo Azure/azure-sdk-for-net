@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.Language.Text.Authoring
 {
     /// <summary> Represents a region in a document for entity labeling. </summary>
-    public partial class ExportedDocumentEntityRegion : IJsonModel<ExportedDocumentEntityRegion>
+    internal partial class ExportedDocumentEntityRegion : IJsonModel<ExportedDocumentEntityRegion>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

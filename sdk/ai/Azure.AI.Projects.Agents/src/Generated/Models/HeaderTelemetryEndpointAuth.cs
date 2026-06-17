@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Header-based secret authentication for a telemetry endpoint. The resolved secret value is injected as an HTTP header. </summary>
-    public partial class HeaderTelemetryEndpointAuth : TelemetryEndpointAuthentication
+    internal partial class HeaderTelemetryEndpointAuth : TelemetryEndpointAuthentication
     {
         /// <summary> Initializes a new instance of <see cref="HeaderTelemetryEndpointAuth"/>. </summary>
         /// <param name="headerName"> The name of the HTTP header to inject the secret value into. </param>

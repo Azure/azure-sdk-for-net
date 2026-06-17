@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Returned when the output audio buffer has been cleared. </summary>
-    public partial class ServerEventOutputAudioBufferCleared : SessionUpdate, IJsonModel<ServerEventOutputAudioBufferCleared>
+    internal partial class ServerEventOutputAudioBufferCleared : SessionUpdate, IJsonModel<ServerEventOutputAudioBufferCleared>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

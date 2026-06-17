@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> Agent source for data generation jobs — references an agent to fetch instructions and metadata from. </summary>
-    public partial class AgentDataGenerationJobSource : DataGenerationJobSource, IJsonModel<AgentDataGenerationJobSource>
+    internal partial class AgentDataGenerationJobSource : DataGenerationJobSource, IJsonModel<AgentDataGenerationJobSource>
     {
         /// <summary> Initializes a new instance of <see cref="AgentDataGenerationJobSource"/> for deserialization. </summary>
         internal AgentDataGenerationJobSource()

@@ -14,7 +14,7 @@ using Azure.AI.Language.Conversations;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> represents the resolution of numeric intervals. </summary>
-    public partial class NumericRangeResolution : ResolutionBase, IJsonModel<NumericRangeResolution>
+    internal partial class NumericRangeResolution : ResolutionBase, IJsonModel<NumericRangeResolution>
     {
         /// <summary> Initializes a new instance of <see cref="NumericRangeResolution"/> for deserialization. </summary>
         internal NumericRangeResolution()

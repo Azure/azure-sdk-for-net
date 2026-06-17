@@ -8,7 +8,7 @@ using System.ClientModel;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary></summary>
-    internal partial class CreateAgentVersionFromCodeContent
+    public partial class CreateAgentVersionFromCodeContent
     {
         /// <summary> Initializes a new instance of <see cref="CreateAgentVersionFromCodeContent"/> for deserialization. </summary>
         internal CreateAgentVersionFromCodeContent()

@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The output of an Azure Function tool call. </summary>
-    public partial class AzureFunctionToolCallOutput : AgentResponseItem, IJsonModel<AzureFunctionToolCallOutput>
+    internal partial class AzureFunctionToolCallOutput : AgentResponseItem, IJsonModel<AzureFunctionToolCallOutput>
     {
         /// <summary> Initializes a new instance of <see cref="AzureFunctionToolCallOutput"/> for deserialization. </summary>
         internal AzureFunctionToolCallOutput()

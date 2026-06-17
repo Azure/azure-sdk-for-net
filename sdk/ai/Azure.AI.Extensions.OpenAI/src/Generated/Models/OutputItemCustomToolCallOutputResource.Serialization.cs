@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> ResponseCustomToolCallOutputItem. </summary>
-    public partial class OutputItemCustomToolCallOutputResource : AgentResponseItem, IJsonModel<OutputItemCustomToolCallOutputResource>
+    internal partial class OutputItemCustomToolCallOutputResource : AgentResponseItem, IJsonModel<OutputItemCustomToolCallOutputResource>
     {
         /// <summary> Initializes a new instance of <see cref="OutputItemCustomToolCallOutputResource"/> for deserialization. </summary>
         internal OutputItemCustomToolCallOutputResource()

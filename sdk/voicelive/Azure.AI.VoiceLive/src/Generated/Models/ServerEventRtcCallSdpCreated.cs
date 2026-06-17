@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Returned when the WebRTC SDP negotiation completes successfully. </summary>
-    public partial class ServerEventRtcCallSdpCreated : SessionUpdate
+    internal partial class ServerEventRtcCallSdpCreated : SessionUpdate
     {
         /// <summary> Initializes a new instance of <see cref="ServerEventRtcCallSdpCreated"/>. </summary>
         /// <param name="rtcCallId"> The unique identifier for this RTC call session. </param>

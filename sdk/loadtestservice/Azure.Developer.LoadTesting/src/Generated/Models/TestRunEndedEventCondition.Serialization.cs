@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.Developer.LoadTesting
 {
     /// <summary> TestRunEnded Event condition. </summary>
-    public partial class TestRunEndedEventCondition : IJsonModel<TestRunEndedEventCondition>
+    internal partial class TestRunEndedEventCondition : IJsonModel<TestRunEndedEventCondition>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

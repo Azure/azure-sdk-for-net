@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.AI.Language.Text.Authoring
 {
     /// <summary> Represents the healthcare evaluation result for a document. </summary>
-    public partial class DocumentHealthcareEvalResult
+    internal partial class DocumentHealthcareEvalResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

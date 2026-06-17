@@ -16,6 +16,13 @@ namespace Azure.AI.Projects.Agents
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ProjectsAgentsModelFactory
     {
+        /// <summary> The AgentObjectVersions. </summary>
+        /// <param name="latest"></param>
+        /// <returns> A new <see cref="Agents.AgentObjectVersions"/> instance for mocking. </returns>
+        public static AgentObjectVersions AgentObjectVersions(ProjectsAgentVersion latest = default)
+        {
+            return new AgentObjectVersions(latest, additionalBinaryDataProperties: null);
+        }
 
         /// <summary> The ProjectsAgentVersion. </summary>
         /// <param name="metadata">
@@ -60,7 +67,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary>
         /// The ProjectsAgentDefinition.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.HostedAgentDefinition"/>, <see cref="Agents.DeclarativeAgentDefinition"/>, <see cref="Agents.WorkflowAgentDefinition"/>, and <see cref="Agents.ExternalAgentDefinition"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.HostedAgentDefinition"/>, <see cref="Agents.DeclarativeAgentDefinition"/>, <see cref="Agents.WorkflowAgentDefinition"/>, and <see cref="ExternalAgentDefinition"/>.
         /// </summary>
         /// <param name="kind"></param>
         /// <param name="contentFilterConfiguration"> Configuration for Responsible AI (RAI) content filtering and safety features. </param>
@@ -369,52 +376,13 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary>
         /// authentication details for OpenApiFunctionDefinition
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.OpenAPIAnonymousAuthenticationDetails"/>, <see cref="Agents.OpenApiProjectConnectionAuthenticationDetails"/>, and <see cref="Agents.OpenAPIManagedAuthenticationDetails"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenAPIAnonymousAuthenticationDetails"/>, <see cref="OpenApiProjectConnectionAuthenticationDetails"/>, and <see cref="OpenAPIManagedAuthenticationDetails"/>.
         /// </summary>
         /// <param name="type"> The type of authentication, must be anonymous/project_connection/managed_identity. </param>
         /// <returns> A new <see cref="Agents.OpenApiAuthenticationDetails"/> instance for mocking. </returns>
         public static OpenApiAuthenticationDetails OpenApiAuthenticationDetails(string @type = default)
         {
             return new UnknownOpenApiAuthenticationDetails(new OpenApiAuthType(@type), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Security details for OpenApi anonymous authentication. </summary>
-        /// <returns> A new <see cref="Agents.OpenAPIAnonymousAuthenticationDetails"/> instance for mocking. </returns>
-        public static OpenAPIAnonymousAuthenticationDetails OpenAPIAnonymousAuthenticationDetails()
-        {
-            return new OpenAPIAnonymousAuthenticationDetails(OpenApiAuthType.Anonymous, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Security details for OpenApi project connection authentication. </summary>
-        /// <param name="securityScheme"> Project connection auth security details. </param>
-        /// <returns> A new <see cref="Agents.OpenApiProjectConnectionAuthenticationDetails"/> instance for mocking. </returns>
-        public static OpenApiProjectConnectionAuthenticationDetails OpenApiProjectConnectionAuthenticationDetails(OpenApiProjectConnectionSecurityScheme securityScheme = default)
-        {
-            return new OpenApiProjectConnectionAuthenticationDetails(OpenApiAuthType.ProjectConnection, additionalBinaryDataProperties: null, securityScheme);
-        }
-
-        /// <summary> Security scheme for OpenApi managed_identity authentication. </summary>
-        /// <param name="projectConnectionId"> Project connection id for Project Connection auth type. </param>
-        /// <returns> A new <see cref="Agents.OpenApiProjectConnectionSecurityScheme"/> instance for mocking. </returns>
-        public static OpenApiProjectConnectionSecurityScheme OpenApiProjectConnectionSecurityScheme(string projectConnectionId = default)
-        {
-            return new OpenApiProjectConnectionSecurityScheme(projectConnectionId, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Security details for OpenApi managed_identity authentication. </summary>
-        /// <param name="securityScheme"> Connection auth security details. </param>
-        /// <returns> A new <see cref="Agents.OpenAPIManagedAuthenticationDetails"/> instance for mocking. </returns>
-        public static OpenAPIManagedAuthenticationDetails OpenAPIManagedAuthenticationDetails(OpenAPIManagedSecurityScheme securityScheme = default)
-        {
-            return new OpenAPIManagedAuthenticationDetails(OpenApiAuthType.ManagedIdentity, additionalBinaryDataProperties: null, securityScheme);
-        }
-
-        /// <summary> Security scheme for OpenApi managed_identity authentication. </summary>
-        /// <param name="audience"> Authentication scope for managed_identity auth type. </param>
-        /// <returns> A new <see cref="Agents.OpenAPIManagedSecurityScheme"/> instance for mocking. </returns>
-        public static OpenAPIManagedSecurityScheme OpenAPIManagedSecurityScheme(string audience = default)
-        {
-            return new OpenAPIManagedSecurityScheme(audience, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The OpenAPIFunctionEntry. </summary>
@@ -758,6 +726,82 @@ namespace Azure.AI.Projects.Agents
             return new ToolboxSearchPreviewTool(ToolType.ToolboxSearchPreview, additionalBinaryDataProperties: null, name, description, toolConfigs);
         }
 
+        /// <summary>
+        /// Network access policy for the container.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenAI.ContainerNetworkPolicyDisabledParam"/> and <see cref="OpenAI.ContainerNetworkPolicyAllowlistParam"/>.
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns> A new <see cref="OpenAI.ContainerNetworkPolicyParam"/> instance for mocking. </returns>
+        public static ContainerNetworkPolicyParam ContainerNetworkPolicyParam(string @type = default)
+        {
+            return new UnknownContainerNetworkPolicyParam(new ContainerNetworkPolicyParamType(@type), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The ContainerNetworkPolicyDisabledParam. </summary>
+        /// <returns> A new <see cref="OpenAI.ContainerNetworkPolicyDisabledParam"/> instance for mocking. </returns>
+        public static ContainerNetworkPolicyDisabledParam ContainerNetworkPolicyDisabledParam()
+        {
+            return new ContainerNetworkPolicyDisabledParam(ContainerNetworkPolicyParamType.Disabled, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The ContainerNetworkPolicyAllowlistParam. </summary>
+        /// <param name="allowedDomains"> A list of allowed domains when type is `allowlist`. </param>
+        /// <param name="domainSecrets"> Optional domain-scoped secrets for allowlisted domains. </param>
+        /// <returns> A new <see cref="OpenAI.ContainerNetworkPolicyAllowlistParam"/> instance for mocking. </returns>
+        public static ContainerNetworkPolicyAllowlistParam ContainerNetworkPolicyAllowlistParam(IEnumerable<string> allowedDomains = default, IEnumerable<ContainerNetworkPolicyDomainSecretParam> domainSecrets = default)
+        {
+            allowedDomains ??= new ChangeTrackingList<string>();
+            domainSecrets ??= new ChangeTrackingList<ContainerNetworkPolicyDomainSecretParam>();
+
+            return new ContainerNetworkPolicyAllowlistParam(ContainerNetworkPolicyParamType.Allowlist, additionalBinaryDataProperties: null, allowedDomains.ToList(), domainSecrets.ToList());
+        }
+
+        /// <summary> The ContainerNetworkPolicyDomainSecretParam. </summary>
+        /// <param name="domain"> The domain associated with the secret. </param>
+        /// <param name="name"> The name of the secret to inject for the domain. </param>
+        /// <param name="value"> The secret value to inject for the domain. </param>
+        /// <returns> A new <see cref="OpenAI.ContainerNetworkPolicyDomainSecretParam"/> instance for mocking. </returns>
+        public static ContainerNetworkPolicyDomainSecretParam ContainerNetworkPolicyDomainSecretParam(string domain = default, string name = default, string value = default)
+        {
+            return new ContainerNetworkPolicyDomainSecretParam(domain, name, value, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The HybridSearchOptions. </summary>
+        /// <param name="embeddingWeight"> The weight of the embedding in the reciprocal ranking fusion. </param>
+        /// <param name="textWeight"> The weight of the text in the reciprocal ranking fusion. </param>
+        /// <returns> A new <see cref="OpenAI.HybridSearchOptions"/> instance for mocking. </returns>
+        public static HybridSearchOptions HybridSearchOptions(double embeddingWeight = default, double textWeight = default)
+        {
+            return new HybridSearchOptions(embeddingWeight, textWeight, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The WebSearchToolFilters. </summary>
+        /// <param name="allowedDomains"></param>
+        /// <returns> A new <see cref="OpenAI.WebSearchToolFilters"/> instance for mocking. </returns>
+        public static OpenAI.WebSearchToolFilters WebSearchToolFilters(IEnumerable<string> allowedDomains = default)
+        {
+            allowedDomains ??= new ChangeTrackingList<string>();
+
+            return new OpenAI.WebSearchToolFilters(allowedDomains.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Web search approximate location. </summary>
+        /// <param name="country"></param>
+        /// <param name="region"></param>
+        /// <param name="city"></param>
+        /// <param name="timezone"></param>
+        /// <returns> A new <see cref="OpenAI.WebSearchApproximateLocation"/> instance for mocking. </returns>
+        public static WebSearchApproximateLocation WebSearchApproximateLocation(string country = default, string region = default, string city = default, string timezone = default)
+        {
+            return new WebSearchApproximateLocation(
+                "approximate",
+                country,
+                region,
+                city,
+                timezone,
+                additionalBinaryDataProperties: null);
+        }
+
         /// <summary> A web search configuration for bing custom search. </summary>
         /// <param name="projectConnectionId"> Project connection id for grounding with bing custom search. </param>
         /// <param name="instanceName"> Name of the custom configuration instance given to config. </param>
@@ -765,6 +809,44 @@ namespace Azure.AI.Projects.Agents
         public static ProjectWebSearchConfiguration ProjectWebSearchConfiguration(string projectConnectionId = default, string instanceName = default)
         {
             return new ProjectWebSearchConfiguration(projectConnectionId, instanceName, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// The FunctionShellToolParamEnvironment.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FunctionShellToolParamEnvironmentLocalEnvironmentParam"/>, <see cref="FunctionShellToolParamEnvironmentContainerReferenceParam"/>, and <see cref="ContainerAutoParam"/>.
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns> A new <see cref="OpenAI.FunctionShellToolParamEnvironment"/> instance for mocking. </returns>
+        public static FunctionShellToolParamEnvironment FunctionShellToolParamEnvironment(string @type = default)
+        {
+            return new UnknownFunctionShellToolParamEnvironment(new FunctionShellToolParamEnvironmentType(@type), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// The input format for the custom tool. Default is unconstrained text.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenAI.CustomTextFormatParam"/> and <see cref="OpenAI.CustomGrammarFormatParam"/>.
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns> A new <see cref="OpenAI.CustomToolParamFormat"/> instance for mocking. </returns>
+        public static CustomToolParamFormat CustomToolParamFormat(string @type = default)
+        {
+            return new UnknownCustomToolParamFormat(new CustomToolParamFormatType(@type), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Text format. </summary>
+        /// <returns> A new <see cref="OpenAI.CustomTextFormatParam"/> instance for mocking. </returns>
+        public static CustomTextFormatParam CustomTextFormatParam()
+        {
+            return new CustomTextFormatParam(CustomToolParamFormatType.Text, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Grammar format. </summary>
+        /// <param name="syntax"> The syntax of the grammar definition. One of `lark` or `regex`. </param>
+        /// <param name="definition"> The grammar definition. </param>
+        /// <returns> A new <see cref="OpenAI.CustomGrammarFormatParam"/> instance for mocking. </returns>
+        public static CustomGrammarFormatParam CustomGrammarFormatParam(GrammarSyntax1 syntax = default, string definition = default)
+        {
+            return new CustomGrammarFormatParam(CustomToolParamFormatType.Grammar, additionalBinaryDataProperties: null, syntax, definition);
         }
 
         /// <summary> The EmptyModelParam. </summary>
@@ -831,7 +913,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary>
         /// A telemetry export endpoint configuration.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.OtlpTelemetryEndpoint"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OtlpTelemetryEndpoint"/>.
         /// </summary>
         /// <param name="kind"> The telemetry export endpoint kind. </param>
         /// <param name="exportedDataTypes"> Data types to export to this endpoint. Use an empty array to export no data. </param>
@@ -846,42 +928,13 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary>
         /// Authentication configuration for a telemetry endpoint.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.HeaderTelemetryEndpointAuth"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="HeaderTelemetryEndpointAuth"/>.
         /// </summary>
         /// <param name="type"> The authentication type. </param>
         /// <returns> A new <see cref="Agents.TelemetryEndpointAuthentication"/> instance for mocking. </returns>
         public static TelemetryEndpointAuthentication TelemetryEndpointAuthentication(string @type = default)
         {
             return new UnknownTelemetryEndpointAuthentication(new TelemetryEndpointAuthenticationKind(@type), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Header-based secret authentication for a telemetry endpoint. The resolved secret value is injected as an HTTP header. </summary>
-        /// <param name="headerName"> The name of the HTTP header to inject the secret value into. </param>
-        /// <param name="secretId"> The identifier of the secret store or connection. </param>
-        /// <param name="secretKey"> The key within the secret to retrieve the authentication value. </param>
-        /// <returns> A new <see cref="Agents.HeaderTelemetryEndpointAuth"/> instance for mocking. </returns>
-        public static HeaderTelemetryEndpointAuth HeaderTelemetryEndpointAuth(string headerName = default, string secretId = default, string secretKey = default)
-        {
-            return new HeaderTelemetryEndpointAuth(TelemetryEndpointAuthenticationKind.Header, additionalBinaryDataProperties: null, headerName, secretId, secretKey);
-        }
-
-        /// <summary> An OTLP (OpenTelemetry Protocol) telemetry export endpoint. </summary>
-        /// <param name="exportedDataTypes"> Data types to export to this endpoint. Use an empty array to export no data. </param>
-        /// <param name="authentication"> Optional authentication configuration. </param>
-        /// <param name="endpoint"> The OTLP collector endpoint URL. </param>
-        /// <param name="protocol"> The transport protocol for the OTLP endpoint. </param>
-        /// <returns> A new <see cref="Agents.OtlpTelemetryEndpoint"/> instance for mocking. </returns>
-        public static OtlpTelemetryEndpoint OtlpTelemetryEndpoint(IEnumerable<ExportedDataTypes> exportedDataTypes = default, TelemetryEndpointAuthentication authentication = default, string endpoint = default, TelemetryTransportProtocol protocol = default)
-        {
-            exportedDataTypes ??= new ChangeTrackingList<ExportedDataTypes>();
-
-            return new OtlpTelemetryEndpoint(
-                TelemetryEndpointKind.OTLP,
-                exportedDataTypes.ToList(),
-                authentication,
-                additionalBinaryDataProperties: null,
-                endpoint,
-                protocol);
         }
 
         /// <summary> The prompt agent definition. </summary>
@@ -953,25 +1006,6 @@ namespace Azure.AI.Projects.Agents
             return new WorkflowAgentDefinition(ProjectsAgentKind.Workflow, contentFilterConfiguration, additionalBinaryDataProperties: null, workflowYaml);
         }
 
-        /// <summary>
-        /// The external agent definition. Represents a third-party agent hosted outside Foundry (for example, on GCP or AWS).
-        /// Registration is metadata-only: Foundry records the agent definition to light up observability experiences (traces, evaluations)
-        /// over customer-emitted OpenTelemetry data.
-        /// </summary>
-        /// <param name="contentFilterConfiguration"> Configuration for Responsible AI (RAI) content filtering and safety features. </param>
-        /// <param name="otelAgentId">
-        /// The OpenTelemetry agent identifier used to attribute customer-emitted spans to this Foundry agent.
-        /// Spans must include the attribute `gen_ai.agent.id = &lt;otel_agent_id&gt;` to appear under this registration.
-        /// Defaults to the top-level agent name when omitted. Provide an explicit value only for migration scenarios
-        /// where the running external agent already emits a stable id that differs from the Foundry agent name.
-        /// The resolved value is always echoed on read.
-        /// </param>
-        /// <returns> A new <see cref="Agents.ExternalAgentDefinition"/> instance for mocking. </returns>
-        public static ExternalAgentDefinition ExternalAgentDefinition(ContentFilterConfiguration contentFilterConfiguration = default, string otelAgentId = default)
-        {
-            return new ExternalAgentDefinition(ProjectsAgentKind.External, contentFilterConfiguration, additionalBinaryDataProperties: null, otelAgentId);
-        }
-
         /// <summary> The AgentIdentity. </summary>
         /// <param name="principalId"> The principal ID of the agent instance. </param>
         /// <param name="clientId"> The client ID of the agent instance. Also referred to as the instance ID. </param>
@@ -983,21 +1017,13 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary>
         /// The AgentBlueprintReference.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.ManagedAgentIdentityBlueprintReference"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ManagedAgentIdentityBlueprintReference"/>.
         /// </summary>
         /// <param name="type"></param>
         /// <returns> A new <see cref="Agents.AgentBlueprintReference"/> instance for mocking. </returns>
         public static AgentBlueprintReference AgentBlueprintReference(string @type = default)
         {
             return new UnknownAgentBlueprintReference(new AgentBlueprintReferenceType(@type), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The ManagedAgentIdentityBlueprintReference. </summary>
-        /// <param name="blueprintId"> The ID of the managed blueprint. </param>
-        /// <returns> A new <see cref="Agents.ManagedAgentIdentityBlueprintReference"/> instance for mocking. </returns>
-        public static ManagedAgentIdentityBlueprintReference ManagedAgentIdentityBlueprintReference(string blueprintId = default)
-        {
-            return new ManagedAgentIdentityBlueprintReference(AgentBlueprintReferenceType.ManagedAgentIdentityBlueprint, additionalBinaryDataProperties: null, blueprintId);
         }
 
         /// <summary> The AgentEndpointConfiguration. </summary>
@@ -1025,7 +1051,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary>
         /// The VersionSelectionRule.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.FixedRatioVersionSelectionRule"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FixedRatioVersionSelectionRule"/>.
         /// </summary>
         /// <param name="type"></param>
         /// <param name="agentVersion"> The agent version to route traffic to. </param>
@@ -1035,71 +1061,15 @@ namespace Azure.AI.Projects.Agents
             return new UnknownVersionSelectionRule(new VersionSelectorType(@type), agentVersion, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The FixedRatioVersionSelectionRule. </summary>
-        /// <param name="agentVersion"> The agent version to route traffic to. </param>
-        /// <param name="trafficPercentage"> The percentage of traffic to route to the version. Must be between 0 and 100. </param>
-        /// <returns> A new <see cref="Agents.FixedRatioVersionSelectionRule"/> instance for mocking. </returns>
-        public static FixedRatioVersionSelectionRule FixedRatioVersionSelectionRule(string agentVersion = default, int trafficPercentage = default)
-        {
-            return new FixedRatioVersionSelectionRule(VersionSelectorType.FixedRatio, agentVersion, additionalBinaryDataProperties: null, trafficPercentage);
-        }
-
         /// <summary>
         /// The AgentEndpointAuthorizationScheme.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.EntraAuthorizationScheme"/>, <see cref="Agents.BotServiceAuthorizationScheme"/>, and <see cref="Agents.BotServiceRbacAuthorizationScheme"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="EntraAuthorizationScheme"/>, <see cref="BotServiceAuthorizationScheme"/>, and <see cref="BotServiceRbacAuthorizationScheme"/>.
         /// </summary>
         /// <param name="type"></param>
         /// <returns> A new <see cref="Agents.AgentEndpointAuthorizationScheme"/> instance for mocking. </returns>
         public static AgentEndpointAuthorizationScheme AgentEndpointAuthorizationScheme(string @type = default)
         {
             return new UnknownAgentEndpointAuthorizationScheme(new AgentEndpointAuthorizationSchemeType(@type), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The EntraAuthorizationScheme. </summary>
-        /// <param name="isolationKeySource"> The source from which the per-user isolation key is derived for requests authorized via this scheme. Defaults to Entra-based isolation when omitted. </param>
-        /// <returns> A new <see cref="Agents.EntraAuthorizationScheme"/> instance for mocking. </returns>
-        public static EntraAuthorizationScheme EntraAuthorizationScheme(IsolationKeySource isolationKeySource = default)
-        {
-            return new EntraAuthorizationScheme(AgentEndpointAuthorizationSchemeType.Entra, additionalBinaryDataProperties: null, isolationKeySource);
-        }
-
-        /// <summary>
-        /// The IsolationKeySource.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.EntraIsolationKeySource"/> and <see cref="Agents.HeaderIsolationKeySource"/>.
-        /// </summary>
-        /// <param name="kind"></param>
-        /// <returns> A new <see cref="Agents.IsolationKeySource"/> instance for mocking. </returns>
-        public static IsolationKeySource IsolationKeySource(string kind = default)
-        {
-            return new UnknownIsolationKeySource(new IsolationKeySourceKind(kind), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The EntraIsolationKeySource. </summary>
-        /// <returns> A new <see cref="Agents.EntraIsolationKeySource"/> instance for mocking. </returns>
-        public static EntraIsolationKeySource EntraIsolationKeySource()
-        {
-            return new EntraIsolationKeySource(IsolationKeySourceKind.Entra, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The HeaderIsolationKeySource. </summary>
-        /// <returns> A new <see cref="Agents.HeaderIsolationKeySource"/> instance for mocking. </returns>
-        public static HeaderIsolationKeySource HeaderIsolationKeySource()
-        {
-            return new HeaderIsolationKeySource(IsolationKeySourceKind.Header, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The BotServiceAuthorizationScheme. </summary>
-        /// <returns> A new <see cref="Agents.BotServiceAuthorizationScheme"/> instance for mocking. </returns>
-        public static BotServiceAuthorizationScheme BotServiceAuthorizationScheme()
-        {
-            return new BotServiceAuthorizationScheme(AgentEndpointAuthorizationSchemeType.BotService, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The BotServiceRbacAuthorizationScheme. </summary>
-        /// <returns> A new <see cref="Agents.BotServiceRbacAuthorizationScheme"/> instance for mocking. </returns>
-        public static BotServiceRbacAuthorizationScheme BotServiceRbacAuthorizationScheme()
-        {
-            return new BotServiceRbacAuthorizationScheme(AgentEndpointAuthorizationSchemeType.BotServiceRbac, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The AgentCard. </summary>
@@ -1167,6 +1137,16 @@ namespace Azure.AI.Projects.Agents
             return new CreateAgentVersionFromCodeMetadata(description, metadata, definition, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Multipart request body for updating or versioning a code-based agent (POST /agents/{name} and POST /agents/{name}/versions). </summary>
+        /// <param name="metadata"> JSON metadata including description and hosted definition. </param>
+        /// <param name="code"> The code zip file (max 250 MB). </param>
+        /// <returns> A new <see cref="Agents.CreateAgentVersionFromCodeContent"/> instance for mocking. </returns>
+        [Experimental("SCME0004")]
+        public static CreateAgentVersionFromCodeContent CreateAgentVersionFromCodeContent(CreateAgentVersionFromCodeMetadata metadata = default, FileBinaryContent code = default)
+        {
+            return new CreateAgentVersionFromCodeContent(metadata, code);
+        }
+
         /// <summary> The AgentManifestOptions. </summary>
         /// <param name="metadata">
         /// Set of 16 key-value pairs that can be attached to an object. This can be
@@ -1187,23 +1167,24 @@ namespace Azure.AI.Projects.Agents
             return new AgentManifestOptions(metadata, description, manifestId, parameterValues, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> The CreateSessionRequest. </summary>
+        /// <param name="agentSessionId"> Optional caller-provided session ID. If specified, it must be unique within the agent endpoint. Auto-generated if omitted. </param>
+        /// <param name="versionIndicator"> Determines which agent version backs the session. </param>
+        /// <returns> A new <see cref="Agents.CreateSessionRequest"/> instance for mocking. </returns>
+        public static CreateSessionRequest CreateSessionRequest(string agentSessionId = default, VersionIndicator versionIndicator = default)
+        {
+            return new CreateSessionRequest(agentSessionId, versionIndicator, additionalBinaryDataProperties: null);
+        }
+
         /// <summary>
         /// Version indicator determining which agent version backs the session.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.VersionRefIndicator"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VersionRefIndicator"/>.
         /// </summary>
         /// <param name="type"> The type of version indicator. </param>
         /// <returns> A new <see cref="Agents.VersionIndicator"/> instance for mocking. </returns>
         public static VersionIndicator VersionIndicator(string @type = default)
         {
             return new UnknownVersionIndicator(new VersionIndicatorType(@type), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Version indicator that references a specific agent version by name. </summary>
-        /// <param name="agentVersion"> The agent version identifier returned by the agent version APIs. </param>
-        /// <returns> A new <see cref="Agents.VersionRefIndicator"/> instance for mocking. </returns>
-        public static VersionRefIndicator VersionRefIndicator(string agentVersion = default)
-        {
-            return new VersionRefIndicator(VersionIndicatorType.VersionRef, additionalBinaryDataProperties: null, agentVersion);
         }
 
         /// <summary> An agent session providing a long-lived compute sandbox for hosted agent invocations. </summary>
@@ -1398,6 +1379,18 @@ namespace Azure.AI.Projects.Agents
                 additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Multipart request body for creating a skill version from files. Accepts either a single zip file or multiple individual skill files (directory upload). For zip uploads, the server extracts and validates contents. For directory uploads, files are validated as-is. </summary>
+        /// <param name="files"> Skill files to upload. Upload a single zip file or multiple individual files with relative paths. </param>
+        /// <param name="default"> Whether to set this version as the default. Defaults to false. </param>
+        /// <returns> A new <see cref="Agents.CreateSkillVersionFromFilesBody"/> instance for mocking. </returns>
+        [Experimental("SCME0004")]
+        public static CreateSkillVersionFromFilesBody CreateSkillVersionFromFilesBody(IEnumerable<FileBinaryContent> files = default, bool? @default = default)
+        {
+            files ??= new ChangeTrackingList<FileBinaryContent>();
+
+            return new CreateSkillVersionFromFilesBody(files.ToList(), @default);
+        }
+
         /// <summary> A deleted skill version. </summary>
         /// <param name="id"> The unique identifier of the deleted skill version. </param>
         /// <param name="name"> The name of the skill. </param>
@@ -1460,54 +1453,13 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary>
         /// Base discriminated model for dataset input. Either inline items or a registered reference.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.OptimizationInlineDatasetInput"/> and <see cref="Agents.OptimizationReferenceDatasetInput"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OptimizationInlineDatasetInput"/> and <see cref="OptimizationReferenceDatasetInput"/>.
         /// </summary>
         /// <param name="type"> Dataset input type discriminator. </param>
         /// <returns> A new <see cref="Agents.OptimizationDatasetInput"/> instance for mocking. </returns>
         public static OptimizationDatasetInput OptimizationDatasetInput(string @type = default)
         {
             return new UnknownOptimizationDatasetInput(new OptimizationDatasetInputType(@type), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Inline dataset — items supplied directly in the request body. </summary>
-        /// <param name="items"> Dataset items. </param>
-        /// <returns> A new <see cref="Agents.OptimizationInlineDatasetInput"/> instance for mocking. </returns>
-        public static OptimizationInlineDatasetInput OptimizationInlineDatasetInput(IEnumerable<OptimizationDatasetItem> items = default)
-        {
-            items ??= new ChangeTrackingList<OptimizationDatasetItem>();
-
-            return new OptimizationInlineDatasetInput(OptimizationDatasetInputType.Inline, additionalBinaryDataProperties: null, items.ToList());
-        }
-
-        /// <summary> A single item in an inline dataset. </summary>
-        /// <param name="query"> The user query / prompt. </param>
-        /// <param name="groundTruth"> Expected ground truth answer. </param>
-        /// <param name="desiredNumTurns"> Desired number of conversation turns for simulation mode (1-20). </param>
-        /// <param name="criteria"> Per-item evaluation criteria. </param>
-        /// <returns> A new <see cref="Agents.OptimizationDatasetItem"/> instance for mocking. </returns>
-        public static OptimizationDatasetItem OptimizationDatasetItem(string query = default, string groundTruth = default, int? desiredNumTurns = default, IEnumerable<OptimizationDatasetCriterion> criteria = default)
-        {
-            criteria ??= new ChangeTrackingList<OptimizationDatasetCriterion>();
-
-            return new OptimizationDatasetItem(query, groundTruth, desiredNumTurns, criteria.ToList(), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Evaluation criterion: a name + instruction pair used for per-item scoring. </summary>
-        /// <param name="name"> Criterion name. </param>
-        /// <param name="instruction"> Criterion instruction / description. </param>
-        /// <returns> A new <see cref="Agents.OptimizationDatasetCriterion"/> instance for mocking. </returns>
-        public static OptimizationDatasetCriterion OptimizationDatasetCriterion(string name = default, string instruction = default)
-        {
-            return new OptimizationDatasetCriterion(name, instruction, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Reference to a registered Foundry dataset. </summary>
-        /// <param name="name"> Registered dataset name. </param>
-        /// <param name="version"> Dataset version. If not specified, the latest version is used. </param>
-        /// <returns> A new <see cref="Agents.OptimizationReferenceDatasetInput"/> instance for mocking. </returns>
-        public static OptimizationReferenceDatasetInput OptimizationReferenceDatasetInput(string name = default, string version = default)
-        {
-            return new OptimizationReferenceDatasetInput(OptimizationDatasetInputType.Reference, additionalBinaryDataProperties: null, name, version);
         }
 
         /// <summary> Reference to a named evaluator, optionally pinned to a version. </summary>
@@ -1614,26 +1566,6 @@ namespace Azure.AI.Projects.Agents
             metadata ??= new ChangeTrackingDictionary<string, string>();
 
             return new ProjectsAgentVersionCreationOptions(metadata, description, definition, blueprintReference, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The CreateAgentVersionFromManifestRequest. </summary>
-        /// <param name="metadata">
-        /// Set of 16 key-value pairs that can be attached to an object. This can be
-        /// useful for storing additional information about the object in a structured
-        /// format, and querying for objects via API or the dashboard.
-        /// Keys are strings with a maximum length of 64 characters. Values are strings
-        /// with a maximum length of 512 characters.
-        /// </param>
-        /// <param name="description"> A human-readable description of the agent. </param>
-        /// <param name="manifestId"> The manifest ID to import the agent version from. </param>
-        /// <param name="parameterValues"> The inputs to the manifest that will result in a fully materialized Agent. </param>
-        /// <returns> A new <see cref="Agents.CreateAgentVersionFromManifestRequest"/> instance for mocking. </returns>
-        public static CreateAgentVersionFromManifestRequest CreateAgentVersionFromManifestRequest(IDictionary<string, string> metadata = default, string description = default, string manifestId = default, IDictionary<string, BinaryData> parameterValues = default)
-        {
-            metadata ??= new ChangeTrackingDictionary<string, string>();
-            parameterValues ??= new ChangeTrackingDictionary<string, BinaryData>();
-
-            return new CreateAgentVersionFromManifestRequest(metadata, description, manifestId, parameterValues, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The PatchAgentOptions. </summary>

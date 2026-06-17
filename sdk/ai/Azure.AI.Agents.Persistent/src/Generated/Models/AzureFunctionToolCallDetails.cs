@@ -14,7 +14,7 @@ namespace Azure.AI.Agents.Persistent
     /// The Azure function call description. All the fields are present in the completed run step, however
     /// only some fields are present in the RunStepDeltaAzureFunctionToolCall.
     /// </summary>
-    public partial class AzureFunctionToolCallDetails
+    internal partial class AzureFunctionToolCallDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

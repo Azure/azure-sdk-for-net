@@ -14,7 +14,7 @@ namespace Azure.AI.Agents.Persistent
     /// A record of a call to a SharePoint tool, issued by the model in evaluation of a defined tool, that represents
     /// executed SharePoint actions.
     /// </summary>
-    public partial class RunStepSharepointToolCall : RunStepToolCall
+    internal partial class RunStepSharepointToolCall : RunStepToolCall
     {
         /// <summary> Initializes a new instance of <see cref="RunStepSharepointToolCall"/>. </summary>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>

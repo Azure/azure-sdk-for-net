@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Text.Authoring
 {
     /// <summary> Represents a list component of an entity. </summary>
-    public partial class TextAuthoringExportedEntityList
+    internal partial class TextAuthoringExportedEntityList
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

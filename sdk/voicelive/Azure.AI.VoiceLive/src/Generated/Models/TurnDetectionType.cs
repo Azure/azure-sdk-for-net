@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.VoiceLive
 {
     /// <summary></summary>
-    internal readonly partial struct TurnDetectionType : IEquatable<TurnDetectionType>
+    public readonly partial struct TurnDetectionType : IEquatable<TurnDetectionType>
     {
         private readonly string _value;
         private const string ServerVadValue = "server_vad";

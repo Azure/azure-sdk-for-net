@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Returned when the avatar switches to idle state. </summary>
-    public partial class ServerEventSessionAvatarSwitchToIdle : SessionUpdate, IJsonModel<ServerEventSessionAvatarSwitchToIdle>
+    internal partial class ServerEventSessionAvatarSwitchToIdle : SessionUpdate, IJsonModel<ServerEventSessionAvatarSwitchToIdle>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

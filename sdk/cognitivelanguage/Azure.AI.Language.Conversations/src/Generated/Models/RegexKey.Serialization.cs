@@ -14,7 +14,7 @@ using Azure.AI.Language.Conversations;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> The regex key extra data kind. </summary>
-    public partial class RegexKey : ConversationEntityExtraInformation, IJsonModel<RegexKey>
+    internal partial class RegexKey : ConversationEntityExtraInformation, IJsonModel<RegexKey>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

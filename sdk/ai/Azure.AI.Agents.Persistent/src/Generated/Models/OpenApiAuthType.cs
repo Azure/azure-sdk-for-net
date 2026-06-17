@@ -14,7 +14,7 @@ namespace Azure.AI.Agents.Persistent
     ///   Authentication type for OpenApi endpoint. Allowed types are:
     /// <list type="bullet"><item><description>Anonymous (no authentication required)</description></item><item><description>Connection (requires connection_id to endpoint, as setup in AI Foundry)</description></item><item><description>Managed_Identity (requires audience for identity based auth)</description></item></list>
     /// </summary>
-    internal readonly partial struct OpenApiAuthType : IEquatable<OpenApiAuthType>
+    public readonly partial struct OpenApiAuthType : IEquatable<OpenApiAuthType>
     {
         private readonly string _value;
         private const string AnonymousValue = "anonymous";

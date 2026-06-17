@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Indicates the processing status of a response item. </summary>
-    public readonly partial struct SessionResponseItemStatus : IEquatable<SessionResponseItemStatus>
+    internal readonly partial struct SessionResponseItemStatus : IEquatable<SessionResponseItemStatus>
     {
         private readonly string _value;
         /// <summary> Item that is in progress. </summary>

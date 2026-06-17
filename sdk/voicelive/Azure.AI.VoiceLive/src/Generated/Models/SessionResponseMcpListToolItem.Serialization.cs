@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> A response item that lists the tools available on an MCP server. </summary>
-    public partial class SessionResponseMcpListToolItem : SessionResponseItem, IJsonModel<SessionResponseMcpListToolItem>
+    internal partial class SessionResponseMcpListToolItem : SessionResponseItem, IJsonModel<SessionResponseMcpListToolItem>
     {
         /// <summary> Initializes a new instance of <see cref="SessionResponseMcpListToolItem"/> for deserialization. </summary>
         internal SessionResponseMcpListToolItem()

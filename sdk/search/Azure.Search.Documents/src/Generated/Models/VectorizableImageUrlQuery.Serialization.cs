@@ -14,7 +14,7 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Models
 {
     /// <summary> The query parameters to use for vector search when an url that represents an image value that needs to be vectorized is provided. </summary>
-    public partial class VectorizableImageUrlQuery : VectorQuery, IJsonModel<VectorizableImageUrlQuery>
+    internal partial class VectorizableImageUrlQuery : VectorQuery, IJsonModel<VectorizableImageUrlQuery>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

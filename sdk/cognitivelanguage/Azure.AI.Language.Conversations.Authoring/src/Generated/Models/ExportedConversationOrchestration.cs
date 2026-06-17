@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Conversations.Authoring
 {
     /// <summary> Defines the orchestration details for a Conversational project target. </summary>
-    public partial class ExportedConversationOrchestration
+    internal partial class ExportedConversationOrchestration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

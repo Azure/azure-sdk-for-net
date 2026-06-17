@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> A resolution for datetime entity instances. </summary>
-    public partial class DateTimeResolution : ResolutionBase
+    internal partial class DateTimeResolution : ResolutionBase
     {
         /// <summary> Initializes a new instance of <see cref="DateTimeResolution"/>. </summary>
         /// <param name="timex"> An extended ISO 8601 date/time representation as described in (https://github.com/Microsoft/Recognizers-Text/blob/master/Patterns/English/English-DateTime.yaml). </param>

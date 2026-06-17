@@ -14,7 +14,7 @@ using Azure.AI.Language.Conversations;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> Represents the length entity resolution model. </summary>
-    public partial class LengthResolution : ResolutionBase, IJsonModel<LengthResolution>
+    internal partial class LengthResolution : ResolutionBase, IJsonModel<LengthResolution>
     {
         /// <summary> Initializes a new instance of <see cref="LengthResolution"/> for deserialization. </summary>
         internal LengthResolution()

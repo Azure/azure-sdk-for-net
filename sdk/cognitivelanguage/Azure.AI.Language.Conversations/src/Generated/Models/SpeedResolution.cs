@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> Represents the speed entity resolution model. </summary>
-    public partial class SpeedResolution : ResolutionBase
+    internal partial class SpeedResolution : ResolutionBase
     {
         /// <summary> Initializes a new instance of <see cref="SpeedResolution"/>. </summary>
         /// <param name="value"> The numeric value that the extracted text denotes. </param>

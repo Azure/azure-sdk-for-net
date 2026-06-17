@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Communication.Messages
 {
     /// <summary> The type of the message template. </summary>
-    internal readonly partial struct MessageTemplateBindingsKind : IEquatable<MessageTemplateBindingsKind>
+    public readonly partial struct MessageTemplateBindingsKind : IEquatable<MessageTemplateBindingsKind>
     {
         private readonly string _value;
         /// <summary> The WhatsApp template type. </summary>

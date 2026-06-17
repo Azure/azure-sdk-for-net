@@ -14,7 +14,7 @@ using Azure.AI.Language.Conversations;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> represents the resolution of a date and/or time span. </summary>
-    public partial class TemporalSpanResolution : ResolutionBase, IJsonModel<TemporalSpanResolution>
+    internal partial class TemporalSpanResolution : ResolutionBase, IJsonModel<TemporalSpanResolution>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

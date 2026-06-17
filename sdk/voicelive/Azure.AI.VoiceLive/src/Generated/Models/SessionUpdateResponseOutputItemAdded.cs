@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Returned when a new Item is created during Response generation. </summary>
-    public partial class SessionUpdateResponseOutputItemAdded : SessionUpdate
+    internal partial class SessionUpdateResponseOutputItemAdded : SessionUpdate
     {
         /// <summary> Initializes a new instance of <see cref="SessionUpdateResponseOutputItemAdded"/>. </summary>
         /// <param name="responseId"> The ID of the Response to which the item belongs. </param>

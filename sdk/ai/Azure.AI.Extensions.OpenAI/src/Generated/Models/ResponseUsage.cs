@@ -11,7 +11,7 @@ namespace Azure.AI.Extensions.OpenAI
     /// Represents token usage details including input tokens, output tokens,
     /// a breakdown of output tokens, and the total tokens used.
     /// </summary>
-    internal partial class ResponseUsage
+    public partial class ResponseUsage
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

@@ -262,5 +262,13 @@ namespace Azure.AI.Vision.ImageAnalysis
 
             return new TagsResult(values.ToList(), additionalBinaryDataProperties: null);
         }
+
+        /// <summary> An object holding the publicly reachable URL of an image to analyze. </summary>
+        /// <param name="url"> Publicly reachable URL of an image to analyze. </param>
+        /// <returns> A new <see cref="ImageAnalysis.ImageUrl"/> instance for mocking. </returns>
+        public static ImageUrl ImageUrl(Uri url = default)
+        {
+            return new ImageUrl(url, additionalBinaryDataProperties: null);
+        }
     }
 }

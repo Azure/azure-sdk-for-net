@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Treat the output as a single block without any parsing. </summary>
-    public partial class McpServerNoneOutputParsing : McpServerOutputParsing
+    internal partial class McpServerNoneOutputParsing : McpServerOutputParsing
     {
         /// <summary> Initializes a new instance of <see cref="McpServerNoneOutputParsing"/>. </summary>
         public McpServerNoneOutputParsing() : base(McpServerOutputParsingKind.None)

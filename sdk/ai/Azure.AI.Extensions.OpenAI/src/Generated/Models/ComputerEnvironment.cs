@@ -5,7 +5,7 @@
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary></summary>
-    internal enum ComputerEnvironment
+    public enum ComputerEnvironment
     {
         /// <summary> Windows. </summary>
         Windows,

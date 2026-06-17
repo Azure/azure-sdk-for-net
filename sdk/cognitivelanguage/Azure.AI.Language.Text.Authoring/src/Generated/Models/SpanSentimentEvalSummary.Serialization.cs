@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.Language.Text.Authoring
 {
     /// <summary> Represents the evaluation summary for a custom sentiment project. </summary>
-    public partial class SpanSentimentEvalSummary : IJsonModel<SpanSentimentEvalSummary>
+    internal partial class SpanSentimentEvalSummary : IJsonModel<SpanSentimentEvalSummary>
     {
         /// <summary> Initializes a new instance of <see cref="SpanSentimentEvalSummary"/> for deserialization. </summary>
         internal SpanSentimentEvalSummary()

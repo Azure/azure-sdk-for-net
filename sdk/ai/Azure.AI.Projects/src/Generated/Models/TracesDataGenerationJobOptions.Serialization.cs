@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> The options for a data generation job with Traces type. </summary>
-    public partial class TracesDataGenerationJobOptions : DataGenerationJobOptions, IJsonModel<TracesDataGenerationJobOptions>
+    internal partial class TracesDataGenerationJobOptions : DataGenerationJobOptions, IJsonModel<TracesDataGenerationJobOptions>
     {
         /// <summary> Initializes a new instance of <see cref="TracesDataGenerationJobOptions"/> for deserialization. </summary>
         internal TracesDataGenerationJobOptions()

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Communication.Messages
 {
     /// <summary> Communication Contact. </summary>
-    public partial class CommunicationContact : ConversationContact
+    internal partial class CommunicationContact : ConversationContact
     {
         /// <summary> Initializes a new instance of <see cref="CommunicationContact"/>. </summary>
         /// <param name="id"> External platform identifier. </param>

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> Parameters to query a knowledge base. </summary>
-    public partial class QuestionAnswersConfig
+    internal partial class QuestionAnswersConfig
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

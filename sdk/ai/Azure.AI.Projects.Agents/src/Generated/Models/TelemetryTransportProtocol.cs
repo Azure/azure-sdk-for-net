@@ -8,7 +8,7 @@ using System.ComponentModel;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The transport protocol for telemetry export. </summary>
-    public readonly partial struct TelemetryTransportProtocol : IEquatable<TelemetryTransportProtocol>
+    internal readonly partial struct TelemetryTransportProtocol : IEquatable<TelemetryTransportProtocol>
     {
         private readonly string _value;
         /// <summary> HTTP transport protocol. </summary>

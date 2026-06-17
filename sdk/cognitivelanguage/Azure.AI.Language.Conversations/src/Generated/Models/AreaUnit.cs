@@ -12,7 +12,7 @@ using Azure.AI.Language.Conversations;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> The area unit of measurement. </summary>
-    public readonly partial struct AreaUnit : IEquatable<AreaUnit>
+    internal readonly partial struct AreaUnit : IEquatable<AreaUnit>
     {
         private readonly string _value;
         /// <summary> Unspecified area unit. </summary>

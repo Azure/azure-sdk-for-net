@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.Language.Conversations.Authoring
 {
     /// <summary> Represents the orchestration options for a Question Answering project target. </summary>
-    public partial class ExportedQuestionAnsweringOrchestrationDetails : ExportedOrchestrationDetails, IJsonModel<ExportedQuestionAnsweringOrchestrationDetails>
+    internal partial class ExportedQuestionAnsweringOrchestrationDetails : ExportedOrchestrationDetails, IJsonModel<ExportedQuestionAnsweringOrchestrationDetails>
     {
         /// <summary> Initializes a new instance of <see cref="ExportedQuestionAnsweringOrchestrationDetails"/> for deserialization. </summary>
         internal ExportedQuestionAnsweringOrchestrationDetails()

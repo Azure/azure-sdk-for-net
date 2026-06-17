@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Returned when the model-generated function call arguments are updated. </summary>
-    public partial class SessionUpdateResponseFunctionCallArgumentsDelta : SessionUpdate
+    internal partial class SessionUpdateResponseFunctionCallArgumentsDelta : SessionUpdate
     {
         /// <summary> Initializes a new instance of <see cref="SessionUpdateResponseFunctionCallArgumentsDelta"/>. </summary>
         /// <param name="responseId"> The ID of the response. </param>

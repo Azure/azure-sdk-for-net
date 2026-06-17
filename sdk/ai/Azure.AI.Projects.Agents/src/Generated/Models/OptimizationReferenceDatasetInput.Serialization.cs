@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Reference to a registered Foundry dataset. </summary>
-    public partial class OptimizationReferenceDatasetInput : OptimizationDatasetInput, IJsonModel<OptimizationReferenceDatasetInput>
+    internal partial class OptimizationReferenceDatasetInput : OptimizationDatasetInput, IJsonModel<OptimizationReferenceDatasetInput>
     {
         /// <summary> Initializes a new instance of <see cref="OptimizationReferenceDatasetInput"/> for deserialization. </summary>
         internal OptimizationReferenceDatasetInput()

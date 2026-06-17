@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects
 {
     /// <summary> Traces source for evaluator generation jobs — conversation traces from Application Insights. </summary>
-    public partial class TracesEvaluatorGenerationJobSource : EvaluatorGenerationJobSource
+    internal partial class TracesEvaluatorGenerationJobSource : EvaluatorGenerationJobSource
     {
         /// <summary> Initializes a new instance of <see cref="TracesEvaluatorGenerationJobSource"/>. </summary>
         /// <param name="startTime"> Start of the time window (Unix timestamp in seconds) for fetching traces. </param>

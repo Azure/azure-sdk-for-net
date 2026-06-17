@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> Dataset output for a data generation job. </summary>
-    public partial class DatasetDataGenerationJobOutput : DataGenerationJobOutput, IJsonModel<DatasetDataGenerationJobOutput>
+    internal partial class DatasetDataGenerationJobOutput : DataGenerationJobOutput, IJsonModel<DatasetDataGenerationJobOutput>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

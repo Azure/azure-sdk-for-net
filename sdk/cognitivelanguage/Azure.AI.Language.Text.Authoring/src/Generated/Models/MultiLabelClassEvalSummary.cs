@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Text.Authoring
 {
     /// <summary> Represents the evaluation summary of a class in a multi-label classification project. </summary>
-    public partial class MultiLabelClassEvalSummary
+    internal partial class MultiLabelClassEvalSummary
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

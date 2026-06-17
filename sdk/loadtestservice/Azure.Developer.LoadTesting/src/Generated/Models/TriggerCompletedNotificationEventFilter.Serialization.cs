@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.Developer.LoadTesting
 {
     /// <summary> The notification event filter when the event type is TriggerCompleted. </summary>
-    public partial class TriggerCompletedNotificationEventFilter : TestsNotificationEventFilter, IJsonModel<TriggerCompletedNotificationEventFilter>
+    internal partial class TriggerCompletedNotificationEventFilter : TestsNotificationEventFilter, IJsonModel<TriggerCompletedNotificationEventFilter>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

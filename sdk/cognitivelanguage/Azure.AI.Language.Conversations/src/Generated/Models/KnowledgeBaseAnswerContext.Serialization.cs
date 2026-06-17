@@ -14,7 +14,7 @@ using Azure.AI.Language.Conversations;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> Context object with previous QnA's information. </summary>
-    public partial class KnowledgeBaseAnswerContext : IJsonModel<KnowledgeBaseAnswerContext>
+    internal partial class KnowledgeBaseAnswerContext : IJsonModel<KnowledgeBaseAnswerContext>
     {
         /// <summary> Initializes a new instance of <see cref="KnowledgeBaseAnswerContext"/> for deserialization. </summary>
         internal KnowledgeBaseAnswerContext()

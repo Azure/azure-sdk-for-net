@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.Language.Text
 {
     /// <summary> Represents the allow overlap policy. Will apply no post processing logic for the entities. Whatever the model predicts is what will be returned to the user. This allows the user to get a full view of every single model's possible values and apply their own custom logic on entity selection. </summary>
-    public partial class AllowOverlapEntityPolicyType : EntityOverlapPolicy, IJsonModel<AllowOverlapEntityPolicyType>
+    internal partial class AllowOverlapEntityPolicyType : EntityOverlapPolicy, IJsonModel<AllowOverlapEntityPolicyType>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

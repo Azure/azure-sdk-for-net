@@ -546,7 +546,7 @@ namespace Azure.Developer.LoadTesting
 
         /// <summary>
         /// Recurrence model.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="LoadTesting.DailyRecurrence"/>, <see cref="LoadTesting.HourlyRecurrence"/>, <see cref="LoadTesting.MonthlyRecurrenceByWeekDays"/>, <see cref="LoadTesting.MonthlyRecurrenceByDates"/>, <see cref="LoadTesting.RecurrenceWithCron"/>, and <see cref="LoadTesting.WeeklyRecurrence"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DailyRecurrence"/>, <see cref="HourlyRecurrence"/>, <see cref="MonthlyRecurrenceByWeekDays"/>, <see cref="MonthlyRecurrenceByDates"/>, <see cref="RecurrenceWithCron"/>, and <see cref="WeeklyRecurrence"/>.
         /// </summary>
         /// <param name="frequency"> Frequency of the recurrence. </param>
         /// <param name="recurrenceEnd"> Recurrence end model. You can specify the end either by providing a numberOfOccurrences (which will end the recurrence after the specified number of occurrences) or by providing an endDateTime (which will end the recurrence after the specified date). If neither value is provided, the recurrence will continue until it is manually ended. However, if both values are provided, an error will be thrown. </param>
@@ -563,76 +563,6 @@ namespace Azure.Developer.LoadTesting
         public static RecurrenceEnd RecurrenceEnd(int? numberOfOccurrences = default, DateTimeOffset? endDateTime = default)
         {
             return new RecurrenceEnd(numberOfOccurrences, endDateTime, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Recurrence model when frequency is set as Daily. </summary>
-        /// <param name="recurrenceEnd"> Recurrence end model. You can specify the end either by providing a numberOfOccurrences (which will end the recurrence after the specified number of occurrences) or by providing an endDateTime (which will end the recurrence after the specified date). If neither value is provided, the recurrence will continue until it is manually ended. However, if both values are provided, an error will be thrown. </param>
-        /// <param name="interval"> The interval at which the recurrence should repeat. It signifies the number of days between each recurrence. </param>
-        /// <returns> A new <see cref="LoadTesting.DailyRecurrence"/> instance for mocking. </returns>
-        public static DailyRecurrence DailyRecurrence(RecurrenceEnd recurrenceEnd = default, int interval = default)
-        {
-            return new DailyRecurrence(Frequency.Daily, recurrenceEnd, additionalBinaryDataProperties: null, interval);
-        }
-
-        /// <summary> Recurrence model when frequency is set as Hourly. </summary>
-        /// <param name="recurrenceEnd"> Recurrence end model. You can specify the end either by providing a numberOfOccurrences (which will end the recurrence after the specified number of occurrences) or by providing an endDateTime (which will end the recurrence after the specified date). If neither value is provided, the recurrence will continue until it is manually ended. However, if both values are provided, an error will be thrown. </param>
-        /// <param name="interval"> The interval at which the recurrence should repeat. It signifies the number of hours between each recurrence. </param>
-        /// <returns> A new <see cref="LoadTesting.HourlyRecurrence"/> instance for mocking. </returns>
-        public static HourlyRecurrence HourlyRecurrence(RecurrenceEnd recurrenceEnd = default, int interval = default)
-        {
-            return new HourlyRecurrence(Frequency.Hourly, recurrenceEnd, additionalBinaryDataProperties: null, interval);
-        }
-
-        /// <summary> Recurrence model when frequency is set as MonthlyByDays . </summary>
-        /// <param name="recurrenceEnd"> Recurrence end model. You can specify the end either by providing a numberOfOccurrences (which will end the recurrence after the specified number of occurrences) or by providing an endDateTime (which will end the recurrence after the specified date). If neither value is provided, the recurrence will continue until it is manually ended. However, if both values are provided, an error will be thrown. </param>
-        /// <param name="weekDaysInMonth"> Specific days of the week when the recurrence should repeat. </param>
-        /// <param name="index"> Index of the week in a month at which the recurrence should repeat. For example, if the index is '2', weekDay is 'Monday', interval is 3 and frequency is 'Month', the recurrence will run every second Monday of the month and repeat every 3 months. Value of index can be 1 to 5. </param>
-        /// <param name="interval"> The interval at which the recurrence should repeat. It signifies the number of months between each recurrence. </param>
-        /// <returns> A new <see cref="LoadTesting.MonthlyRecurrenceByWeekDays"/> instance for mocking. </returns>
-        public static MonthlyRecurrenceByWeekDays MonthlyRecurrenceByWeekDays(RecurrenceEnd recurrenceEnd = default, IEnumerable<WeekDays> weekDaysInMonth = default, int index = default, int interval = default)
-        {
-            weekDaysInMonth ??= new ChangeTrackingList<WeekDays>();
-
-            return new MonthlyRecurrenceByWeekDays(
-                Frequency.MonthlyByDays,
-                recurrenceEnd,
-                additionalBinaryDataProperties: null,
-                weekDaysInMonth.ToList(),
-                index,
-                interval);
-        }
-
-        /// <summary> Recurrence model when frequency is set as MonthlyByDates. </summary>
-        /// <param name="recurrenceEnd"> Recurrence end model. You can specify the end either by providing a numberOfOccurrences (which will end the recurrence after the specified number of occurrences) or by providing an endDateTime (which will end the recurrence after the specified date). If neither value is provided, the recurrence will continue until it is manually ended. However, if both values are provided, an error will be thrown. </param>
-        /// <param name="datesInMonth"> Recurrence set to repeat on the specified dates of the month. Value of dates can be 1 to 31 and -1. -1 represents the last day of the month. </param>
-        /// <param name="interval"> The interval at which the recurrence should repeat. It signifies the number of months between each recurrence. </param>
-        /// <returns> A new <see cref="LoadTesting.MonthlyRecurrenceByDates"/> instance for mocking. </returns>
-        public static MonthlyRecurrenceByDates MonthlyRecurrenceByDates(RecurrenceEnd recurrenceEnd = default, IEnumerable<int> datesInMonth = default, int? interval = default)
-        {
-            datesInMonth ??= new ChangeTrackingList<int>();
-
-            return new MonthlyRecurrenceByDates(Frequency.MonthlyByDates, recurrenceEnd, additionalBinaryDataProperties: null, datesInMonth.ToList(), interval);
-        }
-
-        /// <summary> Recurrence is set based on cron expression. </summary>
-        /// <param name="recurrenceEnd"> Recurrence end model. You can specify the end either by providing a numberOfOccurrences (which will end the recurrence after the specified number of occurrences) or by providing an endDateTime (which will end the recurrence after the specified date). If neither value is provided, the recurrence will continue until it is manually ended. However, if both values are provided, an error will be thrown. </param>
-        /// <param name="cronExpression"> Cron expression for the recurrence. </param>
-        /// <returns> A new <see cref="LoadTesting.RecurrenceWithCron"/> instance for mocking. </returns>
-        public static RecurrenceWithCron RecurrenceWithCron(RecurrenceEnd recurrenceEnd = default, string cronExpression = default)
-        {
-            return new RecurrenceWithCron(Frequency.Cron, recurrenceEnd, additionalBinaryDataProperties: null, cronExpression);
-        }
-
-        /// <summary> Recurrence model when frequency is set as weekly. </summary>
-        /// <param name="recurrenceEnd"> Recurrence end model. You can specify the end either by providing a numberOfOccurrences (which will end the recurrence after the specified number of occurrences) or by providing an endDateTime (which will end the recurrence after the specified date). If neither value is provided, the recurrence will continue until it is manually ended. However, if both values are provided, an error will be thrown. </param>
-        /// <param name="daysOfWeek"> Recurrence set to repeat on the specified days of the week. </param>
-        /// <param name="interval"> The interval at which the recurrence should repeat. It signifies the number of weeks between each recurrence. </param>
-        /// <returns> A new <see cref="LoadTesting.WeeklyRecurrence"/> instance for mocking. </returns>
-        public static WeeklyRecurrence WeeklyRecurrence(RecurrenceEnd recurrenceEnd = default, IEnumerable<WeekDays> daysOfWeek = default, int? interval = default)
-        {
-            daysOfWeek ??= new ChangeTrackingList<WeekDays>();
-
-            return new WeeklyRecurrence(Frequency.Weekly, recurrenceEnd, additionalBinaryDataProperties: null, daysOfWeek.ToList(), interval);
         }
 
         /// <summary>
@@ -700,54 +630,13 @@ namespace Azure.Developer.LoadTesting
 
         /// <summary>
         /// The notification event filter for Tests scope.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="LoadTesting.TestRunEndedNotificationEventFilter"/>, <see cref="LoadTesting.TestRunStartedNotificationEventFilter"/>, <see cref="LoadTesting.TriggerCompletedNotificationEventFilter"/>, and <see cref="LoadTesting.TriggerDisabledNotificationEventFilter"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="TestRunEndedNotificationEventFilter"/>, <see cref="TestRunStartedNotificationEventFilter"/>, <see cref="TriggerCompletedNotificationEventFilter"/>, and <see cref="TriggerDisabledNotificationEventFilter"/>.
         /// </summary>
         /// <param name="kind"> The event type. </param>
         /// <returns> A new <see cref="LoadTesting.TestsNotificationEventFilter"/> instance for mocking. </returns>
         public static TestsNotificationEventFilter TestsNotificationEventFilter(string kind = default)
         {
             return new UnknownTestsNotificationEventFilter(new NotificationEventType(kind), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The notification event filter when the event type is TestRunEnded and scope is Tests. </summary>
-        /// <param name="condition"> Event filtering condition. </param>
-        /// <returns> A new <see cref="LoadTesting.TestRunEndedNotificationEventFilter"/> instance for mocking. </returns>
-        public static TestRunEndedNotificationEventFilter TestRunEndedNotificationEventFilter(TestRunEndedEventCondition condition = default)
-        {
-            return new TestRunEndedNotificationEventFilter(NotificationEventType.TestRunEnded, additionalBinaryDataProperties: null, condition);
-        }
-
-        /// <summary> TestRunEnded Event condition. </summary>
-        /// <param name="testRunStatuses"> The test run statuses to send notification for. </param>
-        /// <param name="testRunResults"> The test run results to send notification for. </param>
-        /// <returns> A new <see cref="LoadTesting.TestRunEndedEventCondition"/> instance for mocking. </returns>
-        public static TestRunEndedEventCondition TestRunEndedEventCondition(IEnumerable<TestRunStatus> testRunStatuses = default, IEnumerable<PassFailTestResult> testRunResults = default)
-        {
-            testRunStatuses ??= new ChangeTrackingList<TestRunStatus>();
-            testRunResults ??= new ChangeTrackingList<PassFailTestResult>();
-
-            return new TestRunEndedEventCondition(testRunStatuses.ToList(), testRunResults.ToList(), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The notification event filter when the event type is TestRunStarted and scope is Tests. </summary>
-        /// <returns> A new <see cref="LoadTesting.TestRunStartedNotificationEventFilter"/> instance for mocking. </returns>
-        public static TestRunStartedNotificationEventFilter TestRunStartedNotificationEventFilter()
-        {
-            return new TestRunStartedNotificationEventFilter(NotificationEventType.TestRunStarted, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The notification event filter when the event type is TriggerCompleted. </summary>
-        /// <returns> A new <see cref="LoadTesting.TriggerCompletedNotificationEventFilter"/> instance for mocking. </returns>
-        public static TriggerCompletedNotificationEventFilter TriggerCompletedNotificationEventFilter()
-        {
-            return new TriggerCompletedNotificationEventFilter(NotificationEventType.TriggerCompleted, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The notification event filter when the event type is TriggerDisabled. </summary>
-        /// <returns> A new <see cref="LoadTesting.TriggerDisabledNotificationEventFilter"/> instance for mocking. </returns>
-        public static TriggerDisabledNotificationEventFilter TriggerDisabledNotificationEventFilter()
-        {
-            return new TriggerDisabledNotificationEventFilter(NotificationEventType.TriggerDisabled, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Status of a long running operation. </summary>

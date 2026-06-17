@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Developer.LoadTesting
 {
     /// <summary> Recurrence is set based on cron expression. </summary>
-    public partial class RecurrenceWithCron : LoadTestingRecurrence
+    internal partial class RecurrenceWithCron : LoadTestingRecurrence
     {
         /// <summary> Initializes a new instance of <see cref="RecurrenceWithCron"/>. </summary>
         /// <param name="cronExpression"> Cron expression for the recurrence. </param>

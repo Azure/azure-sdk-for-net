@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Create a new VoiceLive response with these parameters. </summary>
-    internal partial class ResponseCreateParams : IJsonModel<ResponseCreateParams>
+    public partial class ResponseCreateParams : IJsonModel<ResponseCreateParams>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

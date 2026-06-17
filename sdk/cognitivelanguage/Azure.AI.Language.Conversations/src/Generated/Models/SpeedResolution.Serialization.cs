@@ -14,7 +14,7 @@ using Azure.AI.Language.Conversations;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> Represents the speed entity resolution model. </summary>
-    public partial class SpeedResolution : ResolutionBase, IJsonModel<SpeedResolution>
+    internal partial class SpeedResolution : ResolutionBase, IJsonModel<SpeedResolution>
     {
         /// <summary> Initializes a new instance of <see cref="SpeedResolution"/> for deserialization. </summary>
         internal SpeedResolution()

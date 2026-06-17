@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.Language.Text
 {
     /// <summary> Represents the Currency ) entity Metadata model. </summary>
-    public partial class CurrencyMetadata : BaseMetadata, IJsonModel<CurrencyMetadata>
+    internal partial class CurrencyMetadata : BaseMetadata, IJsonModel<CurrencyMetadata>
     {
         /// <summary> Initializes a new instance of <see cref="CurrencyMetadata"/> for deserialization. </summary>
         internal CurrencyMetadata()

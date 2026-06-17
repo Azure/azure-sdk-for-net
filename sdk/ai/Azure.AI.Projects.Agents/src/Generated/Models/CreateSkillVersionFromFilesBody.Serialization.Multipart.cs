@@ -8,7 +8,7 @@ using System.ClientModel;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary></summary>
-    internal partial class CreateSkillVersionFromFilesBody
+    public partial class CreateSkillVersionFromFilesBody
     {
         /// <summary> Initializes a new instance of <see cref="CreateSkillVersionFromFilesBody"/> for deserialization. </summary>
         internal CreateSkillVersionFromFilesBody()

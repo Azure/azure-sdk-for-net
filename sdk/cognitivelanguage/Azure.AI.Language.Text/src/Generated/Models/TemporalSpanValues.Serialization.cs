@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.Language.Text
 {
     /// <summary> Temporal span object. </summary>
-    public partial class TemporalSpanValues : IJsonModel<TemporalSpanValues>
+    internal partial class TemporalSpanValues : IJsonModel<TemporalSpanValues>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

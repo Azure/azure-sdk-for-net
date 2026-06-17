@@ -9,7 +9,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> A manual payload used to test a responses API routine dispatch. </summary>
-    public partial class InvokeAgentResponsesApiDispatchPayload : RoutineDispatchPayload
+    internal partial class InvokeAgentResponsesApiDispatchPayload : RoutineDispatchPayload
     {
         /// <summary> Initializes a new instance of <see cref="InvokeAgentResponsesApiDispatchPayload"/>. </summary>
         /// <param name="input"> The JSON value sent as the complete downstream responses input. The value is passed through as-is and can be an object, string, number, boolean, array, or null. </param>

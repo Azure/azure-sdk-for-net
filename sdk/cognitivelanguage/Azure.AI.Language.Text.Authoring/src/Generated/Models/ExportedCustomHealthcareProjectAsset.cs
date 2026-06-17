@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Text.Authoring
 {
     /// <summary> Represents the exported assets for a CustomHealthcare project. </summary>
-    public partial class ExportedCustomHealthcareProjectAsset : TextAuthoringExportedProjectAsset
+    internal partial class ExportedCustomHealthcareProjectAsset : TextAuthoringExportedProjectAsset
     {
         /// <summary> Initializes a new instance of <see cref="ExportedCustomHealthcareProjectAsset"/>. </summary>
         public ExportedCustomHealthcareProjectAsset() : base(TextAuthoringProjectKind.CustomHealthcare)

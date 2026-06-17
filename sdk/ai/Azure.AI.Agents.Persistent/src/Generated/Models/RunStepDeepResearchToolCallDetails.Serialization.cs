@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> The detailed information about the deep research tasks performed by the model. </summary>
-    public partial class RunStepDeepResearchToolCallDetails : IJsonModel<RunStepDeepResearchToolCallDetails>
+    internal partial class RunStepDeepResearchToolCallDetails : IJsonModel<RunStepDeepResearchToolCallDetails>
     {
         /// <summary> Initializes a new instance of <see cref="RunStepDeepResearchToolCallDetails"/> for deserialization. </summary>
         internal RunStepDeepResearchToolCallDetails()

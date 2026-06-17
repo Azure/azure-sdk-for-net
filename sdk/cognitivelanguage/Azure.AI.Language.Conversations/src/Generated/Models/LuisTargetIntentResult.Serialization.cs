@@ -14,7 +14,7 @@ using Azure.AI.Language.Conversations;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> It is a wrap up of LUIS Generally Available response. </summary>
-    public partial class LuisTargetIntentResult : TargetIntentResult, IJsonModel<LuisTargetIntentResult>
+    internal partial class LuisTargetIntentResult : TargetIntentResult, IJsonModel<LuisTargetIntentResult>
     {
         /// <summary> Initializes a new instance of <see cref="LuisTargetIntentResult"/> for deserialization. </summary>
         internal LuisTargetIntentResult()

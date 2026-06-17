@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> Describes a single step of a Browser Automation tool execution. </summary>
-    public partial class BrowserAutomationToolCallStep
+    internal partial class BrowserAutomationToolCallStep
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> Dataset source for evaluator generation jobs — reference to a dataset. </summary>
-    public partial class DatasetEvaluatorGenerationJobSource : EvaluatorGenerationJobSource, IJsonModel<DatasetEvaluatorGenerationJobSource>
+    internal partial class DatasetEvaluatorGenerationJobSource : EvaluatorGenerationJobSource, IJsonModel<DatasetEvaluatorGenerationJobSource>
     {
         /// <summary> Initializes a new instance of <see cref="DatasetEvaluatorGenerationJobSource"/> for deserialization. </summary>
         internal DatasetEvaluatorGenerationJobSource()

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> A representation of a requested call to a Computer Use tool, needed by the model to continue evaluation of a run. </summary>
-    public partial class RequiredComputerUseToolCall : RequiredToolCall
+    internal partial class RequiredComputerUseToolCall : RequiredToolCall
     {
         /// <summary> Initializes a new instance of <see cref="RequiredComputerUseToolCall"/>. </summary>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when submitting tool outputs. </param>

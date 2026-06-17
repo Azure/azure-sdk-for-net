@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Returned when avatar video frame data is streamed. </summary>
-    public partial class ServerEventResponseVideoDelta : SessionUpdate
+    internal partial class ServerEventResponseVideoDelta : SessionUpdate
     {
         /// <summary> Initializes a new instance of <see cref="ServerEventResponseVideoDelta"/>. </summary>
         /// <param name="outputIndex"> The index of the output item in the response. </param>

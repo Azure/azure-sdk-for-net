@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> A record of a call to the connected agent. </summary>
-    public partial class RunStepConnectedAgentToolCall : RunStepToolCall, IJsonModel<RunStepConnectedAgentToolCall>
+    internal partial class RunStepConnectedAgentToolCall : RunStepToolCall, IJsonModel<RunStepConnectedAgentToolCall>
     {
         /// <summary> Initializes a new instance of <see cref="RunStepConnectedAgentToolCall"/> for deserialization. </summary>
         internal RunStepConnectedAgentToolCall()

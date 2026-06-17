@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Indicates the MCP call running. </summary>
-    public partial class SessionUpdateResponseMcpCallInProgress : SessionUpdate
+    internal partial class SessionUpdateResponseMcpCallInProgress : SessionUpdate
     {
         /// <summary> Initializes a new instance of <see cref="SessionUpdateResponseMcpCallInProgress"/>. </summary>
         /// <param name="itemId"> The ID of the item associated with the event. </param>

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Text
 {
     /// <summary> represents the Metadata of a date and/or time span. </summary>
-    public partial class TemporalSpanMetadata : BaseMetadata
+    internal partial class TemporalSpanMetadata : BaseMetadata
     {
         /// <summary> Initializes a new instance of <see cref="TemporalSpanMetadata"/>. </summary>
         internal TemporalSpanMetadata() : base(MetadataKind.TemporalSpanMetadata)

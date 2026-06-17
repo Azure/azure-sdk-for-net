@@ -14,7 +14,7 @@ namespace Azure.AI.VoiceLive
     /// Returned when a session is updated with a `session.update` event, unless
     /// there is an error.
     /// </summary>
-    public partial class SessionUpdateSessionUpdated : SessionUpdate
+    internal partial class SessionUpdateSessionUpdated : SessionUpdate
     {
         /// <summary> Initializes a new instance of <see cref="SessionUpdateSessionUpdated"/>. </summary>
         /// <param name="session"></param>

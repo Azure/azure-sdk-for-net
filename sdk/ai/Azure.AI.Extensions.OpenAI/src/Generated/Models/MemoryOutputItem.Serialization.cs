@@ -13,7 +13,7 @@ namespace Azure.AI.Extensions.OpenAI
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="UserProfileMemoryItem"/>, <see cref="ChatSummaryMemoryItem"/>, and <see cref="ProceduralMemoryItem"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownMemoryOutputItem))]
-    public abstract partial class MemoryOutputItem : IJsonModel<MemoryOutputItem>
+    internal abstract partial class MemoryOutputItem : IJsonModel<MemoryOutputItem>
     {
         /// <summary> Initializes a new instance of <see cref="MemoryOutputItem"/> for deserialization. </summary>
         internal MemoryOutputItem()

@@ -8,7 +8,7 @@ using System.ComponentModel;
 namespace Azure.AI.Projects
 {
     /// <summary> Known GitHub issue events that can fire a routine. </summary>
-    public readonly partial struct GitHubIssueEvent : IEquatable<GitHubIssueEvent>
+    internal readonly partial struct GitHubIssueEvent : IEquatable<GitHubIssueEvent>
     {
         private readonly string _value;
         /// <summary> The routine fires when a GitHub issue is opened. </summary>

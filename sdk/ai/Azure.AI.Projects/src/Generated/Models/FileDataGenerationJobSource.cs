@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects
 {
     /// <summary> File source for data generation jobs — Azure OpenAI file input. </summary>
-    public partial class FileDataGenerationJobSource : DataGenerationJobSource
+    internal partial class FileDataGenerationJobSource : DataGenerationJobSource
     {
         /// <summary> Initializes a new instance of <see cref="FileDataGenerationJobSource"/>. </summary>
         /// <param name="id"> Input Azure Open AI file id used for data generation. </param>

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> Represents an invocation of mcp as part of a streaming run step. </summary>
-    public partial class RunStepDeltaMCPObject : RunStepDeltaDetail
+    internal partial class RunStepDeltaMCPObject : RunStepDeltaDetail
     {
         /// <summary> Initializes a new instance of <see cref="RunStepDeltaMCPObject"/>. </summary>
         internal RunStepDeltaMCPObject() : base("mcp")

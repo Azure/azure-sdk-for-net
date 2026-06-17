@@ -21,7 +21,7 @@ namespace Azure.AI.VoiceLive
     /// The transcript may diverge somewhat from the model's interpretation, and
     /// should be treated as a rough guide.
     /// </summary>
-    public partial class SessionUpdateConversationItemInputAudioTranscriptionCompleted : SessionUpdate
+    internal partial class SessionUpdateConversationItemInputAudioTranscriptionCompleted : SessionUpdate
     {
         /// <summary> Initializes a new instance of <see cref="SessionUpdateConversationItemInputAudioTranscriptionCompleted"/>. </summary>
         /// <param name="itemId"> The ID of the user message item containing the audio. </param>

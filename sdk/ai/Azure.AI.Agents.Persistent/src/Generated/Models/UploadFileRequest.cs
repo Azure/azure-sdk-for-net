@@ -13,7 +13,7 @@ using System.IO;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> The UploadFileRequest. </summary>
-    internal partial class UploadFileRequest
+    public partial class UploadFileRequest
     {
         /// <summary> Initializes a new instance of <see cref="UploadFileRequest"/>. </summary>
         /// <param name="dataPath"> The file path for the file file. </param>

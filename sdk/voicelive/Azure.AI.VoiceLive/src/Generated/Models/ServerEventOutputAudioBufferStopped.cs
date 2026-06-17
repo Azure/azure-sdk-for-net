@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Returned when model audio output finishes playing. </summary>
-    public partial class ServerEventOutputAudioBufferStopped : SessionUpdate
+    internal partial class ServerEventOutputAudioBufferStopped : SessionUpdate
     {
         /// <summary> Initializes a new instance of <see cref="ServerEventOutputAudioBufferStopped"/>. </summary>
         internal ServerEventOutputAudioBufferStopped() : base(ServerEventType.OutputAudioBufferStopped)

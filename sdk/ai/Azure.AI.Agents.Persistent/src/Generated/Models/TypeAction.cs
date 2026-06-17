@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> An action to type in text. </summary>
-    public partial class TypeAction : ComputerUseAction
+    internal partial class TypeAction : ComputerUseAction
     {
         /// <summary> Initializes a new instance of <see cref="TypeAction"/>. </summary>
         /// <param name="text"> The text to type. </param>

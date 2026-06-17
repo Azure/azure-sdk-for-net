@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects
 {
     /// <summary> Dataset output for a data generation job. </summary>
-    public partial class DatasetDataGenerationJobOutput : DataGenerationJobOutput
+    internal partial class DatasetDataGenerationJobOutput : DataGenerationJobOutput
     {
         /// <summary> Initializes a new instance of <see cref="DatasetDataGenerationJobOutput"/>. </summary>
         internal DatasetDataGenerationJobOutput() : base(DataGenerationJobOutputType.Dataset)

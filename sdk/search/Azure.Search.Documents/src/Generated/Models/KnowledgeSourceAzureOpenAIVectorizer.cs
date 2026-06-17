@@ -12,7 +12,7 @@ using Azure.Search.Documents.Indexes.Models;
 namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary> Specifies the Azure OpenAI resource used to vectorize a query string. </summary>
-    public partial class KnowledgeSourceAzureOpenAIVectorizer : KnowledgeSourceVectorizer
+    internal partial class KnowledgeSourceAzureOpenAIVectorizer : KnowledgeSourceVectorizer
     {
         /// <summary> Initializes a new instance of <see cref="KnowledgeSourceAzureOpenAIVectorizer"/>. </summary>
         public KnowledgeSourceAzureOpenAIVectorizer() : base(VectorSearchVectorizerKind.AzureOpenAI)

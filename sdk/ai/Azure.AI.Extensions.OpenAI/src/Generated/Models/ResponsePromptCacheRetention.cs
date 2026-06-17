@@ -5,7 +5,7 @@
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary></summary>
-    internal enum ResponsePromptCacheRetention
+    public enum ResponsePromptCacheRetention
     {
         /// <summary> InMemory. </summary>
         InMemory,

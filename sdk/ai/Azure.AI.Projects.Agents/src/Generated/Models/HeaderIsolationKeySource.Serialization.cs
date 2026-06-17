@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The HeaderIsolationKeySource. </summary>
-    public partial class HeaderIsolationKeySource : IsolationKeySource, IJsonModel<HeaderIsolationKeySource>
+    internal partial class HeaderIsolationKeySource : IsolationKeySource, IJsonModel<HeaderIsolationKeySource>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

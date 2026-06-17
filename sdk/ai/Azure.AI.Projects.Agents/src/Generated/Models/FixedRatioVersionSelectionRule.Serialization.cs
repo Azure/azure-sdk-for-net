@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The FixedRatioVersionSelectionRule. </summary>
-    public partial class FixedRatioVersionSelectionRule : VersionSelectionRule, IJsonModel<FixedRatioVersionSelectionRule>
+    internal partial class FixedRatioVersionSelectionRule : VersionSelectionRule, IJsonModel<FixedRatioVersionSelectionRule>
     {
         /// <summary> Initializes a new instance of <see cref="FixedRatioVersionSelectionRule"/> for deserialization. </summary>
         internal FixedRatioVersionSelectionRule()

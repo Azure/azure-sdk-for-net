@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> Details of a Browser Automation tool call. </summary>
-    public partial class BrowserAutomationToolCallDetails : IJsonModel<BrowserAutomationToolCallDetails>
+    internal partial class BrowserAutomationToolCallDetails : IJsonModel<BrowserAutomationToolCallDetails>
     {
         /// <summary> Initializes a new instance of <see cref="BrowserAutomationToolCallDetails"/> for deserialization. </summary>
         internal BrowserAutomationToolCallDetails()

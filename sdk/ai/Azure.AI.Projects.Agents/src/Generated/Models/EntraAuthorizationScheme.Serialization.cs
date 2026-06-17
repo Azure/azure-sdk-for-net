@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The EntraAuthorizationScheme. </summary>
-    public partial class EntraAuthorizationScheme : AgentEndpointAuthorizationScheme, IJsonModel<EntraAuthorizationScheme>
+    internal partial class EntraAuthorizationScheme : AgentEndpointAuthorizationScheme, IJsonModel<EntraAuthorizationScheme>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> Represents the Azure Function tool call in a streaming run step. </summary>
-    public partial class RunStepDeltaAzureFunctionToolCall : RunStepDeltaToolCall, IJsonModel<RunStepDeltaAzureFunctionToolCall>
+    internal partial class RunStepDeltaAzureFunctionToolCall : RunStepDeltaToolCall, IJsonModel<RunStepDeltaAzureFunctionToolCall>
     {
         /// <summary> Initializes a new instance of <see cref="RunStepDeltaAzureFunctionToolCall"/> for deserialization. </summary>
         internal RunStepDeltaAzureFunctionToolCall()

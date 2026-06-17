@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.Language.Text
 {
     /// <summary> An optional modifier of a date/time instance. </summary>
-    public readonly partial struct TemporalModifier : IEquatable<TemporalModifier>
+    internal readonly partial struct TemporalModifier : IEquatable<TemporalModifier>
     {
         private readonly string _value;
         /// <summary> After an approximate time. </summary>

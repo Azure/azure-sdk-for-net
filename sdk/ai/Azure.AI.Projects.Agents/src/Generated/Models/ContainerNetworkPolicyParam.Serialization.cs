@@ -14,7 +14,7 @@ namespace OpenAI
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ContainerNetworkPolicyDisabledParam"/> and <see cref="ContainerNetworkPolicyAllowlistParam"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownContainerNetworkPolicyParam))]
-    internal abstract partial class ContainerNetworkPolicyParam : IJsonModel<ContainerNetworkPolicyParam>
+    public abstract partial class ContainerNetworkPolicyParam : IJsonModel<ContainerNetworkPolicyParam>
     {
         /// <summary> Initializes a new instance of <see cref="ContainerNetworkPolicyParam"/> for deserialization. </summary>
         internal ContainerNetworkPolicyParam()

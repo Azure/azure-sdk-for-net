@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> Represents the openapi tool call in a streaming run step. </summary>
-    public partial class RunStepDeltaOpenAPIToolCall : RunStepDeltaToolCall, IJsonModel<RunStepDeltaOpenAPIToolCall>
+    internal partial class RunStepDeltaOpenAPIToolCall : RunStepDeltaToolCall, IJsonModel<RunStepDeltaOpenAPIToolCall>
     {
         /// <summary> Initializes a new instance of <see cref="RunStepDeltaOpenAPIToolCall"/> for deserialization. </summary>
         internal RunStepDeltaOpenAPIToolCall()

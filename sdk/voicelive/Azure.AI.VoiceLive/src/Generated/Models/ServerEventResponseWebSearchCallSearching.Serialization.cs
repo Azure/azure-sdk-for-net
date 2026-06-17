@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Returned when a web search call is searching. </summary>
-    public partial class ServerEventResponseWebSearchCallSearching : SessionUpdate, IJsonModel<ServerEventResponseWebSearchCallSearching>
+    internal partial class ServerEventResponseWebSearchCallSearching : SessionUpdate, IJsonModel<ServerEventResponseWebSearchCallSearching>
     {
         /// <summary> Initializes a new instance of <see cref="ServerEventResponseWebSearchCallSearching"/> for deserialization. </summary>
         internal ServerEventResponseWebSearchCallSearching()

@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.Language.Text.Authoring
 {
     /// <summary> Represents the exported assets for a custom multi-label classification project. </summary>
-    public partial class ExportedCustomMultiLabelClassificationProjectAsset : TextAuthoringExportedProjectAsset, IJsonModel<ExportedCustomMultiLabelClassificationProjectAsset>
+    internal partial class ExportedCustomMultiLabelClassificationProjectAsset : TextAuthoringExportedProjectAsset, IJsonModel<ExportedCustomMultiLabelClassificationProjectAsset>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

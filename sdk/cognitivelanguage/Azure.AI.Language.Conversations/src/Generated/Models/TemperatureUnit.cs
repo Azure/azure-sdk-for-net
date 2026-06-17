@@ -12,7 +12,7 @@ using Azure.AI.Language.Conversations;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> The temperature Unit of measurement. </summary>
-    public readonly partial struct TemperatureUnit : IEquatable<TemperatureUnit>
+    internal readonly partial struct TemperatureUnit : IEquatable<TemperatureUnit>
     {
         private readonly string _value;
         /// <summary> Unspecified temperature unit. </summary>

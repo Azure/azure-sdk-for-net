@@ -14,7 +14,7 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Models
 {
     /// <summary> The query parameters to use for vector search when a base 64 encoded binary of an image that needs to be vectorized is provided. </summary>
-    public partial class VectorizableImageBinaryQuery : VectorQuery, IJsonModel<VectorizableImageBinaryQuery>
+    internal partial class VectorizableImageBinaryQuery : VectorQuery, IJsonModel<VectorizableImageBinaryQuery>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

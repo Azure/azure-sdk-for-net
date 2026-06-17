@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Text
 {
     /// <summary> Represents the Weight ) entity Metadata model. </summary>
-    public partial class WeightMetadata : BaseMetadata
+    internal partial class WeightMetadata : BaseMetadata
     {
         /// <summary> Initializes a new instance of <see cref="WeightMetadata"/>. </summary>
         /// <param name="value"> The numeric value that the extracted text denotes. </param>

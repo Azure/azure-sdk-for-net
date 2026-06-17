@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> A content filter detection result for Personally Identifiable Information. </summary>
-    internal partial class AzureContentFilterPersonallyIdentifiableInformationResult : IJsonModel<AzureContentFilterPersonallyIdentifiableInformationResult>
+    public partial class AzureContentFilterPersonallyIdentifiableInformationResult : IJsonModel<AzureContentFilterPersonallyIdentifiableInformationResult>
     {
         /// <summary> Initializes a new instance of <see cref="AzureContentFilterPersonallyIdentifiableInformationResult"/> for deserialization. </summary>
         internal AzureContentFilterPersonallyIdentifiableInformationResult()

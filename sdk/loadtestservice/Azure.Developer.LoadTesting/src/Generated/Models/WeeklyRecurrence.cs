@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Developer.LoadTesting
 {
     /// <summary> Recurrence model when frequency is set as weekly. </summary>
-    public partial class WeeklyRecurrence : LoadTestingRecurrence
+    internal partial class WeeklyRecurrence : LoadTestingRecurrence
     {
         /// <summary> Initializes a new instance of <see cref="WeeklyRecurrence"/>. </summary>
         public WeeklyRecurrence() : base(Frequency.Weekly)

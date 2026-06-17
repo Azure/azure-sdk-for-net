@@ -14,7 +14,7 @@ using Azure.AI.Language.Conversations;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> A resolution for datetime entity instances. </summary>
-    public partial class DateTimeResolution : ResolutionBase, IJsonModel<DateTimeResolution>
+    internal partial class DateTimeResolution : ResolutionBase, IJsonModel<DateTimeResolution>
     {
         /// <summary> Initializes a new instance of <see cref="DateTimeResolution"/> for deserialization. </summary>
         internal DateTimeResolution()

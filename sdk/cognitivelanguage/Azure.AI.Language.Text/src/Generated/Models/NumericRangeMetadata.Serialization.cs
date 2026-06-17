@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.Language.Text
 {
     /// <summary> represents the Metadata of numeric intervals. </summary>
-    public partial class NumericRangeMetadata : BaseMetadata, IJsonModel<NumericRangeMetadata>
+    internal partial class NumericRangeMetadata : BaseMetadata, IJsonModel<NumericRangeMetadata>
     {
         /// <summary> Initializes a new instance of <see cref="NumericRangeMetadata"/> for deserialization. </summary>
         internal NumericRangeMetadata()

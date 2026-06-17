@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Indicates completion of viseme animation delivery for a response. </summary>
-    public partial class SessionUpdateResponseAnimationVisemeDone : SessionUpdate
+    internal partial class SessionUpdateResponseAnimationVisemeDone : SessionUpdate
     {
         /// <summary> Initializes a new instance of <see cref="SessionUpdateResponseAnimationVisemeDone"/>. </summary>
         /// <param name="responseId"></param>
