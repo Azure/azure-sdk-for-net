@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> Describes properties of a task. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityTaskData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityTaskPropertiesGenerated properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal SecurityTaskData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityTaskPropertiesInfo properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Describes properties of a task. </summary>
-        internal SecurityTaskPropertiesGenerated Properties { get; }
+        internal SecurityTaskPropertiesInfo Properties { get; }
 
         /// <summary> State of the task (Active, Resolved etc.). </summary>
         public string State

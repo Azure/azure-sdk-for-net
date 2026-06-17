@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.SecurityCenter
     [ModelReaderWriterBuildable(typeof(SecurityTaskData))]
     [ModelReaderWriterBuildable(typeof(SecurityTaskList))]
     [ModelReaderWriterBuildable(typeof(SecurityTaskProperties))]
-    [ModelReaderWriterBuildable(typeof(SecurityTaskPropertiesGenerated))]
+    [ModelReaderWriterBuildable(typeof(SecurityTaskPropertiesInfo))]
     [ModelReaderWriterBuildable(typeof(SecurityTopologyResource))]
     [ModelReaderWriterBuildable(typeof(SecurityWorkspaceSettingData))]
     [ModelReaderWriterBuildable(typeof(SecurityWorkspaceSettingResource))]

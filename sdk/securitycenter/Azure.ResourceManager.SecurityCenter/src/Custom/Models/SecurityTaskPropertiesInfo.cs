@@ -5,7 +5,7 @@
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class SecurityTaskPropertiesGenerated
+    public partial class SecurityTaskPropertiesInfo
     {
         // SecurityTaskData exposes SecurityTaskParameters as a settable flattened GA property. The
         // generated properties container is internal and output-shaped, so this targeted setter lets

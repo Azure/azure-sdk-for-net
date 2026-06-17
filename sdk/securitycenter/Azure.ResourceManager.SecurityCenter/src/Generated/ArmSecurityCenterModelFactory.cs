@@ -3334,7 +3334,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 name,
                 resourceType,
                 systemData,
-                state is null && createdOn is null && securityTaskParameters is null && lastStateChangedOn is null && subState is null ? default : new SecurityTaskPropertiesGenerated(
+                state is null && createdOn is null && securityTaskParameters is null && lastStateChangedOn is null && subState is null ? default : new SecurityTaskPropertiesInfo(
                     state,
                     createdOn,
                     securityTaskParameters,
@@ -3349,10 +3349,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="securityTaskParameters"> Changing set of properties, depending on the task type that is derived from the name field. </param>
         /// <param name="lastStateChangedOn"> The time this task's details were last changed in UTC. </param>
         /// <param name="subState"> Additional data on the state of the task. </param>
-        /// <returns> A new <see cref="Models.SecurityTaskPropertiesGenerated"/> instance for mocking. </returns>
-        public static SecurityTaskPropertiesGenerated SecurityTaskPropertiesGenerated(string state = default, DateTimeOffset? createdOn = default, SecurityTaskProperties securityTaskParameters = default, DateTimeOffset? lastStateChangedOn = default, string subState = default)
+        /// <returns> A new <see cref="Models.SecurityTaskPropertiesInfo"/> instance for mocking. </returns>
+        public static SecurityTaskPropertiesInfo SecurityTaskPropertiesInfo(string state = default, DateTimeOffset? createdOn = default, SecurityTaskProperties securityTaskParameters = default, DateTimeOffset? lastStateChangedOn = default, string subState = default)
         {
-            return new SecurityTaskPropertiesGenerated(
+            return new SecurityTaskPropertiesInfo(
                 state,
                 createdOn,
                 securityTaskParameters,

@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Initializes a new instance of <see cref="SecurityTaskData"/>. </summary>
         public SecurityTaskData()
         {
-            Properties = new SecurityTaskPropertiesGenerated();
+            Properties = new SecurityTaskPropertiesInfo();
             _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         // Preserve the GA flattened property on SecurityTaskData; see the backing setter in
-        // Custom/Models/SecurityTaskPropertiesGenerated.cs for why this remains custom code.
+        // Custom/Models/SecurityTaskPropertiesInfo.cs for why this remains custom code.
         /// <summary> Changing set of properties, depending on the task type that is derived from the name field. </summary>
         public SecurityTaskProperties SecurityTaskParameters
         {

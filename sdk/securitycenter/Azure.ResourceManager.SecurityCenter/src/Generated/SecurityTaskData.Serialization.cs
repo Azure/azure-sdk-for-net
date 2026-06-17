@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.SecurityCenter
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            SecurityTaskPropertiesGenerated properties = default;
+            SecurityTaskPropertiesInfo properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     {
                         continue;
                     }
-                    properties = SecurityTaskPropertiesGenerated.DeserializeSecurityTaskPropertiesGenerated(prop.Value, options);
+                    properties = SecurityTaskPropertiesInfo.DeserializeSecurityTaskPropertiesInfo(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
