@@ -1,0 +1,7 @@
+directory: specification/keyvault/data-plane/Certificates
+commit: 98efa4921b4967a79d19bf3082777e7cf9efc605
+repo: Azure/azure-rest-api-specs
+additionalDirectories: 
+- specification/keyvault/data-plane/Certificates/common
+
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-emitter-package.json
