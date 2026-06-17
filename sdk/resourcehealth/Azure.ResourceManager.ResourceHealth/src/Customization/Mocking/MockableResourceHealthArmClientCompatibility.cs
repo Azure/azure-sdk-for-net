@@ -24,21 +24,6 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         private ClientDiagnostics EventsClientDiagnostics => _eventsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ResourceHealth.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private Events EventsRestClient => _eventsRestClient ??= new Events(EventsClientDiagnostics, Pipeline, Endpoint, "2025-05-01");
 
-        /// <summary> Gets current availability status for a single resource. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<Response<ResourceHealthAvailabilityStatus>> GetAvailabilityStatusAsync(ResourceIdentifier scope, string filter = default, string expand = default, CancellationToken cancellationToken = default)
-        {
-            Response response = await GetSingleResponseAsync(scope, filter, expand, cancellationToken).ConfigureAwait(false);
-            return Response.FromValue(ResourceHealthAvailabilityStatus.FromResponse(response), response);
-        }
-
-        /// <summary> Gets current availability status for a single resource. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Response<ResourceHealthAvailabilityStatus> GetAvailabilityStatus(ResourceIdentifier scope, string filter = default, string expand = default, CancellationToken cancellationToken = default)
-        {
-            Response response = GetSingleResponse(scope, filter, expand, cancellationToken);
-            return Response.FromValue(ResourceHealthAvailabilityStatus.FromResponse(response), response);
-        }
         // This customization preserves the GA GetAvailabilityStatuses* mockable API while forwarding to the generated child-resource availability status list operation.
         /// <summary> Lists the all the children and its current health status for a parent resource. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
