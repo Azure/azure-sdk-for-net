@@ -74,11 +74,11 @@ namespace Azure.ResourceManager.Dns.Models
             {
                 throw new FormatException($"The model {nameof(DnsTxtRecordInfo)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(Value))
+            if (Optional.IsCollectionDefined(Values))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (string item in Value)
+                foreach (string item in Values)
                 {
                     if (item == null)
                     {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Dns.Models
             {
                 return null;
             }
-            IList<string> value = default;
+            IList<string> values = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Dns.Models
                             array.Add(item.GetString());
                         }
                     }
-                    value = array;
+                    values = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Dns.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DnsTxtRecordInfo(value ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
+            return new DnsTxtRecordInfo(values ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

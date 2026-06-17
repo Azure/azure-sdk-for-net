@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.Dns.Models
         /// <summary> Initializes a new instance of <see cref="DnsTxtRecordInfo"/>. </summary>
         public DnsTxtRecordInfo()
         {
-            Value = new ChangeTrackingList<string>();
+            Values = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DnsTxtRecordInfo"/>. </summary>
-        /// <param name="value"> The text value of this TXT record. </param>
+        /// <param name="values"> The text value of this TXT record. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DnsTxtRecordInfo(IList<string> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DnsTxtRecordInfo(IList<string> values, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Value = value;
+            Values = values;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The text value of this TXT record. </summary>
-        public IList<string> Value { get; }
+        public IList<string> Values { get; }
     }
 }

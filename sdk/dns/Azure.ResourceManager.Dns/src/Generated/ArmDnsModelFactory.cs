@@ -175,13 +175,13 @@ namespace Azure.ResourceManager.Dns.Models
             return new DnsSrvRecordInfo(priority, weight, port, target, default);
         }
 
-        /// <param name="value"> The text value of this TXT record. </param>
+        /// <param name="values"> The text value of this TXT record. </param>
         /// <returns> A new <see cref="Models.DnsTxtRecordInfo"/> instance for mocking. </returns>
-        public static DnsTxtRecordInfo DnsTxtRecordInfo(IEnumerable<string> value = default)
+        public static DnsTxtRecordInfo DnsTxtRecordInfo(IEnumerable<string> values = default)
         {
-            value ??= new ChangeTrackingList<string>();
+            values ??= new ChangeTrackingList<string>();
 
-            return new DnsTxtRecordInfo((value ?? new ChangeTrackingList<string>()).ToList(), default);
+            return new DnsTxtRecordInfo((values ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
         /// <param name="host"> The domain name of the authoritative name server for this SOA record. </param>

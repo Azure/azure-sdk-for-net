@@ -225,6 +225,17 @@ namespace Azure.ResourceManager.Dns
             }
         }
 
+        /// <summary> The DnsRecordType in the record set. </summary>
+        public DnsRecordType RecordType
+        {
+            get
+            {
+                var resourceTypeString = base.ResourceType.Type.Split('/').Where(part => !string.IsNullOrEmpty(part)).LastOrDefault();
+                DnsRecordType recordType = DnsRecordTypeExtensions.ToDnsRecordType(resourceTypeString);
+                return recordType;
+            }
+        }
+
         internal static AsyncPageable<TResource> GetAllAsync<TResource>(RecordSets recordSetsRestClient, ArmClient client, ResourceIdentifier zoneId, string recordType, int? top, string recordsetnamesuffix, CancellationToken cancellationToken, string diagnosticScope, Func<ArmClient, ResourceIdentifier, TResource> createResource)
         {
             RequestContext context = new RequestContext

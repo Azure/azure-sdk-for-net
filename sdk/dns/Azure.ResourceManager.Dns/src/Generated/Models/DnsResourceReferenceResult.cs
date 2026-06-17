@@ -32,14 +32,5 @@ namespace Azure.ResourceManager.Dns.Models
 
         /// <summary> The result of dns resource reference request. Returns a list of dns resource references for each of the azure resource in the request. </summary>
         internal DnsResourceReferenceResultProperties Properties { get; }
-
-        /// <summary> The result of dns resource reference request. A list of dns resource references for each of the azure resource in the request. </summary>
-        public IList<DnsResourceReference> DnsResourceReferences
-        {
-            get
-            {
-                return Properties is null ? default : Properties.DnsResourceReferences;
-            }
-        }
     }
 }

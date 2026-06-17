@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             await Create_NAPTR();
             var allRecordData = _dnsZone.GetAllRecordDataAsync();
             // NS SOA is created by default
-            await foreach (Dns.DnsBaseRecordData item in allRecordData)
+            await foreach (DnsRecordData item in allRecordData)
             {
                 var resourceType = item.ResourceType;
                 DnsRecordType recordType = item.RecordType;
