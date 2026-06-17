@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="properties"> Security Solution data. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        internal IotSecuritySolutionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IoTSecuritySolutionProperties properties, IDictionary<string, string> tags, string location) : base(id, name, resourceType, systemData)
+        internal IotSecuritySolutionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IoTSecuritySolutionProperties properties, IDictionary<string, string> tags, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.SecurityCenter
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> The geo-location where the resource lives. </summary>
-        public string Location { get; set; }
+        public AzureLocation? Location { get; set; }
 
         /// <summary> Workspace resource ID. </summary>
         public string Workspace

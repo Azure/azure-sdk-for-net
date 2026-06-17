@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.SecurityCenter
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location);
+                writer.WriteStringValue(Location.Value);
             }
         }
 
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.SecurityCenter
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             IoTSecuritySolutionProperties properties = default;
             IDictionary<string, string> tags = default;
-            string location = default;
+            AzureLocation? location = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -223,7 +223,12 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 if (prop.NameEquals("location"u8))
                 {
-                    location = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        location = null;
+                        continue;
+                    }
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

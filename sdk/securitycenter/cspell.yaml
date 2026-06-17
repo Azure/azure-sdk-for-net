@@ -1,4 +1,8 @@
 import:
   - ../../.vscode/cspell.json
 words:
+  - aqid
   - azprovision
+  - cspm
+  - metadatas
+  - pricings

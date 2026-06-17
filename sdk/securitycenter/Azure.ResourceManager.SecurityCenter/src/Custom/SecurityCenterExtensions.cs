@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableSecurityCenterArmClient(client).GetAdvancedThreatProtectionSettingResource(id);
+            return GetMockableSecurityCenterArmClient(client).GetAdvancedThreatProtectionSetting(id);
         }
     }
 }
