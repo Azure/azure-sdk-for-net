@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 HttpMessage message = _executionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, executionName, EdgeExecutionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 WorkloadOrchestrationArmOperation<EdgeExecutionResource> operation = new WorkloadOrchestrationArmOperation<EdgeExecutionResource>(
-                    new EdgeExecutionOperationSource(Client),
+                    new EdgeExecutionResourceOperationSource(Client),
                     _executionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 HttpMessage message = _executionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, executionName, EdgeExecutionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 WorkloadOrchestrationArmOperation<EdgeExecutionResource> operation = new WorkloadOrchestrationArmOperation<EdgeExecutionResource>(
-                    new EdgeExecutionOperationSource(Client),
+                    new EdgeExecutionResourceOperationSource(Client),
                     _executionsClientDiagnostics,
                     Pipeline,
                     message.Request,

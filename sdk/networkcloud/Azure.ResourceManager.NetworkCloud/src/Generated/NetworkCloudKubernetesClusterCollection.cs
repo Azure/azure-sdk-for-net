@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 HttpMessage message = _kubernetesClustersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, kubernetesClusterName, NetworkCloudKubernetesClusterData.ToRequestContent(data), matchConditions, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkCloudArmOperation<NetworkCloudKubernetesClusterResource> operation = new NetworkCloudArmOperation<NetworkCloudKubernetesClusterResource>(
-                    new NetworkCloudKubernetesClusterOperationSource(Client),
+                    new NetworkCloudKubernetesClusterResourceOperationSource(Client),
                     _kubernetesClustersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 HttpMessage message = _kubernetesClustersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, kubernetesClusterName, NetworkCloudKubernetesClusterData.ToRequestContent(data), matchConditions, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkCloudArmOperation<NetworkCloudKubernetesClusterResource> operation = new NetworkCloudArmOperation<NetworkCloudKubernetesClusterResource>(
-                    new NetworkCloudKubernetesClusterOperationSource(Client),
+                    new NetworkCloudKubernetesClusterResourceOperationSource(Client),
                     _kubernetesClustersClientDiagnostics,
                     Pipeline,
                     message.Request,

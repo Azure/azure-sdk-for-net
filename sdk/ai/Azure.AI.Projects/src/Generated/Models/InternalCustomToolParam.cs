@@ -32,7 +32,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> The name of the custom tool, used to identify it in tool calls. </summary>
-        public string Name { get; }
+        public string Name { get; set; }
 
         /// <summary> Optional description of the custom tool, used to provide more context. </summary>
         public string Description { get; set; }

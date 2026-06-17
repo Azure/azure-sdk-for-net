@@ -10,13 +10,65 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
-    public partial class HybridComputeLicenseProfilePatch : IUtf8JsonSerializable, IJsonModel<HybridComputeLicenseProfilePatch>
+    /// <summary> Describes a License Profile Update. </summary>
+    public partial class HybridComputeLicenseProfilePatch : HybridComputeResourceUpdate, IJsonModel<HybridComputeLicenseProfilePatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HybridComputeLicenseProfilePatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override HybridComputeResourceUpdate PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HybridComputeLicenseProfilePatch>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeHybridComputeLicenseProfilePatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HybridComputeLicenseProfilePatch)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HybridComputeLicenseProfilePatch>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHybridComputeContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(HybridComputeLicenseProfilePatch)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<HybridComputeLicenseProfilePatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HybridComputeLicenseProfilePatch IPersistableModel<HybridComputeLicenseProfilePatch>.Create(BinaryData data, ModelReaderWriterOptions options) => (HybridComputeLicenseProfilePatch)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<HybridComputeLicenseProfilePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="hybridComputeLicenseProfilePatch"> The <see cref="HybridComputeLicenseProfilePatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(HybridComputeLicenseProfilePatch hybridComputeLicenseProfilePatch)
+        {
+            if (hybridComputeLicenseProfilePatch == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(hybridComputeLicenseProfilePatch, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HybridComputeLicenseProfilePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,240 +80,85 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeLicenseProfilePatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HybridComputeLicenseProfilePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HybridComputeLicenseProfilePatch)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            writer.WritePropertyName("productProfile"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(SubscriptionStatus))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("subscriptionStatus"u8);
-                writer.WriteStringValue(SubscriptionStatus.Value.ToString());
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            if (Optional.IsDefined(ProductType))
-            {
-                writer.WritePropertyName("productType"u8);
-                writer.WriteStringValue(ProductType.Value.ToString());
-            }
-            if (Optional.IsCollectionDefined(ProductFeatures))
-            {
-                writer.WritePropertyName("productFeatures"u8);
-                writer.WriteStartArray();
-                foreach (var item in ProductFeatures)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WriteEndObject();
-            writer.WritePropertyName("esuProfile"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(AssignedLicense))
-            {
-                writer.WritePropertyName("assignedLicense"u8);
-                writer.WriteStringValue(AssignedLicense);
-            }
-            writer.WriteEndObject();
-            writer.WritePropertyName("softwareAssurance"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(SoftwareAssuranceCustomer))
-            {
-                writer.WritePropertyName("softwareAssuranceCustomer"u8);
-                writer.WriteBooleanValue(SoftwareAssuranceCustomer.Value);
-            }
-            writer.WriteEndObject();
-            writer.WriteEndObject();
         }
 
-        HybridComputeLicenseProfilePatch IJsonModel<HybridComputeLicenseProfilePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HybridComputeLicenseProfilePatch IJsonModel<HybridComputeLicenseProfilePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (HybridComputeLicenseProfilePatch)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override HybridComputeResourceUpdate JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeLicenseProfilePatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HybridComputeLicenseProfilePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HybridComputeLicenseProfilePatch)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeHybridComputeLicenseProfilePatch(document.RootElement, options);
         }
 
-        internal static HybridComputeLicenseProfilePatch DeserializeHybridComputeLicenseProfilePatch(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static HybridComputeLicenseProfilePatch DeserializeHybridComputeLicenseProfilePatch(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IDictionary<string, string> tags = default;
-            LicenseProfileSubscriptionStatusUpdate? subscriptionStatus = default;
-            LicenseProfileProductType? productType = default;
-            IList<HybridComputeProductFeatureUpdate> productFeatures = default;
-            string assignedLicense = default;
-            bool? softwareAssuranceCustomer = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            LicenseProfileUpdateProperties properties = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("tags"u8))
+                if (prop.NameEquals("tags"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("properties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("productProfile"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            foreach (var property1 in property0.Value.EnumerateObject())
-                            {
-                                if (property1.NameEquals("subscriptionStatus"u8))
-                                {
-                                    if (property1.Value.ValueKind == JsonValueKind.Null)
-                                    {
-                                        continue;
-                                    }
-                                    subscriptionStatus = new LicenseProfileSubscriptionStatusUpdate(property1.Value.GetString());
-                                    continue;
-                                }
-                                if (property1.NameEquals("productType"u8))
-                                {
-                                    if (property1.Value.ValueKind == JsonValueKind.Null)
-                                    {
-                                        continue;
-                                    }
-                                    productType = new LicenseProfileProductType(property1.Value.GetString());
-                                    continue;
-                                }
-                                if (property1.NameEquals("productFeatures"u8))
-                                {
-                                    if (property1.Value.ValueKind == JsonValueKind.Null)
-                                    {
-                                        continue;
-                                    }
-                                    List<HybridComputeProductFeatureUpdate> array = new List<HybridComputeProductFeatureUpdate>();
-                                    foreach (var item in property1.Value.EnumerateArray())
-                                    {
-                                        array.Add(HybridComputeProductFeatureUpdate.DeserializeHybridComputeProductFeatureUpdate(item, options));
-                                    }
-                                    productFeatures = array;
-                                    continue;
-                                }
-                            }
-                            continue;
-                        }
-                        if (property0.NameEquals("esuProfile"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            foreach (var property1 in property0.Value.EnumerateObject())
-                            {
-                                if (property1.NameEquals("assignedLicense"u8))
-                                {
-                                    assignedLicense = property1.Value.GetString();
-                                    continue;
-                                }
-                            }
-                            continue;
-                        }
-                        if (property0.NameEquals("softwareAssurance"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            foreach (var property1 in property0.Value.EnumerateObject())
-                            {
-                                if (property1.NameEquals("softwareAssuranceCustomer"u8))
-                                {
-                                    if (property1.Value.ValueKind == JsonValueKind.Null)
-                                    {
-                                        continue;
-                                    }
-                                    softwareAssuranceCustomer = property1.Value.GetBoolean();
-                                    continue;
-                                }
-                            }
-                            continue;
-                        }
-                    }
+                    properties = LicenseProfileUpdateProperties.DeserializeLicenseProfileUpdateProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new HybridComputeLicenseProfilePatch(
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                serializedAdditionalRawData,
-                subscriptionStatus,
-                productType,
-                productFeatures ?? new ChangeTrackingList<HybridComputeProductFeatureUpdate>(),
-                assignedLicense,
-                softwareAssuranceCustomer);
+            return new HybridComputeLicenseProfilePatch(tags ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties, properties);
         }
-
-        BinaryData IPersistableModel<HybridComputeLicenseProfilePatch>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeLicenseProfilePatch>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHybridComputeContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(HybridComputeLicenseProfilePatch)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        HybridComputeLicenseProfilePatch IPersistableModel<HybridComputeLicenseProfilePatch>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeLicenseProfilePatch>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeHybridComputeLicenseProfilePatch(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(HybridComputeLicenseProfilePatch)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<HybridComputeLicenseProfilePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

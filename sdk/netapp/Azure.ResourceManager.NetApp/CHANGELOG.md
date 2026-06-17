@@ -1,6 +1,5 @@
 # Release History
 
-
 ## 1.17.0-beta.1 (Unreleased)
 
 ### Features Added
@@ -11,7 +10,11 @@
 
 ### Other Changes
 
-- Migrated from AutoRest to TypeSpec-based code generation.
+## 1.16.1 (2026-06-09)
+
+### Features Added
+
+- Make `Azure.ResourceManager.NetApp` AOT-compatible.
 
 ## 1.16.0 (2026-05-01)
 

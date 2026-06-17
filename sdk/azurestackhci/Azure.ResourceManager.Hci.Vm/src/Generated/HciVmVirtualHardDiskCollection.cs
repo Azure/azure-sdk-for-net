@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 HttpMessage message = _virtualHardDisksRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualHardDiskName, HciVmVirtualHardDiskData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 VmArmOperation<HciVmVirtualHardDiskResource> operation = new VmArmOperation<HciVmVirtualHardDiskResource>(
-                    new HciVmVirtualHardDiskOperationSource(Client),
+                    new HciVmVirtualHardDiskResourceOperationSource(Client),
                     _virtualHardDisksClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 HttpMessage message = _virtualHardDisksRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualHardDiskName, HciVmVirtualHardDiskData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 VmArmOperation<HciVmVirtualHardDiskResource> operation = new VmArmOperation<HciVmVirtualHardDiskResource>(
-                    new HciVmVirtualHardDiskOperationSource(Client),
+                    new HciVmVirtualHardDiskResourceOperationSource(Client),
                     _virtualHardDisksClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ProviderHub
                 HttpMessage message = _providerRegistrationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), providerNamespace, ProviderRegistrationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ProviderHubArmOperation<ProviderRegistrationResource> operation = new ProviderHubArmOperation<ProviderRegistrationResource>(
-                    new ProviderRegistrationOperationSource(Client),
+                    new ProviderRegistrationResourceOperationSource(Client),
                     _providerRegistrationsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ProviderHub
                 HttpMessage message = _providerRegistrationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), providerNamespace, ProviderRegistrationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ProviderHubArmOperation<ProviderRegistrationResource> operation = new ProviderHubArmOperation<ProviderRegistrationResource>(
-                    new ProviderRegistrationOperationSource(Client),
+                    new ProviderRegistrationResourceOperationSource(Client),
                     _providerRegistrationsClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Hci
                 HttpMessage message = _securitySettingsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, securitySettingsName, HciClusterSecuritySettingData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HciArmOperation<HciClusterSecuritySettingResource> operation = new HciArmOperation<HciClusterSecuritySettingResource>(
-                    new HciClusterSecuritySettingOperationSource(Client),
+                    new HciClusterSecuritySettingResourceOperationSource(Client),
                     _securitySettingsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Hci
                 HttpMessage message = _securitySettingsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, securitySettingsName, HciClusterSecuritySettingData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HciArmOperation<HciClusterSecuritySettingResource> operation = new HciArmOperation<HciClusterSecuritySettingResource>(
-                    new HciClusterSecuritySettingOperationSource(Client),
+                    new HciClusterSecuritySettingResourceOperationSource(Client),
                     _securitySettingsClientDiagnostics,
                     Pipeline,
                     message.Request,

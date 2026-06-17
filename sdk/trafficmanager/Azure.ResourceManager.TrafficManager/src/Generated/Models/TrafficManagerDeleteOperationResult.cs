@@ -22,15 +22,12 @@ namespace Azure.ResourceManager.TrafficManager.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="TrafficManagerDeleteOperationResult"/>. </summary>
-        /// <param name="operationResult"> The result of the operation or request. </param>
+        /// <param name="isSuccessful"> The result of the operation or request. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TrafficManagerDeleteOperationResult(bool? operationResult, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TrafficManagerDeleteOperationResult(bool? isSuccessful, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            OperationResult = operationResult;
+            IsSuccessful = isSuccessful;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> The result of the operation or request. </summary>
-        public bool? OperationResult { get; }
     }
 }

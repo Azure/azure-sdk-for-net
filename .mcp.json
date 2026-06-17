@@ -1,0 +1,23 @@
+{
+  "_comment": "Workspace MCP config for Copilot CLI. Mirror of .vscode/mcp.json (which is for VS Code and uses the 'servers' key instead of 'mcpServers'). Keep both files in sync — enforced by eng/scripts/Verify-McpConfigSync.ps1 in CI.",
+  "mcpServers": {
+    "azure-sdk-mcp": {
+      "type": "stdio",
+      "command": "pwsh",
+      "args": ["./eng/common/mcp/azure-sdk-mcp.ps1", "-Run"]
+    },
+    "generator-agent": {
+      "type": "stdio",
+      "command": "dotnet",
+      "args": [
+        "run",
+        "--project",
+        "sdk/tools/Azure.GeneratorAgent/src/Azure.GeneratorAgent.csproj",
+        "--framework",
+        "net10.0",
+        "--",
+        "--mcp-server"
+      ]
+    }
+  }
+}

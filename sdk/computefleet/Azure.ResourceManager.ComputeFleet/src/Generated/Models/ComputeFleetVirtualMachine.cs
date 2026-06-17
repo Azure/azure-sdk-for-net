@@ -12,8 +12,8 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
-    /// <summary> An instant Fleet's virtual machine. </summary>
-    public partial class ComputeFleetVirtualMachine
+    /// <summary> A Launch mode Fleet's virtual machine. </summary>
+    public partial class ComputeFleetVirtualMachine : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -28,14 +28,14 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="operationStatus"> This represents the operationStatus of the virtual machine in response to the last operation that was performed on it by Azure Fleet resource. </param>
         /// <param name="error"> Error information when `operationStatus` is `Failed`. </param>
-        internal ComputeFleetVirtualMachine(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ComputeFleetVmOperationStatus operationStatus, ComputeFleetApiError error) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ComputeFleetVirtualMachine(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ComputeFleetVmOperationStatus operationStatus, ComputeFleetApiError error, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             OperationStatus = operationStatus;
             Error = error;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> This represents the operationStatus of the virtual machine in response to the last operation that was performed on it by Azure Fleet resource. </summary>

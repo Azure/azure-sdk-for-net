@@ -22,6 +22,10 @@
   Prefix for the exported variable name (default: GH_TOKEN).
   With a single owner, exports as GH_TOKEN. With multiple owners, exports as GH_TOKEN_<Owner>.
 
+.PARAMETER ExportAsOutputVariable
+  When set in Azure DevOps, also exports the variable as an output variable
+  (##vso[task.setvariable ...;isOutput=true]) for downstream jobs/stages.
+
 .OUTPUTS
   Sets environment variables in the current process and exports them to the CI system:
   - Azure DevOps: sets secret pipeline variables via ##vso logging commands
@@ -34,7 +38,8 @@ param(
   [string] $KeyName = "azure-sdk-automation",
   [string] $GitHubAppId = '1086291', # Azure SDK Automation App ID
   [string[]] $InstallationTokenOwners = @("Azure"),
-  [string] $VariableNamePrefix = "GH_TOKEN"
+  [string] $VariableNamePrefix = "GH_TOKEN",
+  [switch] $ExportAsOutputVariable
 )
 
 $ErrorActionPreference = 'Stop'
@@ -115,6 +120,32 @@ function New-GitHubAppJwt {
   return "$UnsignedToken.$Signature"
 }
 
+function Get-PropertyValue {
+  param(
+    [AllowNull()][object] $InputObject,
+    [Parameter(Mandatory)][string] $PropertyName
+  )
+
+  if ($null -eq $InputObject) {
+    return $null
+  }
+
+  if ($InputObject -is [System.Collections.IDictionary]) {
+    if ($InputObject.Contains($PropertyName)) {
+      return $InputObject[$PropertyName]
+    }
+
+    return $null
+  }
+
+  $property = $InputObject | Get-Member -Name $PropertyName -MemberType NoteProperty,Property -ErrorAction SilentlyContinue
+  if ($null -ne $property) {
+    return $InputObject.$PropertyName
+  }
+
+  return $null
+}
+
 function Get-GitHubInstallationId {
     param(
         [Parameter(Mandatory)][string] $Jwt,
@@ -128,11 +159,46 @@ function Get-GitHubInstallationId {
     $uri = "$ApiBase/app/installations"
     $resp = Invoke-RestMethod -Method Get -Headers $headers -Uri $uri -TimeoutSec 30 -MaximumRetryCount 3
 
-    $resp | Foreach-Object { Write-Host "  $($_.id): $($_.account.login) [$($_.target_type)]" }
+    $resp = @($resp)
+    foreach ($installation in $resp) {
+      $installationId = Get-PropertyValue -InputObject $installation -PropertyName 'id'
+      $installationLogin = Get-PropertyValue -InputObject $installation -PropertyName 'login'
+      $installationType = Get-PropertyValue -InputObject $installation -PropertyName 'target_type'
 
-    $resp = $resp | Where-Object { $_.account.login -ieq $InstallationTokenOwner }
-    if (!$resp.id) { throw "No installations found for this App." }
-    return $resp.id
+      if ($null -eq $installationLogin) {
+        $installationLogin = (Get-PropertyValue -InputObject $installation -PropertyName 'account').login
+      }
+
+      Write-Host "  ${installationId}: ${installationLogin} [${installationType}]"
+    }
+
+    $loginMatches = @($resp | Where-Object {
+      $installationLogin = Get-PropertyValue -InputObject $_ -PropertyName 'login'
+      if ($null -eq $installationLogin) {
+        $installationLogin = (Get-PropertyValue -InputObject $_ -PropertyName 'account').login
+      }
+
+      $installationLogin -ieq $InstallationTokenOwner
+    })
+
+    $matchingInstallations = @($loginMatches | Where-Object {
+      $null -ne (Get-PropertyValue -InputObject $_ -PropertyName 'id')
+    })
+
+    if ($matchingInstallations.Count -eq 0) {
+      if ($loginMatches.Count -gt 0) {
+        throw "No installations with a valid id found for '$InstallationTokenOwner' on this App."
+      }
+
+      throw "No installations found for '$InstallationTokenOwner' on this App."
+    }
+
+    if ($matchingInstallations.Count -gt 1) {
+      Write-Warning "Multiple installations matched '$InstallationTokenOwner'; using the first one."
+    }
+
+    $matchedInstallation = $matchingInstallations[0]
+    return (Get-PropertyValue -InputObject $matchedInstallation -PropertyName 'id')
 }
 
 function New-GitHubInstallationToken {
@@ -149,50 +215,63 @@ function New-GitHubInstallationToken {
   return $resp.token
 }
 
-Write-Host "Generating GitHub App JWT by signing via Azure Key Vault (no key export)..."
-$jwt = New-GitHubAppJwt -VaultName $KeyVaultName -KeyName $KeyName -AppId $GitHubAppId
+function Invoke-LoginToGitHub {
+  Write-Host "Generating GitHub App JWT by signing via Azure Key Vault (no key export)..."
+  $jwt = New-GitHubAppJwt -VaultName $KeyVaultName -KeyName $KeyName -AppId $GitHubAppId
 
-foreach ($InstallationTokenOwner in $InstallationTokenOwners) 
-{
-  Write-Host "Fetching installation ID for $InstallationTokenOwner ..."
-  $installationId = Get-GitHubInstallationId -Jwt $jwt -ApiBase $GitHubApiBaseUrl -ApiVersion $GitHubApiVersion -InstallationTokenOwner $InstallationTokenOwner
+  foreach ($InstallationTokenOwner in $InstallationTokenOwners) {
+    # Token owners can be provided as either "owner" or "owner/repo". Normalize to owner.
+    $normalizedOwner = ($InstallationTokenOwner -split '/')[0]
+    Write-Host "Fetching installation ID for $InstallationTokenOwner (normalized owner: $normalizedOwner) ..."
+    $installationId = Get-GitHubInstallationId -Jwt $jwt -ApiBase $GitHubApiBaseUrl -ApiVersion $GitHubApiVersion -InstallationTokenOwner $normalizedOwner
 
-  Write-Host "Installation ID resolved: $installationId"
+    Write-Host "Installation ID resolved: $installationId"
 
-  Write-Host "Exchanging JWT for installation access token..."
-  $installationToken = New-GitHubInstallationToken -Jwt $jwt -InstallationId $installationId -ApiBase $GitHubApiBaseUrl -ApiVersion $GitHubApiVersion
+    Write-Host "Exchanging JWT for installation access token..."
+    $installationToken = New-GitHubInstallationToken -Jwt $jwt -InstallationId $installationId -ApiBase $GitHubApiBaseUrl -ApiVersion $GitHubApiVersion
 
-  $variableName = $VariableNamePrefix
-  if ($InstallationTokenOwners.Count -gt 1)
-  {
-    $variableName = $VariableNamePrefix + "_" + $InstallationTokenOwner
-  }
+    $variableName = $VariableNamePrefix
+    if ($InstallationTokenOwners.Count -gt 1) {
+      $variableName = $VariableNamePrefix + "_" + $normalizedOwner
+    }
 
-  Set-Item -Path Env:$variableName -Value $installationToken
+    Set-Item -Path Env:$variableName -Value $installationToken
 
-  # Export for gh CLI & git
-  Write-Host "$variableName has been set in the current process."
+    # Export for gh CLI & git
+    Write-Host "$variableName has been set in the current process."
 
-  # Azure DevOps: set secret pipeline variable (so later tasks can reuse it)
-  if ($null -ne $env:SYSTEM_TEAMPROJECTID) {
-    Write-Host "##vso[task.setvariable variable=$variableName;issecret=true]$installationToken"
-    Write-Host "Azure DevOps variable '$variableName' has been set (secret)."
-  }
+    # Azure DevOps: set secret pipeline variable (so later tasks can reuse it)
+    if ($null -ne $env:SYSTEM_TEAMPROJECTID) {
+      Write-Host "##vso[task.setvariable variable=$variableName;issecret=true]$installationToken"
+      Write-Host "Azure DevOps variable '$variableName' has been set (secret)."
 
-  # GitHub Actions: mask the token and export to GITHUB_ENV
-  if ($env:GITHUB_ACTIONS -eq 'true') {
-    Write-Host "::add-mask::$installationToken"
-    Add-Content -Path $env:GITHUB_ENV -Value "$variableName=$installationToken"
-    Write-Host "GitHub Actions env variable '$variableName' has been exported."
-  }
+      if ($ExportAsOutputVariable) {
+        Write-Host "##vso[task.setvariable variable=$variableName;issecret=true;isOutput=true]$installationToken"
+        Write-Host "Azure DevOps output variable '$variableName' has been set (secret)."
+      }
+    }
 
-  try {
-    Write-Host "`n--- gh auth status ---"
-    $gh_token_value_before = $env:GH_TOKEN
-    $env:GH_TOKEN = $installationToken
-    & gh auth status
-  }
-  finally{
-    $env:GH_TOKEN = $gh_token_value_before
+    # GitHub Actions: mask the token and export to GITHUB_ENV
+    if ($env:GITHUB_ACTIONS -eq 'true') {
+      Write-Host "::add-mask::$installationToken"
+      Add-Content -Path $env:GITHUB_ENV -Value "$variableName=$installationToken"
+      Write-Host "GitHub Actions env variable '$variableName' has been exported."
+    }
+
+    try {
+      Write-Host "`n--- gh auth status ---"
+      $gh_token_value_before = $env:GH_TOKEN
+      $env:GH_TOKEN = $installationToken
+      & gh auth status
+    }
+    finally {
+      $env:GH_TOKEN = $gh_token_value_before
+    }
   }
 }
+
+if ($env:PESTER_TEST_RUN -eq 'true') {
+  return
+}
+
+Invoke-LoginToGitHub

@@ -574,6 +574,7 @@ namespace Azure.Core
         public static Azure.Core.RequestContent Create(System.Buffers.ReadOnlySequence<byte> bytes) { throw null; }
         public static Azure.Core.RequestContent Create(byte[] bytes) { throw null; }
         public static Azure.Core.RequestContent Create(byte[] bytes, int index, int length) { throw null; }
+        public static Azure.Core.RequestContent Create(System.ClientModel.BinaryContent content) { throw null; }
         public static Azure.Core.RequestContent Create(System.IO.Stream stream) { throw null; }
         [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("This method uses reflection-based serialization which is incompatible with trimming. Try using one of the 'Create' overloads that doesn't wrap a serialized version of an object.")]
         public static Azure.Core.RequestContent Create(object serializable) { throw null; }
@@ -1003,13 +1004,21 @@ namespace Azure.Core.Pipeline
     public partial class BearerTokenAuthenticationPolicy : Azure.Core.Pipeline.HttpPipelinePolicy
     {
         public BearerTokenAuthenticationPolicy(Azure.Core.TokenCredential credential, System.Collections.Generic.IEnumerable<string> scopes) { }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZID0004")]
+        public BearerTokenAuthenticationPolicy(Azure.Core.TokenCredential credential, System.Collections.Generic.IEnumerable<string> scopes, Azure.Core.Pipeline.HttpPipelineTransportOptions transportOptions) { }
         public BearerTokenAuthenticationPolicy(Azure.Core.TokenCredential credential, string scope) { }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZID0004")]
+        public BearerTokenAuthenticationPolicy(Azure.Core.TokenCredential credential, string scope, Azure.Core.Pipeline.HttpPipelineTransportOptions transportOptions) { }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZID0004")]
+        public event System.Action<Azure.Core.Pipeline.HttpPipelineTransportOptions>? TransportOptionsChanged { add { } remove { } }
         protected void AuthenticateAndAuthorizeRequest(Azure.Core.HttpMessage message, Azure.Core.TokenRequestContext context) { }
         protected System.Threading.Tasks.ValueTask AuthenticateAndAuthorizeRequestAsync(Azure.Core.HttpMessage message, Azure.Core.TokenRequestContext context) { throw null; }
         protected virtual void AuthorizeRequest(Azure.Core.HttpMessage message) { }
         protected virtual System.Threading.Tasks.ValueTask AuthorizeRequestAsync(Azure.Core.HttpMessage message) { throw null; }
         protected virtual bool AuthorizeRequestOnChallenge(Azure.Core.HttpMessage message) { throw null; }
         protected virtual System.Threading.Tasks.ValueTask<bool> AuthorizeRequestOnChallengeAsync(Azure.Core.HttpMessage message) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZID0004")]
+        protected virtual void OnTransportOptionsChanged(Azure.Core.Pipeline.HttpPipelineTransportOptions options) { }
         public override void Process(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline) { }
         public override System.Threading.Tasks.ValueTask ProcessAsync(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline) { throw null; }
     }
@@ -1269,6 +1278,13 @@ namespace Azure.Identity
         public string Subscription { get { throw null; } set { } }
         public string TenantId { get { throw null; } set { } }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+    [System.Runtime.Versioning.UnsupportedOSPlatformAttribute("browser")]
+    public sealed partial class AzureCredentialResolver : System.ClientModel.Primitives.CredentialResolver
+    {
+        public AzureCredentialResolver() { }
+        public override bool TryResolve(Microsoft.Extensions.Configuration.IConfigurationSection credentialSection, [System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)] out System.ClientModel.AuthenticationTokenProvider? provider) { throw null; }
+    }
     [System.Runtime.CompilerServices.TypeForwardedFromAttribute("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
     [System.Runtime.Versioning.UnsupportedOSPlatformAttribute("browser")]
     public partial class AzureDeveloperCliCredential : Azure.Core.TokenCredential
@@ -1410,11 +1426,16 @@ namespace Azure.Identity
     {
         public static System.ClientModel.Primitives.IClientBuilder AddAzureClient<TClient, TSettings>(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) where TClient : class where TSettings : System.ClientModel.Primitives.ClientSettings, new() { throw null; }
         public static System.ClientModel.Primitives.IClientBuilder AddAzureClient<TClient, TSettings>(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<TSettings> configureSettings) where TClient : class where TSettings : System.ClientModel.Primitives.ClientSettings, new() { throw null; }
+        public static Microsoft.Extensions.DependencyInjection.IServiceCollection AddAzureCredentialResolver(this Microsoft.Extensions.DependencyInjection.IServiceCollection services) { throw null; }
+        public static Microsoft.Extensions.Hosting.IHostApplicationBuilder AddAzureCredentialResolver(this Microsoft.Extensions.Hosting.IHostApplicationBuilder builder) { throw null; }
         public static System.ClientModel.Primitives.IClientBuilder AddKeyedAzureClient<TClient, TSettings>(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) where TClient : class where TSettings : System.ClientModel.Primitives.ClientSettings, new() { throw null; }
         public static System.ClientModel.Primitives.IClientBuilder AddKeyedAzureClient<TClient, TSettings>(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<TSettings> configureSettings) where TClient : class where TSettings : System.ClientModel.Primitives.ClientSettings, new() { throw null; }
         public static T GetAzureClientSettings<T>(this Microsoft.Extensions.Configuration.IConfiguration configuration, string sectionName) where T : System.ClientModel.Primitives.ClientSettings, new() { throw null; }
-        public static System.ClientModel.Primitives.IClientBuilder WithAzureCredential(this System.ClientModel.Primitives.IClientBuilder clientBuilder) { throw null; }
-        public static T WithAzureCredential<T>(this T settings) where T : System.ClientModel.Primitives.ClientSettings { throw null; }
+        public static T GetAzureClientSettings<T>(this Microsoft.Extensions.Configuration.IConfiguration configuration, string sectionName, params System.ClientModel.Primitives.CredentialResolver[] resolvers) where T : System.ClientModel.Primitives.ClientSettings, new() { throw null; }
+        public static T GetAzureClientSettings<T>(this Microsoft.Extensions.Configuration.IConfiguration configuration, string sectionName, System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.CredentialResolver> resolvers, System.Action<Microsoft.Extensions.Configuration.IConfigurationSection> configureOverrides) where T : System.ClientModel.Primitives.ClientSettings, new() { throw null; }
+        public static System.ClientModel.Primitives.CredentialSettings GetAzureCredentialSettings(this Microsoft.Extensions.Configuration.IConfiguration configuration, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.CredentialSettings GetAzureCredentialSettings(this Microsoft.Extensions.Configuration.IConfiguration configuration, string sectionName, params System.ClientModel.Primitives.CredentialResolver[] resolvers) { throw null; }
+        public static System.ClientModel.Primitives.CredentialSettings GetAzureCredentialSettings(this Microsoft.Extensions.Configuration.IConfiguration configuration, string sectionName, System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.CredentialResolver> resolvers, System.Action<Microsoft.Extensions.Configuration.IConfigurationSection> configureOverrides) { throw null; }
     }
     [System.Runtime.CompilerServices.TypeForwardedFromAttribute("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
     public partial class CredentialUnavailableException : Azure.Identity.AuthenticationFailedException

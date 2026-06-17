@@ -4,15 +4,18 @@
 import {
   DecoratedType,
   getClientOptions,
+  SdkEnumType,
   SdkHttpOperation,
-  SdkMethod
+  SdkMethod,
+  SdkPathParameter
 } from "@azure-tools/typespec-client-generator-core";
+import { NoTarget, Program } from "@typespec/compiler";
 import pluralize from "pluralize";
+import { $lib } from "./lib/lib.js";
 
 type SdkHttpOperationParameter = SdkHttpOperation["parameters"][number];
-type SdkHttpOperationEnumPathParameter = SdkHttpOperationParameter & {
-  kind: "path";
-  type: { kind: "enum"; values: { value: unknown }[] };
+type SdkHttpOperationEnumPathParameter = SdkPathParameter & {
+  type: SdkEnumType;
 };
 
 // ─── Path utilities ─────────────────────────────────────────────────────────
@@ -23,6 +26,17 @@ type SdkHttpOperationEnumPathParameter = SdkHttpOperationParameter & {
  */
 export function isVariableSegment(segment: string): boolean {
   return segment.startsWith("{") && segment.endsWith("}");
+}
+
+/**
+ * Gets the parameter name from a variable segment like {resourceName}.
+ */
+export function getVariableSegmentName(segment: string): string {
+  return segment.slice(1, -1);
+}
+
+function literalSegmentsEqual(left: string, right: string): boolean {
+  return left.toLowerCase() === right.toLowerCase();
 }
 
 /**
@@ -97,7 +111,7 @@ export class RequestPath {
         isVariableSegment(other.segments[i])
       ) {
         count++;
-      } else if (this.segments[i] === other.segments[i]) {
+      } else if (literalSegmentsEqual(this.segments[i], other.segments[i])) {
         count++;
       } else {
         break;
@@ -133,7 +147,8 @@ export class RequestPath {
       ) {
         continue;
       }
-      if (this.segments[i] !== other.segments[i]) return false;
+      if (!literalSegmentsEqual(this.segments[i], other.segments[i]))
+        return false;
     }
     return true;
   }
@@ -180,7 +195,7 @@ export class RequestPath {
     return (
       this.length === 0 ||
       (this.length === 2 &&
-        this.segments[0] === "tenants" &&
+        literalSegmentsEqual(this.segments[0], "tenants") &&
         isVariableSegment(this.segments[1]))
     );
   }
@@ -188,7 +203,7 @@ export class RequestPath {
   isSubscriptionPath(): boolean {
     return (
       this.length === 2 &&
-      this.segments[0] === "subscriptions" &&
+      literalSegmentsEqual(this.segments[0], "subscriptions") &&
       isVariableSegment(this.segments[1])
     );
   }
@@ -196,9 +211,9 @@ export class RequestPath {
   isResourceGroupPath(): boolean {
     return (
       this.length === 4 &&
-      this.segments[0] === "subscriptions" &&
+      literalSegmentsEqual(this.segments[0], "subscriptions") &&
       isVariableSegment(this.segments[1]) &&
-      this.segments[2] === "resourceGroups" &&
+      literalSegmentsEqual(this.segments[2], "resourceGroups") &&
       isVariableSegment(this.segments[3])
     );
   }
@@ -206,9 +221,9 @@ export class RequestPath {
   isManagementGroupPath(): boolean {
     return (
       this.length === 4 &&
-      this.segments[0] === "providers" &&
-      this.segments[1] === "Microsoft.Management" &&
-      this.segments[2] === "managementGroups" &&
+      literalSegmentsEqual(this.segments[0], "providers") &&
+      literalSegmentsEqual(this.segments[1], "Microsoft.Management") &&
+      literalSegmentsEqual(this.segments[2], "managementGroups") &&
       isVariableSegment(this.segments[3])
     );
   }
@@ -263,7 +278,7 @@ export class RequestPath {
         return "Microsoft.Resources/subscriptions";
       } else if (this.isResourceGroupPath()) {
         return "Microsoft.Resources/resourceGroups";
-      } else if (this.segments[0] === "tenants") {
+      } else if (literalSegmentsEqual(this.segments[0], "tenants")) {
         return "Microsoft.Resources/tenants";
       }
       return undefined;
@@ -481,6 +496,95 @@ export function extractNameConstraintOverrides(
   };
 }
 
+const resourceNameKey = "resource-name";
+
+/**
+ * The parsed value of the `@@clientOption(op, "resource-name", ...)` decorator
+ * applied to an ARM resource's Read operation.
+ *
+ * - A plain `string` renames the single resource that Read identifies.
+ * - A `Map<string, string>` is used when the Read operation expands into
+ *   multiple concrete resources (via `{parentType}` segment expansion). The
+ *   map keys are the enum/union values that get substituted for the
+ *   `{parentType}` segment (e.g. `"eventGridTopics"`), and the values are
+ *   the desired resource (SDK class) names.
+ */
+export type ResourceNameOverride = string | Map<string, string>;
+
+/**
+ * Extracts a resource-name override from an ARM resource's Read operation
+ * `@@clientOption(op, "resource-name", value, "csharp")` decorator.
+ *
+ * Returns:
+ * - a non-empty `string` if the decorator value is a string,
+ * - a non-empty `Map<string, string>` if the decorator value is a record with
+ *   non-empty string entries,
+ * - `undefined` if the decorator is not set or the value is malformed.
+ *
+ * Malformed values (mixed types, empty strings, empty maps) are reported via
+ * the optional `program` and treated as if the decorator was absent.
+ */
+export function extractResourceNameOverride(
+  operation: DecoratedType | undefined,
+  program?: Program
+): ResourceNameOverride | undefined {
+  if (!operation) return undefined;
+  const value = getClientOptions(operation, resourceNameKey);
+  if (value === undefined || value === null) return undefined;
+
+  if (typeof value === "string") {
+    if (value.length === 0) {
+      if (program) {
+        $lib.reportDiagnostic(program, {
+          code: "resource-name-empty-string",
+          format: {},
+          target: NoTarget
+        });
+      }
+      return undefined;
+    }
+    return value;
+  }
+
+  if (typeof value === "object") {
+    const record = value as Record<string, unknown>;
+    const map = new Map<string, string>();
+    for (const [key, v] of Object.entries(record)) {
+      if (typeof v !== "string" || v.length === 0 || key.length === 0) {
+        if (program) {
+          $lib.reportDiagnostic(program, {
+            code: "resource-name-bad-entry",
+            format: { key },
+            target: NoTarget
+          });
+        }
+        continue;
+      }
+      map.set(key, v);
+    }
+    if (map.size === 0) {
+      if (program) {
+        $lib.reportDiagnostic(program, {
+          code: "resource-name-empty-record",
+          format: {},
+          target: NoTarget
+        });
+      }
+      return undefined;
+    }
+    return map;
+  }
+
+  if (program) {
+    $lib.reportDiagnostic(program, {
+      code: "resource-name-bad-type",
+      format: { actualType: typeof value },
+      target: NoTarget
+    });
+  }
+  return undefined;
+}
+
 export interface NonResourceMethod {
   methodId: string;
   operationPath: RequestPath;
@@ -527,6 +631,7 @@ export interface ResourceMethod {
 export enum ResourceOperationKind {
   Action = "Action",
   CheckExistence = "CheckExistence",
+  CollectionAction = "CollectionAction",
   Create = "Create",
   Delete = "Delete",
   Read = "Read",
@@ -569,6 +674,8 @@ function getKindSortOrder(kind: ResourceOperationKind): number {
       return 2;
     case ResourceOperationKind.CheckExistence:
       return 3;
+    case ResourceOperationKind.CollectionAction:
+      return 7;
     case ResourceOperationKind.Update:
       return 4;
     case ResourceOperationKind.Delete:
@@ -576,7 +683,7 @@ function getKindSortOrder(kind: ResourceOperationKind): number {
     case ResourceOperationKind.List:
       return 6;
     case ResourceOperationKind.Action:
-      return 7;
+      return 8;
     default:
       return 99;
   }
@@ -710,9 +817,11 @@ function operationPathEndsWithResourceType(
   resourceType: string
 ): boolean {
   const lastTypeSegment = resourceType.split("/").at(-1);
+  const lastOperationSegment = operationPath.segments.at(-1);
   return (
     lastTypeSegment !== undefined &&
-    operationPath.segments[operationPath.length - 1] === lastTypeSegment
+    lastOperationSegment !== undefined &&
+    literalSegmentsEqual(lastOperationSegment, lastTypeSegment)
   );
 }
 
@@ -735,6 +844,37 @@ export function isResourceInstancePath(
     }
   }
   return true;
+}
+
+/**
+ * Treats name path parameters with fixed one-value enum types as constants.
+ */
+export function resolveFixedEnumNameSegments(
+  method: SdkMethod<SdkHttpOperation>,
+  path: RequestPath
+): RequestPath {
+  let changed = false;
+  const segments = [...path.segments];
+  const providerIndex = path.lastProvidersSegmentIndex;
+  if (providerIndex < 0) return path;
+
+  // The provider tail starts as /providers/<namespace>/<type>/{name};
+  // providerIndex + 3 is the first name segment, then type/name pairs repeat.
+  for (let i = providerIndex + 3; i < segments.length; i += 2) {
+    const segment = segments[i];
+    if (!isVariableSegment(segment)) continue;
+
+    const fixedValue = getSingleFixedEnumValueForPathParam(
+      method,
+      getVariableSegmentName(segment)
+    );
+    if (!fixedValue) continue;
+
+    segments[i] = fixedValue;
+    changed = true;
+  }
+
+  return changed ? RequestPath.fromSegments(segments) : path;
 }
 
 /**
@@ -880,7 +1020,8 @@ export function expandArmResources(
     options.diagnosticReporter,
     (expanded, original) => {
       expandedToOriginal.set(expanded, original);
-    }
+    },
+    options.resourceNameOverrides
   );
   return { expandedResources, expandedToOriginal };
 }
@@ -888,6 +1029,14 @@ export function expandArmResources(
 export interface ExpandArmResourcesOptions {
   serviceMethods?: Map<string, SdkMethod<SdkHttpOperation>>;
   diagnosticReporter?: (message: string) => void;
+  /**
+   * Optional per-template-path map of `resource-name` `@@clientOption`
+   * overrides keyed by enum value. The outer map key is the pre-expansion
+   * resource instance path (i.e. the path containing the `{parentType}`
+   * placeholder). The inner map keys are the enum/union values that get
+   * substituted for the dynamic segment.
+   */
+  resourceNameOverrides?: Map<string, Map<string, string>>;
 }
 
 export interface ExpandArmResourcesResult {
@@ -1060,7 +1209,7 @@ function postProcessExpandedArmResources(
     const validCandidates: RequestPath[] = [];
 
     for (const candidatePath of resourceInstancePaths) {
-      if (canBeListResourceScope(listOp.operationPath, candidatePath)) {
+      if (candidatePath.isPrefixOf(listOp.operationPath)) {
         validCandidates.push(candidatePath);
       }
     }
@@ -1150,42 +1299,6 @@ function postProcessExpandedArmResources(
   }
 
   return filteredResources;
-}
-
-/**
- * Helper function to determine if a resource path can be the scope for a list operation.
- * The resource path must be a prefix of the list operation path.
- */
-function canBeListResourceScope(
-  listPath: RequestPath,
-  resourceInstancePath: RequestPath
-): boolean {
-  // Check if resourceInstancePath is a prefix of listPath
-  if (listPath.length < resourceInstancePath.length) {
-    return false;
-  }
-  for (let i = 0; i < resourceInstancePath.length; i++) {
-    // if both segments are variables, we consider it as a match
-    if (
-      isVariableSegment(listPath.segments[i]) &&
-      isVariableSegment(resourceInstancePath.segments[i])
-    ) {
-      continue;
-    }
-    // if one of them is a variable, the other is not, we consider it as not a match
-    if (
-      isVariableSegment(listPath.segments[i]) ||
-      isVariableSegment(resourceInstancePath.segments[i])
-    ) {
-      return false;
-    }
-    // both are fixed strings, they must match
-    if (listPath.segments[i] !== resourceInstancePath.segments[i]) {
-      return false;
-    }
-  }
-  // here it means every segment in resourceInstancePath matches the corresponding segment in listPath
-  return true;
 }
 
 /**
@@ -1329,12 +1442,19 @@ function buildExpandedResourceName(
  * @param onExpand Optional callback invoked for each expanded resource with a reference
  * to its original (un-expanded) resource. Callers can use it to mirror entries into
  * auxiliary maps keyed by ArmResourceSchema (e.g., schemaToResolvedResource).
+ * @param resourceNameOverrides Optional per-template-path map of
+ * `resource-name` `@@clientOption` overrides keyed by enum value. When the
+ * inner map contains an entry for the enum value being substituted, the
+ * expanded resource's `resourceName` becomes that value instead of the
+ * default `Capitalize(singular(enumValue)) + baseResourceName`. Stale keys
+ * (not matched against any enum value) produce a warning diagnostic.
  */
 export function expandDynamicParentResourcesInSchema(
   resources: ArmResourceSchema[],
   serviceMethods: Map<string, SdkMethod<SdkHttpOperation>>,
   diagnosticReporter?: (message: string) => void,
-  onExpand?: (expanded: ArmResourceSchema, original: ArmResourceSchema) => void
+  onExpand?: (expanded: ArmResourceSchema, original: ArmResourceSchema) => void,
+  resourceNameOverrides?: Map<string, Map<string, string>>
 ): ArmResourceSchema[] {
   const resourcesToRemove: Set<ArmResourceSchema> = new Set();
   const resourcesToAdd: ArmResourceSchema[] = [];
@@ -1369,6 +1489,11 @@ export function expandDynamicParentResourcesInSchema(
       continue;
     }
 
+    const overrideMap = resourceNameOverrides?.get(
+      resource.metadata.resourceIdPattern?.path ?? ""
+    );
+    const usedOverrideKeys = overrideMap ? new Set<string>() : undefined;
+
     for (const enumValue of enumValues) {
       const expandedIdPattern = resource.metadata.resourceIdPattern
         ? replacePathVariable(
@@ -1393,10 +1518,13 @@ export function expandDynamicParentResourcesInSchema(
         ? expandedIdPattern.resourceType ?? ""
         : "";
 
-      const expandedResourceName = buildExpandedResourceName(
-        enumValue,
-        resource.metadata.resourceName
-      );
+      const overrideName = overrideMap?.get(enumValue);
+      if (overrideName !== undefined) {
+        usedOverrideKeys!.add(enumValue);
+      }
+      const expandedResourceName =
+        overrideName ??
+        buildExpandedResourceName(enumValue, resource.metadata.resourceName);
 
       const expanded: ArmResourceSchema = {
         resourceModelId: resource.resourceModelId,
@@ -1418,6 +1546,16 @@ export function expandDynamicParentResourcesInSchema(
       onExpand?.(expanded, resource);
     }
 
+    if (overrideMap && usedOverrideKeys) {
+      for (const key of overrideMap.keys()) {
+        if (!usedOverrideKeys.has(key)) {
+          diagnosticReporter?.(
+            `@@clientOption(..., "resource-name", ...) entry '${key}' did not match any expanded resource produced by this Read operation. Check for typos or stale entries.`
+          );
+        }
+      }
+    }
+
     resourcesToRemove.add(resource);
   }
 
@@ -1431,7 +1569,7 @@ export function expandDynamicParentResourcesInSchema(
   ];
 }
 
-function detectDynamicTypeSegments(
+export function detectDynamicTypeSegments(
   path: RequestPath
 ): Array<{ typeParamName: string; nameParamName: string; typeIndex: number }> {
   const results: Array<{
@@ -1444,9 +1582,11 @@ function detectDynamicTypeSegments(
 
   for (let i = providerIndex + 2; i < path.length - 1; i += 2) {
     if (isVariableSegment(path.segments[i])) {
-      const typeParamName = path.segments[i].slice(1, -1);
+      const typeParamName = getVariableSegmentName(path.segments[i]);
       const nameParamName =
-        i + 1 < path.length ? path.segments[i + 1].slice(1, -1) : "";
+        i + 1 < path.length && isVariableSegment(path.segments[i + 1])
+          ? getVariableSegmentName(path.segments[i + 1])
+          : "";
       results.push({
         typeParamName,
         nameParamName,
@@ -1517,4 +1657,17 @@ function getEnumValuesForPathParam(
   return param?.type.values
     .map((v) => v.value)
     .filter((v): v is string => typeof v === "string");
+}
+
+function getSingleFixedEnumValueForPathParam(
+  method: SdkMethod<SdkHttpOperation>,
+  paramName: string
+): string | undefined {
+  const param = findEnumPathParam(method, paramName);
+  if (!param?.type.isFixed || param.type.values.length !== 1) {
+    return undefined;
+  }
+
+  const value = param.type.values[0].value;
+  return typeof value === "string" ? value : undefined;
 }

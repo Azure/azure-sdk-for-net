@@ -28,11 +28,13 @@ namespace Azure.AI.VoiceLive
         /// <summary> Initializes a new instance of <see cref="OutputTokenDetails"/>. </summary>
         /// <param name="textTokens"> Number of text tokens generated in the output. </param>
         /// <param name="audioTokens"> Number of audio tokens generated in the output. </param>
+        /// <param name="reasoningTokens"> Number of reasoning tokens generated in the output. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OutputTokenDetails(int textTokens, int audioTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OutputTokenDetails(int textTokens, int audioTokens, int? reasoningTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TextTokens = textTokens;
             AudioTokens = audioTokens;
+            ReasoningTokens = reasoningTokens;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -41,5 +43,8 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Number of audio tokens generated in the output. </summary>
         public int AudioTokens { get; }
+
+        /// <summary> Number of reasoning tokens generated in the output. </summary>
+        public int? ReasoningTokens { get; }
     }
 }
