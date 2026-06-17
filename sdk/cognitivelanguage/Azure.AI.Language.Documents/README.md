@@ -1,8 +1,8 @@
 # Azure AI Language Documents client library for .NET
 
-The Azure AI Language Documents client library enables asynchronous document analysis for files stored in Azure Blob Storage. You can submit one or more documents as a long-running job, track job status, and retrieve analysis results. The current SDK surface includes document analysis scenarios such as PII entity recognition and abstractive summarization.
+The Azure AI Language Documents client library enables asynchronous document analysis for files stored in Azure Blob Storage. You can submit one or more documents as a long-running job, track job status, and retrieve analysis results.
 
-[Source code][languagedocuments_client_src] <!-- | [Package (NuGet)][languagedocuments_nuget_package] | [API reference documentation][languagedocuments_refdocs] | [Samples][languagedocuments_samples] --> | [Product documentation][languagedocuments_docs] | [REST API documentation][languagedocuments_rest_docs]
+[Source code][languagedocuments_client_src] | [Samples][languagedocuments_samples] | [Product documentation][languagedocuments_docs] | [REST API documentation][languagedocuments_rest_docs]
 
 ## Getting started
 
@@ -10,7 +10,7 @@ The Azure AI Language Documents client library enables asynchronous document ana
 
 Install the Azure AI Language Documents client library for .NET with [NuGet][nuget]:
 
-```dotnetcli
+```powershell
 dotnet add package Azure.AI.Language.Documents
 ```
 
@@ -25,7 +25,7 @@ dotnet add package Azure.AI.Language.Documents
 
 ### Authenticate the client
 
-To interact with the service, create an instance of [`AnalyzeDocumentsClient`][languagedocuments_client_class]. You need a resource **endpoint** and credential to instantiate the client. The client supports both API key authentication and Microsoft Entra ID authentication.
+To interact with the service, create an instance of [`DocumentsServiceClient`][languagedocuments_client_class]. You need a resource **endpoint** and credential to instantiate the client. The client supports both API key authentication and Microsoft Entra ID authentication.
 
 For more information about authenticating Cognitive Services resources, see [Authenticate requests to Azure Cognitive Services][cognitive_auth].
 
@@ -39,47 +39,60 @@ Alternatively, use the [Azure CLI][azure_cli]:
 az cognitiveservices account keys list --resource-group <resource-group-name> --name <resource-name>
 ```
 
-#### Create an `AnalyzeDocumentsClient` with an API key
+#### Create a `DocumentsServiceClient` with an API key
 
-```csharp
-using Azure;
+```C# Snippet:DocumentsServiceClient_Namespaces
+using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.AI.Language.Documents;
+```
 
-string endpoint = "https://myaccount.cognitiveservices.azure.com";
+```C# Snippet:DocumentsServiceClient_Create
+Uri endpoint = new Uri("{endpoint}");
 AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
 
-AnalyzeDocumentsClient client = new AnalyzeDocumentsClient(endpoint, credential);
+DocumentsServiceClient client = new DocumentsServiceClient(endpoint, credential);
 ```
 
 #### Create a client using Microsoft Entra ID authentication
 
-You can also create `AnalyzeDocumentsClient` with Microsoft Entra ID. Before you can use `DefaultAzureCredential`, install the [Azure.Identity package][azure_identity_install].
+You can also create `DocumentsServiceClient` with Microsoft Entra ID. Before you can use `DefaultAzureCredential`, install the [Azure.Identity package][azure_identity_install].
 
-```csharp
-using Azure.AI.Language.Documents;
+```C# Snippet:DocumentsService_Identity_Namespace
 using Azure.Identity;
+```
 
-string endpoint = "https://myaccount.cognitiveservices.azure.com";
+```C# Snippet:DocumentsServiceClient_CreateWithDefaultAzureCredential
+Uri endpoint = new Uri("{endpoint}");
 DefaultAzureCredential credential = new DefaultAzureCredential();
 
-AnalyzeDocumentsClient client = new AnalyzeDocumentsClient(endpoint, credential);
+DocumentsServiceClient client = new DocumentsServiceClient(endpoint, credential);
+```
+
+#### Create a client with a specific API version
+
+```C# Snippet:CreateDocumentsServiceClientForSpecificApiVersion
+Uri endpoint = new Uri("{endpoint}");
+AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
+DocumentsServiceClientOptions options = new DocumentsServiceClientOptions(DocumentsServiceClientOptions.ServiceVersion.V2026_05_15_Preview);
+DocumentsServiceClient client = new DocumentsServiceClient(endpoint, credential, options);
 ```
 
 Regional endpoints do not support Microsoft Entra ID authentication. To use Microsoft Entra ID, create a [custom domain][custom_domain] for your resource.
 
 ## Key concepts
 
-### `AnalyzeDocumentsClient`
+### `DocumentsServiceClient`
 
-`AnalyzeDocumentsClient` is the primary interface for submitting document analysis jobs, checking job status, and canceling running jobs.
+`DocumentsServiceClient` is the primary interface for submitting document analysis jobs, checking job status, and canceling running jobs.
 
 ### `AnalyzeDocumentsOperationInput`
 
 `AnalyzeDocumentsOperationInput` defines the request payload for a job. It includes:
 
 - The input documents to analyze
-- The analysis tasks to run
-- Optional metadata such as `DisplayName` and `DefaultLanguage`
+- The analysis actions to run
+- Optional metadata such as `DisplayName`
 
 ### `DocumentLocation`
 
@@ -93,7 +106,7 @@ These can be used with SAS URLs or with a managed identity by setting `ManagedId
 
 ### Long-running operations
 
-Document analysis is asynchronous. You submit a job, receive an operation, and then retrieve the final job state with `GetAnalyzeDocumentsJobStatus`.
+Document analysis is asynchronous. You submit a job, receive an operation, and then retrieve the job state with `GetAnalyzeDocumentsJobState`.
 
 ### Thread safety
 
@@ -117,85 +130,176 @@ The Azure AI Language Documents client library provides both synchronous and asy
 
 The following examples show common scenarios using the `client` created above.
 
-### Submit a PII analysis job
+### Submit a document analysis job
 
-```csharp
-using System;
-using Azure;
-using Azure.AI.Language.Documents;
+## Synchronous
 
-AzureBlobDocumentLocation source = new AzureBlobDocumentLocation(
-    "https://<storage-account>.blob.core.windows.net/input/invoice.pdf?<sas-token>");
+```C# Snippet:DocumentsService_SubmitJob
+string sourceLocation = "https://<storage-account>.blob.core.windows.net/input/document.txt?<sas-token>";
+string targetLocation = "https://<storage-account>.blob.core.windows.net/output/pii?<sas-token>";
 
-AzureContainerFolderDocumentLocation target = new AzureContainerFolderDocumentLocation(
-    "https://<storage-account>.blob.core.windows.net/output/pii?<sas-token>");
-
-MultiLanguageDocumentInput documents = new MultiLanguageDocumentInput();
-documents.Documents.Add(new MultiLanguageInput("document-1", source, target)
-{
-    Language = "en"
-});
-
-PiiLROTask piiTask = new PiiLROTask
-{
-    Name = "pii-task",
-    Parameters = new PiiActionContent
+MultiLanguageDocumentCollection documents = new MultiLanguageDocumentCollection();
+documents.Documents.Add(
+    new MultiLanguageInput(
+        "1",
+        new AzureBlobDocumentLocation(sourceLocation),
+        new AzureContainerFolderDocumentLocation(targetLocation))
     {
-        LoggingOptOut = true,
-        StringIndexType = StringIndexType.Utf16CodeUnit
-    }
+        Language = "en",
+    });
+
+PiiEntityRecognitionAction piiAction = new PiiEntityRecognitionAction
+{
+    Parameters = DocumentsServiceModelFactory.PiiActionContent(
+        redactionPolicies: new[]
+        {
+            new EntityMaskRedactionPolicy
+            {
+                PolicyName = "defaultPolicy",
+                IsDefault = true,
+            },
+        }),
 };
 
 AnalyzeDocumentsOperationInput request = new AnalyzeDocumentsOperationInput(
     documents,
-    new AnalyzeDocumentsOperationAction[] { piiTask })
+    new AnalyzeDocumentsOperationAction[] { piiAction })
 {
-    DisplayName = "sample-pii-job",
-    DefaultLanguage = "en"
+    DisplayName = "Document Analysis.",
 };
 
-Operation operation = client.AnalyzeDocumentsSubmitOperation(WaitUntil.Completed, request);
-Guid jobId = Guid.Parse(operation.Id);
+Operation operation = client.AnalyzeDocumentsSubmitOperation(
+    WaitUntil.Started,
+    request);
+```
 
-Response<AnalyzeDocumentsJobState> response = client.GetAnalyzeDocumentsJobStatus(jobId, showStats: true);
-AnalyzeDocumentsJobState job = response.Value;
+## Asynchronous
 
-Console.WriteLine($"Job status: {job.Status}");
-Console.WriteLine($"Completed tasks: {job.Tasks.Completed}");
-
-foreach (AnalyzeDocumentsLROResult task in job.Tasks.Items)
-{
-    if (task is PiiEntityRecognitionOperationResult piiResult)
-    {
-        foreach (DocumentAnalysisDocumentResult document in piiResult.Results.Documents)
-        {
-            Console.WriteLine($"Document ID: {document.Id}");
-
-            foreach (DocumentLocation output in document.Target)
-            {
-                Console.WriteLine($"Output location: {output.Location}");
-            }
-        }
-    }
-}
+```C# Snippet:DocumentsService_SubmitJobAsync
+Operation operation = await client.AnalyzeDocumentsSubmitOperationAsync(
+    WaitUntil.Started,
+    request);
 ```
 
 > [!NOTE]
 > If you want the service to access storage using a user-assigned managed identity instead of SAS tokens, set `ManagedIdentityClientId` on the document location objects.
 
+### Get a document analysis job state
+
+## Synchronous
+
+```C# Snippet:DocumentsService_GetJobState
+string sourceLocation = "https://<storage-account>.blob.core.windows.net/input/document.txt?<sas-token>";
+string targetLocation = "https://<storage-account>.blob.core.windows.net/output/pii?<sas-token>";
+
+MultiLanguageDocumentCollection documents = new MultiLanguageDocumentCollection();
+documents.Documents.Add(
+    new MultiLanguageInput(
+        "1",
+        new AzureBlobDocumentLocation(sourceLocation),
+        new AzureContainerFolderDocumentLocation(targetLocation))
+    {
+        Language = "en",
+    });
+
+PiiEntityRecognitionAction piiAction = new PiiEntityRecognitionAction
+{
+    Parameters = DocumentsServiceModelFactory.PiiActionContent(
+        redactionPolicies: new[]
+        {
+            new EntityMaskRedactionPolicy
+            {
+                PolicyName = "defaultPolicy",
+                IsDefault = true,
+            },
+        }),
+};
+
+AnalyzeDocumentsOperationInput request = new AnalyzeDocumentsOperationInput(
+    documents,
+    new AnalyzeDocumentsOperationAction[] { piiAction })
+{
+    DisplayName = "Document Analysis.",
+};
+
+Operation operation = client.AnalyzeDocumentsSubmitOperation(
+    WaitUntil.Started,
+    request);
+
+string operationLocation = operation.GetRawResponse().Headers.TryGetValue("Operation-Location", out string headerValue)
+    ? headerValue
+    : throw new InvalidOperationException("Operation-Location header was not found.");
+
+Guid jobId = Guid.Parse(new Uri(operationLocation).AbsolutePath.TrimEnd('/').Split('/').Last());
+
+Response<AnalyzeDocumentsJobState> response = client.GetAnalyzeDocumentsJobState(jobId);
+```
+
+## Asynchronous
+
+```C# Snippet:DocumentsService_GetJobStateAsync
+Response<AnalyzeDocumentsJobState> response = await client.GetAnalyzeDocumentsJobStateAsync(jobId);
+```
+
 ### Cancel a running job
 
-```csharp
-using System;
-using Azure;
+## Synchronous
 
-Operation operation = client.AnalyzeDocumentsSubmitOperation(WaitUntil.Started, request);
-Guid jobId = Guid.Parse(operation.Id);
+```C# Snippet:DocumentsService_CancelJob
+string sourceLocation = "https://<storage-account>.blob.core.windows.net/input/document.txt?<sas-token>";
+string targetLocation = "https://<storage-account>.blob.core.windows.net/output/pii?<sas-token>";
 
-client.AnalyzeDocumentsCancelOperation(WaitUntil.Completed, jobId);
+MultiLanguageDocumentCollection documents = new MultiLanguageDocumentCollection();
+documents.Documents.Add(
+    new MultiLanguageInput(
+        "1",
+        new AzureBlobDocumentLocation(sourceLocation),
+        new AzureContainerFolderDocumentLocation(targetLocation))
+    {
+        Language = "en",
+    });
 
-Response<AnalyzeDocumentsJobState> cancelledJob = client.GetAnalyzeDocumentsJobStatus(jobId);
-Console.WriteLine($"Job status: {cancelledJob.Value.Status}");
+PiiEntityRecognitionAction piiAction = new PiiEntityRecognitionAction
+{
+    Parameters = DocumentsServiceModelFactory.PiiActionContent(
+        redactionPolicies: new[]
+        {
+            new EntityMaskRedactionPolicy
+            {
+                PolicyName = "defaultPolicy",
+                IsDefault = true,
+            },
+        }),
+};
+
+AnalyzeDocumentsOperationInput request = new AnalyzeDocumentsOperationInput(
+    documents,
+    new AnalyzeDocumentsOperationAction[] { piiAction })
+{
+    DisplayName = "Document Analysis.",
+};
+
+Operation submitOperation = client.AnalyzeDocumentsSubmitOperation(
+    WaitUntil.Started,
+    request);
+
+string operationLocation = submitOperation.GetRawResponse().Headers.TryGetValue("Operation-Location", out string headerValue)
+    ? headerValue
+    : throw new InvalidOperationException("Operation-Location header was not found.");
+
+Guid jobId = Guid.Parse(new Uri(operationLocation).AbsolutePath.TrimEnd('/').Split('/').Last());
+
+Operation cancelOperation = client.AnalyzeDocumentsCancelOperation(
+    WaitUntil.Started,
+    jobId);
+```
+
+## Asynchronous
+
+```C# Snippet:DocumentsService_CancelJobAsync
+Operation cancelOperation = await client.AnalyzeDocumentsCancelOperationAsync(
+    WaitUntil.Started,
+    jobId);
 ```
 
 ## Troubleshooting
@@ -206,13 +310,11 @@ When you interact with the Azure AI Language Documents client library using the 
 
 For example, requesting a job that does not exist returns a service error:
 
-```csharp
-using System;
-using Azure;
-
+```C# Snippet:DocumentsServiceClient_BadRequest
 try
 {
-    client.GetAnalyzeDocumentsJobStatus(Guid.Parse("00000000-0000-0000-0000-000000000000"));
+    Response<AnalyzeDocumentsJobState> response = client.GetAnalyzeDocumentsJobState(
+        Guid.Parse("00000000-0000-0000-0000-000000000000"));
 }
 catch (RequestFailedException ex)
 {
@@ -273,4 +375,4 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 <!-- [languagedocuments_nuget_package]: https://www.nuget.org/packages/Azure.AI.Language.Documents/ -->
 <!-- [languagedocuments_refdocs]: https://learn.microsoft.com/dotnet/api/Azure.AI.Language.Documents/ -->
 [languagedocuments_rest_docs]: https://learn.microsoft.com/rest/api/language/
-<!-- [languagedocuments_samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Documents/samples/README.md -->
+[languagedocuments_samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Documents/samples/README.md
