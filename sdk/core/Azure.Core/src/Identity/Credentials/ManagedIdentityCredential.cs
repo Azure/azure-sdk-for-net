@@ -55,7 +55,7 @@ namespace Azure.Identity
         public ManagedIdentityCredential(string clientId = null, TokenCredentialOptions options = null)
             : this(new ManagedIdentityClient(CreateManagedIdentityClientOptions(
                 options,
-                ResolveManagedIdentityId(clientId),
+                clientId,
                 CredentialPipeline.GetInstance(options, IsManagedIdentityCredential: true))))
         {
             _logAccountDetails = options?.Diagnostics?.IsAccountIdentifierLoggingEnabled ?? false;
@@ -146,10 +146,18 @@ namespace Azure.Identity
             };
         }
 
-        private static ManagedIdentityId ResolveManagedIdentityId(string clientId)
-            => string.IsNullOrEmpty(clientId)
-                ? ManagedIdentityId.SystemAssigned
-                : ManagedIdentityId.FromUserAssignedClientId(clientId);
+        private static ManagedIdentityClientOptions CreateManagedIdentityClientOptions(
+            TokenCredentialOptions options,
+            string clientId,
+            CredentialPipeline pipeline,
+            bool preserveTransport = false)
+            => CreateManagedIdentityClientOptions(
+                options,
+                string.IsNullOrEmpty(clientId)
+                    ? ManagedIdentityId.SystemAssigned
+                    : ManagedIdentityId.FromUserAssignedClientId(clientId),
+                pipeline,
+                preserveTransport);
 
         private static bool ResolveDisableMtlsProofOfPossession(TokenCredentialOptions options)
         {
