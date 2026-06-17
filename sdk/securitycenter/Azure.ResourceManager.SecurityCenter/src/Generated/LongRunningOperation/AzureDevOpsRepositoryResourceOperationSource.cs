@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary></summary>
-    internal partial class DevOpsConfigurationOperationSource : IOperationSource<DevOpsConfigurationResource>
+    internal partial class AzureDevOpsRepositoryResourceOperationSource : IOperationSource<AzureDevOpsRepositoryResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal DevOpsConfigurationOperationSource(ArmClient client)
+        internal AzureDevOpsRepositoryResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        DevOpsConfigurationResource IOperationSource<DevOpsConfigurationResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        AzureDevOpsRepositoryResource IOperationSource<AzureDevOpsRepositoryResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            DevOpsConfigurationData data = DevOpsConfigurationData.DeserializeDevOpsConfigurationData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new DevOpsConfigurationResource(_client, data);
+            AzureDevOpsRepositoryData data = AzureDevOpsRepositoryData.DeserializeAzureDevOpsRepositoryData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new AzureDevOpsRepositoryResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<DevOpsConfigurationResource> IOperationSource<DevOpsConfigurationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<AzureDevOpsRepositoryResource> IOperationSource<AzureDevOpsRepositoryResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            DevOpsConfigurationData data = DevOpsConfigurationData.DeserializeDevOpsConfigurationData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new DevOpsConfigurationResource(_client, data);
+            AzureDevOpsRepositoryData data = AzureDevOpsRepositoryData.DeserializeAzureDevOpsRepositoryData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new AzureDevOpsRepositoryResource(_client, data);
         }
     }
 }

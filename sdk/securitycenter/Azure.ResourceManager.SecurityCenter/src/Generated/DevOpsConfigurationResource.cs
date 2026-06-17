@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 HttpMessage message = _devOpsConfigurationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, DevOpsConfigurationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SecurityCenterArmOperation<DevOpsConfigurationResource> operation = new SecurityCenterArmOperation<DevOpsConfigurationResource>(
-                    new DevOpsConfigurationOperationSource(Client),
+                    new DevOpsConfigurationResourceOperationSource(Client),
                     _devOpsConfigurationsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 HttpMessage message = _devOpsConfigurationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, DevOpsConfigurationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SecurityCenterArmOperation<DevOpsConfigurationResource> operation = new SecurityCenterArmOperation<DevOpsConfigurationResource>(
-                    new DevOpsConfigurationOperationSource(Client),
+                    new DevOpsConfigurationResourceOperationSource(Client),
                     _devOpsConfigurationsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 HttpMessage message = _devOpsConfigurationsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, DevOpsConfigurationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SecurityCenterArmOperation<DevOpsConfigurationResource> operation = new SecurityCenterArmOperation<DevOpsConfigurationResource>(
-                    new DevOpsConfigurationOperationSource(Client),
+                    new DevOpsConfigurationResourceOperationSource(Client),
                     _devOpsConfigurationsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 HttpMessage message = _devOpsConfigurationsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, DevOpsConfigurationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SecurityCenterArmOperation<DevOpsConfigurationResource> operation = new SecurityCenterArmOperation<DevOpsConfigurationResource>(
-                    new DevOpsConfigurationOperationSource(Client),
+                    new DevOpsConfigurationResourceOperationSource(Client),
                     _devOpsConfigurationsClientDiagnostics,
                     Pipeline,
                     message.Request,

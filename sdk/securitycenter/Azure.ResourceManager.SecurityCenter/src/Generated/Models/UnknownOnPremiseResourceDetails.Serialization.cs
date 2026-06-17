@@ -56,7 +56,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        OnPremiseResourceDetails IPersistableModel<OnPremiseResourceDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => (UnknownOnPremiseResourceDetails)PersistableModelCreateCore(data, options);
+        OnPremiseResourceDetails IPersistableModel<OnPremiseResourceDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            return (OnPremiseResourceDetails)PersistableModelCreateCore(data, options);
+        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<OnPremiseResourceDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -84,7 +87,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        OnPremiseResourceDetails IJsonModel<OnPremiseResourceDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (UnknownOnPremiseResourceDetails)JsonModelCreateCore(ref reader, options);
+        OnPremiseResourceDetails IJsonModel<OnPremiseResourceDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            return (OnPremiseResourceDetails)JsonModelCreateCore(ref reader, options);
+        }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

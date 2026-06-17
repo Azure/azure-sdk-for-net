@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="kind"> the kind of the settings string. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Alert sync setting data. </param>
-        internal AlertSyncSettings(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, SettingKind kind, AlertSyncSettingProperties properties) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, kind)
+        internal AlertSyncSettings(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SettingKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, AlertSyncSettingProperties properties) : base(id, name, resourceType, systemData, kind, additionalBinaryDataProperties)
         {
             Properties = properties;
         }

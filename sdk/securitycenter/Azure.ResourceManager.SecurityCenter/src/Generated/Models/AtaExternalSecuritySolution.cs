@@ -25,11 +25,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="kind"> The external security solution kind. </param>
         /// <param name="location"> The resource location. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The ATA solution properties. </param>
-        internal AtaExternalSecuritySolution(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ExternalSecuritySolutionKind? kind, AzureLocation? location, AtaSolutionProperties properties) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, kind, location)
+        internal AtaExternalSecuritySolution(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ExternalSecuritySolutionKind? kind, AzureLocation? location, IDictionary<string, BinaryData> additionalBinaryDataProperties, AtaSolutionProperties properties) : base(id, name, resourceType, systemData, kind, location, additionalBinaryDataProperties)
         {
             Properties = properties;
         }

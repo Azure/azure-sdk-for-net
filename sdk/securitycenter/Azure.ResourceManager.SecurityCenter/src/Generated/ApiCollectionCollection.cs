@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 HttpMessage message = _apiCollectionsRestClient.CreateOnboardAzureApiManagementApiRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, apiId, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SecurityCenterArmOperation<ApiCollectionResource> operation = new SecurityCenterArmOperation<ApiCollectionResource>(
-                    new ApiCollectionOperationSource(Client),
+                    new ApiCollectionResourceOperationSource(Client),
                     _apiCollectionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 HttpMessage message = _apiCollectionsRestClient.CreateOnboardAzureApiManagementApiRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, apiId, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SecurityCenterArmOperation<ApiCollectionResource> operation = new SecurityCenterArmOperation<ApiCollectionResource>(
-                    new ApiCollectionOperationSource(Client),
+                    new ApiCollectionResourceOperationSource(Client),
                     _apiCollectionsClientDiagnostics,
                     Pipeline,
                     message.Request,

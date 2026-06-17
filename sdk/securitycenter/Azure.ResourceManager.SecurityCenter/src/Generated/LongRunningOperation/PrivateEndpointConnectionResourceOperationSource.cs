@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary></summary>
-    internal partial class AzureDevOpsProjectOperationSource : IOperationSource<AzureDevOpsProjectResource>
+    internal partial class PrivateEndpointConnectionResourceOperationSource : IOperationSource<PrivateEndpointConnectionResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal AzureDevOpsProjectOperationSource(ArmClient client)
+        internal PrivateEndpointConnectionResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        AzureDevOpsProjectResource IOperationSource<AzureDevOpsProjectResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        PrivateEndpointConnectionResource IOperationSource<PrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            AzureDevOpsProjectData data = AzureDevOpsProjectData.DeserializeAzureDevOpsProjectData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new AzureDevOpsProjectResource(_client, data);
+            SecurityCenterPrivateEndpointConnectionData data = SecurityCenterPrivateEndpointConnectionData.DeserializeSecurityCenterPrivateEndpointConnectionData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new PrivateEndpointConnectionResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<AzureDevOpsProjectResource> IOperationSource<AzureDevOpsProjectResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<PrivateEndpointConnectionResource> IOperationSource<PrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            AzureDevOpsProjectData data = AzureDevOpsProjectData.DeserializeAzureDevOpsProjectData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new AzureDevOpsProjectResource(_client, data);
+            SecurityCenterPrivateEndpointConnectionData data = SecurityCenterPrivateEndpointConnectionData.DeserializeSecurityCenterPrivateEndpointConnectionData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new PrivateEndpointConnectionResource(_client, data);
         }
     }
 }
