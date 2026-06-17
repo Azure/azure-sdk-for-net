@@ -11,11 +11,12 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    internal partial class SyncGroupsGetSyncDatabaseIdsSyncGroupsAsyncCollectionResultOfT : AsyncPageable<SyncDatabaseIdProperties>
+    internal partial class SyncGroupsGetSyncDatabaseIdsSyncGroupsAsyncCollectionResultOfT : AsyncPageable<SubResource>
     {
         private readonly SyncGroups _client;
         private readonly Guid _subscriptionId;
@@ -42,7 +43,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of SyncGroupsGetSyncDatabaseIdsSyncGroupsAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<SyncDatabaseIdProperties>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<SubResource>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -53,7 +54,7 @@ namespace Azure.ResourceManager.Sql
                     yield break;
                 }
                 SyncDatabaseIdListResult result = SyncDatabaseIdListResult.FromResponse(response);
-                yield return Page<SyncDatabaseIdProperties>.FromValues((IReadOnlyList<SyncDatabaseIdProperties>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<SubResource>.FromValues((IReadOnlyList<SubResource>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

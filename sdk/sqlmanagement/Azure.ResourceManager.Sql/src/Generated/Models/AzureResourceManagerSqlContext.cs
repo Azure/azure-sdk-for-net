@@ -8,6 +8,7 @@
 using System.ClientModel.Primitives;
 using Azure;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
@@ -602,6 +603,7 @@ namespace Azure.ResourceManager.Sql
     [ModelReaderWriterBuildable(typeof(StartStopManagedInstanceScheduleListResult))]
     [ModelReaderWriterBuildable(typeof(StartStopManagedInstanceScheduleProperties))]
     [ModelReaderWriterBuildable(typeof(StorageCapability))]
+    [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SubscriptionLongTermRetentionBackupResource))]
     [ModelReaderWriterBuildable(typeof(SubscriptionLongTermRetentionManagedInstanceBackupResource))]
     [ModelReaderWriterBuildable(typeof(SubscriptionUsageData))]
@@ -619,7 +621,6 @@ namespace Azure.ResourceManager.Sql
     [ModelReaderWriterBuildable(typeof(SyncAgentProperties))]
     [ModelReaderWriterBuildable(typeof(SyncAgentResource))]
     [ModelReaderWriterBuildable(typeof(SyncDatabaseIdListResult))]
-    [ModelReaderWriterBuildable(typeof(SyncDatabaseIdProperties))]
     [ModelReaderWriterBuildable(typeof(SyncFullSchemaProperties))]
     [ModelReaderWriterBuildable(typeof(SyncFullSchemaPropertiesListResult))]
     [ModelReaderWriterBuildable(typeof(SyncFullSchemaTable))]

@@ -13,6 +13,7 @@ using System.Net;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
@@ -4829,13 +4830,6 @@ namespace Azure.ResourceManager.Sql.Models
                 tracingId,
                 operationStatus,
                 default);
-        }
-
-        /// <param name="id"> ARM resource id of sync database. </param>
-        /// <returns> A new <see cref="Models.SyncDatabaseIdProperties"/> instance for mocking. </returns>
-        public static SyncDatabaseIdProperties SyncDatabaseIdProperties(string id = default)
-        {
-            return new SyncDatabaseIdProperties(id, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>

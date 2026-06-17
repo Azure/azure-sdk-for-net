@@ -8,8 +8,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
@@ -89,9 +91,14 @@ namespace Azure.ResourceManager.Sql.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (SyncDatabaseIdProperties item in Value)
+            foreach (SubResource item in Value)
             {
-                writer.WriteObjectValue(item, options);
+                if (item == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
+                ((IJsonModel<SubResource>)item).Write(writer, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(NextLink))
@@ -141,17 +148,24 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            IList<SyncDatabaseIdProperties> value = default;
+            IList<SubResource> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<SyncDatabaseIdProperties> array = new List<SyncDatabaseIdProperties>();
+                    List<SubResource> array = new List<SubResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SyncDatabaseIdProperties.DeserializeSyncDatabaseIdProperties(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerSqlContext.Default));
+                        }
                     }
                     value = array;
                     continue;

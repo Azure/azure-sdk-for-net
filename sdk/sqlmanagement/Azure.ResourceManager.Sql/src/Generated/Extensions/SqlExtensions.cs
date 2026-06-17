@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql.Mocking;
 using Azure.ResourceManager.Sql.Models;
 
@@ -3681,8 +3682,8 @@ namespace Azure.ResourceManager.Sql
         /// <param name="locationName"> The name of the region where the resource is located. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="SyncDatabaseIdProperties"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SyncDatabaseIdProperties> GetSyncDatabaseIdsSyncGroupsAsync(this SubscriptionResource subscriptionResource, AzureLocation locationName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SubResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<SubResource> GetSyncDatabaseIdsSyncGroupsAsync(this SubscriptionResource subscriptionResource, AzureLocation locationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -3700,8 +3701,8 @@ namespace Azure.ResourceManager.Sql
         /// <param name="locationName"> The name of the region where the resource is located. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="SyncDatabaseIdProperties"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SyncDatabaseIdProperties> GetSyncDatabaseIdsSyncGroups(this SubscriptionResource subscriptionResource, AzureLocation locationName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SubResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<SubResource> GetSyncDatabaseIdsSyncGroups(this SubscriptionResource subscriptionResource, AzureLocation locationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 

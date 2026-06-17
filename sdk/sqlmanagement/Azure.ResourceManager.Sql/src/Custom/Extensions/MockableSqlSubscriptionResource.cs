@@ -212,5 +212,55 @@ namespace Azure.ResourceManager.Sql.Mocking
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithLocation(AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
             => GetLongTermRetentionManagedInstanceBackupsWithLocation(locationName, onlyLatestPerDatabase, databaseState, default, default, default, cancellationToken);
+
+        /// <summary>
+        /// Lists the long term retention backups for managed databases in a given location.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstanceBackups</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LongTermRetentionManagedInstanceBackups_ListByLocation</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <returns> An async collection of <see cref="ManagedInstanceLongTermRetentionBackupData"/> that may take multiple service requests to iterate over. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual AsyncPageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithLocationAsync(SubscriptionResourceGetLongTermRetentionManagedInstanceBackupsWithLocationOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            return GetLongTermRetentionManagedInstanceBackupsWithLocationAsync(options.LocationName, options.OnlyLatestPerDatabase, options.DatabaseState, options.Skip, options.Top, options.Filter, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the long term retention backups for managed databases in a given location.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstanceBackups</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LongTermRetentionManagedInstanceBackups_ListByLocation</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <returns> A collection of <see cref="ManagedInstanceLongTermRetentionBackupData"/> that may take multiple service requests to iterate over. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Pageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithLocation(SubscriptionResourceGetLongTermRetentionManagedInstanceBackupsWithLocationOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            return GetLongTermRetentionManagedInstanceBackupsWithLocation(options.LocationName, options.OnlyLatestPerDatabase, options.DatabaseState, options.Skip, options.Top, options.Filter, cancellationToken);
+        }
     }
 }

@@ -13,6 +13,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Sql;
 using Azure.ResourceManager.Sql.Models;
 
@@ -1179,8 +1180,8 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </summary>
         /// <param name="locationName"> The name of the region where the resource is located. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SyncDatabaseIdProperties"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SyncDatabaseIdProperties> GetSyncDatabaseIdsSyncGroupsAsync(AzureLocation locationName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SubResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SubResource> GetSyncDatabaseIdsSyncGroupsAsync(AzureLocation locationName, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -1208,8 +1209,8 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </summary>
         /// <param name="locationName"> The name of the region where the resource is located. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SyncDatabaseIdProperties"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SyncDatabaseIdProperties> GetSyncDatabaseIdsSyncGroups(AzureLocation locationName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SubResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SubResource> GetSyncDatabaseIdsSyncGroups(AzureLocation locationName, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
