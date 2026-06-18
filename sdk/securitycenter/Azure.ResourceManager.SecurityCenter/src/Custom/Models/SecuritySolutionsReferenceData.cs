@@ -10,7 +10,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    // Compatibility customization: preserves Azure.ResourceManager.SecurityCenter 1.1.0 public API shape during the MPG migration.
+    // The current TypeSpec schema does not generate the same ARM resource-data base type as the GA SDK; this partial restores the GA inheritance so resource data remains assignable to the same base class.
     /// <summary>
     /// Provides a compatibility shim for the SecuritySolutionsReferenceData class.
     /// </summary>

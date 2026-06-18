@@ -14,7 +14,7 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    // Compatibility customization: preserves Azure.ResourceManager.SecurityCenter 1.1.0 public API shape during the MPG migration.
+    // The current TypeSpec models alert resource identifiers through regenerated derived details, but GA exposed this abstract base type; keep its protected constructor for custom or test derivation.
     /// <summary> Resource identifier for a security alert entity. </summary>
     public abstract partial class SecurityAlertResourceIdentifier
     {

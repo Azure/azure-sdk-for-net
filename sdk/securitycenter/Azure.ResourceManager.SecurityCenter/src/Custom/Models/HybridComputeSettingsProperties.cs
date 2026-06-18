@@ -5,7 +5,7 @@
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    // Compatibility customization: preserves Azure.ResourceManager.SecurityCenter 1.1.0 public API shape during the MPG migration.
+    // The latest TypeSpec removed or reshaped this legacy model/member, so the generator cannot recreate the previous GA signature; keep a hidden shim for ApiCompat and throw because the wire shape is no longer supported.
     /// <summary>
     /// Provides a compatibility shim for the HybridComputeSettingsProperties class.
     /// </summary>

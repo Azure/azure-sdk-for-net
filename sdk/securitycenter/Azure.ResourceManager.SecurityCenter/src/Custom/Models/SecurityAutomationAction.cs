@@ -5,7 +5,7 @@
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    // Compatibility customization: preserves Azure.ResourceManager.SecurityCenter 1.1.0 public API shape during the MPG migration.
+    // The current TypeSpec-generated abstract polymorphic base does not expose the GA protected parameterless constructor used for derivation and mocking; keep that constructor in this partial.
     /// <summary>
     /// Provides a compatibility shim for the SecurityAutomationAction class.
     /// </summary>

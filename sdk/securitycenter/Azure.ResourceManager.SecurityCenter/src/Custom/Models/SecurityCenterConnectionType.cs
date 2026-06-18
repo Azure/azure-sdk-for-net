@@ -5,7 +5,7 @@
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    // Compatibility customization: preserves Azure.ResourceManager.SecurityCenter 1.1.0 public API shape during the MPG migration.
+    // The latest TypeSpec renamed or removed this extensible-enum type from the generated surface; keep the previous GA enum wrapper so existing signatures and constants remain source-compatible.
     /// <summary>
     /// Provides a compatibility shim for the SecurityCenterConnectionType structure.
     /// </summary>

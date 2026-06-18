@@ -14,7 +14,7 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    // Compatibility customization: preserves Azure.ResourceManager.SecurityCenter 1.1.0 public API shape during the MPG migration.
+    // The latest TypeSpec removed this legacy resource or operation path, so the generator cannot emit the previous GA management-plane method; keep a hidden shim for ApiCompat and throw because the service path is no longer supported.
     // Compatibility customization: GA exposed this resource-id overload without the generated Resource suffix.
     /// <summary>
     /// Provides a compatibility shim for the SecurityCenterExtensions class.
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SecurityCenter
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    // Compatibility customization: preserves Azure.ResourceManager.SecurityCenter 1.1.0 public API shape during the MPG migration.
+    // The latest TypeSpec removed this legacy resource or operation path, so the generator cannot emit the previous GA management-plane method; keep a hidden shim for ApiCompat and throw because the service path is no longer supported.
     /// <summary>
     /// Provides a compatibility shim for the SecurityCenterExtensions class.
     /// </summary>
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.SecurityCenter
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    // Compatibility customization: preserves Azure.ResourceManager.SecurityCenter 1.1.0 public API shape during the MPG migration.
+    // The latest TypeSpec removed this legacy resource or operation path, so the generator cannot emit the previous GA management-plane method; keep a hidden shim for ApiCompat and throw because the service path is no longer supported.
     /// <summary>
     /// Provides a compatibility shim for the SecurityCenterExtensions class.
     /// </summary>
@@ -535,7 +535,7 @@ namespace Azure.ResourceManager.SecurityCenter
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    // Compatibility customization: preserves Azure.ResourceManager.SecurityCenter 1.1.0 public API shape during the MPG migration.
+    // The latest TypeSpec removed this legacy resource or operation path, so the generator cannot emit the previous GA management-plane method; keep a hidden shim for ApiCompat and throw because the service path is no longer supported.
 /// <summary>
 /// Provides a compatibility shim for the SecurityCenterExtensions class.
 /// </summary>

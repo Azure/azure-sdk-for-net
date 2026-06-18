@@ -7,8 +7,8 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    // Compatibility customization: preserves Azure.ResourceManager.SecurityCenter 1.1.0 public API shape during the MPG migration.
-    // Backward compatibility: preserve the previous AzureLocation overload for resource identifier creation.
+    // The current TypeSpec renamed, nested, or removed these legacy model members, so generation omits the GA constructor/property shape; reintroduce the source-compatible member in this partial.
+    // The current TypeSpec-generated resource identifier helper uses the regenerated path parameter shape, but GA exposed an AzureLocation overload; keep that overload and translate it to the generated identifier.
     public partial class JitNetworkAccessPolicyResource
     {
         /// <summary> Generate the resource identifier for this resource. </summary>

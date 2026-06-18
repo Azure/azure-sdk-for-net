@@ -12,7 +12,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    // Compatibility customization: preserves Azure.ResourceManager.SecurityCenter 1.1.0 public API shape during the MPG migration.
+    // The current TypeSpec uses SecurityConnectorGovernanceRuleData, but GA exposed GovernanceRuleData and resource-level rule operations; keep those signatures and map them to hidden throwing shims.
     /// <summary>
     /// Provides a compatibility shim for the SecurityConnectorGovernanceRuleResource class.
     /// </summary>
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.SecurityCenter
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    // Compatibility customization: preserves Azure.ResourceManager.SecurityCenter 1.1.0 public API shape during the MPG migration.
+    // The current TypeSpec uses SecurityConnectorGovernanceRuleData, but GA exposed GovernanceRuleData and resource-level rule operations; keep those signatures and map them to hidden throwing shims.
     /// <summary>
     /// Provides a compatibility shim for the SecurityConnectorGovernanceRuleResource class.
     /// </summary>
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.SecurityCenter
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    // Compatibility customization: preserves Azure.ResourceManager.SecurityCenter 1.1.0 public API shape during the MPG migration.
+    // The current TypeSpec uses SecurityConnectorGovernanceRuleData, but GA exposed GovernanceRuleData and resource-level rule operations; keep those signatures and map them to hidden throwing shims.
     /// <summary>
     /// Provides a compatibility shim for the SecurityConnectorGovernanceRuleResource class.
     /// </summary>

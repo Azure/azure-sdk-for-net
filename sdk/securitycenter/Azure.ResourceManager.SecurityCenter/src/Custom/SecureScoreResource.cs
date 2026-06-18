@@ -9,8 +9,8 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    // Compatibility customization: preserves Azure.ResourceManager.SecurityCenter 1.1.0 public API shape during the MPG migration.
-    // Backward compatibility: preserve legacy overloads that accepted the strongly typed OData expand value.
+    // The current TypeSpec renamed, nested, or removed these legacy model members, so generation omits the GA constructor/property shape; reintroduce the source-compatible member in this partial.
+    // The current TypeSpec emits the expand query as the regenerated request shape, but GA exposed overloads with the strongly typed SecurityScoreODataExpand value; keep those overloads and forward to the generated implementation.
     public partial class SecureScoreResource
     {
         /// <summary> Get all security controls for a specific initiative within a scope. </summary>

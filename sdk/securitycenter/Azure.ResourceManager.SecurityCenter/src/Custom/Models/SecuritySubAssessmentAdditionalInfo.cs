@@ -14,7 +14,7 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    // Compatibility customization: preserves Azure.ResourceManager.SecurityCenter 1.1.0 public API shape during the MPG migration.
+    // The current TypeSpec models sub-assessment additional info through regenerated derived details, but GA exposed this abstract base type; keep its protected constructor for custom or test derivation.
     /// <summary> Additional information for a security sub-assessment. </summary>
     public abstract partial class SecuritySubAssessmentAdditionalInfo
     {

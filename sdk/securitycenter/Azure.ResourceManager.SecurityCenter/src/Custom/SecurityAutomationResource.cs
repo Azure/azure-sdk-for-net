@@ -11,8 +11,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    // Compatibility customization: preserves Azure.ResourceManager.SecurityCenter 1.1.0 public API shape during the MPG migration.
-    // Backward compatibility: preserve the resource-level update methods that were available in the previous SDK.
+    // The current TypeSpec operation is generated as a collection CreateOrUpdate call, but GA also exposed resource-level Update methods; forward those GA methods to the generated collection operation.
     public partial class SecurityAutomationResource
     {
         /// <summary> Updates a security automation. </summary>

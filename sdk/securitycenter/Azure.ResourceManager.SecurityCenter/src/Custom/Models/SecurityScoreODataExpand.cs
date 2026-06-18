@@ -8,8 +8,8 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    // Compatibility customization: preserves Azure.ResourceManager.SecurityCenter 1.1.0 public API shape during the MPG migration.
-    // Backward compatibility: preserve the previous strongly typed OData expand value.
+    // The latest TypeSpec renamed or removed this extensible-enum type from the generated surface; keep the previous GA enum wrapper so existing signatures and constants remain source-compatible.
+    // The current TypeSpec no longer emits the GA strongly typed secure-score expand enum, so custom code keeps the prior OData expand value used by public method signatures.
     /// <summary> OData expand. </summary>
     public readonly partial struct SecurityScoreODataExpand : IEquatable<SecurityScoreODataExpand>
     {

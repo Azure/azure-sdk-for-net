@@ -5,8 +5,8 @@
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    // Compatibility customization: preserves Azure.ResourceManager.SecurityCenter 1.1.0 public API shape during the MPG migration.
-    // Backward compatibility: preserve the public constructor used by tests and mocking code.
+    // The current TypeSpec renamed, nested, or removed these legacy model members, so generation omits the GA constructor/property shape; reintroduce the source-compatible member in this partial.
+    // The current TypeSpec-generated data model only exposes serialization constructors, while GA exposed a public parameterless constructor used by tests and mocking code; keep that constructor here.
     public partial class SecuritySettingData
     {
         /// <summary> Initializes a new instance of <see cref="SecuritySettingData"/>. </summary>

@@ -8,7 +8,6 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    // Compatibility customization: preserves Azure.ResourceManager.SecurityCenter 1.1.0 public API shape during the MPG migration.
     // Previous GA packages were generated from an older pricing API version whose list operation did
     // not have a $filter query parameter. The current TypeSpec input is based on a newer operation
     // that adds optional $filter. Keep the generated GetAll(string filter = null, ...) overload for

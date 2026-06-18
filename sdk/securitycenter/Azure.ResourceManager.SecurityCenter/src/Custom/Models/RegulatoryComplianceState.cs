@@ -8,8 +8,8 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    // Compatibility customization: preserves Azure.ResourceManager.SecurityCenter 1.1.0 public API shape during the MPG migration.
-    // Backward compatibility: preserve the previous extensible enum shape for regulatory compliance state.
+    // The latest TypeSpec renamed or removed this extensible-enum type from the generated surface; keep the previous GA enum wrapper so existing signatures and constants remain source-compatible.
+    // The current TypeSpec no longer emits the GA extensible RegulatoryComplianceState wrapper, so custom code keeps the prior enum-like API used by compliance model properties.
     /// <summary> State of regulatory compliance. </summary>
     public readonly partial struct RegulatoryComplianceState : IEquatable<RegulatoryComplianceState>
     {

@@ -11,7 +11,7 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    // Compatibility customization: preserves Azure.ResourceManager.SecurityCenter 1.1.0 public API shape during the MPG migration.
+    // The regenerated model factory follows the latest TypeSpec model graph, but the GA package exposed overloads using older flattened parameters and enum types; keep those overloads here so callers can recompile without ApiCompat breaks.
     [CodeGenSuppress(
         "SecurityAlertsSuppressionRuleData",
         typeof(ResourceIdentifier),
