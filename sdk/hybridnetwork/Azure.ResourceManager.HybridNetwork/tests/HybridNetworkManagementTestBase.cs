@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.HybridNetwork.Tests
                 }
             };
 
-            nsdvData.Properties.NfvisFromSite.Add("nfvi1", new NfviDetails()
+            nsdvData.Properties.NfvisFromSite.Add("nfvi1", new NfviSiteDetails()
             {
                 Name = NfviName,
                 NfviDetailsType = "AzureCore"
