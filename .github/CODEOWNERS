@@ -77,6 +77,7 @@
 # Client Libraries
 ####################
 
+
 # PRLabel: %AI Agents
 /sdk/agentserver/    @ankitbko @RaviPidaparthi @vangarp
 
@@ -99,10 +100,10 @@
 # ServiceOwners: @dargilco @nick863 @trangevi
 
 # PRLabel: %App Configuration
-/sdk/appconfiguration/    @avanigupta @linglingye001 @zhiyuanliang-ms
+/sdk/appconfiguration/    @avanigupta @jimmyca15 @linglingye001 @mrm9084 @zhiyuanliang-ms
 
 # ServiceLabel: %App Configuration
-# ServiceOwners: @avanigupta @linglingye001 @zhiyuanliang-ms
+# ServiceOwners: @avanigupta @linglingye001 @mrm9084 @zhiyuanliang-ms
 
 # PRLabel: %Attestation
 /sdk/attestation/Azure.Security.Attestation/    @anilba06 @Azure/azure-sdk-write-attestation @gkostal
