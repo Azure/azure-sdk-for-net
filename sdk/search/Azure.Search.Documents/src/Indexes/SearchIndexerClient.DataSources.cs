@@ -76,35 +76,39 @@ namespace Azure.Search.Documents.Indexes
         /// Deletes a data source connection.
         /// </summary>
         /// <param name="dataSourceConnectionName">The name of the <see cref="SearchIndexerDataSourceConnection"/> to delete.</param>
-        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
+        /// <param name="cancellationToken"><see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response"/> from the server.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="dataSourceConnectionName"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+#pragma warning disable AZC0002 // CancellationToken is intentionally required to avoid ambiguity with generated convenience method
         [ForwardsClientCalls]
         public virtual Response DeleteDataSourceConnection(
             string dataSourceConnectionName,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken)
         {
             Argument.AssertNotNull(dataSourceConnectionName, nameof(dataSourceConnectionName));
             return DeleteDataSourceConnection(dataSourceConnectionName, matchConditions: null, cancellationToken);
         }
+#pragma warning restore AZC0002
 
         /// <summary>
         /// Deletes a data source connection.
         /// </summary>
         /// <param name="dataSourceConnectionName">The name of the <see cref="SearchIndexerDataSourceConnection"/> to delete.</param>
-        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
+        /// <param name="cancellationToken"><see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response"/> from the server.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="dataSourceConnectionName"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+#pragma warning disable AZC0002 // CancellationToken is intentionally required to avoid ambiguity with generated convenience method
         [ForwardsClientCalls]
         public virtual async Task<Response> DeleteDataSourceConnectionAsync(
             string dataSourceConnectionName,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken)
         {
             Argument.AssertNotNull(dataSourceConnectionName, nameof(dataSourceConnectionName));
             return await DeleteDataSourceConnectionAsync(dataSourceConnectionName, matchConditions: null, cancellationToken).ConfigureAwait(false);
         }
+#pragma warning restore AZC0002
 
         /// <summary>
         /// Deletes a data source connection.

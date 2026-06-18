@@ -288,29 +288,33 @@ namespace Azure.Search.Documents.Indexes
         /// Deletes a search index and all the documents it contains.
         /// </summary>
         /// <param name="indexName">Required. The name of the <see cref="SearchIndex"/> to delete.</param>
-        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
+        /// <param name="cancellationToken"><see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response"/> from the server.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="indexName"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+#pragma warning disable AZC0002 // CancellationToken is intentionally required to avoid ambiguity with generated convenience method
         [ForwardsClientCalls]
         public virtual Response DeleteIndex(
             string indexName,
-            CancellationToken cancellationToken = default) =>
+            CancellationToken cancellationToken) =>
             DeleteIndex(indexName, matchConditions: null, cancellationToken);
+#pragma warning restore AZC0002
 
         /// <summary>
         /// Deletes a search index and all the documents it contains.
         /// </summary>
         /// <param name="indexName">Required. The name of the <see cref="SearchIndex"/> to delete.</param>
-        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
+        /// <param name="cancellationToken"><see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response"/> from the server.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="indexName"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+#pragma warning disable AZC0002 // CancellationToken is intentionally required to avoid ambiguity with generated convenience method
         [ForwardsClientCalls]
         public virtual async Task<Response> DeleteIndexAsync(
             string indexName,
-            CancellationToken cancellationToken = default) =>
+            CancellationToken cancellationToken) =>
             await DeleteIndexAsync(indexName, matchConditions: null, cancellationToken).ConfigureAwait(false);
+#pragma warning restore AZC0002
 
         /// <summary>
         /// Deletes a search index and all the documents it contains.
@@ -510,29 +514,33 @@ namespace Azure.Search.Documents.Indexes
         /// Deletes a synonym map.
         /// </summary>
         /// <param name="synonymMapName">The name of a <see cref="SynonymMap"/> to delete.</param>
-        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
+        /// <param name="cancellationToken"><see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response"/> from the server.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="synonymMapName"/> or <see cref="SynonymMap.Name"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+#pragma warning disable AZC0002 // CancellationToken is intentionally required to avoid ambiguity with generated convenience method
         [ForwardsClientCalls]
         public virtual Response DeleteSynonymMap(
             string synonymMapName,
-            CancellationToken cancellationToken = default) =>
+            CancellationToken cancellationToken) =>
             DeleteSynonymMap(synonymMapName, matchConditions: null, cancellationToken);
+#pragma warning restore AZC0002
 
         /// <summary>
         /// Deletes a synonym map.
         /// </summary>
         /// <param name="synonymMapName">The name of a <see cref="SynonymMap"/> to delete.</param>
-        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
+        /// <param name="cancellationToken"><see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response"/> from the server.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="synonymMapName"/> or <see cref="SynonymMap.Name"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+#pragma warning disable AZC0002 // CancellationToken is intentionally required to avoid ambiguity with generated convenience method
         [ForwardsClientCalls]
         public virtual async Task<Response> DeleteSynonymMapAsync(
             string synonymMapName,
-            CancellationToken cancellationToken = default) =>
+            CancellationToken cancellationToken) =>
             await DeleteSynonymMapAsync(synonymMapName, matchConditions: null, cancellationToken).ConfigureAwait(false);
+#pragma warning restore AZC0002
 
         /// <summary>
         /// Deletes a synonym map.
