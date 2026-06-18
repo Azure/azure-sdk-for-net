@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/Azure.ResourceManager.NetworkCloud.csproj" />
+  <Project Path="tests/Azure.ResourceManager.NetworkCloud.Tests.csproj" />
+</Solution>

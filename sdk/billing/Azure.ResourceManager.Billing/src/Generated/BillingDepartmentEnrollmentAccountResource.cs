@@ -6,45 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Billing
 {
     /// <summary>
-    /// A Class representing a BillingDepartmentEnrollmentAccount along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BillingDepartmentEnrollmentAccountResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetBillingDepartmentEnrollmentAccountResource method.
-    /// Otherwise you can get one from its parent resource <see cref="BillingDepartmentResource"/> using the GetBillingDepartmentEnrollmentAccount method.
+    /// A class representing a BillingDepartmentEnrollmentAccount along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BillingDepartmentEnrollmentAccountResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="BillingDepartmentResource"/> using the GetBillingDepartmentEnrollmentAccounts method.
     /// </summary>
     public partial class BillingDepartmentEnrollmentAccountResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="BillingDepartmentEnrollmentAccountResource"/> instance. </summary>
-        /// <param name="billingAccountName"> The billingAccountName. </param>
-        /// <param name="departmentName"> The departmentName. </param>
-        /// <param name="enrollmentAccountName"> The enrollmentAccountName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string billingAccountName, string departmentName, string enrollmentAccountName)
-        {
-            var resourceId = $"/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}/enrollmentAccounts/{enrollmentAccountName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _billingDepartmentEnrollmentAccountEnrollmentAccountsClientDiagnostics;
-        private readonly EnrollmentAccountsRestOperations _billingDepartmentEnrollmentAccountEnrollmentAccountsRestClient;
+        private readonly ClientDiagnostics _enrollmentAccountsClientDiagnostics;
+        private readonly EnrollmentAccounts _enrollmentAccountsRestClient;
         private readonly BillingEnrollmentAccountData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Billing/billingAccounts/departments/enrollmentAccounts";
 
-        /// <summary> Initializes a new instance of the <see cref="BillingDepartmentEnrollmentAccountResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of BillingDepartmentEnrollmentAccountResource for mocking. </summary>
         protected BillingDepartmentEnrollmentAccountResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="BillingDepartmentEnrollmentAccountResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingDepartmentEnrollmentAccountResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal BillingDepartmentEnrollmentAccountResource(ArmClient client, BillingEnrollmentAccountData data) : this(client, data.Id)
@@ -53,71 +43,92 @@ namespace Azure.ResourceManager.Billing
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="BillingDepartmentEnrollmentAccountResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingDepartmentEnrollmentAccountResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal BillingDepartmentEnrollmentAccountResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _billingDepartmentEnrollmentAccountEnrollmentAccountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string billingDepartmentEnrollmentAccountEnrollmentAccountsApiVersion);
-            _billingDepartmentEnrollmentAccountEnrollmentAccountsRestClient = new EnrollmentAccountsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, billingDepartmentEnrollmentAccountEnrollmentAccountsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string billingDepartmentEnrollmentAccountApiVersion);
+            _enrollmentAccountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
+            _enrollmentAccountsRestClient = new EnrollmentAccounts(_enrollmentAccountsClientDiagnostics, Pipeline, Endpoint, billingDepartmentEnrollmentAccountApiVersion ?? "2024-04-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual BillingEnrollmentAccountData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="billingAccountName"> The billingAccountName. </param>
+        /// <param name="departmentName"> The departmentName. </param>
+        /// <param name="enrollmentAccountName"> The enrollmentAccountName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string billingAccountName, string departmentName, string enrollmentAccountName)
+        {
+            string resourceId = $"/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}/enrollmentAccounts/{enrollmentAccountName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets an enrollment account by department. The operation is supported only for billing accounts with agreement type Enterprise Agreement.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}/enrollmentAccounts/{enrollmentAccountName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}/enrollmentAccounts/{enrollmentAccountName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EnrollmentAccounts_GetByDepartment</description>
+        /// <term> Operation Id. </term>
+        /// <description> EnrollmentAccounts_GetByDepartment. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingDepartmentEnrollmentAccountResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingDepartmentEnrollmentAccountResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<BillingDepartmentEnrollmentAccountResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _billingDepartmentEnrollmentAccountEnrollmentAccountsClientDiagnostics.CreateScope("BillingDepartmentEnrollmentAccountResource.Get");
+            using DiagnosticScope scope = _enrollmentAccountsClientDiagnostics.CreateScope("BillingDepartmentEnrollmentAccountResource.Get");
             scope.Start();
             try
             {
-                var response = await _billingDepartmentEnrollmentAccountEnrollmentAccountsRestClient.GetByDepartmentAsync(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _enrollmentAccountsRestClient.CreateGetByDepartmentRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<BillingEnrollmentAccountData> response = Response.FromValue(BillingEnrollmentAccountData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new BillingDepartmentEnrollmentAccountResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -131,33 +142,41 @@ namespace Azure.ResourceManager.Billing
         /// Gets an enrollment account by department. The operation is supported only for billing accounts with agreement type Enterprise Agreement.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}/enrollmentAccounts/{enrollmentAccountName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}/enrollmentAccounts/{enrollmentAccountName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EnrollmentAccounts_GetByDepartment</description>
+        /// <term> Operation Id. </term>
+        /// <description> EnrollmentAccounts_GetByDepartment. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingDepartmentEnrollmentAccountResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingDepartmentEnrollmentAccountResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<BillingDepartmentEnrollmentAccountResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _billingDepartmentEnrollmentAccountEnrollmentAccountsClientDiagnostics.CreateScope("BillingDepartmentEnrollmentAccountResource.Get");
+            using DiagnosticScope scope = _enrollmentAccountsClientDiagnostics.CreateScope("BillingDepartmentEnrollmentAccountResource.Get");
             scope.Start();
             try
             {
-                var response = _billingDepartmentEnrollmentAccountEnrollmentAccountsRestClient.GetByDepartment(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _enrollmentAccountsRestClient.CreateGetByDepartmentRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<BillingEnrollmentAccountData> response = Response.FromValue(BillingEnrollmentAccountData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new BillingDepartmentEnrollmentAccountResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

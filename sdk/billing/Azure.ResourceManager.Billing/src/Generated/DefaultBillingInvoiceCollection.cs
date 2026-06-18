@@ -6,11 +6,13 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Billing
@@ -22,69 +24,75 @@ namespace Azure.ResourceManager.Billing
     /// </summary>
     public partial class DefaultBillingInvoiceCollection : ArmCollection
     {
-        private readonly ClientDiagnostics _defaultBillingInvoiceInvoicesClientDiagnostics;
-        private readonly InvoicesRestOperations _defaultBillingInvoiceInvoicesRestClient;
+        private readonly ClientDiagnostics _invoicesClientDiagnostics;
+        private readonly Invoices _invoicesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="DefaultBillingInvoiceCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of DefaultBillingInvoiceCollection for mocking. </summary>
         protected DefaultBillingInvoiceCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DefaultBillingInvoiceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefaultBillingInvoiceCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DefaultBillingInvoiceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _defaultBillingInvoiceInvoicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", DefaultBillingInvoiceResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(DefaultBillingInvoiceResource.ResourceType, out string defaultBillingInvoiceInvoicesApiVersion);
-            _defaultBillingInvoiceInvoicesRestClient = new InvoicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, defaultBillingInvoiceInvoicesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(DefaultBillingInvoiceResource.ResourceType, out string defaultBillingInvoiceApiVersion);
+            _invoicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", DefaultBillingInvoiceResource.ResourceType.Namespace, Diagnostics);
+            _invoicesRestClient = new Invoices(_invoicesClientDiagnostics, Pipeline, Endpoint, defaultBillingInvoiceApiVersion ?? "2024-04-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != TenantResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, TenantResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, TenantResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets an invoice by ID. The operation is supported for billing accounts with agreement type Microsoft Partner Agreement or Microsoft Customer Agreement.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/default/invoices/{invoiceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/default/invoices/{invoiceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Invoices_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> InvoiceById_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DefaultBillingInvoiceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="invoiceName"> The ID that uniquely identifies an invoice. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="invoiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="invoiceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="invoiceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<DefaultBillingInvoiceResource>> GetAsync(string invoiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(invoiceName, nameof(invoiceName));
 
-            using var scope = _defaultBillingInvoiceInvoicesClientDiagnostics.CreateScope("DefaultBillingInvoiceCollection.Get");
+            using DiagnosticScope scope = _invoicesClientDiagnostics.CreateScope("DefaultBillingInvoiceCollection.Get");
             scope.Start();
             try
             {
-                var response = await _defaultBillingInvoiceInvoicesRestClient.GetAsync(invoiceName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _invoicesRestClient.CreateGetRequest(invoiceName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<BillingInvoiceData> response = Response.FromValue(BillingInvoiceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DefaultBillingInvoiceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -98,38 +106,42 @@ namespace Azure.ResourceManager.Billing
         /// Gets an invoice by ID. The operation is supported for billing accounts with agreement type Microsoft Partner Agreement or Microsoft Customer Agreement.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/default/invoices/{invoiceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/default/invoices/{invoiceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Invoices_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> InvoiceById_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DefaultBillingInvoiceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="invoiceName"> The ID that uniquely identifies an invoice. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="invoiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="invoiceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="invoiceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<DefaultBillingInvoiceResource> Get(string invoiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(invoiceName, nameof(invoiceName));
 
-            using var scope = _defaultBillingInvoiceInvoicesClientDiagnostics.CreateScope("DefaultBillingInvoiceCollection.Get");
+            using DiagnosticScope scope = _invoicesClientDiagnostics.CreateScope("DefaultBillingInvoiceCollection.Get");
             scope.Start();
             try
             {
-                var response = _defaultBillingInvoiceInvoicesRestClient.Get(invoiceName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _invoicesRestClient.CreateGetRequest(invoiceName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<BillingInvoiceData> response = Response.FromValue(BillingInvoiceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DefaultBillingInvoiceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -143,36 +155,50 @@ namespace Azure.ResourceManager.Billing
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/default/invoices/{invoiceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/default/invoices/{invoiceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Invoices_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> InvoiceById_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DefaultBillingInvoiceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="invoiceName"> The ID that uniquely identifies an invoice. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="invoiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="invoiceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="invoiceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string invoiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(invoiceName, nameof(invoiceName));
 
-            using var scope = _defaultBillingInvoiceInvoicesClientDiagnostics.CreateScope("DefaultBillingInvoiceCollection.Exists");
+            using DiagnosticScope scope = _invoicesClientDiagnostics.CreateScope("DefaultBillingInvoiceCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _defaultBillingInvoiceInvoicesRestClient.GetAsync(invoiceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _invoicesRestClient.CreateGetRequest(invoiceName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<BillingInvoiceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(BillingInvoiceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((BillingInvoiceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -186,36 +212,50 @@ namespace Azure.ResourceManager.Billing
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/default/invoices/{invoiceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/default/invoices/{invoiceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Invoices_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> InvoiceById_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DefaultBillingInvoiceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="invoiceName"> The ID that uniquely identifies an invoice. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="invoiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="invoiceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="invoiceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string invoiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(invoiceName, nameof(invoiceName));
 
-            using var scope = _defaultBillingInvoiceInvoicesClientDiagnostics.CreateScope("DefaultBillingInvoiceCollection.Exists");
+            using DiagnosticScope scope = _invoicesClientDiagnostics.CreateScope("DefaultBillingInvoiceCollection.Exists");
             scope.Start();
             try
             {
-                var response = _defaultBillingInvoiceInvoicesRestClient.Get(invoiceName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _invoicesRestClient.CreateGetRequest(invoiceName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<BillingInvoiceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(BillingInvoiceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((BillingInvoiceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -229,38 +269,54 @@ namespace Azure.ResourceManager.Billing
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/default/invoices/{invoiceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/default/invoices/{invoiceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Invoices_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> InvoiceById_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DefaultBillingInvoiceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="invoiceName"> The ID that uniquely identifies an invoice. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="invoiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="invoiceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="invoiceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<DefaultBillingInvoiceResource>> GetIfExistsAsync(string invoiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(invoiceName, nameof(invoiceName));
 
-            using var scope = _defaultBillingInvoiceInvoicesClientDiagnostics.CreateScope("DefaultBillingInvoiceCollection.GetIfExists");
+            using DiagnosticScope scope = _invoicesClientDiagnostics.CreateScope("DefaultBillingInvoiceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _defaultBillingInvoiceInvoicesRestClient.GetAsync(invoiceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _invoicesRestClient.CreateGetRequest(invoiceName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<BillingInvoiceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(BillingInvoiceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((BillingInvoiceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<DefaultBillingInvoiceResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new DefaultBillingInvoiceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -274,38 +330,54 @@ namespace Azure.ResourceManager.Billing
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/default/invoices/{invoiceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/default/invoices/{invoiceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Invoices_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> InvoiceById_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DefaultBillingInvoiceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="invoiceName"> The ID that uniquely identifies an invoice. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="invoiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="invoiceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="invoiceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<DefaultBillingInvoiceResource> GetIfExists(string invoiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(invoiceName, nameof(invoiceName));
 
-            using var scope = _defaultBillingInvoiceInvoicesClientDiagnostics.CreateScope("DefaultBillingInvoiceCollection.GetIfExists");
+            using DiagnosticScope scope = _invoicesClientDiagnostics.CreateScope("DefaultBillingInvoiceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _defaultBillingInvoiceInvoicesRestClient.Get(invoiceName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _invoicesRestClient.CreateGetRequest(invoiceName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<BillingInvoiceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(BillingInvoiceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((BillingInvoiceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<DefaultBillingInvoiceResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new DefaultBillingInvoiceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
