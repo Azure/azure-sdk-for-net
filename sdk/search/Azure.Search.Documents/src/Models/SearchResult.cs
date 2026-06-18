@@ -47,7 +47,7 @@ namespace Azure.Search.Documents.Models
         /// <summary>
         /// Contains debugging information that can be used to further explore your search results.
         /// </summary>
-        internal DocumentDebugInfo DocumentDebugInfo { get; set; }
+        public DocumentDebugInfo DocumentDebugInfo { get; internal set; }
 
         /// <summary>
         /// The document found by the search query.
@@ -328,7 +328,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="documentDebugInfo"> Contains debugging information that
         /// can be used to further explore your search results. </param>
         /// <returns>A new SearchResult instance for mocking.</returns>
-        internal static SearchResult<T> SearchResult<T>(
+        public static SearchResult<T> SearchResult<T>(
             T document,
             double? score,
             IDictionary<string, IList<string>> highlights,

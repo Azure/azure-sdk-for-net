@@ -590,7 +590,8 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> Initializes a new instance of DocumentDebugInfo. </summary>
         /// <param name="vectors"> Contains debugging information specific to vector and hybrid search. </param>
-        internal static DocumentDebugInfo DocumentDebugInfo(VectorsDebugInfo vectors = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DocumentDebugInfo DocumentDebugInfo(VectorsDebugInfo vectors = null)
         {
             return new DocumentDebugInfo(vectors, additionalBinaryDataProperties: null);
         }

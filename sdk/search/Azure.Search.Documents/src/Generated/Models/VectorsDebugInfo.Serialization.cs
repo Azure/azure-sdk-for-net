@@ -14,7 +14,7 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Models
 {
     /// <summary> "Contains debugging information specific to vector and hybrid search."). </summary>
-    internal partial class VectorsDebugInfo : IJsonModel<VectorsDebugInfo>
+    public partial class VectorsDebugInfo : IJsonModel<VectorsDebugInfo>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

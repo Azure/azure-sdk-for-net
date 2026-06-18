@@ -14,7 +14,7 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Models
 {
     /// <summary> Contains debugging information that can be used to further explore your search results. </summary>
-    internal partial class DocumentDebugInfo : IJsonModel<DocumentDebugInfo>
+    public partial class DocumentDebugInfo : IJsonModel<DocumentDebugInfo>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

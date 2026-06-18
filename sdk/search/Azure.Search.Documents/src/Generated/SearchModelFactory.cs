@@ -236,7 +236,7 @@ namespace Azure.Search.Documents.Models
         /// <summary> "Contains debugging information specific to vector and hybrid search."). </summary>
         /// <param name="subscores"> The breakdown of subscores of the document prior to the chosen result set fusion/combination method such as RRF. </param>
         /// <returns> A new <see cref="Models.VectorsDebugInfo"/> instance for mocking. </returns>
-        internal static VectorsDebugInfo VectorsDebugInfo(QueryResultDocumentSubscores subscores = default)
+        public static VectorsDebugInfo VectorsDebugInfo(QueryResultDocumentSubscores subscores = default)
         {
             return new VectorsDebugInfo(subscores, additionalBinaryDataProperties: null);
         }
