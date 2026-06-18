@@ -769,10 +769,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="nfvisFromSite"> The nfvis from the site. </param>
         /// <param name="resourceElementTemplates"> List of resource element template. </param>
         /// <returns> A new <see cref="Models.NetworkServiceDesignVersionPropertiesFormat"/> instance for mocking. </returns>
-        public static NetworkServiceDesignVersionPropertiesFormat NetworkServiceDesignVersionPropertiesFormat(ProvisioningState? provisioningState = default, VersionState? versionState = default, string description = default, IDictionary<string, ReferencedResourceById> referencedConfigurationGroupSchemas = default, IDictionary<string, NfviDetails> nfvisFromSite = default, IEnumerable<ResourceElementTemplate> resourceElementTemplates = default)
+        public static NetworkServiceDesignVersionPropertiesFormat NetworkServiceDesignVersionPropertiesFormat(ProvisioningState? provisioningState = default, VersionState? versionState = default, string description = default, IDictionary<string, ReferencedResourceById> referencedConfigurationGroupSchemas = default, IDictionary<string, NfviSiteDetails> nfvisFromSite = default, IEnumerable<ResourceElementTemplate> resourceElementTemplates = default)
         {
             referencedConfigurationGroupSchemas ??= new ChangeTrackingDictionary<string, ReferencedResourceById>();
-            nfvisFromSite ??= new ChangeTrackingDictionary<string, NfviDetails>();
+            nfvisFromSite ??= new ChangeTrackingDictionary<string, NfviSiteDetails>();
             resourceElementTemplates ??= new ChangeTrackingList<ResourceElementTemplate>();
 
             return new NetworkServiceDesignVersionPropertiesFormat(
@@ -995,9 +995,9 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="nfvis"> List of NFVIs. </param>
         /// <param name="referencedSiteNetworkServices"> The list of site network services on the site. </param>
         /// <returns> A new <see cref="Models.SitePropertiesFormat"/> instance for mocking. </returns>
-        public static SitePropertiesFormat SitePropertiesFormat(ProvisioningState? provisioningState = default, IEnumerable<NfviEntry> nfvis = default, IEnumerable<ReferencedResourceById> referencedSiteNetworkServices = default)
+        public static SitePropertiesFormat SitePropertiesFormat(ProvisioningState? provisioningState = default, IEnumerable<NfviDetails> nfvis = default, IEnumerable<ReferencedResourceById> referencedSiteNetworkServices = default)
         {
-            nfvis ??= new ChangeTrackingList<NfviEntry>();
+            nfvis ??= new ChangeTrackingList<NfviDetails>();
             referencedSiteNetworkServices ??= new ChangeTrackingList<ReferencedResourceById>();
 
             return new SitePropertiesFormat(provisioningState, nfvis.ToList(), referencedSiteNetworkServices.ToList(), additionalBinaryDataProperties: null);

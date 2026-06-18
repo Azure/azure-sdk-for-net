@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary> The Azure Core NFVI detail. </summary>
-    public partial class AzureCoreNfviDetails : NfviEntry
+    public partial class AzureCoreNfviDetails : NfviDetails
     {
         /// <summary> Initializes a new instance of <see cref="AzureCoreNfviDetails"/>. </summary>
         public AzureCoreNfviDetails() : base(NfviType.AzureCore)

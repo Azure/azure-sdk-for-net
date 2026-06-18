@@ -10,32 +10,37 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> The nfvi details. </summary>
-    public partial class NfviDetails
+    /// <summary>
+    /// The NFVI object.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureCoreNfviDetails"/>, <see cref="AzureArcK8SClusterNfviDetails"/>, and <see cref="AzureOperatorNexusClusterNfviDetails"/>.
+    /// </summary>
+    public abstract partial class NfviDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NfviDetails"/>. </summary>
-        public NfviDetails()
+        /// <param name="nfviType"> The NFVI type. </param>
+        private protected NfviDetails(NfviType nfviType)
         {
+            NfviType = nfviType;
         }
 
         /// <summary> Initializes a new instance of <see cref="NfviDetails"/>. </summary>
-        /// <param name="name"> The nfvi name. </param>
-        /// <param name="nfviDetailsType"> The nfvi type. </param>
+        /// <param name="name"> Name of the nfvi. </param>
+        /// <param name="nfviType"> The NFVI type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NfviDetails(string name, string nfviDetailsType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NfviDetails(string name, NfviType nfviType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
-            NfviDetailsType = nfviDetailsType;
+            NfviType = nfviType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The nfvi name. </summary>
+        /// <summary> Name of the nfvi. </summary>
         public string Name { get; set; }
 
-        /// <summary> The nfvi type. </summary>
-        public string NfviDetailsType { get; set; }
+        /// <summary> The NFVI type. </summary>
+        internal NfviType NfviType { get; set; }
     }
 }

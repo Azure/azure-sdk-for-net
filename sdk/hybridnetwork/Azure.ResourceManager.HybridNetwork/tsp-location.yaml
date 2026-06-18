@@ -1,5 +1,5 @@
 directory: specification/hybridnetwork/HybridNetwork.Management
-commit: bdff2c20b7bd4b551008fbaf1618f7949d722867
+commit: 0a7621177d608ae4633b4cfd2423a08cedb0f548
 repo: Azure/azure-rest-api-specs
 additionalDirectories:
 

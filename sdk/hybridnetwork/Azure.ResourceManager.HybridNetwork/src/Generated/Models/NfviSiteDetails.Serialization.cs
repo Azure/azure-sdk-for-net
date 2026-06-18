@@ -7,66 +7,58 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.ResourceManager.HybridNetwork;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary>
-    /// The NFVI object.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureCoreNfviDetails"/>, <see cref="AzureArcK8SClusterNfviDetails"/>, and <see cref="AzureOperatorNexusClusterNfviDetails"/>.
-    /// </summary>
-    [PersistableModelProxy(typeof(UnknownNfviEntry))]
-    public abstract partial class NfviEntry : IJsonModel<NfviEntry>
+    /// <summary> The nfvi details. </summary>
+    public partial class NfviSiteDetails : IJsonModel<NfviSiteDetails>
     {
-        /// <summary> Initializes a new instance of <see cref="NfviEntry"/> for deserialization. </summary>
-        internal NfviEntry()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual NfviEntry PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual NfviSiteDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NfviEntry>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NfviSiteDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeNfviEntry(document.RootElement, options);
+                        return DeserializeNfviSiteDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NfviEntry)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NfviSiteDetails)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NfviEntry>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NfviSiteDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerHybridNetworkContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(NfviEntry)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NfviSiteDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<NfviEntry>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<NfviSiteDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        NfviEntry IPersistableModel<NfviEntry>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        NfviSiteDetails IPersistableModel<NfviSiteDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<NfviEntry>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NfviSiteDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<NfviEntry>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NfviSiteDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -77,18 +69,21 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NfviEntry>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NfviSiteDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NfviEntry)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NfviSiteDetails)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            writer.WritePropertyName("nfviType"u8);
-            writer.WriteStringValue(NfviType.ToString());
+            if (Optional.IsDefined(NfviDetailsType))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(NfviDetailsType);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -108,42 +103,50 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        NfviEntry IJsonModel<NfviEntry>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        NfviSiteDetails IJsonModel<NfviSiteDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual NfviEntry JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual NfviSiteDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NfviEntry>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NfviSiteDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NfviEntry)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NfviSiteDetails)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeNfviEntry(document.RootElement, options);
+            return DeserializeNfviSiteDetails(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static NfviEntry DeserializeNfviEntry(JsonElement element, ModelReaderWriterOptions options)
+        internal static NfviSiteDetails DeserializeNfviSiteDetails(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            if (element.TryGetProperty("nfviType"u8, out JsonElement discriminator))
+            string name = default;
+            string nfviDetailsType = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                switch (discriminator.GetString())
+                if (prop.NameEquals("name"u8))
                 {
-                    case "AzureCore":
-                        return AzureCoreNfviDetails.DeserializeAzureCoreNfviDetails(element, options);
-                    case "AzureArcKubernetes":
-                        return AzureArcK8SClusterNfviDetails.DeserializeAzureArcK8SClusterNfviDetails(element, options);
-                    case "AzureOperatorNexus":
-                        return AzureOperatorNexusClusterNfviDetails.DeserializeAzureOperatorNexusClusterNfviDetails(element, options);
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    nfviDetailsType = prop.Value.GetString();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return UnknownNfviEntry.DeserializeUnknownNfviEntry(element, options);
+            return new NfviSiteDetails(name, nfviDetailsType, additionalBinaryDataProperties);
         }
     }
 }

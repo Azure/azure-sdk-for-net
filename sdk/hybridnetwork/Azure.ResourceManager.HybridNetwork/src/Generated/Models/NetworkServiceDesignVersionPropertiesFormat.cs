@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         public NetworkServiceDesignVersionPropertiesFormat()
         {
             ReferencedConfigurationGroupSchemas = new ChangeTrackingDictionary<string, ReferencedResourceById>();
-            NfvisFromSite = new ChangeTrackingDictionary<string, NfviDetails>();
+            NfvisFromSite = new ChangeTrackingDictionary<string, NfviSiteDetails>();
             ResourceElementTemplates = new ChangeTrackingList<ResourceElementTemplate>();
         }
 
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="nfvisFromSite"> The nfvis from the site. </param>
         /// <param name="resourceElementTemplates"> List of resource element template. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkServiceDesignVersionPropertiesFormat(ProvisioningState? provisioningState, VersionState? versionState, string description, IDictionary<string, ReferencedResourceById> referencedConfigurationGroupSchemas, IDictionary<string, NfviDetails> nfvisFromSite, IList<ResourceElementTemplate> resourceElementTemplates, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkServiceDesignVersionPropertiesFormat(ProvisioningState? provisioningState, VersionState? versionState, string description, IDictionary<string, ReferencedResourceById> referencedConfigurationGroupSchemas, IDictionary<string, NfviSiteDetails> nfvisFromSite, IList<ResourceElementTemplate> resourceElementTemplates, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             VersionState = versionState;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         public IDictionary<string, ReferencedResourceById> ReferencedConfigurationGroupSchemas { get; }
 
         /// <summary> The nfvis from the site. </summary>
-        public IDictionary<string, NfviDetails> NfvisFromSite { get; }
+        public IDictionary<string, NfviSiteDetails> NfvisFromSite { get; }
 
         /// <summary> List of resource element template. </summary>
         public IList<ResourceElementTemplate> ResourceElementTemplates { get; }

@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             VersionState? versionState = default;
             string description = default;
             IDictionary<string, ReferencedResourceById> referencedConfigurationGroupSchemas = default;
-            IDictionary<string, NfviDetails> nfvisFromSite = default;
+            IDictionary<string, NfviSiteDetails> nfvisFromSite = default;
             IList<ResourceElementTemplate> resourceElementTemplates = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -215,10 +215,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    Dictionary<string, NfviDetails> dictionary = new Dictionary<string, NfviDetails>();
+                    Dictionary<string, NfviSiteDetails> dictionary = new Dictionary<string, NfviSiteDetails>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(prop0.Name, NfviDetails.DeserializeNfviDetails(prop0.Value, options));
+                        dictionary.Add(prop0.Name, NfviSiteDetails.DeserializeNfviSiteDetails(prop0.Value, options));
                     }
                     nfvisFromSite = dictionary;
                     continue;
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 versionState,
                 description,
                 referencedConfigurationGroupSchemas ?? new ChangeTrackingDictionary<string, ReferencedResourceById>(),
-                nfvisFromSite ?? new ChangeTrackingDictionary<string, NfviDetails>(),
+                nfvisFromSite ?? new ChangeTrackingDictionary<string, NfviSiteDetails>(),
                 resourceElementTemplates ?? new ChangeTrackingList<ResourceElementTemplate>(),
                 additionalBinaryDataProperties);
         }

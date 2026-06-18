@@ -7,15 +7,23 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.ResourceManager.HybridNetwork;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> The nfvi details. </summary>
-    public partial class NfviDetails : IJsonModel<NfviDetails>
+    /// <summary>
+    /// The NFVI object.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureCoreNfviDetails"/>, <see cref="AzureArcK8SClusterNfviDetails"/>, and <see cref="AzureOperatorNexusClusterNfviDetails"/>.
+    /// </summary>
+    [PersistableModelProxy(typeof(UnknownNfviDetails))]
+    public abstract partial class NfviDetails : IJsonModel<NfviDetails>
     {
+        /// <summary> Initializes a new instance of <see cref="NfviDetails"/> for deserialization. </summary>
+        internal NfviDetails()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual NfviDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -79,11 +87,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(NfviDetailsType))
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(NfviDetailsType);
-            }
+            writer.WritePropertyName("nfviType"u8);
+            writer.WriteStringValue(NfviType.ToString());
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -126,27 +131,19 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            string name = default;
-            string nfviDetailsType = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            if (element.TryGetProperty("nfviType"u8, out JsonElement discriminator))
             {
-                if (prop.NameEquals("name"u8))
+                switch (discriminator.GetString())
                 {
-                    name = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("type"u8))
-                {
-                    nfviDetailsType = prop.Value.GetString();
-                    continue;
-                }
-                if (options.Format != "W")
-                {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    case "AzureCore":
+                        return AzureCoreNfviDetails.DeserializeAzureCoreNfviDetails(element, options);
+                    case "AzureArcKubernetes":
+                        return AzureArcK8SClusterNfviDetails.DeserializeAzureArcK8SClusterNfviDetails(element, options);
+                    case "AzureOperatorNexus":
+                        return AzureOperatorNexusClusterNfviDetails.DeserializeAzureOperatorNexusClusterNfviDetails(element, options);
                 }
             }
-            return new NfviDetails(name, nfviDetailsType, additionalBinaryDataProperties);
+            return UnknownNfviDetails.DeserializeUnknownNfviDetails(element, options);
         }
     }
 }

@@ -14,11 +14,11 @@ using Azure.ResourceManager.HybridNetwork;
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary> The AzureArcK8sCluster NFVI detail. </summary>
-    public partial class AzureArcK8SClusterNfviDetails : NfviEntry, IJsonModel<AzureArcK8SClusterNfviDetails>
+    public partial class AzureArcK8SClusterNfviDetails : NfviDetails, IJsonModel<AzureArcK8SClusterNfviDetails>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override NfviEntry PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override NfviDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AzureArcK8SClusterNfviDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override NfviEntry JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override NfviDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AzureArcK8SClusterNfviDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
