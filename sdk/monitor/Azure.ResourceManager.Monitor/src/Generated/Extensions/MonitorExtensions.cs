@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.Monitor
         /// <b>Lists the metric values for a resource</b>. This API used the [default ARM throttling limits](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/request-limits-and-throttling).
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMonitorArmClient.GetAllAsync(ResourceIdentifier, string, string, string, string, int?, string, string, MonitorResultType?, string, bool?, bool?, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorArmClient.GetMonitorMetricsAsync(ResourceIdentifier, string, string, string, string, int?, string, string, MonitorResultType?, string, bool?, bool?, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -489,18 +489,18 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="rollupby"> Dimension name(s) to rollup results by. For example if you only want to see metric values with a filter like 'City eq Seattle or City eq Tacoma' but don't want to see separate values for each city, you can specify 'RollUpBy=City' to see the results for Seattle and Tacoma rolled up into one timeseries. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        public static async Task<Response<Models.Response>> GetAllAsync(this ArmClient client, ResourceIdentifier scope, string timespan = default, string interval = default, string metricnames = default, string aggregation = default, int? top = default, string @orderby = default, string filter = default, MonitorResultType? resultType = default, string metricnamespace = default, bool? autoAdjustTimegrain = default, bool? validateDimensions = default, string rollupby = default, CancellationToken cancellationToken = default)
+        public static async Task<Response<Models.Response>> GetMonitorMetricsAsync(this ArmClient client, ResourceIdentifier scope, string timespan = default, string interval = default, string metricnames = default, string aggregation = default, int? top = default, string @orderby = default, string filter = default, MonitorResultType? resultType = default, string metricnamespace = default, bool? autoAdjustTimegrain = default, bool? validateDimensions = default, string rollupby = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return await GetMockableMonitorArmClient(client).GetAllAsync(scope, timespan, interval, metricnames, aggregation, top, @orderby, filter, resultType, metricnamespace, autoAdjustTimegrain, validateDimensions, rollupby, cancellationToken).ConfigureAwait(false);
+            return await GetMockableMonitorArmClient(client).GetMonitorMetricsAsync(scope, timespan, interval, metricnames, aggregation, top, @orderby, filter, resultType, metricnamespace, autoAdjustTimegrain, validateDimensions, rollupby, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// <b>Lists the metric values for a resource</b>. This API used the [default ARM throttling limits](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/request-limits-and-throttling).
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMonitorArmClient.GetAll(ResourceIdentifier, string, string, string, string, int?, string, string, MonitorResultType?, string, bool?, bool?, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorArmClient.GetMonitorMetrics(ResourceIdentifier, string, string, string, string, int?, string, string, MonitorResultType?, string, bool?, bool?, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -533,11 +533,11 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="rollupby"> Dimension name(s) to rollup results by. For example if you only want to see metric values with a filter like 'City eq Seattle or City eq Tacoma' but don't want to see separate values for each city, you can specify 'RollUpBy=City' to see the results for Seattle and Tacoma rolled up into one timeseries. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        public static Response<Models.Response> GetAll(this ArmClient client, ResourceIdentifier scope, string timespan = default, string interval = default, string metricnames = default, string aggregation = default, int? top = default, string @orderby = default, string filter = default, MonitorResultType? resultType = default, string metricnamespace = default, bool? autoAdjustTimegrain = default, bool? validateDimensions = default, string rollupby = default, CancellationToken cancellationToken = default)
+        public static Response<Models.Response> GetMonitorMetrics(this ArmClient client, ResourceIdentifier scope, string timespan = default, string interval = default, string metricnames = default, string aggregation = default, int? top = default, string @orderby = default, string filter = default, MonitorResultType? resultType = default, string metricnamespace = default, bool? autoAdjustTimegrain = default, bool? validateDimensions = default, string rollupby = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableMonitorArmClient(client).GetAll(scope, timespan, interval, metricnames, aggregation, top, @orderby, filter, resultType, metricnamespace, autoAdjustTimegrain, validateDimensions, rollupby, cancellationToken);
+            return GetMockableMonitorArmClient(client).GetMonitorMetrics(scope, timespan, interval, metricnames, aggregation, top, @orderby, filter, resultType, metricnamespace, autoAdjustTimegrain, validateDimensions, rollupby, cancellationToken);
         }
 
         /// <summary>

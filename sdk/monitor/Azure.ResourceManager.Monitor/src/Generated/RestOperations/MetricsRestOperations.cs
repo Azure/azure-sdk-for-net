@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Monitor
             return message;
         }
 
-        internal HttpMessage CreateGetAllRequest(string resourceUri, string timespan, string interval, string metricnames, string aggregation, int? top, string @orderby, string filter, string resultType, string metricnamespace, bool? autoAdjustTimegrain, bool? validateDimensions, string rollupby, RequestContext context)
+        internal HttpMessage CreateGetMonitorMetricsRequest(string resourceUri, string timespan, string interval, string metricnames, string aggregation, int? top, string @orderby, string filter, string resultType, string metricnamespace, bool? autoAdjustTimegrain, bool? validateDimensions, string rollupby, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
