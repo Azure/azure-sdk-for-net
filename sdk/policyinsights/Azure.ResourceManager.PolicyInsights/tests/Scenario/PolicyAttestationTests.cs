@@ -50,6 +50,7 @@ namespace Azure.ResourceManager.PolicyInsights.Tests
         }
 
         [RecordedTest]
+        [Ignore("not authorized for running live re-record")]
         public async Task Attestation_SubscriptionCrud()
         {
             // Create a custom definition
@@ -89,6 +90,7 @@ namespace Azure.ResourceManager.PolicyInsights.Tests
         }
 
         [RecordedTest]
+        [Ignore("not authorized for running live re-record")]
         public async Task Attestation_ResourceGroupCrud()
         {
             // Create a custom definition

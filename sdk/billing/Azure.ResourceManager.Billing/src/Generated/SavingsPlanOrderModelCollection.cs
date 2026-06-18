@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Billing
 {
@@ -24,70 +25,76 @@ namespace Azure.ResourceManager.Billing
     /// </summary>
     public partial class SavingsPlanOrderModelCollection : ArmCollection, IEnumerable<SavingsPlanOrderModelResource>, IAsyncEnumerable<SavingsPlanOrderModelResource>
     {
-        private readonly ClientDiagnostics _savingsPlanOrderModelSavingsPlanOrdersClientDiagnostics;
-        private readonly SavingsPlanOrdersRestOperations _savingsPlanOrderModelSavingsPlanOrdersRestClient;
+        private readonly ClientDiagnostics _savingsPlanOrdersClientDiagnostics;
+        private readonly SavingsPlanOrders _savingsPlanOrdersRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="SavingsPlanOrderModelCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of SavingsPlanOrderModelCollection for mocking. </summary>
         protected SavingsPlanOrderModelCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SavingsPlanOrderModelCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SavingsPlanOrderModelCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SavingsPlanOrderModelCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _savingsPlanOrderModelSavingsPlanOrdersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", SavingsPlanOrderModelResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(SavingsPlanOrderModelResource.ResourceType, out string savingsPlanOrderModelSavingsPlanOrdersApiVersion);
-            _savingsPlanOrderModelSavingsPlanOrdersRestClient = new SavingsPlanOrdersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, savingsPlanOrderModelSavingsPlanOrdersApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(SavingsPlanOrderModelResource.ResourceType, out string savingsPlanOrderModelApiVersion);
+            _savingsPlanOrdersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", SavingsPlanOrderModelResource.ResourceType.Namespace, Diagnostics);
+            _savingsPlanOrdersRestClient = new SavingsPlanOrders(_savingsPlanOrdersClientDiagnostics, Pipeline, Endpoint, savingsPlanOrderModelApiVersion ?? "2024-04-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != BillingAccountResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, BillingAccountResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, BillingAccountResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Get a savings plan order by billing account.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/savingsPlanOrders/{savingsPlanOrderId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/savingsPlanOrders/{savingsPlanOrderId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SavingsPlanOrders_GetByBillingAccount</description>
+        /// <term> Operation Id. </term>
+        /// <description> SavingsPlanOrderModels_GetByBillingAccount. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SavingsPlanOrderModelResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="savingsPlanOrderId"> Order ID of the savings plan. </param>
         /// <param name="expand"> May be used to expand the planInformation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/> is null. </exception>
-        public virtual async Task<Response<SavingsPlanOrderModelResource>> GetAsync(string savingsPlanOrderId, string expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<SavingsPlanOrderModelResource>> GetAsync(string savingsPlanOrderId, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
 
-            using var scope = _savingsPlanOrderModelSavingsPlanOrdersClientDiagnostics.CreateScope("SavingsPlanOrderModelCollection.Get");
+            using DiagnosticScope scope = _savingsPlanOrdersClientDiagnostics.CreateScope("SavingsPlanOrderModelCollection.Get");
             scope.Start();
             try
             {
-                var response = await _savingsPlanOrderModelSavingsPlanOrdersRestClient.GetByBillingAccountAsync(Id.Name, savingsPlanOrderId, expand, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _savingsPlanOrdersRestClient.CreateGetByBillingAccountRequest(Id.Name, savingsPlanOrderId, expand, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SavingsPlanOrderModelData> response = Response.FromValue(SavingsPlanOrderModelData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SavingsPlanOrderModelResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -101,39 +108,43 @@ namespace Azure.ResourceManager.Billing
         /// Get a savings plan order by billing account.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/savingsPlanOrders/{savingsPlanOrderId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/savingsPlanOrders/{savingsPlanOrderId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SavingsPlanOrders_GetByBillingAccount</description>
+        /// <term> Operation Id. </term>
+        /// <description> SavingsPlanOrderModels_GetByBillingAccount. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SavingsPlanOrderModelResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="savingsPlanOrderId"> Order ID of the savings plan. </param>
         /// <param name="expand"> May be used to expand the planInformation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/> is null. </exception>
-        public virtual Response<SavingsPlanOrderModelResource> Get(string savingsPlanOrderId, string expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<SavingsPlanOrderModelResource> Get(string savingsPlanOrderId, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
 
-            using var scope = _savingsPlanOrderModelSavingsPlanOrdersClientDiagnostics.CreateScope("SavingsPlanOrderModelCollection.Get");
+            using DiagnosticScope scope = _savingsPlanOrdersClientDiagnostics.CreateScope("SavingsPlanOrderModelCollection.Get");
             scope.Start();
             try
             {
-                var response = _savingsPlanOrderModelSavingsPlanOrdersRestClient.GetByBillingAccount(Id.Name, savingsPlanOrderId, expand, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _savingsPlanOrdersRestClient.CreateGetByBillingAccountRequest(Id.Name, savingsPlanOrderId, expand, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SavingsPlanOrderModelData> response = Response.FromValue(SavingsPlanOrderModelData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SavingsPlanOrderModelResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -147,53 +158,16 @@ namespace Azure.ResourceManager.Billing
         /// List all Savings plan orders by billing account.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/savingsPlanOrders</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/savingsPlanOrders. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SavingsPlanOrders_ListByBillingAccount</description>
+        /// <term> Operation Id. </term>
+        /// <description> SavingsPlanOrderModels_ListByBillingAccount. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SavingsPlanOrderModelResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
-        /// <param name="orderBy"> The orderby query option allows clients to request resources in a particular order. </param>
-        /// <param name="skiptoken"> The number of savings plans to skip from the list before returning results. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SavingsPlanOrderModelResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SavingsPlanOrderModelResource> GetAllAsync(string filter = null, string orderBy = null, float? skiptoken = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _savingsPlanOrderModelSavingsPlanOrdersRestClient.CreateListByBillingAccountRequest(Id.Name, filter, orderBy, skiptoken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _savingsPlanOrderModelSavingsPlanOrdersRestClient.CreateListByBillingAccountNextPageRequest(nextLink, Id.Name, filter, orderBy, skiptoken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SavingsPlanOrderModelResource(Client, SavingsPlanOrderModelData.DeserializeSavingsPlanOrderModelData(e)), _savingsPlanOrderModelSavingsPlanOrdersClientDiagnostics, Pipeline, "SavingsPlanOrderModelCollection.GetAll", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List all Savings plan orders by billing account.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/savingsPlanOrders</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SavingsPlanOrders_ListByBillingAccount</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SavingsPlanOrderModelResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -202,48 +176,109 @@ namespace Azure.ResourceManager.Billing
         /// <param name="skiptoken"> The number of savings plans to skip from the list before returning results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SavingsPlanOrderModelResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SavingsPlanOrderModelResource> GetAll(string filter = null, string orderBy = null, float? skiptoken = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SavingsPlanOrderModelResource> GetAllAsync(string filter = default, string orderBy = default, float? skiptoken = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _savingsPlanOrderModelSavingsPlanOrdersRestClient.CreateListByBillingAccountRequest(Id.Name, filter, orderBy, skiptoken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _savingsPlanOrderModelSavingsPlanOrdersRestClient.CreateListByBillingAccountNextPageRequest(nextLink, Id.Name, filter, orderBy, skiptoken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SavingsPlanOrderModelResource(Client, SavingsPlanOrderModelData.DeserializeSavingsPlanOrderModelData(e)), _savingsPlanOrderModelSavingsPlanOrdersClientDiagnostics, Pipeline, "SavingsPlanOrderModelCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<SavingsPlanOrderModelData, SavingsPlanOrderModelResource>(new SavingsPlanOrdersGetByBillingAccountAsyncCollectionResultOfT(
+                _savingsPlanOrdersRestClient,
+                Id.Name,
+                filter,
+                orderBy,
+                skiptoken,
+                context,
+                "SavingsPlanOrderModelCollection.GetAll"), data => new SavingsPlanOrderModelResource(Client, data));
+        }
+
+        /// <summary>
+        /// List all Savings plan orders by billing account.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/savingsPlanOrders. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SavingsPlanOrderModels_ListByBillingAccount. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
+        /// <param name="orderBy"> The orderby query option allows clients to request resources in a particular order. </param>
+        /// <param name="skiptoken"> The number of savings plans to skip from the list before returning results. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SavingsPlanOrderModelResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SavingsPlanOrderModelResource> GetAll(string filter = default, string orderBy = default, float? skiptoken = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<SavingsPlanOrderModelData, SavingsPlanOrderModelResource>(new SavingsPlanOrdersGetByBillingAccountCollectionResultOfT(
+                _savingsPlanOrdersRestClient,
+                Id.Name,
+                filter,
+                orderBy,
+                skiptoken,
+                context,
+                "SavingsPlanOrderModelCollection.GetAll"), data => new SavingsPlanOrderModelResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/savingsPlanOrders/{savingsPlanOrderId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/savingsPlanOrders/{savingsPlanOrderId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SavingsPlanOrders_GetByBillingAccount</description>
+        /// <term> Operation Id. </term>
+        /// <description> SavingsPlanOrderModels_GetByBillingAccount. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SavingsPlanOrderModelResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="savingsPlanOrderId"> Order ID of the savings plan. </param>
         /// <param name="expand"> May be used to expand the planInformation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/> is null. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string savingsPlanOrderId, string expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string savingsPlanOrderId, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
 
-            using var scope = _savingsPlanOrderModelSavingsPlanOrdersClientDiagnostics.CreateScope("SavingsPlanOrderModelCollection.Exists");
+            using DiagnosticScope scope = _savingsPlanOrdersClientDiagnostics.CreateScope("SavingsPlanOrderModelCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _savingsPlanOrderModelSavingsPlanOrdersRestClient.GetByBillingAccountAsync(Id.Name, savingsPlanOrderId, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _savingsPlanOrdersRestClient.CreateGetByBillingAccountRequest(Id.Name, savingsPlanOrderId, expand, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SavingsPlanOrderModelData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SavingsPlanOrderModelData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SavingsPlanOrderModelData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -257,37 +292,51 @@ namespace Azure.ResourceManager.Billing
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/savingsPlanOrders/{savingsPlanOrderId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/savingsPlanOrders/{savingsPlanOrderId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SavingsPlanOrders_GetByBillingAccount</description>
+        /// <term> Operation Id. </term>
+        /// <description> SavingsPlanOrderModels_GetByBillingAccount. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SavingsPlanOrderModelResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="savingsPlanOrderId"> Order ID of the savings plan. </param>
         /// <param name="expand"> May be used to expand the planInformation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/> is null. </exception>
-        public virtual Response<bool> Exists(string savingsPlanOrderId, string expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<bool> Exists(string savingsPlanOrderId, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
 
-            using var scope = _savingsPlanOrderModelSavingsPlanOrdersClientDiagnostics.CreateScope("SavingsPlanOrderModelCollection.Exists");
+            using DiagnosticScope scope = _savingsPlanOrdersClientDiagnostics.CreateScope("SavingsPlanOrderModelCollection.Exists");
             scope.Start();
             try
             {
-                var response = _savingsPlanOrderModelSavingsPlanOrdersRestClient.GetByBillingAccount(Id.Name, savingsPlanOrderId, expand, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _savingsPlanOrdersRestClient.CreateGetByBillingAccountRequest(Id.Name, savingsPlanOrderId, expand, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SavingsPlanOrderModelData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SavingsPlanOrderModelData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SavingsPlanOrderModelData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -301,39 +350,55 @@ namespace Azure.ResourceManager.Billing
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/savingsPlanOrders/{savingsPlanOrderId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/savingsPlanOrders/{savingsPlanOrderId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SavingsPlanOrders_GetByBillingAccount</description>
+        /// <term> Operation Id. </term>
+        /// <description> SavingsPlanOrderModels_GetByBillingAccount. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SavingsPlanOrderModelResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="savingsPlanOrderId"> Order ID of the savings plan. </param>
         /// <param name="expand"> May be used to expand the planInformation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/> is null. </exception>
-        public virtual async Task<NullableResponse<SavingsPlanOrderModelResource>> GetIfExistsAsync(string savingsPlanOrderId, string expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<NullableResponse<SavingsPlanOrderModelResource>> GetIfExistsAsync(string savingsPlanOrderId, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
 
-            using var scope = _savingsPlanOrderModelSavingsPlanOrdersClientDiagnostics.CreateScope("SavingsPlanOrderModelCollection.GetIfExists");
+            using DiagnosticScope scope = _savingsPlanOrdersClientDiagnostics.CreateScope("SavingsPlanOrderModelCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _savingsPlanOrderModelSavingsPlanOrdersRestClient.GetByBillingAccountAsync(Id.Name, savingsPlanOrderId, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _savingsPlanOrdersRestClient.CreateGetByBillingAccountRequest(Id.Name, savingsPlanOrderId, expand, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SavingsPlanOrderModelData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SavingsPlanOrderModelData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SavingsPlanOrderModelData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SavingsPlanOrderModelResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SavingsPlanOrderModelResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -347,39 +412,55 @@ namespace Azure.ResourceManager.Billing
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/savingsPlanOrders/{savingsPlanOrderId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/savingsPlanOrders/{savingsPlanOrderId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SavingsPlanOrders_GetByBillingAccount</description>
+        /// <term> Operation Id. </term>
+        /// <description> SavingsPlanOrderModels_GetByBillingAccount. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SavingsPlanOrderModelResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="savingsPlanOrderId"> Order ID of the savings plan. </param>
         /// <param name="expand"> May be used to expand the planInformation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/> is null. </exception>
-        public virtual NullableResponse<SavingsPlanOrderModelResource> GetIfExists(string savingsPlanOrderId, string expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="savingsPlanOrderId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual NullableResponse<SavingsPlanOrderModelResource> GetIfExists(string savingsPlanOrderId, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(savingsPlanOrderId, nameof(savingsPlanOrderId));
 
-            using var scope = _savingsPlanOrderModelSavingsPlanOrdersClientDiagnostics.CreateScope("SavingsPlanOrderModelCollection.GetIfExists");
+            using DiagnosticScope scope = _savingsPlanOrdersClientDiagnostics.CreateScope("SavingsPlanOrderModelCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _savingsPlanOrderModelSavingsPlanOrdersRestClient.GetByBillingAccount(Id.Name, savingsPlanOrderId, expand, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _savingsPlanOrdersRestClient.CreateGetByBillingAccountRequest(Id.Name, savingsPlanOrderId, expand, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SavingsPlanOrderModelData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SavingsPlanOrderModelData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SavingsPlanOrderModelData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SavingsPlanOrderModelResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SavingsPlanOrderModelResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -399,6 +480,7 @@ namespace Azure.ResourceManager.Billing
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<SavingsPlanOrderModelResource> IAsyncEnumerable<SavingsPlanOrderModelResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

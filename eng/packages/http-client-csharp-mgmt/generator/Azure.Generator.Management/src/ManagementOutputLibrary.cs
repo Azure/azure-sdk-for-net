@@ -446,10 +446,7 @@ namespace Azure.Generator.Management
         internal bool TryGetResourceClientProvider(CSharpType resourceDataType, [MaybeNullWhen(false)] out ResourceClientProvider resourceClientProvider)
         {
             resourceClientProvider = null;
-            if (!GetResourceDataTypes().TryGetValue(resourceDataType, out var providers))
-            {
-                return false;
-            }
+            var providers = ResourceProviders.Where(p => p.IsResourceDataType(resourceDataType)).ToList();
 
             // Only wrap when the data type is exclusively used by one resource.
             // When multiple resources share the same data type, wrapping would pick an arbitrary resource,

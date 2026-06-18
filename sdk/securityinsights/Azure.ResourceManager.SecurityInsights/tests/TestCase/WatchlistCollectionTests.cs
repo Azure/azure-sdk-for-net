@@ -71,9 +71,9 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
             var sOS = await GetSentinelOnboardingStateResourceAsync(operationalInsights);
             //1.CreateOrUpdate
             var collection = GetWatchlistCollectionAsync(operationalInsights);
-            var name = Recording.GenerateAssetName("Watchlists-");
-            var name2 = Recording.GenerateAssetName("Watchlists-");
-            var name3 = Recording.GenerateAssetName("Watchlists-");
+            var name = GenerateAssetNameFromRecording("Watchlists-", "watchlists");
+            var name2 = GenerateAssetNameFromRecording("Watchlists-", "watchlists");
+            var name3 = GenerateAssetNameFromRecording("Watchlists-", "watchlists");
             var input = ResourceDataHelpers.GetWatchlistData();
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
             SecurityInsightsWatchlistResource watch1 = lro.Value;

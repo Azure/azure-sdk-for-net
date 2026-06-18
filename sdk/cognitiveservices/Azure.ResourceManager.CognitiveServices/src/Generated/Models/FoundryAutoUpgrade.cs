@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Initializes a new instance of <see cref="FoundryAutoUpgrade"/>. </summary>
         /// <param name="mode"> Gets or sets the auto-upgrade mode. </param>
-        /// <param name="plannedByMicrosoft"> Gets or sets a value indicating whether the auto-upgrade is planned by Microsoft. </param>
+        /// <param name="isPlannedByMicrosoft"> Gets or sets a value indicating whether the auto-upgrade is planned by Microsoft. </param>
         /// <param name="statusReason"> Gets or sets the status reason for the auto-upgrade configuration. </param>
         /// <param name="scheduledOn"> Gets or sets the scheduled time for the auto-upgrade. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FoundryAutoUpgrade(FoundryAutoUpgradeMode? mode, bool? plannedByMicrosoft, string statusReason, DateTimeOffset? scheduledOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FoundryAutoUpgrade(FoundryAutoUpgradeMode? mode, bool? isPlannedByMicrosoft, string statusReason, DateTimeOffset? scheduledOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Mode = mode;
-            PlannedByMicrosoft = plannedByMicrosoft;
+            IsPlannedByMicrosoft = isPlannedByMicrosoft;
             StatusReason = statusReason;
             ScheduledOn = scheduledOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Gets or sets a value indicating whether the auto-upgrade is planned by Microsoft. </summary>
         [WirePath("plannedByMicrosoft")]
-        public bool? PlannedByMicrosoft { get; set; }
+        public bool? IsPlannedByMicrosoft { get; set; }
 
         /// <summary> Gets or sets the status reason for the auto-upgrade configuration. </summary>
         [WirePath("statusReason")]

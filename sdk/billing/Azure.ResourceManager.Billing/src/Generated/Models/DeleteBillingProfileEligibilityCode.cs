@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -14,59 +15,92 @@ namespace Azure.ResourceManager.Billing.Models
     public readonly partial struct DeleteBillingProfileEligibilityCode : IEquatable<DeleteBillingProfileEligibilityCode>
     {
         private readonly string _value;
+        /// <summary> None. </summary>
+        private const string NoneValue = "None";
+        /// <summary> ActiveCredits. </summary>
+        private const string ActiveCreditsValue = "ActiveCredits";
+        /// <summary> ActiveCreditCard. </summary>
+        private const string ActiveCreditCardValue = "ActiveCreditCard";
+        /// <summary> LastBillingProfile. </summary>
+        private const string LastBillingProfileValue = "LastBillingProfile";
+        /// <summary> NotSupported. </summary>
+        private const string NotSupportedValue = "NotSupported";
+        /// <summary> OutstandingCharges. </summary>
+        private const string OutstandingChargesValue = "OutstandingCharges";
+        /// <summary> PendingCharges. </summary>
+        private const string PendingChargesValue = "PendingCharges";
+        /// <summary> ReservedInstances. </summary>
+        private const string ReservedInstancesValue = "ReservedInstances";
+        /// <summary> ActiveBillingSubscriptions. </summary>
+        private const string ActiveBillingSubscriptionsValue = "ActiveBillingSubscriptions";
 
         /// <summary> Initializes a new instance of <see cref="DeleteBillingProfileEligibilityCode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DeleteBillingProfileEligibilityCode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "None";
-        private const string ActiveCreditsValue = "ActiveCredits";
-        private const string ActiveCreditCardValue = "ActiveCreditCard";
-        private const string LastBillingProfileValue = "LastBillingProfile";
-        private const string NotSupportedValue = "NotSupported";
-        private const string OutstandingChargesValue = "OutstandingCharges";
-        private const string PendingChargesValue = "PendingCharges";
-        private const string ReservedInstancesValue = "ReservedInstances";
-        private const string ActiveBillingSubscriptionsValue = "ActiveBillingSubscriptions";
+            _value = value;
+        }
 
         /// <summary> None. </summary>
         public static DeleteBillingProfileEligibilityCode None { get; } = new DeleteBillingProfileEligibilityCode(NoneValue);
+
         /// <summary> ActiveCredits. </summary>
         public static DeleteBillingProfileEligibilityCode ActiveCredits { get; } = new DeleteBillingProfileEligibilityCode(ActiveCreditsValue);
+
         /// <summary> ActiveCreditCard. </summary>
         public static DeleteBillingProfileEligibilityCode ActiveCreditCard { get; } = new DeleteBillingProfileEligibilityCode(ActiveCreditCardValue);
+
         /// <summary> LastBillingProfile. </summary>
         public static DeleteBillingProfileEligibilityCode LastBillingProfile { get; } = new DeleteBillingProfileEligibilityCode(LastBillingProfileValue);
+
         /// <summary> NotSupported. </summary>
         public static DeleteBillingProfileEligibilityCode NotSupported { get; } = new DeleteBillingProfileEligibilityCode(NotSupportedValue);
+
         /// <summary> OutstandingCharges. </summary>
         public static DeleteBillingProfileEligibilityCode OutstandingCharges { get; } = new DeleteBillingProfileEligibilityCode(OutstandingChargesValue);
+
         /// <summary> PendingCharges. </summary>
         public static DeleteBillingProfileEligibilityCode PendingCharges { get; } = new DeleteBillingProfileEligibilityCode(PendingChargesValue);
+
         /// <summary> ReservedInstances. </summary>
         public static DeleteBillingProfileEligibilityCode ReservedInstances { get; } = new DeleteBillingProfileEligibilityCode(ReservedInstancesValue);
+
         /// <summary> ActiveBillingSubscriptions. </summary>
         public static DeleteBillingProfileEligibilityCode ActiveBillingSubscriptions { get; } = new DeleteBillingProfileEligibilityCode(ActiveBillingSubscriptionsValue);
+
         /// <summary> Determines if two <see cref="DeleteBillingProfileEligibilityCode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DeleteBillingProfileEligibilityCode left, DeleteBillingProfileEligibilityCode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DeleteBillingProfileEligibilityCode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DeleteBillingProfileEligibilityCode left, DeleteBillingProfileEligibilityCode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DeleteBillingProfileEligibilityCode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DeleteBillingProfileEligibilityCode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DeleteBillingProfileEligibilityCode(string value) => new DeleteBillingProfileEligibilityCode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DeleteBillingProfileEligibilityCode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DeleteBillingProfileEligibilityCode?(string value) => value == null ? null : new DeleteBillingProfileEligibilityCode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DeleteBillingProfileEligibilityCode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DeleteBillingProfileEligibilityCode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -14,53 +15,82 @@ namespace Azure.ResourceManager.Billing.Models
     public readonly partial struct RefundStatus : IEquatable<RefundStatus>
     {
         private readonly string _value;
+        /// <summary> Other. </summary>
+        private const string OtherValue = "Other";
+        /// <summary> Pending. </summary>
+        private const string PendingValue = "Pending";
+        /// <summary> Approved. </summary>
+        private const string ApprovedValue = "Approved";
+        /// <summary> Declined. </summary>
+        private const string DeclinedValue = "Declined";
+        /// <summary> Cancelled. </summary>
+        private const string CancelledValue = "Cancelled";
+        /// <summary> Completed. </summary>
+        private const string CompletedValue = "Completed";
+        /// <summary> Expired. </summary>
+        private const string ExpiredValue = "Expired";
 
         /// <summary> Initializes a new instance of <see cref="RefundStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RefundStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string OtherValue = "Other";
-        private const string PendingValue = "Pending";
-        private const string ApprovedValue = "Approved";
-        private const string DeclinedValue = "Declined";
-        private const string CancelledValue = "Cancelled";
-        private const string CompletedValue = "Completed";
-        private const string ExpiredValue = "Expired";
+            _value = value;
+        }
 
         /// <summary> Other. </summary>
         public static RefundStatus Other { get; } = new RefundStatus(OtherValue);
+
         /// <summary> Pending. </summary>
         public static RefundStatus Pending { get; } = new RefundStatus(PendingValue);
+
         /// <summary> Approved. </summary>
         public static RefundStatus Approved { get; } = new RefundStatus(ApprovedValue);
+
         /// <summary> Declined. </summary>
         public static RefundStatus Declined { get; } = new RefundStatus(DeclinedValue);
+
         /// <summary> Cancelled. </summary>
         public static RefundStatus Cancelled { get; } = new RefundStatus(CancelledValue);
+
         /// <summary> Completed. </summary>
         public static RefundStatus Completed { get; } = new RefundStatus(CompletedValue);
+
         /// <summary> Expired. </summary>
         public static RefundStatus Expired { get; } = new RefundStatus(ExpiredValue);
+
         /// <summary> Determines if two <see cref="RefundStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RefundStatus left, RefundStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RefundStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RefundStatus left, RefundStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RefundStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RefundStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RefundStatus(string value) => new RefundStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RefundStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RefundStatus?(string value) => value == null ? null : new RefundStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RefundStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RefundStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

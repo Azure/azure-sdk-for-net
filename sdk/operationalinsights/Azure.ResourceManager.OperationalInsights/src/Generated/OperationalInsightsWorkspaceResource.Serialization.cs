@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.OperationalInsights
 {
+    /// <summary></summary>
     public partial class OperationalInsightsWorkspaceResource : IJsonModel<OperationalInsightsWorkspaceData>
     {
-        private static OperationalInsightsWorkspaceData s_dataDeserializationInstance;
-        private static OperationalInsightsWorkspaceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<OperationalInsightsWorkspaceData> s_dataDeserializationInstance;
 
+        private static IJsonModel<OperationalInsightsWorkspaceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new OperationalInsightsWorkspaceData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<OperationalInsightsWorkspaceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<OperationalInsightsWorkspaceData>)Data).Write(writer, options);
 
-        OperationalInsightsWorkspaceData IJsonModel<OperationalInsightsWorkspaceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<OperationalInsightsWorkspaceData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        OperationalInsightsWorkspaceData IJsonModel<OperationalInsightsWorkspaceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<OperationalInsightsWorkspaceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<OperationalInsightsWorkspaceData>(Data, options, AzureResourceManagerOperationalInsightsContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         OperationalInsightsWorkspaceData IPersistableModel<OperationalInsightsWorkspaceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<OperationalInsightsWorkspaceData>(data, options, AzureResourceManagerOperationalInsightsContext.Default);
 
-        string IPersistableModel<OperationalInsightsWorkspaceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<OperationalInsightsWorkspaceData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<OperationalInsightsWorkspaceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }
