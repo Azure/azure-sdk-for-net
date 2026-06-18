@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            ScanningMode? scanningMode = default;
+            DefenderForServersScanningMode? scanningMode = default;
             IDictionary<string, string> exclusionTags = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    scanningMode = new ScanningMode(prop.Value.GetString());
+                    scanningMode = new DefenderForServersScanningMode(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("exclusionTags"u8))

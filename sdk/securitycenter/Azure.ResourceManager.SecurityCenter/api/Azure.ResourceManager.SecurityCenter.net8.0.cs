@@ -5184,7 +5184,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static Azure.ResourceManager.SecurityCenter.Models.VendorReference VendorReference(string title = null, string link = null) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.Models.VmScannersAws VmScannersAws(bool? enabled = default(bool?), Azure.ResourceManager.SecurityCenter.Models.VmScannersBaseConfiguration configuration = null, string cloudRoleArn = null) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.Models.VmScannersBase VmScannersBase(bool? enabled = default(bool?), Azure.ResourceManager.SecurityCenter.Models.VmScannersBaseConfiguration configuration = null) { throw null; }
-        public static Azure.ResourceManager.SecurityCenter.Models.VmScannersBaseConfiguration VmScannersBaseConfiguration(Azure.ResourceManager.SecurityCenter.Models.ScanningMode? scanningMode = default(Azure.ResourceManager.SecurityCenter.Models.ScanningMode?), System.Collections.Generic.IDictionary<string, string> exclusionTags = null) { throw null; }
+        public static Azure.ResourceManager.SecurityCenter.Models.VmScannersBaseConfiguration VmScannersBaseConfiguration(Azure.ResourceManager.SecurityCenter.Models.DefenderForServersScanningMode? scanningMode = default(Azure.ResourceManager.SecurityCenter.Models.DefenderForServersScanningMode?), System.Collections.Generic.IDictionary<string, string> exclusionTags = null) { throw null; }
         public static Azure.ResourceManager.SecurityCenter.Models.VmScannersGcp VmScannersGcp(bool? enabled = default(bool?), Azure.ResourceManager.SecurityCenter.Models.VmScannersBaseConfiguration configuration = null) { throw null; }
     }
     public partial class AtaExternalSecuritySolution : Azure.ResourceManager.SecurityCenter.Models.ExternalSecuritySolution, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.Models.AtaExternalSecuritySolution>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.Models.AtaExternalSecuritySolution>
@@ -6869,6 +6869,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.DefenderForServersScanningMode left, Azure.ResourceManager.SecurityCenter.Models.DefenderForServersScanningMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.DefenderForServersScanningMode (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.DefenderForServersScanningMode? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.DefenderForServersScanningMode left, Azure.ResourceManager.SecurityCenter.Models.DefenderForServersScanningMode right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -9353,22 +9354,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.RuleType (string value) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.RuleType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.RuleType left, Azure.ResourceManager.SecurityCenter.Models.RuleType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ScanningMode : System.IEquatable<Azure.ResourceManager.SecurityCenter.Models.ScanningMode>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ScanningMode(string value) { throw null; }
-        public static Azure.ResourceManager.SecurityCenter.Models.ScanningMode Default { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.SecurityCenter.Models.ScanningMode other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.ScanningMode left, Azure.ResourceManager.SecurityCenter.Models.ScanningMode right) { throw null; }
-        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.ScanningMode (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.ScanningMode? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.ScanningMode left, Azure.ResourceManager.SecurityCenter.Models.ScanningMode right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -12141,7 +12126,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         public VmScannersBaseConfiguration() { }
         public System.Collections.Generic.IDictionary<string, string> ExclusionTags { get { throw null; } }
-        public Azure.ResourceManager.SecurityCenter.Models.ScanningMode? ScanningMode { get { throw null; } set { } }
+        public Azure.ResourceManager.SecurityCenter.Models.DefenderForServersScanningMode? ScanningMode { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.SecurityCenter.Models.VmScannersBaseConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.SecurityCenter.Models.VmScannersBaseConfiguration PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

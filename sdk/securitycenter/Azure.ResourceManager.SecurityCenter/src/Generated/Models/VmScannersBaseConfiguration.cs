@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="scanningMode"> The scanning mode for the VM scan. </param>
         /// <param name="exclusionTags"> Tags that indicates that a resource should not be scanned. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VmScannersBaseConfiguration(ScanningMode? scanningMode, IDictionary<string, string> exclusionTags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VmScannersBaseConfiguration(DefenderForServersScanningMode? scanningMode, IDictionary<string, string> exclusionTags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ScanningMode = scanningMode;
             ExclusionTags = exclusionTags;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> The scanning mode for the VM scan. </summary>
-        public ScanningMode? ScanningMode { get; set; }
+        public DefenderForServersScanningMode? ScanningMode { get; set; }
 
         /// <summary> Tags that indicates that a resource should not be scanned. </summary>
         public IDictionary<string, string> ExclusionTags { get; }

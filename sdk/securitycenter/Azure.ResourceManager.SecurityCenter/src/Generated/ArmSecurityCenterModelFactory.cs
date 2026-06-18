@@ -1816,7 +1816,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="scanningMode"> The scanning mode for the VM scan. </param>
         /// <param name="exclusionTags"> Tags that indicates that a resource should not be scanned. </param>
         /// <returns> A new <see cref="Models.VmScannersBaseConfiguration"/> instance for mocking. </returns>
-        public static VmScannersBaseConfiguration VmScannersBaseConfiguration(ScanningMode? scanningMode = default, IDictionary<string, string> exclusionTags = default)
+        public static VmScannersBaseConfiguration VmScannersBaseConfiguration(DefenderForServersScanningMode? scanningMode = default, IDictionary<string, string> exclusionTags = default)
         {
             exclusionTags ??= new ChangeTrackingDictionary<string, string>();
 
