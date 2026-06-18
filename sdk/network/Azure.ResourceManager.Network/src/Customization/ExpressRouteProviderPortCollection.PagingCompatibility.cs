@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Network
     public partial class ExpressRouteProviderPortCollection
     {
         /// <summary> Invokes the GetAllAsync compatibility operation. </summary>
-        public virtual AsyncPageable<ExpressRouteProviderPortResource> GetAllAsync(string expand, CancellationToken cancellationToken) => default;
+        public virtual AsyncPageable<ExpressRouteProviderPortResource> GetAllAsync(string expand, CancellationToken cancellationToken) => throw new global::System.NotSupportedException("This compatibility method is not supported by the TypeSpec-generated Network SDK.");
         /// <summary> Invokes the GetAll compatibility operation. </summary>
-        public virtual Pageable<ExpressRouteProviderPortResource> GetAll(string expand, CancellationToken cancellationToken) => default;
+        public virtual Pageable<ExpressRouteProviderPortResource> GetAll(string expand, CancellationToken cancellationToken) => throw new global::System.NotSupportedException("This compatibility method is not supported by the TypeSpec-generated Network SDK.");
     }
 }

@@ -9,10 +9,6 @@ namespace Azure.ResourceManager.Network.Models
     public partial class TrafficAnalyticsConfigurationProperties
     {
         /// <summary> Compatibility member. </summary>
-        public global::System.Nullable<global::System.Int32> TrafficAnalyticsIntervalInMinutes
-        {
-            get => default;
-            set { } // Compatibility setter: previous GA surface was settable; generated model treats this service-populated property as read-only.
-        }
+        public global::System.Nullable<global::System.Int32> TrafficAnalyticsIntervalInMinutes { get; set; }
     }
 }

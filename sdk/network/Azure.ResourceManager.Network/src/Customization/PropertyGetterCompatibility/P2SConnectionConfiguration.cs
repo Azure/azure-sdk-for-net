@@ -9,8 +9,8 @@ namespace Azure.ResourceManager.Network.Models
     public partial class P2SConnectionConfiguration
     {
         /// <summary> Compatibility member. </summary>
-        public global::System.Collections.Generic.IList<global::Azure.ResourceManager.Resources.Models.WritableSubResource> ConfigurationPolicyGroups => default;
+        public global::System.Collections.Generic.IList<global::Azure.ResourceManager.Resources.Models.WritableSubResource> ConfigurationPolicyGroups { get; } = new global::System.Collections.Generic.List<global::Azure.ResourceManager.Resources.Models.WritableSubResource>();
         /// <summary> Compatibility member. </summary>
-        public global::System.Collections.Generic.IList<global::System.String> VpnClientAddressPrefixes => default;
+        public global::System.Collections.Generic.IList<global::System.String> VpnClientAddressPrefixes { get; } = new global::System.Collections.Generic.List<global::System.String>();
     }
 }

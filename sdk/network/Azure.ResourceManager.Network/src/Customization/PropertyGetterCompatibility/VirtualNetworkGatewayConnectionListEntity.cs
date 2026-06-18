@@ -9,8 +9,8 @@ namespace Azure.ResourceManager.Network.Models
     public partial class VirtualNetworkGatewayConnectionListEntity
     {
         /// <summary> Compatibility member. </summary>
-        public global::System.Collections.Generic.IList<global::Azure.ResourceManager.Network.Models.GatewayCustomBgpIPAddressIPConfiguration> GatewayCustomBgpIPAddresses => default;
+        public global::System.Collections.Generic.IList<global::Azure.ResourceManager.Network.Models.GatewayCustomBgpIPAddressIPConfiguration> GatewayCustomBgpIPAddresses { get; } = new global::System.Collections.Generic.List<global::Azure.ResourceManager.Network.Models.GatewayCustomBgpIPAddressIPConfiguration>();
         /// <summary> Compatibility member. </summary>
-        public global::System.Collections.Generic.IList<global::Azure.ResourceManager.Network.Models.IPsecPolicy> IPsecPolicies => default;
+        public global::System.Collections.Generic.IList<global::Azure.ResourceManager.Network.Models.IPsecPolicy> IPsecPolicies { get; } = new global::System.Collections.Generic.List<global::Azure.ResourceManager.Network.Models.IPsecPolicy>();
     }
 }

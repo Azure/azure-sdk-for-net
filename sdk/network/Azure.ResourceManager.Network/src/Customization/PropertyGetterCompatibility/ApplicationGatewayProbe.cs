@@ -9,22 +9,10 @@ namespace Azure.ResourceManager.Network.Models
     public partial class ApplicationGatewayProbe
     {
         /// <summary> Compatibility member. </summary>
-        public global::System.Nullable<global::System.Int32> IntervalInSeconds
-        {
-            get => default;
-            set { } // Compatibility setter: previous GA surface was settable; generated model treats this service-populated property as read-only.
-        }
+        public global::System.Nullable<global::System.Int32> IntervalInSeconds { get; set; }
         /// <summary> Compatibility member. </summary>
-        public global::System.Nullable<global::System.Boolean> IsProbeProxyProtocolHeaderEnabled
-        {
-            get => default;
-            set { } // Compatibility setter: previous GA surface was settable; generated model treats this service-populated property as read-only.
-        }
+        public global::System.Nullable<global::System.Boolean> IsProbeProxyProtocolHeaderEnabled { get; set; }
         /// <summary> Compatibility member. </summary>
-        public global::System.Nullable<global::System.Int32> TimeoutInSeconds
-        {
-            get => default;
-            set { } // Compatibility setter: previous GA surface was settable; generated model treats this service-populated property as read-only.
-        }
+        public global::System.Nullable<global::System.Int32> TimeoutInSeconds { get; set; }
     }
 }

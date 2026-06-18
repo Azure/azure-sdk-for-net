@@ -9,6 +9,6 @@ namespace Azure.ResourceManager.Network.Models
     public partial class TroubleshootingContent
     {
         /// <summary> Compatibility member. </summary>
-        public global::System.Uri StorageUri => default;
+        public global::System.Uri StorageUri { get; }
     }
 }

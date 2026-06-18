@@ -9,6 +9,6 @@ namespace Azure.ResourceManager.Network.Models
     public partial class PublicIPDdosProtectionStatusResult
     {
         /// <summary> Compatibility member. </summary>
-        public global::System.Net.IPAddress PublicIPAddress => default;
+        public global::System.Net.IPAddress PublicIPAddress { get; }
     }
 }

@@ -9,8 +9,8 @@ namespace Azure.ResourceManager.Network.Models
     public partial class ExpressRouteFailoverTestDetails
     {
         /// <summary> Compatibility member. </summary>
-        public global::System.Nullable<global::System.DateTimeOffset> EndOn => default;
+        public global::System.Nullable<global::System.DateTimeOffset> EndOn { get; }
         /// <summary> Compatibility member. </summary>
-        public global::System.Nullable<global::System.DateTimeOffset> StartOn => default;
+        public global::System.Nullable<global::System.DateTimeOffset> StartOn { get; }
     }
 }

@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Network
     public partial class CloudServiceSwapCollection
     {
         /// <summary> Invokes the GetAllAsync compatibility operation. </summary>
-        public virtual AsyncPageable<CloudServiceSwapResource> GetAllAsync(CancellationToken cancellationToken) => default;
+        public virtual AsyncPageable<CloudServiceSwapResource> GetAllAsync(CancellationToken cancellationToken) => throw new global::System.NotSupportedException("This compatibility method is not supported by the TypeSpec-generated Network SDK.");
         /// <summary> Invokes the GetAll compatibility operation. </summary>
-        public virtual Pageable<CloudServiceSwapResource> GetAll(CancellationToken cancellationToken) => default;
+        public virtual Pageable<CloudServiceSwapResource> GetAll(CancellationToken cancellationToken) => throw new global::System.NotSupportedException("This compatibility method is not supported by the TypeSpec-generated Network SDK.");
     }
 }

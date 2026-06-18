@@ -9,6 +9,6 @@ namespace Azure.ResourceManager.Network.Models
     public partial class VngClientConnectionConfiguration
     {
         /// <summary> Compatibility member. </summary>
-        public global::System.Collections.Generic.IList<global::System.String> VpnClientAddressPrefixes => default;
+        public global::System.Collections.Generic.IList<global::System.String> VpnClientAddressPrefixes { get; } = new global::System.Collections.Generic.List<global::System.String>();
     }
 }

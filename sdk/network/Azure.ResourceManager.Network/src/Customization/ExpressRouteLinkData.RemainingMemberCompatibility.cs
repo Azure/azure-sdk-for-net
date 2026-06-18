@@ -16,6 +16,6 @@ namespace Azure.ResourceManager.Network
     public partial class ExpressRouteLinkData
     {
         /// <summary> Gets or sets the ETag compatibility property. </summary>
-        public ETag? ETag => default;
+        public ETag? ETag { get; }
     }
 }

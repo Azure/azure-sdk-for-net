@@ -9,13 +9,6 @@ namespace Azure.ResourceManager.Network.Models
     public partial class ReachabilityAnalysisIntentProperties
     {
         /// <summary> Gets or sets the ProvisioningState compatibility property. </summary>
-        public System.Nullable<Azure.ResourceManager.Network.Models.NetworkProvisioningState> ProvisioningState
-        {
-            get => default;
-            set
-            {
-                // Compatibility setter for previous GA surface; service value remains read-only.
-            }
-        }
+        public System.Nullable<Azure.ResourceManager.Network.Models.NetworkProvisioningState> ProvisioningState { get; set; }
     }
 }

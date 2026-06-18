@@ -9,19 +9,11 @@ namespace Azure.ResourceManager.Network
     public partial class VirtualNetworkGatewayData
     {
         /// <summary> Compatibility member. </summary>
-        public global::System.Nullable<global::System.Boolean> Active
-        {
-            get => default;
-            set { } // Compatibility setter: previous GA surface was settable; generated model treats this service-populated property as read-only.
-        }
+        public global::System.Nullable<global::System.Boolean> Active { get; set; }
         /// <summary> Compatibility member. </summary>
-        public global::System.Collections.Generic.IList<global::System.String> CustomRoutesAddressPrefixes => default;
+        public global::System.Collections.Generic.IList<global::System.String> CustomRoutesAddressPrefixes { get; } = new global::System.Collections.Generic.List<global::System.String>();
         /// <summary> Compatibility member. </summary>
-        public global::System.Nullable<global::System.Boolean> EnablePrivateIPAddress
-        {
-            get => default;
-            set { } // Compatibility setter: previous GA surface was settable; generated model treats this service-populated property as read-only.
-        }
+        public global::System.Nullable<global::System.Boolean> EnablePrivateIPAddress { get; set; }
         /// <summary> Compatibility member. </summary>
         public global::System.Collections.Generic.IList<global::Azure.ResourceManager.Network.Models.VirtualNetworkGatewayIPConfiguration> IPConfigurations => Properties is null ? default : Properties.IpConfigurations;
         /// <summary> Compatibility member. </summary>

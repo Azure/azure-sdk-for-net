@@ -9,13 +9,6 @@ namespace Azure.ResourceManager.Network.Models
     public partial class P2SConnectionConfiguration
     {
         /// <summary> Gets or sets the RoutingConfiguration compatibility property. </summary>
-        public Azure.ResourceManager.Network.Models.RoutingConfiguration RoutingConfiguration
-        {
-            get => default;
-            set
-            {
-                // Compatibility setter for previous GA surface; service value remains read-only.
-            }
-        }
+        public Azure.ResourceManager.Network.Models.RoutingConfiguration RoutingConfiguration { get; set; }
     }
 }

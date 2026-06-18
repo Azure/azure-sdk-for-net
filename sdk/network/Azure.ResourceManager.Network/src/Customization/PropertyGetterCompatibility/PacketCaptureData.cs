@@ -9,6 +9,6 @@ namespace Azure.ResourceManager.Network
     public partial class PacketCaptureData
     {
         /// <summary> Compatibility member. </summary>
-        public global::System.Nullable<global::System.Boolean> IsContinuousCapture => default;
+        public global::System.Nullable<global::System.Boolean> IsContinuousCapture { get; }
     }
 }

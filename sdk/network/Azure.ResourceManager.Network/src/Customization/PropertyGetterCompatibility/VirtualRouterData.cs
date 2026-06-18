@@ -9,6 +9,6 @@ namespace Azure.ResourceManager.Network
     public partial class VirtualRouterData
     {
         /// <summary> Compatibility member. </summary>
-        public global::System.Collections.Generic.IList<global::System.String> VirtualRouterIPs => default;
+        public global::System.Collections.Generic.IList<global::System.String> VirtualRouterIPs { get; } = new global::System.Collections.Generic.List<global::System.String>();
     }
 }

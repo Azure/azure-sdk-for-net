@@ -9,8 +9,8 @@ namespace Azure.ResourceManager.Network
     public partial class ApplicationGatewayData
     {
         /// <summary> Compatibility member. </summary>
-        public global::System.Collections.Generic.IList<global::System.String> AvailabilityZones => default;
+        public global::System.Collections.Generic.IList<global::System.String> AvailabilityZones { get; } = new global::System.Collections.Generic.List<global::System.String>();
         /// <summary> Compatibility member. </summary>
-        public global::System.Collections.Generic.IList<global::Azure.ResourceManager.Network.Models.ApplicationGatewayEntraJwtValidationConfig> EntraJwtValidationConfigs => default;
+        public global::System.Collections.Generic.IList<global::Azure.ResourceManager.Network.Models.ApplicationGatewayEntraJwtValidationConfig> EntraJwtValidationConfigs { get; } = new global::System.Collections.Generic.List<global::Azure.ResourceManager.Network.Models.ApplicationGatewayEntraJwtValidationConfig>();
     }
 }

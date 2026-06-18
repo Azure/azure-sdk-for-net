@@ -10,6 +10,6 @@ namespace Azure.ResourceManager.Network.Models
     public partial class PeerRouteList
     {
         /// <summary> Compatibility member. </summary>
-        public global::System.Collections.Generic.IReadOnlyList<global::Azure.ResourceManager.Network.Models.PeerRoute> Value => default;
+        public global::System.Collections.Generic.IReadOnlyList<global::Azure.ResourceManager.Network.Models.PeerRoute> Value { get; } = new global::System.Collections.Generic.List<global::Azure.ResourceManager.Network.Models.PeerRoute>();
     }
 }

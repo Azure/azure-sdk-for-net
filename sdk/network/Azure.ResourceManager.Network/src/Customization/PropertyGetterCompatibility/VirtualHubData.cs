@@ -9,12 +9,12 @@ namespace Azure.ResourceManager.Network
     public partial class VirtualHubData
     {
         /// <summary> Compatibility member. </summary>
-        public global::System.Collections.Generic.IReadOnlyList<global::Azure.ResourceManager.Resources.Models.WritableSubResource> IPConfigurations => default;
+        public global::System.Collections.Generic.IReadOnlyList<global::Azure.ResourceManager.Resources.Models.WritableSubResource> IPConfigurations { get; } = new global::System.Collections.Generic.List<global::Azure.ResourceManager.Resources.Models.WritableSubResource>();
         /// <summary> Compatibility member. </summary>
-        public global::System.Collections.Generic.IList<global::Azure.ResourceManager.Network.Models.VirtualHubRoute> Routes => default;
+        public global::System.Collections.Generic.IList<global::Azure.ResourceManager.Network.Models.VirtualHubRoute> Routes { get; } = new global::System.Collections.Generic.List<global::Azure.ResourceManager.Network.Models.VirtualHubRoute>();
         /// <summary> Compatibility member. </summary>
-        public global::System.Collections.Generic.IList<global::Azure.ResourceManager.Network.VirtualHubRouteTableV2Data> VirtualHubRouteTableV2S => default;
+        public global::System.Collections.Generic.IList<global::Azure.ResourceManager.Network.VirtualHubRouteTableV2Data> VirtualHubRouteTableV2S { get; } = new global::System.Collections.Generic.List<global::Azure.ResourceManager.Network.VirtualHubRouteTableV2Data>();
         /// <summary> Compatibility member. </summary>
-        public global::System.Collections.Generic.IList<global::System.String> VirtualRouterIPs => default;
+        public global::System.Collections.Generic.IList<global::System.String> VirtualRouterIPs { get; } = new global::System.Collections.Generic.List<global::System.String>();
     }
 }

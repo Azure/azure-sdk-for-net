@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Network
     public partial class LoadBalancerResource
     {
         /// <summary> Invokes the GetLoadBalancerNetworkInterfacesAsync compatibility operation. </summary>
-        public virtual AsyncPageable<NetworkInterfaceResource> GetLoadBalancerNetworkInterfacesAsync(CancellationToken cancellationToken) => default;
+        public virtual AsyncPageable<NetworkInterfaceResource> GetLoadBalancerNetworkInterfacesAsync(CancellationToken cancellationToken) => throw new global::System.NotSupportedException("This compatibility method is not supported by the TypeSpec-generated Network SDK.");
         /// <summary> Invokes the GetLoadBalancerNetworkInterfaces compatibility operation. </summary>
-        public virtual Pageable<NetworkInterfaceResource> GetLoadBalancerNetworkInterfaces(CancellationToken cancellationToken) => default;
+        public virtual Pageable<NetworkInterfaceResource> GetLoadBalancerNetworkInterfaces(CancellationToken cancellationToken) => throw new global::System.NotSupportedException("This compatibility method is not supported by the TypeSpec-generated Network SDK.");
     }
 }

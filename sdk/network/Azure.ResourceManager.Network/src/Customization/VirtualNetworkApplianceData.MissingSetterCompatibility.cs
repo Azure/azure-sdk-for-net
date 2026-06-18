@@ -9,13 +9,6 @@ namespace Azure.ResourceManager.Network
     public partial class VirtualNetworkApplianceData
     {
         /// <summary> Gets or sets the BandwidthInGbps compatibility property. </summary>
-        public System.String BandwidthInGbps
-        {
-            get => default;
-            set
-            {
-                // Compatibility setter for previous GA surface; service value remains read-only.
-            }
-        }
+        public System.String BandwidthInGbps { get; set; }
     }
 }

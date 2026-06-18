@@ -18,9 +18,11 @@ namespace Azure.ResourceManager.Network.Mocking
     public partial class MockableNetworkSubscriptionResource
     {
         /// <summary> Invokes the SwapPublicIPAddressesLoadBalancer compatibility operation. </summary>
-        public virtual ArmOperation SwapPublicIPAddressesLoadBalancer(WaitUntil waitUntil, AzureLocation location, LoadBalancerVipSwapContent content, CancellationToken cancellationToken) => default;
+        public virtual ArmOperation SwapPublicIPAddressesLoadBalancer(WaitUntil waitUntil, AzureLocation location, LoadBalancerVipSwapContent content, CancellationToken cancellationToken)
+            => SwapPublicIpAddresses(waitUntil, location, content, cancellationToken);
         /// <summary> Invokes the CheckPrivateLinkServiceVisibilityPrivateLinkService compatibility operation. </summary>
-        public virtual ArmOperation<PrivateLinkServiceVisibility> CheckPrivateLinkServiceVisibilityPrivateLinkService(WaitUntil waitUntil, AzureLocation location, CheckPrivateLinkServiceVisibilityRequest checkPrivateLinkServiceVisibilityRequest, CancellationToken cancellationToken) => default;
+        public virtual ArmOperation<PrivateLinkServiceVisibility> CheckPrivateLinkServiceVisibilityPrivateLinkService(WaitUntil waitUntil, AzureLocation location, CheckPrivateLinkServiceVisibilityRequest checkPrivateLinkServiceVisibilityRequest, CancellationToken cancellationToken)
+            => CheckPrivateLinkServiceVisibility(waitUntil, location, checkPrivateLinkServiceVisibilityRequest, cancellationToken);
         /// <summary> Invokes the GetApplicationGatewayWafDynamicManifests compatibility operation. </summary>
         public virtual ApplicationGatewayWafDynamicManifestCollection GetApplicationGatewayWafDynamicManifests(AzureLocation location)
             => new ApplicationGatewayWafDynamicManifestCollection(Client, Id, location);
@@ -65,14 +67,12 @@ namespace Azure.ResourceManager.Network.Mocking
             var response = resource.GetSslPredefinedPolicy(predefinedPolicyName, cancellationToken);
             return Response.FromValue(NetworkExtensions.NormalizeApplicationGatewaySslPredefinedPolicy(response.Value, Id.SubscriptionId), response.GetRawResponse());
         }
-        /// <summary> Invokes the CheckDnsNameAvailability compatibility operation. </summary>
-        public virtual Response<DnsNameAvailabilityResult> CheckDnsNameAvailability(AzureLocation location, string domainNameLabel, CancellationToken cancellationToken) => default;
-        /// <summary> Invokes the GetServiceTag compatibility operation. </summary>
-        public virtual Response<ServiceTagsListResult> GetServiceTag(AzureLocation location, CancellationToken cancellationToken) => default;
         /// <summary> Invokes the CheckPrivateLinkServiceVisibilityPrivateLinkServiceAsync compatibility operation. </summary>
-        public virtual Task<ArmOperation<PrivateLinkServiceVisibility>> CheckPrivateLinkServiceVisibilityPrivateLinkServiceAsync(WaitUntil waitUntil, AzureLocation location, CheckPrivateLinkServiceVisibilityRequest checkPrivateLinkServiceVisibilityRequest, CancellationToken cancellationToken) => default;
+        public virtual Task<ArmOperation<PrivateLinkServiceVisibility>> CheckPrivateLinkServiceVisibilityPrivateLinkServiceAsync(WaitUntil waitUntil, AzureLocation location, CheckPrivateLinkServiceVisibilityRequest checkPrivateLinkServiceVisibilityRequest, CancellationToken cancellationToken)
+            => CheckPrivateLinkServiceVisibilityAsync(waitUntil, location, checkPrivateLinkServiceVisibilityRequest, cancellationToken);
         /// <summary> Invokes the SwapPublicIPAddressesLoadBalancerAsync compatibility operation. </summary>
-        public virtual Task<ArmOperation> SwapPublicIPAddressesLoadBalancerAsync(WaitUntil waitUntil, AzureLocation location, LoadBalancerVipSwapContent content, CancellationToken cancellationToken) => default;
+        public virtual Task<ArmOperation> SwapPublicIPAddressesLoadBalancerAsync(WaitUntil waitUntil, AzureLocation location, LoadBalancerVipSwapContent content, CancellationToken cancellationToken)
+            => SwapPublicIpAddressesAsync(waitUntil, location, content, cancellationToken);
         /// <summary> Invokes the GetApplicationGatewayWafDynamicManifestAsync compatibility operation. </summary>
         [ForwardsClientCalls]
         public virtual Task<Response<ApplicationGatewayWafDynamicManifestResource>> GetApplicationGatewayWafDynamicManifestAsync(AzureLocation location, CancellationToken cancellationToken)
@@ -114,9 +114,5 @@ namespace Azure.ResourceManager.Network.Mocking
             var response = await resource.GetSslPredefinedPolicyAsync(predefinedPolicyName, cancellationToken).ConfigureAwait(false);
             return Response.FromValue(NetworkExtensions.NormalizeApplicationGatewaySslPredefinedPolicy(response.Value, Id.SubscriptionId), response.GetRawResponse());
         }
-        /// <summary> Invokes the CheckDnsNameAvailabilityAsync compatibility operation. </summary>
-        public virtual Task<Response<DnsNameAvailabilityResult>> CheckDnsNameAvailabilityAsync(AzureLocation location, string domainNameLabel, CancellationToken cancellationToken) => default;
-        /// <summary> Invokes the GetServiceTagAsync compatibility operation. </summary>
-        public virtual Task<Response<ServiceTagsListResult>> GetServiceTagAsync(AzureLocation location, CancellationToken cancellationToken) => default;
     }
 }

@@ -9,6 +9,6 @@ namespace Azure.ResourceManager.Network.Models
     public partial class LearnedIPPrefixesListResult
     {
         /// <summary> Compatibility member. </summary>
-        public global::System.Collections.Generic.IReadOnlyList<global::System.String> IPPrefixes => default;
+        public global::System.Collections.Generic.IReadOnlyList<global::System.String> IPPrefixes { get; } = new global::System.Collections.Generic.List<global::System.String>();
     }
 }

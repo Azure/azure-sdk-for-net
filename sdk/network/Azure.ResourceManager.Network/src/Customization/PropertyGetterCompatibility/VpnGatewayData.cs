@@ -9,6 +9,6 @@ namespace Azure.ResourceManager.Network
     public partial class VpnGatewayData
     {
         /// <summary> Compatibility member. </summary>
-        public global::System.Collections.Generic.IReadOnlyList<global::Azure.ResourceManager.Network.Models.VpnGatewayIPConfiguration> IPConfigurations => default;
+        public global::System.Collections.Generic.IReadOnlyList<global::Azure.ResourceManager.Network.Models.VpnGatewayIPConfiguration> IPConfigurations { get; } = new global::System.Collections.Generic.List<global::Azure.ResourceManager.Network.Models.VpnGatewayIPConfiguration>();
     }
 }

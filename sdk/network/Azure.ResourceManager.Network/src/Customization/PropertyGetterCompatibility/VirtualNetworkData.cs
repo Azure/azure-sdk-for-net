@@ -34,12 +34,8 @@ namespace Azure.ResourceManager.Network
             }
         }
         /// <summary> Compatibility member. </summary>
-        public global::System.Collections.Generic.IList<global::Azure.ResourceManager.Resources.Models.WritableSubResource> IPAllocations => default;
+        public global::System.Collections.Generic.IList<global::Azure.ResourceManager.Resources.Models.WritableSubResource> IPAllocations { get; } = new global::System.Collections.Generic.List<global::Azure.ResourceManager.Resources.Models.WritableSubResource>();
         /// <summary> Compatibility member. </summary>
-        public global::System.Nullable<global::Azure.ResourceManager.Network.Models.PrivateEndpointVnetPolicy> PrivateEndpointVnetPolicy
-        {
-            get => default;
-            set { } // Compatibility setter: previous GA surface was settable; generated model treats this service-populated property as read-only.
-        }
+        public global::System.Nullable<global::Azure.ResourceManager.Network.Models.PrivateEndpointVnetPolicy> PrivateEndpointVnetPolicy { get; set; }
     }
 }

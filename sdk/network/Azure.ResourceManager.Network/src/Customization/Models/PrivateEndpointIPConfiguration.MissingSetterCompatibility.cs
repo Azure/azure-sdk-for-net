@@ -9,13 +9,6 @@ namespace Azure.ResourceManager.Network.Models
     public partial class PrivateEndpointIPConfiguration
     {
         /// <summary> Gets or sets the PrivateIPAddress compatibility property. </summary>
-        public System.Net.IPAddress PrivateIPAddress
-        {
-            get => default;
-            set
-            {
-                // Compatibility setter for previous GA surface; service value remains read-only.
-            }
-        }
+        public System.Net.IPAddress PrivateIPAddress { get; set; }
     }
 }

@@ -12,13 +12,6 @@ namespace Azure.ResourceManager.Network.Models
         public new Azure.Core.ResourceType ResourceType => Id?.ResourceType ?? Type;
 
         /// <summary> Gets or sets the MinProtocolVersion compatibility property. </summary>
-        public System.Nullable<ApplicationGatewaySslProtocol> MinProtocolVersion
-        {
-            get => default;
-            set
-            {
-                // Compatibility setter for previous GA surface; service value remains read-only.
-            }
-        }
+        public System.Nullable<ApplicationGatewaySslProtocol> MinProtocolVersion { get; set; }
     }
 }

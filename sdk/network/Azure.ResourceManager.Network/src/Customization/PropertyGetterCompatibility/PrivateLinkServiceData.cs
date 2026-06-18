@@ -9,8 +9,8 @@ namespace Azure.ResourceManager.Network
     public partial class PrivateLinkServiceData
     {
         /// <summary> Compatibility member. </summary>
-        public global::System.Collections.Generic.IList<global::Azure.ResourceManager.Network.Models.PrivateLinkServiceIPConfiguration> IPConfigurations => default;
+        public global::System.Collections.Generic.IList<global::Azure.ResourceManager.Network.Models.PrivateLinkServiceIPConfiguration> IPConfigurations { get; } = new global::System.Collections.Generic.List<global::Azure.ResourceManager.Network.Models.PrivateLinkServiceIPConfiguration>();
         /// <summary> Compatibility member. </summary>
-        public global::System.Collections.Generic.IList<global::Azure.ResourceManager.Network.FrontendIPConfigurationData> LoadBalancerFrontendIPConfigurations => default;
+        public global::System.Collections.Generic.IList<global::Azure.ResourceManager.Network.FrontendIPConfigurationData> LoadBalancerFrontendIPConfigurations { get; } = new global::System.Collections.Generic.List<global::Azure.ResourceManager.Network.FrontendIPConfigurationData>();
     }
 }

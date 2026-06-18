@@ -9,6 +9,6 @@ namespace Azure.ResourceManager.Network.Models
     public partial class ApplicationRule
     {
         /// <summary> Compatibility member. </summary>
-        public global::System.Collections.Generic.IList<global::System.String> SourceIPGroups => default;
+        public global::System.Collections.Generic.IList<global::System.String> SourceIPGroups { get; } = new global::System.Collections.Generic.List<global::System.String>();
     }
 }

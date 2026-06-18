@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Network
     {
         /// <summary> Invokes the UpdateAsync compatibility operation. </summary>
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
-        public virtual Task<ArmOperation<BastionHostResource>> UpdateAsync(WaitUntil waitUntil, BastionHostData data, CancellationToken cancellationToken) => default;
+        public virtual Task<ArmOperation<BastionHostResource>> UpdateAsync(WaitUntil waitUntil, BastionHostData data, CancellationToken cancellationToken) => throw new global::System.NotSupportedException("This compatibility method is not supported by the TypeSpec-generated Network SDK.");
         /// <summary> Invokes the Update compatibility operation. </summary>
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
-        public virtual ArmOperation<BastionHostResource> Update(WaitUntil waitUntil, BastionHostData data, CancellationToken cancellationToken) => default;
+        public virtual ArmOperation<BastionHostResource> Update(WaitUntil waitUntil, BastionHostData data, CancellationToken cancellationToken) => throw new global::System.NotSupportedException("This compatibility method is not supported by the TypeSpec-generated Network SDK.");
     }
 }

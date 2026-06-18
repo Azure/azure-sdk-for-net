@@ -9,6 +9,6 @@ namespace Azure.ResourceManager.Network
     public partial class NetworkManagerRoutingRulesData
     {
         /// <summary> Compatibility member. </summary>
-        public global::System.Nullable<global::Azure.ETag> ETag => default;
+        public global::System.Nullable<global::Azure.ETag> ETag { get; }
     }
 }

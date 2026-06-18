@@ -9,10 +9,6 @@ namespace Azure.ResourceManager.Network
     public partial class NetworkVirtualApplianceConnectionData
     {
         /// <summary> Compatibility member. </summary>
-        public global::Azure.ResourceManager.Network.Models.RoutingConfiguration ConnectionRoutingConfiguration
-        {
-            get => default;
-            set { } // Compatibility setter: previous GA surface was settable; generated model treats this service-populated property as read-only.
-        }
+        public global::Azure.ResourceManager.Network.Models.RoutingConfiguration ConnectionRoutingConfiguration { get; set; }
     }
 }

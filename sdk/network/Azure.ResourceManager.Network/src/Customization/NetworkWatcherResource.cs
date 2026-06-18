@@ -9,8 +9,8 @@ namespace Azure.ResourceManager.Network
     public partial class NetworkWatcherResource
     {
         /// <summary> Invokes the GetVmSecurityRules compatibility operation. </summary>
-        public virtual global::Azure.ResourceManager.ArmOperation<global::Azure.ResourceManager.Network.Models.SecurityGroupViewResult> GetVmSecurityRules(global::Azure.WaitUntil p0, global::Azure.ResourceManager.Network.Models.SecurityGroupViewContent p1, global::System.Threading.CancellationToken p2) => default;
+        public virtual global::Azure.ResourceManager.ArmOperation<global::Azure.ResourceManager.Network.Models.SecurityGroupViewResult> GetVmSecurityRules(global::Azure.WaitUntil p0, global::Azure.ResourceManager.Network.Models.SecurityGroupViewContent p1, global::System.Threading.CancellationToken p2) => throw new global::System.NotSupportedException("This compatibility method is not supported by the TypeSpec-generated Network SDK.");
         /// <summary> Invokes the GetVmSecurityRulesAsync compatibility operation. </summary>
-        public virtual global::System.Threading.Tasks.Task<global::Azure.ResourceManager.ArmOperation<global::Azure.ResourceManager.Network.Models.SecurityGroupViewResult>> GetVmSecurityRulesAsync(global::Azure.WaitUntil p0, global::Azure.ResourceManager.Network.Models.SecurityGroupViewContent p1, global::System.Threading.CancellationToken p2) => default;
+        public virtual global::System.Threading.Tasks.Task<global::Azure.ResourceManager.ArmOperation<global::Azure.ResourceManager.Network.Models.SecurityGroupViewResult>> GetVmSecurityRulesAsync(global::Azure.WaitUntil p0, global::Azure.ResourceManager.Network.Models.SecurityGroupViewContent p1, global::System.Threading.CancellationToken p2) => throw new global::System.NotSupportedException("This compatibility method is not supported by the TypeSpec-generated Network SDK.");
     }
 }

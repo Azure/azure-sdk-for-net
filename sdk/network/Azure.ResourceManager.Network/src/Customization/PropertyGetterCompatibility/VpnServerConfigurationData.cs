@@ -9,6 +9,6 @@ namespace Azure.ResourceManager.Network
     public partial class VpnServerConfigurationData
     {
         /// <summary> Compatibility member. </summary>
-        public global::System.Collections.Generic.IList<global::Azure.ResourceManager.Network.Models.IPsecPolicy> VpnClientIPsecPolicies => default;
+        public global::System.Collections.Generic.IList<global::Azure.ResourceManager.Network.Models.IPsecPolicy> VpnClientIPsecPolicies { get; } = new global::System.Collections.Generic.List<global::Azure.ResourceManager.Network.Models.IPsecPolicy>();
     }
 }

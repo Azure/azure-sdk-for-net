@@ -17,6 +17,6 @@ namespace Azure.ResourceManager.Network
     public partial class PublicIPPrefixData
     {
         /// <summary> Gets or sets the PublicIPAddresses compatibility property. </summary>
-        public IReadOnlyList<SubResource> PublicIPAddresses => default;
+        public IReadOnlyList<SubResource> PublicIPAddresses { get; } = new global::System.Collections.Generic.List<SubResource>();
     }
 }

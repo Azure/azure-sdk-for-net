@@ -9,13 +9,6 @@ namespace Azure.ResourceManager.Network
     public partial class RouteData
     {
         /// <summary> Gets or sets the HasBgpOverride compatibility property. </summary>
-        public System.Nullable<System.Boolean> HasBgpOverride
-        {
-            get => default;
-            set
-            {
-                // Compatibility setter for previous GA surface; service value remains read-only.
-            }
-        }
+        public System.Nullable<System.Boolean> HasBgpOverride { get; set; }
     }
 }

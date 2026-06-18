@@ -9,10 +9,6 @@ namespace Azure.ResourceManager.Network
     public partial class ExpressRouteCircuitConnectionData
     {
         /// <summary> Compatibility member. </summary>
-        public global::Azure.ResourceManager.Network.Models.IPv6CircuitConnectionConfig IPv6CircuitConnectionConfig
-        {
-            get => default;
-            set { } // Compatibility setter: previous GA surface was settable; generated model treats this service-populated property as read-only.
-        }
+        public global::Azure.ResourceManager.Network.Models.IPv6CircuitConnectionConfig IPv6CircuitConnectionConfig { get; set; }
     }
 }

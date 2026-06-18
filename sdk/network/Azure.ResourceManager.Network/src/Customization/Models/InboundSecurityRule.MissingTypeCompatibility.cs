@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Network.Models
         public ETag? ETag { get; }
 
         /// <summary> Converts the compatibility model to the generated resource data model. </summary>
-        public static implicit operator InboundSecurityRuleData(InboundSecurityRule rule) => default;
+        public static implicit operator InboundSecurityRuleData(InboundSecurityRule rule) => rule is null ? null : new InboundSecurityRuleData();
 
         InboundSecurityRule IJsonModel<InboundSecurityRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => new InboundSecurityRule();
         void IJsonModel<InboundSecurityRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) { writer.WriteStartObject(); writer.WriteEndObject(); }

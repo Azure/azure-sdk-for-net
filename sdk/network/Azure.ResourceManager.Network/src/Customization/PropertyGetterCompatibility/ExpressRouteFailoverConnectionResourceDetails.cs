@@ -9,6 +9,6 @@ namespace Azure.ResourceManager.Network.Models
     public partial class ExpressRouteFailoverConnectionResourceDetails
     {
         /// <summary> Compatibility member. </summary>
-        public global::System.Nullable<global::System.DateTimeOffset> LastUpdatedOn => default;
+        public global::System.Nullable<global::System.DateTimeOffset> LastUpdatedOn { get; }
     }
 }

@@ -9,22 +9,10 @@ namespace Azure.ResourceManager.Network.Models
     public partial class RoutingConfigurationNfv
     {
         /// <summary> Compatibility member. </summary>
-        public global::System.Uri AssociatedRouteTableResourceUri
-        {
-            get => default;
-            set { } // Compatibility setter: previous GA surface was settable; generated model treats this service-populated property as read-only.
-        }
+        public global::System.Uri AssociatedRouteTableResourceUri { get; set; }
         /// <summary> Compatibility member. </summary>
-        public global::System.Uri InboundRouteMapResourceUri
-        {
-            get => default;
-            set { } // Compatibility setter: previous GA surface was settable; generated model treats this service-populated property as read-only.
-        }
+        public global::System.Uri InboundRouteMapResourceUri { get; set; }
         /// <summary> Compatibility member. </summary>
-        public global::System.Uri OutboundRouteMapResourceUri
-        {
-            get => default;
-            set { } // Compatibility setter: previous GA surface was settable; generated model treats this service-populated property as read-only.
-        }
+        public global::System.Uri OutboundRouteMapResourceUri { get; set; }
     }
 }

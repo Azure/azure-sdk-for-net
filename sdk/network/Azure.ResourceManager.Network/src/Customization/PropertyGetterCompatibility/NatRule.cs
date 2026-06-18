@@ -9,8 +9,8 @@ namespace Azure.ResourceManager.Network.Models
     public partial class NatRule
     {
         /// <summary> Compatibility member. </summary>
-        public global::System.Collections.Generic.IList<global::Azure.ResourceManager.Network.Models.FirewallPolicyRuleNetworkProtocol> IPProtocols => default;
+        public global::System.Collections.Generic.IList<global::Azure.ResourceManager.Network.Models.FirewallPolicyRuleNetworkProtocol> IPProtocols { get; } = new global::System.Collections.Generic.List<global::Azure.ResourceManager.Network.Models.FirewallPolicyRuleNetworkProtocol>();
         /// <summary> Compatibility member. </summary>
-        public global::System.Collections.Generic.IList<global::System.String> SourceIPGroups => default;
+        public global::System.Collections.Generic.IList<global::System.String> SourceIPGroups { get; } = new global::System.Collections.Generic.List<global::System.String>();
     }
 }

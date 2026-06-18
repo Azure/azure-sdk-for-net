@@ -11,12 +11,8 @@ namespace Azure.ResourceManager.Network
         /// <summary> Compatibility member. </summary>
         public global::System.Collections.Generic.IList<global::Azure.ResourceManager.Network.Models.AzureFirewallIPConfiguration> IPConfigurations => IpConfigurations;
         /// <summary> Compatibility member. </summary>
-        public global::System.Collections.Generic.IReadOnlyList<global::Azure.ResourceManager.Network.Models.AzureFirewallIPGroups> IPGroups => default;
+        public global::System.Collections.Generic.IReadOnlyList<global::Azure.ResourceManager.Network.Models.AzureFirewallIPGroups> IPGroups { get; } = new global::System.Collections.Generic.List<global::Azure.ResourceManager.Network.Models.AzureFirewallIPGroups>();
         /// <summary> Compatibility member. </summary>
-        public global::Azure.ResourceManager.Network.Models.AzureFirewallIPConfiguration ManagementIPConfiguration
-        {
-            get => default;
-            set { } // Compatibility setter: previous GA surface was settable; generated model treats this service-populated property as read-only.
-        }
+        public global::Azure.ResourceManager.Network.Models.AzureFirewallIPConfiguration ManagementIPConfiguration { get; set; }
     }
 }

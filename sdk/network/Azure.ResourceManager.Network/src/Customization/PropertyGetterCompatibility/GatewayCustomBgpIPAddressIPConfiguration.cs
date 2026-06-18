@@ -9,16 +9,8 @@ namespace Azure.ResourceManager.Network.Models
     public partial class GatewayCustomBgpIPAddressIPConfiguration
     {
         /// <summary> Compatibility member. </summary>
-        public global::System.String CustomBgpIPAddress
-        {
-            get => default;
-            set { } // Compatibility setter: previous GA surface was settable; generated model treats this service-populated property as read-only.
-        }
+        public global::System.String CustomBgpIPAddress { get; set; }
         /// <summary> Compatibility member. </summary>
-        public global::System.String IPConfigurationId
-        {
-            get => default;
-            set { } // Compatibility setter: previous GA surface was settable; generated model treats this service-populated property as read-only.
-        }
+        public global::System.String IPConfigurationId { get; set; }
     }
 }

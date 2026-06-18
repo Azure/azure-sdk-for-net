@@ -9,23 +9,9 @@ namespace Azure.ResourceManager.Network.Models
     public partial class ResourceNavigationLink
     {
         /// <summary> Gets or sets the Link compatibility property. </summary>
-        public Azure.Core.ResourceIdentifier Link
-        {
-            get => default;
-            set
-            {
-                // Compatibility setter for previous GA surface; service value remains read-only.
-            }
-        }
+        public Azure.Core.ResourceIdentifier Link { get; set; }
 
         /// <summary> Gets or sets the LinkedResourceType compatibility property. </summary>
-        public System.Nullable<Azure.Core.ResourceType> LinkedResourceType
-        {
-            get => default;
-            set
-            {
-                // Compatibility setter for previous GA surface; service value remains read-only.
-            }
-        }
+        public System.Nullable<Azure.Core.ResourceType> LinkedResourceType { get; set; }
     }
 }

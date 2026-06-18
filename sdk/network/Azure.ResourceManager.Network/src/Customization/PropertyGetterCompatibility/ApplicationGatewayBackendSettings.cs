@@ -9,16 +9,8 @@ namespace Azure.ResourceManager.Network.Models
     public partial class ApplicationGatewayBackendSettings
     {
         /// <summary> Compatibility member. </summary>
-        public global::System.Nullable<global::System.Boolean> IsL4ClientIPPreservationEnabled
-        {
-            get => default;
-            set { } // Compatibility setter: previous GA surface was settable; generated model treats this service-populated property as read-only.
-        }
+        public global::System.Nullable<global::System.Boolean> IsL4ClientIPPreservationEnabled { get; set; }
         /// <summary> Compatibility member. </summary>
-        public global::System.Nullable<global::System.Int32> TimeoutInSeconds
-        {
-            get => default;
-            set { } // Compatibility setter: previous GA surface was settable; generated model treats this service-populated property as read-only.
-        }
+        public global::System.Nullable<global::System.Int32> TimeoutInSeconds { get; set; }
     }
 }

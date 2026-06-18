@@ -9,8 +9,8 @@ namespace Azure.ResourceManager.Network.Models
     public partial class FirewallPolicyIntrusionDetectionBypassTrafficSpecifications
     {
         /// <summary> Compatibility member. </summary>
-        public global::System.Collections.Generic.IList<global::System.String> DestinationIPGroups => default;
+        public global::System.Collections.Generic.IList<global::System.String> DestinationIPGroups { get; } = new global::System.Collections.Generic.List<global::System.String>();
         /// <summary> Compatibility member. </summary>
-        public global::System.Collections.Generic.IList<global::System.String> SourceIPGroups => default;
+        public global::System.Collections.Generic.IList<global::System.String> SourceIPGroups { get; } = new global::System.Collections.Generic.List<global::System.String>();
     }
 }

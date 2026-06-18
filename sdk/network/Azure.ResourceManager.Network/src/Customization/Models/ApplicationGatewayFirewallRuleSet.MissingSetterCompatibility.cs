@@ -9,23 +9,9 @@ namespace Azure.ResourceManager.Network.Models
     public partial class ApplicationGatewayFirewallRuleSet
     {
         /// <summary> Gets or sets the RuleSetType compatibility property. </summary>
-        public System.String RuleSetType
-        {
-            get => default;
-            set
-            {
-                // Compatibility setter for previous GA surface; service value remains read-only.
-            }
-        }
+        public System.String RuleSetType { get; set; }
 
         /// <summary> Gets or sets the RuleSetVersion compatibility property. </summary>
-        public System.String RuleSetVersion
-        {
-            get => default;
-            set
-            {
-                // Compatibility setter for previous GA surface; service value remains read-only.
-            }
-        }
+        public System.String RuleSetVersion { get; set; }
     }
 }

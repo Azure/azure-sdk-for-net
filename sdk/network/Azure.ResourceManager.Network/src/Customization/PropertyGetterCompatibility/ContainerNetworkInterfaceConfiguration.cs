@@ -9,6 +9,6 @@ namespace Azure.ResourceManager.Network.Models
     public partial class ContainerNetworkInterfaceConfiguration
     {
         /// <summary> Compatibility member. </summary>
-        public global::System.Collections.Generic.IList<global::Azure.ResourceManager.Network.Models.NetworkIPConfigurationProfile> IPConfigurations => default;
+        public global::System.Collections.Generic.IList<global::Azure.ResourceManager.Network.Models.NetworkIPConfigurationProfile> IPConfigurations { get; } = new global::System.Collections.Generic.List<global::Azure.ResourceManager.Network.Models.NetworkIPConfigurationProfile>();
     }
 }

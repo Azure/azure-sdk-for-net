@@ -9,10 +9,6 @@ namespace Azure.ResourceManager.Network
     public partial class VpnGatewayNatRuleData
     {
         /// <summary> Compatibility member. </summary>
-        public global::System.String IPConfigurationId
-        {
-            get => default;
-            set { } // Compatibility setter: previous GA surface was settable; generated model treats this service-populated property as read-only.
-        }
+        public global::System.String IPConfigurationId { get; set; }
     }
 }

@@ -9,6 +9,6 @@ namespace Azure.ResourceManager.Network.Models
     public partial class NetworkManagerDeploymentStatus
     {
         /// <summary> Compatibility member. </summary>
-        public global::System.Nullable<global::Azure.ResourceManager.Network.Models.NetworkManagerDeploymentState> DeploymentState => default;
+        public global::System.Nullable<global::Azure.ResourceManager.Network.Models.NetworkManagerDeploymentState> DeploymentState { get; }
     }
 }

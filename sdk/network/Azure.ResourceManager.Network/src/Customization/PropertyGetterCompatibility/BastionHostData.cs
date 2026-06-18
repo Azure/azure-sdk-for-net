@@ -9,14 +9,10 @@ namespace Azure.ResourceManager.Network
     public partial class BastionHostData
     {
         /// <summary> Compatibility member. </summary>
-        public global::System.Nullable<global::System.Boolean> EnableIPConnect
-        {
-            get => default;
-            set { } // Compatibility setter: previous GA surface was settable; generated model treats this service-populated property as read-only.
-        }
+        public global::System.Nullable<global::System.Boolean> EnableIPConnect { get; set; }
         /// <summary> Compatibility member. </summary>
         public global::System.Collections.Generic.IList<global::Azure.ResourceManager.Network.Models.BastionHostIPConfiguration> IPConfigurations => IpConfigurations;
         /// <summary> Compatibility member. </summary>
-        public global::System.Collections.Generic.IList<global::Azure.ResourceManager.Network.Models.BastionHostIPRule> NetworkAclsIPRules => default;
+        public global::System.Collections.Generic.IList<global::Azure.ResourceManager.Network.Models.BastionHostIPRule> NetworkAclsIPRules { get; } = new global::System.Collections.Generic.List<global::Azure.ResourceManager.Network.Models.BastionHostIPRule>();
     }
 }

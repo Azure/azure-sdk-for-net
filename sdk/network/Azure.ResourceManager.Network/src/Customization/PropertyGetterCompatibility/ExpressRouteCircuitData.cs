@@ -9,12 +9,8 @@ namespace Azure.ResourceManager.Network
     public partial class ExpressRouteCircuitData
     {
         /// <summary> Compatibility member. </summary>
-        public global::System.String GatewayManagerETag
-        {
-            get => default;
-            set { } // Compatibility setter: previous GA surface was settable; generated model treats this service-populated property as read-only.
-        }
+        public global::System.String GatewayManagerETag { get; set; }
         /// <summary> Compatibility member. </summary>
-        public global::System.Nullable<global::System.Int32> STag => default;
+        public global::System.Nullable<global::System.Int32> STag { get; }
     }
 }

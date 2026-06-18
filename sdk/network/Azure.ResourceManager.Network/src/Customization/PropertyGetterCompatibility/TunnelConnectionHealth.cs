@@ -9,6 +9,6 @@ namespace Azure.ResourceManager.Network.Models
     public partial class TunnelConnectionHealth
     {
         /// <summary> Compatibility member. </summary>
-        public global::System.String LastConnectionEstablishedOn => default;
+        public global::System.String LastConnectionEstablishedOn { get; }
     }
 }

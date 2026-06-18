@@ -9,6 +9,6 @@ namespace Azure.ResourceManager.Network.Models
     public partial class ContainerNetworkInterfaceIPConfiguration
     {
         /// <summary> Compatibility member. </summary>
-        public global::System.String ContainerNetworkInterfaceIpConfigurationType => default;
+        public global::System.String ContainerNetworkInterfaceIpConfigurationType { get; }
     }
 }

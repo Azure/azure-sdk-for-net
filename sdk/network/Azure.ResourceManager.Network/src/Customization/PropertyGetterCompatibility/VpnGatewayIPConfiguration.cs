@@ -9,8 +9,8 @@ namespace Azure.ResourceManager.Network.Models
     public partial class VpnGatewayIPConfiguration
     {
         /// <summary> Compatibility member. </summary>
-        public global::System.String PrivateIPAddress => default;
+        public global::System.String PrivateIPAddress { get; }
         /// <summary> Compatibility member. </summary>
-        public global::System.String PublicIPAddress => default;
+        public global::System.String PublicIPAddress { get; }
     }
 }

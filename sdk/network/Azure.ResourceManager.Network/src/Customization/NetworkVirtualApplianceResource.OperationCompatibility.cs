@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Network
     public partial class NetworkVirtualApplianceResource
     {
         /// <summary> Invokes the RestartAsync compatibility operation. </summary>
-        public virtual Task<Response> RestartAsync(NetworkVirtualApplianceInstanceIds content, CancellationToken cancellationToken) => default;
+        public virtual Task<Response> RestartAsync(NetworkVirtualApplianceInstanceIds content, CancellationToken cancellationToken) => throw new global::System.NotSupportedException("This compatibility method is not supported by the TypeSpec-generated Network SDK.");
         /// <summary> Invokes the Restart compatibility operation. </summary>
-        public virtual Response Restart(NetworkVirtualApplianceInstanceIds content, CancellationToken cancellationToken) => default;
+        public virtual Response Restart(NetworkVirtualApplianceInstanceIds content, CancellationToken cancellationToken) => throw new global::System.NotSupportedException("This compatibility method is not supported by the TypeSpec-generated Network SDK.");
     }
 }

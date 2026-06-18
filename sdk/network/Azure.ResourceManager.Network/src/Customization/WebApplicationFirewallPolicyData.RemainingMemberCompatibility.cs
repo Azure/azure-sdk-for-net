@@ -17,6 +17,6 @@ namespace Azure.ResourceManager.Network
     public partial class WebApplicationFirewallPolicyData
     {
         /// <summary> Gets or sets the ApplicationGatewayForContainers compatibility property. </summary>
-        public IReadOnlyList<SubResource> ApplicationGatewayForContainers => default;
+        public IReadOnlyList<SubResource> ApplicationGatewayForContainers { get; } = new global::System.Collections.Generic.List<SubResource>();
     }
 }

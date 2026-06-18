@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network
     public partial class InboundNatRuleData
     {
         /// <summary> Gets or sets the ETag compatibility property. </summary>
-        public ETag? ETag => default;
+        public ETag? ETag { get; }
         /// <summary> Compatibility member. </summary>
         public global::Azure.ResourceManager.Resources.Models.WritableSubResource FrontendIPConfiguration
         {

@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Network
     public partial class NetworkManagerResource
     {
         /// <summary> Invokes the PostNetworkManagerCommitAsync compatibility operation. </summary>
-        public virtual Task<ArmOperation<NetworkManagerCommit>> PostNetworkManagerCommitAsync(WaitUntil waitUntil, NetworkManagerCommit content, CancellationToken cancellationToken) => default;
+        public virtual Task<ArmOperation<NetworkManagerCommit>> PostNetworkManagerCommitAsync(WaitUntil waitUntil, NetworkManagerCommit content, CancellationToken cancellationToken) => throw new global::System.NotSupportedException("This compatibility method is not supported by the TypeSpec-generated Network SDK.");
         /// <summary> Invokes the PostNetworkManagerCommit compatibility operation. </summary>
-        public virtual ArmOperation<NetworkManagerCommit> PostNetworkManagerCommit(WaitUntil waitUntil, NetworkManagerCommit content, CancellationToken cancellationToken) => default;
+        public virtual ArmOperation<NetworkManagerCommit> PostNetworkManagerCommit(WaitUntil waitUntil, NetworkManagerCommit content, CancellationToken cancellationToken) => throw new global::System.NotSupportedException("This compatibility method is not supported by the TypeSpec-generated Network SDK.");
     }
 }

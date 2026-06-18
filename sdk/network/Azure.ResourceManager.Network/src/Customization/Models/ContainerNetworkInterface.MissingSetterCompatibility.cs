@@ -9,13 +9,6 @@ namespace Azure.ResourceManager.Network.Models
     public partial class ContainerNetworkInterface
     {
         /// <summary> Gets or sets the ContainerId compatibility property. </summary>
-        public Azure.Core.ResourceIdentifier ContainerId
-        {
-            get => default;
-            set
-            {
-                // Compatibility setter for previous GA surface; service value remains read-only.
-            }
-        }
+        public Azure.Core.ResourceIdentifier ContainerId { get; set; }
     }
 }

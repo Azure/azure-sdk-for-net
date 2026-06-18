@@ -9,6 +9,6 @@ namespace Azure.ResourceManager.Network.Models
     public partial class PrivateEndpointIPConfiguration
     {
         /// <summary> Compatibility member. </summary>
-        public global::System.String PrivateEndpointIPConfigurationType => default;
+        public global::System.String PrivateEndpointIPConfigurationType { get; }
     }
 }

@@ -9,6 +9,6 @@ namespace Azure.ResourceManager.Network.Models
     public partial class NvaInterfaceConfigurationsProperties
     {
         /// <summary> Compatibility member. </summary>
-        public global::System.Collections.Generic.IList<global::Azure.ResourceManager.Network.Models.NvaNicType> PropertiesType => default;
+        public global::System.Collections.Generic.IList<global::Azure.ResourceManager.Network.Models.NvaNicType> PropertiesType { get; } = new global::System.Collections.Generic.List<global::Azure.ResourceManager.Network.Models.NvaNicType>();
     }
 }

@@ -9,10 +9,6 @@ namespace Azure.ResourceManager.Network
     public partial class BgpConnectionData
     {
         /// <summary> Compatibility member. </summary>
-        public global::System.String PeerIP
-        {
-            get => default;
-            set { } // Compatibility setter: previous GA surface was settable; generated model treats this service-populated property as read-only.
-        }
+        public global::System.String PeerIP { get; set; }
     }
 }

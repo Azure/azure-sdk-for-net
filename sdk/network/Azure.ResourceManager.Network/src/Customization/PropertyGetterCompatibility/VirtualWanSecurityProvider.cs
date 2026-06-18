@@ -9,6 +9,6 @@ namespace Azure.ResourceManager.Network.Models
     public partial class VirtualWanSecurityProvider
     {
         /// <summary> Compatibility member. </summary>
-        public global::System.Nullable<global::Azure.ResourceManager.Network.Models.VirtualWanSecurityProviderType> ProviderType => default;
+        public global::System.Nullable<global::Azure.ResourceManager.Network.Models.VirtualWanSecurityProviderType> ProviderType { get; }
     }
 }

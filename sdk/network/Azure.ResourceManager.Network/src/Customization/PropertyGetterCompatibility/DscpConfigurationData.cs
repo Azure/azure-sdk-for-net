@@ -9,8 +9,8 @@ namespace Azure.ResourceManager.Network
     public partial class DscpConfigurationData
     {
         /// <summary> Compatibility member. </summary>
-        public global::System.Collections.Generic.IList<global::Azure.ResourceManager.Network.Models.QosIPRange> DestinationIPRanges => default;
+        public global::System.Collections.Generic.IList<global::Azure.ResourceManager.Network.Models.QosIPRange> DestinationIPRanges { get; } = new global::System.Collections.Generic.List<global::Azure.ResourceManager.Network.Models.QosIPRange>();
         /// <summary> Compatibility member. </summary>
-        public global::System.Collections.Generic.IList<global::Azure.ResourceManager.Network.Models.QosIPRange> SourceIPRanges => default;
+        public global::System.Collections.Generic.IList<global::Azure.ResourceManager.Network.Models.QosIPRange> SourceIPRanges { get; } = new global::System.Collections.Generic.List<global::Azure.ResourceManager.Network.Models.QosIPRange>();
     }
 }

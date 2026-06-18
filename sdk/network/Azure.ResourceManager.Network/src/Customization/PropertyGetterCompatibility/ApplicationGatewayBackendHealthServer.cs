@@ -9,6 +9,6 @@ namespace Azure.ResourceManager.Network.Models
     public partial class ApplicationGatewayBackendHealthServer
     {
         /// <summary> Compatibility member. </summary>
-        public global::Azure.ResourceManager.Network.NetworkInterfaceIPConfigurationData IPConfiguration => default;
+        public global::Azure.ResourceManager.Network.NetworkInterfaceIPConfigurationData IPConfiguration { get; }
     }
 }

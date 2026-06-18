@@ -9,6 +9,6 @@ namespace Azure.ResourceManager.Network.Models
     public partial class VpnClientConnectionHealth
     {
         /// <summary> Compatibility member. </summary>
-        public global::System.Collections.Generic.IReadOnlyList<global::System.String> AllocatedIPAddresses => default;
+        public global::System.Collections.Generic.IReadOnlyList<global::System.String> AllocatedIPAddresses { get; } = new global::System.Collections.Generic.List<global::System.String>();
     }
 }

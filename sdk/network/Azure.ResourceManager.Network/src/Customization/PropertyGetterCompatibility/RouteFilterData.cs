@@ -9,6 +9,6 @@ namespace Azure.ResourceManager.Network
     public partial class RouteFilterData
     {
         /// <summary> Compatibility member. </summary>
-        public global::System.Collections.Generic.IReadOnlyList<global::Azure.ResourceManager.Network.ExpressRouteCircuitPeeringData> IPv6Peerings => default;
+        public global::System.Collections.Generic.IReadOnlyList<global::Azure.ResourceManager.Network.ExpressRouteCircuitPeeringData> IPv6Peerings { get; } = new global::System.Collections.Generic.List<global::Azure.ResourceManager.Network.ExpressRouteCircuitPeeringData>();
     }
 }

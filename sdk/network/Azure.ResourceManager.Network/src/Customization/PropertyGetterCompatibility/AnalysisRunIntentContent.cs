@@ -9,10 +9,6 @@ namespace Azure.ResourceManager.Network.Models
     public partial class AnalysisRunIntentContent
     {
         /// <summary> Compatibility member. </summary>
-        public global::Azure.ResourceManager.Network.Models.NetworkVerifierIPTraffic IPTraffic
-        {
-            get => default;
-            set { } // Compatibility setter: previous GA surface was settable; generated model treats this service-populated property as read-only.
-        }
+        public global::Azure.ResourceManager.Network.Models.NetworkVerifierIPTraffic IPTraffic { get; set; }
     }
 }

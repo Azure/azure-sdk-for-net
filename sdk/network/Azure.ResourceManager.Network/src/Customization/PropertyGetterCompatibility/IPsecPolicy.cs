@@ -9,16 +9,8 @@ namespace Azure.ResourceManager.Network.Models
     public partial class IPsecPolicy
     {
         /// <summary> Compatibility member. </summary>
-        public global::Azure.ResourceManager.Network.Models.IPsecEncryption IPsecEncryption
-        {
-            get => default;
-            set { } // Compatibility setter: previous GA surface was settable; generated model treats this service-populated property as read-only.
-        }
+        public global::Azure.ResourceManager.Network.Models.IPsecEncryption IPsecEncryption { get; set; }
         /// <summary> Compatibility member. </summary>
-        public global::Azure.ResourceManager.Network.Models.IPsecIntegrity IPsecIntegrity
-        {
-            get => default;
-            set { } // Compatibility setter: previous GA surface was settable; generated model treats this service-populated property as read-only.
-        }
+        public global::Azure.ResourceManager.Network.Models.IPsecIntegrity IPsecIntegrity { get; set; }
     }
 }

@@ -26,10 +26,6 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static global::Azure.Response<global::Azure.ResourceManager.Network.CloudServiceSwapResource> GetCloudServiceSwap(this global::Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, global::System.String cloudServiceName, global::System.Threading.CancellationToken cancellationToken)
             => resourceGroupResource.GetCachedClient(client => new global::Azure.ResourceManager.Network.Mocking.MockableNetworkResourceGroupResource(client, resourceGroupResource.Id)).GetCloudServiceSwap(cloudServiceName, cancellationToken);
-        /// <summary> Invokes the GetLoadBalancer compatibility operation. </summary>
-        [ForwardsClientCalls]
-        public static global::Azure.Response<global::Azure.ResourceManager.Network.LoadBalancerResource> GetLoadBalancer(this global::Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, global::System.String loadBalancerName, global::System.String frontendIPConfigurationName, global::System.Threading.CancellationToken cancellationToken)
-            => resourceGroupResource.GetCachedClient(client => new global::Azure.ResourceManager.Network.Mocking.MockableNetworkResourceGroupResource(client, resourceGroupResource.Id)).GetLoadBalancer(loadBalancerName, frontendIPConfigurationName, cancellationToken);
         /// <summary> Invokes the GetApplicationGatewayAvailableSslOptions compatibility operation. </summary>
         public static global::Azure.Response<global::Azure.ResourceManager.Network.Models.ApplicationGatewayAvailableSslOptionsInfo> GetApplicationGatewayAvailableSslOptions(this global::Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, global::System.Threading.CancellationToken cancellationToken)
             => subscriptionResource.GetCachedClient(client => new global::Azure.ResourceManager.Network.Mocking.MockableNetworkSubscriptionResource(client, subscriptionResource.Id)).GetApplicationGatewayAvailableSslOptions(cancellationToken);
@@ -43,10 +39,6 @@ namespace Azure.ResourceManager.Network
         [ForwardsClientCalls]
         public static global::System.Threading.Tasks.Task<global::Azure.Response<global::Azure.ResourceManager.Network.CloudServiceSwapResource>> GetCloudServiceSwapAsync(this global::Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, global::System.String cloudServiceName, global::System.Threading.CancellationToken cancellationToken)
             => resourceGroupResource.GetCachedClient(client => new global::Azure.ResourceManager.Network.Mocking.MockableNetworkResourceGroupResource(client, resourceGroupResource.Id)).GetCloudServiceSwapAsync(cloudServiceName, cancellationToken);
-        /// <summary> Invokes the GetLoadBalancerAsync compatibility operation. </summary>
-        [ForwardsClientCalls]
-        public static global::System.Threading.Tasks.Task<global::Azure.Response<global::Azure.ResourceManager.Network.LoadBalancerResource>> GetLoadBalancerAsync(this global::Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, global::System.String loadBalancerName, global::System.String frontendIPConfigurationName, global::System.Threading.CancellationToken cancellationToken)
-            => resourceGroupResource.GetCachedClient(client => new global::Azure.ResourceManager.Network.Mocking.MockableNetworkResourceGroupResource(client, resourceGroupResource.Id)).GetLoadBalancerAsync(loadBalancerName, frontendIPConfigurationName, cancellationToken);
         /// <summary> Invokes the GetApplicationGatewayAvailableSslOptionsAsync compatibility operation. </summary>
         public static async global::System.Threading.Tasks.Task<global::Azure.Response<global::Azure.ResourceManager.Network.Models.ApplicationGatewayAvailableSslOptionsInfo>> GetApplicationGatewayAvailableSslOptionsAsync(this global::Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, global::System.Threading.CancellationToken cancellationToken)
             => await subscriptionResource.GetCachedClient(client => new global::Azure.ResourceManager.Network.Mocking.MockableNetworkSubscriptionResource(client, subscriptionResource.Id)).GetApplicationGatewayAvailableSslOptionsAsync(cancellationToken).ConfigureAwait(false);

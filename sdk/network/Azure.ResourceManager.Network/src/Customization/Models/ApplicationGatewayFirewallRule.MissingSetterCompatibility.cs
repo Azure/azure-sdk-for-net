@@ -9,63 +9,21 @@ namespace Azure.ResourceManager.Network.Models
     public partial class ApplicationGatewayFirewallRule
     {
         /// <summary> Gets or sets the Action compatibility property. </summary>
-        public System.Nullable<Azure.ResourceManager.Network.Models.ApplicationGatewayWafRuleActionType> Action
-        {
-            get => default;
-            set
-            {
-                // Compatibility setter for previous GA surface; service value remains read-only.
-            }
-        }
+        public System.Nullable<Azure.ResourceManager.Network.Models.ApplicationGatewayWafRuleActionType> Action { get; set; }
 
         /// <summary> Gets or sets the Description compatibility property. </summary>
-        public System.String Description
-        {
-            get => default;
-            set
-            {
-                // Compatibility setter for previous GA surface; service value remains read-only.
-            }
-        }
+        public System.String Description { get; set; }
 
         /// <summary> Gets or sets the RuleId compatibility property. </summary>
-        public System.Int32 RuleId
-        {
-            get => default;
-            set
-            {
-                // Compatibility setter for previous GA surface; service value remains read-only.
-            }
-        }
+        public System.Int32 RuleId { get; set; }
 
         /// <summary> Gets or sets the RuleIdString compatibility property. </summary>
-        public System.String RuleIdString
-        {
-            get => default;
-            set
-            {
-                // Compatibility setter for previous GA surface; service value remains read-only.
-            }
-        }
+        public System.String RuleIdString { get; set; }
 
         /// <summary> Gets or sets the Sensitivity compatibility property. </summary>
-        public System.Nullable<Azure.ResourceManager.Network.Models.ApplicationGatewayWafRuleSensitivityType> Sensitivity
-        {
-            get => default;
-            set
-            {
-                // Compatibility setter for previous GA surface; service value remains read-only.
-            }
-        }
+        public System.Nullable<Azure.ResourceManager.Network.Models.ApplicationGatewayWafRuleSensitivityType> Sensitivity { get; set; }
 
         /// <summary> Gets or sets the State compatibility property. </summary>
-        public System.Nullable<Azure.ResourceManager.Network.Models.ApplicationGatewayWafRuleStateType> State
-        {
-            get => default;
-            set
-            {
-                // Compatibility setter for previous GA surface; service value remains read-only.
-            }
-        }
+        public System.Nullable<Azure.ResourceManager.Network.Models.ApplicationGatewayWafRuleStateType> State { get; set; }
     }
 }

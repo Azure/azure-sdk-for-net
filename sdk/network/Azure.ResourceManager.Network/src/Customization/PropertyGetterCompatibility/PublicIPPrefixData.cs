@@ -9,8 +9,8 @@ namespace Azure.ResourceManager.Network
     public partial class PublicIPPrefixData
     {
         /// <summary> Compatibility member. </summary>
-        public global::System.String IPPrefix => default;
+        public global::System.String IPPrefix { get; }
         /// <summary> Compatibility member. </summary>
-        public global::System.Collections.Generic.IList<global::Azure.ResourceManager.Network.Models.IPTag> IPTags => default;
+        public global::System.Collections.Generic.IList<global::Azure.ResourceManager.Network.Models.IPTag> IPTags { get; } = new global::System.Collections.Generic.List<global::Azure.ResourceManager.Network.Models.IPTag>();
     }
 }

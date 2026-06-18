@@ -9,17 +9,13 @@ namespace Azure.ResourceManager.Network
     public partial class VirtualNetworkPeeringData
     {
         /// <summary> Compatibility member. </summary>
-        public global::System.Nullable<global::System.Boolean> AreCompleteVnetsPeered
-        {
-            get => default;
-            set { } // Compatibility setter: previous GA surface was settable; generated model treats this service-populated property as read-only.
-        }
+        public global::System.Nullable<global::System.Boolean> AreCompleteVnetsPeered { get; set; }
         /// <summary> Compatibility member. </summary>
-        public global::System.Collections.Generic.IList<global::System.String> LocalAddressPrefixes => default;
+        public global::System.Collections.Generic.IList<global::System.String> LocalAddressPrefixes { get; } = new global::System.Collections.Generic.List<global::System.String>();
         /// <summary> Compatibility member. </summary>
-        public global::System.Collections.Generic.IList<global::System.String> LocalVirtualNetworkAddressPrefixes => default;
+        public global::System.Collections.Generic.IList<global::System.String> LocalVirtualNetworkAddressPrefixes { get; } = new global::System.Collections.Generic.List<global::System.String>();
         /// <summary> Compatibility member. </summary>
-        public global::System.Collections.Generic.IList<global::System.String> RemoteAddressPrefixes => default;
+        public global::System.Collections.Generic.IList<global::System.String> RemoteAddressPrefixes { get; } = new global::System.Collections.Generic.List<global::System.String>();
         /// <summary> Compatibility member. </summary>
         public global::Azure.ResourceManager.Resources.Models.WritableSubResource RemoteVirtualNetwork
         {
@@ -27,6 +23,6 @@ namespace Azure.ResourceManager.Network
             set => RemoteVirtualNetworkId = value?.Id;
         }
         /// <summary> Compatibility member. </summary>
-        public global::System.Collections.Generic.IList<global::System.String> RemoteVirtualNetworkAddressPrefixes => default;
+        public global::System.Collections.Generic.IList<global::System.String> RemoteVirtualNetworkAddressPrefixes { get; } = new global::System.Collections.Generic.List<global::System.String>();
     }
 }

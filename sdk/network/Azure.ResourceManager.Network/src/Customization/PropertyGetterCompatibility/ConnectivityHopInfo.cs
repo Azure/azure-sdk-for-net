@@ -9,6 +9,6 @@ namespace Azure.ResourceManager.Network.Models
     public partial class ConnectivityHopInfo
     {
         /// <summary> Compatibility member. </summary>
-        public global::System.String ConnectivityHopType => default;
+        public global::System.String ConnectivityHopType { get; }
     }
 }

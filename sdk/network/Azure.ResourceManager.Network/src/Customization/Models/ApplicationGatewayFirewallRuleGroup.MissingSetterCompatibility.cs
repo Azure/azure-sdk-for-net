@@ -9,23 +9,9 @@ namespace Azure.ResourceManager.Network.Models
     public partial class ApplicationGatewayFirewallRuleGroup
     {
         /// <summary> Gets or sets the Description compatibility property. </summary>
-        public System.String Description
-        {
-            get => default;
-            set
-            {
-                // Compatibility setter for previous GA surface; service value remains read-only.
-            }
-        }
+        public System.String Description { get; set; }
 
         /// <summary> Gets or sets the RuleGroupName compatibility property. </summary>
-        public System.String RuleGroupName
-        {
-            get => default;
-            set
-            {
-                // Compatibility setter for previous GA surface; service value remains read-only.
-            }
-        }
+        public System.String RuleGroupName { get; set; }
     }
 }

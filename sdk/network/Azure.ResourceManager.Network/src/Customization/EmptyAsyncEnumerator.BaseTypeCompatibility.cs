@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.Network
     internal class EmptyAsyncEnumerator<T> : IAsyncEnumerator<T>
     {
         /// <summary> Compatibility member. </summary>
-        public T Current => default;
+        public T Current { get; }
         /// <summary> Invokes the DisposeAsync compatibility operation. </summary>
-        public ValueTask DisposeAsync() => default;
+        public ValueTask DisposeAsync() => new ValueTask();
         /// <summary> Invokes the MoveNextAsync compatibility operation. </summary>
         public ValueTask<bool> MoveNextAsync() => new ValueTask<bool>(false);
     }

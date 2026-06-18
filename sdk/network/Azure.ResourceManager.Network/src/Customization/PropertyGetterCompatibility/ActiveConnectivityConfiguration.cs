@@ -9,6 +9,6 @@ namespace Azure.ResourceManager.Network.Models
     public partial class ActiveConnectivityConfiguration
     {
         /// <summary> Compatibility member. </summary>
-        public global::System.Nullable<global::System.DateTimeOffset> CommittedOn => default;
+        public global::System.Nullable<global::System.DateTimeOffset> CommittedOn { get; }
     }
 }

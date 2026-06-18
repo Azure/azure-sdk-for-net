@@ -9,6 +9,6 @@ namespace Azure.ResourceManager.Network
     public partial class VirtualNetworkApplianceData
     {
         /// <summary> Compatibility member. </summary>
-        public global::System.Collections.Generic.IReadOnlyList<global::Azure.ResourceManager.Network.Models.VirtualNetworkApplianceIPConfiguration> IPConfigurations => default;
+        public global::System.Collections.Generic.IReadOnlyList<global::Azure.ResourceManager.Network.Models.VirtualNetworkApplianceIPConfiguration> IPConfigurations { get; } = new global::System.Collections.Generic.List<global::Azure.ResourceManager.Network.Models.VirtualNetworkApplianceIPConfiguration>();
     }
 }

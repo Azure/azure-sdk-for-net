@@ -20,20 +20,20 @@ namespace Azure.ResourceManager.Network
     public partial class IpamPoolResource
     {
         /// <summary> Invokes the DeleteAsync compatibility operation. </summary>
-        public virtual Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken) => default;
+        public virtual Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken) => throw new global::System.NotSupportedException("This compatibility method is not supported by the TypeSpec-generated Network SDK.");
         /// <summary> Invokes the Delete compatibility operation. </summary>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken) => default;
+        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken) => throw new global::System.NotSupportedException("This compatibility method is not supported by the TypeSpec-generated Network SDK.");
         /// <summary> Invokes the DeleteAsync compatibility operation. </summary>
-        public virtual Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, string ifMatch, CancellationToken cancellationToken) => default;
+        public virtual Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, string ifMatch, CancellationToken cancellationToken) => throw new global::System.NotSupportedException("This compatibility method is not supported by the TypeSpec-generated Network SDK.");
         /// <summary> Invokes the Delete compatibility operation. </summary>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, string ifMatch, CancellationToken cancellationToken) => default;
+        public virtual ArmOperation Delete(WaitUntil waitUntil, string ifMatch, CancellationToken cancellationToken) => throw new global::System.NotSupportedException("This compatibility method is not supported by the TypeSpec-generated Network SDK.");
         /// <summary> Invokes the UpdateAsync compatibility operation. </summary>
-        public virtual Task<Response<IpamPoolResource>> UpdateAsync(IpamPoolPatch patch, CancellationToken cancellationToken) => default;
+        public virtual Task<Response<IpamPoolResource>> UpdateAsync(IpamPoolPatch patch, CancellationToken cancellationToken) => throw new global::System.NotSupportedException("This compatibility method is not supported by the TypeSpec-generated Network SDK.");
         /// <summary> Invokes the Update compatibility operation. </summary>
-        public virtual Response<IpamPoolResource> Update(IpamPoolPatch patch, CancellationToken cancellationToken) => default;
+        public virtual Response<IpamPoolResource> Update(IpamPoolPatch patch, CancellationToken cancellationToken) => throw new global::System.NotSupportedException("This compatibility method is not supported by the TypeSpec-generated Network SDK.");
         /// <summary> Invokes the UpdateAsync compatibility operation. </summary>
-        public virtual Task<Response<IpamPoolResource>> UpdateAsync(IpamPoolPatch patch, string ifMatch, CancellationToken cancellationToken) => default;
+        public virtual Task<Response<IpamPoolResource>> UpdateAsync(IpamPoolPatch patch, string ifMatch, CancellationToken cancellationToken) => throw new global::System.NotSupportedException("This compatibility method is not supported by the TypeSpec-generated Network SDK.");
         /// <summary> Invokes the Update compatibility operation. </summary>
-        public virtual Response<IpamPoolResource> Update(IpamPoolPatch patch, string ifMatch, CancellationToken cancellationToken) => default;
+        public virtual Response<IpamPoolResource> Update(IpamPoolPatch patch, string ifMatch, CancellationToken cancellationToken) => throw new global::System.NotSupportedException("This compatibility method is not supported by the TypeSpec-generated Network SDK.");
     }
 }

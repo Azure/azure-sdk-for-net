@@ -9,8 +9,8 @@ namespace Azure.ResourceManager.Network
     public partial class PolicySignaturesOverridesForIdpsResource
     {
         /// <summary> Invokes the Update compatibility operation. </summary>
-        public virtual global::Azure.Response<global::Azure.ResourceManager.Network.PolicySignaturesOverridesForIdpsResource> Update(global::Azure.ResourceManager.Network.PolicySignaturesOverridesForIdpsData p0, global::System.Threading.CancellationToken p1) => default;
+        public virtual global::Azure.Response<global::Azure.ResourceManager.Network.PolicySignaturesOverridesForIdpsResource> Update(global::Azure.ResourceManager.Network.PolicySignaturesOverridesForIdpsData p0, global::System.Threading.CancellationToken p1) => throw new global::System.NotSupportedException("This compatibility method is not supported by the TypeSpec-generated Network SDK.");
         /// <summary> Invokes the UpdateAsync compatibility operation. </summary>
-        public virtual global::System.Threading.Tasks.Task<global::Azure.Response<global::Azure.ResourceManager.Network.PolicySignaturesOverridesForIdpsResource>> UpdateAsync(global::Azure.ResourceManager.Network.PolicySignaturesOverridesForIdpsData p0, global::System.Threading.CancellationToken p1) => default;
+        public virtual global::System.Threading.Tasks.Task<global::Azure.Response<global::Azure.ResourceManager.Network.PolicySignaturesOverridesForIdpsResource>> UpdateAsync(global::Azure.ResourceManager.Network.PolicySignaturesOverridesForIdpsData p0, global::System.Threading.CancellationToken p1) => throw new global::System.NotSupportedException("This compatibility method is not supported by the TypeSpec-generated Network SDK.");
     }
 }

@@ -9,13 +9,6 @@ namespace Azure.ResourceManager.Network
     public partial class HubVirtualNetworkConnectionData
     {
         /// <summary> Gets or sets the RoutingConfiguration compatibility property. </summary>
-        public Azure.ResourceManager.Network.Models.RoutingConfiguration RoutingConfiguration
-        {
-            get => default;
-            set
-            {
-                // Compatibility setter for previous GA surface; service value remains read-only.
-            }
-        }
+        public Azure.ResourceManager.Network.Models.RoutingConfiguration RoutingConfiguration { get; set; }
     }
 }

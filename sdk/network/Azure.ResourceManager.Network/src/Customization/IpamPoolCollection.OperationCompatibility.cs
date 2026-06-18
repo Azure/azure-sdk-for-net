@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.Network
     public partial class IpamPoolCollection
     {
         /// <summary> Invokes the CreateOrUpdateAsync compatibility operation. </summary>
-        public virtual Task<ArmOperation<IpamPoolResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string ipamPoolName, IpamPoolData data, CancellationToken cancellationToken) => default;
+        public virtual Task<ArmOperation<IpamPoolResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string ipamPoolName, IpamPoolData data, CancellationToken cancellationToken) => throw new global::System.NotSupportedException("This compatibility method is not supported by the TypeSpec-generated Network SDK.");
         /// <summary> Invokes the CreateOrUpdate compatibility operation. </summary>
-        public virtual ArmOperation<IpamPoolResource> CreateOrUpdate(WaitUntil waitUntil, string ipamPoolName, IpamPoolData data, CancellationToken cancellationToken) => default;
+        public virtual ArmOperation<IpamPoolResource> CreateOrUpdate(WaitUntil waitUntil, string ipamPoolName, IpamPoolData data, CancellationToken cancellationToken) => throw new global::System.NotSupportedException("This compatibility method is not supported by the TypeSpec-generated Network SDK.");
         /// <summary> Invokes the CreateOrUpdateAsync compatibility operation. </summary>
-        public virtual Task<ArmOperation<IpamPoolResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string ipamPoolName, IpamPoolData data, string ifMatch, CancellationToken cancellationToken) => default;
+        public virtual Task<ArmOperation<IpamPoolResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string ipamPoolName, IpamPoolData data, string ifMatch, CancellationToken cancellationToken) => throw new global::System.NotSupportedException("This compatibility method is not supported by the TypeSpec-generated Network SDK.");
         /// <summary> Invokes the CreateOrUpdate compatibility operation. </summary>
-        public virtual ArmOperation<IpamPoolResource> CreateOrUpdate(WaitUntil waitUntil, string ipamPoolName, IpamPoolData data, string ifMatch, CancellationToken cancellationToken) => default;
+        public virtual ArmOperation<IpamPoolResource> CreateOrUpdate(WaitUntil waitUntil, string ipamPoolName, IpamPoolData data, string ifMatch, CancellationToken cancellationToken) => throw new global::System.NotSupportedException("This compatibility method is not supported by the TypeSpec-generated Network SDK.");
     }
 }

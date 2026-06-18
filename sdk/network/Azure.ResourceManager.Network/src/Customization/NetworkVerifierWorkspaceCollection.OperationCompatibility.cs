@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.Network
     public partial class NetworkVerifierWorkspaceCollection
     {
         /// <summary> Invokes the CreateOrUpdateAsync compatibility operation. </summary>
-        public virtual Task<ArmOperation<NetworkVerifierWorkspaceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string networkVerifierWorkspaceName, NetworkVerifierWorkspaceData data, CancellationToken cancellationToken) => default;
+        public virtual Task<ArmOperation<NetworkVerifierWorkspaceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string networkVerifierWorkspaceName, NetworkVerifierWorkspaceData data, CancellationToken cancellationToken) => throw new global::System.NotSupportedException("This compatibility method is not supported by the TypeSpec-generated Network SDK.");
         /// <summary> Invokes the CreateOrUpdate compatibility operation. </summary>
-        public virtual ArmOperation<NetworkVerifierWorkspaceResource> CreateOrUpdate(WaitUntil waitUntil, string networkVerifierWorkspaceName, NetworkVerifierWorkspaceData data, CancellationToken cancellationToken) => default;
+        public virtual ArmOperation<NetworkVerifierWorkspaceResource> CreateOrUpdate(WaitUntil waitUntil, string networkVerifierWorkspaceName, NetworkVerifierWorkspaceData data, CancellationToken cancellationToken) => throw new global::System.NotSupportedException("This compatibility method is not supported by the TypeSpec-generated Network SDK.");
         /// <summary> Invokes the CreateOrUpdateAsync compatibility operation. </summary>
-        public virtual Task<ArmOperation<NetworkVerifierWorkspaceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string networkVerifierWorkspaceName, NetworkVerifierWorkspaceData data, string ifMatch, CancellationToken cancellationToken) => default;
+        public virtual Task<ArmOperation<NetworkVerifierWorkspaceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string networkVerifierWorkspaceName, NetworkVerifierWorkspaceData data, string ifMatch, CancellationToken cancellationToken) => throw new global::System.NotSupportedException("This compatibility method is not supported by the TypeSpec-generated Network SDK.");
         /// <summary> Invokes the CreateOrUpdate compatibility operation. </summary>
-        public virtual ArmOperation<NetworkVerifierWorkspaceResource> CreateOrUpdate(WaitUntil waitUntil, string networkVerifierWorkspaceName, NetworkVerifierWorkspaceData data, string ifMatch, CancellationToken cancellationToken) => default;
+        public virtual ArmOperation<NetworkVerifierWorkspaceResource> CreateOrUpdate(WaitUntil waitUntil, string networkVerifierWorkspaceName, NetworkVerifierWorkspaceData data, string ifMatch, CancellationToken cancellationToken) => throw new global::System.NotSupportedException("This compatibility method is not supported by the TypeSpec-generated Network SDK.");
     }
 }

@@ -9,13 +9,6 @@ namespace Azure.ResourceManager.Network
     public partial class RouteFilterRuleData
     {
         /// <summary> Gets or sets the Location compatibility property. </summary>
-        public System.Nullable<Azure.Core.AzureLocation> Location
-        {
-            get => default;
-            set
-            {
-                // Compatibility setter for previous GA surface; service value remains read-only.
-            }
-        }
+        public System.Nullable<Azure.Core.AzureLocation> Location { get; set; }
     }
 }

@@ -15,6 +15,6 @@ namespace Azure.ResourceManager.Network
             set => GatewayIpAddress = value;
         }
         /// <summary> Compatibility member. </summary>
-        public global::System.Collections.Generic.IList<global::System.String> LocalNetworkAddressPrefixes => default;
+        public global::System.Collections.Generic.IList<global::System.String> LocalNetworkAddressPrefixes { get; } = new global::System.Collections.Generic.List<global::System.String>();
     }
 }

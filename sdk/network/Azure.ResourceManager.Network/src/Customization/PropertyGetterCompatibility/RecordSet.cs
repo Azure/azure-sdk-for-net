@@ -9,6 +9,6 @@ namespace Azure.ResourceManager.Network.Models
     public partial class RecordSet
     {
         /// <summary> Compatibility member. </summary>
-        public global::System.Collections.Generic.IReadOnlyList<global::System.String> IPAddresses => default;
+        public global::System.Collections.Generic.IReadOnlyList<global::System.String> IPAddresses { get; } = new global::System.Collections.Generic.List<global::System.String>();
     }
 }

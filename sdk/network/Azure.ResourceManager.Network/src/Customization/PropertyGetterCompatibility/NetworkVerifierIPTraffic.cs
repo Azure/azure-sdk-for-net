@@ -9,8 +9,8 @@ namespace Azure.ResourceManager.Network.Models
     public partial class NetworkVerifierIPTraffic
     {
         /// <summary> Compatibility member. </summary>
-        public global::System.Collections.Generic.IList<global::System.String> DestinationIPs => default;
+        public global::System.Collections.Generic.IList<global::System.String> DestinationIPs { get; } = new global::System.Collections.Generic.List<global::System.String>();
         /// <summary> Compatibility member. </summary>
-        public global::System.Collections.Generic.IList<global::System.String> SourceIPs => default;
+        public global::System.Collections.Generic.IList<global::System.String> SourceIPs { get; } = new global::System.Collections.Generic.List<global::System.String>();
     }
 }

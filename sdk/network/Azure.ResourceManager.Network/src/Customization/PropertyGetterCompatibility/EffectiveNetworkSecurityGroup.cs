@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
         public string TagMap => _tagMap;
 
         /// <summary> Compatibility member. </summary>
-        public global::System.Collections.Generic.IReadOnlyDictionary<global::System.String, global::System.Collections.Generic.IList<global::System.String>> TagToIPAddresses => default;
+        public global::System.Collections.Generic.IReadOnlyDictionary<global::System.String, global::System.Collections.Generic.IList<global::System.String>> TagToIPAddresses { get; } = new global::System.Collections.Generic.Dictionary<global::System.String, global::System.Collections.Generic.IList<global::System.String>>();
 
         // The generated constructor and writer must reference the obsolete TagMap compatibility property.
         // TODO: Remove this SDK-side workaround after https://github.com/Azure/azure-sdk-for-net/issues/60023 is fixed.

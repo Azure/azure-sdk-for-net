@@ -10,6 +10,6 @@ namespace Azure.ResourceManager.Network
     {
         /// <summary> Compatibility member. </summary>
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
-        public global::System.Collections.Generic.IList<global::System.String> SnatPrivateRanges => default;
+        public global::System.Collections.Generic.IList<global::System.String> SnatPrivateRanges { get; } = new global::System.Collections.Generic.List<global::System.String>();
     }
 }
