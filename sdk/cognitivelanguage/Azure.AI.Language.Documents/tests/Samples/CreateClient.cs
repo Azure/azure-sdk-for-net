@@ -2,29 +2,32 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Core.TestFramework;
-
-#region Snippet:DocumentsServiceClient_Namespaces
 using Azure.Core;
 using Azure.Core.Serialization;
+using Azure.Core.TestFramework;
+using NUnit.Framework;
+
+#region Snippet:DocumentsServiceClient_Namespaces
 using Azure.AI.Language.Documents;
 #endregion
 
 #region Snippet:DocumentsService_Identity_Namespace
 using Azure.Identity;
-using NUnit.Framework;
 #endregion
 
 namespace Azure.AI.Language.Documents.Tests.Samples
 {
-    public partial class DocumentsServiceClientSamples : DocumentServiceTestBase<DocumentsServiceClient>
+    public partial class CreateClient : SamplesBase<DocumentServiceTestEnvironment>
     {
         [Test]
         public void CreateConversationClient()
         {
             #region Snippet:DocumentsServiceClient_Create
             Uri endpoint = new Uri("{endpoint}");
-            AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
+#if !SNIPPET
+            endpoint = TestEnvironment.Endpoint;
+#endif
+            DefaultAzureCredential credential = new DefaultAzureCredential();
 
             DocumentsServiceClient client = new DocumentsServiceClient(endpoint, credential);
             #endregion
@@ -35,7 +38,10 @@ namespace Azure.AI.Language.Documents.Tests.Samples
         {
             #region Snippet:CreateDocumentsServiceClientForSpecificApiVersion
             Uri endpoint = new Uri("{endpoint}");
-            AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
+#if !SNIPPET
+            endpoint = TestEnvironment.Endpoint;
+#endif
+            DefaultAzureCredential credential = new DefaultAzureCredential();
             DocumentsServiceClientOptions options = new DocumentsServiceClientOptions(DocumentsServiceClientOptions.ServiceVersion.V2026_05_15_Preview);
             DocumentsServiceClient client = new DocumentsServiceClient(endpoint, credential, options);
             #endregion
@@ -46,6 +52,9 @@ namespace Azure.AI.Language.Documents.Tests.Samples
         {
             #region Snippet:DocumentsServiceClient_CreateWithDefaultAzureCredential
             Uri endpoint = new Uri("{endpoint}");
+#if !SNIPPET
+            endpoint = TestEnvironment.Endpoint;
+#endif
             DefaultAzureCredential credential = new DefaultAzureCredential();
 
             DocumentsServiceClient client = new DocumentsServiceClient(endpoint, credential);
@@ -55,7 +64,7 @@ namespace Azure.AI.Language.Documents.Tests.Samples
         [Test]
         public void BadArgument()
         {
-            DocumentsServiceClient client = Client;
+            DocumentsServiceClient client = new DocumentsServiceClient(TestEnvironment.Endpoint, new DefaultAzureCredential());
 
             #region Snippet:DocumentsServiceClient_BadRequest
             try

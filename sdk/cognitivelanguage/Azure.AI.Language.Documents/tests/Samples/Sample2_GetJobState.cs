@@ -11,13 +11,18 @@ using NUnit.Framework;
 
 namespace Azure.AI.Language.Documents.Tests.Samples
 {
-    public partial class DocumentsServiceClientSamples
+    public class Sample2_GetJobState : SamplesBase<DocumentServiceTestEnvironment>
     {
         [SyncOnly]
         [Test]
         public void GetJobState()
         {
-            DocumentsServiceClient client = Client;
+            Uri endpoint = new Uri("{endpoint}");
+#if !SNIPPET
+            endpoint = TestEnvironment.Endpoint;
+#endif
+            DefaultAzureCredential credential = new DefaultAzureCredential();
+            DocumentsServiceClient client = new DocumentsServiceClient(endpoint, credential);
 
             #region Snippet:DocumentsService_GetJobState
             string sourceLocation = "https://<storage-account>.blob.core.windows.net/input/document.txt?<sas-token>";
@@ -79,7 +84,7 @@ namespace Azure.AI.Language.Documents.Tests.Samples
         [Test]
         public async Task GetJobStateAsync()
         {
-            DocumentsServiceClient client = Client;
+            DocumentsServiceClient client = new DocumentsServiceClient(TestEnvironment.Endpoint, new DefaultAzureCredential());
 
             string sourceLocation = TestEnvironment.SourceLocation;
             string targetLocation = TestEnvironment.TargetLocation;
