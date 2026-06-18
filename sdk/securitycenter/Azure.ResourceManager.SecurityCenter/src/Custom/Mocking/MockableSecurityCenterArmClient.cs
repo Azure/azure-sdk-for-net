@@ -13,10 +13,10 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
     {
         /// <summary> Get a security assessment on your scanned resource. </summary>
         public virtual Response<SecurityAssessmentResource> GetSecurityAssessment(ResourceIdentifier scope, string assessmentName, SecurityAssessmentODataExpand? expand = default, CancellationToken cancellationToken = default)
-            => GetSecurityAssessment(scope, assessmentName, expand.HasValue ? new ExpandEnum(expand.Value.ToString()) : null, cancellationToken);
+            => GetSecurityAssessments(scope).Get(assessmentName, expand, cancellationToken);
 
         /// <summary> Get a security assessment on your scanned resource. </summary>
         public virtual Task<Response<SecurityAssessmentResource>> GetSecurityAssessmentAsync(ResourceIdentifier scope, string assessmentName, SecurityAssessmentODataExpand? expand = default, CancellationToken cancellationToken = default)
-            => GetSecurityAssessmentAsync(scope, assessmentName, expand.HasValue ? new ExpandEnum(expand.Value.ToString()) : null, cancellationToken);
+            => GetSecurityAssessments(scope).GetAsync(assessmentName, expand, cancellationToken);
     }
 }

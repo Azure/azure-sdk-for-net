@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> The available sub plans. </summary>
-        public SubPlan? SubPlanType
+        public AvailableSubPlanType? SubPlanType
         {
             get
             {

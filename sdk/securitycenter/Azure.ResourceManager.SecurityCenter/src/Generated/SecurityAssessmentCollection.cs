@@ -44,106 +44,6 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// Get a security assessment on your scanned resource
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{resourceId}/providers/Microsoft.Security/assessments/{assessmentName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SecurityAssessmentResponses_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-04. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="assessmentName"> The Assessment Key - Unique key for the assessment type. </param>
-        /// <param name="expand"> OData expand. Optional. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="assessmentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="assessmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<SecurityAssessmentResource>> GetAsync(string assessmentName, ExpandEnum? expand = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(assessmentName, nameof(assessmentName));
-
-            using DiagnosticScope scope = _assessmentsClientDiagnostics.CreateScope("SecurityAssessmentCollection.Get");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _assessmentsRestClient.CreateGetRequest(Id.ToString(), assessmentName, expand?.ToString(), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<SecurityAssessmentData> response = Response.FromValue(SecurityAssessmentData.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return Response.FromValue(new SecurityAssessmentResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Get a security assessment on your scanned resource
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{resourceId}/providers/Microsoft.Security/assessments/{assessmentName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SecurityAssessmentResponses_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-04. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="assessmentName"> The Assessment Key - Unique key for the assessment type. </param>
-        /// <param name="expand"> OData expand. Optional. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="assessmentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="assessmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<SecurityAssessmentResource> Get(string assessmentName, ExpandEnum? expand = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(assessmentName, nameof(assessmentName));
-
-            using DiagnosticScope scope = _assessmentsClientDiagnostics.CreateScope("SecurityAssessmentCollection.Get");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _assessmentsRestClient.CreateGetRequest(Id.ToString(), assessmentName, expand?.ToString(), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<SecurityAssessmentData> response = Response.FromValue(SecurityAssessmentData.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return Response.FromValue(new SecurityAssessmentResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
         /// Get security assessments on all your scanned resources inside a scope
         /// <list type="bullet">
         /// <item>
@@ -200,122 +100,6 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{resourceId}/providers/Microsoft.Security/assessments/{assessmentName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SecurityAssessmentResponses_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-04. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="assessmentName"> The Assessment Key - Unique key for the assessment type. </param>
-        /// <param name="expand"> OData expand. Optional. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="assessmentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="assessmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string assessmentName, ExpandEnum? expand = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(assessmentName, nameof(assessmentName));
-
-            using DiagnosticScope scope = _assessmentsClientDiagnostics.CreateScope("SecurityAssessmentCollection.Exists");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _assessmentsRestClient.CreateGetRequest(Id.ToString(), assessmentName, expand?.ToString(), context);
-                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
-                Response<SecurityAssessmentData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(SecurityAssessmentData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((SecurityAssessmentData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Checks to see if the resource exists in azure.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{resourceId}/providers/Microsoft.Security/assessments/{assessmentName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SecurityAssessmentResponses_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-04. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="assessmentName"> The Assessment Key - Unique key for the assessment type. </param>
-        /// <param name="expand"> OData expand. Optional. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="assessmentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="assessmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<bool> Exists(string assessmentName, ExpandEnum? expand = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(assessmentName, nameof(assessmentName));
-
-            using DiagnosticScope scope = _assessmentsClientDiagnostics.CreateScope("SecurityAssessmentCollection.Exists");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _assessmentsRestClient.CreateGetRequest(Id.ToString(), assessmentName, expand?.ToString(), context);
-                Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
-                Response<SecurityAssessmentData> response = default;
-                switch (result.Status)
-                {
-                    case 200:
-                        response = Response.FromValue(SecurityAssessmentData.FromResponse(result), result);
-                        break;
-                    case 404:
-                        response = Response.FromValue((SecurityAssessmentData)null, result);
-                        break;
-                    default:
-                        throw new RequestFailedException(result);
-                }
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
@@ -337,7 +121,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="assessmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="assessmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<SecurityAssessmentResource>> GetIfExistsAsync(string assessmentName, ExpandEnum? expand = default, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<SecurityAssessmentResource>> GetIfExistsAsync(string assessmentName, SecurityAssessmentODataExpand? expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(assessmentName, nameof(assessmentName));
 
@@ -399,7 +183,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="assessmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="assessmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<SecurityAssessmentResource> GetIfExists(string assessmentName, ExpandEnum? expand = default, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<SecurityAssessmentResource> GetIfExists(string assessmentName, SecurityAssessmentODataExpand? expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(assessmentName, nameof(assessmentName));
 

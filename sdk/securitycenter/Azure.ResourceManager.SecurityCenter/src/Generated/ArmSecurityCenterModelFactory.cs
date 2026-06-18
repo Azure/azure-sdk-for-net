@@ -527,7 +527,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <param name="minimalSeverity"> Defines the minimal alert severity which will be sent as email notifications. </param>
         /// <returns> A new <see cref="Models.NotificationsSourceAlert"/> instance for mocking. </returns>
-        public static NotificationsSourceAlert NotificationsSourceAlert(MinimalSeverity? minimalSeverity = default)
+        public static NotificationsSourceAlert NotificationsSourceAlert(SecurityAlertMinimalSeverity? minimalSeverity = default)
         {
             return new NotificationsSourceAlert(default, default, minimalSeverity);
         }
@@ -1831,7 +1831,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="subPlanType"> The available sub plans. </param>
         /// <param name="vmScanners"> The Microsoft Defender for Server VM scanning configuration. </param>
         /// <returns> A new <see cref="Models.DefenderForServersAwsOffering"/> instance for mocking. </returns>
-        public static DefenderForServersAwsOffering DefenderForServersAwsOffering(string description = default, string defenderForServersCloudRoleArn = default, DefenderForServersAwsOfferingArcAutoProvisioning arcAutoProvisioning = default, DefenderForServersAwsOfferingVulnerabilityAssessmentAutoProvisioning vaAutoProvisioning = default, DefenderForServersAwsOfferingMdeAutoProvisioning mdeAutoProvisioning = default, SubPlan? subPlanType = default, DefenderForServersAwsOfferingVmScanners vmScanners = default)
+        public static DefenderForServersAwsOffering DefenderForServersAwsOffering(string description = default, string defenderForServersCloudRoleArn = default, DefenderForServersAwsOfferingArcAutoProvisioning arcAutoProvisioning = default, DefenderForServersAwsOfferingVulnerabilityAssessmentAutoProvisioning vaAutoProvisioning = default, DefenderForServersAwsOfferingMdeAutoProvisioning mdeAutoProvisioning = default, AvailableSubPlanType? subPlanType = default, DefenderForServersAwsOfferingVmScanners vmScanners = default)
         {
             return new DefenderForServersAwsOffering(
                 default,
@@ -1882,7 +1882,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="enabled"> Is Vulnerability Assessment auto provisioning enabled. </param>
         /// <param name="type"> The Vulnerability Assessment solution to be provisioned. Can be either 'TVM' or 'Qualys'. </param>
         /// <returns> A new <see cref="Models.DefenderForServersAwsOfferingVulnerabilityAssessmentAutoProvisioning"/> instance for mocking. </returns>
-        public static DefenderForServersAwsOfferingVulnerabilityAssessmentAutoProvisioning DefenderForServersAwsOfferingVulnerabilityAssessmentAutoProvisioning(bool? enabled = default, Type? @type = default)
+        public static DefenderForServersAwsOfferingVulnerabilityAssessmentAutoProvisioning DefenderForServersAwsOfferingVulnerabilityAssessmentAutoProvisioning(bool? enabled = default, VulnerabilityAssessmentAutoProvisioningType? @type = default)
         {
             return new DefenderForServersAwsOfferingVulnerabilityAssessmentAutoProvisioning(enabled, @type is null ? default : new DefenderForServersAwsOfferingVaAutoProvisioningConfiguration(@type, default), default);
         }
@@ -1969,7 +1969,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="subPlanType"> The available sub plans. </param>
         /// <param name="vmScanners"> The Microsoft Defender for Server VM scanning configuration. </param>
         /// <returns> A new <see cref="Models.DefenderForServersGcpOffering"/> instance for mocking. </returns>
-        public static DefenderForServersGcpOffering DefenderForServersGcpOffering(string description = default, GcpDefenderForServersInfo defenderForServers = default, DefenderForServersGcpOfferingArcAutoProvisioning arcAutoProvisioning = default, DefenderForServersGcpOfferingVaAutoProvisioning vaAutoProvisioning = default, DefenderForServersGcpOfferingMdeAutoProvisioning mdeAutoProvisioning = default, SubPlan? subPlanType = default, DefenderForServersGcpOfferingVmScanners vmScanners = default)
+        public static DefenderForServersGcpOffering DefenderForServersGcpOffering(string description = default, GcpDefenderForServersInfo defenderForServers = default, DefenderForServersGcpOfferingArcAutoProvisioning arcAutoProvisioning = default, DefenderForServersGcpOfferingVaAutoProvisioning vaAutoProvisioning = default, DefenderForServersGcpOfferingMdeAutoProvisioning mdeAutoProvisioning = default, AvailableSubPlanType? subPlanType = default, DefenderForServersGcpOfferingVmScanners vmScanners = default)
         {
             return new DefenderForServersGcpOffering(
                 default,
@@ -2010,7 +2010,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="enabled"> Is Vulnerability Assessment auto provisioning enabled. </param>
         /// <param name="type"> The Vulnerability Assessment solution to be provisioned. Can be either 'TVM' or 'Qualys'. </param>
         /// <returns> A new <see cref="Models.DefenderForServersGcpOfferingVaAutoProvisioning"/> instance for mocking. </returns>
-        public static DefenderForServersGcpOfferingVaAutoProvisioning DefenderForServersGcpOfferingVaAutoProvisioning(bool? enabled = default, Type? @type = default)
+        public static DefenderForServersGcpOfferingVaAutoProvisioning DefenderForServersGcpOfferingVaAutoProvisioning(bool? enabled = default, VulnerabilityAssessmentAutoProvisioningType? @type = default)
         {
             return new DefenderForServersGcpOfferingVaAutoProvisioning(enabled, @type is null ? default : new DefenderForServersGcpOfferingVaAutoProvisioningConfiguration(@type, default), default);
         }
@@ -3598,7 +3598,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="queryCheck"> The rule query details. </param>
         /// <param name="benchmarkReferences"> The benchmark references. </param>
         /// <returns> A new <see cref="Models.VaRule"/> instance for mocking. </returns>
-        public static VaRule VaRule(string ruleId = default, RuleSeverity? severity = default, string category = default, RuleType? ruleType = default, string title = default, string description = default, string rationale = default, QueryCheck queryCheck = default, IEnumerable<BenchmarkReference> benchmarkReferences = default)
+        public static VaRule VaRule(string ruleId = default, RuleSeverity? severity = default, string category = default, VulnerabilityAssessmentRuleType? ruleType = default, string title = default, string description = default, string rationale = default, QueryCheck queryCheck = default, IEnumerable<BenchmarkReference> benchmarkReferences = default)
         {
             benchmarkReferences ??= new ChangeTrackingList<BenchmarkReference>();
 

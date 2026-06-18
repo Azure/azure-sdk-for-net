@@ -26,18 +26,36 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary> Get a security assessment on your scanned resource. </summary>
         public virtual Task<Response<SecurityAssessmentResource>> GetAsync(string assessmentName, SecurityAssessmentODataExpand? expand = default, CancellationToken cancellationToken = default)
-            => GetAsync(assessmentName, expand.HasValue ? new ExpandEnum(expand.Value.ToString()) : null, cancellationToken);
+            => GetAsyncWrapper(assessmentName, expand, cancellationToken);
 
         /// <summary> Get a security assessment on your scanned resource. </summary>
         public virtual Response<SecurityAssessmentResource> Get(string assessmentName, SecurityAssessmentODataExpand? expand = default, CancellationToken cancellationToken = default)
-            => Get(assessmentName, expand.HasValue ? new ExpandEnum(expand.Value.ToString()) : null, cancellationToken);
+        {
+            NullableResponse<SecurityAssessmentResource> response = GetIfExists(assessmentName, expand, cancellationToken);
+            return Response.FromValue(response.Value, response.GetRawResponse());
+        }
 
         /// <summary> Check if a security assessment exists. </summary>
         public virtual Task<Response<bool>> ExistsAsync(string assessmentName, SecurityAssessmentODataExpand? expand = default, CancellationToken cancellationToken = default)
-            => ExistsAsync(assessmentName, expand.HasValue ? new ExpandEnum(expand.Value.ToString()) : null, cancellationToken);
+            => ExistsAsyncWrapper(assessmentName, expand, cancellationToken);
 
         /// <summary> Check if a security assessment exists. </summary>
         public virtual Response<bool> Exists(string assessmentName, SecurityAssessmentODataExpand? expand = default, CancellationToken cancellationToken = default)
-            => Exists(assessmentName, expand.HasValue ? new ExpandEnum(expand.Value.ToString()) : null, cancellationToken);
+        {
+            NullableResponse<SecurityAssessmentResource> response = GetIfExists(assessmentName, expand, cancellationToken);
+            return Response.FromValue(response.HasValue, response.GetRawResponse());
+        }
+
+        private async Task<Response<SecurityAssessmentResource>> GetAsyncWrapper(string assessmentName, SecurityAssessmentODataExpand? expand, CancellationToken cancellationToken)
+        {
+            NullableResponse<SecurityAssessmentResource> response = await GetIfExistsAsync(assessmentName, expand, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(response.Value, response.GetRawResponse());
+        }
+
+        private async Task<Response<bool>> ExistsAsyncWrapper(string assessmentName, SecurityAssessmentODataExpand? expand, CancellationToken cancellationToken)
+        {
+            NullableResponse<SecurityAssessmentResource> response = await GetIfExistsAsync(assessmentName, expand, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(response.HasValue, response.GetRawResponse());
+        }
     }
 }

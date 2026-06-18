@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="queryCheck"> The rule query details. </param>
         /// <param name="benchmarkReferences"> The benchmark references. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VaRule(string ruleId, RuleSeverity? severity, string category, RuleType? ruleType, string title, string description, string rationale, QueryCheck queryCheck, IList<BenchmarkReference> benchmarkReferences, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VaRule(string ruleId, RuleSeverity? severity, string category, VulnerabilityAssessmentRuleType? ruleType, string title, string description, string rationale, QueryCheck queryCheck, IList<BenchmarkReference> benchmarkReferences, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RuleId = ruleId;
             Severity = severity;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public string Category { get; }
 
         /// <summary> The rule type. </summary>
-        public RuleType? RuleType { get; }
+        public VulnerabilityAssessmentRuleType? RuleType { get; }
 
         /// <summary> The rule title. </summary>
         public string Title { get; }

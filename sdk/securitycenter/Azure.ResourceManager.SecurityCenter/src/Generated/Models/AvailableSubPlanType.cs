@@ -12,7 +12,7 @@ using Azure.ResourceManager.SecurityCenter;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The available sub plans. </summary>
-    public readonly partial struct SubPlan : IEquatable<SubPlan>
+    public readonly partial struct AvailableSubPlanType : IEquatable<AvailableSubPlanType>
     {
         private readonly string _value;
         /// <summary> P1. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> P2. </summary>
         private const string P2Value = "P2";
 
-        /// <summary> Initializes a new instance of <see cref="SubPlan"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailableSubPlanType"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public SubPlan(string value)
+        public AvailableSubPlanType(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> P1. </summary>
-        public static SubPlan P1 { get; } = new SubPlan(P1Value);
+        public static AvailableSubPlanType P1 { get; } = new AvailableSubPlanType(P1Value);
 
         /// <summary> P2. </summary>
-        public static SubPlan P2 { get; } = new SubPlan(P2Value);
+        public static AvailableSubPlanType P2 { get; } = new AvailableSubPlanType(P2Value);
 
-        /// <summary> Determines if two <see cref="SubPlan"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="AvailableSubPlanType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(SubPlan left, SubPlan right) => left.Equals(right);
+        public static bool operator ==(AvailableSubPlanType left, AvailableSubPlanType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="SubPlan"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="AvailableSubPlanType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(SubPlan left, SubPlan right) => !left.Equals(right);
+        public static bool operator !=(AvailableSubPlanType left, AvailableSubPlanType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="SubPlan"/>. </summary>
+        /// <summary> Converts a string to a <see cref="AvailableSubPlanType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SubPlan(string value) => new SubPlan(value);
+        public static implicit operator AvailableSubPlanType(string value) => new AvailableSubPlanType(value);
 
-        /// <summary> Converts a string to a <see cref="SubPlan"/>. </summary>
+        /// <summary> Converts a string to a <see cref="AvailableSubPlanType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator SubPlan?(string value) => value == null ? null : new SubPlan(value);
+        public static implicit operator AvailableSubPlanType?(string value) => value == null ? null : new AvailableSubPlanType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is SubPlan other && Equals(other);
+        public override bool Equals(object obj) => obj is AvailableSubPlanType other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(SubPlan other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(AvailableSubPlanType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

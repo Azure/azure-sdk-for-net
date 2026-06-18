@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             string ruleId = default;
             RuleSeverity? severity = default;
             string category = default;
-            RuleType? ruleType = default;
+            VulnerabilityAssessmentRuleType? ruleType = default;
             string title = default;
             string description = default;
             string rationale = default;
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    ruleType = new RuleType(prop.Value.GetString());
+                    ruleType = new VulnerabilityAssessmentRuleType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("title"u8))

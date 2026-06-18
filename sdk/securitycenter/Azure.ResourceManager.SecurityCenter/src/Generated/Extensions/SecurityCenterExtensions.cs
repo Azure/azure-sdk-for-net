@@ -1783,48 +1783,6 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// Get a security assessment on your scanned resource
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterArmClient.GetSecurityAssessment(ResourceIdentifier, string, ExpandEnum?, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="assessmentName"> The Assessment Key - Unique key for the assessment type. </param>
-        /// <param name="expand"> OData expand. Optional. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<SecurityAssessmentResource> GetSecurityAssessment(this ArmClient client, ResourceIdentifier scope, string assessmentName, ExpandEnum? expand = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableSecurityCenterArmClient(client).GetSecurityAssessment(scope, assessmentName, expand, cancellationToken);
-        }
-
-        /// <summary>
-        /// Get a security assessment on your scanned resource
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterArmClient.GetSecurityAssessmentAsync(ResourceIdentifier, string, ExpandEnum?, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="assessmentName"> The Assessment Key - Unique key for the assessment type. </param>
-        /// <param name="expand"> OData expand. Optional. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<SecurityAssessmentResource>> GetSecurityAssessmentAsync(this ArmClient client, ResourceIdentifier scope, string assessmentName, ExpandEnum? expand = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return await GetMockableSecurityCenterArmClient(client).GetSecurityAssessmentAsync(scope, assessmentName, expand, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="AdvancedThreatProtectionSettingResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
@@ -4276,7 +4234,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Get all security controls within a scope
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterSubscriptionResource.GetAllAsync(ExpandControlsEnum?, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterSubscriptionResource.GetAllAsync(SecurityScoreODataExpand?, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -4284,7 +4242,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="SecureScoreControlDetails"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SecureScoreControlDetails> GetAllAsync(this SubscriptionResource subscriptionResource, ExpandControlsEnum? expand = default, CancellationToken cancellationToken = default)
+        public static AsyncPageable<SecureScoreControlDetails> GetAllAsync(this SubscriptionResource subscriptionResource, SecurityScoreODataExpand? expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -4295,7 +4253,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Get all security controls within a scope
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterSubscriptionResource.GetAll(ExpandControlsEnum?, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSecurityCenterSubscriptionResource.GetAll(SecurityScoreODataExpand?, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -4303,7 +4261,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="SecureScoreControlDetails"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SecureScoreControlDetails> GetAll(this SubscriptionResource subscriptionResource, ExpandControlsEnum? expand = default, CancellationToken cancellationToken = default)
+        public static Pageable<SecureScoreControlDetails> GetAll(this SubscriptionResource subscriptionResource, SecurityScoreODataExpand? expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 

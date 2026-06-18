@@ -13,6 +13,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
     {
         /// <summary> Get all security controls within a scope. </summary>
         public virtual Pageable<SecureScoreControlDetails> GetSecureScoreControls(SecurityScoreODataExpand? expand = default, CancellationToken cancellationToken = default)
-            => GetAll(expand.HasValue ? new ExpandControlsEnum(expand.Value.ToString()) : null, cancellationToken);
+            => GetAll(expand, cancellationToken);
     }
 }

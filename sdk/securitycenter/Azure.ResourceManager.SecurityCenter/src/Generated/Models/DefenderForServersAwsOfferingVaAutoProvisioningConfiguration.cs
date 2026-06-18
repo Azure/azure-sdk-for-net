@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of <see cref="DefenderForServersAwsOfferingVaAutoProvisioningConfiguration"/>. </summary>
         /// <param name="type"> The Vulnerability Assessment solution to be provisioned. Can be either 'TVM' or 'Qualys'. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DefenderForServersAwsOfferingVaAutoProvisioningConfiguration(Type? @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DefenderForServersAwsOfferingVaAutoProvisioningConfiguration(VulnerabilityAssessmentAutoProvisioningType? @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The Vulnerability Assessment solution to be provisioned. Can be either 'TVM' or 'Qualys'. </summary>
-        public Type? Type { get; set; }
+        public VulnerabilityAssessmentAutoProvisioningType? Type { get; set; }
     }
 }

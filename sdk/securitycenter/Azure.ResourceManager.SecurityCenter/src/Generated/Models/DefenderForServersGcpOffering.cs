@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public DefenderForServersGcpOfferingVmScanners VmScanners { get; set; }
 
         /// <summary> The available sub plans. </summary>
-        public SubPlan? SubPlanType
+        public AvailableSubPlanType? SubPlanType
         {
             get
             {

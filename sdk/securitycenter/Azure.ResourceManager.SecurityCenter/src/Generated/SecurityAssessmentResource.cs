@@ -13,7 +13,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
@@ -87,104 +86,6 @@ namespace Azure.ResourceManager.SecurityCenter
             if (id.ResourceType != ResourceType)
             {
                 throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-            }
-        }
-
-        /// <summary>
-        /// Get a security assessment on your scanned resource
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{resourceId}/providers/Microsoft.Security/assessments/{assessmentName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SecurityAssessmentResponses_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-04. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="SecurityAssessmentResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="expand"> OData expand. Optional. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SecurityAssessmentResource>> GetAsync(ExpandEnum? expand = default, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _assessmentsClientDiagnostics.CreateScope("SecurityAssessmentResource.Get");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _assessmentsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, expand?.ToString(), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<SecurityAssessmentData> response = Response.FromValue(SecurityAssessmentData.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return Response.FromValue(new SecurityAssessmentResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Get a security assessment on your scanned resource
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{resourceId}/providers/Microsoft.Security/assessments/{assessmentName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> SecurityAssessmentResponses_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-05-04. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="SecurityAssessmentResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="expand"> OData expand. Optional. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SecurityAssessmentResource> Get(ExpandEnum? expand = default, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _assessmentsClientDiagnostics.CreateScope("SecurityAssessmentResource.Get");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _assessmentsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, expand?.ToString(), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<SecurityAssessmentData> response = Response.FromValue(SecurityAssessmentData.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return Response.FromValue(new SecurityAssessmentResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
             }
         }
 

@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of <see cref="DefenderForServersAwsOfferingSubPlan"/>. </summary>
         /// <param name="type"> The available sub plans. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DefenderForServersAwsOfferingSubPlan(SubPlan? @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DefenderForServersAwsOfferingSubPlan(AvailableSubPlanType? @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The available sub plans. </summary>
-        public SubPlan? Type { get; set; }
+        public AvailableSubPlanType? Type { get; set; }
     }
 }

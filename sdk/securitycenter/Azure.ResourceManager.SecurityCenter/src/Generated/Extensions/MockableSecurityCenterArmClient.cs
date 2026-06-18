@@ -1012,36 +1012,6 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             return new SecurityAssessmentCollection(Client, scope);
         }
 
-        /// <summary> Get a security assessment on your scanned resource. </summary>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="assessmentName"> The Assessment Key - Unique key for the assessment type. </param>
-        /// <param name="expand"> OData expand. Optional. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="assessmentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="assessmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<SecurityAssessmentResource> GetSecurityAssessment(ResourceIdentifier scope, string assessmentName, ExpandEnum? expand = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(assessmentName, nameof(assessmentName));
-
-            return GetSecurityAssessments(scope).Get(assessmentName, expand, cancellationToken);
-        }
-
-        /// <summary> Get a security assessment on your scanned resource. </summary>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="assessmentName"> The Assessment Key - Unique key for the assessment type. </param>
-        /// <param name="expand"> OData expand. Optional. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="assessmentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="assessmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<SecurityAssessmentResource>> GetSecurityAssessmentAsync(ResourceIdentifier scope, string assessmentName, ExpandEnum? expand = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(assessmentName, nameof(assessmentName));
-
-            return await GetSecurityAssessments(scope).GetAsync(assessmentName, expand, cancellationToken).ConfigureAwait(false);
-        }
-
         /// <summary> Gets an object representing a <see cref="AdvancedThreatProtectionSettingResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="AdvancedThreatProtectionSettingResource"/> object. </returns>

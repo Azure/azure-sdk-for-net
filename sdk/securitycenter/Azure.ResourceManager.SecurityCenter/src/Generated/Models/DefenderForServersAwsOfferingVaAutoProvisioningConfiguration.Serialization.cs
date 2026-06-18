@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Type? @type = default;
+            VulnerabilityAssessmentAutoProvisioningType? @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    @type = new Type(prop.Value.GetString());
+                    @type = new VulnerabilityAssessmentAutoProvisioningType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

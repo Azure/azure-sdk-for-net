@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         internal DefenderForServersGcpOfferingVaAutoProvisioningConfiguration Configuration { get; set; }
 
         /// <summary> The Vulnerability Assessment solution to be provisioned. Can be either 'TVM' or 'Qualys'. </summary>
-        public Type? Type
+        public VulnerabilityAssessmentAutoProvisioningType? Type
         {
             get
             {

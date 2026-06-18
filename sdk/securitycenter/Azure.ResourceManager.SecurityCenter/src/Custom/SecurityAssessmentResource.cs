@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.SecurityCenter
     {
         /// <summary> Get a security assessment on your scanned resource. </summary>
         public virtual Task<Response<SecurityAssessmentResource>> GetAsync(SecurityAssessmentODataExpand? expand = default, CancellationToken cancellationToken = default)
-            => GetAsync(expand.HasValue ? new ExpandEnum(expand.Value.ToString()) : null, cancellationToken);
+            => new SecurityAssessmentCollection(Client, Id.Parent).GetAsync(Id.Name, expand, cancellationToken);
 
         /// <summary> Get a security assessment on your scanned resource. </summary>
         public virtual Response<SecurityAssessmentResource> Get(SecurityAssessmentODataExpand? expand = default, CancellationToken cancellationToken = default)
-            => Get(expand.HasValue ? new ExpandEnum(expand.Value.ToString()) : null, cancellationToken);
+            => new SecurityAssessmentCollection(Client, Id.Parent).Get(Id.Name, expand, cancellationToken);
 
         /// <summary> Update a SecurityAssessment. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]

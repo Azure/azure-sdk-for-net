@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="expand"> OData expand. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SecureScoreControlDetails"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SecureScoreControlDetails> GetBySecureScoreAsync(ExpandControlsEnum? expand = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SecureScoreControlDetails> GetBySecureScoreAsync(SecurityScoreODataExpand? expand = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="expand"> OData expand. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SecureScoreControlDetails"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SecureScoreControlDetails> GetBySecureScore(ExpandControlsEnum? expand = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<SecureScoreControlDetails> GetBySecureScore(SecurityScoreODataExpand? expand = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {

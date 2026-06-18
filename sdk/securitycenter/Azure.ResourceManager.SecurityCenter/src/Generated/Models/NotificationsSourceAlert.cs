@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="sourceType"> The source type that will trigger the notification. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="minimalSeverity"> Defines the minimal alert severity which will be sent as email notifications. </param>
-        internal NotificationsSourceAlert(SourceType sourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, MinimalSeverity? minimalSeverity) : base(sourceType, additionalBinaryDataProperties)
+        internal NotificationsSourceAlert(SourceType sourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, SecurityAlertMinimalSeverity? minimalSeverity) : base(sourceType, additionalBinaryDataProperties)
         {
             MinimalSeverity = minimalSeverity;
         }
 
         /// <summary> Defines the minimal alert severity which will be sent as email notifications. </summary>
-        public MinimalSeverity? MinimalSeverity { get; set; }
+        public SecurityAlertMinimalSeverity? MinimalSeverity { get; set; }
     }
 }

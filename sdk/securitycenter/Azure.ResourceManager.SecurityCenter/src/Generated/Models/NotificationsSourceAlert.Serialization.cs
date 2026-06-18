@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             SourceType sourceType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            MinimalSeverity? minimalSeverity = default;
+            SecurityAlertMinimalSeverity? minimalSeverity = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("sourceType"u8))
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    minimalSeverity = new MinimalSeverity(prop.Value.GetString());
+                    minimalSeverity = new SecurityAlertMinimalSeverity(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

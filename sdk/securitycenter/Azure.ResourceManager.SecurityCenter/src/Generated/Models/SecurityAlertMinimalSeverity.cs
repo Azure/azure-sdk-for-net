@@ -12,7 +12,7 @@ using Azure.ResourceManager.SecurityCenter;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> Defines the minimal alert severity which will be sent as email notifications. </summary>
-    public readonly partial struct MinimalSeverity : IEquatable<MinimalSeverity>
+    public readonly partial struct SecurityAlertMinimalSeverity : IEquatable<SecurityAlertMinimalSeverity>
     {
         private readonly string _value;
         /// <summary> Get notifications on new alerts with High severity. </summary>
@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Get notifications on new alerts with Low, Medium or High severity. </summary>
         private const string LowValue = "Low";
 
-        /// <summary> Initializes a new instance of <see cref="MinimalSeverity"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityAlertMinimalSeverity"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public MinimalSeverity(string value)
+        public SecurityAlertMinimalSeverity(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -33,38 +33,38 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Get notifications on new alerts with High severity. </summary>
-        public static MinimalSeverity High { get; } = new MinimalSeverity(HighValue);
+        public static SecurityAlertMinimalSeverity High { get; } = new SecurityAlertMinimalSeverity(HighValue);
 
         /// <summary> Get notifications on new alerts with Medium or High severity. </summary>
-        public static MinimalSeverity Medium { get; } = new MinimalSeverity(MediumValue);
+        public static SecurityAlertMinimalSeverity Medium { get; } = new SecurityAlertMinimalSeverity(MediumValue);
 
         /// <summary> Get notifications on new alerts with Low, Medium or High severity. </summary>
-        public static MinimalSeverity Low { get; } = new MinimalSeverity(LowValue);
+        public static SecurityAlertMinimalSeverity Low { get; } = new SecurityAlertMinimalSeverity(LowValue);
 
-        /// <summary> Determines if two <see cref="MinimalSeverity"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="SecurityAlertMinimalSeverity"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(MinimalSeverity left, MinimalSeverity right) => left.Equals(right);
+        public static bool operator ==(SecurityAlertMinimalSeverity left, SecurityAlertMinimalSeverity right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="MinimalSeverity"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="SecurityAlertMinimalSeverity"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(MinimalSeverity left, MinimalSeverity right) => !left.Equals(right);
+        public static bool operator !=(SecurityAlertMinimalSeverity left, SecurityAlertMinimalSeverity right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="MinimalSeverity"/>. </summary>
+        /// <summary> Converts a string to a <see cref="SecurityAlertMinimalSeverity"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MinimalSeverity(string value) => new MinimalSeverity(value);
+        public static implicit operator SecurityAlertMinimalSeverity(string value) => new SecurityAlertMinimalSeverity(value);
 
-        /// <summary> Converts a string to a <see cref="MinimalSeverity"/>. </summary>
+        /// <summary> Converts a string to a <see cref="SecurityAlertMinimalSeverity"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MinimalSeverity?(string value) => value == null ? null : new MinimalSeverity(value);
+        public static implicit operator SecurityAlertMinimalSeverity?(string value) => value == null ? null : new SecurityAlertMinimalSeverity(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is MinimalSeverity other && Equals(other);
+        public override bool Equals(object obj) => obj is SecurityAlertMinimalSeverity other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(MinimalSeverity other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(SecurityAlertMinimalSeverity other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

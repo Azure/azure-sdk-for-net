@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            SubPlan? @type = default;
+            AvailableSubPlanType? @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    @type = new SubPlan(prop.Value.GetString());
+                    @type = new AvailableSubPlanType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
