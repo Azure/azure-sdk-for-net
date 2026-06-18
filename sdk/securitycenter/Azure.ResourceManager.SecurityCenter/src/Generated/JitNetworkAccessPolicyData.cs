@@ -52,9 +52,6 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Kind of the resource. </summary>
         public string Kind { get; set; }
 
-        /// <summary> Location where the resource is stored. </summary>
-        public AzureLocation? Location { get; }
-
         /// <summary> Configurations for Microsoft.Compute/virtualMachines resource type. </summary>
         public IList<JitNetworkAccessPolicyVirtualMachine> VirtualMachines
         {

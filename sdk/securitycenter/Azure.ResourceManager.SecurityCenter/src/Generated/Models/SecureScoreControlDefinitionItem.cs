@@ -19,11 +19,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SecureScoreControlDefinitionItem"/>. </summary>
-        internal SecureScoreControlDefinitionItem()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SecureScoreControlDefinitionItem"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -63,15 +58,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             get
             {
                 return Properties is null ? default : Properties.MaxScore;
-            }
-        }
-
-        /// <summary> Array of assessments metadata IDs that are included in this security control. </summary>
-        public IReadOnlyList<SubResource> AssessmentDefinitions
-        {
-            get
-            {
-                return Properties is null ? default : Properties.AssessmentDefinitions;
             }
         }
 

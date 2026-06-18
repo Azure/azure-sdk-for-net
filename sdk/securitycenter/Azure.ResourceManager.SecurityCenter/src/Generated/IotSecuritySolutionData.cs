@@ -14,15 +14,15 @@ using Azure.ResourceManager.SecurityCenter.Models;
 namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary> IoT Security solution configuration and resource information. </summary>
-    public partial class IotSecuritySolutionData : ResourceData
+    public partial class IotSecuritySolutionData : TrackedResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="IotSecuritySolutionData"/>. </summary>
-        public IotSecuritySolutionData()
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        public IotSecuritySolutionData(AzureLocation location) : base(location)
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="IotSecuritySolutionData"/>. </summary>
@@ -30,26 +30,18 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> Security Solution data. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Security Solution data. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IotSecuritySolutionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IoTSecuritySolutionProperties properties, IDictionary<string, string> tags, AzureLocation? location, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal IotSecuritySolutionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IoTSecuritySolutionProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
-            Tags = tags;
-            Location = location;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Security Solution data. </summary>
         internal IoTSecuritySolutionProperties Properties { get; set; }
-
-        /// <summary> Resource tags. </summary>
-        public IDictionary<string, string> Tags { get; }
-
-        /// <summary> The geo-location where the resource lives. </summary>
-        public AzureLocation? Location { get; set; }
 
         /// <summary> Workspace resource ID. </summary>
         public string Workspace

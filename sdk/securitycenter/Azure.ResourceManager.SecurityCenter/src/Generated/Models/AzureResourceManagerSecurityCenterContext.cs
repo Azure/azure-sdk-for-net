@@ -8,6 +8,7 @@
 using System.ClientModel.Primitives;
 using Azure;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
@@ -503,7 +504,8 @@ namespace Azure.ResourceManager.SecurityCenter
     [ModelReaderWriterBuildable(typeof(StandardProperties))]
     [ModelReaderWriterBuildable(typeof(StandardResource))]
     [ModelReaderWriterBuildable(typeof(SubAssessmentStatus))]
-    [ModelReaderWriterBuildable(typeof(SubResource))]
+    [ModelReaderWriterBuildable(typeof(Resources.Models.SubResource))]
+    [ModelReaderWriterBuildable(typeof(Models.SubResource))]
     [ModelReaderWriterBuildable(typeof(SubscriptionAssessmentMetadataResource))]
     [ModelReaderWriterBuildable(typeof(SubscriptionSecurityAlertResource))]
     [ModelReaderWriterBuildable(typeof(SubscriptionSecurityApplicationResource))]

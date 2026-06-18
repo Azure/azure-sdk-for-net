@@ -128,23 +128,5 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 Properties.PartnersData = value;
             }
         }
-
-        /// <summary> Link to assessment in Azure Portal. </summary>
-        public string LinksAzurePortalUri
-        {
-            get
-            {
-                return Properties is null ? default : Properties.LinksAzurePortalUri;
-            }
-        }
-
-        /// <summary> The result of the assessment. </summary>
-        public SecurityAssessmentStatus Status
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Status;
-            }
-        }
     }
 }

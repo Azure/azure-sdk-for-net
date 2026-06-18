@@ -45,41 +45,5 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Location where the resource is stored. </summary>
         public AzureLocation? Location { get; }
-
-        /// <summary> The security family of the discovered solution. </summary>
-        public SecurityFamily SecurityFamily
-        {
-            get
-            {
-                return Properties.SecurityFamily;
-            }
-        }
-
-        /// <summary> The security solutions' image offer. </summary>
-        public string Offer
-        {
-            get
-            {
-                return Properties.Offer;
-            }
-        }
-
-        /// <summary> The security solutions' image publisher. </summary>
-        public string Publisher
-        {
-            get
-            {
-                return Properties.Publisher;
-            }
-        }
-
-        /// <summary> The security solutions' image sku. </summary>
-        public string Sku
-        {
-            get
-            {
-                return Properties.Sku;
-            }
-        }
     }
 }

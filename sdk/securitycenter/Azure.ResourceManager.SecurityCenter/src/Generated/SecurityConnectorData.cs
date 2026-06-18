@@ -15,15 +15,15 @@ using Azure.ResourceManager.SecurityCenter.Models;
 namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary> The security connector resource. </summary>
-    public partial class SecurityConnectorData : ResourceData
+    public partial class SecurityConnectorData : TrackedResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SecurityConnectorData"/>. </summary>
-        public SecurityConnectorData()
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        public SecurityConnectorData(AzureLocation location) : base(location)
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityConnectorData"/>. </summary>
@@ -31,17 +31,15 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> Security connector data. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Security connector data. </param>
         /// <param name="kind"> Kind of the resource. </param>
         /// <param name="eTag"> Entity tag is used for comparing two or more entities from the same requested resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityConnectorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityConnectorProperties properties, IDictionary<string, string> tags, string location, string kind, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal SecurityConnectorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SecurityConnectorProperties properties, string kind, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
-            Tags = tags;
-            Location = location;
             Kind = kind;
             ETag = eTag;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -49,12 +47,6 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary> Security connector data. </summary>
         internal SecurityConnectorProperties Properties { get; set; }
-
-        /// <summary> Resource tags. </summary>
-        public IDictionary<string, string> Tags { get; }
-
-        /// <summary> The geo-location where the resource lives. </summary>
-        public string Location { get; set; }
 
         /// <summary> Kind of the resource. </summary>
         public string Kind { get; set; }

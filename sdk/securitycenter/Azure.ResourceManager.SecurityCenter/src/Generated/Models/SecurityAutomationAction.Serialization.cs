@@ -19,11 +19,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     [PersistableModelProxy(typeof(UnknownSecurityAutomationAction))]
     public abstract partial class SecurityAutomationAction : IJsonModel<SecurityAutomationAction>
     {
-        /// <summary> Initializes a new instance of <see cref="SecurityAutomationAction"/> for deserialization. </summary>
-        internal SecurityAutomationAction()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual SecurityAutomationAction PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

@@ -1,0 +1,17 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+#nullable disable
+
+#pragma warning disable CS1591 // Hidden compatibility shim does not need public docs.
+
+using System;
+
+namespace Azure.ResourceManager.SecurityCenter.Models
+{
+    public partial class SecurityAssessmentCreateOrUpdateContent
+    {
+        public Uri LinksAzurePortalUri => throw new NotSupportedException("This API is no longer supported by the service.");
+        public SecurityAssessmentStatus Status { get; set; }
+    }
+}

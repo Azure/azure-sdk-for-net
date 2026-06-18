@@ -18,8 +18,13 @@ using Azure.ResourceManager.SecurityCenter.Models;
 namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary> The security automation resource. </summary>
-    public partial class SecurityAutomationData : ResourceData, IJsonModel<SecurityAutomationData>
+    public partial class SecurityAutomationData : TrackedResourceData, IJsonModel<SecurityAutomationData>
     {
+        /// <summary> Initializes a new instance of <see cref="SecurityAutomationData"/> for deserialization. </summary>
+        internal SecurityAutomationData()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -101,27 +106,6 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
             }
-            if (Optional.IsCollectionDefined(Tags))
-            {
-                writer.WritePropertyName("tags"u8);
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            if (Optional.IsDefined(Location))
-            {
-                writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location);
-            }
             if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
@@ -178,9 +162,9 @@ namespace Azure.ResourceManager.SecurityCenter
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            AutomationProperties properties = default;
             IDictionary<string, string> tags = default;
-            string location = default;
+            AzureLocation location = default;
+            AutomationProperties properties = default;
             string kind = default;
             ETag? eTag = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -218,15 +202,6 @@ namespace Azure.ResourceManager.SecurityCenter
                     systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerSecurityCenterContext.Default);
                     continue;
                 }
-                if (prop.NameEquals("properties"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    properties = AutomationProperties.DeserializeAutomationProperties(prop.Value, options);
-                    continue;
-                }
                 if (prop.NameEquals("tags"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -250,7 +225,16 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 if (prop.NameEquals("location"u8))
                 {
-                    location = prop.Value.GetString();
+                    location = new AzureLocation(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = AutomationProperties.DeserializeAutomationProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("kind"u8))
@@ -277,9 +261,9 @@ namespace Azure.ResourceManager.SecurityCenter
                 name,
                 resourceType,
                 systemData,
-                properties,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
+                properties,
                 kind,
                 eTag,
                 additionalBinaryDataProperties);

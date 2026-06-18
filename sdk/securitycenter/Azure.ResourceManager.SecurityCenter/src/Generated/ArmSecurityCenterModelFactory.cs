@@ -167,37 +167,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new AlertSimulatorBundlesRequestProperties(default, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(), (bundles ?? new ChangeTrackingList<BundleType>()).ToList());
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="alertType"> Type of the alert to automatically suppress. For all alert types, use '*'. </param>
-        /// <param name="lastModifiedOn"> The last time this rule was modified. </param>
-        /// <param name="expireOn"> Expiration date of the rule, if value is not provided or provided as null there will no expiration at all. </param>
-        /// <param name="reason"> The reason for dismissing the alert. </param>
-        /// <param name="state"> Possible states of the rule. </param>
-        /// <param name="comment"> Any comment regarding the rule. </param>
-        /// <param name="suppressionAlertsScopeAllOf"> All the conditions inside need to be true in order to suppress the alert. </param>
-        /// <returns> A new <see cref="SecurityCenter.SecurityAlertsSuppressionRuleData"/> instance for mocking. </returns>
-        public static SecurityAlertsSuppressionRuleData SecurityAlertsSuppressionRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string alertType = default, DateTimeOffset? lastModifiedOn = default, DateTimeOffset? expireOn = default, string reason = default, SecurityAlertsSuppressionRuleState? state = default, string comment = default, IEnumerable<SuppressionAlertsScopeElement> suppressionAlertsScopeAllOf = default)
-        {
-            return new SecurityAlertsSuppressionRuleData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                alertType is null && lastModifiedOn is null && expireOn is null && reason is null && state is null && comment is null && suppressionAlertsScopeAllOf is null ? default : new AlertsSuppressionRuleProperties(
-                    alertType,
-                    lastModifiedOn,
-                    expireOn,
-                    reason,
-                    state.GetValueOrDefault(),
-                    comment,
-                    new SuppressionAlertsScope((suppressionAlertsScopeAllOf ?? new ChangeTrackingList<SuppressionAlertsScopeElement>()).ToList(), default),
-                    default),
-                default);
-        }
-
         /// <param name="field"> The alert entity type to suppress by. </param>
         /// <param name="additionalProperties"></param>
         /// <returns> A new <see cref="Models.SuppressionAlertsScopeElement"/> instance for mocking. </returns>
@@ -376,17 +345,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="description"> The security automation description. </param>
         /// <param name="isEnabled"> Indicates whether the security automation is enabled. </param>
         /// <param name="scopes"> A collection of scopes on which the security automations logic is applied. Supported scopes are the subscription itself or a resource group under that subscription. The automation will only apply on defined scopes. </param>
         /// <param name="sources"> A collection of the source event types which evaluate the security automation set of rules. </param>
         /// <param name="actions"> A collection of the actions which are triggered if all the configured rules evaluations, within at least one rule set, are true. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="kind"> Kind of the resource. </param>
         /// <param name="eTag"> Entity tag is used for comparing two or more entities from the same requested resource. </param>
         /// <returns> A new <see cref="SecurityCenter.SecurityAutomationData"/> instance for mocking. </returns>
-        public static SecurityAutomationData SecurityAutomationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string description = default, bool? isEnabled = default, IEnumerable<SecurityAutomationScope> scopes = default, IEnumerable<SecurityAutomationSource> sources = default, IEnumerable<SecurityAutomationAction> actions = default, IDictionary<string, string> tags = default, string location = default, string kind = default, ETag? eTag = default)
+        public static SecurityAutomationData SecurityAutomationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string description = default, bool? isEnabled = default, IEnumerable<SecurityAutomationScope> scopes = default, IEnumerable<SecurityAutomationSource> sources = default, IEnumerable<SecurityAutomationAction> actions = default, string kind = default, ETag? eTag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -395,6 +364,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 name,
                 resourceType,
                 systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
                 description is null && isEnabled is null && scopes is null && sources is null && actions is null ? default : new AutomationProperties(
                     description,
                     isEnabled,
@@ -402,8 +373,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     (sources ?? new ChangeTrackingList<SecurityAutomationSource>()).ToList(),
                     (actions ?? new ChangeTrackingList<SecurityAutomationAction>()).ToList(),
                     default),
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
                 kind,
                 eTag,
                 default);
@@ -1318,17 +1287,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="hierarchyIdentifier"> The multi cloud resource identifier (account id in case of AWS connector, project number in case of GCP connector). </param>
         /// <param name="hierarchyIdentifierTrialEndOn"> The date on which the trial period will end, if applicable. Trial period exists for 30 days after upgrading to payed offerings. </param>
         /// <param name="environmentName"> The multi cloud resource's cloud name. </param>
         /// <param name="offerings"> A collection of offerings for the security connector. </param>
         /// <param name="environmentData"> The security connector environment data. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="kind"> Kind of the resource. </param>
         /// <param name="eTag"> Entity tag is used for comparing two or more entities from the same requested resource. </param>
         /// <returns> A new <see cref="SecurityCenter.SecurityConnectorData"/> instance for mocking. </returns>
-        public static SecurityConnectorData SecurityConnectorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string hierarchyIdentifier = default, DateTimeOffset? hierarchyIdentifierTrialEndOn = default, SecurityCenterCloudName? environmentName = default, IEnumerable<SecurityCenterCloudOffering> offerings = default, SecurityConnectorEnvironment environmentData = default, IDictionary<string, string> tags = default, string location = default, string kind = default, ETag? eTag = default)
+        public static SecurityConnectorData SecurityConnectorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string hierarchyIdentifier = default, DateTimeOffset? hierarchyIdentifierTrialEndOn = default, SecurityCenterCloudName? environmentName = default, IEnumerable<SecurityCenterCloudOffering> offerings = default, SecurityConnectorEnvironment environmentData = default, string kind = default, ETag? eTag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1337,6 +1306,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 name,
                 resourceType,
                 systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
                 hierarchyIdentifier is null && hierarchyIdentifierTrialEndOn is null && environmentName is null && offerings is null && environmentData is null ? default : new SecurityConnectorProperties(
                     hierarchyIdentifier,
                     hierarchyIdentifierTrialEndOn,
@@ -1344,8 +1315,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     (offerings ?? new ChangeTrackingList<SecurityCenterCloudOffering>()).ToList(),
                     environmentData,
                     default),
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
                 kind,
                 eTag,
                 default);
@@ -3210,13 +3179,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <param name="expectedResults"> Expected results. </param>
-        /// <param name="updatedOn"> Baseline update time (UTC). </param>
         /// <returns> A new <see cref="Models.SqlVulnerabilityAssessmentBaseline"/> instance for mocking. </returns>
-        public static SqlVulnerabilityAssessmentBaseline SqlVulnerabilityAssessmentBaseline(IEnumerable<IList<string>> expectedResults = default, DateTimeOffset? updatedOn = default)
+        public static SqlVulnerabilityAssessmentBaseline SqlVulnerabilityAssessmentBaseline(IEnumerable<IList<string>> expectedResults = default)
         {
             expectedResults ??= new ChangeTrackingList<IList<string>>();
 
-            return new SqlVulnerabilityAssessmentBaseline((expectedResults ?? new ChangeTrackingList<IList<string>>()).ToList(), updatedOn, default);
+            return new SqlVulnerabilityAssessmentBaseline((expectedResults ?? new ChangeTrackingList<IList<string>>()).ToList(), default);
         }
 
         /// <param name="ruleId"> The rule Id. </param>
@@ -3900,6 +3868,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="workspace"> Workspace resource ID. </param>
         /// <param name="displayName"> Resource display name. </param>
         /// <param name="status"> Status of the IoT Security solution. </param>
@@ -3911,10 +3881,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="recommendationsConfiguration"> List of the configuration status for each recommendation type. </param>
         /// <param name="unmaskedIPLoggingStatus"> Unmasked IP address logging status. </param>
         /// <param name="additionalWorkspaces"> List of additional workspaces. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <returns> A new <see cref="SecurityCenter.IotSecuritySolutionData"/> instance for mocking. </returns>
-        public static IotSecuritySolutionData IotSecuritySolutionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string workspace = default, string displayName = default, SecuritySolutionStatus? status = default, IEnumerable<IotSecuritySolutionExportOption> export = default, IEnumerable<IotSecuritySolutionDataSource> disabledDataSources = default, IEnumerable<string> iotHubs = default, UserDefinedResourcesProperties userDefinedResources = default, IEnumerable<string> autoDiscoveredResources = default, IEnumerable<RecommendationConfigurationProperties> recommendationsConfiguration = default, UnmaskedIPLoggingStatus? unmaskedIPLoggingStatus = default, IEnumerable<AdditionalWorkspacesProperties> additionalWorkspaces = default, IDictionary<string, string> tags = default, AzureLocation? location = default)
+        public static IotSecuritySolutionData IotSecuritySolutionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string workspace = default, string displayName = default, SecuritySolutionStatus? status = default, IEnumerable<IotSecuritySolutionExportOption> export = default, IEnumerable<IotSecuritySolutionDataSource> disabledDataSources = default, IEnumerable<string> iotHubs = default, UserDefinedResourcesProperties userDefinedResources = default, IEnumerable<string> autoDiscoveredResources = default, IEnumerable<RecommendationConfigurationProperties> recommendationsConfiguration = default, UnmaskedIPLoggingStatus? unmaskedIPLoggingStatus = default, IEnumerable<AdditionalWorkspacesProperties> additionalWorkspaces = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -3923,6 +3891,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 name,
                 resourceType,
                 systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
                 workspace is null && displayName is null && status is null && export is null && disabledDataSources is null && iotHubs is null && userDefinedResources is null && autoDiscoveredResources is null && recommendationsConfiguration is null && unmaskedIPLoggingStatus is null && additionalWorkspaces is null ? default : new IoTSecuritySolutionProperties(
                     workspace,
                     displayName,
@@ -3936,8 +3906,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     unmaskedIPLoggingStatus,
                     (additionalWorkspaces ?? new ChangeTrackingList<AdditionalWorkspacesProperties>()).ToList(),
                     default),
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
                 default);
         }
 
@@ -4651,8 +4619,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="server"> The server name. </param>
         /// <param name="database"> The database name. </param>
         /// <param name="sqlVersion"> The SQL version. </param>
-        /// <param name="startOn"> The scan start time (UTC). </param>
-        /// <param name="endOn"> Scan results are valid until end time (UTC). </param>
         /// <param name="highSeverityFailedRulesCount"> The number of failed rules with high severity. </param>
         /// <param name="mediumSeverityFailedRulesCount"> The number of failed rules with medium severity. </param>
         /// <param name="lowSeverityFailedRulesCount"> The number of failed rules with low severity. </param>
@@ -4662,7 +4628,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="isBaselineApplied"> Baseline created for this database, and has one or more rules. </param>
         /// <param name="lastScanOn"> Last scan time. </param>
         /// <returns> A new <see cref="Models.SqlVulnerabilityAssessmentScanProperties"/> instance for mocking. </returns>
-        public static SqlVulnerabilityAssessmentScanProperties SqlVulnerabilityAssessmentScanProperties(SqlVulnerabilityAssessmentScanTriggerType? triggerType = default, SqlVulnerabilityAssessmentScanState? state = default, string server = default, string database = default, string sqlVersion = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, int? highSeverityFailedRulesCount = default, int? mediumSeverityFailedRulesCount = default, int? lowSeverityFailedRulesCount = default, int? totalPassedRulesCount = default, int? totalFailedRulesCount = default, int? totalRulesCount = default, bool? isBaselineApplied = default, DateTimeOffset? lastScanOn = default)
+        public static SqlVulnerabilityAssessmentScanProperties SqlVulnerabilityAssessmentScanProperties(SqlVulnerabilityAssessmentScanTriggerType? triggerType = default, SqlVulnerabilityAssessmentScanState? state = default, string server = default, string database = default, string sqlVersion = default, int? highSeverityFailedRulesCount = default, int? mediumSeverityFailedRulesCount = default, int? lowSeverityFailedRulesCount = default, int? totalPassedRulesCount = default, int? totalFailedRulesCount = default, int? totalRulesCount = default, bool? isBaselineApplied = default, DateTimeOffset? lastScanOn = default)
         {
             return new SqlVulnerabilityAssessmentScanProperties(
                 triggerType,
@@ -4670,8 +4636,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 server,
                 database,
                 sqlVersion,
-                startOn,
-                endOn,
                 highSeverityFailedRulesCount,
                 mediumSeverityFailedRulesCount,
                 lowSeverityFailedRulesCount,

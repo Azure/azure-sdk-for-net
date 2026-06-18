@@ -19,11 +19,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SecuritySolution"/>. </summary>
-        internal SecuritySolution()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SecuritySolution"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -43,41 +38,5 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Location where the resource is stored. </summary>
         public AzureLocation? Location { get; }
-
-        /// <summary> The security family of the security solution. </summary>
-        public SecurityFamily? SecurityFamily
-        {
-            get
-            {
-                return Properties is null ? default : Properties.SecurityFamily;
-            }
-        }
-
-        /// <summary> The security family provisioning State. </summary>
-        public SecurityCenterProvisioningState? ProvisioningState
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ProvisioningState;
-            }
-        }
-
-        /// <summary> The security solutions' template. </summary>
-        public string Template
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Template;
-            }
-        }
-
-        /// <summary> The security solutions' status. </summary>
-        public string ProtectionStatus
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ProtectionStatus;
-            }
-        }
     }
 }

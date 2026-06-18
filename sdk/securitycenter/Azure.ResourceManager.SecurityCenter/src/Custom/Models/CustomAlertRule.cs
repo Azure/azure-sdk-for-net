@@ -20,5 +20,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             IsEnabled = isEnabled;
             _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
+
+        /// <summary> Initializes a new instance of <see cref="CustomAlertRule"/>. </summary>
+        /// <param name="isEnabled"> Status of the custom alert. </param>
+        protected CustomAlertRule(bool isEnabled)
+        {
+            IsEnabled = isEnabled;
+            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+        }
     }
 }

@@ -57,32 +57,6 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
-        /// <summary> The last time this rule was modified. </summary>
-        public DateTimeOffset? LastModifiedOn
-        {
-            get
-            {
-                return Properties is null ? default : Properties.LastModifiedOn;
-            }
-        }
-
-        /// <summary> Expiration date of the rule, if value is not provided or provided as null there will no expiration at all. </summary>
-        public DateTimeOffset? ExpireOn
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ExpireOn;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new AlertsSuppressionRuleProperties();
-                }
-                Properties.ExpireOn = value;
-            }
-        }
-
         /// <summary> The reason for dismissing the alert. </summary>
         public string Reason
         {
@@ -100,26 +74,6 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
-        /// <summary> Possible states of the rule. </summary>
-        public SecurityAlertsSuppressionRuleState? State
-        {
-            get
-            {
-                return Properties is null ? default : Properties.State;
-            }
-            set
-            {
-                if (value.HasValue)
-                {
-                    if (Properties is null)
-                    {
-                        Properties = new AlertsSuppressionRuleProperties();
-                    }
-                    Properties.State = value.Value;
-                }
-            }
-        }
-
         /// <summary> Any comment regarding the rule. </summary>
         public string Comment
         {
@@ -134,19 +88,6 @@ namespace Azure.ResourceManager.SecurityCenter
                     Properties = new AlertsSuppressionRuleProperties();
                 }
                 Properties.Comment = value;
-            }
-        }
-
-        /// <summary> All the conditions inside need to be true in order to suppress the alert. </summary>
-        public IList<SuppressionAlertsScopeElement> SuppressionAlertsScopeAllOf
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new AlertsSuppressionRuleProperties();
-                }
-                return Properties.SuppressionAlertsScopeAllOf;
             }
         }
     }
