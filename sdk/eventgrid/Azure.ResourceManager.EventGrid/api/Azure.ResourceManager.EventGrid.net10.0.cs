@@ -2639,7 +2639,7 @@ namespace Azure.ResourceManager.EventGrid.Models
     }
     public partial class CustomerManagedKeyEncryption : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.CustomerManagedKeyEncryption>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.CustomerManagedKeyEncryption>
     {
-        public CustomerManagedKeyEncryption(string keyEncryptionKeyUri) { }
+        public CustomerManagedKeyEncryption(System.Uri keyEncryptionKeyUri) { }
         public Azure.ResourceManager.EventGrid.Models.KeyEncryptionKeyIdentity KeyEncryptionKeyIdentity { get { throw null; } set { } }
         public Azure.ResourceManager.EventGrid.Models.KeyEncryptionKeyStatus? KeyEncryptionKeyStatus { get { throw null; } }
         public string KeyEncryptionKeyStatusFriendlyDescription { get { throw null; } }
