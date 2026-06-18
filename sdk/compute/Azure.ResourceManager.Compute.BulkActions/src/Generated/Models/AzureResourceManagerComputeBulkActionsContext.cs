@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Compute.BulkActions
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(BulkOperationRetryPolicy))]
+    [ModelReaderWriterBuildable(typeof(CancelBulkOperationsContent))]
     [ModelReaderWriterBuildable(typeof(CancelBulkOperationsResult))]
-    [ModelReaderWriterBuildable(typeof(CancelOperationsContent))]
     [ModelReaderWriterBuildable(typeof(ComputeBulkFallbackOperationInfo))]
     [ModelReaderWriterBuildable(typeof(ComputeBulkOperationDetails))]
     [ModelReaderWriterBuildable(typeof(ComputeBulkOperationError))]
@@ -28,8 +28,8 @@ namespace Azure.ResourceManager.Compute.BulkActions
     [ModelReaderWriterBuildable(typeof(ExecuteDeleteContent))]
     [ModelReaderWriterBuildable(typeof(ExecuteHibernateContent))]
     [ModelReaderWriterBuildable(typeof(ExecuteStartContent))]
+    [ModelReaderWriterBuildable(typeof(GetBulkOperationStatusContent))]
     [ModelReaderWriterBuildable(typeof(GetBulkOperationStatusResult))]
-    [ModelReaderWriterBuildable(typeof(GetOperationStatusContent))]
     [ModelReaderWriterBuildable(typeof(HibernateResourceOperationResult))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ScheduledActionExecutionParameterDetail))]

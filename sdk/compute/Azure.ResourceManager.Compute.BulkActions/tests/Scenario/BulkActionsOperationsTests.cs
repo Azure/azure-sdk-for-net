@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Tests.Scenario
 
             var statusResponse = await DefaultResourceGroup.BulkGetOperationsStatusAsync(
                 Location,
-                new GetOperationStatusContent(opIds));
+                new GetBulkOperationStatusContent(opIds));
             var status = statusResponse.Value;
 
             ClassicAssert.AreEqual(opIds.Count, status.Results.Count);
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Tests.Scenario
 
             var cancelResponse = await DefaultResourceGroup.BulkCancelOperationsAsync(
                 Location,
-                new CancelOperationsContent(opIds));
+                new CancelBulkOperationsContent(opIds));
             var cancel = cancelResponse.Value;
             ClassicAssert.AreEqual(opIds.Count, cancel.Results.Count);
             foreach (var r in cancel.Results)

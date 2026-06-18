@@ -183,12 +183,12 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <param name="operationIds"> The list of operation ids to get the status of. </param>
-        /// <returns> A new <see cref="Models.GetOperationStatusContent"/> instance for mocking. </returns>
-        public static GetOperationStatusContent GetOperationStatusContent(IEnumerable<string> operationIds = default)
+        /// <returns> A new <see cref="Models.GetBulkOperationStatusContent"/> instance for mocking. </returns>
+        public static GetBulkOperationStatusContent GetBulkOperationStatusContent(IEnumerable<string> operationIds = default)
         {
             operationIds ??= new ChangeTrackingList<string>();
 
-            return new GetOperationStatusContent((operationIds ?? new ChangeTrackingList<string>()).ToList(), default);
+            return new GetBulkOperationStatusContent((operationIds ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
         /// <param name="results"> An array of resource operations based on their operation ids. </param>
@@ -201,12 +201,12 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <param name="operationIds"> The list of operation ids to cancel operations on. </param>
-        /// <returns> A new <see cref="Models.CancelOperationsContent"/> instance for mocking. </returns>
-        public static CancelOperationsContent CancelOperationsContent(IEnumerable<string> operationIds = default)
+        /// <returns> A new <see cref="Models.CancelBulkOperationsContent"/> instance for mocking. </returns>
+        public static CancelBulkOperationsContent CancelBulkOperationsContent(IEnumerable<string> operationIds = default)
         {
             operationIds ??= new ChangeTrackingList<string>();
 
-            return new CancelOperationsContent((operationIds ?? new ChangeTrackingList<string>()).ToList(), default);
+            return new CancelBulkOperationsContent((operationIds ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
         /// <param name="results"> An array of resource operations that were successfully cancelled. </param>

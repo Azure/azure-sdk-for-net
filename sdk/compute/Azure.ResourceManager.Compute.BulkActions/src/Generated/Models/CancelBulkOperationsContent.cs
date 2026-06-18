@@ -12,32 +12,32 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> This is the request to get operation status using operationids. </summary>
-    public partial class GetOperationStatusContent
+    /// <summary> This is the request to cancel running operations in scheduled actions using the operation ids. </summary>
+    public partial class CancelBulkOperationsContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="GetOperationStatusContent"/>. </summary>
-        /// <param name="operationIds"> The list of operation ids to get the status of. </param>
+        /// <summary> Initializes a new instance of <see cref="CancelBulkOperationsContent"/>. </summary>
+        /// <param name="operationIds"> The list of operation ids to cancel operations on. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationIds"/> is null. </exception>
-        public GetOperationStatusContent(IEnumerable<string> operationIds)
+        public CancelBulkOperationsContent(IEnumerable<string> operationIds)
         {
             Argument.AssertNotNull(operationIds, nameof(operationIds));
 
             OperationIds = operationIds.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="GetOperationStatusContent"/>. </summary>
-        /// <param name="operationIds"> The list of operation ids to get the status of. </param>
+        /// <summary> Initializes a new instance of <see cref="CancelBulkOperationsContent"/>. </summary>
+        /// <param name="operationIds"> The list of operation ids to cancel operations on. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GetOperationStatusContent(IList<string> operationIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CancelBulkOperationsContent(IList<string> operationIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OperationIds = operationIds;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The list of operation ids to get the status of. </summary>
+        /// <summary> The list of operation ids to cancel operations on. </summary>
         public IList<string> OperationIds { get; }
     }
 }
