@@ -536,7 +536,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> A collection of <see cref="MonitorSingleMetricBaseline"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MonitorSingleMetricBaseline> GetAllAsync(ResourceIdentifier scope, string metricnames = default, string metricnamespace = default, string timespan = default, TimeSpan? interval = default, string aggregation = default, string sensitivities = default, string filter = default, MonitorResultType? resultType = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<MonitorSingleMetricBaseline> GetMonitorMetricBaselinesAsync(ResourceIdentifier scope, string metricnames = default, string metricnamespace = default, string timespan = default, TimeSpan? interval = default, string aggregation = default, string sensitivities = default, string filter = default, MonitorResultType? resultType = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new BaselinesGetAllAsyncCollectionResultOfT(
+            return new BaselinesGetMonitorMetricBaselinesAsyncCollectionResultOfT(
                 BaselinesRestClient,
                 scope.ToString(),
                 metricnames,
@@ -556,7 +556,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
                 filter,
                 resultType?.ToSerialString(),
                 context,
-                "MockableMonitorArmClient.GetAll");
+                "MockableMonitorArmClient.GetMonitorMetricBaselines");
         }
 
         /// <summary>
@@ -588,7 +588,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> A collection of <see cref="MonitorSingleMetricBaseline"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MonitorSingleMetricBaseline> GetAll(ResourceIdentifier scope, string metricnames = default, string metricnamespace = default, string timespan = default, TimeSpan? interval = default, string aggregation = default, string sensitivities = default, string filter = default, MonitorResultType? resultType = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<MonitorSingleMetricBaseline> GetMonitorMetricBaselines(ResourceIdentifier scope, string metricnames = default, string metricnamespace = default, string timespan = default, TimeSpan? interval = default, string aggregation = default, string sensitivities = default, string filter = default, MonitorResultType? resultType = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -596,7 +596,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new BaselinesGetAllCollectionResultOfT(
+            return new BaselinesGetMonitorMetricBaselinesCollectionResultOfT(
                 BaselinesRestClient,
                 scope.ToString(),
                 metricnames,
@@ -608,7 +608,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
                 filter,
                 resultType?.ToSerialString(),
                 context,
-                "MockableMonitorArmClient.GetAll");
+                "MockableMonitorArmClient.GetMonitorMetricBaselines");
         }
     }
 }

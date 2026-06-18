@@ -212,36 +212,6 @@ namespace Azure.ResourceManager.Monitor
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static VmInsightsOnboardingStatusResource GetVmInsightsOnboardingStatus(this ArmClient client, ResourceIdentifier scope) => throw new NotSupportedException("This API is no longer supported.");
 
-        /// <summary> Gets metric baselines for a resource. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This API is no longer supported.", false)]
-        public static Pageable<MonitorSingleMetricBaseline> GetMonitorMetricBaselines(this ArmClient client, ResourceIdentifier scope, ArmResourceGetMonitorMetricBaselinesOptions options, CancellationToken cancellationToken = default) => throw new NotSupportedException("This API is no longer supported.");
-
-        /// <summary> Gets metric baselines for a resource. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This API is no longer supported.", false)]
-        public static AsyncPageable<MonitorSingleMetricBaseline> GetMonitorMetricBaselinesAsync(this ArmClient client, ResourceIdentifier scope, ArmResourceGetMonitorMetricBaselinesOptions options, CancellationToken cancellationToken = default) => throw new NotSupportedException("This API is no longer supported.");
-
-        /// <summary> Gets metrics for a resource. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [ForwardsClientCalls]
-        public static Pageable<MonitorMetric> GetMonitorMetrics(this ArmClient client, ResourceIdentifier scope, ArmResourceGetMonitorMetricsOptions options, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableMonitorArmClient(client).GetMonitorMetrics(scope, options, cancellationToken);
-        }
-
-        /// <summary> Gets metrics for a resource. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [ForwardsClientCalls]
-        public static AsyncPageable<MonitorMetric> GetMonitorMetricsAsync(this ArmClient client, ResourceIdentifier scope, ArmResourceGetMonitorMetricsOptions options, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableMonitorArmClient(client).GetMonitorMetricsAsync(scope, options, cancellationToken);
-        }
-
         /// <summary> Gets metrics for a subscription. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This API is no longer supported.", false)]

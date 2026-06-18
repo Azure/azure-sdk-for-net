@@ -820,11 +820,11 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="region"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="region"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<Models.Response>> GetAtSubscriptionScopeAsync(string region, string timespan = default, string interval = default, string metricnames = default, string aggregation = default, int? top = default, string @orderby = default, string filter = default, MonitorMetricResultType? resultType = default, string metricnamespace = default, bool? autoAdjustTimegrain = default, bool? validateDimensions = default, string rollupby = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Models.Response>> GetMonitorMetricsAsync(string region, string timespan = default, string interval = default, string metricnames = default, string aggregation = default, int? top = default, string @orderby = default, string filter = default, MonitorMetricResultType? resultType = default, string metricnamespace = default, bool? autoAdjustTimegrain = default, bool? validateDimensions = default, string rollupby = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(region, nameof(region));
 
-            using DiagnosticScope scope = MetricsClientDiagnostics.CreateScope("MockableMonitorSubscriptionResource.GetAtSubscriptionScope");
+            using DiagnosticScope scope = MetricsClientDiagnostics.CreateScope("MockableMonitorSubscriptionResource.GetMonitorMetrics");
             scope.Start();
             try
             {
@@ -832,7 +832,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = MetricsRestClient.CreateGetAtSubscriptionScopeRequest(Guid.Parse(Id.SubscriptionId), region, timespan, interval, metricnames, aggregation, top, @orderby, filter, resultType?.ToString(), metricnamespace, autoAdjustTimegrain, validateDimensions, rollupby, context);
+                HttpMessage message = MetricsRestClient.CreateGetMonitorMetricsRequest(Guid.Parse(Id.SubscriptionId), region, timespan, interval, metricnames, aggregation, top, @orderby, filter, resultType?.ToString(), metricnamespace, autoAdjustTimegrain, validateDimensions, rollupby, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<Models.Response> response = Response.FromValue(Models.Response.FromResponse(result), result);
                 if (response.Value == null)
@@ -895,11 +895,11 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="region"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="region"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<Models.Response> GetAtSubscriptionScope(string region, string timespan = default, string interval = default, string metricnames = default, string aggregation = default, int? top = default, string @orderby = default, string filter = default, MonitorMetricResultType? resultType = default, string metricnamespace = default, bool? autoAdjustTimegrain = default, bool? validateDimensions = default, string rollupby = default, CancellationToken cancellationToken = default)
+        public virtual Response<Models.Response> GetMonitorMetrics(string region, string timespan = default, string interval = default, string metricnames = default, string aggregation = default, int? top = default, string @orderby = default, string filter = default, MonitorMetricResultType? resultType = default, string metricnamespace = default, bool? autoAdjustTimegrain = default, bool? validateDimensions = default, string rollupby = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(region, nameof(region));
 
-            using DiagnosticScope scope = MetricsClientDiagnostics.CreateScope("MockableMonitorSubscriptionResource.GetAtSubscriptionScope");
+            using DiagnosticScope scope = MetricsClientDiagnostics.CreateScope("MockableMonitorSubscriptionResource.GetMonitorMetrics");
             scope.Start();
             try
             {
@@ -907,7 +907,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = MetricsRestClient.CreateGetAtSubscriptionScopeRequest(Guid.Parse(Id.SubscriptionId), region, timespan, interval, metricnames, aggregation, top, @orderby, filter, resultType?.ToString(), metricnamespace, autoAdjustTimegrain, validateDimensions, rollupby, context);
+                HttpMessage message = MetricsRestClient.CreateGetMonitorMetricsRequest(Guid.Parse(Id.SubscriptionId), region, timespan, interval, metricnames, aggregation, top, @orderby, filter, resultType?.ToString(), metricnamespace, autoAdjustTimegrain, validateDimensions, rollupby, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<Models.Response> response = Response.FromValue(Models.Response.FromResponse(result), result);
                 if (response.Value == null)
@@ -971,11 +971,11 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="region"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="region"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<Models.Response>> GetAtSubscriptionScopePostAsync(string region, SubscriptionScopeMetricsRequestBodyParameters content = default, string timespan = default, string interval = default, string metricnames = default, string aggregation = default, int? top = default, string @orderby = default, string filter = default, MonitorMetricResultType? resultType = default, string metricnamespace = default, bool? autoAdjustTimegrain = default, bool? validateDimensions = default, string rollupby = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Models.Response>> GetMonitorMetricsWithPostAsync(string region, SubscriptionScopeMetricsRequestBodyParameters content = default, string timespan = default, string interval = default, string metricnames = default, string aggregation = default, int? top = default, string @orderby = default, string filter = default, MonitorMetricResultType? resultType = default, string metricnamespace = default, bool? autoAdjustTimegrain = default, bool? validateDimensions = default, string rollupby = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(region, nameof(region));
 
-            using DiagnosticScope scope = MetricsClientDiagnostics.CreateScope("MockableMonitorSubscriptionResource.GetAtSubscriptionScopePost");
+            using DiagnosticScope scope = MetricsClientDiagnostics.CreateScope("MockableMonitorSubscriptionResource.GetMonitorMetricsWithPost");
             scope.Start();
             try
             {
@@ -983,7 +983,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = MetricsRestClient.CreateGetAtSubscriptionScopePostRequest(Guid.Parse(Id.SubscriptionId), region, SubscriptionScopeMetricsRequestBodyParameters.ToRequestContent(content), timespan, interval, metricnames, aggregation, top, @orderby, filter, resultType?.ToString(), metricnamespace, autoAdjustTimegrain, validateDimensions, rollupby, context);
+                HttpMessage message = MetricsRestClient.CreateGetMonitorMetricsWithPostRequest(Guid.Parse(Id.SubscriptionId), region, SubscriptionScopeMetricsRequestBodyParameters.ToRequestContent(content), timespan, interval, metricnames, aggregation, top, @orderby, filter, resultType?.ToString(), metricnamespace, autoAdjustTimegrain, validateDimensions, rollupby, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<Models.Response> response = Response.FromValue(Models.Response.FromResponse(result), result);
                 if (response.Value == null)
@@ -1047,11 +1047,11 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="region"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="region"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<Models.Response> GetAtSubscriptionScopePost(string region, SubscriptionScopeMetricsRequestBodyParameters content = default, string timespan = default, string interval = default, string metricnames = default, string aggregation = default, int? top = default, string @orderby = default, string filter = default, MonitorMetricResultType? resultType = default, string metricnamespace = default, bool? autoAdjustTimegrain = default, bool? validateDimensions = default, string rollupby = default, CancellationToken cancellationToken = default)
+        public virtual Response<Models.Response> GetMonitorMetricsWithPost(string region, SubscriptionScopeMetricsRequestBodyParameters content = default, string timespan = default, string interval = default, string metricnames = default, string aggregation = default, int? top = default, string @orderby = default, string filter = default, MonitorMetricResultType? resultType = default, string metricnamespace = default, bool? autoAdjustTimegrain = default, bool? validateDimensions = default, string rollupby = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(region, nameof(region));
 
-            using DiagnosticScope scope = MetricsClientDiagnostics.CreateScope("MockableMonitorSubscriptionResource.GetAtSubscriptionScopePost");
+            using DiagnosticScope scope = MetricsClientDiagnostics.CreateScope("MockableMonitorSubscriptionResource.GetMonitorMetricsWithPost");
             scope.Start();
             try
             {
@@ -1059,7 +1059,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = MetricsRestClient.CreateGetAtSubscriptionScopePostRequest(Guid.Parse(Id.SubscriptionId), region, SubscriptionScopeMetricsRequestBodyParameters.ToRequestContent(content), timespan, interval, metricnames, aggregation, top, @orderby, filter, resultType?.ToString(), metricnamespace, autoAdjustTimegrain, validateDimensions, rollupby, context);
+                HttpMessage message = MetricsRestClient.CreateGetMonitorMetricsWithPostRequest(Guid.Parse(Id.SubscriptionId), region, SubscriptionScopeMetricsRequestBodyParameters.ToRequestContent(content), timespan, interval, metricnames, aggregation, top, @orderby, filter, resultType?.ToString(), metricnamespace, autoAdjustTimegrain, validateDimensions, rollupby, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<Models.Response> response = Response.FromValue(Models.Response.FromResponse(result), result);
                 if (response.Value == null)

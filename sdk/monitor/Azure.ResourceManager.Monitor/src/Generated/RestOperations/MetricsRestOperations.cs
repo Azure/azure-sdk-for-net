@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Monitor
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetAtSubscriptionScopeRequest(Guid subscriptionId, string region, string timespan, string interval, string metricnames, string aggregation, int? top, string @orderby, string filter, string resultType, string metricnamespace, bool? autoAdjustTimegrain, bool? validateDimensions, string rollupby, RequestContext context)
+        internal HttpMessage CreateGetMonitorMetricsRequest(Guid subscriptionId, string region, string timespan, string interval, string metricnames, string aggregation, int? top, string @orderby, string filter, string resultType, string metricnamespace, bool? autoAdjustTimegrain, bool? validateDimensions, string rollupby, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Monitor
             return message;
         }
 
-        internal HttpMessage CreateGetAtSubscriptionScopePostRequest(Guid subscriptionId, string region, RequestContent content, string timespan, string interval, string metricnames, string aggregation, int? top, string @orderby, string filter, string resultType, string metricnamespace, bool? autoAdjustTimegrain, bool? validateDimensions, string rollupby, RequestContext context)
+        internal HttpMessage CreateGetMonitorMetricsWithPostRequest(Guid subscriptionId, string region, RequestContent content, string timespan, string interval, string metricnames, string aggregation, int? top, string @orderby, string filter, string resultType, string metricnamespace, bool? autoAdjustTimegrain, bool? validateDimensions, string rollupby, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

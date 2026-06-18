@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.Monitor
         /// <b>Lists the metric baseline values for a resource</b>.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMonitorArmClient.GetAllAsync(ResourceIdentifier, string, string, string, TimeSpan?, string, string, string, MonitorResultType?, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorArmClient.GetMonitorMetricBaselinesAsync(ResourceIdentifier, string, string, string, TimeSpan?, string, string, string, MonitorResultType?, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -560,18 +560,18 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> A collection of <see cref="MonitorSingleMetricBaseline"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<MonitorSingleMetricBaseline> GetAllAsync(this ArmClient client, ResourceIdentifier scope, string metricnames = default, string metricnamespace = default, string timespan = default, TimeSpan? interval = default, string aggregation = default, string sensitivities = default, string filter = default, MonitorResultType? resultType = default, CancellationToken cancellationToken = default)
+        public static AsyncPageable<MonitorSingleMetricBaseline> GetMonitorMetricBaselinesAsync(this ArmClient client, ResourceIdentifier scope, string metricnames = default, string metricnamespace = default, string timespan = default, TimeSpan? interval = default, string aggregation = default, string sensitivities = default, string filter = default, MonitorResultType? resultType = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableMonitorArmClient(client).GetAllAsync(scope, metricnames, metricnamespace, timespan, interval, aggregation, sensitivities, filter, resultType, cancellationToken);
+            return GetMockableMonitorArmClient(client).GetMonitorMetricBaselinesAsync(scope, metricnames, metricnamespace, timespan, interval, aggregation, sensitivities, filter, resultType, cancellationToken);
         }
 
         /// <summary>
         /// <b>Lists the metric baseline values for a resource</b>.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMonitorArmClient.GetAll(ResourceIdentifier, string, string, string, TimeSpan?, string, string, string, MonitorResultType?, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorArmClient.GetMonitorMetricBaselines(ResourceIdentifier, string, string, string, TimeSpan?, string, string, string, MonitorResultType?, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -587,11 +587,11 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> A collection of <see cref="MonitorSingleMetricBaseline"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<MonitorSingleMetricBaseline> GetAll(this ArmClient client, ResourceIdentifier scope, string metricnames = default, string metricnamespace = default, string timespan = default, TimeSpan? interval = default, string aggregation = default, string sensitivities = default, string filter = default, MonitorResultType? resultType = default, CancellationToken cancellationToken = default)
+        public static Pageable<MonitorSingleMetricBaseline> GetMonitorMetricBaselines(this ArmClient client, ResourceIdentifier scope, string metricnames = default, string metricnamespace = default, string timespan = default, TimeSpan? interval = default, string aggregation = default, string sensitivities = default, string filter = default, MonitorResultType? resultType = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableMonitorArmClient(client).GetAll(scope, metricnames, metricnamespace, timespan, interval, aggregation, sensitivities, filter, resultType, cancellationToken);
+            return GetMockableMonitorArmClient(client).GetMonitorMetricBaselines(scope, metricnames, metricnamespace, timespan, interval, aggregation, sensitivities, filter, resultType, cancellationToken);
         }
 
         /// <summary>
@@ -1537,7 +1537,7 @@ namespace Azure.ResourceManager.Monitor
         /// <b>Lists the metric data for a subscription</b>. This API used the [default ARM throttling limits](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/request-limits-and-throttling).
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMonitorSubscriptionResource.GetAtSubscriptionScopeAsync(string, string, string, string, string, int?, string, string, MonitorMetricResultType?, string, bool?, bool?, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorSubscriptionResource.GetMonitorMetricsAsync(string, string, string, string, string, int?, string, string, MonitorMetricResultType?, string, bool?, bool?, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -1570,18 +1570,18 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="rollupby"> Dimension name(s) to rollup results by. For example if you only want to see metric values with a filter like 'City eq Seattle or City eq Tacoma' but don't want to see separate values for each city, you can specify 'RollUpBy=City' to see the results for Seattle and Tacoma rolled up into one timeseries. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<Models.Response>> GetAtSubscriptionScopeAsync(this SubscriptionResource subscriptionResource, string region, string timespan = default, string interval = default, string metricnames = default, string aggregation = default, int? top = default, string @orderby = default, string filter = default, MonitorMetricResultType? resultType = default, string metricnamespace = default, bool? autoAdjustTimegrain = default, bool? validateDimensions = default, string rollupby = default, CancellationToken cancellationToken = default)
+        public static async Task<Response<Models.Response>> GetMonitorMetricsAsync(this SubscriptionResource subscriptionResource, string region, string timespan = default, string interval = default, string metricnames = default, string aggregation = default, int? top = default, string @orderby = default, string filter = default, MonitorMetricResultType? resultType = default, string metricnamespace = default, bool? autoAdjustTimegrain = default, bool? validateDimensions = default, string rollupby = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableMonitorSubscriptionResource(subscriptionResource).GetAtSubscriptionScopeAsync(region, timespan, interval, metricnames, aggregation, top, @orderby, filter, resultType, metricnamespace, autoAdjustTimegrain, validateDimensions, rollupby, cancellationToken).ConfigureAwait(false);
+            return await GetMockableMonitorSubscriptionResource(subscriptionResource).GetMonitorMetricsAsync(region, timespan, interval, metricnames, aggregation, top, @orderby, filter, resultType, metricnamespace, autoAdjustTimegrain, validateDimensions, rollupby, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// <b>Lists the metric data for a subscription</b>. This API used the [default ARM throttling limits](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/request-limits-and-throttling).
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMonitorSubscriptionResource.GetAtSubscriptionScope(string, string, string, string, string, int?, string, string, MonitorMetricResultType?, string, bool?, bool?, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorSubscriptionResource.GetMonitorMetrics(string, string, string, string, string, int?, string, string, MonitorMetricResultType?, string, bool?, bool?, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -1614,18 +1614,18 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="rollupby"> Dimension name(s) to rollup results by. For example if you only want to see metric values with a filter like 'City eq Seattle or City eq Tacoma' but don't want to see separate values for each city, you can specify 'RollUpBy=City' to see the results for Seattle and Tacoma rolled up into one timeseries. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<Models.Response> GetAtSubscriptionScope(this SubscriptionResource subscriptionResource, string region, string timespan = default, string interval = default, string metricnames = default, string aggregation = default, int? top = default, string @orderby = default, string filter = default, MonitorMetricResultType? resultType = default, string metricnamespace = default, bool? autoAdjustTimegrain = default, bool? validateDimensions = default, string rollupby = default, CancellationToken cancellationToken = default)
+        public static Response<Models.Response> GetMonitorMetrics(this SubscriptionResource subscriptionResource, string region, string timespan = default, string interval = default, string metricnames = default, string aggregation = default, int? top = default, string @orderby = default, string filter = default, MonitorMetricResultType? resultType = default, string metricnamespace = default, bool? autoAdjustTimegrain = default, bool? validateDimensions = default, string rollupby = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableMonitorSubscriptionResource(subscriptionResource).GetAtSubscriptionScope(region, timespan, interval, metricnames, aggregation, top, @orderby, filter, resultType, metricnamespace, autoAdjustTimegrain, validateDimensions, rollupby, cancellationToken);
+            return GetMockableMonitorSubscriptionResource(subscriptionResource).GetMonitorMetrics(region, timespan, interval, metricnames, aggregation, top, @orderby, filter, resultType, metricnamespace, autoAdjustTimegrain, validateDimensions, rollupby, cancellationToken);
         }
 
         /// <summary>
         /// <b>Lists the metric data for a subscription</b>. Parameters can be specified on either query params or the body. This API used the [default ARM throttling limits](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/request-limits-and-throttling).
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMonitorSubscriptionResource.GetAtSubscriptionScopePostAsync(string, SubscriptionScopeMetricsRequestBodyParameters, string, string, string, string, int?, string, string, MonitorMetricResultType?, string, bool?, bool?, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorSubscriptionResource.GetMonitorMetricsWithPostAsync(string, SubscriptionScopeMetricsRequestBodyParameters, string, string, string, string, int?, string, string, MonitorMetricResultType?, string, bool?, bool?, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -1659,18 +1659,18 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="rollupby"> Dimension name(s) to rollup results by. For example if you only want to see metric values with a filter like 'City eq Seattle or City eq Tacoma' but don't want to see separate values for each city, you can specify 'RollUpBy=City' to see the results for Seattle and Tacoma rolled up into one timeseries. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<Models.Response>> GetAtSubscriptionScopePostAsync(this SubscriptionResource subscriptionResource, string region, SubscriptionScopeMetricsRequestBodyParameters content = default, string timespan = default, string interval = default, string metricnames = default, string aggregation = default, int? top = default, string @orderby = default, string filter = default, MonitorMetricResultType? resultType = default, string metricnamespace = default, bool? autoAdjustTimegrain = default, bool? validateDimensions = default, string rollupby = default, CancellationToken cancellationToken = default)
+        public static async Task<Response<Models.Response>> GetMonitorMetricsWithPostAsync(this SubscriptionResource subscriptionResource, string region, SubscriptionScopeMetricsRequestBodyParameters content = default, string timespan = default, string interval = default, string metricnames = default, string aggregation = default, int? top = default, string @orderby = default, string filter = default, MonitorMetricResultType? resultType = default, string metricnamespace = default, bool? autoAdjustTimegrain = default, bool? validateDimensions = default, string rollupby = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableMonitorSubscriptionResource(subscriptionResource).GetAtSubscriptionScopePostAsync(region, content, timespan, interval, metricnames, aggregation, top, @orderby, filter, resultType, metricnamespace, autoAdjustTimegrain, validateDimensions, rollupby, cancellationToken).ConfigureAwait(false);
+            return await GetMockableMonitorSubscriptionResource(subscriptionResource).GetMonitorMetricsWithPostAsync(region, content, timespan, interval, metricnames, aggregation, top, @orderby, filter, resultType, metricnamespace, autoAdjustTimegrain, validateDimensions, rollupby, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// <b>Lists the metric data for a subscription</b>. Parameters can be specified on either query params or the body. This API used the [default ARM throttling limits](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/request-limits-and-throttling).
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMonitorSubscriptionResource.GetAtSubscriptionScopePost(string, SubscriptionScopeMetricsRequestBodyParameters, string, string, string, string, int?, string, string, MonitorMetricResultType?, string, bool?, bool?, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorSubscriptionResource.GetMonitorMetricsWithPost(string, SubscriptionScopeMetricsRequestBodyParameters, string, string, string, string, int?, string, string, MonitorMetricResultType?, string, bool?, bool?, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -1704,11 +1704,11 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="rollupby"> Dimension name(s) to rollup results by. For example if you only want to see metric values with a filter like 'City eq Seattle or City eq Tacoma' but don't want to see separate values for each city, you can specify 'RollUpBy=City' to see the results for Seattle and Tacoma rolled up into one timeseries. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<Models.Response> GetAtSubscriptionScopePost(this SubscriptionResource subscriptionResource, string region, SubscriptionScopeMetricsRequestBodyParameters content = default, string timespan = default, string interval = default, string metricnames = default, string aggregation = default, int? top = default, string @orderby = default, string filter = default, MonitorMetricResultType? resultType = default, string metricnamespace = default, bool? autoAdjustTimegrain = default, bool? validateDimensions = default, string rollupby = default, CancellationToken cancellationToken = default)
+        public static Response<Models.Response> GetMonitorMetricsWithPost(this SubscriptionResource subscriptionResource, string region, SubscriptionScopeMetricsRequestBodyParameters content = default, string timespan = default, string interval = default, string metricnames = default, string aggregation = default, int? top = default, string @orderby = default, string filter = default, MonitorMetricResultType? resultType = default, string metricnamespace = default, bool? autoAdjustTimegrain = default, bool? validateDimensions = default, string rollupby = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableMonitorSubscriptionResource(subscriptionResource).GetAtSubscriptionScopePost(region, content, timespan, interval, metricnames, aggregation, top, @orderby, filter, resultType, metricnamespace, autoAdjustTimegrain, validateDimensions, rollupby, cancellationToken);
+            return GetMockableMonitorSubscriptionResource(subscriptionResource).GetMonitorMetricsWithPost(region, content, timespan, interval, metricnames, aggregation, top, @orderby, filter, resultType, metricnamespace, autoAdjustTimegrain, validateDimensions, rollupby, cancellationToken);
         }
 
         /// <summary>

@@ -28,7 +28,6 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"><paramref name="resourceGroupResource"/> is null.</exception>
         [Obsolete("This API is no longer supported.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [ForwardsClientCalls]
         public static Task<ArmOperation<NotificationStatus>> CreateNotificationsAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, NotificationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
@@ -47,7 +46,6 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"><paramref name="resourceGroupResource"/> is null.</exception>
         [Obsolete("This API is no longer supported.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [ForwardsClientCalls]
         public static ArmOperation<NotificationStatus> CreateNotifications(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, NotificationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
@@ -65,7 +63,6 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"><paramref name="resourceGroupResource"/> is null.</exception>
         [Obsolete("This API is no longer supported.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [ForwardsClientCalls]
         public static Task<Response<NotificationStatus>> GetNotificationStatusAsync(this ResourceGroupResource resourceGroupResource, string notificationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
@@ -83,7 +80,6 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"><paramref name="resourceGroupResource"/> is null.</exception>
         [Obsolete("This API is no longer supported.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [ForwardsClientCalls]
         public static Response<NotificationStatus> GetNotificationStatus(this ResourceGroupResource resourceGroupResource, string notificationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
@@ -102,7 +98,6 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"><paramref name="subscriptionResource"/> is null.</exception>
         [Obsolete("This API is no longer supported.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [ForwardsClientCalls]
         public static Task<ArmOperation<NotificationStatus>> CreateNotificationsAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, NotificationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -121,7 +116,6 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"><paramref name="subscriptionResource"/> is null.</exception>
         [Obsolete("This API is no longer supported.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [ForwardsClientCalls]
         public static ArmOperation<NotificationStatus> CreateNotifications(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, NotificationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -139,7 +133,6 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"><paramref name="subscriptionResource"/> is null.</exception>
         [Obsolete("This API is no longer supported.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [ForwardsClientCalls]
         public static Task<Response<NotificationStatus>> GetNotificationStatusAsync(this SubscriptionResource subscriptionResource, string notificationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -157,7 +150,6 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"><paramref name="subscriptionResource"/> is null.</exception>
         [Obsolete("This API is no longer supported.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [ForwardsClientCalls]
         public static Response<NotificationStatus> GetNotificationStatus(this SubscriptionResource subscriptionResource, string notificationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
