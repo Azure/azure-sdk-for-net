@@ -5,8 +5,6 @@ This sample demonstrates how to retrieve the state of a previously submitted doc
 Start by importing the namespace for the `DocumentsServiceClient` and related classes:
 
 ```C# Snippet:DocumentsServiceClient_Namespaces
-using Azure.Core;
-using Azure.Core.Serialization;
 using Azure.AI.Language.Documents;
 ```
 
@@ -14,7 +12,7 @@ Create a client:
 
 ```C# Snippet:CreateDocumentsServiceClientForSpecificApiVersion
 Uri endpoint = new Uri("{endpoint}");
-AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
+DefaultAzureCredential credential = new DefaultAzureCredential();
 DocumentsServiceClientOptions options = new DocumentsServiceClientOptions(DocumentsServiceClientOptions.ServiceVersion.V2026_05_15_Preview);
 DocumentsServiceClient client = new DocumentsServiceClient(endpoint, credential, options);
 ```
