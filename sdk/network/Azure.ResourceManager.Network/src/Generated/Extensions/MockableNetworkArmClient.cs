@@ -1321,7 +1321,7 @@ namespace Azure.ResourceManager.Network.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = VipSwapRestClient.CreateGetAllRequest(Guid.Parse(scope.SubscriptionId), scope.Parent.Name, scope.Name, context);
+                HttpMessage message = VipSwapRestClient.CreateGetAllRequest(Guid.Parse(scope.SubscriptionId), scope.ResourceGroupName, scope.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SwapResourceListResult> response = Response.FromValue(SwapResourceListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1369,7 +1369,7 @@ namespace Azure.ResourceManager.Network.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = VipSwapRestClient.CreateGetAllRequest(Guid.Parse(scope.SubscriptionId), scope.Parent.Name, scope.Name, context);
+                HttpMessage message = VipSwapRestClient.CreateGetAllRequest(Guid.Parse(scope.SubscriptionId), scope.ResourceGroupName, scope.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SwapResourceListResult> response = Response.FromValue(SwapResourceListResult.FromResponse(result), result);
                 if (response.Value == null)

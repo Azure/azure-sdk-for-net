@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,7 +23,7 @@ namespace Azure.ResourceManager.Network
     /// Each <see cref="VirtualMachineScaleSetNetworkInterfaceIPConfigurationResource"/> in the collection will belong to the same instance of <see cref="VirtualMachineScaleSetNetworkInterfaceResource"/>.
     /// To get a <see cref="VirtualMachineScaleSetNetworkInterfaceIPConfigurationCollection"/> instance call the GetVirtualMachineScaleSetNetworkInterfaceIPConfigurations method from an instance of <see cref="VirtualMachineScaleSetNetworkInterfaceResource"/>.
     /// </summary>
-    public partial class VirtualMachineScaleSetNetworkInterfaceIPConfigurationCollection : ArmCollection
+    public partial class VirtualMachineScaleSetNetworkInterfaceIPConfigurationCollection : ArmCollection, IEnumerable<VirtualMachineScaleSetNetworkInterfaceIPConfigurationResource>, IAsyncEnumerable<VirtualMachineScaleSetNetworkInterfaceIPConfigurationResource>
     {
         private readonly ClientDiagnostics _virtualMachineScaleSetNetworkInterfaceIPConfigurationsClientDiagnostics;
         private readonly VirtualMachineScaleSetNetworkInterfaceIPConfigurations _virtualMachineScaleSetNetworkInterfaceIPConfigurationsRestClient;
@@ -169,20 +171,11 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="virtualMachineScaleSetName"></param>
-        /// <param name="virtualmachineIndex"></param>
-        /// <param name="networkInterfaceName"></param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="virtualmachineIndex"/> or <paramref name="networkInterfaceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="virtualmachineIndex"/> or <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="VirtualMachineScaleSetNetworkInterfaceIPConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VirtualMachineScaleSetNetworkInterfaceIPConfigurationResource> GetAllAsync(string virtualMachineScaleSetName, string virtualmachineIndex, string networkInterfaceName, string expand = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<VirtualMachineScaleSetNetworkInterfaceIPConfigurationResource> GetAllAsync(string expand = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
-            Argument.AssertNotNullOrEmpty(virtualmachineIndex, nameof(virtualmachineIndex));
-            Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
-
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
@@ -191,9 +184,9 @@ namespace Azure.ResourceManager.Network
                 _virtualMachineScaleSetNetworkInterfaceIPConfigurationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
-                virtualMachineScaleSetName,
-                virtualmachineIndex,
-                networkInterfaceName,
+                Id.Parent.Parent.Name,
+                Id.Parent.Name,
+                Id.Name,
                 expand,
                 context,
                 "VirtualMachineScaleSetNetworkInterfaceIPConfigurationCollection.GetAll"), data => new VirtualMachineScaleSetNetworkInterfaceIPConfigurationResource(Client, data));
@@ -216,20 +209,11 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="virtualMachineScaleSetName"></param>
-        /// <param name="virtualmachineIndex"></param>
-        /// <param name="networkInterfaceName"></param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="virtualmachineIndex"/> or <paramref name="networkInterfaceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="virtualmachineIndex"/> or <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="VirtualMachineScaleSetNetworkInterfaceIPConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VirtualMachineScaleSetNetworkInterfaceIPConfigurationResource> GetAll(string virtualMachineScaleSetName, string virtualmachineIndex, string networkInterfaceName, string expand = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<VirtualMachineScaleSetNetworkInterfaceIPConfigurationResource> GetAll(string expand = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
-            Argument.AssertNotNullOrEmpty(virtualmachineIndex, nameof(virtualmachineIndex));
-            Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
-
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
@@ -238,9 +222,9 @@ namespace Azure.ResourceManager.Network
                 _virtualMachineScaleSetNetworkInterfaceIPConfigurationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
-                virtualMachineScaleSetName,
-                virtualmachineIndex,
-                networkInterfaceName,
+                Id.Parent.Parent.Name,
+                Id.Parent.Name,
+                Id.Name,
                 expand,
                 context,
                 "VirtualMachineScaleSetNetworkInterfaceIPConfigurationCollection.GetAll"), data => new VirtualMachineScaleSetNetworkInterfaceIPConfigurationResource(Client, data));
@@ -484,6 +468,22 @@ namespace Azure.ResourceManager.Network
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        IEnumerator<VirtualMachineScaleSetNetworkInterfaceIPConfigurationResource> IEnumerable<VirtualMachineScaleSetNetworkInterfaceIPConfigurationResource>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        IAsyncEnumerator<VirtualMachineScaleSetNetworkInterfaceIPConfigurationResource> IAsyncEnumerable<VirtualMachineScaleSetNetworkInterfaceIPConfigurationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Network
         public virtual AsyncPageable<NetworkInterfaceIPConfigurationData> GetAllIPConfigurationDataAsync(string virtualMachineScaleSetName, string virtualmachineIndex, CancellationToken cancellationToken)
         {
             return new AsyncPageableWrapper<VirtualMachineScaleSetNetworkInterfaceIPConfigurationResource, NetworkInterfaceIPConfigurationData>(
-                GetVirtualMachineScaleSetNetworkInterfaceResource(virtualMachineScaleSetName, Id.Name).GetVirtualMachineScaleSetNetworkInterfaceIPConfigurations().GetAllAsync(virtualMachineScaleSetName, virtualmachineIndex, Id.Name, cancellationToken: cancellationToken),
+                GetVirtualMachineScaleSetNetworkInterfaceResource(virtualMachineScaleSetName, Id.Name).GetVirtualMachineScaleSetNetworkInterfaceIPConfigurations().GetAllAsync(cancellationToken: cancellationToken),
                 resource => resource.Data);
         }
 
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Network
         public virtual Pageable<NetworkInterfaceIPConfigurationData> GetAllIPConfigurationData(string virtualMachineScaleSetName, string virtualmachineIndex, CancellationToken cancellationToken)
         {
             return new PageableWrapper<VirtualMachineScaleSetNetworkInterfaceIPConfigurationResource, NetworkInterfaceIPConfigurationData>(
-                GetVirtualMachineScaleSetNetworkInterfaceResource(virtualMachineScaleSetName, Id.Name).GetVirtualMachineScaleSetNetworkInterfaceIPConfigurations().GetAll(virtualMachineScaleSetName, virtualmachineIndex, Id.Name, cancellationToken: cancellationToken),
+                GetVirtualMachineScaleSetNetworkInterfaceResource(virtualMachineScaleSetName, Id.Name).GetVirtualMachineScaleSetNetworkInterfaceIPConfigurations().GetAll(cancellationToken: cancellationToken),
                 resource => resource.Data);
         }
 

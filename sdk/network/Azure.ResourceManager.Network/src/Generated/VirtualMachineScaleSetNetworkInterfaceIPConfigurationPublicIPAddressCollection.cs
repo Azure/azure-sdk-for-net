@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,7 +23,7 @@ namespace Azure.ResourceManager.Network
     /// Each <see cref="VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressResource"/> in the collection will belong to the same instance of <see cref="VirtualMachineScaleSetNetworkInterfaceIPConfigurationResource"/>.
     /// To get a <see cref="VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressCollection"/> instance call the GetVirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddresses method from an instance of <see cref="VirtualMachineScaleSetNetworkInterfaceIPConfigurationResource"/>.
     /// </summary>
-    public partial class VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressCollection : ArmCollection
+    public partial class VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressCollection : ArmCollection, IEnumerable<VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressResource>, IAsyncEnumerable<VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressResource>
     {
         private readonly ClientDiagnostics _virtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressesClientDiagnostics;
         private readonly VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddresses _virtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressesRestClient;
@@ -69,15 +71,13 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="ipConfigurationName"></param>
         /// <param name="publicIpAddressName"></param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ipConfigurationName"/> or <paramref name="publicIpAddressName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="ipConfigurationName"/> or <paramref name="publicIpAddressName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressResource>> GetAsync(string ipConfigurationName, string publicIpAddressName, string expand = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="publicIpAddressName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="publicIpAddressName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressResource>> GetAsync(string publicIpAddressName, string expand = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ipConfigurationName, nameof(ipConfigurationName));
             Argument.AssertNotNullOrEmpty(publicIpAddressName, nameof(publicIpAddressName));
 
             using DiagnosticScope scope = _virtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressesClientDiagnostics.CreateScope("VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressCollection.Get");
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressesRestClient.CreateGetVirtualMachineScaleSetPublicIPAddressRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, ipConfigurationName, publicIpAddressName, expand, context);
+                HttpMessage message = _virtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressesRestClient.CreateGetVirtualMachineScaleSetPublicIPAddressRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, publicIpAddressName, expand, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PublicIPAddressData> response = Response.FromValue(PublicIPAddressData.FromResponse(result), result);
                 if (response.Value == null)
@@ -121,15 +121,13 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="ipConfigurationName"></param>
         /// <param name="publicIpAddressName"></param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ipConfigurationName"/> or <paramref name="publicIpAddressName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="ipConfigurationName"/> or <paramref name="publicIpAddressName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressResource> Get(string ipConfigurationName, string publicIpAddressName, string expand = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="publicIpAddressName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="publicIpAddressName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressResource> Get(string publicIpAddressName, string expand = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ipConfigurationName, nameof(ipConfigurationName));
             Argument.AssertNotNullOrEmpty(publicIpAddressName, nameof(publicIpAddressName));
 
             using DiagnosticScope scope = _virtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressesClientDiagnostics.CreateScope("VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressCollection.Get");
@@ -140,7 +138,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressesRestClient.CreateGetVirtualMachineScaleSetPublicIPAddressRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, ipConfigurationName, publicIpAddressName, expand, context);
+                HttpMessage message = _virtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressesRestClient.CreateGetVirtualMachineScaleSetPublicIPAddressRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, publicIpAddressName, expand, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PublicIPAddressData> response = Response.FromValue(PublicIPAddressData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,15 +171,10 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="ipConfigurationName"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ipConfigurationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="ipConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressResource> GetAllAsync(string ipConfigurationName, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ipConfigurationName, nameof(ipConfigurationName));
-
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
@@ -193,7 +186,7 @@ namespace Azure.ResourceManager.Network
                 Id.Parent.Parent.Parent.Name,
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,
-                ipConfigurationName,
+                Id.Name,
                 context,
                 "VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressCollection.GetAll"), data => new VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressResource(Client, data));
         }
@@ -215,15 +208,10 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="ipConfigurationName"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ipConfigurationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="ipConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressResource> GetAll(string ipConfigurationName, CancellationToken cancellationToken = default)
+        public virtual Pageable<VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ipConfigurationName, nameof(ipConfigurationName));
-
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
@@ -235,7 +223,7 @@ namespace Azure.ResourceManager.Network
                 Id.Parent.Parent.Parent.Name,
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,
-                ipConfigurationName,
+                Id.Name,
                 context,
                 "VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressCollection.GetAll"), data => new VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressResource(Client, data));
         }
@@ -257,15 +245,13 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="ipConfigurationName"></param>
         /// <param name="publicIpAddressName"></param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ipConfigurationName"/> or <paramref name="publicIpAddressName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="ipConfigurationName"/> or <paramref name="publicIpAddressName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string ipConfigurationName, string publicIpAddressName, string expand = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="publicIpAddressName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="publicIpAddressName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string publicIpAddressName, string expand = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ipConfigurationName, nameof(ipConfigurationName));
             Argument.AssertNotNullOrEmpty(publicIpAddressName, nameof(publicIpAddressName));
 
             using DiagnosticScope scope = _virtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressesClientDiagnostics.CreateScope("VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressCollection.Exists");
@@ -276,7 +262,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressesRestClient.CreateGetVirtualMachineScaleSetPublicIPAddressRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, ipConfigurationName, publicIpAddressName, expand, context);
+                HttpMessage message = _virtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressesRestClient.CreateGetVirtualMachineScaleSetPublicIPAddressRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, publicIpAddressName, expand, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<PublicIPAddressData> response = default;
@@ -317,15 +303,13 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="ipConfigurationName"></param>
         /// <param name="publicIpAddressName"></param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ipConfigurationName"/> or <paramref name="publicIpAddressName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="ipConfigurationName"/> or <paramref name="publicIpAddressName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<bool> Exists(string ipConfigurationName, string publicIpAddressName, string expand = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="publicIpAddressName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="publicIpAddressName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<bool> Exists(string publicIpAddressName, string expand = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ipConfigurationName, nameof(ipConfigurationName));
             Argument.AssertNotNullOrEmpty(publicIpAddressName, nameof(publicIpAddressName));
 
             using DiagnosticScope scope = _virtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressesClientDiagnostics.CreateScope("VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressCollection.Exists");
@@ -336,7 +320,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressesRestClient.CreateGetVirtualMachineScaleSetPublicIPAddressRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, ipConfigurationName, publicIpAddressName, expand, context);
+                HttpMessage message = _virtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressesRestClient.CreateGetVirtualMachineScaleSetPublicIPAddressRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, publicIpAddressName, expand, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<PublicIPAddressData> response = default;
@@ -377,15 +361,13 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="ipConfigurationName"></param>
         /// <param name="publicIpAddressName"></param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ipConfigurationName"/> or <paramref name="publicIpAddressName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="ipConfigurationName"/> or <paramref name="publicIpAddressName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressResource>> GetIfExistsAsync(string ipConfigurationName, string publicIpAddressName, string expand = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="publicIpAddressName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="publicIpAddressName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<NullableResponse<VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressResource>> GetIfExistsAsync(string publicIpAddressName, string expand = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ipConfigurationName, nameof(ipConfigurationName));
             Argument.AssertNotNullOrEmpty(publicIpAddressName, nameof(publicIpAddressName));
 
             using DiagnosticScope scope = _virtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressesClientDiagnostics.CreateScope("VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressCollection.GetIfExists");
@@ -396,7 +378,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressesRestClient.CreateGetVirtualMachineScaleSetPublicIPAddressRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, ipConfigurationName, publicIpAddressName, expand, context);
+                HttpMessage message = _virtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressesRestClient.CreateGetVirtualMachineScaleSetPublicIPAddressRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, publicIpAddressName, expand, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<PublicIPAddressData> response = default;
@@ -441,15 +423,13 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="ipConfigurationName"></param>
         /// <param name="publicIpAddressName"></param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ipConfigurationName"/> or <paramref name="publicIpAddressName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="ipConfigurationName"/> or <paramref name="publicIpAddressName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressResource> GetIfExists(string ipConfigurationName, string publicIpAddressName, string expand = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="publicIpAddressName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="publicIpAddressName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual NullableResponse<VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressResource> GetIfExists(string publicIpAddressName, string expand = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ipConfigurationName, nameof(ipConfigurationName));
             Argument.AssertNotNullOrEmpty(publicIpAddressName, nameof(publicIpAddressName));
 
             using DiagnosticScope scope = _virtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressesClientDiagnostics.CreateScope("VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressCollection.GetIfExists");
@@ -460,7 +440,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressesRestClient.CreateGetVirtualMachineScaleSetPublicIPAddressRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, ipConfigurationName, publicIpAddressName, expand, context);
+                HttpMessage message = _virtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressesRestClient.CreateGetVirtualMachineScaleSetPublicIPAddressRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, publicIpAddressName, expand, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<PublicIPAddressData> response = default;
@@ -486,6 +466,22 @@ namespace Azure.ResourceManager.Network
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        IEnumerator<VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressResource> IEnumerable<VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressResource>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        IAsyncEnumerator<VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressResource> IAsyncEnumerable<VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }
