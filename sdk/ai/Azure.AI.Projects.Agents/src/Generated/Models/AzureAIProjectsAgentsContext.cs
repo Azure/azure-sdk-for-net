@@ -67,7 +67,9 @@ namespace Azure.AI.Projects.Agents
     [ModelReaderWriterBuildable(typeof(EmptyModelParam))]
     [ModelReaderWriterBuildable(typeof(EntraAuthorizationScheme))]
     [ModelReaderWriterBuildable(typeof(EntraIsolationKeySource))]
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.ExternalAgentDefinition is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ExternalAgentDefinition))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.ExternalAgentDefinition is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(FabricDataAgentToolOptions))]
     [ModelReaderWriterBuildable(typeof(FabricIQPreviewTool))]
     [ModelReaderWriterBuildable(typeof(FixedRatioVersionSelectionRule))]
