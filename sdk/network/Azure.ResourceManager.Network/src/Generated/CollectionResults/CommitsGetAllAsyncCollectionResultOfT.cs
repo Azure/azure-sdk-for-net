@@ -15,7 +15,7 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    internal partial class CommitsGetAllAsyncCollectionResultOfT : AsyncPageable<CommitData>
+    internal partial class CommitsGetAllAsyncCollectionResultOfT : AsyncPageable<NetworkManagerConfigurationCommitData>
     {
         private readonly Commits _client;
         private readonly Guid _subscriptionId;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of CommitsGetAllAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<CommitData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<NetworkManagerConfigurationCommitData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Network
                     yield break;
                 }
                 CommitListResult result = CommitListResult.FromResponse(response);
-                yield return Page<CommitData>.FromValues((IReadOnlyList<CommitData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<NetworkManagerConfigurationCommitData>.FromValues((IReadOnlyList<NetworkManagerConfigurationCommitData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

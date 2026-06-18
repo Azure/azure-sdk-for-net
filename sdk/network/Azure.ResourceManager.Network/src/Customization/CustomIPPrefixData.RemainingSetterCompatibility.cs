@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Network
                     Properties = new CustomIpPrefixPropertiesFormat();
                 }
 
-                Properties.Geo = value.HasValue ? new Geo(value.Value.ToString()) : default(Geo?);
+                Properties.Geo = value.HasValue ? new CidrAdvertisingGeoCode(value.Value.ToString()) : default(CidrAdvertisingGeoCode?);
             }
         }
     }

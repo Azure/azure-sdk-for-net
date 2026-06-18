@@ -98,11 +98,11 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Request timeout in seconds. Application Gateway will fail the request if response is not received within RequestTimeout. Acceptable values are from 1 second to 86400 seconds. </summary>
         [WirePath("properties.requestTimeout")]
-        public int? RequestTimeout
+        public int? RequestTimeoutInSeconds
         {
             get
             {
-                return Properties is null ? default : Properties.RequestTimeout;
+                return Properties is null ? default : Properties.RequestTimeoutInSeconds;
             }
             set
             {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     Properties = new ApplicationGatewayBackendHttpSettingsPropertiesFormat();
                 }
-                Properties.RequestTimeout = value;
+                Properties.RequestTimeoutInSeconds = value;
             }
         }
 
@@ -224,11 +224,11 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Enable or disable dedicated connection per backend server. Default is set to false. </summary>
         [WirePath("properties.dedicatedBackendConnection")]
-        public bool? DedicatedBackendConnection
+        public bool? IsDedicatedBackendConnectionEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.DedicatedBackendConnection;
+                return Properties is null ? default : Properties.IsDedicatedBackendConnectionEnabled;
             }
             set
             {
@@ -236,17 +236,17 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     Properties = new ApplicationGatewayBackendHttpSettingsPropertiesFormat();
                 }
-                Properties.DedicatedBackendConnection = value;
+                Properties.IsDedicatedBackendConnectionEnabled = value;
             }
         }
 
         /// <summary> Verify or skip both chain and expiry validations of the certificate on the backend server. Default is set to true. </summary>
         [WirePath("properties.validateCertChainAndExpiry")]
-        public bool? ValidateCertChainAndExpiry
+        public bool? IsValidateCertChainAndExpiryEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.ValidateCertChainAndExpiry;
+                return Properties is null ? default : Properties.IsValidateCertChainAndExpiryEnabled;
             }
             set
             {
@@ -254,17 +254,17 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     Properties = new ApplicationGatewayBackendHttpSettingsPropertiesFormat();
                 }
-                Properties.ValidateCertChainAndExpiry = value;
+                Properties.IsValidateCertChainAndExpiryEnabled = value;
             }
         }
 
         /// <summary> When enabled, verifies if the Common Name of the certificate provided by the backend server matches the Server Name Indication (SNI) value. Default value is true. </summary>
         [WirePath("properties.validateSNI")]
-        public bool? ValidateSNI
+        public bool? IsValidateSniEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.ValidateSNI;
+                return Properties is null ? default : Properties.IsValidateSniEnabled;
             }
             set
             {
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     Properties = new ApplicationGatewayBackendHttpSettingsPropertiesFormat();
                 }
-                Properties.ValidateSNI = value;
+                Properties.IsValidateSniEnabled = value;
             }
         }
 

@@ -1064,11 +1064,11 @@ namespace Azure.ResourceManager.Network
             return GetScopeConnections().Get(scopeConnectionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of Commits in the <see cref="NetworkManagerResource"/>. </summary>
-        /// <returns> An object representing collection of Commits and their operations over a CommitResource. </returns>
-        public virtual CommitCollection GetCommits()
+        /// <summary> Gets a collection of NetworkManagerConfigurationCommits in the <see cref="NetworkManagerResource"/>. </summary>
+        /// <returns> An object representing collection of NetworkManagerConfigurationCommits and their operations over a NetworkManagerConfigurationCommitResource. </returns>
+        public virtual NetworkManagerConfigurationCommitCollection GetNetworkManagerConfigurationCommits()
         {
-            return GetCachedClient(client => new CommitCollection(client, Id));
+            return GetCachedClient(client => new NetworkManagerConfigurationCommitCollection(client, Id));
         }
 
         /// <summary> Gets the specified commit. </summary>
@@ -1077,11 +1077,11 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="commitName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="commitName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<CommitResource>> GetCommitAsync(string commitName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetworkManagerConfigurationCommitResource>> GetNetworkManagerConfigurationCommitAsync(string commitName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(commitName, nameof(commitName));
 
-            return await GetCommits().GetAsync(commitName, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkManagerConfigurationCommits().GetAsync(commitName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets the specified commit. </summary>
@@ -1090,11 +1090,11 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="commitName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="commitName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<CommitResource> GetCommit(string commitName, CancellationToken cancellationToken = default)
+        public virtual Response<NetworkManagerConfigurationCommitResource> GetNetworkManagerConfigurationCommit(string commitName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(commitName, nameof(commitName));
 
-            return GetCommits().Get(commitName, cancellationToken);
+            return GetNetworkManagerConfigurationCommits().Get(commitName, cancellationToken);
         }
 
         /// <summary> Gets a collection of SecurityAdminConfigurations in the <see cref="NetworkManagerResource"/>. </summary>

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="port"> The destination port on the backend. </param>
         /// <param name="protocol"> The protocol used to communicate with the backend. </param>
         /// <param name="cookieBasedAffinity"> Cookie based affinity. </param>
-        /// <param name="requestTimeout"> Request timeout in seconds. Application Gateway will fail the request if response is not received within RequestTimeout. Acceptable values are from 1 second to 86400 seconds. </param>
+        /// <param name="requestTimeoutInSeconds"> Request timeout in seconds. Application Gateway will fail the request if response is not received within RequestTimeout. Acceptable values are from 1 second to 86400 seconds. </param>
         /// <param name="probe"> Probe resource of an application gateway. </param>
         /// <param name="authenticationCertificates"> Array of references to application gateway authentication certificates. </param>
         /// <param name="trustedRootCertificates"> Array of references to application gateway trusted root certificates. </param>
@@ -40,18 +40,18 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="affinityCookieName"> Cookie name to use for the affinity cookie. </param>
         /// <param name="probeEnabled"> Whether the probe is enabled. Default value is false. </param>
         /// <param name="path"> Path which should be used as a prefix for all HTTP requests. Null means no path will be prefixed. Default value is null. </param>
-        /// <param name="dedicatedBackendConnection"> Enable or disable dedicated connection per backend server. Default is set to false. </param>
-        /// <param name="validateCertChainAndExpiry"> Verify or skip both chain and expiry validations of the certificate on the backend server. Default is set to true. </param>
-        /// <param name="validateSNI"> When enabled, verifies if the Common Name of the certificate provided by the backend server matches the Server Name Indication (SNI) value. Default value is true. </param>
+        /// <param name="isDedicatedBackendConnectionEnabled"> Enable or disable dedicated connection per backend server. Default is set to false. </param>
+        /// <param name="isValidateCertChainAndExpiryEnabled"> Verify or skip both chain and expiry validations of the certificate on the backend server. Default is set to true. </param>
+        /// <param name="isValidateSniEnabled"> When enabled, verifies if the Common Name of the certificate provided by the backend server matches the Server Name Indication (SNI) value. Default value is true. </param>
         /// <param name="sniName"> Specify an SNI value to match the common name of the certificate on the backend. By default, the application gateway uses the incoming request’s host header as the SNI. Default value is null. </param>
         /// <param name="provisioningState"> The provisioning state of the backend HTTP settings resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationGatewayBackendHttpSettingsPropertiesFormat(int? port, ApplicationGatewayProtocol? protocol, ApplicationGatewayCookieBasedAffinity? cookieBasedAffinity, int? requestTimeout, NetworkSubResource probe, IList<WritableSubResource> authenticationCertificates, IList<WritableSubResource> trustedRootCertificates, ApplicationGatewayConnectionDraining connectionDraining, string hostName, bool? pickHostNameFromBackendAddress, string affinityCookieName, bool? probeEnabled, string path, bool? dedicatedBackendConnection, bool? validateCertChainAndExpiry, bool? validateSNI, string sniName, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApplicationGatewayBackendHttpSettingsPropertiesFormat(int? port, ApplicationGatewayProtocol? protocol, ApplicationGatewayCookieBasedAffinity? cookieBasedAffinity, int? requestTimeoutInSeconds, NetworkSubResource probe, IList<WritableSubResource> authenticationCertificates, IList<WritableSubResource> trustedRootCertificates, ApplicationGatewayConnectionDraining connectionDraining, string hostName, bool? pickHostNameFromBackendAddress, string affinityCookieName, bool? probeEnabled, string path, bool? isDedicatedBackendConnectionEnabled, bool? isValidateCertChainAndExpiryEnabled, bool? isValidateSniEnabled, string sniName, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Port = port;
             Protocol = protocol;
             CookieBasedAffinity = cookieBasedAffinity;
-            RequestTimeout = requestTimeout;
+            RequestTimeoutInSeconds = requestTimeoutInSeconds;
             Probe = probe;
             AuthenticationCertificates = authenticationCertificates;
             TrustedRootCertificates = trustedRootCertificates;
@@ -61,9 +61,9 @@ namespace Azure.ResourceManager.Network.Models
             AffinityCookieName = affinityCookieName;
             ProbeEnabled = probeEnabled;
             Path = path;
-            DedicatedBackendConnection = dedicatedBackendConnection;
-            ValidateCertChainAndExpiry = validateCertChainAndExpiry;
-            ValidateSNI = validateSNI;
+            IsDedicatedBackendConnectionEnabled = isDedicatedBackendConnectionEnabled;
+            IsValidateCertChainAndExpiryEnabled = isValidateCertChainAndExpiryEnabled;
+            IsValidateSniEnabled = isValidateSniEnabled;
             SniName = sniName;
             ProvisioningState = provisioningState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Request timeout in seconds. Application Gateway will fail the request if response is not received within RequestTimeout. Acceptable values are from 1 second to 86400 seconds. </summary>
         [WirePath("requestTimeout")]
-        public int? RequestTimeout { get; set; }
+        public int? RequestTimeoutInSeconds { get; set; }
 
         /// <summary> Probe resource of an application gateway. </summary>
         [WirePath("probe")]
@@ -123,15 +123,15 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Enable or disable dedicated connection per backend server. Default is set to false. </summary>
         [WirePath("dedicatedBackendConnection")]
-        public bool? DedicatedBackendConnection { get; set; }
+        public bool? IsDedicatedBackendConnectionEnabled { get; set; }
 
         /// <summary> Verify or skip both chain and expiry validations of the certificate on the backend server. Default is set to true. </summary>
         [WirePath("validateCertChainAndExpiry")]
-        public bool? ValidateCertChainAndExpiry { get; set; }
+        public bool? IsValidateCertChainAndExpiryEnabled { get; set; }
 
         /// <summary> When enabled, verifies if the Common Name of the certificate provided by the backend server matches the Server Name Indication (SNI) value. Default value is true. </summary>
         [WirePath("validateSNI")]
-        public bool? ValidateSNI { get; set; }
+        public bool? IsValidateSniEnabled { get; set; }
 
         /// <summary> Specify an SNI value to match the common name of the certificate on the backend. By default, the application gateway uses the incoming request’s host header as the SNI. Default value is null. </summary>
         [WirePath("sniName")]

@@ -785,21 +785,21 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="CommitResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="NetworkManagerConfigurationCommitResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkArmClient.GetCommitResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetworkArmClient.GetNetworkManagerConfigurationCommitResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="CommitResource"/> object. </returns>
-        public static CommitResource GetCommitResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetworkManagerConfigurationCommitResource"/> object. </returns>
+        public static NetworkManagerConfigurationCommitResource GetNetworkManagerConfigurationCommitResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableNetworkArmClient(client).GetCommitResource(id);
+            return GetMockableNetworkArmClient(client).GetNetworkManagerConfigurationCommitResource(id);
         }
 
         /// <summary>
@@ -1757,21 +1757,21 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SubgroupResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="InterconnectGroupSubgroupResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkArmClient.GetSubgroupResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetworkArmClient.GetInterconnectGroupSubgroupResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SubgroupResource"/> object. </returns>
-        public static SubgroupResource GetSubgroupResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="InterconnectGroupSubgroupResource"/> object. </returns>
+        public static InterconnectGroupSubgroupResource GetInterconnectGroupSubgroupResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableNetworkArmClient(client).GetSubgroupResource(id);
+            return GetMockableNetworkArmClient(client).GetInterconnectGroupSubgroupResource(id);
         }
 
         /// <summary>

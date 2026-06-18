@@ -779,11 +779,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets a collection of Subgroups in the <see cref="InterconnectGroupResource"/>. </summary>
-        /// <returns> An object representing collection of Subgroups and their operations over a SubgroupResource. </returns>
-        public virtual SubgroupCollection GetSubgroups()
+        /// <summary> Gets a collection of InterconnectGroupSubgroups in the <see cref="InterconnectGroupResource"/>. </summary>
+        /// <returns> An object representing collection of InterconnectGroupSubgroups and their operations over a InterconnectGroupSubgroupResource. </returns>
+        public virtual InterconnectGroupSubgroupCollection GetInterconnectGroupSubgroups()
         {
-            return GetCachedClient(client => new SubgroupCollection(client, Id));
+            return GetCachedClient(client => new InterconnectGroupSubgroupCollection(client, Id));
         }
 
         /// <summary> Gets the specified subgroup in an interconnect group. </summary>
@@ -792,11 +792,11 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="subgroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subgroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SubgroupResource>> GetSubgroupAsync(string subgroupName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<InterconnectGroupSubgroupResource>> GetInterconnectGroupSubgroupAsync(string subgroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subgroupName, nameof(subgroupName));
 
-            return await GetSubgroups().GetAsync(subgroupName, cancellationToken).ConfigureAwait(false);
+            return await GetInterconnectGroupSubgroups().GetAsync(subgroupName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets the specified subgroup in an interconnect group. </summary>
@@ -805,11 +805,11 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="subgroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subgroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SubgroupResource> GetSubgroup(string subgroupName, CancellationToken cancellationToken = default)
+        public virtual Response<InterconnectGroupSubgroupResource> GetInterconnectGroupSubgroup(string subgroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subgroupName, nameof(subgroupName));
 
-            return GetSubgroups().Get(subgroupName, cancellationToken);
+            return GetInterconnectGroupSubgroups().Get(subgroupName, cancellationToken);
         }
     }
 }

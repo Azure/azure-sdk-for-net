@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="BastionShareableLink"/>. </summary>
         /// <param name="vm"> Reference of the virtual machine resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vm"/> is null. </exception>
-        public BastionShareableLink(VM vm)
+        public BastionShareableLink(BastionShareableLinkVirtualMachine vm)
         {
             Argument.AssertNotNull(vm, nameof(vm));
 
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="createdAt"> The time when the link was created. </param>
         /// <param name="message"> Optional field indicating the warning or error message related to the vm in case of partial failure. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BastionShareableLink(VM vm, string bsl, string createdAt, string message, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BastionShareableLink(BastionShareableLinkVirtualMachine vm, string bsl, string createdAt, string message, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Vm = vm;
             Bsl = bsl;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Reference of the virtual machine resource. </summary>
         [WirePath("vm")]
-        public VM Vm { get; set; }
+        public BastionShareableLinkVirtualMachine Vm { get; set; }
 
         /// <summary> The unique Bastion Shareable Link to the virtual machine. </summary>
         [WirePath("bsl")]

@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("subgroups"u8);
                 writer.WriteStartArray();
-                foreach (SubgroupData item in Subgroups)
+                foreach (InterconnectGroupSubgroupData item in Subgroups)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             InterconnectGroupScope? scope = default;
-            IReadOnlyList<SubgroupData> subgroups = default;
+            IReadOnlyList<InterconnectGroupSubgroupData> subgroups = default;
             NetworkProvisioningState? provisioningState = default;
             string resourceGuid = default;
             SubgroupProfile subgroupProfile = default;
@@ -171,10 +171,10 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    List<SubgroupData> array = new List<SubgroupData>();
+                    List<InterconnectGroupSubgroupData> array = new List<InterconnectGroupSubgroupData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SubgroupData.DeserializeSubgroupData(item, options));
+                        array.Add(InterconnectGroupSubgroupData.DeserializeInterconnectGroupSubgroupData(item, options));
                     }
                     subgroups = array;
                     continue;
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             return new InterconnectGroupPropertiesFormat(
                 scope,
-                subgroups ?? new ChangeTrackingList<SubgroupData>(),
+                subgroups ?? new ChangeTrackingList<InterconnectGroupSubgroupData>(),
                 provisioningState,
                 resourceGuid,
                 subgroupProfile,

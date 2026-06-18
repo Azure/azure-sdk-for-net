@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("cookieBasedAffinity"u8);
                 writer.WriteStringValue(CookieBasedAffinity.Value.ToString());
             }
-            if (Optional.IsDefined(RequestTimeout))
+            if (Optional.IsDefined(RequestTimeoutInSeconds))
             {
                 writer.WritePropertyName("requestTimeout"u8);
-                writer.WriteNumberValue(RequestTimeout.Value);
+                writer.WriteNumberValue(RequestTimeoutInSeconds.Value);
             }
             if (Optional.IsDefined(Probe))
             {
@@ -161,20 +161,20 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (Optional.IsDefined(DedicatedBackendConnection))
+            if (Optional.IsDefined(IsDedicatedBackendConnectionEnabled))
             {
                 writer.WritePropertyName("dedicatedBackendConnection"u8);
-                writer.WriteBooleanValue(DedicatedBackendConnection.Value);
+                writer.WriteBooleanValue(IsDedicatedBackendConnectionEnabled.Value);
             }
-            if (Optional.IsDefined(ValidateCertChainAndExpiry))
+            if (Optional.IsDefined(IsValidateCertChainAndExpiryEnabled))
             {
                 writer.WritePropertyName("validateCertChainAndExpiry"u8);
-                writer.WriteBooleanValue(ValidateCertChainAndExpiry.Value);
+                writer.WriteBooleanValue(IsValidateCertChainAndExpiryEnabled.Value);
             }
-            if (Optional.IsDefined(ValidateSNI))
+            if (Optional.IsDefined(IsValidateSniEnabled))
             {
                 writer.WritePropertyName("validateSNI"u8);
-                writer.WriteBooleanValue(ValidateSNI.Value);
+                writer.WriteBooleanValue(IsValidateSniEnabled.Value);
             }
             if (Optional.IsDefined(SniName))
             {
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Network.Models
             int? port = default;
             ApplicationGatewayProtocol? protocol = default;
             ApplicationGatewayCookieBasedAffinity? cookieBasedAffinity = default;
-            int? requestTimeout = default;
+            int? requestTimeoutInSeconds = default;
             NetworkSubResource probe = default;
             IList<WritableSubResource> authenticationCertificates = default;
             IList<WritableSubResource> trustedRootCertificates = default;
@@ -241,9 +241,9 @@ namespace Azure.ResourceManager.Network.Models
             string affinityCookieName = default;
             bool? probeEnabled = default;
             string path = default;
-            bool? dedicatedBackendConnection = default;
-            bool? validateCertChainAndExpiry = default;
-            bool? validateSNI = default;
+            bool? isDedicatedBackendConnectionEnabled = default;
+            bool? isValidateCertChainAndExpiryEnabled = default;
+            bool? isValidateSniEnabled = default;
             string sniName = default;
             NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    requestTimeout = prop.Value.GetInt32();
+                    requestTimeoutInSeconds = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("probe"u8))
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    dedicatedBackendConnection = prop.Value.GetBoolean();
+                    isDedicatedBackendConnectionEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("validateCertChainAndExpiry"u8))
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    validateCertChainAndExpiry = prop.Value.GetBoolean();
+                    isValidateCertChainAndExpiryEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("validateSNI"u8))
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    validateSNI = prop.Value.GetBoolean();
+                    isValidateSniEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("sniName"u8))
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.Network.Models
                 port,
                 protocol,
                 cookieBasedAffinity,
-                requestTimeout,
+                requestTimeoutInSeconds,
                 probe,
                 authenticationCertificates ?? new ChangeTrackingList<WritableSubResource>(),
                 trustedRootCertificates ?? new ChangeTrackingList<WritableSubResource>(),
@@ -438,9 +438,9 @@ namespace Azure.ResourceManager.Network.Models
                 affinityCookieName,
                 probeEnabled,
                 path,
-                dedicatedBackendConnection,
-                validateCertChainAndExpiry,
-                validateSNI,
+                isDedicatedBackendConnectionEnabled,
+                isValidateCertChainAndExpiryEnabled,
+                isValidateSniEnabled,
                 sniName,
                 provisioningState,
                 additionalBinaryDataProperties);

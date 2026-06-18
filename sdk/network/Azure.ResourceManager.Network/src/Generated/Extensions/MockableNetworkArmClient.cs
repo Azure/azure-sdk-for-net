@@ -408,13 +408,13 @@ namespace Azure.ResourceManager.Network.Mocking
             return new ScopeConnectionResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="CommitResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="NetworkManagerConfigurationCommitResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CommitResource"/> object. </returns>
-        public virtual CommitResource GetCommitResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetworkManagerConfigurationCommitResource"/> object. </returns>
+        public virtual NetworkManagerConfigurationCommitResource GetNetworkManagerConfigurationCommitResource(ResourceIdentifier id)
         {
-            CommitResource.ValidateResourceId(id);
-            return new CommitResource(Client, id);
+            NetworkManagerConfigurationCommitResource.ValidateResourceId(id);
+            return new NetworkManagerConfigurationCommitResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="SecurityAdminConfigurationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -894,13 +894,13 @@ namespace Azure.ResourceManager.Network.Mocking
             return new InterconnectGroupResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="SubgroupResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="InterconnectGroupSubgroupResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SubgroupResource"/> object. </returns>
-        public virtual SubgroupResource GetSubgroupResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="InterconnectGroupSubgroupResource"/> object. </returns>
+        public virtual InterconnectGroupSubgroupResource GetInterconnectGroupSubgroupResource(ResourceIdentifier id)
         {
-            SubgroupResource.ValidateResourceId(id);
-            return new SubgroupResource(Client, id);
+            InterconnectGroupSubgroupResource.ValidateResourceId(id);
+            return new InterconnectGroupSubgroupResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="VirtualMachineScaleSetNetworkInterfaceIPConfigurationResource"/> along with the instance operations that can be performed on it but with no data. </summary>

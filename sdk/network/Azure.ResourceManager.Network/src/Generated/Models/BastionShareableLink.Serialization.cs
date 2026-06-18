@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            VM vm = default;
+            BastionShareableLinkVirtualMachine vm = default;
             string bsl = default;
             string createdAt = default;
             string message = default;
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (prop.NameEquals("vm"u8))
                 {
-                    vm = VM.DeserializeVM(prop.Value, options);
+                    vm = BastionShareableLinkVirtualMachine.DeserializeBastionShareableLinkVirtualMachine(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("bsl"u8))

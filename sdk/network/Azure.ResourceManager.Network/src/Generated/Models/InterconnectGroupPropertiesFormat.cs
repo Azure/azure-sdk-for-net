@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             Argument.AssertNotNull(subgroupProfile, nameof(subgroupProfile));
 
-            Subgroups = new ChangeTrackingList<SubgroupData>();
+            Subgroups = new ChangeTrackingList<InterconnectGroupSubgroupData>();
             SubgroupProfile = subgroupProfile;
         }
 
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="resourceGuid"> The resource GUID property of the interconnect group resource. </param>
         /// <param name="subgroupProfile"> The subgroup profile of the interconnect group resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InterconnectGroupPropertiesFormat(InterconnectGroupScope? scope, IReadOnlyList<SubgroupData> subgroups, NetworkProvisioningState? provisioningState, string resourceGuid, SubgroupProfile subgroupProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InterconnectGroupPropertiesFormat(InterconnectGroupScope? scope, IReadOnlyList<InterconnectGroupSubgroupData> subgroups, NetworkProvisioningState? provisioningState, string resourceGuid, SubgroupProfile subgroupProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Scope = scope;
             Subgroups = subgroups;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> A list of subgroups of the interconnect group. </summary>
         [WirePath("subgroups")]
-        public IReadOnlyList<SubgroupData> Subgroups { get; }
+        public IReadOnlyList<InterconnectGroupSubgroupData> Subgroups { get; }
 
         /// <summary> The provisioning state of the interconnect group resource. </summary>
         [WirePath("provisioningState")]

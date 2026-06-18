@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (SubgroupData item in Value)
+            foreach (InterconnectGroupSubgroupData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            IList<SubgroupData> value = default;
+            IList<InterconnectGroupSubgroupData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<SubgroupData> array = new List<SubgroupData>();
+                    List<InterconnectGroupSubgroupData> array = new List<InterconnectGroupSubgroupData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SubgroupData.DeserializeSubgroupData(item, options));
+                        array.Add(InterconnectGroupSubgroupData.DeserializeInterconnectGroupSubgroupData(item, options));
                     }
                     value = array;
                     continue;

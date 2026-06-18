@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Network.Models
             IReadOnlyList<NetworkSubResource> childCustomIpPrefixes = default;
             CommissionedState? commissionedState = default;
             bool? expressRouteAdvertise = default;
-            Geo? geo = default;
+            CidrAdvertisingGeoCode? geo = default;
             bool? noInternetAdvertise = default;
             CustomIPPrefixType? prefixType = default;
             IReadOnlyList<NetworkSubResource> publicIpPrefixes = default;
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    geo = new Geo(prop.Value.GetString());
+                    geo = new CidrAdvertisingGeoCode(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("noInternetAdvertise"u8))

@@ -1692,7 +1692,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="port"> The destination port on the backend. </param>
         /// <param name="protocol"> The protocol used to communicate with the backend. </param>
         /// <param name="cookieBasedAffinity"> Cookie based affinity. </param>
-        /// <param name="requestTimeout"> Request timeout in seconds. Application Gateway will fail the request if response is not received within RequestTimeout. Acceptable values are from 1 second to 86400 seconds. </param>
+        /// <param name="requestTimeoutInSeconds"> Request timeout in seconds. Application Gateway will fail the request if response is not received within RequestTimeout. Acceptable values are from 1 second to 86400 seconds. </param>
         /// <param name="authenticationCertificates"> Array of references to application gateway authentication certificates. </param>
         /// <param name="trustedRootCertificates"> Array of references to application gateway trusted root certificates. </param>
         /// <param name="connectionDraining"> Connection draining of the backend http settings resource. </param>
@@ -1701,26 +1701,26 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="affinityCookieName"> Cookie name to use for the affinity cookie. </param>
         /// <param name="probeEnabled"> Whether the probe is enabled. Default value is false. </param>
         /// <param name="path"> Path which should be used as a prefix for all HTTP requests. Null means no path will be prefixed. Default value is null. </param>
-        /// <param name="dedicatedBackendConnection"> Enable or disable dedicated connection per backend server. Default is set to false. </param>
-        /// <param name="validateCertChainAndExpiry"> Verify or skip both chain and expiry validations of the certificate on the backend server. Default is set to true. </param>
-        /// <param name="validateSNI"> When enabled, verifies if the Common Name of the certificate provided by the backend server matches the Server Name Indication (SNI) value. Default value is true. </param>
+        /// <param name="isDedicatedBackendConnectionEnabled"> Enable or disable dedicated connection per backend server. Default is set to false. </param>
+        /// <param name="isValidateCertChainAndExpiryEnabled"> Verify or skip both chain and expiry validations of the certificate on the backend server. Default is set to true. </param>
+        /// <param name="isValidateSniEnabled"> When enabled, verifies if the Common Name of the certificate provided by the backend server matches the Server Name Indication (SNI) value. Default value is true. </param>
         /// <param name="sniName"> Specify an SNI value to match the common name of the certificate on the backend. By default, the application gateway uses the incoming request’s host header as the SNI. Default value is null. </param>
         /// <param name="provisioningState"> The provisioning state of the backend HTTP settings resource. </param>
         /// <param name="probeId"> Resource ID. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="Models.ApplicationGatewayBackendHttpSettings"/> instance for mocking. </returns>
-        public static ApplicationGatewayBackendHttpSettings ApplicationGatewayBackendHttpSettings(ResourceIdentifier id = default, string name = default, string @type = default, int? port = default, ApplicationGatewayProtocol? protocol = default, ApplicationGatewayCookieBasedAffinity? cookieBasedAffinity = default, int? requestTimeout = default, IEnumerable<WritableSubResource> authenticationCertificates = default, IEnumerable<WritableSubResource> trustedRootCertificates = default, ApplicationGatewayConnectionDraining connectionDraining = default, string hostName = default, bool? pickHostNameFromBackendAddress = default, string affinityCookieName = default, bool? probeEnabled = default, string path = default, bool? dedicatedBackendConnection = default, bool? validateCertChainAndExpiry = default, bool? validateSNI = default, string sniName = default, NetworkProvisioningState? provisioningState = default, ResourceIdentifier probeId = default, ETag? eTag = default)
+        public static ApplicationGatewayBackendHttpSettings ApplicationGatewayBackendHttpSettings(ResourceIdentifier id = default, string name = default, string @type = default, int? port = default, ApplicationGatewayProtocol? protocol = default, ApplicationGatewayCookieBasedAffinity? cookieBasedAffinity = default, int? requestTimeoutInSeconds = default, IEnumerable<WritableSubResource> authenticationCertificates = default, IEnumerable<WritableSubResource> trustedRootCertificates = default, ApplicationGatewayConnectionDraining connectionDraining = default, string hostName = default, bool? pickHostNameFromBackendAddress = default, string affinityCookieName = default, bool? probeEnabled = default, string path = default, bool? isDedicatedBackendConnectionEnabled = default, bool? isValidateCertChainAndExpiryEnabled = default, bool? isValidateSniEnabled = default, string sniName = default, NetworkProvisioningState? provisioningState = default, ResourceIdentifier probeId = default, ETag? eTag = default)
         {
             return new ApplicationGatewayBackendHttpSettings(
                 id,
                 default,
                 name,
                 @type,
-                port is null && protocol is null && cookieBasedAffinity is null && requestTimeout is null && probeId is null && authenticationCertificates is null && trustedRootCertificates is null && connectionDraining is null && hostName is null && pickHostNameFromBackendAddress is null && affinityCookieName is null && probeEnabled is null && path is null && dedicatedBackendConnection is null && validateCertChainAndExpiry is null && validateSNI is null && sniName is null && provisioningState is null ? default : new ApplicationGatewayBackendHttpSettingsPropertiesFormat(
+                port is null && protocol is null && cookieBasedAffinity is null && requestTimeoutInSeconds is null && probeId is null && authenticationCertificates is null && trustedRootCertificates is null && connectionDraining is null && hostName is null && pickHostNameFromBackendAddress is null && affinityCookieName is null && probeEnabled is null && path is null && isDedicatedBackendConnectionEnabled is null && isValidateCertChainAndExpiryEnabled is null && isValidateSniEnabled is null && sniName is null && provisioningState is null ? default : new ApplicationGatewayBackendHttpSettingsPropertiesFormat(
                     port,
                     protocol,
                     cookieBasedAffinity,
-                    requestTimeout,
+                    requestTimeoutInSeconds,
                     new NetworkSubResource(probeId, default),
                     (authenticationCertificates ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
                     (trustedRootCertificates ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
@@ -1730,9 +1730,9 @@ namespace Azure.ResourceManager.Network.Models
                     affinityCookieName,
                     probeEnabled,
                     path,
-                    dedicatedBackendConnection,
-                    validateCertChainAndExpiry,
-                    validateSNI,
+                    isDedicatedBackendConnectionEnabled,
+                    isValidateCertChainAndExpiryEnabled,
+                    isValidateSniEnabled,
                     sniName,
                     provisioningState,
                     default),
@@ -2963,7 +2963,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="createdAt"> The time when the link was created. </param>
         /// <param name="message"> Optional field indicating the warning or error message related to the vm in case of partial failure. </param>
         /// <returns> A new <see cref="Models.BastionShareableLink"/> instance for mocking. </returns>
-        public static BastionShareableLink BastionShareableLink(VM vm = default, string bsl = default, string createdAt = default, string message = default)
+        public static BastionShareableLink BastionShareableLink(BastionShareableLinkVirtualMachine vm = default, string bsl = default, string createdAt = default, string message = default)
         {
             return new BastionShareableLink(vm, bsl, createdAt, message, default);
         }
@@ -2973,12 +2973,12 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="type"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="Models.VM"/> instance for mocking. </returns>
-        public static VM VM(ResourceIdentifier id = default, string name = default, string @type = default, AzureLocation? location = default, IDictionary<string, string> tags = default)
+        /// <returns> A new <see cref="Models.BastionShareableLinkVirtualMachine"/> instance for mocking. </returns>
+        public static BastionShareableLinkVirtualMachine BastionShareableLinkVirtualMachine(ResourceIdentifier id = default, string name = default, string @type = default, AzureLocation? location = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new VM(
+            return new BastionShareableLinkVirtualMachine(
                 id,
                 name,
                 @type,
@@ -5468,10 +5468,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="properties"> The Commit properties. </param>
         /// <param name="systemData"> The system metadata related to this resource. </param>
-        /// <returns> A new <see cref="Network.CommitData"/> instance for mocking. </returns>
-        public static CommitData CommitData(ResourceIdentifier id = default, string name = default, string @type = default, string eTag = default, CommitProperties properties = default, SystemData systemData = default)
+        /// <returns> A new <see cref="Network.NetworkManagerConfigurationCommitData"/> instance for mocking. </returns>
+        public static NetworkManagerConfigurationCommitData NetworkManagerConfigurationCommitData(ResourceIdentifier id = default, string name = default, string @type = default, string eTag = default, CommitProperties properties = default, SystemData systemData = default)
         {
-            return new CommitData(
+            return new NetworkManagerConfigurationCommitData(
                 id,
                 name,
                 @type,
@@ -9766,13 +9766,13 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="resourceGuid"> The resource GUID property of the interconnect group resource. </param>
         /// <param name="subgroupProfile"> The subgroup profile of the interconnect group resource. </param>
         /// <returns> A new <see cref="Models.InterconnectGroupPropertiesFormat"/> instance for mocking. </returns>
-        public static InterconnectGroupPropertiesFormat InterconnectGroupPropertiesFormat(InterconnectGroupScope? scope = default, IEnumerable<SubgroupData> subgroups = default, NetworkProvisioningState? provisioningState = default, string resourceGuid = default, SubgroupProfile subgroupProfile = default)
+        public static InterconnectGroupPropertiesFormat InterconnectGroupPropertiesFormat(InterconnectGroupScope? scope = default, IEnumerable<InterconnectGroupSubgroupData> subgroups = default, NetworkProvisioningState? provisioningState = default, string resourceGuid = default, SubgroupProfile subgroupProfile = default)
         {
-            subgroups ??= new ChangeTrackingList<SubgroupData>();
+            subgroups ??= new ChangeTrackingList<InterconnectGroupSubgroupData>();
 
             return new InterconnectGroupPropertiesFormat(
                 scope,
-                (subgroups ?? new ChangeTrackingList<SubgroupData>()).ToList(),
+                (subgroups ?? new ChangeTrackingList<InterconnectGroupSubgroupData>()).ToList(),
                 provisioningState,
                 resourceGuid,
                 subgroupProfile,
@@ -9783,10 +9783,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="name"> Name of the resource. </param>
         /// <param name="type"> Resource type. </param>
         /// <param name="properties"> Properties of the subgroup. </param>
-        /// <returns> A new <see cref="Network.SubgroupData"/> instance for mocking. </returns>
-        public static SubgroupData SubgroupData(ResourceIdentifier id = default, string name = default, string @type = default, SubgroupProperties properties = default)
+        /// <returns> A new <see cref="Network.InterconnectGroupSubgroupData"/> instance for mocking. </returns>
+        public static InterconnectGroupSubgroupData InterconnectGroupSubgroupData(ResourceIdentifier id = default, string name = default, string @type = default, SubgroupProperties properties = default)
         {
-            return new SubgroupData(id, default, name, @type, properties);
+            return new InterconnectGroupSubgroupData(id, default, name, @type, properties);
         }
 
         /// <param name="internalSubgroupId"> The unique identifier of the subgroup. </param>
@@ -9943,7 +9943,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="zones"> A list of availability zones denoting where the resource needs to come from. </param>
         /// <returns> A new <see cref="Network.CustomIPPrefixData"/> instance for mocking. </returns>
-        public static CustomIPPrefixData CustomIPPrefixData(ResourceIdentifier id = default, string name = default, string @type = default, AzureLocation? location = default, IDictionary<string, string> tags = default, string asn = default, string cidr = default, string signedMessage = default, string authorizationMessage = default, ResourceIdentifier customIpPrefixParent = default, IEnumerable<NetworkSubResource> childCustomIpPrefixes = default, CommissionedState? commissionedState = default, bool? expressRouteAdvertise = default, Geo? geo = default, bool? noInternetAdvertise = default, CustomIPPrefixType? prefixType = default, IEnumerable<NetworkSubResource> publicIpPrefixes = default, Guid? resourceGuid = default, string failedReason = default, NetworkProvisioningState? provisioningState = default, ExtendedLocation extendedLocation = default, ETag? eTag = default, IEnumerable<string> zones = default)
+        public static CustomIPPrefixData CustomIPPrefixData(ResourceIdentifier id = default, string name = default, string @type = default, AzureLocation? location = default, IDictionary<string, string> tags = default, string asn = default, string cidr = default, string signedMessage = default, string authorizationMessage = default, ResourceIdentifier customIpPrefixParent = default, IEnumerable<NetworkSubResource> childCustomIpPrefixes = default, CommissionedState? commissionedState = default, bool? expressRouteAdvertise = default, CidrAdvertisingGeoCode? geo = default, bool? noInternetAdvertise = default, CustomIPPrefixType? prefixType = default, IEnumerable<NetworkSubResource> publicIpPrefixes = default, Guid? resourceGuid = default, string failedReason = default, NetworkProvisioningState? provisioningState = default, ExtendedLocation extendedLocation = default, ETag? eTag = default, IEnumerable<string> zones = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             zones ??= new ChangeTrackingList<string>();
@@ -13692,11 +13692,11 @@ namespace Azure.ResourceManager.Network.Models
                 default,
                 name,
                 default,
-                port is null && protocol is null && cookieBasedAffinity is null && probeId is null && authenticationCertificates is null && trustedRootCertificates is null && connectionDraining is null && hostName is null && pickHostNameFromBackendAddress is null && affinityCookieName is null && probeEnabled is null && path is null && sniName is null && provisioningState is null ? default : new ApplicationGatewayBackendHttpSettingsPropertiesFormat(
+                port is null && protocol is null && cookieBasedAffinity is null && requestTimeoutInSeconds is null && probeId is null && authenticationCertificates is null && trustedRootCertificates is null && connectionDraining is null && hostName is null && pickHostNameFromBackendAddress is null && affinityCookieName is null && probeEnabled is null && path is null && isDedicatedBackendConnectionEnabled is null && isValidateCertChainAndExpiryEnabled is null && isValidateSniEnabled is null && sniName is null && provisioningState is null ? default : new ApplicationGatewayBackendHttpSettingsPropertiesFormat(
                     port,
                     protocol,
                     cookieBasedAffinity,
-                    default,
+                    requestTimeoutInSeconds,
                     new NetworkSubResource(probeId, default),
                     (authenticationCertificates ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
                     (trustedRootCertificates ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
@@ -13706,9 +13706,9 @@ namespace Azure.ResourceManager.Network.Models
                     affinityCookieName,
                     probeEnabled,
                     path,
-                    default,
-                    default,
-                    default,
+                    isDedicatedBackendConnectionEnabled,
+                    isValidateCertChainAndExpiryEnabled,
+                    isValidateSniEnabled,
                     sniName,
                     provisioningState,
                     default),
@@ -14604,7 +14604,7 @@ namespace Azure.ResourceManager.Network.Models
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
-                asn is null && cidr is null && signedMessage is null && authorizationMessage is null && commissionedState is null && expressRouteAdvertise is null && noInternetAdvertise is null && prefixType is null && resourceGuid is null && failedReason is null && provisioningState is null ? default : new CustomIpPrefixPropertiesFormat(
+                asn is null && cidr is null && signedMessage is null && authorizationMessage is null && commissionedState is null && expressRouteAdvertise is null && geo is null && noInternetAdvertise is null && prefixType is null && resourceGuid is null && failedReason is null && provisioningState is null ? default : new CustomIpPrefixPropertiesFormat(
                     asn,
                     cidr,
                     signedMessage,
@@ -14613,7 +14613,7 @@ namespace Azure.ResourceManager.Network.Models
                     default,
                     commissionedState,
                     expressRouteAdvertise,
-                    default,
+                    geo,
                     noInternetAdvertise,
                     prefixType,
                     default,
@@ -19254,11 +19254,11 @@ namespace Azure.ResourceManager.Network.Models
                 default,
                 name,
                 default,
-                port is null && protocol is null && cookieBasedAffinity is null && probeId is null && authenticationCertificates is null && trustedRootCertificates is null && connectionDraining is null && hostName is null && pickHostNameFromBackendAddress is null && affinityCookieName is null && probeEnabled is null && path is null && provisioningState is null ? default : new ApplicationGatewayBackendHttpSettingsPropertiesFormat(
+                port is null && protocol is null && cookieBasedAffinity is null && requestTimeoutInSeconds is null && probeId is null && authenticationCertificates is null && trustedRootCertificates is null && connectionDraining is null && hostName is null && pickHostNameFromBackendAddress is null && affinityCookieName is null && probeEnabled is null && path is null && provisioningState is null ? default : new ApplicationGatewayBackendHttpSettingsPropertiesFormat(
                     port,
                     protocol,
                     cookieBasedAffinity,
-                    default,
+                    requestTimeoutInSeconds,
                     new NetworkSubResource(probeId, default),
                     (authenticationCertificates ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
                     (trustedRootCertificates ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
