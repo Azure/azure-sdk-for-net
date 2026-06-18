@@ -1,5 +1,20 @@
 # Release History
 
+<<<<<<< HEAD
+=======
+## 12.30.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+- Fixed an issue where the `GenerateSasUri` and `GenerateUserDelegationSasUri` convenience methods on blob clients did not honor the `RequestHeaders` and `RequestQueryParameters` properties, and where `GenerateUserDelegationSasUri` did not honor `DelegatedUserObjectId`, set on the supplied `BlobSasBuilder`.
+
+### Other Changes
+- Improved performance of `DownloadToAsync` by buffering each range into memory concurrently instead of streaming one range at a time. This increases throughput but also increases memory consumption, as up to `MaximumConcurrency` ranges (each up to `MaximumTransferLength` in size) may be buffered simultaneously. Use `StorageTransferOptions.MaximumConcurrency` and `StorageTransferOptions.MaximumTransferLength` to control memory usage.
+
+>>>>>>> b2d010db21c (Fixed SasBuilder.DeepCopy to Preserve all Properties (#59974))
 ## 12.29.0 (2026-06-04)
 
 ### Features Added
