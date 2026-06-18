@@ -11,7 +11,7 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    // The latest TypeSpec split the application data shape by scope, so the generator cannot emit the previous shared GA model. Keep a hidden stateful shim for ApiCompat.
+    // Generated code now emits separate application data types for subscription and security-connector scopes; the previous GA shared SecurityApplicationData type is no longer in the TypeSpec model graph. Keep a hidden stateful shim for ApiCompat.
     /// <summary>
     /// Provides a compatibility shim for the SecurityApplicationData class.
     /// </summary>

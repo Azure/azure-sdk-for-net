@@ -8,7 +8,7 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    // The latest TypeSpec no longer describes this legacy data property, so the generator cannot emit the previous GA member. Keep a hidden stateful shim for ApiCompat.
+    // Generated SecurityContactData follows the current TypeSpec properties, which no longer include the previous GA AlertNotifications member. Keep the property as a hidden stateful shim for ApiCompat.
     /// <summary>
     /// Provides a compatibility shim for the SecurityContactData class.
     /// </summary>

@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary>
     /// A custom alert rule.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ThresholdCustomAlertRule"/>, <see cref="TimeWindowCustomAlertRule"/>, <see cref="AllowlistCustomAlertRule"/>, <see cref="ListCustomAlertRule"/>, and <see cref="DenylistCustomAlertRule"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ThresholdCustomAlertRule"/>, <see cref="TimeWindowCustomAlertRule"/>, <see cref="AllowlistCustomAlertRule"/>, <see cref="ListCustomAlertRule"/>, <see cref="DenylistCustomAlertRule"/>, <see cref="ConnectionToIPNotAllowed"/>, <see cref="ConnectionFromIPNotAllowed"/>, <see cref="LocalUserNotAllowed"/>, <see cref="ProcessNotAllowed"/>, <see cref="ActiveConnectionsNotInAllowedRange"/>, <see cref="AmqpC2DMessagesNotInAllowedRange"/>, <see cref="MqttC2DMessagesNotInAllowedRange"/>, <see cref="HttpC2DMessagesNotInAllowedRange"/>, <see cref="AmqpC2DRejectedMessagesNotInAllowedRange"/>, <see cref="MqttC2DRejectedMessagesNotInAllowedRange"/>, <see cref="HttpC2DRejectedMessagesNotInAllowedRange"/>, <see cref="AmqpD2CMessagesNotInAllowedRange"/>, <see cref="MqttD2CMessagesNotInAllowedRange"/>, <see cref="HttpD2CMessagesNotInAllowedRange"/>, <see cref="DirectMethodInvokesNotInAllowedRange"/>, <see cref="FailedLocalLoginsNotInAllowedRange"/>, <see cref="FileUploadsNotInAllowedRange"/>, <see cref="QueuePurgesNotInAllowedRange"/>, <see cref="TwinUpdatesNotInAllowedRange"/>, and <see cref="UnauthorizedOperationsNotInAllowedRange"/>.
     /// </summary>
     public abstract partial class CustomAlertRule
     {

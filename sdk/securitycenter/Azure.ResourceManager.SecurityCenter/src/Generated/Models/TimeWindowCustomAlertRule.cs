@@ -37,6 +37,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             TimeWindowSize = timeWindowSize;
         }
 
+        /// <summary> Initializes a new instance of <see cref="TimeWindowCustomAlertRule"/>. </summary>
+        /// <param name="isEnabled"> Status of the custom alert. </param>
+        /// <param name="ruleType"> The type of the custom alert rule. </param>
+        /// <param name="minThreshold"> The minimum threshold. </param>
+        /// <param name="maxThreshold"> The maximum threshold. </param>
+        /// <param name="timeWindowSize"> The time window size in iso8601 format. </param>
+        private protected TimeWindowCustomAlertRule(bool isEnabled, string ruleType, int minThreshold, int maxThreshold, TimeSpan timeWindowSize) : base("TimeWindowCustomAlertRule", isEnabled, minThreshold, maxThreshold)
+        {
+            TimeWindowSize = timeWindowSize;
+        }
+
         /// <summary> The time window size in iso8601 format. </summary>
         public TimeSpan TimeWindowSize { get; set; }
     }

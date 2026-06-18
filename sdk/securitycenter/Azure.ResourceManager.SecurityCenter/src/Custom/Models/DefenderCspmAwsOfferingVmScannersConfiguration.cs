@@ -9,7 +9,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    // The latest TypeSpec removed or reshaped this legacy model/member, so the generator cannot recreate the previous GA signature; keep a hidden shim for ApiCompat and throw because the wire shape is no longer supported.
+    // Generated code only emits models and members described by the current TypeSpec shape; this previous GA signature was removed, renamed, or folded into a different model, so there is no generated backing member or serialization path to implement it. Keep a hidden ApiCompat shim and fail unsupported wire operations explicitly.
     // Compatibility customization: the generated factory overload exposes an internal AzureResourceLink type after the
     // assessmentDefinitions property is hidden behind the public SubResource compatibility property below.
     // Suppress the invalid generated overload and preserve the previous public ModelFactory signature.

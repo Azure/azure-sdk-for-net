@@ -7,7 +7,6 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.ResourceManager.SecurityCenter;
 
@@ -119,74 +118,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            string displayName = default;
-            string description = default;
-            bool isEnabled = default;
-            string ruleType = "AllowlistCustomAlertRule";
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            SecurityValueType? valueType = default;
-            IList<string> allowlistValues = default;
-            foreach (var prop in element.EnumerateObject())
-            {
-                if (prop.NameEquals("displayName"u8))
-                {
-                    displayName = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("description"u8))
-                {
-                    description = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("isEnabled"u8))
-                {
-                    isEnabled = prop.Value.GetBoolean();
-                    continue;
-                }
-                if (prop.NameEquals("ruleType"u8))
-                {
-                    ruleType = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("valueType"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    valueType = new SecurityValueType(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("allowlistValues"u8))
-                {
-                    List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
-                    }
-                    allowlistValues = array;
-                    continue;
-                }
-                if (options.Format != "W")
-                {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
-                }
-            }
-            return new AllowlistCustomAlertRule(
-                displayName,
-                description,
-                isEnabled,
-                ruleType,
-                additionalBinaryDataProperties,
-                valueType,
-                allowlistValues);
+            return UnknownAllowlistCustomAlertRule.DeserializeUnknownAllowlistCustomAlertRule(element, options);
         }
     }
 }

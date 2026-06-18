@@ -39,6 +39,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             AllowlistValues = allowlistValues;
         }
 
+        /// <summary> Initializes a new instance of <see cref="AllowlistCustomAlertRule"/>. </summary>
+        /// <param name="isEnabled"> Status of the custom alert. </param>
+        /// <param name="ruleType"> The type of the custom alert rule. </param>
+        /// <param name="allowlistValues"> The values to allow. The format of the values depends on the rule type. </param>
+        private protected AllowlistCustomAlertRule(bool isEnabled, string ruleType, IEnumerable<string> allowlistValues) : base("AllowlistCustomAlertRule", isEnabled)
+        {
+            AllowlistValues = allowlistValues.ToList();
+        }
+
         /// <summary> The values to allow. The format of the values depends on the rule type. </summary>
         public IList<string> AllowlistValues { get; }
     }

@@ -224,9 +224,8 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
 
         protected async Task<IotSecuritySolutionResource> CreateIotSecuritySolution(ResourceGroupResource resourceGroup, string iotHubId, string solutionModelName)
         {
-            IotSecuritySolutionData data = new IotSecuritySolutionData()
+            IotSecuritySolutionData data = new IotSecuritySolutionData(resourceGroup.Data.Location)
             {
-                Location = resourceGroup.Data.Location,
                 Status = SecuritySolutionStatus.Enabled,
                 UnmaskedIPLoggingStatus = UnmaskedIPLoggingStatus.Enabled,
                 DisplayName = solutionModelName,

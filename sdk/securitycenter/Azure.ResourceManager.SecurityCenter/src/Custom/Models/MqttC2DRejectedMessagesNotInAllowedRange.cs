@@ -5,36 +5,36 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.ComponentModel;
 using System.Text.Json;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    // The latest TypeSpec no longer emits this IoT custom-alert-rule discriminator subtype, so the generator only produces the common rule hierarchy; keep the previous GA subtype as a hidden shim for ApiCompat.
-    /// <summary>
-    /// Provides a compatibility shim for the MqttC2DRejectedMessagesNotInAllowedRange class.
-    /// </summary>
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public partial class MqttC2DRejectedMessagesNotInAllowedRange : TimeWindowCustomAlertRule, IJsonModel<MqttC2DRejectedMessagesNotInAllowedRange>, IPersistableModel<MqttC2DRejectedMessagesNotInAllowedRange>
+    // The TypeSpec leaf uses Legacy.hierarchyBuilding to share TimeWindow/Allowlist properties through a base model; generated leaf classes therefore get only internal deserialization constructors, not the previous GA public constructor. Keep that constructor and delegate serialization to the generated partial implementation.
+    public partial class MqttC2DRejectedMessagesNotInAllowedRange : IPersistableModel<MqttC2DRejectedMessagesNotInAllowedRange>
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MqttC2DRejectedMessagesNotInAllowedRange"/> type for compatibility with the previous public API surface.
-        /// </summary>
-        /// <param name="isEnabled">The value preserved for API compatibility.</param>
-        /// <param name="minThreshold">The value preserved for API compatibility.</param>
-        /// <param name="maxThreshold">The value preserved for API compatibility.</param>
-        /// <param name="timeWindowSize">The value preserved for API compatibility.</param>
-        public MqttC2DRejectedMessagesNotInAllowedRange(bool isEnabled, int minThreshold, int maxThreshold, System.TimeSpan timeWindowSize) : base(default(bool), default(int), default(int), default(System.TimeSpan)) { }
-        /// <summary>
-        /// Provides a compatibility shim for the JsonModelWriteCore operation preserved from the previous public API surface.
-        /// </summary>
-        /// <param name="writer">The value preserved for API compatibility.</param>
-        /// <param name="options">The value preserved for API compatibility.</param>
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
-        MqttC2DRejectedMessagesNotInAllowedRange IJsonModel<MqttC2DRejectedMessagesNotInAllowedRange>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) { throw new NotSupportedException("This API is no longer supported by the service."); }
-        void IJsonModel<MqttC2DRejectedMessagesNotInAllowedRange>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
-        MqttC2DRejectedMessagesNotInAllowedRange IPersistableModel<MqttC2DRejectedMessagesNotInAllowedRange>.Create(System.BinaryData data, ModelReaderWriterOptions options) { throw new NotSupportedException("This API is no longer supported by the service."); }
-        string IPersistableModel<MqttC2DRejectedMessagesNotInAllowedRange>.GetFormatFromOptions(ModelReaderWriterOptions options) { throw new NotSupportedException("This API is no longer supported by the service."); }
-        System.BinaryData IPersistableModel<MqttC2DRejectedMessagesNotInAllowedRange>.Write(ModelReaderWriterOptions options) { throw new NotSupportedException("This API is no longer supported by the service."); }
+        /// <summary> Initializes a new instance of <see cref="MqttC2DRejectedMessagesNotInAllowedRange"/>. </summary>
+        /// <param name="isEnabled"> Status of the custom alert. </param>
+        /// <param name="minThreshold"> The minimum threshold. </param>
+        /// <param name="maxThreshold"> The maximum threshold. </param>
+        /// <param name="timeWindowSize"> The time window size in iso8601 format. </param>
+        public MqttC2DRejectedMessagesNotInAllowedRange(bool isEnabled, int minThreshold, int maxThreshold, TimeSpan timeWindowSize) : base(isEnabled, minThreshold, maxThreshold, timeWindowSize)
+        {
+            RuleType = "MqttC2DRejectedMessagesNotInAllowedRange";
+        }
+
+        MqttC2DRejectedMessagesNotInAllowedRange IJsonModel<MqttC2DRejectedMessagesNotInAllowedRange>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (MqttC2DRejectedMessagesNotInAllowedRange)JsonModelCreateCore(ref reader, options);
+
+        void IJsonModel<MqttC2DRejectedMessagesNotInAllowedRange>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        MqttC2DRejectedMessagesNotInAllowedRange IPersistableModel<MqttC2DRejectedMessagesNotInAllowedRange>.Create(BinaryData data, ModelReaderWriterOptions options) => (MqttC2DRejectedMessagesNotInAllowedRange)PersistableModelCreateCore(data, options);
+
+        string IPersistableModel<MqttC2DRejectedMessagesNotInAllowedRange>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        BinaryData IPersistableModel<MqttC2DRejectedMessagesNotInAllowedRange>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
     }
 }

@@ -5,7 +5,7 @@
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    // The latest TypeSpec moved the old top-level isEnabled field under arcAutoProvisioning; expose the GA IsEnabled property and map it to the nested generated model.
+    // Generated code exposes the current nested arcAutoProvisioning.enabled shape; the previous GA API had a top-level IsEnabled property, so map it to the generated nested model for source compatibility.
     public partial class DefenderForDatabasesGcpOffering
     {
         /// <summary> Is arc auto provisioning enabled. </summary>

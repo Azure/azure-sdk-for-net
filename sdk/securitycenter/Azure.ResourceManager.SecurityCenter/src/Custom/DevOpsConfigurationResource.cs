@@ -14,9 +14,7 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    // The current TypeSpec constructor/property list follows the latest wire schema, but the GA SDK exposed a different constructor or property signature; CodeGenSuppress lets this partial provide the GA shape explicitly.
-    // AOT compatibility customization: generated operation-result methods use the
-    // reflection-based ModelReaderWriter.Read overload, which fails net10 trim/AOT analysis.
+    // Generated operation-result methods use a reflection-based ModelReaderWriter.Read overload that fails net10 trim/AOT analysis; suppress them so this partial can provide context-based deserialization.
     [CodeGenSuppress("GetAsync", typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("Get", typeof(string), typeof(CancellationToken))]
     public partial class DevOpsConfigurationResource

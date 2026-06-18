@@ -7,7 +7,6 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.ResourceManager.SecurityCenter;
 
@@ -109,65 +108,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            string displayName = default;
-            string description = default;
-            bool isEnabled = default;
-            string ruleType = "TimeWindowCustomAlertRule";
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            int minThreshold = default;
-            int maxThreshold = default;
-            TimeSpan timeWindowSize = default;
-            foreach (var prop in element.EnumerateObject())
-            {
-                if (prop.NameEquals("displayName"u8))
-                {
-                    displayName = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("description"u8))
-                {
-                    description = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("isEnabled"u8))
-                {
-                    isEnabled = prop.Value.GetBoolean();
-                    continue;
-                }
-                if (prop.NameEquals("ruleType"u8))
-                {
-                    ruleType = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("minThreshold"u8))
-                {
-                    minThreshold = prop.Value.GetInt32();
-                    continue;
-                }
-                if (prop.NameEquals("maxThreshold"u8))
-                {
-                    maxThreshold = prop.Value.GetInt32();
-                    continue;
-                }
-                if (prop.NameEquals("timeWindowSize"u8))
-                {
-                    timeWindowSize = prop.Value.GetTimeSpan("P");
-                    continue;
-                }
-                if (options.Format != "W")
-                {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
-                }
-            }
-            return new TimeWindowCustomAlertRule(
-                displayName,
-                description,
-                isEnabled,
-                ruleType,
-                additionalBinaryDataProperties,
-                minThreshold,
-                maxThreshold,
-                timeWindowSize);
+            return UnknownTimeWindowCustomAlertRule.DeserializeUnknownTimeWindowCustomAlertRule(element, options);
         }
     }
 }

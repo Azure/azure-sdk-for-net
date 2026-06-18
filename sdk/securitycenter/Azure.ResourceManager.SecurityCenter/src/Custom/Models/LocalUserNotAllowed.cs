@@ -6,34 +6,34 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Text.Json;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    // The latest TypeSpec removed or reshaped this legacy model/member, so the generator cannot recreate the previous GA signature; keep a hidden shim for ApiCompat and throw because the wire shape is no longer supported.
-    /// <summary>
-    /// Provides a compatibility shim for the LocalUserNotAllowed class.
-    /// </summary>
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public partial class LocalUserNotAllowed : AllowlistCustomAlertRule, IJsonModel<LocalUserNotAllowed>, IPersistableModel<LocalUserNotAllowed>
+    // The TypeSpec leaf uses Legacy.hierarchyBuilding to share TimeWindow/Allowlist properties through a base model; generated leaf classes therefore get only internal deserialization constructors, not the previous GA public constructor. Keep that constructor and delegate serialization to the generated partial implementation.
+    public partial class LocalUserNotAllowed : IPersistableModel<LocalUserNotAllowed>
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="LocalUserNotAllowed"/> type for compatibility with the previous public API surface.
-        /// </summary>
-        /// <param name="isEnabled">The value preserved for API compatibility.</param>
-        /// <param name="allowlistValues">The value preserved for API compatibility.</param>
-        public LocalUserNotAllowed(bool isEnabled, IEnumerable<string> allowlistValues) : base(default(bool), default(IEnumerable<string>)) { }
-        /// <summary>
-        /// Provides a compatibility shim for the JsonModelWriteCore operation preserved from the previous public API surface.
-        /// </summary>
-        /// <param name="writer">The value preserved for API compatibility.</param>
-        /// <param name="options">The value preserved for API compatibility.</param>
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
-        LocalUserNotAllowed IJsonModel<LocalUserNotAllowed>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) { throw new NotSupportedException("This API is no longer supported by the service."); }
-        void IJsonModel<LocalUserNotAllowed>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
-        LocalUserNotAllowed IPersistableModel<LocalUserNotAllowed>.Create(System.BinaryData data, ModelReaderWriterOptions options) { throw new NotSupportedException("This API is no longer supported by the service."); }
-        string IPersistableModel<LocalUserNotAllowed>.GetFormatFromOptions(ModelReaderWriterOptions options) { throw new NotSupportedException("This API is no longer supported by the service."); }
-        System.BinaryData IPersistableModel<LocalUserNotAllowed>.Write(ModelReaderWriterOptions options) { throw new NotSupportedException("This API is no longer supported by the service."); }
+        /// <summary> Initializes a new instance of <see cref="LocalUserNotAllowed"/>. </summary>
+        /// <param name="isEnabled"> Status of the custom alert. </param>
+        /// <param name="allowlistValues"> The values to allow. The format of the values depends on the rule type. </param>
+        public LocalUserNotAllowed(bool isEnabled, IEnumerable<string> allowlistValues) : base(isEnabled, allowlistValues)
+        {
+            RuleType = "LocalUserNotAllowed";
+        }
+
+        LocalUserNotAllowed IJsonModel<LocalUserNotAllowed>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (LocalUserNotAllowed)JsonModelCreateCore(ref reader, options);
+
+        void IJsonModel<LocalUserNotAllowed>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        LocalUserNotAllowed IPersistableModel<LocalUserNotAllowed>.Create(BinaryData data, ModelReaderWriterOptions options) => (LocalUserNotAllowed)PersistableModelCreateCore(data, options);
+
+        string IPersistableModel<LocalUserNotAllowed>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        BinaryData IPersistableModel<LocalUserNotAllowed>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
     }
 }

@@ -11,6 +11,7 @@ using System.Linq;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
@@ -886,6 +887,326 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="displayName"> The display name of the custom alert. </param>
         /// <param name="description"> The description of the custom alert. </param>
         /// <param name="isEnabled"> Status of the custom alert. </param>
+        /// <param name="minThreshold"> The minimum threshold. </param>
+        /// <param name="maxThreshold"> The maximum threshold. </param>
+        /// <param name="timeWindowSize"> The time window size in iso8601 format. </param>
+        /// <returns> A new <see cref="Models.ActiveConnectionsNotInAllowedRange"/> instance for mocking. </returns>
+        public static ActiveConnectionsNotInAllowedRange ActiveConnectionsNotInAllowedRange(string displayName = default, string description = default, bool isEnabled = default, int minThreshold = default, int maxThreshold = default, TimeSpan timeWindowSize = default)
+        {
+            return new ActiveConnectionsNotInAllowedRange(
+                displayName,
+                description,
+                isEnabled,
+                default,
+                default,
+                minThreshold,
+                maxThreshold,
+                timeWindowSize);
+        }
+
+        /// <param name="displayName"> The display name of the custom alert. </param>
+        /// <param name="description"> The description of the custom alert. </param>
+        /// <param name="isEnabled"> Status of the custom alert. </param>
+        /// <param name="minThreshold"> The minimum threshold. </param>
+        /// <param name="maxThreshold"> The maximum threshold. </param>
+        /// <param name="timeWindowSize"> The time window size in iso8601 format. </param>
+        /// <returns> A new <see cref="Models.AmqpC2DMessagesNotInAllowedRange"/> instance for mocking. </returns>
+        public static AmqpC2DMessagesNotInAllowedRange AmqpC2DMessagesNotInAllowedRange(string displayName = default, string description = default, bool isEnabled = default, int minThreshold = default, int maxThreshold = default, TimeSpan timeWindowSize = default)
+        {
+            return new AmqpC2DMessagesNotInAllowedRange(
+                displayName,
+                description,
+                isEnabled,
+                default,
+                default,
+                minThreshold,
+                maxThreshold,
+                timeWindowSize);
+        }
+
+        /// <param name="displayName"> The display name of the custom alert. </param>
+        /// <param name="description"> The description of the custom alert. </param>
+        /// <param name="isEnabled"> Status of the custom alert. </param>
+        /// <param name="minThreshold"> The minimum threshold. </param>
+        /// <param name="maxThreshold"> The maximum threshold. </param>
+        /// <param name="timeWindowSize"> The time window size in iso8601 format. </param>
+        /// <returns> A new <see cref="Models.MqttC2DMessagesNotInAllowedRange"/> instance for mocking. </returns>
+        public static MqttC2DMessagesNotInAllowedRange MqttC2DMessagesNotInAllowedRange(string displayName = default, string description = default, bool isEnabled = default, int minThreshold = default, int maxThreshold = default, TimeSpan timeWindowSize = default)
+        {
+            return new MqttC2DMessagesNotInAllowedRange(
+                displayName,
+                description,
+                isEnabled,
+                default,
+                default,
+                minThreshold,
+                maxThreshold,
+                timeWindowSize);
+        }
+
+        /// <param name="displayName"> The display name of the custom alert. </param>
+        /// <param name="description"> The description of the custom alert. </param>
+        /// <param name="isEnabled"> Status of the custom alert. </param>
+        /// <param name="minThreshold"> The minimum threshold. </param>
+        /// <param name="maxThreshold"> The maximum threshold. </param>
+        /// <param name="timeWindowSize"> The time window size in iso8601 format. </param>
+        /// <returns> A new <see cref="Models.HttpC2DMessagesNotInAllowedRange"/> instance for mocking. </returns>
+        public static HttpC2DMessagesNotInAllowedRange HttpC2DMessagesNotInAllowedRange(string displayName = default, string description = default, bool isEnabled = default, int minThreshold = default, int maxThreshold = default, TimeSpan timeWindowSize = default)
+        {
+            return new HttpC2DMessagesNotInAllowedRange(
+                displayName,
+                description,
+                isEnabled,
+                default,
+                default,
+                minThreshold,
+                maxThreshold,
+                timeWindowSize);
+        }
+
+        /// <param name="displayName"> The display name of the custom alert. </param>
+        /// <param name="description"> The description of the custom alert. </param>
+        /// <param name="isEnabled"> Status of the custom alert. </param>
+        /// <param name="minThreshold"> The minimum threshold. </param>
+        /// <param name="maxThreshold"> The maximum threshold. </param>
+        /// <param name="timeWindowSize"> The time window size in iso8601 format. </param>
+        /// <returns> A new <see cref="Models.AmqpC2DRejectedMessagesNotInAllowedRange"/> instance for mocking. </returns>
+        public static AmqpC2DRejectedMessagesNotInAllowedRange AmqpC2DRejectedMessagesNotInAllowedRange(string displayName = default, string description = default, bool isEnabled = default, int minThreshold = default, int maxThreshold = default, TimeSpan timeWindowSize = default)
+        {
+            return new AmqpC2DRejectedMessagesNotInAllowedRange(
+                displayName,
+                description,
+                isEnabled,
+                default,
+                default,
+                minThreshold,
+                maxThreshold,
+                timeWindowSize);
+        }
+
+        /// <param name="displayName"> The display name of the custom alert. </param>
+        /// <param name="description"> The description of the custom alert. </param>
+        /// <param name="isEnabled"> Status of the custom alert. </param>
+        /// <param name="minThreshold"> The minimum threshold. </param>
+        /// <param name="maxThreshold"> The maximum threshold. </param>
+        /// <param name="timeWindowSize"> The time window size in iso8601 format. </param>
+        /// <returns> A new <see cref="Models.MqttC2DRejectedMessagesNotInAllowedRange"/> instance for mocking. </returns>
+        public static MqttC2DRejectedMessagesNotInAllowedRange MqttC2DRejectedMessagesNotInAllowedRange(string displayName = default, string description = default, bool isEnabled = default, int minThreshold = default, int maxThreshold = default, TimeSpan timeWindowSize = default)
+        {
+            return new MqttC2DRejectedMessagesNotInAllowedRange(
+                displayName,
+                description,
+                isEnabled,
+                default,
+                default,
+                minThreshold,
+                maxThreshold,
+                timeWindowSize);
+        }
+
+        /// <param name="displayName"> The display name of the custom alert. </param>
+        /// <param name="description"> The description of the custom alert. </param>
+        /// <param name="isEnabled"> Status of the custom alert. </param>
+        /// <param name="minThreshold"> The minimum threshold. </param>
+        /// <param name="maxThreshold"> The maximum threshold. </param>
+        /// <param name="timeWindowSize"> The time window size in iso8601 format. </param>
+        /// <returns> A new <see cref="Models.HttpC2DRejectedMessagesNotInAllowedRange"/> instance for mocking. </returns>
+        public static HttpC2DRejectedMessagesNotInAllowedRange HttpC2DRejectedMessagesNotInAllowedRange(string displayName = default, string description = default, bool isEnabled = default, int minThreshold = default, int maxThreshold = default, TimeSpan timeWindowSize = default)
+        {
+            return new HttpC2DRejectedMessagesNotInAllowedRange(
+                displayName,
+                description,
+                isEnabled,
+                default,
+                default,
+                minThreshold,
+                maxThreshold,
+                timeWindowSize);
+        }
+
+        /// <param name="displayName"> The display name of the custom alert. </param>
+        /// <param name="description"> The description of the custom alert. </param>
+        /// <param name="isEnabled"> Status of the custom alert. </param>
+        /// <param name="minThreshold"> The minimum threshold. </param>
+        /// <param name="maxThreshold"> The maximum threshold. </param>
+        /// <param name="timeWindowSize"> The time window size in iso8601 format. </param>
+        /// <returns> A new <see cref="Models.AmqpD2CMessagesNotInAllowedRange"/> instance for mocking. </returns>
+        public static AmqpD2CMessagesNotInAllowedRange AmqpD2CMessagesNotInAllowedRange(string displayName = default, string description = default, bool isEnabled = default, int minThreshold = default, int maxThreshold = default, TimeSpan timeWindowSize = default)
+        {
+            return new AmqpD2CMessagesNotInAllowedRange(
+                displayName,
+                description,
+                isEnabled,
+                default,
+                default,
+                minThreshold,
+                maxThreshold,
+                timeWindowSize);
+        }
+
+        /// <param name="displayName"> The display name of the custom alert. </param>
+        /// <param name="description"> The description of the custom alert. </param>
+        /// <param name="isEnabled"> Status of the custom alert. </param>
+        /// <param name="minThreshold"> The minimum threshold. </param>
+        /// <param name="maxThreshold"> The maximum threshold. </param>
+        /// <param name="timeWindowSize"> The time window size in iso8601 format. </param>
+        /// <returns> A new <see cref="Models.MqttD2CMessagesNotInAllowedRange"/> instance for mocking. </returns>
+        public static MqttD2CMessagesNotInAllowedRange MqttD2CMessagesNotInAllowedRange(string displayName = default, string description = default, bool isEnabled = default, int minThreshold = default, int maxThreshold = default, TimeSpan timeWindowSize = default)
+        {
+            return new MqttD2CMessagesNotInAllowedRange(
+                displayName,
+                description,
+                isEnabled,
+                default,
+                default,
+                minThreshold,
+                maxThreshold,
+                timeWindowSize);
+        }
+
+        /// <param name="displayName"> The display name of the custom alert. </param>
+        /// <param name="description"> The description of the custom alert. </param>
+        /// <param name="isEnabled"> Status of the custom alert. </param>
+        /// <param name="minThreshold"> The minimum threshold. </param>
+        /// <param name="maxThreshold"> The maximum threshold. </param>
+        /// <param name="timeWindowSize"> The time window size in iso8601 format. </param>
+        /// <returns> A new <see cref="Models.HttpD2CMessagesNotInAllowedRange"/> instance for mocking. </returns>
+        public static HttpD2CMessagesNotInAllowedRange HttpD2CMessagesNotInAllowedRange(string displayName = default, string description = default, bool isEnabled = default, int minThreshold = default, int maxThreshold = default, TimeSpan timeWindowSize = default)
+        {
+            return new HttpD2CMessagesNotInAllowedRange(
+                displayName,
+                description,
+                isEnabled,
+                default,
+                default,
+                minThreshold,
+                maxThreshold,
+                timeWindowSize);
+        }
+
+        /// <param name="displayName"> The display name of the custom alert. </param>
+        /// <param name="description"> The description of the custom alert. </param>
+        /// <param name="isEnabled"> Status of the custom alert. </param>
+        /// <param name="minThreshold"> The minimum threshold. </param>
+        /// <param name="maxThreshold"> The maximum threshold. </param>
+        /// <param name="timeWindowSize"> The time window size in iso8601 format. </param>
+        /// <returns> A new <see cref="Models.DirectMethodInvokesNotInAllowedRange"/> instance for mocking. </returns>
+        public static DirectMethodInvokesNotInAllowedRange DirectMethodInvokesNotInAllowedRange(string displayName = default, string description = default, bool isEnabled = default, int minThreshold = default, int maxThreshold = default, TimeSpan timeWindowSize = default)
+        {
+            return new DirectMethodInvokesNotInAllowedRange(
+                displayName,
+                description,
+                isEnabled,
+                default,
+                default,
+                minThreshold,
+                maxThreshold,
+                timeWindowSize);
+        }
+
+        /// <param name="displayName"> The display name of the custom alert. </param>
+        /// <param name="description"> The description of the custom alert. </param>
+        /// <param name="isEnabled"> Status of the custom alert. </param>
+        /// <param name="minThreshold"> The minimum threshold. </param>
+        /// <param name="maxThreshold"> The maximum threshold. </param>
+        /// <param name="timeWindowSize"> The time window size in iso8601 format. </param>
+        /// <returns> A new <see cref="Models.FailedLocalLoginsNotInAllowedRange"/> instance for mocking. </returns>
+        public static FailedLocalLoginsNotInAllowedRange FailedLocalLoginsNotInAllowedRange(string displayName = default, string description = default, bool isEnabled = default, int minThreshold = default, int maxThreshold = default, TimeSpan timeWindowSize = default)
+        {
+            return new FailedLocalLoginsNotInAllowedRange(
+                displayName,
+                description,
+                isEnabled,
+                default,
+                default,
+                minThreshold,
+                maxThreshold,
+                timeWindowSize);
+        }
+
+        /// <param name="displayName"> The display name of the custom alert. </param>
+        /// <param name="description"> The description of the custom alert. </param>
+        /// <param name="isEnabled"> Status of the custom alert. </param>
+        /// <param name="minThreshold"> The minimum threshold. </param>
+        /// <param name="maxThreshold"> The maximum threshold. </param>
+        /// <param name="timeWindowSize"> The time window size in iso8601 format. </param>
+        /// <returns> A new <see cref="Models.FileUploadsNotInAllowedRange"/> instance for mocking. </returns>
+        public static FileUploadsNotInAllowedRange FileUploadsNotInAllowedRange(string displayName = default, string description = default, bool isEnabled = default, int minThreshold = default, int maxThreshold = default, TimeSpan timeWindowSize = default)
+        {
+            return new FileUploadsNotInAllowedRange(
+                displayName,
+                description,
+                isEnabled,
+                default,
+                default,
+                minThreshold,
+                maxThreshold,
+                timeWindowSize);
+        }
+
+        /// <param name="displayName"> The display name of the custom alert. </param>
+        /// <param name="description"> The description of the custom alert. </param>
+        /// <param name="isEnabled"> Status of the custom alert. </param>
+        /// <param name="minThreshold"> The minimum threshold. </param>
+        /// <param name="maxThreshold"> The maximum threshold. </param>
+        /// <param name="timeWindowSize"> The time window size in iso8601 format. </param>
+        /// <returns> A new <see cref="Models.QueuePurgesNotInAllowedRange"/> instance for mocking. </returns>
+        public static QueuePurgesNotInAllowedRange QueuePurgesNotInAllowedRange(string displayName = default, string description = default, bool isEnabled = default, int minThreshold = default, int maxThreshold = default, TimeSpan timeWindowSize = default)
+        {
+            return new QueuePurgesNotInAllowedRange(
+                displayName,
+                description,
+                isEnabled,
+                default,
+                default,
+                minThreshold,
+                maxThreshold,
+                timeWindowSize);
+        }
+
+        /// <param name="displayName"> The display name of the custom alert. </param>
+        /// <param name="description"> The description of the custom alert. </param>
+        /// <param name="isEnabled"> Status of the custom alert. </param>
+        /// <param name="minThreshold"> The minimum threshold. </param>
+        /// <param name="maxThreshold"> The maximum threshold. </param>
+        /// <param name="timeWindowSize"> The time window size in iso8601 format. </param>
+        /// <returns> A new <see cref="Models.TwinUpdatesNotInAllowedRange"/> instance for mocking. </returns>
+        public static TwinUpdatesNotInAllowedRange TwinUpdatesNotInAllowedRange(string displayName = default, string description = default, bool isEnabled = default, int minThreshold = default, int maxThreshold = default, TimeSpan timeWindowSize = default)
+        {
+            return new TwinUpdatesNotInAllowedRange(
+                displayName,
+                description,
+                isEnabled,
+                default,
+                default,
+                minThreshold,
+                maxThreshold,
+                timeWindowSize);
+        }
+
+        /// <param name="displayName"> The display name of the custom alert. </param>
+        /// <param name="description"> The description of the custom alert. </param>
+        /// <param name="isEnabled"> Status of the custom alert. </param>
+        /// <param name="minThreshold"> The minimum threshold. </param>
+        /// <param name="maxThreshold"> The maximum threshold. </param>
+        /// <param name="timeWindowSize"> The time window size in iso8601 format. </param>
+        /// <returns> A new <see cref="Models.UnauthorizedOperationsNotInAllowedRange"/> instance for mocking. </returns>
+        public static UnauthorizedOperationsNotInAllowedRange UnauthorizedOperationsNotInAllowedRange(string displayName = default, string description = default, bool isEnabled = default, int minThreshold = default, int maxThreshold = default, TimeSpan timeWindowSize = default)
+        {
+            return new UnauthorizedOperationsNotInAllowedRange(
+                displayName,
+                description,
+                isEnabled,
+                default,
+                default,
+                minThreshold,
+                maxThreshold,
+                timeWindowSize);
+        }
+
+        /// <param name="displayName"> The display name of the custom alert. </param>
+        /// <param name="description"> The description of the custom alert. </param>
+        /// <param name="isEnabled"> Status of the custom alert. </param>
         /// <param name="valueType"> The value type of the items in the list. </param>
         /// <param name="allowlistValues"> The values to allow. The format of the values depends on the rule type. </param>
         /// <returns> A new <see cref="Models.AllowlistCustomAlertRule"/> instance for mocking. </returns>
@@ -937,6 +1258,86 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 default,
                 valueType,
                 (denylistValues ?? new ChangeTrackingList<string>()).ToList());
+        }
+
+        /// <param name="displayName"> The display name of the custom alert. </param>
+        /// <param name="description"> The description of the custom alert. </param>
+        /// <param name="isEnabled"> Status of the custom alert. </param>
+        /// <param name="valueType"> The value type of the items in the list. </param>
+        /// <param name="allowlistValues"> The values to allow. The format of the values depends on the rule type. </param>
+        /// <returns> A new <see cref="Models.ConnectionToIPNotAllowed"/> instance for mocking. </returns>
+        public static ConnectionToIPNotAllowed ConnectionToIPNotAllowed(string displayName = default, string description = default, bool isEnabled = default, SecurityValueType? valueType = default, IEnumerable<string> allowlistValues = default)
+        {
+            allowlistValues ??= new ChangeTrackingList<string>();
+
+            return new ConnectionToIPNotAllowed(
+                displayName,
+                description,
+                isEnabled,
+                default,
+                default,
+                valueType,
+                (allowlistValues ?? new ChangeTrackingList<string>()).ToList());
+        }
+
+        /// <param name="displayName"> The display name of the custom alert. </param>
+        /// <param name="description"> The description of the custom alert. </param>
+        /// <param name="isEnabled"> Status of the custom alert. </param>
+        /// <param name="valueType"> The value type of the items in the list. </param>
+        /// <param name="allowlistValues"> The values to allow. The format of the values depends on the rule type. </param>
+        /// <returns> A new <see cref="Models.ConnectionFromIPNotAllowed"/> instance for mocking. </returns>
+        public static ConnectionFromIPNotAllowed ConnectionFromIPNotAllowed(string displayName = default, string description = default, bool isEnabled = default, SecurityValueType? valueType = default, IEnumerable<string> allowlistValues = default)
+        {
+            allowlistValues ??= new ChangeTrackingList<string>();
+
+            return new ConnectionFromIPNotAllowed(
+                displayName,
+                description,
+                isEnabled,
+                default,
+                default,
+                valueType,
+                (allowlistValues ?? new ChangeTrackingList<string>()).ToList());
+        }
+
+        /// <param name="displayName"> The display name of the custom alert. </param>
+        /// <param name="description"> The description of the custom alert. </param>
+        /// <param name="isEnabled"> Status of the custom alert. </param>
+        /// <param name="valueType"> The value type of the items in the list. </param>
+        /// <param name="allowlistValues"> The values to allow. The format of the values depends on the rule type. </param>
+        /// <returns> A new <see cref="Models.LocalUserNotAllowed"/> instance for mocking. </returns>
+        public static LocalUserNotAllowed LocalUserNotAllowed(string displayName = default, string description = default, bool isEnabled = default, SecurityValueType? valueType = default, IEnumerable<string> allowlistValues = default)
+        {
+            allowlistValues ??= new ChangeTrackingList<string>();
+
+            return new LocalUserNotAllowed(
+                displayName,
+                description,
+                isEnabled,
+                default,
+                default,
+                valueType,
+                (allowlistValues ?? new ChangeTrackingList<string>()).ToList());
+        }
+
+        /// <param name="displayName"> The display name of the custom alert. </param>
+        /// <param name="description"> The description of the custom alert. </param>
+        /// <param name="isEnabled"> Status of the custom alert. </param>
+        /// <param name="valueType"> The value type of the items in the list. </param>
+        /// <param name="allowlistValues"> The values to allow. The format of the values depends on the rule type. </param>
+        /// <returns> A new <see cref="Models.ProcessNotAllowed"/> instance for mocking. </returns>
+        public static ProcessNotAllowed ProcessNotAllowed(string displayName = default, string description = default, bool isEnabled = default, SecurityValueType? valueType = default, IEnumerable<string> allowlistValues = default)
+        {
+            allowlistValues ??= new ChangeTrackingList<string>();
+
+            return new ProcessNotAllowed(
+                displayName,
+                description,
+                isEnabled,
+                default,
+                default,
+                valueType,
+                (allowlistValues ?? new ChangeTrackingList<string>()).ToList());
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -4187,13 +4588,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     (assessmentDefinitions ?? new ChangeTrackingList<SubResource>()).ToList(),
                     default),
                 default);
-        }
-
-        /// <param name="id"> The resource id. </param>
-        /// <returns> A new <see cref="Models.SubResource"/> instance for mocking. </returns>
-        public static SubResource SubResource(ResourceIdentifier id = default)
-        {
-            return new SubResource(id, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
