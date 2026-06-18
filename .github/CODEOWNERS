@@ -218,6 +218,9 @@
 # PRLabel: %Communication - Call Automation
 /sdk/communication/Azure.Communication.CallAutomation/    @juntuchen-msft @minwoolee-msft
 
+# ServiceLabel: %Communication - Call Automation
+# ServiceOwners: @juntuchen-msft @minwoolee-msft
+
 # PRLabel: %Communication - Chat
 /sdk/communication/Azure.Communication.Chat/    @LuChen-Microsoft
 

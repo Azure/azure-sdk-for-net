@@ -2,13 +2,9 @@
 
 ## 1.4.0-beta.1 (Unreleased)
 
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
 ### Other Changes
+
+- Migrated from AutoRest to TypeSpec-based code generation.
 
 ## 1.3.0 (2025-10-22)
 
