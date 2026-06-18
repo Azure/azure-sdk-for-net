@@ -558,6 +558,19 @@ function assignRemainingOperations(
 
   for (const resource of resources) {
     sortResourceMethods(resource.metadata.methods);
+    // Demote singleton classification when the resource exposes a list
+    // operation. A genuine ARM singleton has no list op by definition; the
+    // path-shape heuristic can otherwise be tripped by single-value enum keys
+    // that the TypeSpec ARM resolver materializes as literal path segments
+    // (e.g. `.../auditingSettings/default`).
+    if (
+      resource.metadata.singletonResourceName !== undefined &&
+      resource.metadata.methods.some(
+        (m) => m.kind === ResourceOperationKind.List
+      )
+    ) {
+      resource.metadata.singletonResourceName = undefined;
+    }
   }
 }
 
