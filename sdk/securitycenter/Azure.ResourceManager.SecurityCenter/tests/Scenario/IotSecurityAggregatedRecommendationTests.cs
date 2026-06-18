@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         {
             _resourceGroup = await CreateResourceGroup();
             var iotHub = await CreateIotHub(_resourceGroup, Recording.GenerateAssetName("iothub"));
-            _iotSecuritySolutionResource = await CreateIotSecuritySolution(_resourceGroup, iotHub.Data.Id, Recording.GenerateAssetName("solution"));
+            _iotSecuritySolutionResource = await CreateIotSecuritySolution(_resourceGroup, iotHub.Data.Id, GetRecordedAssetName("solutionName", "solution"));
             _iotSecurityAggregatedRecommendationCollection = _iotSecuritySolutionResource.GetIotSecuritySolutionAnalyticsModel().GetIotSecurityAggregatedRecommendations();
         }
 
