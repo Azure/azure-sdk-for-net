@@ -948,13 +948,13 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <param name="vmSizes"> Specifies the VM sizes for the virtual machine scale set. </param>
         /// <param name="allocationStrategy"> Specifies the allocation strategy for the virtual machine scale set based on which the VMs will be allocated. </param>
-        /// <param name="automaticSkuMigrationPolicyEnabled"> Specifies whether automatic SKU migration should be enabled on the virtual machine scale set. The default value is false. </param>
+        /// <param name="isAutomaticSkuMigrationPolicyEnabled"> Specifies whether automatic SKU migration should be enabled on the virtual machine scale set. The default value is false. </param>
         /// <returns> A new <see cref="Models.ComputeSkuProfile"/> instance for mocking. </returns>
-        public static ComputeSkuProfile ComputeSkuProfile(IEnumerable<ComputeSkuProfileVmSize> vmSizes = default, ComputeAllocationStrategy? allocationStrategy = default, bool? automaticSkuMigrationPolicyEnabled = default)
+        public static ComputeSkuProfile ComputeSkuProfile(IEnumerable<ComputeSkuProfileVmSize> vmSizes = default, ComputeAllocationStrategy? allocationStrategy = default, bool? isAutomaticSkuMigrationPolicyEnabled = default)
         {
             vmSizes ??= new ChangeTrackingList<ComputeSkuProfileVmSize>();
 
-            return new ComputeSkuProfile((vmSizes ?? new ChangeTrackingList<ComputeSkuProfileVmSize>()).ToList(), allocationStrategy, automaticSkuMigrationPolicyEnabled is null ? default : new AutomaticSkuMigrationPolicy(automaticSkuMigrationPolicyEnabled, default), default);
+            return new ComputeSkuProfile((vmSizes ?? new ChangeTrackingList<ComputeSkuProfileVmSize>()).ToList(), allocationStrategy, isAutomaticSkuMigrationPolicyEnabled is null ? default : new AutomaticSkuMigrationPolicy(isAutomaticSkuMigrationPolicyEnabled, default), default);
         }
 
         /// <param name="name"> Specifies the name of the VM Size. </param>

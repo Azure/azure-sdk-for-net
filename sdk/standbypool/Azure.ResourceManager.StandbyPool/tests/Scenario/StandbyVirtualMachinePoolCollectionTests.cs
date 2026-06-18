@@ -12,8 +12,6 @@ namespace Azure.ResourceManager.StandbyPool.Tests
     [ClientTestFixture]
     public class StandbyVirtualMachinePoolCollectionTests : StandbyVirtualMachinePoolTestBase
     {
-        private const string StandbyPoolReRecordIssue = "Re-record after Azure.ResourceManager.Compute dependency release: https://github.com/Azure/azure-sdk-for-net/issues/60036";
-
         public StandbyVirtualMachinePoolCollectionTests(bool isAsync)
             : base(isAsync, RecordedTestMode.Playback)
         {
@@ -43,7 +41,7 @@ namespace Azure.ResourceManager.StandbyPool.Tests
 
         [TestCase]
         [RecordedTest]
-        [Ignore(StandbyPoolReRecordIssue)]
+        [Ignore("Re-record after Azure.ResourceManager.Compute dependency release: https://github.com/Azure/azure-sdk-for-net/issues/60036")]
         public async Task ListStandbyVirtualMachinePoolByResourcGroup()
         {
             string resourceGroupName = Recording.GenerateAssetName("standbyPoolRG-");

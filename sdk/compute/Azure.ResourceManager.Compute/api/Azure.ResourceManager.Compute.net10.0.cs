@@ -3941,7 +3941,7 @@ namespace Azure.ResourceManager.Compute.Models
         public static Azure.ResourceManager.Compute.Models.ComputeScheduledEventsProfile ComputeScheduledEventsProfile(Azure.ResourceManager.Compute.Models.TerminateNotificationProfile terminateNotificationProfile = null, Azure.ResourceManager.Compute.Models.OSImageNotificationProfile osImageNotificationProfile = null) { throw null; }
         public static Azure.ResourceManager.Compute.Models.ComputeSecurityPostureReference ComputeSecurityPostureReference(Azure.Core.ResourceIdentifier id = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.VirtualMachineExtensionData> excludeExtensions = null, bool? isOverridable = default(bool?)) { throw null; }
         public static Azure.ResourceManager.Compute.Models.ComputeSku ComputeSku(string name = null, string tier = null, long? capacity = default(long?)) { throw null; }
-        public static Azure.ResourceManager.Compute.Models.ComputeSkuProfile ComputeSkuProfile(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.Models.ComputeSkuProfileVmSize> vmSizes = null, Azure.ResourceManager.Compute.Models.ComputeAllocationStrategy? allocationStrategy = default(Azure.ResourceManager.Compute.Models.ComputeAllocationStrategy?), bool? automaticSkuMigrationPolicyEnabled = default(bool?)) { throw null; }
+        public static Azure.ResourceManager.Compute.Models.ComputeSkuProfile ComputeSkuProfile(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Compute.Models.ComputeSkuProfileVmSize> vmSizes = null, Azure.ResourceManager.Compute.Models.ComputeAllocationStrategy? allocationStrategy = default(Azure.ResourceManager.Compute.Models.ComputeAllocationStrategy?), bool? isAutomaticSkuMigrationPolicyEnabled = default(bool?)) { throw null; }
         public static Azure.ResourceManager.Compute.Models.ComputeSkuProfileVmSize ComputeSkuProfileVmSize(string name = null, int? rank = default(int?)) { throw null; }
         public static Azure.ResourceManager.Compute.Models.ComputeSubResourceData ComputeSubResourceData(Azure.Core.ResourceIdentifier id = null) { throw null; }
         public static Azure.ResourceManager.Compute.Models.ComputeSubResourceDataWithColocationStatus ComputeSubResourceDataWithColocationStatus(Azure.Core.ResourceIdentifier id = null, Azure.ResourceManager.Compute.Models.InstanceViewStatus colocationStatus = null) { throw null; }
@@ -5486,7 +5486,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         public ComputeSkuProfile() { }
         public Azure.ResourceManager.Compute.Models.ComputeAllocationStrategy? AllocationStrategy { get { throw null; } set { } }
-        public bool? AutomaticSkuMigrationPolicyEnabled { get { throw null; } set { } }
+        public bool? IsAutomaticSkuMigrationPolicyEnabled { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.ComputeSkuProfileVmSize> VmSizes { get { throw null; } }
         protected virtual Azure.ResourceManager.Compute.Models.ComputeSkuProfile JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }

@@ -1,5 +1,5 @@
 directory: specification/compute/resource-manager/Microsoft.Compute/Compute
-commit: 3b150d8306af83a98579681868a065385c079a9e
-repo: Azure/azure-rest-api-specs
+commit: c853a16cd9eba68dfb9bc6753ea7a384bf51c916
+repo: ArcturusZhang/azure-rest-api-specs
 cleanup: true
 emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json

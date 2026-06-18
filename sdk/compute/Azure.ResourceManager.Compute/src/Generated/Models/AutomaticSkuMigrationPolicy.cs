@@ -22,15 +22,15 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AutomaticSkuMigrationPolicy"/>. </summary>
-        /// <param name="enabled"> Specifies whether automatic SKU migration should be enabled on the virtual machine scale set. The default value is false. </param>
+        /// <param name="isAutomaticSkuMigrationPolicyEnabled"> Specifies whether automatic SKU migration should be enabled on the virtual machine scale set. The default value is false. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AutomaticSkuMigrationPolicy(bool? enabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AutomaticSkuMigrationPolicy(bool? isAutomaticSkuMigrationPolicyEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Enabled = enabled;
+            IsAutomaticSkuMigrationPolicyEnabled = isAutomaticSkuMigrationPolicyEnabled;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Specifies whether automatic SKU migration should be enabled on the virtual machine scale set. The default value is false. </summary>
-        public bool? Enabled { get; set; }
+        public bool? IsAutomaticSkuMigrationPolicyEnabled { get; set; }
     }
 }
