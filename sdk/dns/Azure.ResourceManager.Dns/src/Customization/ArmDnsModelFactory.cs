@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Dns.Models
         /// <param name="properties"></param>
         /// <param name="eTag"></param>
         /// <returns> A new <see cref="Dns.DnsRecordData"/> instance for mocking. </returns>
-        public static DnsRecordData DnsRecordData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, RecordSetProperties properties = default, ETag? eTag = default)
+        public static DnsRecordData DnsRecordData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DnsRecordSetProperties properties = default, ETag? eTag = default)
         {
             return new DnsRecordData(id, name, resourceType, systemData, new Dictionary<string, BinaryData>(), properties, eTag);
         }
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Dns.Models
         /// <returns> A new <see cref="Dns.DnsARecordData"/> instance for mocking. </returns>
         public static DnsARecordData DnsARecordData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? etag = default, IDictionary<string, string> metadata = default, long? ttl = default, string fqdn = default, string provisioningState = default, WritableSubResource targetResource = default, IList<DnsARecordInfo> aRecords = default)
         {
-            RecordSetProperties properties = CreateRecordSetProperties(metadata, ttl, fqdn, provisioningState, targetResource, dnsARecords: aRecords);
+            DnsRecordSetProperties properties = CreateDnsRecordSetProperties(metadata, ttl, fqdn, provisioningState, targetResource, dnsARecords: aRecords);
             return new DnsARecordData(id, name, resourceType, systemData, new Dictionary<string, BinaryData>(), properties, etag);
         }
 
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Dns.Models
         /// <returns> A new <see cref="Dns.DnsAaaaRecordData"/> instance for mocking. </returns>
         public static DnsAaaaRecordData DnsAaaaRecordData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? etag = default, IDictionary<string, string> metadata = default, long? ttl = default, string fqdn = default, string provisioningState = default, WritableSubResource targetResource = default, IList<DnsAaaaRecordInfo> aaaaRecords = default)
         {
-            RecordSetProperties properties = CreateRecordSetProperties(metadata, ttl, fqdn, provisioningState, targetResource, dnsAaaaRecords: aaaaRecords);
+            DnsRecordSetProperties properties = CreateDnsRecordSetProperties(metadata, ttl, fqdn, provisioningState, targetResource, dnsAaaaRecords: aaaaRecords);
             return new DnsAaaaRecordData(id, name, resourceType, systemData, new Dictionary<string, BinaryData>(), properties, etag);
         }
 
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Dns.Models
         /// <returns> A new <see cref="Dns.DnsCaaRecordData"/> instance for mocking. </returns>
         public static DnsCaaRecordData DnsCaaRecordData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? etag = default, IDictionary<string, string> metadata = default, long? ttl = default, string fqdn = default, string provisioningState = default, WritableSubResource targetResource = default, IList<DnsCaaRecordInfo> caaRecords = default)
         {
-            RecordSetProperties properties = CreateRecordSetProperties(metadata, ttl, fqdn, provisioningState, targetResource, dnsCaaRecords: caaRecords);
+            DnsRecordSetProperties properties = CreateDnsRecordSetProperties(metadata, ttl, fqdn, provisioningState, targetResource, dnsCaaRecords: caaRecords);
             return new DnsCaaRecordData(id, name, resourceType, systemData, new Dictionary<string, BinaryData>(), properties, etag);
         }
 
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Dns.Models
         /// <returns> A new <see cref="Dns.DnsCnameRecordData"/> instance for mocking. </returns>
         public static DnsCnameRecordData DnsCnameRecordData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? etag = default, IDictionary<string, string> metadata = default, long? ttl = default, string fqdn = default, string provisioningState = default, WritableSubResource targetResource = default, string CnameRecordName = default)
         {
-            RecordSetProperties properties = CreateRecordSetProperties(metadata, ttl, fqdn, provisioningState, targetResource, cname: CnameRecordName);
+            DnsRecordSetProperties properties = CreateDnsRecordSetProperties(metadata, ttl, fqdn, provisioningState, targetResource, cname: CnameRecordName);
             return new DnsCnameRecordData(id, name, resourceType, systemData, new Dictionary<string, BinaryData>(), properties, etag);
         }
 
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Dns.Models
         /// <returns> A new <see cref="Dns.DnsMXRecordData"/> instance for mocking. </returns>
         public static DnsMXRecordData DnsMXRecordData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? etag = default, IDictionary<string, string> metadata = default, long? ttl = default, string fqdn = default, string provisioningState = default, WritableSubResource targetResource = default, IList<DnsMXRecordInfo> mxRecords = default)
         {
-            RecordSetProperties properties = CreateRecordSetProperties(metadata, ttl, fqdn, provisioningState, targetResource, dnsMXRecords: mxRecords);
+            DnsRecordSetProperties properties = CreateDnsRecordSetProperties(metadata, ttl, fqdn, provisioningState, targetResource, dnsMXRecords: mxRecords);
             return new DnsMXRecordData(id, name, resourceType, systemData, new Dictionary<string, BinaryData>(), properties, etag);
         }
 
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Dns.Models
         /// <returns> A new <see cref="Dns.DnsNSRecordData"/> instance for mocking. </returns>
         public static DnsNSRecordData DnsNSRecordData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? etag = default, IDictionary<string, string> metadata = default, long? ttl = default, string fqdn = default, string provisioningState = default, WritableSubResource targetResource = default, IList<DnsNSRecordInfo> nsRecords = default)
         {
-            RecordSetProperties properties = CreateRecordSetProperties(metadata, ttl, fqdn, provisioningState, targetResource, dnsNSRecords: nsRecords);
+            DnsRecordSetProperties properties = CreateDnsRecordSetProperties(metadata, ttl, fqdn, provisioningState, targetResource, dnsNSRecords: nsRecords);
             return new DnsNSRecordData(id, name, resourceType, systemData, new Dictionary<string, BinaryData>(), properties, etag);
         }
 
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Dns.Models
         /// <returns> A new <see cref="Dns.DnsPtrRecordData"/> instance for mocking. </returns>
         public static DnsPtrRecordData DnsPtrRecordData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? etag = default, IDictionary<string, string> metadata = default, long? ttl = default, string fqdn = default, string provisioningState = default, WritableSubResource targetResource = default, IList<DnsPtrRecordInfo> ptrRecords = default)
         {
-            RecordSetProperties properties = CreateRecordSetProperties(metadata, ttl, fqdn, provisioningState, targetResource, dnsPtrRecords: ptrRecords);
+            DnsRecordSetProperties properties = CreateDnsRecordSetProperties(metadata, ttl, fqdn, provisioningState, targetResource, dnsPtrRecords: ptrRecords);
             return new DnsPtrRecordData(id, name, resourceType, systemData, new Dictionary<string, BinaryData>(), properties, etag);
         }
 
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Dns.Models
         /// <returns> A new <see cref="Dns.DnsSoaRecordData"/> instance for mocking. </returns>
         public static DnsSoaRecordData DnsSoaRecordData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? etag = default, IDictionary<string, string> metadata = default, long? ttl = default, string fqdn = default, string provisioningState = default, WritableSubResource targetResource = default, DnsSoaRecordInfo soaRecords = default)
         {
-            RecordSetProperties properties = CreateRecordSetProperties(metadata, ttl, fqdn, provisioningState, targetResource, dnsSoaRecord: soaRecords);
+            DnsRecordSetProperties properties = CreateDnsRecordSetProperties(metadata, ttl, fqdn, provisioningState, targetResource, dnsSoaRecord: soaRecords);
             return new DnsSoaRecordData(id, name, resourceType, systemData, new Dictionary<string, BinaryData>(), properties, etag);
         }
 
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Dns.Models
         /// <returns> A new <see cref="Dns.DnsSrvRecordData"/> instance for mocking. </returns>
         public static DnsSrvRecordData DnsSrvRecordData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? etag = default, IDictionary<string, string> metadata = default, long? ttl = default, string fqdn = default, string provisioningState = default, WritableSubResource targetResource = default, IList<DnsSrvRecordInfo> srvRecords = default)
         {
-            RecordSetProperties properties = CreateRecordSetProperties(metadata, ttl, fqdn, provisioningState, targetResource, dnsSrvRecords: srvRecords);
+            DnsRecordSetProperties properties = CreateDnsRecordSetProperties(metadata, ttl, fqdn, provisioningState, targetResource, dnsSrvRecords: srvRecords);
             return new DnsSrvRecordData(id, name, resourceType, systemData, new Dictionary<string, BinaryData>(), properties, etag);
         }
 
@@ -216,11 +216,11 @@ namespace Azure.ResourceManager.Dns.Models
         /// <returns> A new <see cref="Dns.DnsTxtRecordData"/> instance for mocking. </returns>
         public static DnsTxtRecordData DnsTxtRecordData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? etag = default, IDictionary<string, string> metadata = default, long? ttl = default, string fqdn = default, string provisioningState = default, WritableSubResource targetResource = default, IList<DnsTxtRecordInfo> txtRecords = default)
         {
-            RecordSetProperties properties = CreateRecordSetProperties(metadata, ttl, fqdn, provisioningState, targetResource, dnsTxtRecords: txtRecords);
+            DnsRecordSetProperties properties = CreateDnsRecordSetProperties(metadata, ttl, fqdn, provisioningState, targetResource, dnsTxtRecords: txtRecords);
             return new DnsTxtRecordData(id, name, resourceType, systemData, new Dictionary<string, BinaryData>(), properties, etag);
         }
 
-        private static RecordSetProperties CreateRecordSetProperties(
+        private static DnsRecordSetProperties CreateDnsRecordSetProperties(
             IDictionary<string, string> metadata,
             long? ttlInSeconds,
             string fqdn,
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.Dns.Models
             DnsSoaRecordInfo dnsSoaRecord = default,
             IList<DnsCaaRecordInfo> dnsCaaRecords = default)
         {
-            return new RecordSetProperties(
+            return new DnsRecordSetProperties(
                 metadata ?? new Dictionary<string, string>(),
                 ttlInSeconds,
                 fqdn,

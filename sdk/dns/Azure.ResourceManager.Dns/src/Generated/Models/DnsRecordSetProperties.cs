@@ -13,13 +13,13 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Dns.Models
 {
     /// <summary> Represents the properties of the records in the record set. </summary>
-    public partial class RecordSetProperties
+    public partial class DnsRecordSetProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RecordSetProperties"/>. </summary>
-        public RecordSetProperties()
+        /// <summary> Initializes a new instance of <see cref="DnsRecordSetProperties"/>. </summary>
+        public DnsRecordSetProperties()
         {
             Metadata = new ChangeTrackingDictionary<string, string>();
             DnsARecords = new ChangeTrackingList<DnsARecordInfo>();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Dns.Models
             DnsNaptrRecords = new ChangeTrackingList<DnsNaptrRecordInfo>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="RecordSetProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DnsRecordSetProperties"/>. </summary>
         /// <param name="metadata"> The metadata attached to the record set. </param>
         /// <param name="ttlInSeconds"> The TTL (time-to-live) of the records in the record set. </param>
         /// <param name="fqdn"> Fully qualified domain name of the record set. </param>
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Dns.Models
         /// <param name="dnsTlsaRecords"> The list of TLSA records in the record set. </param>
         /// <param name="dnsNaptrRecords"> The list of NAPTR records in the record set. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RecordSetProperties(IDictionary<string, string> metadata, long? ttlInSeconds, string fqdn, string provisioningState, WritableSubResource targetResource, WritableSubResource trafficManagementProfile, IList<DnsARecordInfo> dnsARecords, IList<DnsAaaaRecordInfo> dnsAaaaRecords, IList<DnsMXRecordInfo> dnsMXRecords, IList<DnsNSRecordInfo> dnsNSRecords, IList<DnsPtrRecordInfo> dnsPtrRecords, IList<DnsSrvRecordInfo> dnsSrvRecords, IList<DnsTxtRecordInfo> dnsTxtRecords, DnsCnameRecordInfo dnsCnameRecord, DnsSoaRecordInfo dnsSoaRecord, IList<DnsCaaRecordInfo> dnsCaaRecords, IList<DnsDSRecordInfo> dnsDSRecords, IList<DnsTlsaRecordInfo> dnsTlsaRecords, IList<DnsNaptrRecordInfo> dnsNaptrRecords, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DnsRecordSetProperties(IDictionary<string, string> metadata, long? ttlInSeconds, string fqdn, string provisioningState, WritableSubResource targetResource, WritableSubResource trafficManagementProfile, IList<DnsARecordInfo> dnsARecords, IList<DnsAaaaRecordInfo> dnsAaaaRecords, IList<DnsMXRecordInfo> dnsMXRecords, IList<DnsNSRecordInfo> dnsNSRecords, IList<DnsPtrRecordInfo> dnsPtrRecords, IList<DnsSrvRecordInfo> dnsSrvRecords, IList<DnsTxtRecordInfo> dnsTxtRecords, DnsCnameRecordInfo dnsCnameRecord, DnsSoaRecordInfo dnsSoaRecord, IList<DnsCaaRecordInfo> dnsCaaRecords, IList<DnsDSRecordInfo> dnsDSRecords, IList<DnsTlsaRecordInfo> dnsTlsaRecords, IList<DnsNaptrRecordInfo> dnsNaptrRecords, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Metadata = metadata;
             TtlInSeconds = ttlInSeconds;

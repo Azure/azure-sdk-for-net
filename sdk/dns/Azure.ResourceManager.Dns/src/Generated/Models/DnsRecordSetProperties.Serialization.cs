@@ -16,51 +16,51 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Dns.Models
 {
     /// <summary> Represents the properties of the records in the record set. </summary>
-    public partial class RecordSetProperties : IJsonModel<RecordSetProperties>
+    public partial class DnsRecordSetProperties : IJsonModel<DnsRecordSetProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RecordSetProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual DnsRecordSetProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RecordSetProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DnsRecordSetProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeRecordSetProperties(document.RootElement, options);
+                        return DeserializeDnsRecordSetProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RecordSetProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DnsRecordSetProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RecordSetProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DnsRecordSetProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDnsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(RecordSetProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DnsRecordSetProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RecordSetProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<DnsRecordSetProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RecordSetProperties IPersistableModel<RecordSetProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        DnsRecordSetProperties IPersistableModel<DnsRecordSetProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RecordSetProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DnsRecordSetProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<RecordSetProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DnsRecordSetProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -71,10 +71,10 @@ namespace Azure.ResourceManager.Dns.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RecordSetProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DnsRecordSetProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecordSetProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DnsRecordSetProperties)} does not support writing '{format}' format.");
             }
             if (Optional.IsCollectionDefined(Metadata))
             {
@@ -256,24 +256,24 @@ namespace Azure.ResourceManager.Dns.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RecordSetProperties IJsonModel<RecordSetProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        DnsRecordSetProperties IJsonModel<DnsRecordSetProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RecordSetProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual DnsRecordSetProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RecordSetProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DnsRecordSetProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecordSetProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DnsRecordSetProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRecordSetProperties(document.RootElement, options);
+            return DeserializeDnsRecordSetProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static RecordSetProperties DeserializeRecordSetProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static DnsRecordSetProperties DeserializeDnsRecordSetProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -536,7 +536,7 @@ namespace Azure.ResourceManager.Dns.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RecordSetProperties(
+            return new DnsRecordSetProperties(
                 metadata ?? new ChangeTrackingDictionary<string, string>(),
                 ttlInSeconds,
                 fqdn,

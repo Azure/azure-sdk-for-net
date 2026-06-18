@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Dns
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            RecordSetProperties properties = default;
+            DnsRecordSetProperties properties = default;
             ETag? eTag = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Dns
                     {
                         continue;
                     }
-                    properties = RecordSetProperties.DeserializeRecordSetProperties(prop.Value, options);
+                    properties = DnsRecordSetProperties.DeserializeDnsRecordSetProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("etag"u8))

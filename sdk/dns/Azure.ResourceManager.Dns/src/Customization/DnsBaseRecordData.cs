@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Dns
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The properties of the record set. </param>
         /// <param name="eTag"> The etag of the record set. </param>
-        internal DnsBaseRecordData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, RecordSetProperties properties, ETag? eTag) : base(id, name, resourceType, systemData)
+        internal DnsBaseRecordData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, DnsRecordSetProperties properties, ETag? eTag) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Dns
         }
 
         /// <summary> The properties of the record set. </summary>
-        internal RecordSetProperties Properties { get; set; }
+        internal DnsRecordSetProperties Properties { get; set; }
 
         /// <summary> The etag of the record set. </summary>
         public ETag? ETag { get; set; }
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Dns
             {
                 if (Properties is null)
                 {
-                    Properties = new RecordSetProperties();
+                    Properties = new DnsRecordSetProperties();
                 }
                 return Properties.Metadata;
             }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Dns
             {
                 if (Properties is null)
                 {
-                    Properties = new RecordSetProperties();
+                    Properties = new DnsRecordSetProperties();
                 }
                 Properties.TtlInSeconds = value;
             }
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Dns
             {
                 if (Properties is null)
                 {
-                    Properties = new RecordSetProperties();
+                    Properties = new DnsRecordSetProperties();
                 }
                 Properties.TargetResource = value;
             }
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Dns
             {
                 if (Properties is null)
                 {
-                    Properties = new RecordSetProperties();
+                    Properties = new DnsRecordSetProperties();
                 }
                 Properties.TrafficManagementProfile = value;
             }

@@ -10,7 +10,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Dns.Models
 {
-    public partial class RecordSetProperties
+    public partial class DnsRecordSetProperties
     {
     }
 }

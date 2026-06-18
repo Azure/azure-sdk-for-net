@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Dns
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The properties of the record set. </param>
         /// <param name="eTag"> The etag of the record set. </param>
-        internal DnsNSRecordData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, RecordSetProperties properties, ETag? eTag) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, properties, eTag)
+        internal DnsNSRecordData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, DnsRecordSetProperties properties, ETag? eTag) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, properties, eTag)
         {
         }
 
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Dns
             {
                 if (Properties is null)
                 {
-                    Properties = new RecordSetProperties();
+                    Properties = new DnsRecordSetProperties();
                 }
                 return Properties.DnsNSRecords;
             }

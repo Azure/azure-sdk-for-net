@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Dns
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The properties of the record set. </param>
         /// <param name="eTag"> The etag of the record set. </param>
-        internal DnsRecordData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, RecordSetProperties properties, ETag? eTag) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, properties, eTag)
+        internal DnsRecordData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, DnsRecordSetProperties properties, ETag? eTag) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, properties, eTag)
         {
         }
 
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Dns
             {
                 if (Properties is null)
                 {
-                    Properties = new RecordSetProperties();
+                    Properties = new DnsRecordSetProperties();
                 }
                 return Properties.DnsARecords;
             }
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Dns
             {
                 if (Properties is null)
                 {
-                    Properties = new RecordSetProperties();
+                    Properties = new DnsRecordSetProperties();
                 }
                 return Properties.DnsAaaaRecords;
             }
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Dns
             {
                 if (Properties is null)
                 {
-                    Properties = new RecordSetProperties();
+                    Properties = new DnsRecordSetProperties();
                 }
                 return Properties.DnsMXRecords;
             }
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Dns
             {
                 if (Properties is null)
                 {
-                    Properties = new RecordSetProperties();
+                    Properties = new DnsRecordSetProperties();
                 }
                 return Properties.DnsNSRecords;
             }
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Dns
             {
                 if (Properties is null)
                 {
-                    Properties = new RecordSetProperties();
+                    Properties = new DnsRecordSetProperties();
                 }
                 return Properties.DnsPtrRecords;
             }
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Dns
             {
                 if (Properties is null)
                 {
-                    Properties = new RecordSetProperties();
+                    Properties = new DnsRecordSetProperties();
                 }
                 return Properties.DnsSrvRecords;
             }
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Dns
             {
                 if (Properties is null)
                 {
-                    Properties = new RecordSetProperties();
+                    Properties = new DnsRecordSetProperties();
                 }
                 return Properties.DnsTxtRecords;
             }
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Dns
             {
                 if (Properties is null)
                 {
-                    Properties = new RecordSetProperties();
+                    Properties = new DnsRecordSetProperties();
                 }
                 Properties.DnsSoaRecord = value;
             }
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Dns
             {
                 if (Properties is null)
                 {
-                    Properties = new RecordSetProperties();
+                    Properties = new DnsRecordSetProperties();
                 }
                 return Properties.DnsCaaRecords;
             }
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Dns
             {
                 if (Properties is null)
                 {
-                    Properties = new RecordSetProperties();
+                    Properties = new DnsRecordSetProperties();
                 }
                 return Properties.DnsDSRecords;
             }
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Dns
             {
                 if (Properties is null)
                 {
-                    Properties = new RecordSetProperties();
+                    Properties = new DnsRecordSetProperties();
                 }
                 return Properties.DnsTlsaRecords;
             }
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Dns
             {
                 if (Properties is null)
                 {
-                    Properties = new RecordSetProperties();
+                    Properties = new DnsRecordSetProperties();
                 }
                 return Properties.DnsNaptrRecords;
             }
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Dns
             {
                 if (Properties is null)
                 {
-                    Properties = new RecordSetProperties();
+                    Properties = new DnsRecordSetProperties();
                 }
                 Properties.Cname = value;
             }

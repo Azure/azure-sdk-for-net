@@ -90,8 +90,8 @@ namespace Azure.ResourceManager.Dns.Models
         /// <param name="dnsDSRecords"> The list of DS records in the record set. </param>
         /// <param name="dnsTlsaRecords"> The list of TLSA records in the record set. </param>
         /// <param name="dnsNaptrRecords"> The list of NAPTR records in the record set. </param>
-        /// <returns> A new <see cref="Models.RecordSetProperties"/> instance for mocking. </returns>
-        public static RecordSetProperties RecordSetProperties(IDictionary<string, string> metadata = default, long? ttlInSeconds = default, string fqdn = default, string provisioningState = default, WritableSubResource targetResource = default, WritableSubResource trafficManagementProfile = default, IEnumerable<DnsARecordInfo> dnsARecords = default, IEnumerable<DnsAaaaRecordInfo> dnsAaaaRecords = default, IEnumerable<DnsMXRecordInfo> dnsMXRecords = default, IEnumerable<DnsNSRecordInfo> dnsNSRecords = default, IEnumerable<DnsPtrRecordInfo> dnsPtrRecords = default, IEnumerable<DnsSrvRecordInfo> dnsSrvRecords = default, IEnumerable<DnsTxtRecordInfo> dnsTxtRecords = default, string cname = default, DnsSoaRecordInfo dnsSoaRecord = default, IEnumerable<DnsCaaRecordInfo> dnsCaaRecords = default, IEnumerable<DnsDSRecordInfo> dnsDSRecords = default, IEnumerable<DnsTlsaRecordInfo> dnsTlsaRecords = default, IEnumerable<DnsNaptrRecordInfo> dnsNaptrRecords = default)
+        /// <returns> A new <see cref="Models.DnsRecordSetProperties"/> instance for mocking. </returns>
+        public static DnsRecordSetProperties DnsRecordSetProperties(IDictionary<string, string> metadata = default, long? ttlInSeconds = default, string fqdn = default, string provisioningState = default, WritableSubResource targetResource = default, WritableSubResource trafficManagementProfile = default, IEnumerable<DnsARecordInfo> dnsARecords = default, IEnumerable<DnsAaaaRecordInfo> dnsAaaaRecords = default, IEnumerable<DnsMXRecordInfo> dnsMXRecords = default, IEnumerable<DnsNSRecordInfo> dnsNSRecords = default, IEnumerable<DnsPtrRecordInfo> dnsPtrRecords = default, IEnumerable<DnsSrvRecordInfo> dnsSrvRecords = default, IEnumerable<DnsTxtRecordInfo> dnsTxtRecords = default, string cname = default, DnsSoaRecordInfo dnsSoaRecord = default, IEnumerable<DnsCaaRecordInfo> dnsCaaRecords = default, IEnumerable<DnsDSRecordInfo> dnsDSRecords = default, IEnumerable<DnsTlsaRecordInfo> dnsTlsaRecords = default, IEnumerable<DnsNaptrRecordInfo> dnsNaptrRecords = default)
         {
             metadata ??= new ChangeTrackingDictionary<string, string>();
             dnsARecords ??= new ChangeTrackingList<DnsARecordInfo>();
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Dns.Models
             dnsTlsaRecords ??= new ChangeTrackingList<DnsTlsaRecordInfo>();
             dnsNaptrRecords ??= new ChangeTrackingList<DnsNaptrRecordInfo>();
 
-            return new RecordSetProperties(
+            return new DnsRecordSetProperties(
                 metadata ?? new ChangeTrackingDictionary<string, string>(),
                 ttlInSeconds,
                 fqdn,
