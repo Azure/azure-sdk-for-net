@@ -166,6 +166,17 @@ namespace Azure.Generator.Management.Tests
         }
 
         [Test]
+        public void Equals_TreatsProviderSegmentCasingAsEqual()
+        {
+            var first = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}");
+            var second = new RequestPathPattern("/subscriptions/{subId}/resourceGroups/{rgName}/Providers/Microsoft.Storage/storageAccounts/{name}");
+
+            Assert.That(first.Equals(second), Is.True);
+            Assert.That(first.GetHashCode(), Is.EqualTo(second.GetHashCode()));
+            Assert.That(new RequestPathSegment("Providers").IsProvidersSegment, Is.True);
+        }
+
+        [Test]
         public void GetHashCode_DifferentPatternsCanCoexistInHashSet()
         {
             var resourceGroup = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}");

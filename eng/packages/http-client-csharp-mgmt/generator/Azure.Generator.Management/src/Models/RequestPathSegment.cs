@@ -41,6 +41,7 @@ namespace Azure.Generator.Management.Models
                 return false;
             if (IsConstant)
                 return string.Equals(_value, other._value, StringComparison.OrdinalIgnoreCase);
+
             return strict ? string.Equals(_value, other._value, StringComparison.Ordinal) : true;
         }
 
@@ -87,7 +88,7 @@ namespace Azure.Generator.Management.Models
         public override bool Equals(object? obj) => obj is RequestPathSegment other && Equals(other);
 
         /// <inheritdoc />
-        public override int GetHashCode() => IsConstant ? StringComparer.OrdinalIgnoreCase.GetHashCode(_value) : "{}".GetHashCode();
+        public override int GetHashCode() => IsConstant ? StringComparer.OrdinalIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc />
         public override string ToString() => _value;

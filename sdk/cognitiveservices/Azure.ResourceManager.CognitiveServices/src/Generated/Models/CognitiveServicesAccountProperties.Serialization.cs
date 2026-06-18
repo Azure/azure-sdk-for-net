@@ -174,10 +174,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("dynamicThrottlingEnabled"u8);
                 writer.WriteBooleanValue(EnableDynamicThrottling.Value);
             }
-            if (Optional.IsDefined(StoredCompletionsDisabled))
+            if (Optional.IsDefined(IsStoredCompletionsDisabled))
             {
                 writer.WritePropertyName("storedCompletionsDisabled"u8);
-                writer.WriteBooleanValue(StoredCompletionsDisabled.Value);
+                writer.WriteBooleanValue(IsStoredCompletionsDisabled.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(QuotaLimit))
             {
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             DateTimeOffset? createdOn = default;
             ServiceAccountCallRateLimit callRateLimit = default;
             bool? enableDynamicThrottling = default;
-            bool? storedCompletionsDisabled = default;
+            bool? isStoredCompletionsDisabled = default;
             ServiceAccountQuotaLimit quotaLimit = default;
             bool? restrictOutboundNetworkAccess = default;
             IList<string> allowedFqdnList = default;
@@ -547,7 +547,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    storedCompletionsDisabled = prop.Value.GetBoolean();
+                    isStoredCompletionsDisabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("quotaLimit"u8))
@@ -764,7 +764,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 createdOn,
                 callRateLimit,
                 enableDynamicThrottling,
-                storedCompletionsDisabled,
+                isStoredCompletionsDisabled,
                 quotaLimit,
                 restrictOutboundNetworkAccess,
                 allowedFqdnList ?? new ChangeTrackingList<string>(),

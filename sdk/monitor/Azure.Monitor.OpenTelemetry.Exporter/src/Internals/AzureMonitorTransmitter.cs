@@ -9,6 +9,7 @@ using Azure.Core.Pipeline;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.NetworkSdkStats;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat;
@@ -51,12 +52,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             _fileBlobProvider = InitializeOfflineStorage(platform, _connectionVars, options.DisableOfflineStorage, options.StorageDirectory);
 
+            _statsbeat = InitializeStatsbeat(options, _connectionVars, platform);
+
             if (_fileBlobProvider != null)
             {
-                _transmitFromStorageHandler = new TransmitFromStorageHandler(_applicationInsightsRestClient, _fileBlobProvider, _transmissionStateManager, _connectionVars, _isAadEnabled);
+                _transmitFromStorageHandler = new TransmitFromStorageHandler(_applicationInsightsRestClient, _fileBlobProvider, _transmissionStateManager, _connectionVars, _isAadEnabled, _statsbeat?.NetworkSdkStatsManager);
             }
-
-            _statsbeat = InitializeStatsbeat(options, _connectionVars, platform);
         }
 
         internal static ConnectionVars InitializeConnectionVars(AzureMonitorExporterOptions options, IPlatform platform)
@@ -167,6 +168,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 return result;
             }
 
+            var networkSdkStats = _statsbeat?.NetworkSdkStatsManager;
+
             try
             {
                 if (_transmissionStateManager.State == TransmissionState.Closed)
@@ -177,10 +180,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
                     result = HttpPipelineHelper.IsSuccess(httpMessage, telemetrySchemaTypeCounter);
 
+                    if (result == ExportResult.Success && networkSdkStats != null)
+                    {
+                        // Record Network SDKStats Request_Success_Count for HTTP 200.
+                        // request.Uri reflects any redirect followed by IngestionRedirectPolicy,
+                        // so the host recorded matches the stamp that returned the response.
+                        networkSdkStats.TrackSuccess(httpMessage.Request.Uri.Host);
+                    }
+
                     if (result == ExportResult.Failure && _fileBlobProvider != null)
                     {
                         _transmissionStateManager.EnableBackOff(httpMessage.HasResponse ? httpMessage.Response : null);
-                        var transmissionResult = HttpPipelineHelper.ProcessTransmissionResult(httpMessage, _fileBlobProvider, null, _connectionVars, origin, _isAadEnabled, telemetrySchemaTypeCounter);
+                        var transmissionResult = HttpPipelineHelper.ProcessTransmissionResult(httpMessage, _fileBlobProvider, null, _connectionVars, origin, _isAadEnabled, telemetrySchemaTypeCounter, networkSdkStats);
                         result = transmissionResult.ExportResult;
                     }
                     else
