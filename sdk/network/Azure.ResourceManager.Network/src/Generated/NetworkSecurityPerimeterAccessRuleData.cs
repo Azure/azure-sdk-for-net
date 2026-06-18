@@ -27,10 +27,6 @@ namespace Azure.ResourceManager.Network
         [WirePath("properties")]
         internal NspAccessRuleProperties Properties { get; set; }
 
-        /// <summary> The name of the NSP access rule. </summary>
-        [WirePath("name")]
-        public string Name { get; }
-
         /// <summary> The provisioning state of the scope assignment resource. </summary>
         [WirePath("properties.provisioningState")]
         public NetworkSecurityPerimeterProvisioningState? ProvisioningState

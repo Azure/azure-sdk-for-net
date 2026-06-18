@@ -10,4 +10,8 @@
     <!-- CA1708 cannot be suppress through #pragma. So we suppress it here. -->
     <NoWarn>$(NoWarn);CA1708</NoWarn>
   </PropertyGroup>
+  <ItemGroup>
+    <!-- TODO: Remove when https://github.com/Azure/azure-sdk-for-net/issues/60023 is fixed. -->
+    <Compile Remove="Generated\LongRunningOperation\IDictionaryOfStringIListOfPeerRouteListOperationSource.cs" />
+  </ItemGroup>
 </Project>

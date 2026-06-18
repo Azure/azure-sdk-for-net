@@ -38,14 +38,6 @@ namespace Azure.ResourceManager.Network.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The name of the service alias. </summary>
-        [WirePath("name")]
-        public string Name { get; }
-
-        /// <summary> The ID of the service alias. </summary>
-        [WirePath("id")]
-        public string Id { get; }
-
         /// <summary> The type of the resource. </summary>
         [WirePath("type")]
         public string Type { get; }

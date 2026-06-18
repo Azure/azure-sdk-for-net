@@ -46,13 +46,5 @@ namespace Azure.ResourceManager.Network
         /// <summary> String representing unique etag for the resource document. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }
-
-        /// <summary> The system metadata related to this resource. </summary>
-        [WirePath("systemData")]
-        public SystemData SystemData { get; }
-
-        /// <summary> The name of the resource. </summary>
-        [WirePath("name")]
-        public string Name { get; }
     }
 }

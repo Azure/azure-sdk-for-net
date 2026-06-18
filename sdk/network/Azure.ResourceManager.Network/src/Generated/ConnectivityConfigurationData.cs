@@ -40,14 +40,6 @@ namespace Azure.ResourceManager.Network
         [WirePath("properties")]
         internal ConnectivityConfigurationProperties Properties { get; set; }
 
-        /// <summary> The name of the network manager connectivity configuration. </summary>
-        [WirePath("name")]
-        public string Name { get; }
-
-        /// <summary> The system metadata related to this resource. </summary>
-        [WirePath("systemData")]
-        public SystemData SystemData { get; }
-
         /// <summary> A description of the connectivity configuration. </summary>
         [WirePath("properties.description")]
         public string Description

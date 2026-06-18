@@ -40,14 +40,6 @@ namespace Azure.ResourceManager.Network
         [WirePath("properties")]
         internal SecurityAdminConfigurationPropertiesFormat Properties { get; set; }
 
-        /// <summary> The name of the network manager Security Configuration. </summary>
-        [WirePath("name")]
-        public string Name { get; }
-
-        /// <summary> The system metadata related to this resource. </summary>
-        [WirePath("systemData")]
-        public SystemData SystemData { get; }
-
         /// <summary> A description of the security configuration. </summary>
         [WirePath("properties.description")]
         public string Description

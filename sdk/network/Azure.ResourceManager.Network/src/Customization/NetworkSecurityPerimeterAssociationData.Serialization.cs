@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary> The network security perimeter association resource. </summary>
     [CodeGenSuppress("NetworkSecurityPerimeterAssociationData", typeof(NspAssociationProperties), typeof(string), typeof(IDictionary<string, BinaryData>))]
+    [CodeGenSuppress("JsonModelWriteCore", typeof(Utf8JsonWriter), typeof(ModelReaderWriterOptions))]
     [CodeGenSuppress("DeserializeNetworkSecurityPerimeterAssociationData", typeof(JsonElement), typeof(ModelReaderWriterOptions))]
     public partial class NetworkSecurityPerimeterAssociationData
     {
@@ -29,6 +30,39 @@ namespace Azure.ResourceManager.Network
             Properties = properties;
             Name = name ?? NetworkResourceDataSerializationCompatibility.GetName(additionalBinaryDataProperties);
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        // The generated writer currently hides the inherited ResourceData serialization hook.
+        // TODO: Remove this SDK-side workaround after https://github.com/Azure/azure-sdk-for-net/issues/60023 is fixed.
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityPerimeterAssociationData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NetworkSecurityPerimeterAssociationData)} does not support writing '{format}' format.");
+            }
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
         // The generated deserializer ignores inherited ARM fields in wire format; keep them in the raw

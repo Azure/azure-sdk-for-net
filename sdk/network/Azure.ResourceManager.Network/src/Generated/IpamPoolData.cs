@@ -39,9 +39,5 @@ namespace Azure.ResourceManager.Network
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }
-
-        /// <summary> Pool resource name. </summary>
-        [WirePath("name")]
-        public string Name { get; }
     }
 }

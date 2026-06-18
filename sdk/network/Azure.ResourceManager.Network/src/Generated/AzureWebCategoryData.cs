@@ -38,10 +38,6 @@ namespace Azure.ResourceManager.Network
         [WirePath("properties")]
         internal AzureWebCategoryPropertiesFormat Properties { get; }
 
-        /// <summary> The name of the azureWebCategory. </summary>
-        [WirePath("name")]
-        public string Name { get; }
-
         /// <summary> The name of the group that the category belongs to. </summary>
         [WirePath("properties.group")]
         public string Group

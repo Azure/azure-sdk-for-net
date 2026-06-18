@@ -38,10 +38,6 @@ namespace Azure.ResourceManager.Network
         [WirePath("properties")]
         internal ConnectionMonitorResultProperties Properties { get; }
 
-        /// <summary> The name of the connection monitor. </summary>
-        [WirePath("name")]
-        public string Name { get; }
-
         /// <summary> Describes the source of connection monitor. </summary>
         [WirePath("properties.source")]
         public ConnectionMonitorSource Source

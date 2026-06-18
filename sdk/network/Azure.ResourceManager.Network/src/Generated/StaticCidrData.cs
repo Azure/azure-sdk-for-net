@@ -37,9 +37,5 @@ namespace Azure.ResourceManager.Network
         /// <summary> Properties of static CIDR resource. </summary>
         [WirePath("properties")]
         public StaticCidrProperties Properties { get; set; }
-
-        /// <summary> StaticCidr resource name to retrieve. </summary>
-        [WirePath("name")]
-        public string Name { get; }
     }
 }

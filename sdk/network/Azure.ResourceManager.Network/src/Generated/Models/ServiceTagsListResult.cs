@@ -45,14 +45,6 @@ namespace Azure.ResourceManager.Network.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The name of the cloud. </summary>
-        [WirePath("name")]
-        public string Name { get; }
-
-        /// <summary> The ID of the cloud. </summary>
-        [WirePath("id")]
-        public string Id { get; }
-
         /// <summary> The azure resource type. </summary>
         [WirePath("type")]
         public string Type { get; }

@@ -27,10 +27,6 @@ namespace Azure.ResourceManager.Network
         [WirePath("properties")]
         internal NspProfileProperties Properties { get; set; }
 
-        /// <summary> The name of the NSP profile. </summary>
-        [WirePath("name")]
-        public string Name { get; }
-
         /// <summary> Version number that increases with every update to access rules within the profile. </summary>
         [WirePath("properties.accessRulesVersion")]
         public string AccessRulesVersion

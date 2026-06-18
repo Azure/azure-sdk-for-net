@@ -14,8 +14,6 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Common resource representation. </summary>
     public partial class TrackedResourceWithSettableIdOptionalLocation : NetworkTrackedResourceData
     {
-        private protected string _name;
-
         /// <summary> Initializes a new instance of <see cref="TrackedResourceWithSettableIdOptionalLocation"/>. </summary>
         public TrackedResourceWithSettableIdOptionalLocation()
         {

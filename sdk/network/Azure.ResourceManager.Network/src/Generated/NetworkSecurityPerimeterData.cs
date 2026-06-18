@@ -27,10 +27,6 @@ namespace Azure.ResourceManager.Network
         [WirePath("properties")]
         internal NetworkSecurityPerimeterProperties Properties { get; set; }
 
-        /// <summary> The name of the network security perimeter. </summary>
-        [WirePath("name")]
-        public string Name { get; }
-
         /// <summary> The provisioning state of the scope assignment resource. </summary>
         [WirePath("properties.provisioningState")]
         public NetworkSecurityPerimeterProvisioningState? ProvisioningState

@@ -23,10 +23,6 @@ namespace Azure.ResourceManager.Network
         [WirePath("properties")]
         internal NspLinkReferenceProperties Properties { get; }
 
-        /// <summary> The name of the NSP linkReference. </summary>
-        [WirePath("name")]
-        public string Name { get; }
-
         /// <summary> The provisioning state of the NSP LinkReference resource. </summary>
         [WirePath("properties.provisioningState")]
         public NetworkSecurityPerimeterLinkProvisioningState? ProvisioningState

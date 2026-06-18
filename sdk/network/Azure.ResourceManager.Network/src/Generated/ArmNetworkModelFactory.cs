@@ -3083,18 +3083,6 @@ namespace Azure.ResourceManager.Network.Models
             return new EffectiveNetworkSecurityGroupListResult((value ?? new ChangeTrackingList<EffectiveNetworkSecurityGroup>()).ToList(), nextLink, default);
         }
 
-        /// <param name="networkSecurityGroupId"> Resource ID. </param>
-        /// <param name="association"> Associated resources. </param>
-        /// <param name="effectiveSecurityRules"> A collection of effective security rules. </param>
-        /// <param name="tagMap"> Mapping of tags to list of IP Addresses included within the tag. </param>
-        /// <returns> A new <see cref="Models.EffectiveNetworkSecurityGroup"/> instance for mocking. </returns>
-        public static EffectiveNetworkSecurityGroup EffectiveNetworkSecurityGroup(ResourceIdentifier networkSecurityGroupId = default, EffectiveNetworkSecurityGroupAssociation association = default, IEnumerable<EffectiveNetworkSecurityRule> effectiveSecurityRules = default, string tagMap = default)
-        {
-            effectiveSecurityRules ??= new ChangeTrackingList<EffectiveNetworkSecurityRule>();
-
-            return new EffectiveNetworkSecurityGroup(networkSecurityGroupId is null ? default : new NetworkSubResource(networkSecurityGroupId, default), association, (effectiveSecurityRules ?? new ChangeTrackingList<EffectiveNetworkSecurityRule>()).ToList(), tagMap, default);
-        }
-
         /// <param name="networkManagerId"> Resource ID. </param>
         /// <param name="subnetId"> Resource ID. </param>
         /// <param name="networkInterfaceId"> Resource ID. </param>
@@ -11192,27 +11180,6 @@ namespace Azure.ResourceManager.Network.Models
                     routingConfiguration,
                     default),
                 eTag);
-        }
-
-        /// <param name="localAddress"> The peer's local address. </param>
-        /// <param name="network"> The route's network prefix. </param>
-        /// <param name="nextHop"> The route's next hop. </param>
-        /// <param name="sourcePeer"> The peer this route was learned from. </param>
-        /// <param name="origin"> The source this route was learned from. </param>
-        /// <param name="asPath"> The route's AS path sequence. </param>
-        /// <param name="weight"> The route's weight. </param>
-        /// <returns> A new <see cref="Models.PeerRouteList"/> instance for mocking. </returns>
-        public static PeerRouteList PeerRouteList(string localAddress = default, string network = default, string nextHop = default, string sourcePeer = default, string origin = default, string asPath = default, int? weight = default)
-        {
-            return new PeerRouteList(
-                localAddress,
-                network,
-                nextHop,
-                sourcePeer,
-                origin,
-                asPath,
-                weight,
-                default);
         }
 
         /// <param name="id"> Resource ID. </param>

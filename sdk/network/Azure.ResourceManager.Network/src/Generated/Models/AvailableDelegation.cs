@@ -41,14 +41,6 @@ namespace Azure.ResourceManager.Network.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The name of the AvailableDelegation resource. </summary>
-        [WirePath("name")]
-        public string Name { get; }
-
-        /// <summary> A unique identifier of the AvailableDelegation resource. </summary>
-        [WirePath("id")]
-        public string Id { get; }
-
         /// <summary> Resource type. </summary>
         [WirePath("type")]
         public string Type { get; }

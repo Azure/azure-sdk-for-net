@@ -42,14 +42,6 @@ namespace Azure.ResourceManager.Network.Models
         [WirePath("properties")]
         internal PerimeterAssociableResourceProperties Properties { get; }
 
-        /// <summary> The name of the resource that is unique within a resource group. This name can be used to access the resource. </summary>
-        [WirePath("name")]
-        public string Name { get; }
-
-        /// <summary> Identifier of the perimeter associable resource. </summary>
-        [WirePath("id")]
-        public string Id { get; }
-
         /// <summary> Resource type. </summary>
         [WirePath("type")]
         public string Type { get; }
@@ -61,16 +53,6 @@ namespace Azure.ResourceManager.Network.Models
             get
             {
                 return Properties is null ? default : Properties.DisplayName;
-            }
-        }
-
-        /// <summary> Resource type/provider name. </summary>
-        [WirePath("properties.resourceType")]
-        public string ResourceType
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ResourceType;
             }
         }
 

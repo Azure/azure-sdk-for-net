@@ -28,10 +28,6 @@ namespace Azure.ResourceManager.Network
         [WirePath("properties")]
         internal NspAssociationProperties Properties { get; set; }
 
-        /// <summary> The name of the NSP association. </summary>
-        [WirePath("name")]
-        public string Name { get; }
-
         /// <summary> The provisioning state of the resource  association resource. </summary>
         [WirePath("properties.provisioningState")]
         public NetworkSecurityPerimeterProvisioningState? ProvisioningState

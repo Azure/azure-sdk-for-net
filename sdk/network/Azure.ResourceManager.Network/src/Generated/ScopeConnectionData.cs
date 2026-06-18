@@ -44,17 +44,9 @@ namespace Azure.ResourceManager.Network
         [WirePath("properties")]
         internal ScopeConnectionProperties Properties { get; set; }
 
-        /// <summary> Name for the cross-tenant connection. </summary>
-        [WirePath("name")]
-        public string Name { get; }
-
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }
-
-        /// <summary> The system metadata related to this resource. </summary>
-        [WirePath("systemData")]
-        public SystemData SystemData { get; }
 
         /// <summary> Resource ID. </summary>
         [WirePath("properties.resourceId")]

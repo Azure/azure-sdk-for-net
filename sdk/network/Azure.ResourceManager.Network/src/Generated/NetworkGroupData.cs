@@ -40,14 +40,6 @@ namespace Azure.ResourceManager.Network
         [WirePath("properties")]
         internal NetworkGroupProperties Properties { get; set; }
 
-        /// <summary> The name of the network group. </summary>
-        [WirePath("name")]
-        public string Name { get; }
-
-        /// <summary> The system metadata related to this resource. </summary>
-        [WirePath("systemData")]
-        public SystemData SystemData { get; }
-
         /// <summary> A description of the network group. </summary>
         [WirePath("properties.description")]
         public string Description

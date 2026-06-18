@@ -38,14 +38,6 @@ namespace Azure.ResourceManager.Network
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The name of the rule. </summary>
-        [WirePath("name")]
-        public string Name { get; }
-
-        /// <summary> The system metadata related to this resource. </summary>
-        [WirePath("systemData")]
-        public SystemData SystemData { get; }
-
         /// <summary> Whether the rule is custom or default. </summary>
         [WirePath("kind")]
         internal AdminRuleKind Kind { get; set; }

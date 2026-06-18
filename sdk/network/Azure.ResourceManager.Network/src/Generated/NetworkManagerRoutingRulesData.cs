@@ -40,14 +40,6 @@ namespace Azure.ResourceManager.Network
         [WirePath("properties")]
         internal RoutingRuleCollectionPropertiesFormat Properties { get; set; }
 
-        /// <summary> The name of the network manager routing Configuration rule collection. </summary>
-        [WirePath("name")]
-        public string Name { get; }
-
-        /// <summary> The system metadata related to this resource. </summary>
-        [WirePath("systemData")]
-        public SystemData SystemData { get; }
-
         /// <summary> A description of the routing rule collection. </summary>
         [WirePath("properties.description")]
         public string Description

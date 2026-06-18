@@ -44,13 +44,5 @@ namespace Azure.ResourceManager.Network
         /// <summary> Represents the Reachability Analysis Run properties. </summary>
         [WirePath("properties")]
         public ReachabilityAnalysisRunProperties Properties { get; set; }
-
-        /// <summary> Reachability Analysis Run name. </summary>
-        [WirePath("name")]
-        public string Name { get; }
-
-        /// <summary> The system metadata related to this resource. </summary>
-        [WirePath("systemData")]
-        public SystemData SystemData { get; }
     }
 }

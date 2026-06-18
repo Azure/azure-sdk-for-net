@@ -65,57 +65,6 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteEndObject();
         }
 
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<EffectiveNetworkSecurityGroup>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(EffectiveNetworkSecurityGroup)} does not support writing '{format}' format.");
-            }
-            if (Optional.IsDefined(NetworkSecurityGroup))
-            {
-                writer.WritePropertyName("networkSecurityGroup"u8);
-                writer.WriteObjectValue(NetworkSecurityGroup, options);
-            }
-            if (Optional.IsDefined(Association))
-            {
-                writer.WritePropertyName("association"u8);
-                writer.WriteObjectValue(Association, options);
-            }
-            if (Optional.IsCollectionDefined(EffectiveSecurityRules))
-            {
-                writer.WritePropertyName("effectiveSecurityRules"u8);
-                writer.WriteStartArray();
-                foreach (EffectiveNetworkSecurityRule item in EffectiveSecurityRules)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(TagMap))
-            {
-                writer.WritePropertyName("tagMap"u8);
-                writer.WriteStringValue(TagMap);
-            }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-        }
-
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         EffectiveNetworkSecurityGroup IJsonModel<EffectiveNetworkSecurityGroup>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);

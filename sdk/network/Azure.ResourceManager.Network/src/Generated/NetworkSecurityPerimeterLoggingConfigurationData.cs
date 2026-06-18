@@ -27,10 +27,6 @@ namespace Azure.ResourceManager.Network
         [WirePath("properties")]
         internal NspLoggingConfigurationProperties Properties { get; set; }
 
-        /// <summary> The name of the NSP logging configuration. Accepts 'instance' as name. </summary>
-        [WirePath("name")]
-        public string Name { get; }
-
         /// <summary> The log categories to enable in the NSP logging configuration. </summary>
         [WirePath("properties.enabledLogCategories")]
         public IList<string> EnabledLogCategories
