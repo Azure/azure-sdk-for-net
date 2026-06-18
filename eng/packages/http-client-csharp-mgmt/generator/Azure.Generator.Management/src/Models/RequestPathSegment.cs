@@ -25,15 +25,6 @@ namespace Azure.Generator.Management.Models
 
         /// <inheritdoc />
         public bool Equals(RequestPathSegment? other)
-            => Equals(other, strict: false);
-
-        /// <summary>
-        /// Determines whether this segment equals another segment.
-        /// </summary>
-        /// <param name="other">The other segment to compare.</param>
-        /// <param name="strict">Whether variable segment names must match exactly.</param>
-        /// <returns><c>true</c> if the segments are equal; otherwise, <c>false</c>.</returns>
-        public bool Equals(RequestPathSegment? other, bool strict)
         {
             if (other is null)
                 return false;
@@ -41,7 +32,9 @@ namespace Azure.Generator.Management.Models
                 return false;
             if (IsConstant)
                 return string.Equals(_value, other._value, StringComparison.OrdinalIgnoreCase);
-            return strict ? string.Equals(_value, other._value, StringComparison.Ordinal) : true;
+
+            // Variable segment names are placeholders only; {resourceGroupName} and {rgName} represent the same path shape.
+            return true;
         }
 
         /// <summary>
@@ -87,7 +80,7 @@ namespace Azure.Generator.Management.Models
         public override bool Equals(object? obj) => obj is RequestPathSegment other && Equals(other);
 
         /// <inheritdoc />
-        public override int GetHashCode() => IsConstant ? StringComparer.OrdinalIgnoreCase.GetHashCode(_value) : "{}".GetHashCode();
+        public override int GetHashCode() => IsConstant ? StringComparer.OrdinalIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc />
         public override string ToString() => _value;
