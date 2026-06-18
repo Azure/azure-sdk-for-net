@@ -12,19 +12,19 @@ using Azure.ResourceManager.CognitiveServices;
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> Gets or sets the source to which safety providers applies. </summary>
-    public partial class SafetyProviderConfig : RaiSafetyProviderConfig
+    public partial class RaiSafetyProviderSourceConfig : RaiSafetyProviderConfig
     {
-        /// <summary> Initializes a new instance of <see cref="SafetyProviderConfig"/>. </summary>
-        public SafetyProviderConfig()
+        /// <summary> Initializes a new instance of <see cref="RaiSafetyProviderSourceConfig"/>. </summary>
+        public RaiSafetyProviderSourceConfig()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SafetyProviderConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RaiSafetyProviderSourceConfig"/>. </summary>
         /// <param name="safetyProviderName"> Name of RAI Safety Provider. </param>
         /// <param name="isBlocking"> If blocking would occur. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="source"> Content source to apply the Content Filters. </param>
-        internal SafetyProviderConfig(string safetyProviderName, bool? isBlocking, IDictionary<string, BinaryData> additionalBinaryDataProperties, RaiPolicyContentSource? source) : base(safetyProviderName, isBlocking, additionalBinaryDataProperties)
+        internal RaiSafetyProviderSourceConfig(string safetyProviderName, bool? isBlocking, IDictionary<string, BinaryData> additionalBinaryDataProperties, RaiPolicyContentSource? source) : base(safetyProviderName, isBlocking, additionalBinaryDataProperties)
         {
             Source = source;
         }

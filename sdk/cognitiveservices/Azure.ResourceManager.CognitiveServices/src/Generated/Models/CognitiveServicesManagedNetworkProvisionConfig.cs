@@ -11,19 +11,19 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> Managed Network Provisioning options for managed network of a cognitive services account. </summary>
-    public partial class CognitiveServicesManagedNetworkProvisionOptions
+    public partial class CognitiveServicesManagedNetworkProvisionConfig
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CognitiveServicesManagedNetworkProvisionOptions"/>. </summary>
-        public CognitiveServicesManagedNetworkProvisionOptions()
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesManagedNetworkProvisionConfig"/>. </summary>
+        public CognitiveServicesManagedNetworkProvisionConfig()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="CognitiveServicesManagedNetworkProvisionOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesManagedNetworkProvisionConfig"/>. </summary>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CognitiveServicesManagedNetworkProvisionOptions(IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CognitiveServicesManagedNetworkProvisionConfig(IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
