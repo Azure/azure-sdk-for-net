@@ -15,11 +15,8 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary> Initializes a new instance of <see cref="ResponsesBrowserAutomationToolParameters"/>. </summary>
         /// <param name="connection"> The project connection parameters associated with the Browser Automation Tool. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connection"/> is null. </exception>
-        public ResponsesBrowserAutomationToolParameters(ResponsesBrowserAutomationToolConnectionParameters connection)
+        internal ResponsesBrowserAutomationToolParameters(ResponsesBrowserAutomationToolConnectionParameters connection)
         {
-            Argument.AssertNotNull(connection, nameof(connection));
-
             Connection = connection;
         }
 
@@ -33,6 +30,6 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> The project connection parameters associated with the Browser Automation Tool. </summary>
-        public ResponsesBrowserAutomationToolConnectionParameters Connection { get; set; }
+        public ResponsesBrowserAutomationToolConnectionParameters Connection { get; }
     }
 }

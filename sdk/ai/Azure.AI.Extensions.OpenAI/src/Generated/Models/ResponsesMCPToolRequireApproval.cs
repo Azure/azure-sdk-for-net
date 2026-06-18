@@ -14,7 +14,7 @@ namespace Azure.AI.Extensions.OpenAI
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ResponsesMCPToolRequireApproval"/>. </summary>
-        public ResponsesMCPToolRequireApproval()
+        internal ResponsesMCPToolRequireApproval()
         {
         }
 
@@ -29,10 +29,10 @@ namespace Azure.AI.Extensions.OpenAI
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets or sets the Always. </summary>
-        public ResponsesMCPToolFilter Always { get; set; }
+        /// <summary> Gets the Always. </summary>
+        public ResponsesMCPToolFilter Always { get; }
 
-        /// <summary> Gets or sets the Never. </summary>
-        public ResponsesMCPToolFilter Never { get; set; }
+        /// <summary> Gets the Never. </summary>
+        public ResponsesMCPToolFilter Never { get; }
     }
 }

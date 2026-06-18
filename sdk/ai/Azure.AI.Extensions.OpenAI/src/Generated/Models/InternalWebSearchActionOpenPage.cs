@@ -13,7 +13,7 @@ namespace Azure.AI.Extensions.OpenAI
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="InternalWebSearchActionOpenPage"/>. </summary>
-        public InternalWebSearchActionOpenPage()
+        internal InternalWebSearchActionOpenPage()
         {
         }
 
@@ -29,9 +29,9 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> The action type. </summary>
-        public string Type { get; } = "open_page";
+        internal string Type { get; } = "open_page";
 
         /// <summary> The URL opened by the model. </summary>
-        public Uri Url { get; set; }
+        public Uri Url { get; }
     }
 }

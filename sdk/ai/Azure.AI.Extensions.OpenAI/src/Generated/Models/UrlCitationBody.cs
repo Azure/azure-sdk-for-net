@@ -16,12 +16,8 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="startIndex"> The index of the first character of the URL citation in the message. </param>
         /// <param name="endIndex"> The index of the last character of the URL citation in the message. </param>
         /// <param name="title"> The title of the web resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="url"/> or <paramref name="title"/> is null. </exception>
-        public UrlCitationBody(Uri url, long startIndex, long endIndex, string title) : base(AnnotationType.UrlCitation)
+        internal UrlCitationBody(Uri url, long startIndex, long endIndex, string title) : base(AnnotationType.UrlCitation)
         {
-            Argument.AssertNotNull(url, nameof(url));
-            Argument.AssertNotNull(title, nameof(title));
-
             Url = url;
             StartIndex = startIndex;
             EndIndex = endIndex;
@@ -44,15 +40,15 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> The URL of the web resource. </summary>
-        public Uri Url { get; set; }
+        public Uri Url { get; }
 
         /// <summary> The index of the first character of the URL citation in the message. </summary>
-        public long StartIndex { get; set; }
+        public long StartIndex { get; }
 
         /// <summary> The index of the last character of the URL citation in the message. </summary>
-        public long EndIndex { get; set; }
+        public long EndIndex { get; }
 
         /// <summary> The title of the web resource. </summary>
-        public string Title { get; set; }
+        public string Title { get; }
     }
 }

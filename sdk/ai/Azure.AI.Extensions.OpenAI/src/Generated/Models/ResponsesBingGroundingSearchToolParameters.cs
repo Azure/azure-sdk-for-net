@@ -19,11 +19,8 @@ namespace Azure.AI.Extensions.OpenAI
         /// The search configurations attached to this tool. There can be a maximum of 1
         /// search configuration resource attached to the tool.
         /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchConfigurations"/> is null. </exception>
-        public ResponsesBingGroundingSearchToolParameters(IEnumerable<ResponsesBingGroundingSearchConfiguration> searchConfigurations)
+        internal ResponsesBingGroundingSearchToolParameters(IEnumerable<ResponsesBingGroundingSearchConfiguration> searchConfigurations)
         {
-            Argument.AssertNotNull(searchConfigurations, nameof(searchConfigurations));
-
             SearchConfigurations = searchConfigurations.ToList();
         }
 

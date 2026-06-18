@@ -15,11 +15,8 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary> Initializes a new instance of <see cref="WebSearchActionSearchSources"/>. </summary>
         /// <param name="url"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
-        public WebSearchActionSearchSources(string url)
+        internal WebSearchActionSearchSources(string url)
         {
-            Argument.AssertNotNull(url, nameof(url));
-
             Url = url;
         }
 
@@ -35,9 +32,9 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> Gets the Type. </summary>
-        public string Type { get; } = "url";
+        internal string Type { get; } = "url";
 
-        /// <summary> Gets or sets the Url. </summary>
-        public string Url { get; set; }
+        /// <summary> Gets the Url. </summary>
+        public string Url { get; }
     }
 }

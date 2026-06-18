@@ -15,11 +15,8 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary> Initializes a new instance of <see cref="ResponsesBingGroundingSearchConfiguration"/>. </summary>
         /// <param name="projectConnectionId"> Project connection id for grounding with bing search. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectConnectionId"/> is null. </exception>
-        public ResponsesBingGroundingSearchConfiguration(string projectConnectionId)
+        internal ResponsesBingGroundingSearchConfiguration(string projectConnectionId)
         {
-            Argument.AssertNotNull(projectConnectionId, nameof(projectConnectionId));
-
             ProjectConnectionId = projectConnectionId;
         }
 
@@ -41,18 +38,18 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> Project connection id for grounding with bing search. </summary>
-        public string ProjectConnectionId { get; set; }
+        public string ProjectConnectionId { get; }
 
         /// <summary> The market where the results come from. </summary>
-        public string Market { get; set; }
+        public string Market { get; }
 
         /// <summary> The language to use for user interface strings when calling Bing API. </summary>
-        public string Language { get; set; }
+        public string Language { get; }
 
         /// <summary> The number of search results to return in the bing api response. </summary>
-        public long? Count { get; set; }
+        public long? Count { get; }
 
         /// <summary> Filter search results by a specific time range. See [accepted values here](https://learn.microsoft.com/bing/search-apis/bing-web-search/reference/query-parameters). </summary>
-        public string Freshness { get; set; }
+        public string Freshness { get; }
     }
 }

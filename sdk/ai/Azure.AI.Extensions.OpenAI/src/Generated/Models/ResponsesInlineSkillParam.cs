@@ -14,13 +14,8 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="name"> The name of the skill. </param>
         /// <param name="description"> The description of the skill. </param>
         /// <param name="source"> Inline skill payload. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="description"/> or <paramref name="source"/> is null. </exception>
-        public ResponsesInlineSkillParam(string name, string description, ResponsesInlineSkillSourceParam source) : base(ContainerSkillType.Inline)
+        internal ResponsesInlineSkillParam(string name, string description, ResponsesInlineSkillSourceParam source) : base(ContainerSkillType.Inline)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(description, nameof(description));
-            Argument.AssertNotNull(source, nameof(source));
-
             Name = name;
             Description = description;
             Source = source;
@@ -40,12 +35,12 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> The name of the skill. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
 
         /// <summary> The description of the skill. </summary>
-        public string Description { get; set; }
+        public string Description { get; }
 
         /// <summary> Inline skill payload. </summary>
-        public ResponsesInlineSkillSourceParam Source { get; set; }
+        public ResponsesInlineSkillSourceParam Source { get; }
     }
 }

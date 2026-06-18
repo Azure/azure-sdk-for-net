@@ -13,11 +13,8 @@ namespace Azure.AI.Extensions.OpenAI
         /// <summary> Initializes a new instance of <see cref="RealtimeMCPProtocolError"/>. </summary>
         /// <param name="code"></param>
         /// <param name="message"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
-        public RealtimeMCPProtocolError(long code, string message) : base(RealtimeMcpErrorType.ProtocolError)
+        internal RealtimeMCPProtocolError(long code, string message) : base(RealtimeMcpErrorType.ProtocolError)
         {
-            Argument.AssertNotNull(message, nameof(message));
-
             Code = code;
             Message = message;
         }
@@ -33,10 +30,10 @@ namespace Azure.AI.Extensions.OpenAI
             Message = message;
         }
 
-        /// <summary> Gets or sets the Code. </summary>
-        public long Code { get; set; }
+        /// <summary> Gets the Code. </summary>
+        public long Code { get; }
 
-        /// <summary> Gets or sets the Message. </summary>
-        public string Message { get; set; }
+        /// <summary> Gets the Message. </summary>
+        public string Message { get; }
     }
 }

@@ -5,6 +5,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text.Json;
 using Azure.AI.Extensions.OpenAI;
 
@@ -127,9 +128,9 @@ namespace OpenAI
             {
                 return null;
             }
-            IDictionary<string, string> additionalProperties = new ChangeTrackingDictionary<string, string>();
-            IDictionary<string, double> additionalDoubleProperties = new ChangeTrackingDictionary<string, double>();
-            IDictionary<string, bool> additionalBooleanProperties = new ChangeTrackingDictionary<string, bool>();
+            ChangeTrackingDictionary<string, string> additionalProperties = new ChangeTrackingDictionary<string, string>();
+            ChangeTrackingDictionary<string, double> additionalDoubleProperties = new ChangeTrackingDictionary<string, double>();
+            ChangeTrackingDictionary<string, bool> additionalBooleanProperties = new ChangeTrackingDictionary<string, bool>();
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -154,7 +155,7 @@ namespace OpenAI
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new InternalVectorStoreFileAttributes(additionalProperties, additionalDoubleProperties, additionalBooleanProperties, additionalBinaryDataProperties);
+            return new InternalVectorStoreFileAttributes(new ReadOnlyDictionary<string, string>(additionalProperties), new ReadOnlyDictionary<string, double>(additionalDoubleProperties), new ReadOnlyDictionary<string, bool>(additionalBooleanProperties), additionalBinaryDataProperties);
         }
     }
 }

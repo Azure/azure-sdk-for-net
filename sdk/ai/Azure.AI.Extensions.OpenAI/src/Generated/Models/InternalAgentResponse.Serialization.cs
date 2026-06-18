@@ -7,6 +7,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.Extensions.OpenAI;
+using OpenAI.Responses;
 
 namespace OpenAI
 {
@@ -223,8 +224,13 @@ namespace OpenAI
             }
             writer.WritePropertyName("output"u8);
             writer.WriteStartArray();
-            foreach (AgentResponseItem item in Output)
+            foreach (ResponseItem item in Output)
             {
+                if (item == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
@@ -329,7 +335,7 @@ namespace OpenAI
             string user = default;
             string safetyIdentifier = default;
             string promptCacheKey = default;
-            ResponseServiceTier? serviceTier = default;
+            Azure.AI.Extensions.OpenAI.ResponseServiceTier? serviceTier = default;
             ResponsePromptCacheRetention? promptCacheRetention = default;
             string previousResponseId = default;
             string model = default;
@@ -349,7 +355,7 @@ namespace OpenAI
             DateTimeOffset? completedAt = default;
             InternalAgentResponseError error = default;
             ResponseIncompleteDetails incompleteDetails = default;
-            IList<AgentResponseItem> output = default;
+            IList<ResponseItem> output = default;
             BinaryData instructions = default;
             string outputText = default;
             ResponseUsage usage = default;
@@ -597,10 +603,17 @@ namespace OpenAI
                 }
                 if (prop.NameEquals("output"u8))
                 {
-                    List<AgentResponseItem> array = new List<AgentResponseItem>();
+                    List<ResponseItem> array = new List<ResponseItem>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AgentResponseItem.DeserializeAgentResponseItem(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<ResponseItem>(item.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIExtensionsOpenAIContext.Default));
+                        }
                     }
                     output = array;
                     continue;

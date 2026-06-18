@@ -12,11 +12,8 @@ namespace Azure.AI.Extensions.OpenAI
     {
         /// <summary> Initializes a new instance of <see cref="ResponsesCaptureStructuredOutputsTool"/>. </summary>
         /// <param name="outputs"> The structured outputs to capture from the model. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="outputs"/> is null. </exception>
-        public ResponsesCaptureStructuredOutputsTool(ResponsesStructuredOutputDefinition outputs) : base(ToolType.CaptureStructuredOutputs)
+        internal ResponsesCaptureStructuredOutputsTool(ResponsesStructuredOutputDefinition outputs) : base(ToolType.CaptureStructuredOutputs)
         {
-            Argument.AssertNotNull(outputs, nameof(outputs));
-
             ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
             Outputs = outputs;
         }
@@ -41,10 +38,10 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> Optional user-defined name for this tool or configuration. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
 
         /// <summary> Optional user-defined description for this tool or configuration. </summary>
-        public string Description { get; set; }
+        public string Description { get; }
 
         /// <summary>
         /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
@@ -54,6 +51,6 @@ namespace Azure.AI.Extensions.OpenAI
         public IDictionary<string, ToolConfig> ToolConfigs { get; }
 
         /// <summary> The structured outputs to capture from the model. </summary>
-        public ResponsesStructuredOutputDefinition Outputs { get; set; }
+        public ResponsesStructuredOutputDefinition Outputs { get; }
     }
 }

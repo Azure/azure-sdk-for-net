@@ -11,7 +11,7 @@ namespace Azure.AI.Extensions.OpenAI
     {
         /// <summary> Initializes a new instance of <see cref="InternalSummaryTextObject"/>. </summary>
         /// <param name="text"> A summary of the reasoning output from the model so far. </param>
-        public InternalSummaryTextObject(string text) : base(MessageContentType.SummaryText)
+        internal InternalSummaryTextObject(string text) : base(MessageContentType.SummaryText)
         {
             Text = text;
         }
@@ -26,6 +26,6 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> A summary of the reasoning output from the model so far. </summary>
-        public string Text { get; set; }
+        public string Text { get; }
     }
 }

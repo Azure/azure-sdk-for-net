@@ -11,7 +11,7 @@ namespace Azure.AI.Extensions.OpenAI
     public partial class ResponsesToolSearchToolParam : ResponsesTool
     {
         /// <summary> Initializes a new instance of <see cref="ResponsesToolSearchToolParam"/>. </summary>
-        public ResponsesToolSearchToolParam() : base(ToolType.ToolSearch)
+        internal ResponsesToolSearchToolParam() : base(ToolType.ToolSearch)
         {
         }
 
@@ -29,12 +29,12 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> Whether tool search is executed by the server or by the client. </summary>
-        public ResponsesToolSearchExecutionType? Execution { get; set; }
+        public ResponsesToolSearchExecutionType? Execution { get; }
 
-        /// <summary> Gets or sets the Description. </summary>
-        public string Description { get; set; }
+        /// <summary> Gets the Description. </summary>
+        public string Description { get; }
 
-        /// <summary> Gets or sets the Parameters. </summary>
-        public ResponsesEmptyModelParam Parameters { get; set; }
+        /// <summary> Gets the Parameters. </summary>
+        public ResponsesEmptyModelParam Parameters { get; }
     }
 }

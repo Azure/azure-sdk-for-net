@@ -16,7 +16,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <summary> Initializes a new instance of <see cref="CoordParam"/>. </summary>
         /// <param name="x"> The x-coordinate. </param>
         /// <param name="y"> The y-coordinate. </param>
-        public CoordParam(long x, long y)
+        internal CoordParam(long x, long y)
         {
             X = x;
             Y = y;
@@ -34,9 +34,9 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> The x-coordinate. </summary>
-        public long X { get; set; }
+        public long X { get; }
 
         /// <summary> The y-coordinate. </summary>
-        public long Y { get; set; }
+        public long Y { get; }
     }
 }

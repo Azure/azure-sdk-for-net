@@ -12,11 +12,8 @@ namespace Azure.AI.Extensions.OpenAI
     {
         /// <summary> Initializes a new instance of <see cref="ResponsesBingGroundingTool"/>. </summary>
         /// <param name="bingGrounding"> The bing grounding search tool parameters. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="bingGrounding"/> is null. </exception>
-        public ResponsesBingGroundingTool(ResponsesBingGroundingSearchToolParameters bingGrounding) : base(ToolType.BingGrounding)
+        internal ResponsesBingGroundingTool(ResponsesBingGroundingSearchToolParameters bingGrounding) : base(ToolType.BingGrounding)
         {
-            Argument.AssertNotNull(bingGrounding, nameof(bingGrounding));
-
             ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
             BingGrounding = bingGrounding;
         }
@@ -41,10 +38,10 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> Optional user-defined name for this tool or configuration. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
 
         /// <summary> Optional user-defined description for this tool or configuration. </summary>
-        public string Description { get; set; }
+        public string Description { get; }
 
         /// <summary>
         /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
@@ -54,6 +51,6 @@ namespace Azure.AI.Extensions.OpenAI
         public IDictionary<string, ToolConfig> ToolConfigs { get; }
 
         /// <summary> The bing grounding search tool parameters. </summary>
-        public ResponsesBingGroundingSearchToolParameters BingGrounding { get; set; }
+        public ResponsesBingGroundingSearchToolParameters BingGrounding { get; }
     }
 }

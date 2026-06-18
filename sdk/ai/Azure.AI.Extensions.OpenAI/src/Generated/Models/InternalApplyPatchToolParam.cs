@@ -10,7 +10,7 @@ namespace Azure.AI.Extensions.OpenAI
     internal partial class InternalApplyPatchToolParam : ResponsesTool
     {
         /// <summary> Initializes a new instance of <see cref="InternalApplyPatchToolParam"/>. </summary>
-        public InternalApplyPatchToolParam() : base(ToolType.ApplyPatch)
+        internal InternalApplyPatchToolParam() : base(ToolType.ApplyPatch)
         {
         }
 

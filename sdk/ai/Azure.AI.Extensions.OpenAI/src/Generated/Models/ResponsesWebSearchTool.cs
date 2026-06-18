@@ -11,7 +11,7 @@ namespace Azure.AI.Extensions.OpenAI
     public partial class ResponsesWebSearchTool : ResponsesTool
     {
         /// <summary> Initializes a new instance of <see cref="ResponsesWebSearchTool"/>. </summary>
-        public ResponsesWebSearchTool() : base(ToolType.WebSearch)
+        internal ResponsesWebSearchTool() : base(ToolType.WebSearch)
         {
             ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
         }
@@ -44,20 +44,20 @@ namespace Azure.AI.Extensions.OpenAI
             CustomSearchConfiguration = customSearchConfiguration;
         }
 
-        /// <summary> Gets or sets the Filters. </summary>
-        public WebSearchToolFilters Filters { get; set; }
+        /// <summary> Gets the Filters. </summary>
+        public WebSearchToolFilters Filters { get; }
 
-        /// <summary> Gets or sets the UserLocation. </summary>
-        public ResponsesWebSearchApproximateLocation UserLocation { get; set; }
+        /// <summary> Gets the UserLocation. </summary>
+        public ResponsesWebSearchApproximateLocation UserLocation { get; }
 
         /// <summary> High level guidance for the amount of context window space to use for the search. One of `low`, `medium`, or `high`. `medium` is the default. </summary>
-        public ResponsesWebSearchToolSearchContextSize? SearchContextSize { get; set; }
+        public ResponsesWebSearchToolSearchContextSize? SearchContextSize { get; }
 
         /// <summary> Optional user-defined name for this tool or configuration. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
 
         /// <summary> Optional user-defined description for this tool or configuration. </summary>
-        public string Description { get; set; }
+        public string Description { get; }
 
         /// <summary>
         /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
@@ -70,6 +70,6 @@ namespace Azure.AI.Extensions.OpenAI
         /// The project connections attached to this tool. There can be a maximum of 1 connection
         /// resource attached to the tool.
         /// </summary>
-        public ResponsesWebSearchConfiguration CustomSearchConfiguration { get; set; }
+        public ResponsesWebSearchConfiguration CustomSearchConfiguration { get; }
     }
 }

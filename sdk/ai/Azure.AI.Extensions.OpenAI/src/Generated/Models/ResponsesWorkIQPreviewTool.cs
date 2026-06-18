@@ -12,11 +12,8 @@ namespace Azure.AI.Extensions.OpenAI
     {
         /// <summary> Initializes a new instance of <see cref="ResponsesWorkIQPreviewTool"/>. </summary>
         /// <param name="projectConnectionId"> The ID of the WorkIQ project connection. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectConnectionId"/> is null. </exception>
-        public ResponsesWorkIQPreviewTool(string projectConnectionId) : base(ToolType.WorkIqPreview)
+        internal ResponsesWorkIQPreviewTool(string projectConnectionId) : base(ToolType.WorkIqPreview)
         {
-            Argument.AssertNotNull(projectConnectionId, nameof(projectConnectionId));
-
             ProjectConnectionId = projectConnectionId;
             ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
         }
@@ -41,13 +38,13 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> The ID of the WorkIQ project connection. </summary>
-        public string ProjectConnectionId { get; set; }
+        public string ProjectConnectionId { get; }
 
         /// <summary> Optional user-defined name for this tool or configuration. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
 
         /// <summary> Optional user-defined description for this tool or configuration. </summary>
-        public string Description { get; set; }
+        public string Description { get; }
 
         /// <summary>
         /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).

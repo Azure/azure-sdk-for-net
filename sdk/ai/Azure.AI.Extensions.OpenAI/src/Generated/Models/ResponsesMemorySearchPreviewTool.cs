@@ -17,12 +17,8 @@ namespace Azure.AI.Extensions.OpenAI
         /// Limits which memories can be retrieved or updated.
         /// Use special variable `{{$userId}}` to scope memories to the current signed-in user.
         /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="memoryStoreName"/> or <paramref name="scope"/> is null. </exception>
-        public ResponsesMemorySearchPreviewTool(string memoryStoreName, string scope) : base(ToolType.MemorySearchPreview)
+        internal ResponsesMemorySearchPreviewTool(string memoryStoreName, string scope) : base(ToolType.MemorySearchPreview)
         {
-            Argument.AssertNotNull(memoryStoreName, nameof(memoryStoreName));
-            Argument.AssertNotNull(scope, nameof(scope));
-
             ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
             MemoryStoreName = memoryStoreName;
             Scope = scope;
@@ -58,10 +54,10 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> Optional user-defined name for this tool or configuration. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
 
         /// <summary> Optional user-defined description for this tool or configuration. </summary>
-        public string Description { get; set; }
+        public string Description { get; }
 
         /// <summary>
         /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
@@ -71,19 +67,19 @@ namespace Azure.AI.Extensions.OpenAI
         public IDictionary<string, ToolConfig> ToolConfigs { get; }
 
         /// <summary> The name of the memory store to use. </summary>
-        public string MemoryStoreName { get; set; }
+        public string MemoryStoreName { get; }
 
         /// <summary>
         /// The namespace used to group and isolate memories, such as a user ID.
         /// Limits which memories can be retrieved or updated.
         /// Use special variable `{{$userId}}` to scope memories to the current signed-in user.
         /// </summary>
-        public string Scope { get; set; }
+        public string Scope { get; }
 
         /// <summary> Options for searching the memory store. </summary>
-        public ResponsesMemorySearchOptions SearchOptions { get; set; }
+        public ResponsesMemorySearchOptions SearchOptions { get; }
 
         /// <summary> Time to wait before updating memories after inactivity (seconds). Default 300. </summary>
-        public int? UpdateDelayInSeconds { get; set; }
+        public int? UpdateDelayInSeconds { get; }
     }
 }

@@ -11,7 +11,7 @@ namespace Azure.AI.Extensions.OpenAI
     public partial class ResponsesComputerTool : ResponsesTool
     {
         /// <summary> Initializes a new instance of <see cref="ResponsesComputerTool"/>. </summary>
-        public ResponsesComputerTool() : base(ToolType.Computer)
+        internal ResponsesComputerTool() : base(ToolType.Computer)
         {
         }
 

@@ -11,7 +11,7 @@ namespace Azure.AI.Extensions.OpenAI
     internal partial class LocalEnvironmentResource : FunctionShellCallEnvironment
     {
         /// <summary> Initializes a new instance of <see cref="LocalEnvironmentResource"/>. </summary>
-        public LocalEnvironmentResource() : base(FunctionShellCallEnvironmentType.Local)
+        internal LocalEnvironmentResource() : base(FunctionShellCallEnvironmentType.Local)
         {
         }
 

@@ -11,7 +11,7 @@ namespace Azure.AI.Extensions.OpenAI
     public partial class ResponsesContainerAutoParam : ResponsesFunctionShellToolParamEnvironment
     {
         /// <summary> Initializes a new instance of <see cref="ResponsesContainerAutoParam"/>. </summary>
-        public ResponsesContainerAutoParam() : base(FunctionShellToolParamEnvironmentType.ContainerAuto)
+        internal ResponsesContainerAutoParam() : base(FunctionShellToolParamEnvironmentType.ContainerAuto)
         {
             FileIds = new ChangeTrackingList<string>();
             Skills = new ChangeTrackingList<ContainerSkill>();
@@ -35,13 +35,13 @@ namespace Azure.AI.Extensions.OpenAI
         /// <summary> An optional list of uploaded files to make available to your code. </summary>
         public IList<string> FileIds { get; }
 
-        /// <summary> Gets or sets the MemoryLimit. </summary>
-        public ResponsesContainerMemoryLimit? MemoryLimit { get; set; }
+        /// <summary> Gets the MemoryLimit. </summary>
+        public ResponsesContainerMemoryLimit? MemoryLimit { get; }
 
         /// <summary> An optional list of skills referenced by id or inline data. </summary>
         public IList<ContainerSkill> Skills { get; }
 
-        /// <summary> Gets or sets the NetworkPolicy. </summary>
-        public ResponsesContainerNetworkPolicyParam NetworkPolicy { get; set; }
+        /// <summary> Gets the NetworkPolicy. </summary>
+        public ResponsesContainerNetworkPolicyParam NetworkPolicy { get; }
     }
 }

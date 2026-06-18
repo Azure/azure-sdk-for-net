@@ -18,13 +18,8 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="name"> The name of the function to be called. </param>
         /// <param name="specification"> The openapi function shape, described as a JSON Schema object. </param>
         /// <param name="auth"> Open API authentication details. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="specification"/> or <paramref name="auth"/> is null. </exception>
-        public ResponsesOpenApiFunctionDefinition(string name, IDictionary<string, BinaryData> specification, ResponsesOpenApiAuthDetails auth)
+        internal ResponsesOpenApiFunctionDefinition(string name, IDictionary<string, BinaryData> specification, ResponsesOpenApiAuthDetails auth)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(specification, nameof(specification));
-            Argument.AssertNotNull(auth, nameof(auth));
-
             Name = name;
             Specification = specification;
             Auth = auth;
@@ -52,10 +47,10 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> The name of the function to be called. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
 
         /// <summary> A description of what the function does, used by the model to choose when and how to call the function. </summary>
-        public string Description { get; set; }
+        public string Description { get; }
 
         /// <summary>
         /// The openapi function shape, described as a JSON Schema object.
@@ -86,7 +81,7 @@ namespace Azure.AI.Extensions.OpenAI
         public IDictionary<string, BinaryData> Specification { get; }
 
         /// <summary> Open API authentication details. </summary>
-        public ResponsesOpenApiAuthDetails Auth { get; set; }
+        public ResponsesOpenApiAuthDetails Auth { get; }
 
         /// <summary> List of OpenAPI spec parameters that will use user-provided defaults. </summary>
         public IList<string> DefaultParams { get; }

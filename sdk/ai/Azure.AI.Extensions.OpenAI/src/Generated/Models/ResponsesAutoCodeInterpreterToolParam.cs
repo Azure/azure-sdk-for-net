@@ -14,7 +14,7 @@ namespace Azure.AI.Extensions.OpenAI
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ResponsesAutoCodeInterpreterToolParam"/>. </summary>
-        public ResponsesAutoCodeInterpreterToolParam()
+        internal ResponsesAutoCodeInterpreterToolParam()
         {
             FileIds = new ChangeTrackingList<string>();
         }
@@ -35,15 +35,15 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> Always `auto`. </summary>
-        public string Kind { get; } = "auto";
+        internal string Kind { get; } = "auto";
 
         /// <summary> An optional list of uploaded files to make available to your code. </summary>
         public IList<string> FileIds { get; }
 
-        /// <summary> Gets or sets the MemoryLimit. </summary>
-        public ResponsesContainerMemoryLimit? MemoryLimit { get; set; }
+        /// <summary> Gets the MemoryLimit. </summary>
+        public ResponsesContainerMemoryLimit? MemoryLimit { get; }
 
-        /// <summary> Gets or sets the NetworkPolicy. </summary>
-        public ResponsesContainerNetworkPolicyParam NetworkPolicy { get; set; }
+        /// <summary> Gets the NetworkPolicy. </summary>
+        public ResponsesContainerNetworkPolicyParam NetworkPolicy { get; }
     }
 }

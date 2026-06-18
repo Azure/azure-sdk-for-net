@@ -12,11 +12,8 @@ namespace Azure.AI.Extensions.OpenAI
     {
         /// <summary> Initializes a new instance of <see cref="OutputMessageContentRefusalContent"/>. </summary>
         /// <param name="refusal"> The refusal explanation from the model. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="refusal"/> is null. </exception>
-        public OutputMessageContentRefusalContent(string refusal) : base(OutputMessageContentType.Refusal)
+        internal OutputMessageContentRefusalContent(string refusal) : base(OutputMessageContentType.Refusal)
         {
-            Argument.AssertNotNull(refusal, nameof(refusal));
-
             Refusal = refusal;
         }
 
@@ -30,6 +27,6 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> The refusal explanation from the model. </summary>
-        public string Refusal { get; set; }
+        public string Refusal { get; }
     }
 }

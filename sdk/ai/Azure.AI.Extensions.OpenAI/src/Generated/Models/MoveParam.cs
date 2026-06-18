@@ -14,7 +14,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <summary> Initializes a new instance of <see cref="MoveParam"/>. </summary>
         /// <param name="x"> The x-coordinate to move to. </param>
         /// <param name="y"> The y-coordinate to move to. </param>
-        public MoveParam(long x, long y) : base(ComputerActionType.Move)
+        internal MoveParam(long x, long y) : base(ComputerActionType.Move)
         {
             X = x;
             Y = y;
@@ -35,12 +35,12 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> The x-coordinate to move to. </summary>
-        public long X { get; set; }
+        public long X { get; }
 
         /// <summary> The y-coordinate to move to. </summary>
-        public long Y { get; set; }
+        public long Y { get; }
 
-        /// <summary> Gets or sets the Keys. </summary>
-        public IList<string> Keys { get; set; }
+        /// <summary> Gets the Keys. </summary>
+        public IList<string> Keys { get; }
     }
 }

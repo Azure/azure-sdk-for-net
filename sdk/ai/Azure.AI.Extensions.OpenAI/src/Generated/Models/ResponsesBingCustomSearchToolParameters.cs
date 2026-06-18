@@ -19,11 +19,8 @@ namespace Azure.AI.Extensions.OpenAI
         /// The project connections attached to this tool. There can be a maximum of 1 connection
         /// resource attached to the tool.
         /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchConfigurations"/> is null. </exception>
-        public ResponsesBingCustomSearchToolParameters(IEnumerable<ResponsesBingCustomSearchConfiguration> searchConfigurations)
+        internal ResponsesBingCustomSearchToolParameters(IEnumerable<ResponsesBingCustomSearchConfiguration> searchConfigurations)
         {
-            Argument.AssertNotNull(searchConfigurations, nameof(searchConfigurations));
-
             SearchConfigurations = searchConfigurations.ToList();
         }
 

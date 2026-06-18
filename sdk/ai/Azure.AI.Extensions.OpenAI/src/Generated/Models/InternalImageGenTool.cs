@@ -11,7 +11,7 @@ namespace OpenAI
     internal partial class InternalImageGenTool : ResponsesTool
     {
         /// <summary> Initializes a new instance of <see cref="InternalImageGenTool"/>. </summary>
-        public InternalImageGenTool() : base(ToolType.ImageGeneration)
+        internal InternalImageGenTool() : base(ToolType.ImageGeneration)
         {
             ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
         }
@@ -70,59 +70,59 @@ namespace OpenAI
             ToolConfigs = toolConfigs;
         }
 
-        /// <summary> Gets or sets the Model. </summary>
-        public ImageGenToolModel? Model { get; set; }
+        /// <summary> Gets the Model. </summary>
+        public ImageGenToolModel? Model { get; }
 
         /// <summary>
         /// The quality of the generated image. One of `low`, `medium`, `high`,
         ///   or `auto`. Default: `auto`.
         /// </summary>
-        public ImageGenToolQuality? Quality { get; set; }
+        public ImageGenToolQuality? Quality { get; }
 
         /// <summary>
         /// The size of the generated image. One of `1024x1024`, `1024x1536`,
         ///   `1536x1024`, or `auto`. Default: `auto`.
         /// </summary>
-        public ImageGenToolSize? Size { get; set; }
+        public ImageGenToolSize? Size { get; }
 
         /// <summary>
         /// The output format of the generated image. One of `png`, `webp`, or
         ///   `jpeg`. Default: `png`.
         /// </summary>
-        public ImageGenToolOutputFormat? OutputFormat { get; set; }
+        public ImageGenToolOutputFormat? OutputFormat { get; }
 
         /// <summary> Compression level for the output image. Default: 100. </summary>
-        public long? OutputCompression { get; set; }
+        public long? OutputCompression { get; }
 
         /// <summary> Moderation level for the generated image. Default: `auto`. </summary>
-        public ImageGenToolModeration? Moderation { get; set; }
+        public ImageGenToolModeration? Moderation { get; }
 
         /// <summary>
         /// Background type for the generated image. One of `transparent`,
         ///   `opaque`, or `auto`. Default: `auto`.
         /// </summary>
-        public ImageGenToolBackground? Background { get; set; }
+        public ImageGenToolBackground? Background { get; }
 
-        /// <summary> Gets or sets the InputFidelity. </summary>
-        public InputFidelity? InputFidelity { get; set; }
+        /// <summary> Gets the InputFidelity. </summary>
+        public InputFidelity? InputFidelity { get; }
 
         /// <summary>
         /// Optional mask for inpainting. Contains `image_url`
         ///   (string, optional) and `file_id` (string, optional).
         /// </summary>
-        public InternalImageGenToolInputImageMask InputImageMask { get; set; }
+        public InternalImageGenToolInputImageMask InputImageMask { get; }
 
         /// <summary> Number of partial images to generate in streaming mode, from 0 (default value) to 3. </summary>
-        public long? PartialImages { get; set; }
+        public long? PartialImages { get; }
 
         /// <summary> Whether to generate a new image or edit an existing image. Default: `auto`. </summary>
-        public ImageGenActionEnum? Action { get; set; }
+        public ImageGenActionEnum? Action { get; }
 
         /// <summary> Optional user-defined name for this tool or configuration. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
 
         /// <summary> Optional user-defined description for this tool or configuration. </summary>
-        public string Description { get; set; }
+        public string Description { get; }
 
         /// <summary>
         /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).

@@ -17,13 +17,8 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="function"> The definition of azure function and its parameters. </param>
         /// <param name="inputBinding"> Input storage queue. The queue storage trigger runs a function as messages are added to it. </param>
         /// <param name="outputBinding"> Output storage queue. The function writes output to this queue when the input items are processed. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="function"/>, <paramref name="inputBinding"/> or <paramref name="outputBinding"/> is null. </exception>
-        public ResponsesAzureFunctionDefinition(ResponsesAzureFunctionDefinitionFunction function, ResponsesAzureFunctionBinding inputBinding, ResponsesAzureFunctionBinding outputBinding)
+        internal ResponsesAzureFunctionDefinition(ResponsesAzureFunctionDefinitionFunction function, ResponsesAzureFunctionBinding inputBinding, ResponsesAzureFunctionBinding outputBinding)
         {
-            Argument.AssertNotNull(function, nameof(function));
-            Argument.AssertNotNull(inputBinding, nameof(inputBinding));
-            Argument.AssertNotNull(outputBinding, nameof(outputBinding));
-
             Function = function;
             InputBinding = inputBinding;
             OutputBinding = outputBinding;
@@ -43,12 +38,12 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> The definition of azure function and its parameters. </summary>
-        public ResponsesAzureFunctionDefinitionFunction Function { get; set; }
+        public ResponsesAzureFunctionDefinitionFunction Function { get; }
 
         /// <summary> Input storage queue. The queue storage trigger runs a function as messages are added to it. </summary>
-        public ResponsesAzureFunctionBinding InputBinding { get; set; }
+        public ResponsesAzureFunctionBinding InputBinding { get; }
 
         /// <summary> Output storage queue. The function writes output to this queue when the input items are processed. </summary>
-        public ResponsesAzureFunctionBinding OutputBinding { get; set; }
+        public ResponsesAzureFunctionBinding OutputBinding { get; }
     }
 }

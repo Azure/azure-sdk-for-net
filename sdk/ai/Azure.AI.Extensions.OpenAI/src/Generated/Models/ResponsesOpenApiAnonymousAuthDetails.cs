@@ -11,7 +11,7 @@ namespace Azure.AI.Extensions.OpenAI
     public partial class ResponsesOpenApiAnonymousAuthDetails : ResponsesOpenApiAuthDetails
     {
         /// <summary> Initializes a new instance of <see cref="ResponsesOpenApiAnonymousAuthDetails"/>. </summary>
-        public ResponsesOpenApiAnonymousAuthDetails() : base(OpenApiAuthType.Anonymous)
+        internal ResponsesOpenApiAnonymousAuthDetails() : base(OpenApiAuthType.Anonymous)
         {
         }
 

@@ -14,7 +14,7 @@ namespace Azure.AI.Extensions.OpenAI
     {
         /// <summary> Initializes a new instance of <see cref="InternalFileSearchTool"/>. </summary>
         /// <param name="vectorStoreIds"> The IDs of the vector stores to search. </param>
-        public InternalFileSearchTool(IEnumerable<string> vectorStoreIds) : base(ToolType.FileSearch)
+        internal InternalFileSearchTool(IEnumerable<string> vectorStoreIds) : base(ToolType.FileSearch)
         {
             VectorStoreIds = vectorStoreIds.ToList();
             ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
@@ -49,13 +49,13 @@ namespace Azure.AI.Extensions.OpenAI
         public IList<string> VectorStoreIds { get; }
 
         /// <summary> The maximum number of results to return. This number should be between 1 and 50 inclusive. </summary>
-        public long? MaxNumResults { get; set; }
+        public long? MaxNumResults { get; }
 
         /// <summary> Ranking options for search. </summary>
-        public InternalRankingOptions RankingOptions { get; set; }
+        public InternalRankingOptions RankingOptions { get; }
 
         /// <summary>
-        /// Gets or sets the Filters.
+        /// Gets the Filters.
         /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
         /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>
@@ -93,13 +93,13 @@ namespace Azure.AI.Extensions.OpenAI
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData Filters { get; set; }
+        public BinaryData Filters { get; }
 
         /// <summary> Optional user-defined name for this tool or configuration. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
 
         /// <summary> Optional user-defined description for this tool or configuration. </summary>
-        public string Description { get; set; }
+        public string Description { get; }
 
         /// <summary>
         /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).

@@ -17,13 +17,8 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="domain"> The domain associated with the secret. </param>
         /// <param name="name"> The name of the secret to inject for the domain. </param>
         /// <param name="value"> The secret value to inject for the domain. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="domain"/>, <paramref name="name"/> or <paramref name="value"/> is null. </exception>
-        public ResponsesContainerNetworkPolicyDomainSecretParam(string domain, string name, string value)
+        internal ResponsesContainerNetworkPolicyDomainSecretParam(string domain, string name, string value)
         {
-            Argument.AssertNotNull(domain, nameof(domain));
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(value, nameof(value));
-
             Domain = domain;
             Name = name;
             Value = value;
@@ -43,12 +38,12 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> The domain associated with the secret. </summary>
-        public string Domain { get; set; }
+        public string Domain { get; }
 
         /// <summary> The name of the secret to inject for the domain. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
 
         /// <summary> The secret value to inject for the domain. </summary>
-        public string Value { get; set; }
+        public string Value { get; }
     }
 }

@@ -14,7 +14,7 @@ namespace Azure.AI.Extensions.OpenAI
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ResponsesMCPToolFilter"/>. </summary>
-        public ResponsesMCPToolFilter()
+        internal ResponsesMCPToolFilter()
         {
             ToolNames = new ChangeTrackingList<string>();
         }
@@ -42,6 +42,6 @@ namespace Azure.AI.Extensions.OpenAI
         ///   MCP server is [annotated with `readOnlyHint`](https://modelcontextprotocol.io/specification/2025-06-18/schema#toolannotations-readonlyhint),
         ///   it will match this filter.
         /// </summary>
-        public bool? IsReadOnly { get; set; }
+        public bool? IsReadOnly { get; }
     }
 }

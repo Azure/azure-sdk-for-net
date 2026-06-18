@@ -15,7 +15,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <summary> Initializes a new instance of <see cref="InternalWebSearchActionFind"/>. </summary>
         /// <param name="url"> The URL of the page searched for the pattern. </param>
         /// <param name="pattern"> The pattern or text to search for within the page. </param>
-        public InternalWebSearchActionFind(Uri url, string pattern)
+        internal InternalWebSearchActionFind(Uri url, string pattern)
         {
             Url = url;
             Pattern = pattern;
@@ -35,12 +35,12 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> The action type. </summary>
-        public string Type { get; } = "find_in_page";
+        internal string Type { get; } = "find_in_page";
 
         /// <summary> The URL of the page searched for the pattern. </summary>
-        public Uri Url { get; set; }
+        public Uri Url { get; }
 
         /// <summary> The pattern or text to search for within the page. </summary>
-        public string Pattern { get; set; }
+        public string Pattern { get; }
     }
 }

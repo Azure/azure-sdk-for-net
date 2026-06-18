@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 using System;
+using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI;
 
@@ -23,7 +24,7 @@ public partial class OAuthConsentRequestResponseItem
     /// <param name="consentLink"> The link the user can use to perform OAuth consent. </param>
     /// <param name="serverLabel"> The server label for the OAuth consent request. </param>
     /// <exception cref="ArgumentNullException"> <paramref name="consentLink"/> or <paramref name="serverLabel"/> is null. </exception>
-    public OAuthConsentRequestResponseItem(string consentLink, string serverLabel) : base(AgentResponseItemKind.OauthConsentRequest)
+    public OAuthConsentRequestResponseItem(string consentLink, string serverLabel) : base(ResponseItemKind.OauthConsentRequest)
     {
         Argument.AssertNotNull(consentLink, nameof(consentLink));
         Argument.AssertNotNull(serverLabel, nameof(serverLabel));

@@ -12,11 +12,8 @@ namespace Azure.AI.Extensions.OpenAI
     {
         /// <summary> Initializes a new instance of <see cref="ResponsesOpenApiTool"/>. </summary>
         /// <param name="openApi"> The openapi function definition. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="openApi"/> is null. </exception>
-        public ResponsesOpenApiTool(ResponsesOpenApiFunctionDefinition openApi) : base(ToolType.Openapi)
+        internal ResponsesOpenApiTool(ResponsesOpenApiFunctionDefinition openApi) : base(ToolType.Openapi)
         {
-            Argument.AssertNotNull(openApi, nameof(openApi));
-
             OpenApi = openApi;
             ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
         }
@@ -37,7 +34,7 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> The openapi function definition. </summary>
-        public ResponsesOpenApiFunctionDefinition OpenApi { get; set; }
+        public ResponsesOpenApiFunctionDefinition OpenApi { get; }
 
         /// <summary>
         /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).

@@ -14,7 +14,7 @@ namespace Azure.AI.Extensions.OpenAI
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ResponsesWebSearchApproximateLocation"/>. </summary>
-        public ResponsesWebSearchApproximateLocation()
+        internal ResponsesWebSearchApproximateLocation()
         {
         }
 
@@ -36,18 +36,18 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> The type of location approximation. Always `approximate`. </summary>
-        public string Kind { get; } = "approximate";
+        internal string Kind { get; } = "approximate";
 
-        /// <summary> Gets or sets the Country. </summary>
-        public string Country { get; set; }
+        /// <summary> Gets the Country. </summary>
+        public string Country { get; }
 
-        /// <summary> Gets or sets the Region. </summary>
-        public string Region { get; set; }
+        /// <summary> Gets the Region. </summary>
+        public string Region { get; }
 
-        /// <summary> Gets or sets the City. </summary>
-        public string City { get; set; }
+        /// <summary> Gets the City. </summary>
+        public string City { get; }
 
-        /// <summary> Gets or sets the Timezone. </summary>
-        public string Timezone { get; set; }
+        /// <summary> Gets the Timezone. </summary>
+        public string Timezone { get; }
     }
 }

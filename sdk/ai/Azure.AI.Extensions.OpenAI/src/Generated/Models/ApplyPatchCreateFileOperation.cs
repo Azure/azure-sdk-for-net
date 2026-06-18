@@ -13,12 +13,8 @@ namespace Azure.AI.Extensions.OpenAI
         /// <summary> Initializes a new instance of <see cref="ApplyPatchCreateFileOperation"/>. </summary>
         /// <param name="path"> Path of the file to create. </param>
         /// <param name="diff"> Diff to apply. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="path"/> or <paramref name="diff"/> is null. </exception>
-        public ApplyPatchCreateFileOperation(string path, string diff) : base(ApplyPatchFileOperationType.CreateFile)
+        internal ApplyPatchCreateFileOperation(string path, string diff) : base(ApplyPatchFileOperationType.CreateFile)
         {
-            Argument.AssertNotNull(path, nameof(path));
-            Argument.AssertNotNull(diff, nameof(diff));
-
             Path = path;
             Diff = diff;
         }
@@ -35,9 +31,9 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> Path of the file to create. </summary>
-        public string Path { get; set; }
+        public string Path { get; }
 
         /// <summary> Diff to apply. </summary>
-        public string Diff { get; set; }
+        public string Diff { get; }
     }
 }

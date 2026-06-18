@@ -8,13 +8,13 @@ using System.Collections.Generic;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> A computer screenshot image used with the computer use tool. </summary>
-    public partial class ComputerScreenshotImage
+    internal partial class ComputerScreenshotImage
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ComputerScreenshotImage"/>. </summary>
-        public ComputerScreenshotImage()
+        internal ComputerScreenshotImage()
         {
         }
 
@@ -38,12 +38,12 @@ namespace Azure.AI.Extensions.OpenAI
         /// Specifies the event type. For a computer screenshot, this property is
         ///   always set to `computer_screenshot`.
         /// </summary>
-        public string Type { get; } = "computer_screenshot";
+        internal string Type { get; } = "computer_screenshot";
 
         /// <summary> The URL of the screenshot image. </summary>
-        public Uri ImageUri { get; set; }
+        public Uri ImageUri { get; }
 
         /// <summary> The identifier of an uploaded file that contains the screenshot. </summary>
-        public string FileId { get; set; }
+        public string FileId { get; }
     }
 }

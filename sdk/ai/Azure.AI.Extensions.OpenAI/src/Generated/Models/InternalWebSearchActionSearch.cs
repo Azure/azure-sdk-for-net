@@ -14,7 +14,7 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary> Initializes a new instance of <see cref="InternalWebSearchActionSearch"/>. </summary>
         /// <param name="query"> [DEPRECATED] The search query. </param>
-        public InternalWebSearchActionSearch(string query)
+        internal InternalWebSearchActionSearch(string query)
         {
             Query = query;
             Queries = new ChangeTrackingList<string>();
@@ -37,10 +37,10 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> The action type. </summary>
-        public string Type { get; } = "search";
+        internal string Type { get; } = "search";
 
         /// <summary> [DEPRECATED] The search query. </summary>
-        public string Query { get; set; }
+        public string Query { get; }
 
         /// <summary> The search queries. </summary>
         public IList<string> Queries { get; }

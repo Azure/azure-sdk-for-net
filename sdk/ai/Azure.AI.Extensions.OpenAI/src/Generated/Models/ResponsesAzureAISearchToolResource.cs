@@ -19,11 +19,8 @@ namespace Azure.AI.Extensions.OpenAI
         /// The indices attached to this agent. There can be a maximum of 1 index
         /// resource attached to the agent.
         /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="indexes"/> is null. </exception>
-        public ResponsesAzureAISearchToolResource(IEnumerable<ResponsesAISearchIndexResource> indexes)
+        internal ResponsesAzureAISearchToolResource(IEnumerable<ResponsesAISearchIndexResource> indexes)
         {
-            Argument.AssertNotNull(indexes, nameof(indexes));
-
             Indexes = indexes.ToList();
         }
 

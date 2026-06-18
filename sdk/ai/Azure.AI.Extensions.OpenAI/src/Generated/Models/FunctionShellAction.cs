@@ -18,11 +18,8 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="commands"></param>
         /// <param name="timeoutMs"></param>
         /// <param name="maxOutputLength"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="commands"/> is null. </exception>
-        public FunctionShellAction(IEnumerable<string> commands, long? timeoutMs, long? maxOutputLength)
+        internal FunctionShellAction(IEnumerable<string> commands, long? timeoutMs, long? maxOutputLength)
         {
-            Argument.AssertNotNull(commands, nameof(commands));
-
             Commands = commands.ToList();
             TimeoutMs = timeoutMs;
             MaxOutputLength = maxOutputLength;
@@ -44,10 +41,10 @@ namespace Azure.AI.Extensions.OpenAI
         /// <summary> Gets the Commands. </summary>
         public IList<string> Commands { get; }
 
-        /// <summary> Gets or sets the TimeoutMs. </summary>
-        public long? TimeoutMs { get; set; }
+        /// <summary> Gets the TimeoutMs. </summary>
+        public long? TimeoutMs { get; }
 
-        /// <summary> Gets or sets the MaxOutputLength. </summary>
-        public long? MaxOutputLength { get; set; }
+        /// <summary> Gets the MaxOutputLength. </summary>
+        public long? MaxOutputLength { get; }
     }
 }

@@ -14,7 +14,7 @@ namespace Azure.AI.Extensions.OpenAI
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MCPListToolsToolInputSchema"/>. </summary>
-        public MCPListToolsToolInputSchema()
+        internal MCPListToolsToolInputSchema()
         {
         }
 

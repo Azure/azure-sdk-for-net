@@ -14,7 +14,7 @@ namespace Azure.AI.Extensions.OpenAI
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ResponsesAISearchIndexResource"/>. </summary>
-        public ResponsesAISearchIndexResource()
+        internal ResponsesAISearchIndexResource()
         {
         }
 
@@ -38,21 +38,21 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> An index connection ID in an IndexResource attached to this agent. </summary>
-        public string ProjectConnectionId { get; set; }
+        public string ProjectConnectionId { get; }
 
         /// <summary> The name of an index in an IndexResource attached to this agent. </summary>
-        public string IndexName { get; set; }
+        public string IndexName { get; }
 
         /// <summary> Type of query in an AIIndexResource attached to this agent. </summary>
-        public ResponsesAzureAISearchQueryType? QueryType { get; set; }
+        public ResponsesAzureAISearchQueryType? QueryType { get; }
 
         /// <summary> Number of documents to retrieve from search and present to the model. </summary>
-        public int? TopK { get; set; }
+        public int? TopK { get; }
 
         /// <summary> filter string for search resource. [Learn more here](https://learn.microsoft.com/azure/search/search-filters). </summary>
-        public string Filter { get; set; }
+        public string Filter { get; }
 
         /// <summary> Index asset id for search resource. </summary>
-        public string IndexAssetId { get; set; }
+        public string IndexAssetId { get; }
     }
 }

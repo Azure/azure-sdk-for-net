@@ -12,7 +12,7 @@ namespace OpenAI
     internal partial class InternalCodeInterpreterTool : ResponsesTool
     {
         /// <summary> Initializes a new instance of <see cref="InternalCodeInterpreterTool"/>. </summary>
-        public InternalCodeInterpreterTool() : base(ToolType.CodeInterpreter)
+        internal InternalCodeInterpreterTool() : base(ToolType.CodeInterpreter)
         {
             ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
         }
@@ -42,10 +42,10 @@ namespace OpenAI
         }
 
         /// <summary> Optional user-defined name for this tool or configuration. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
 
         /// <summary> Optional user-defined description for this tool or configuration. </summary>
-        public string Description { get; set; }
+        public string Description { get; }
 
         /// <summary>
         /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
@@ -96,6 +96,6 @@ namespace OpenAI
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData Container { get; set; }
+        public BinaryData Container { get; }
     }
 }

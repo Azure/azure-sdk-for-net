@@ -12,11 +12,8 @@ namespace Azure.AI.Extensions.OpenAI
     {
         /// <summary> Initializes a new instance of <see cref="ResponsesBingCustomSearchPreviewTool"/>. </summary>
         /// <param name="bingCustomSearchPreview"> The bing custom search tool parameters. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="bingCustomSearchPreview"/> is null. </exception>
-        public ResponsesBingCustomSearchPreviewTool(ResponsesBingCustomSearchToolParameters bingCustomSearchPreview) : base(ToolType.BingCustomSearchPreview)
+        internal ResponsesBingCustomSearchPreviewTool(ResponsesBingCustomSearchToolParameters bingCustomSearchPreview) : base(ToolType.BingCustomSearchPreview)
         {
-            Argument.AssertNotNull(bingCustomSearchPreview, nameof(bingCustomSearchPreview));
-
             ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
             BingCustomSearchPreview = bingCustomSearchPreview;
         }
@@ -41,10 +38,10 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> Optional user-defined name for this tool or configuration. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
 
         /// <summary> Optional user-defined description for this tool or configuration. </summary>
-        public string Description { get; set; }
+        public string Description { get; }
 
         /// <summary>
         /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
@@ -54,6 +51,6 @@ namespace Azure.AI.Extensions.OpenAI
         public IDictionary<string, ToolConfig> ToolConfigs { get; }
 
         /// <summary> The bing custom search tool parameters. </summary>
-        public ResponsesBingCustomSearchToolParameters BingCustomSearchPreview { get; set; }
+        public ResponsesBingCustomSearchToolParameters BingCustomSearchPreview { get; }
     }
 }

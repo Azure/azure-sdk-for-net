@@ -15,11 +15,8 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary> Initializes a new instance of <see cref="ResponsesInlineSkillSourceParam"/>. </summary>
         /// <param name="data"> Base64-encoded skill zip bundle. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public ResponsesInlineSkillSourceParam(string data)
+        internal ResponsesInlineSkillSourceParam(string data)
         {
-            Argument.AssertNotNull(data, nameof(data));
-
             Data = data;
         }
 
@@ -37,12 +34,12 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> The type of the inline skill source. Must be `base64`. </summary>
-        public string Type { get; } = "base64";
+        internal string Type { get; } = "base64";
 
         /// <summary> The media type of the inline skill payload. Must be `application/zip`. </summary>
-        public string MediaType { get; } = "application/zip";
+        internal string MediaType { get; } = "application/zip";
 
         /// <summary> Base64-encoded skill zip bundle. </summary>
-        public string Data { get; set; }
+        public string Data { get; }
     }
 }

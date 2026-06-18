@@ -14,7 +14,7 @@ namespace Azure.AI.Extensions.OpenAI
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WebSearchToolFilters"/>. </summary>
-        public WebSearchToolFilters()
+        internal WebSearchToolFilters()
         {
             AllowedDomains = new ChangeTrackingList<string>();
         }
@@ -28,7 +28,7 @@ namespace Azure.AI.Extensions.OpenAI
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets or sets the AllowedDomains. </summary>
-        public IList<string> AllowedDomains { get; set; }
+        /// <summary> Gets the AllowedDomains. </summary>
+        public IList<string> AllowedDomains { get; }
     }
 }

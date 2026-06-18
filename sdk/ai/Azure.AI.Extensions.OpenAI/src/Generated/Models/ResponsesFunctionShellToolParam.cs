@@ -11,7 +11,7 @@ namespace Azure.AI.Extensions.OpenAI
     public partial class ResponsesFunctionShellToolParam : ResponsesTool
     {
         /// <summary> Initializes a new instance of <see cref="ResponsesFunctionShellToolParam"/>. </summary>
-        public ResponsesFunctionShellToolParam() : base(ToolType.Shell)
+        internal ResponsesFunctionShellToolParam() : base(ToolType.Shell)
         {
             ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
         }
@@ -35,14 +35,14 @@ namespace Azure.AI.Extensions.OpenAI
             ToolConfigs = toolConfigs;
         }
 
-        /// <summary> Gets or sets the Environment. </summary>
-        public ResponsesFunctionShellToolParamEnvironment Environment { get; set; }
+        /// <summary> Gets the Environment. </summary>
+        public ResponsesFunctionShellToolParamEnvironment Environment { get; }
 
         /// <summary> Optional user-defined name for this tool or configuration. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
 
         /// <summary> Optional user-defined description for this tool or configuration. </summary>
-        public string Description { get; set; }
+        public string Description { get; }
 
         /// <summary>
         /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).

@@ -11,7 +11,7 @@ namespace Azure.AI.Extensions.OpenAI
     public partial class ResponsesLocalShellToolParam : ResponsesTool
     {
         /// <summary> Initializes a new instance of <see cref="ResponsesLocalShellToolParam"/>. </summary>
-        public ResponsesLocalShellToolParam() : base(ToolType.LocalShell)
+        internal ResponsesLocalShellToolParam() : base(ToolType.LocalShell)
         {
             ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
         }
@@ -34,10 +34,10 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> Optional user-defined name for this tool or configuration. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
 
         /// <summary> Optional user-defined description for this tool or configuration. </summary>
-        public string Description { get; set; }
+        public string Description { get; }
 
         /// <summary>
         /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).

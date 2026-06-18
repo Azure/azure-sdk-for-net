@@ -11,7 +11,7 @@ namespace Azure.AI.Extensions.OpenAI
     public partial class ResponsesA2APreviewTool : ResponsesTool
     {
         /// <summary> Initializes a new instance of <see cref="ResponsesA2APreviewTool"/>. </summary>
-        public ResponsesA2APreviewTool() : base(ToolType.A2aPreview)
+        internal ResponsesA2APreviewTool() : base(ToolType.A2aPreview)
         {
             ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
         }
@@ -46,10 +46,10 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> Optional user-defined name for this tool or configuration. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
 
         /// <summary> Optional user-defined description for this tool or configuration. </summary>
-        public string Description { get; set; }
+        public string Description { get; }
 
         /// <summary>
         /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
@@ -59,18 +59,18 @@ namespace Azure.AI.Extensions.OpenAI
         public IDictionary<string, ToolConfig> ToolConfigs { get; }
 
         /// <summary> Base URL of the agent. </summary>
-        public Uri BaseUrl { get; set; }
+        public Uri BaseUrl { get; }
 
         /// <summary>
         /// The path to the agent card relative to the `base_url`.
         /// If not provided, defaults to  `/.well-known/agent-card.json`
         /// </summary>
-        public string AgentCardPath { get; set; }
+        public string AgentCardPath { get; }
 
         /// <summary>
         /// The connection ID in the project for the A2A server.
         /// The connection stores authentication and other connection details needed to connect to the A2A server.
         /// </summary>
-        public string ProjectConnectionId { get; set; }
+        public string ProjectConnectionId { get; }
     }
 }

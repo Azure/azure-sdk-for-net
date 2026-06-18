@@ -16,7 +16,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <summary> Initializes a new instance of <see cref="HybridSearchOptions"/>. </summary>
         /// <param name="embeddingWeight"> The weight of the embedding in the reciprocal ranking fusion. </param>
         /// <param name="textWeight"> The weight of the text in the reciprocal ranking fusion. </param>
-        public HybridSearchOptions(double embeddingWeight, double textWeight)
+        internal HybridSearchOptions(double embeddingWeight, double textWeight)
         {
             EmbeddingWeight = embeddingWeight;
             TextWeight = textWeight;
@@ -34,9 +34,9 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> The weight of the embedding in the reciprocal ranking fusion. </summary>
-        public double EmbeddingWeight { get; set; }
+        public double EmbeddingWeight { get; }
 
         /// <summary> The weight of the text in the reciprocal ranking fusion. </summary>
-        public double TextWeight { get; set; }
+        public double TextWeight { get; }
     }
 }

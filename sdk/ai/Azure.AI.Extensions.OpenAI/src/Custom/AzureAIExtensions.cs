@@ -26,10 +26,10 @@ public static partial class AzureAIExtensions
     /// <summary> Converts an OpenAI response item into an agent response item. </summary>
     /// <param name="responseItem"> The OpenAI response item to convert. </param>
     /// <returns> The agent response item representation. </returns>
-    public static AgentResponseItem AsAgentResponseItem(this ResponseItem responseItem)
+    public static ResponseItem AsAgentResponseItem(this ResponseItem responseItem)
     {
         BinaryData serializedResponseItem = ModelReaderWriter.Write(responseItem, ModelSerializationExtensions.WireOptions, AzureAIExtensionsOpenAIContext.Default);
-        return ModelReaderWriter.Read<AgentResponseItem>(serializedResponseItem, ModelSerializationExtensions.WireOptions, AzureAIExtensionsOpenAIContext.Default);
+        return ModelReaderWriter.Read<ResponseItem>(serializedResponseItem, ModelSerializationExtensions.WireOptions, AzureAIExtensionsOpenAIContext.Default);
     }
 
     // ResponseResult

@@ -14,7 +14,7 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary> Initializes a new instance of <see cref="InternalCodeInterpreterOutputImage"/>. </summary>
         /// <param name="url"> The URL of the image output from the code interpreter. </param>
-        public InternalCodeInterpreterOutputImage(Uri url)
+        internal InternalCodeInterpreterOutputImage(Uri url)
         {
             Url = url;
         }
@@ -31,9 +31,9 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> The type of the output. Always `image`. </summary>
-        public string Type { get; } = "image";
+        internal string Type { get; } = "image";
 
         /// <summary> The URL of the image output from the code interpreter. </summary>
-        public Uri Url { get; set; }
+        public Uri Url { get; }
     }
 }

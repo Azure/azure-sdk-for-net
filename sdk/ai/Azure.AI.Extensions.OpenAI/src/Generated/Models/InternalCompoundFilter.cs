@@ -17,7 +17,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <summary> Initializes a new instance of <see cref="InternalCompoundFilter"/>. </summary>
         /// <param name="type"> Type of operation: `and` or `or`. </param>
         /// <param name="filters"> Array of filters to combine. Items can be `ComparisonFilter` or `CompoundFilter`. </param>
-        public InternalCompoundFilter(FileSearchToolFiltersType1 @type, IEnumerable<BinaryData> filters)
+        internal InternalCompoundFilter(FileSearchToolFiltersType1 @type, IEnumerable<BinaryData> filters)
         {
             Type = @type;
             Filters = filters.ToList();
@@ -35,7 +35,7 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> Type of operation: `and` or `or`. </summary>
-        public FileSearchToolFiltersType1 Type { get; set; }
+        public FileSearchToolFiltersType1 Type { get; }
 
         /// <summary>
         /// Array of filters to combine. Items can be `ComparisonFilter` or `CompoundFilter`.

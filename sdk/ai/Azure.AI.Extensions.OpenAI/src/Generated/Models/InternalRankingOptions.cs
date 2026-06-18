@@ -14,7 +14,7 @@ namespace OpenAI
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="InternalRankingOptions"/>. </summary>
-        public InternalRankingOptions()
+        internal InternalRankingOptions()
         {
         }
 
@@ -32,12 +32,12 @@ namespace OpenAI
         }
 
         /// <summary> The ranker to use for the file search. </summary>
-        public RankerVersionType? Ranker { get; set; }
+        public RankerVersionType? Ranker { get; }
 
         /// <summary> The score threshold for the file search, a number between 0 and 1. Numbers closer to 1 will attempt to return only the most relevant results, but may return fewer results. </summary>
-        public double? ScoreThreshold { get; set; }
+        public double? ScoreThreshold { get; }
 
         /// <summary> Weights that control how reciprocal rank fusion balances semantic embedding matches versus sparse keyword matches when hybrid search is enabled. </summary>
-        public HybridSearchOptions HybridSearch { get; set; }
+        public HybridSearchOptions HybridSearch { get; }
     }
 }

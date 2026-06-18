@@ -11,7 +11,7 @@ namespace OpenAI
     internal partial class InternalWebSearchPreviewTool : ResponsesTool
     {
         /// <summary> Initializes a new instance of <see cref="InternalWebSearchPreviewTool"/>. </summary>
-        public InternalWebSearchPreviewTool() : base(ToolType.WebSearchPreview)
+        internal InternalWebSearchPreviewTool() : base(ToolType.WebSearchPreview)
         {
             SearchContentTypes = new ChangeTrackingList<SearchContentType>();
         }
@@ -29,11 +29,11 @@ namespace OpenAI
             SearchContentTypes = searchContentTypes;
         }
 
-        /// <summary> Gets or sets the UserLocation. </summary>
-        public InternalApproximateLocation UserLocation { get; set; }
+        /// <summary> Gets the UserLocation. </summary>
+        public InternalApproximateLocation UserLocation { get; }
 
         /// <summary> High level guidance for the amount of context window space to use for the search. One of `low`, `medium`, or `high`. `medium` is the default. </summary>
-        public SearchContextSize? SearchContextSize { get; set; }
+        public SearchContextSize? SearchContextSize { get; }
 
         /// <summary> Gets the SearchContentTypes. </summary>
         public IList<SearchContentType> SearchContentTypes { get; }

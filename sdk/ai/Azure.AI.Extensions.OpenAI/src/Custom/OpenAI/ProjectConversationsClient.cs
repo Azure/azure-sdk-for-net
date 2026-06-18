@@ -179,9 +179,9 @@ public partial class ProjectConversationsClient : ConversationClient
     /// <param name="include"> The additional item properties to include in the response. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <returns> The project conversation items. </returns>
-    public virtual CollectionResult<AgentResponseItem> GetProjectConversationItems(
+    public virtual CollectionResult<ResponseItem> GetProjectConversationItems(
         string conversationId,
-        AgentResponseItemKind? itemKind = null,
+        ResponseItemKind? itemKind = null,
         int? limit = null,
         string order = null,
         string after = null,
@@ -189,7 +189,7 @@ public partial class ProjectConversationsClient : ConversationClient
         IEnumerable<IncludedConversationItemProperty> include = null,
         CancellationToken cancellationToken = default)
     {
-        return new InternalOpenAICollectionResultOfT<AgentResponseItem>(
+        return new InternalOpenAICollectionResultOfT<ResponseItem>(
             Pipeline,
             messageGenerator: (localCollectionOptions, localRequestOptions)
                 => CreateGetProjectConversationItemsRequest(
@@ -201,7 +201,7 @@ public partial class ProjectConversationsClient : ConversationClient
                     localCollectionOptions.BeforeId,
                     localCollectionOptions.Includes.Select(rawInclude => new IncludedConversationItemProperty(rawInclude)),
                     localRequestOptions),
-            dataItemDeserializer: AgentResponseItem.DeserializeAgentResponseItem,
+            dataItemDeserializer: ResponseItem.DeserializeResponseItem,
             new InternalOpenAICollectionResultOptions(limit, order, after, before: before, filters: [itemKind?.ToString()], includes: include?.Select(includeProperty => includeProperty.ToString()) ?? []),
             cancellationToken.ToRequestOptions());
     }
@@ -216,9 +216,9 @@ public partial class ProjectConversationsClient : ConversationClient
     /// <param name="include"> The additional item properties to include in the response. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <returns> The project conversation items. </returns>
-    public virtual AsyncCollectionResult<AgentResponseItem> GetProjectConversationItemsAsync(
+    public virtual AsyncCollectionResult<ResponseItem> GetProjectConversationItemsAsync(
         string conversationId,
-        AgentResponseItemKind? itemKind = null,
+        ResponseItemKind? itemKind = null,
         int? limit = null,
         string order = null,
         string after = null,
@@ -226,7 +226,7 @@ public partial class ProjectConversationsClient : ConversationClient
         IEnumerable<IncludedConversationItemProperty> include = null,
         CancellationToken cancellationToken = default)
     {
-        return new InternalOpenAIAsyncCollectionResultOfT<AgentResponseItem>(
+        return new InternalOpenAIAsyncCollectionResultOfT<ResponseItem>(
             Pipeline,
             messageGenerator: (localCollectionOptions, localRequestOptions)
                 => CreateGetProjectConversationItemsRequest(
@@ -238,7 +238,7 @@ public partial class ProjectConversationsClient : ConversationClient
                     localCollectionOptions.BeforeId,
                     localCollectionOptions.Includes.Select(rawInclude => new IncludedConversationItemProperty(rawInclude)),
                     localRequestOptions),
-            dataItemDeserializer: AgentResponseItem.DeserializeAgentResponseItem,
+            dataItemDeserializer: ResponseItem.DeserializeResponseItem,
             new InternalOpenAICollectionResultOptions(limit, order, after, before: before, filters: [itemKind?.ToString()], includes: include?.Select(includeProperty => includeProperty.ToString()) ?? []),
             cancellationToken.ToRequestOptions());
     }
@@ -249,10 +249,10 @@ public partial class ProjectConversationsClient : ConversationClient
     /// <param name="include"> The additional item properties to include in the response. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <returns> The requested project conversation item. </returns>
-    public virtual ClientResult<AgentResponseItem> GetProjectConversationItem(string conversationId, string itemId, IEnumerable<IncludedConversationItemProperty> include = null, CancellationToken cancellationToken = default)
+    public virtual ClientResult<ResponseItem> GetProjectConversationItem(string conversationId, string itemId, IEnumerable<IncludedConversationItemProperty> include = null, CancellationToken cancellationToken = default)
     {
         ClientResult protocolResult = GetConversationItem(conversationId, itemId, include, cancellationToken.ToRequestOptions());
-        return protocolResult.ToAgentClientResult<AgentResponseItem>();
+        return protocolResult.ToAgentClientResult<ResponseItem>();
     }
 
     /// <summary> Asynchronously gets a single item from a project conversation. </summary>
@@ -261,10 +261,10 @@ public partial class ProjectConversationsClient : ConversationClient
     /// <param name="include"> The additional item properties to include in the response. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <returns> The requested project conversation item. </returns>
-    public virtual async Task<ClientResult<AgentResponseItem>> GetProjectConversationItemAsync(string conversationId, string itemId, IEnumerable<IncludedConversationItemProperty> include = null, CancellationToken cancellationToken = default)
+    public virtual async Task<ClientResult<ResponseItem>> GetProjectConversationItemAsync(string conversationId, string itemId, IEnumerable<IncludedConversationItemProperty> include = null, CancellationToken cancellationToken = default)
     {
         ClientResult protocolResult = await GetConversationItemAsync(conversationId, itemId, include, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-        return protocolResult.ToAgentClientResult<AgentResponseItem>();
+        return protocolResult.ToAgentClientResult<ResponseItem>();
     }
 
     /// <summary> Creates items in a conversation with the given ID. </summary>
@@ -288,7 +288,7 @@ public partial class ProjectConversationsClient : ConversationClient
         return ClientResult.FromValue(new ReadOnlyCollection<ResponseItem>(
             InternalOpenAIPaginatedListResultOfT<ResponseItem>.DeserializeInternalOpenAIPaginatedListResultOfT(
                 protocolResult,
-                (element, options) => AgentResponseItem.DeserializeAgentResponseItem(element, options).AsResponseResultItem(),
+                (element, options) => ResponseItem.DeserializeResponseItem(element, options),
                 ModelSerializationExtensions.WireOptions)),
             protocolResult.GetRawResponse());
     }
@@ -314,7 +314,7 @@ public partial class ProjectConversationsClient : ConversationClient
         return ClientResult.FromValue(new ReadOnlyCollection<ResponseItem>(
             InternalOpenAIPaginatedListResultOfT<ResponseItem>.DeserializeInternalOpenAIPaginatedListResultOfT(
                 protocolResult,
-                (element, options) => AgentResponseItem.DeserializeAgentResponseItem(element, options).AsResponseResultItem(),
+                (element, options) => ResponseItem.DeserializeResponseItem(element, options),
                 ModelSerializationExtensions.WireOptions)),
             protocolResult.GetRawResponse());
     }

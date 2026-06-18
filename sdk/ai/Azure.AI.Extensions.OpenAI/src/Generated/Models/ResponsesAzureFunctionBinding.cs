@@ -15,11 +15,8 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary> Initializes a new instance of <see cref="ResponsesAzureFunctionBinding"/>. </summary>
         /// <param name="storageQueue"> Storage queue. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="storageQueue"/> is null. </exception>
-        public ResponsesAzureFunctionBinding(ResponsesAzureFunctionStorageQueue storageQueue)
+        internal ResponsesAzureFunctionBinding(ResponsesAzureFunctionStorageQueue storageQueue)
         {
-            Argument.AssertNotNull(storageQueue, nameof(storageQueue));
-
             StorageQueue = storageQueue;
         }
 
@@ -35,9 +32,9 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> The type of binding, which is always 'storage_queue'. </summary>
-        public string Kind { get; } = "storage_queue";
+        internal string Kind { get; } = "storage_queue";
 
         /// <summary> Storage queue. </summary>
-        public ResponsesAzureFunctionStorageQueue StorageQueue { get; set; }
+        public ResponsesAzureFunctionStorageQueue StorageQueue { get; }
     }
 }

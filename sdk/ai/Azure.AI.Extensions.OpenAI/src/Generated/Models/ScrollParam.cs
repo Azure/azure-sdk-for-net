@@ -16,7 +16,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="y"> The y-coordinate where the scroll occurred. </param>
         /// <param name="scrollX"> The horizontal scroll distance. </param>
         /// <param name="scrollY"> The vertical scroll distance. </param>
-        public ScrollParam(long x, long y, long scrollX, long scrollY) : base(ComputerActionType.Scroll)
+        internal ScrollParam(long x, long y, long scrollX, long scrollY) : base(ComputerActionType.Scroll)
         {
             X = x;
             Y = y;
@@ -43,18 +43,18 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> The x-coordinate where the scroll occurred. </summary>
-        public long X { get; set; }
+        public long X { get; }
 
         /// <summary> The y-coordinate where the scroll occurred. </summary>
-        public long Y { get; set; }
+        public long Y { get; }
 
         /// <summary> The horizontal scroll distance. </summary>
-        public long ScrollX { get; set; }
+        public long ScrollX { get; }
 
         /// <summary> The vertical scroll distance. </summary>
-        public long ScrollY { get; set; }
+        public long ScrollY { get; }
 
-        /// <summary> Gets or sets the Keys. </summary>
-        public IList<string> Keys { get; set; }
+        /// <summary> Gets the Keys. </summary>
+        public IList<string> Keys { get; }
     }
 }

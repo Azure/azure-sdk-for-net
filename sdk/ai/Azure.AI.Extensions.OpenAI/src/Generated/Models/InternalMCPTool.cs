@@ -13,7 +13,7 @@ namespace OpenAI
     {
         /// <summary> Initializes a new instance of <see cref="InternalMCPTool"/>. </summary>
         /// <param name="serverLabel"> A label for this MCP server, used to identify it in tool calls. </param>
-        public InternalMCPTool(string serverLabel) : base(ToolType.Mcp)
+        internal InternalMCPTool(string serverLabel) : base(ToolType.Mcp)
         {
             ServerLabel = serverLabel;
             Headers = new ChangeTrackingDictionary<string, string>();
@@ -67,13 +67,13 @@ namespace OpenAI
         }
 
         /// <summary> A label for this MCP server, used to identify it in tool calls. </summary>
-        public string ServerLabel { get; set; }
+        public string ServerLabel { get; }
 
         /// <summary>
         /// The URL for the MCP server. One of `server_url` or `connector_id` must be
         ///   provided.
         /// </summary>
-        public Uri ServerUrl { get; set; }
+        public Uri ServerUrl { get; }
 
         /// <summary>
         /// Identifier for service connectors, like those available in ChatGPT. One of
@@ -82,23 +82,23 @@ namespace OpenAI
         ///   Currently supported `connector_id` values are:
         /// <list type="bullet"><item><description>Dropbox: `connector_dropbox`</description></item><item><description>Gmail: `connector_gmail`</description></item><item><description>Google Calendar: `connector_googlecalendar`</description></item><item><description>Google Drive: `connector_googledrive`</description></item><item><description>Microsoft Teams: `connector_microsoftteams`</description></item><item><description>Outlook Calendar: `connector_outlookcalendar`</description></item><item><description>Outlook Email: `connector_outlookemail`</description></item><item><description>SharePoint: `connector_sharepoint`</description></item></list>
         /// </summary>
-        public MCPToolConnectorId? ConnectorId { get; set; }
+        public MCPToolConnectorId? ConnectorId { get; }
 
         /// <summary>
         /// An OAuth access token that can be used with a remote MCP server, either
         ///   with a custom MCP server URL or a service connector. Your application
         ///   must handle the OAuth authorization flow and provide the token here.
         /// </summary>
-        public string Authorization { get; set; }
+        public string Authorization { get; }
 
         /// <summary> Optional description of the MCP server, used to provide more context. </summary>
-        public string ServerDescription { get; set; }
+        public string ServerDescription { get; }
 
-        /// <summary> Gets or sets the Headers. </summary>
-        public IDictionary<string, string> Headers { get; set; }
+        /// <summary> Gets the Headers. </summary>
+        public IDictionary<string, string> Headers { get; }
 
         /// <summary>
-        /// Gets or sets the AllowedTools.
+        /// Gets the AllowedTools.
         /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
         /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>
@@ -136,10 +136,10 @@ namespace OpenAI
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData AllowedTools { get; set; }
+        public BinaryData AllowedTools { get; }
 
         /// <summary>
-        /// Gets or sets the RequireApproval.
+        /// Gets the RequireApproval.
         /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
         /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>
@@ -180,13 +180,13 @@ namespace OpenAI
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData RequireApproval { get; set; }
+        public BinaryData RequireApproval { get; }
 
         /// <summary> Whether this MCP tool is deferred and discovered via tool search. </summary>
-        public bool? DeferLoading { get; set; }
+        public bool? DeferLoading { get; }
 
         /// <summary> The connection ID in the project for the MCP server. The connection stores authentication and other connection details needed to connect to the MCP server. </summary>
-        public string ProjectConnectionId { get; set; }
+        public string ProjectConnectionId { get; }
 
         /// <summary>
         /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).

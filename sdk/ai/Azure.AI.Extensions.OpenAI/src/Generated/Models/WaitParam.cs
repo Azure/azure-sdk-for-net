@@ -12,7 +12,7 @@ namespace Azure.AI.Extensions.OpenAI
     internal partial class WaitParam : InternalComputerAction
     {
         /// <summary> Initializes a new instance of <see cref="WaitParam"/>. </summary>
-        public WaitParam() : base(ComputerActionType.Wait)
+        internal WaitParam() : base(ComputerActionType.Wait)
         {
         }
 

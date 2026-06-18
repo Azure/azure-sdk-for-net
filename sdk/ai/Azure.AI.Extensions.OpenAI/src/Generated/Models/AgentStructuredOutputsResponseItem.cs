@@ -5,22 +5,26 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The AgentStructuredOutputsResponseItem. </summary>
-    public partial class AgentStructuredOutputsResponseItem : AgentResponseItem
+    public partial class AgentStructuredOutputsResponseItem : ResponseItem
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="AgentStructuredOutputsResponseItem"/>. </summary>
-        /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="agentReference"> The agent that created the item. </param>
         /// <param name="responseId"> The response on which the item is created. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="output"> The structured output captured during the response. </param>
-        internal AgentStructuredOutputsResponseItem(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, BinaryData output) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AgentStructuredOutputsResponseItem(string id, AgentReference agentReference, string responseId, BinaryData output, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, agentReference, responseId)
         {
             Output = output;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary>
@@ -49,6 +53,6 @@ namespace Azure.AI.Extensions.OpenAI
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData Output { get; set; }
+        public BinaryData Output { get; }
     }
 }

@@ -16,12 +16,8 @@ namespace Azure.AI.Extensions.OpenAI
         /// <summary> Initializes a new instance of <see cref="ResponsesAzureFunctionStorageQueue"/>. </summary>
         /// <param name="queueServiceEndpoint"> URI to the Azure Storage Queue service allowing you to manipulate a queue. </param>
         /// <param name="queueName"> The name of an Azure function storage queue. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="queueServiceEndpoint"/> or <paramref name="queueName"/> is null. </exception>
-        public ResponsesAzureFunctionStorageQueue(string queueServiceEndpoint, string queueName)
+        internal ResponsesAzureFunctionStorageQueue(string queueServiceEndpoint, string queueName)
         {
-            Argument.AssertNotNull(queueServiceEndpoint, nameof(queueServiceEndpoint));
-            Argument.AssertNotNull(queueName, nameof(queueName));
-
             QueueServiceEndpoint = queueServiceEndpoint;
             QueueName = queueName;
         }
@@ -38,9 +34,9 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> URI to the Azure Storage Queue service allowing you to manipulate a queue. </summary>
-        public string QueueServiceEndpoint { get; set; }
+        public string QueueServiceEndpoint { get; }
 
         /// <summary> The name of an Azure function storage queue. </summary>
-        public string QueueName { get; set; }
+        public string QueueName { get; }
     }
 }

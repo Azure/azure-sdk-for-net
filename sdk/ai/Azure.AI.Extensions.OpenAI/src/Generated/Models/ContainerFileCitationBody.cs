@@ -17,13 +17,8 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="startIndex"> The index of the first character of the container file citation in the message. </param>
         /// <param name="endIndex"> The index of the last character of the container file citation in the message. </param>
         /// <param name="filename"> The filename of the container file cited. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerId"/>, <paramref name="fileId"/> or <paramref name="filename"/> is null. </exception>
-        public ContainerFileCitationBody(string containerId, string fileId, long startIndex, long endIndex, string filename) : base(AnnotationType.ContainerFileCitation)
+        internal ContainerFileCitationBody(string containerId, string fileId, long startIndex, long endIndex, string filename) : base(AnnotationType.ContainerFileCitation)
         {
-            Argument.AssertNotNull(containerId, nameof(containerId));
-            Argument.AssertNotNull(fileId, nameof(fileId));
-            Argument.AssertNotNull(filename, nameof(filename));
-
             ContainerId = containerId;
             FileId = fileId;
             StartIndex = startIndex;
@@ -49,18 +44,18 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> The ID of the container file. </summary>
-        public string ContainerId { get; set; }
+        public string ContainerId { get; }
 
         /// <summary> The ID of the file. </summary>
-        public string FileId { get; set; }
+        public string FileId { get; }
 
         /// <summary> The index of the first character of the container file citation in the message. </summary>
-        public long StartIndex { get; set; }
+        public long StartIndex { get; }
 
         /// <summary> The index of the last character of the container file citation in the message. </summary>
-        public long EndIndex { get; set; }
+        public long EndIndex { get; }
 
         /// <summary> The filename of the container file cited. </summary>
-        public string Filename { get; set; }
+        public string Filename { get; }
     }
 }

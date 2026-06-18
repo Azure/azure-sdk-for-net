@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using Azure.AI.Extensions.OpenAI;
+using OpenAI.Responses;
 
 namespace OpenAI
 {
@@ -32,7 +33,7 @@ namespace OpenAI
         /// <param name="instructions"></param>
         /// <param name="parallelToolCalls"> Whether to allow the model to run tool calls in parallel. </param>
         /// <param name="agentReference"> The agent used for this response. </param>
-        internal InternalAgentResponse(string id, DateTimeOffset createdAt, InternalAgentResponseError error, ResponseIncompleteDetails incompleteDetails, IEnumerable<AgentResponseItem> output, BinaryData instructions, bool parallelToolCalls, AgentReference agentReference)
+        internal InternalAgentResponse(string id, DateTimeOffset createdAt, InternalAgentResponseError error, ResponseIncompleteDetails incompleteDetails, IEnumerable<ResponseItem> output, BinaryData instructions, bool parallelToolCalls, AgentReference agentReference)
         {
             Tools = new ChangeTrackingList<ResponsesTool>();
             Id = id;
@@ -101,7 +102,7 @@ namespace OpenAI
         /// <param name="agentReference"> The agent used for this response. </param>
         /// <param name="contentFilters"> The content filter evaluation results. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalAgentResponse(InternalMetadataContainer metadata, long? topLogprobs, double? temperature, double? topP, string user, string safetyIdentifier, string promptCacheKey, ResponseServiceTier? serviceTier, ResponsePromptCacheRetention? promptCacheRetention, string previousResponseId, string model, InternalReasoning reasoning, bool? background, long? maxOutputTokens, long? maxToolCalls, ResponseTextParam text, IList<ResponsesTool> tools, BinaryData toolChoice, Prompt prompt, ResponseTruncation? truncation, string id, string @object, InternalAgentResponseStatus? status, DateTimeOffset createdAt, DateTimeOffset? completedAt, InternalAgentResponseError error, ResponseIncompleteDetails incompleteDetails, IList<AgentResponseItem> output, BinaryData instructions, string outputText, ResponseUsage usage, bool parallelToolCalls, ConversationReference conversation, AgentReference agentReference, IList<ContentFilterResult> contentFilters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InternalAgentResponse(InternalMetadataContainer metadata, long? topLogprobs, double? temperature, double? topP, string user, string safetyIdentifier, string promptCacheKey, Azure.AI.Extensions.OpenAI.ResponseServiceTier? serviceTier, ResponsePromptCacheRetention? promptCacheRetention, string previousResponseId, string model, InternalReasoning reasoning, bool? background, long? maxOutputTokens, long? maxToolCalls, ResponseTextParam text, IList<ResponsesTool> tools, BinaryData toolChoice, Prompt prompt, ResponseTruncation? truncation, string id, string @object, InternalAgentResponseStatus? status, DateTimeOffset createdAt, DateTimeOffset? completedAt, InternalAgentResponseError error, ResponseIncompleteDetails incompleteDetails, IList<ResponseItem> output, BinaryData instructions, string outputText, ResponseUsage usage, bool parallelToolCalls, ConversationReference conversation, AgentReference agentReference, IList<ContentFilterResult> contentFilters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Metadata = metadata;
             TopLogprobs = topLogprobs;
@@ -170,7 +171,7 @@ namespace OpenAI
         public string PromptCacheKey { get; }
 
         /// <summary> Gets the ServiceTier. </summary>
-        public ResponseServiceTier? ServiceTier { get; }
+        public Azure.AI.Extensions.OpenAI.ResponseServiceTier? ServiceTier { get; }
 
         /// <summary> Gets the PromptCacheRetention. </summary>
         public ResponsePromptCacheRetention? PromptCacheRetention { get; }
@@ -279,7 +280,7 @@ namespace OpenAI
         ///   the model, you might consider using the `output_text` property where
         ///   supported in SDKs.
         /// </summary>
-        public IList<AgentResponseItem> Output { get; }
+        public IList<ResponseItem> Output { get; }
 
         /// <summary>
         /// Gets the Instructions.

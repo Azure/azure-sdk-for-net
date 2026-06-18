@@ -11,7 +11,7 @@ namespace Azure.AI.Extensions.OpenAI
     public partial class ResponsesFunctionShellToolParamEnvironmentLocalEnvironmentParam : ResponsesFunctionShellToolParamEnvironment
     {
         /// <summary> Initializes a new instance of <see cref="ResponsesFunctionShellToolParamEnvironmentLocalEnvironmentParam"/>. </summary>
-        public ResponsesFunctionShellToolParamEnvironmentLocalEnvironmentParam() : base(FunctionShellToolParamEnvironmentType.Local)
+        internal ResponsesFunctionShellToolParamEnvironmentLocalEnvironmentParam() : base(FunctionShellToolParamEnvironmentType.Local)
         {
             Skills = new ChangeTrackingList<LocalSkillParam>();
         }

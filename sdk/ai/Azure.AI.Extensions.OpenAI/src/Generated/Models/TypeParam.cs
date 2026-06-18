@@ -13,11 +13,8 @@ namespace Azure.AI.Extensions.OpenAI
     {
         /// <summary> Initializes a new instance of <see cref="TypeParam"/>. </summary>
         /// <param name="text"> The text to type. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
-        public TypeParam(string text) : base(ComputerActionType.Type)
+        internal TypeParam(string text) : base(ComputerActionType.Type)
         {
-            Argument.AssertNotNull(text, nameof(text));
-
             Text = text;
         }
 
@@ -31,6 +28,6 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> The text to type. </summary>
-        public string Text { get; set; }
+        public string Text { get; }
     }
 }

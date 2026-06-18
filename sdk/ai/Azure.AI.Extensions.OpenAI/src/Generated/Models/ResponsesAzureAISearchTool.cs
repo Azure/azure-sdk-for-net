@@ -12,11 +12,8 @@ namespace Azure.AI.Extensions.OpenAI
     {
         /// <summary> Initializes a new instance of <see cref="ResponsesAzureAISearchTool"/>. </summary>
         /// <param name="azureAISearch"> The azure ai search index resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="azureAISearch"/> is null. </exception>
-        public ResponsesAzureAISearchTool(ResponsesAzureAISearchToolResource azureAISearch) : base(ToolType.AzureAiSearch)
+        internal ResponsesAzureAISearchTool(ResponsesAzureAISearchToolResource azureAISearch) : base(ToolType.AzureAiSearch)
         {
-            Argument.AssertNotNull(azureAISearch, nameof(azureAISearch));
-
             ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
             AzureAISearch = azureAISearch;
         }
@@ -41,10 +38,10 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> Optional user-defined name for this tool or configuration. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
 
         /// <summary> Optional user-defined description for this tool or configuration. </summary>
-        public string Description { get; set; }
+        public string Description { get; }
 
         /// <summary>
         /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
@@ -54,6 +51,6 @@ namespace Azure.AI.Extensions.OpenAI
         public IDictionary<string, ToolConfig> ToolConfigs { get; }
 
         /// <summary> The azure ai search index resource. </summary>
-        public ResponsesAzureAISearchToolResource AzureAISearch { get; set; }
+        public ResponsesAzureAISearchToolResource AzureAISearch { get; }
     }
 }

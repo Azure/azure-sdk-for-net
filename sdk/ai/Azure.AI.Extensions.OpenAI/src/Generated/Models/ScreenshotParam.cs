@@ -12,7 +12,7 @@ namespace Azure.AI.Extensions.OpenAI
     internal partial class ScreenshotParam : InternalComputerAction
     {
         /// <summary> Initializes a new instance of <see cref="ScreenshotParam"/>. </summary>
-        public ScreenshotParam() : base(ComputerActionType.Screenshot)
+        internal ScreenshotParam() : base(ComputerActionType.Screenshot)
         {
         }
 

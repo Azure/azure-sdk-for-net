@@ -15,7 +15,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="text"> The text output from the model. </param>
         /// <param name="annotations"> The annotations of the text output. </param>
         /// <param name="logprobs"></param>
-        public InternalOutputMessageContentOutputTextContent(string text, IEnumerable<InternalAnnotation> annotations, IEnumerable<InternalLogProb> logprobs) : base(OutputMessageContentType.OutputText)
+        internal InternalOutputMessageContentOutputTextContent(string text, IEnumerable<InternalAnnotation> annotations, IEnumerable<InternalLogProb> logprobs) : base(OutputMessageContentType.OutputText)
         {
             Text = text;
             Annotations = annotations.ToList();
@@ -36,7 +36,7 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> The text output from the model. </summary>
-        public string Text { get; set; }
+        public string Text { get; }
 
         /// <summary> The annotations of the text output. </summary>
         public IList<InternalAnnotation> Annotations { get; }

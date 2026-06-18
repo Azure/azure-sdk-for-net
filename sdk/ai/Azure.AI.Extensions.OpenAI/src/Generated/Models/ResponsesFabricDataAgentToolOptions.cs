@@ -14,7 +14,7 @@ namespace Azure.AI.Extensions.OpenAI
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ResponsesFabricDataAgentToolOptions"/>. </summary>
-        public ResponsesFabricDataAgentToolOptions()
+        internal ResponsesFabricDataAgentToolOptions()
         {
             ProjectConnections = new ChangeTrackingList<ResponsesToolProjectConnection>();
         }

@@ -13,7 +13,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="environment"> The type of computer environment to control. </param>
         /// <param name="displayWidth"> The width of the computer display. </param>
         /// <param name="displayHeight"> The height of the computer display. </param>
-        public InternalComputerUsePreviewTool(ComputerEnvironment environment, long displayWidth, long displayHeight) : base(ToolType.ComputerUsePreview)
+        internal InternalComputerUsePreviewTool(ComputerEnvironment environment, long displayWidth, long displayHeight) : base(ToolType.ComputerUsePreview)
         {
             Environment = environment;
             DisplayWidth = displayWidth;
@@ -34,12 +34,12 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> The type of computer environment to control. </summary>
-        public ComputerEnvironment Environment { get; set; }
+        public ComputerEnvironment Environment { get; }
 
         /// <summary> The width of the computer display. </summary>
-        public long DisplayWidth { get; set; }
+        public long DisplayWidth { get; }
 
         /// <summary> The height of the computer display. </summary>
-        public long DisplayHeight { get; set; }
+        public long DisplayHeight { get; }
     }
 }

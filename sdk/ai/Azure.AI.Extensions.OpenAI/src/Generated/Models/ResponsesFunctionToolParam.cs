@@ -15,11 +15,8 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary> Initializes a new instance of <see cref="ResponsesFunctionToolParam"/>. </summary>
         /// <param name="name"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public ResponsesFunctionToolParam(string name)
+        internal ResponsesFunctionToolParam(string name)
         {
-            Argument.AssertNotNull(name, nameof(name));
-
             Name = name;
         }
 
@@ -42,22 +39,22 @@ namespace Azure.AI.Extensions.OpenAI
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets or sets the Name. </summary>
-        public string Name { get; set; }
+        /// <summary> Gets the Name. </summary>
+        public string Name { get; }
 
-        /// <summary> Gets or sets the Description. </summary>
-        public string Description { get; set; }
+        /// <summary> Gets the Description. </summary>
+        public string Description { get; }
 
-        /// <summary> Gets or sets the Parameters. </summary>
-        public ResponsesEmptyModelParam Parameters { get; set; }
+        /// <summary> Gets the Parameters. </summary>
+        public ResponsesEmptyModelParam Parameters { get; }
 
-        /// <summary> Gets or sets the IsStrict. </summary>
-        public bool? IsStrict { get; set; }
+        /// <summary> Gets the IsStrict. </summary>
+        public bool? IsStrict { get; }
 
         /// <summary> Gets the Type. </summary>
-        public string Type { get; } = "function";
+        internal string Type { get; } = "function";
 
         /// <summary> Whether this function should be deferred and discovered via tool search. </summary>
-        public bool? ShouldDeferLoading { get; set; }
+        public bool? ShouldDeferLoading { get; }
     }
 }

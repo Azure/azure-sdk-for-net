@@ -15,7 +15,7 @@ namespace Azure.AI.Extensions.OpenAI
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FileSearchToolCallResults"/>. </summary>
-        public FileSearchToolCallResults()
+        internal FileSearchToolCallResults()
         {
         }
 
@@ -36,19 +36,19 @@ namespace Azure.AI.Extensions.OpenAI
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets or sets the FileId. </summary>
-        public string FileId { get; set; }
+        /// <summary> Gets the FileId. </summary>
+        public string FileId { get; }
 
-        /// <summary> Gets or sets the Text. </summary>
-        public string Text { get; set; }
+        /// <summary> Gets the Text. </summary>
+        public string Text { get; }
 
-        /// <summary> Gets or sets the Filename. </summary>
-        public string Filename { get; set; }
+        /// <summary> Gets the Filename. </summary>
+        public string Filename { get; }
 
-        /// <summary> Gets or sets the Attributes. </summary>
-        public InternalVectorStoreFileAttributes Attributes { get; set; }
+        /// <summary> Gets the Attributes. </summary>
+        public InternalVectorStoreFileAttributes Attributes { get; }
 
-        /// <summary> Gets or sets the Score. </summary>
-        public float? Score { get; set; }
+        /// <summary> Gets the Score. </summary>
+        public float? Score { get; }
     }
 }

@@ -16,13 +16,8 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="name"> The namespace name used in tool calls (for example, `crm`). </param>
         /// <param name="description"> A description of the namespace shown to the model. </param>
         /// <param name="tools"> The function/custom tools available inside this namespace. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="description"/> or <paramref name="tools"/> is null. </exception>
-        public ResponsesNamespaceToolParam(string name, string description, IEnumerable<BinaryData> tools) : base(ToolType.Namespace)
+        internal ResponsesNamespaceToolParam(string name, string description, IEnumerable<BinaryData> tools) : base(ToolType.Namespace)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(description, nameof(description));
-            Argument.AssertNotNull(tools, nameof(tools));
-
             Name = name;
             Description = description;
             Tools = tools.ToList();
@@ -42,10 +37,10 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> The namespace name used in tool calls (for example, `crm`). </summary>
-        public string Name { get; set; }
+        public string Name { get; }
 
         /// <summary> A description of the namespace shown to the model. </summary>
-        public string Description { get; set; }
+        public string Description { get; }
 
         /// <summary>
         /// The function/custom tools available inside this namespace.

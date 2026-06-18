@@ -15,7 +15,7 @@ namespace OpenAI
         /// <param name="name"> The name of the function to call. </param>
         /// <param name="parameters"></param>
         /// <param name="strict"></param>
-        public InternalFunctionTool(string name, IDictionary<string, BinaryData> parameters, bool? strict) : base(ToolType.Function)
+        internal InternalFunctionTool(string name, IDictionary<string, BinaryData> parameters, bool? strict) : base(ToolType.Function)
         {
             Name = name;
             Parameters = parameters;
@@ -40,13 +40,13 @@ namespace OpenAI
         }
 
         /// <summary> The name of the function to call. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
 
-        /// <summary> Gets or sets the Description. </summary>
-        public string Description { get; set; }
+        /// <summary> Gets the Description. </summary>
+        public string Description { get; }
 
         /// <summary>
-        /// Gets or sets the Parameters.
+        /// Gets the Parameters.
         /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
         /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>
@@ -71,12 +71,12 @@ namespace OpenAI
         /// </list>
         /// </para>
         /// </summary>
-        public IDictionary<string, BinaryData> Parameters { get; set; }
+        public IDictionary<string, BinaryData> Parameters { get; }
 
-        /// <summary> Gets or sets the Strict. </summary>
-        public bool? Strict { get; set; }
+        /// <summary> Gets the Strict. </summary>
+        public bool? Strict { get; }
 
         /// <summary> Whether this function is deferred and loaded via tool search. </summary>
-        public bool? DeferLoading { get; set; }
+        public bool? DeferLoading { get; }
     }
 }

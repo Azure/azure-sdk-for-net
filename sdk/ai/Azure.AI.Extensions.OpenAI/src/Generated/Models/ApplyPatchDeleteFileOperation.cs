@@ -12,11 +12,8 @@ namespace Azure.AI.Extensions.OpenAI
     {
         /// <summary> Initializes a new instance of <see cref="ApplyPatchDeleteFileOperation"/>. </summary>
         /// <param name="path"> Path of the file to delete. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="path"/> is null. </exception>
-        public ApplyPatchDeleteFileOperation(string path) : base(ApplyPatchFileOperationType.DeleteFile)
+        internal ApplyPatchDeleteFileOperation(string path) : base(ApplyPatchFileOperationType.DeleteFile)
         {
-            Argument.AssertNotNull(path, nameof(path));
-
             Path = path;
         }
 
@@ -30,6 +27,6 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> Path of the file to delete. </summary>
-        public string Path { get; set; }
+        public string Path { get; }
     }
 }

@@ -14,7 +14,7 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary> Initializes a new instance of <see cref="InternalCodeInterpreterOutputLogs"/>. </summary>
         /// <param name="logs"> The logs output from the code interpreter. </param>
-        public InternalCodeInterpreterOutputLogs(string logs)
+        internal InternalCodeInterpreterOutputLogs(string logs)
         {
             Logs = logs;
         }
@@ -31,9 +31,9 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> The type of the output. Always `logs`. </summary>
-        public string Type { get; } = "logs";
+        internal string Type { get; } = "logs";
 
         /// <summary> The logs output from the code interpreter. </summary>
-        public string Logs { get; set; }
+        public string Logs { get; }
     }
 }

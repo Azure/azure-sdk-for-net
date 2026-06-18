@@ -15,7 +15,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="button"> Indicates which mouse button was pressed during the click. One of `left`, `right`, `wheel`, `back`, or `forward`. </param>
         /// <param name="x"> The x-coordinate where the click occurred. </param>
         /// <param name="y"> The y-coordinate where the click occurred. </param>
-        public ClickParam(ClickButtonType button, long x, long y) : base(ComputerActionType.Click)
+        internal ClickParam(ClickButtonType button, long x, long y) : base(ComputerActionType.Click)
         {
             Button = button;
             X = x;
@@ -39,15 +39,15 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> Indicates which mouse button was pressed during the click. One of `left`, `right`, `wheel`, `back`, or `forward`. </summary>
-        public ClickButtonType Button { get; set; }
+        public ClickButtonType Button { get; }
 
         /// <summary> The x-coordinate where the click occurred. </summary>
-        public long X { get; set; }
+        public long X { get; }
 
         /// <summary> The y-coordinate where the click occurred. </summary>
-        public long Y { get; set; }
+        public long Y { get; }
 
-        /// <summary> Gets or sets the Keys. </summary>
-        public IList<string> Keys { get; set; }
+        /// <summary> Gets the Keys. </summary>
+        public IList<string> Keys { get; }
     }
 }

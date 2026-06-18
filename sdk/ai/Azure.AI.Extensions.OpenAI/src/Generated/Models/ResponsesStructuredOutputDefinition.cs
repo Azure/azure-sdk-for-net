@@ -19,13 +19,8 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="description"> A description of the output to emit. Used by the model to determine when to emit the output. </param>
         /// <param name="schema"> The JSON schema for the structured output. </param>
         /// <param name="isStrict"> Whether to enforce strict validation. Default `true`. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="description"/> or <paramref name="schema"/> is null. </exception>
-        public ResponsesStructuredOutputDefinition(string name, string description, IDictionary<string, BinaryData> schema, bool? isStrict)
+        internal ResponsesStructuredOutputDefinition(string name, string description, IDictionary<string, BinaryData> schema, bool? isStrict)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(description, nameof(description));
-            Argument.AssertNotNull(schema, nameof(schema));
-
             Name = name;
             Description = description;
             Schema = schema;
@@ -48,10 +43,10 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> The name of the structured output. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
 
         /// <summary> A description of the output to emit. Used by the model to determine when to emit the output. </summary>
-        public string Description { get; set; }
+        public string Description { get; }
 
         /// <summary>
         /// The JSON schema for the structured output.
@@ -82,6 +77,6 @@ namespace Azure.AI.Extensions.OpenAI
         public IDictionary<string, BinaryData> Schema { get; }
 
         /// <summary> Whether to enforce strict validation. Default `true`. </summary>
-        public bool? IsStrict { get; set; }
+        public bool? IsStrict { get; }
     }
 }

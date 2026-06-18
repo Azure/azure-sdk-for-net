@@ -15,12 +15,8 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="fileId"> The ID of the file. </param>
         /// <param name="index"> The index of the file in the list of files. </param>
         /// <param name="filename"> The filename of the file cited. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fileId"/> or <paramref name="filename"/> is null. </exception>
-        public FileCitationBody(string fileId, long index, string filename) : base(AnnotationType.FileCitation)
+        internal FileCitationBody(string fileId, long index, string filename) : base(AnnotationType.FileCitation)
         {
-            Argument.AssertNotNull(fileId, nameof(fileId));
-            Argument.AssertNotNull(filename, nameof(filename));
-
             FileId = fileId;
             Index = index;
             Filename = filename;
@@ -40,12 +36,12 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> The ID of the file. </summary>
-        public string FileId { get; set; }
+        public string FileId { get; }
 
         /// <summary> The index of the file in the list of files. </summary>
-        public long Index { get; set; }
+        public long Index { get; }
 
         /// <summary> The filename of the file cited. </summary>
-        public string Filename { get; set; }
+        public string Filename { get; }
     }
 }

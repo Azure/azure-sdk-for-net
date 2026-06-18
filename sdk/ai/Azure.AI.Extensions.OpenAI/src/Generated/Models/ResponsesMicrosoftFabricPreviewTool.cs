@@ -12,11 +12,8 @@ namespace Azure.AI.Extensions.OpenAI
     {
         /// <summary> Initializes a new instance of <see cref="ResponsesMicrosoftFabricPreviewTool"/>. </summary>
         /// <param name="fabricDataagentPreview"> The fabric data agent tool parameters. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fabricDataagentPreview"/> is null. </exception>
-        public ResponsesMicrosoftFabricPreviewTool(ResponsesFabricDataAgentToolOptions fabricDataagentPreview) : base(ToolType.FabricDataagentPreview)
+        internal ResponsesMicrosoftFabricPreviewTool(ResponsesFabricDataAgentToolOptions fabricDataagentPreview) : base(ToolType.FabricDataagentPreview)
         {
-            Argument.AssertNotNull(fabricDataagentPreview, nameof(fabricDataagentPreview));
-
             ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
             FabricDataagentPreview = fabricDataagentPreview;
         }
@@ -41,10 +38,10 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> Optional user-defined name for this tool or configuration. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
 
         /// <summary> Optional user-defined description for this tool or configuration. </summary>
-        public string Description { get; set; }
+        public string Description { get; }
 
         /// <summary>
         /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
@@ -54,6 +51,6 @@ namespace Azure.AI.Extensions.OpenAI
         public IDictionary<string, ToolConfig> ToolConfigs { get; }
 
         /// <summary> The fabric data agent tool parameters. </summary>
-        public ResponsesFabricDataAgentToolOptions FabricDataagentPreview { get; set; }
+        public ResponsesFabricDataAgentToolOptions FabricDataagentPreview { get; }
     }
 }
