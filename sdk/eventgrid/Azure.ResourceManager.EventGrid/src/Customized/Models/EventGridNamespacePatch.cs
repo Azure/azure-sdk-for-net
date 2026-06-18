@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 #nullable disable
-#pragma warning disable CS1591
 
 using System.Collections.Generic;
 using Microsoft.TypeSpec.Generator.Customizations;
@@ -27,6 +26,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
         }
 
+        /// <summary> Gets the custom domains for namespace topics. </summary>
         [WirePath("properties.topicsConfiguration.customDomains")]
         public IList<CustomDomainConfiguration> TopicsCustomDomains
         {

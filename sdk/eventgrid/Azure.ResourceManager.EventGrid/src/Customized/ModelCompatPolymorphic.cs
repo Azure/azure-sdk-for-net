@@ -1,4 +1,3 @@
-#pragma warning disable CS1591
 #pragma warning disable SA1402
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
@@ -28,6 +27,7 @@ namespace Azure.ResourceManager.EventGrid.Models
     {
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
+        /// <summary> Initializes a new instance of the <see cref="AdvancedFilter"/> class. </summary>
         protected AdvancedFilter()
         {
         }
@@ -47,9 +47,14 @@ namespace Azure.ResourceManager.EventGrid.Models
         [WirePath("operatorType")]
         internal AdvancedFilterOperatorType OperatorType { get; set; }
 
+        /// <summary> Gets or sets the key. </summary>
         [WirePath("key")]
         public string Key { get; set; }
 
+        /// <summary> Creates a GA-compatible advanced filter model from a serialized payload. </summary>
+        /// <param name="data"> The serialized model payload. </param>
+        /// <param name="options"> The model reader/writer options. </param>
+        /// <returns> The deserialized GA-compatible advanced filter model. </returns>
         protected virtual AdvancedFilter PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AdvancedFilter>)this).GetFormatFromOptions(options) : options.Format;
@@ -60,6 +65,9 @@ namespace Azure.ResourceManager.EventGrid.Models
             };
         }
 
+        /// <summary> Serializes this GA-compatible advanced filter model. </summary>
+        /// <param name="options"> The model reader/writer options. </param>
+        /// <returns> The serialized model payload. </returns>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AdvancedFilter>)this).GetFormatFromOptions(options) : options.Format;
@@ -81,6 +89,9 @@ namespace Azure.ResourceManager.EventGrid.Models
             writer.WriteEndObject();
         }
 
+        /// <summary> Writes the JSON representation of this GA-compatible advanced filter model. </summary>
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The model reader/writer options. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AdvancedFilter>)this).GetFormatFromOptions(options) : options.Format;
@@ -100,6 +111,10 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         AdvancedFilter IJsonModel<AdvancedFilter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
+        /// <summary> Creates a GA-compatible advanced filter model from its JSON representation. </summary>
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The model reader/writer options. </param>
+        /// <returns> The deserialized GA-compatible advanced filter model. </returns>
         protected virtual AdvancedFilter JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AdvancedFilter>)this).GetFormatFromOptions(options) : options.Format;
@@ -169,6 +184,7 @@ namespace Azure.ResourceManager.EventGrid.Models
     {
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
+        /// <summary> Initializes a new instance of the <see cref="DeadLetterDestination"/> class. </summary>
         protected DeadLetterDestination()
         {
         }
@@ -187,6 +203,10 @@ namespace Azure.ResourceManager.EventGrid.Models
         [WirePath("endpointType")]
         internal DeadLetterEndPointType EndpointType { get; set; }
 
+        /// <summary> Creates a GA-compatible dead-letter destination model from a serialized payload. </summary>
+        /// <param name="data"> The serialized model payload. </param>
+        /// <param name="options"> The model reader/writer options. </param>
+        /// <returns> The deserialized GA-compatible dead-letter destination model. </returns>
         protected virtual DeadLetterDestination PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<DeadLetterDestination>)this).GetFormatFromOptions(options) : options.Format;
@@ -197,6 +217,9 @@ namespace Azure.ResourceManager.EventGrid.Models
             };
         }
 
+        /// <summary> Serializes this GA-compatible dead-letter destination model. </summary>
+        /// <param name="options"> The model reader/writer options. </param>
+        /// <returns> The serialized model payload. </returns>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<DeadLetterDestination>)this).GetFormatFromOptions(options) : options.Format;
@@ -218,6 +241,9 @@ namespace Azure.ResourceManager.EventGrid.Models
             writer.WriteEndObject();
         }
 
+        /// <summary> Writes the JSON representation of this GA-compatible dead-letter destination model. </summary>
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The model reader/writer options. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<DeadLetterDestination>)this).GetFormatFromOptions(options) : options.Format;
@@ -232,6 +258,10 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         DeadLetterDestination IJsonModel<DeadLetterDestination>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
+        /// <summary> Creates a GA-compatible dead-letter destination model from its JSON representation. </summary>
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The model reader/writer options. </param>
+        /// <returns> The deserialized GA-compatible dead-letter destination model. </returns>
         protected virtual DeadLetterDestination JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<DeadLetterDestination>)this).GetFormatFromOptions(options) : options.Format;
@@ -265,6 +295,7 @@ namespace Azure.ResourceManager.EventGrid.Models
     {
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
+        /// <summary> Initializes a new instance of the <see cref="DeliveryAttributeMapping"/> class. </summary>
         protected DeliveryAttributeMapping()
         {
         }
@@ -281,12 +312,17 @@ namespace Azure.ResourceManager.EventGrid.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Gets or sets the name. </summary>
         [WirePath("name")]
         public string Name { get; set; }
 
         [WirePath("type")]
         internal DeliveryAttributeMappingType Type { get; set; }
 
+        /// <summary> Creates a GA-compatible delivery attribute mapping model from a serialized payload. </summary>
+        /// <param name="data"> The serialized model payload. </param>
+        /// <param name="options"> The model reader/writer options. </param>
+        /// <returns> The deserialized GA-compatible delivery attribute mapping model. </returns>
         protected virtual DeliveryAttributeMapping PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<DeliveryAttributeMapping>)this).GetFormatFromOptions(options) : options.Format;
@@ -297,6 +333,9 @@ namespace Azure.ResourceManager.EventGrid.Models
             };
         }
 
+        /// <summary> Serializes this GA-compatible delivery attribute mapping model. </summary>
+        /// <param name="options"> The model reader/writer options. </param>
+        /// <returns> The serialized model payload. </returns>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<DeliveryAttributeMapping>)this).GetFormatFromOptions(options) : options.Format;
@@ -318,6 +357,9 @@ namespace Azure.ResourceManager.EventGrid.Models
             writer.WriteEndObject();
         }
 
+        /// <summary> Writes the JSON representation of this GA-compatible delivery attribute mapping model. </summary>
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The model reader/writer options. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<DeliveryAttributeMapping>)this).GetFormatFromOptions(options) : options.Format;
@@ -337,6 +379,10 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         DeliveryAttributeMapping IJsonModel<DeliveryAttributeMapping>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
+        /// <summary> Creates a GA-compatible delivery attribute mapping model from its JSON representation. </summary>
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The model reader/writer options. </param>
+        /// <returns> The deserialized GA-compatible delivery attribute mapping model. </returns>
         protected virtual DeliveryAttributeMapping JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<DeliveryAttributeMapping>)this).GetFormatFromOptions(options) : options.Format;
@@ -372,6 +418,7 @@ namespace Azure.ResourceManager.EventGrid.Models
     {
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
+        /// <summary> Initializes a new instance of the <see cref="EventGridFilter"/> class. </summary>
         protected EventGridFilter()
         {
         }
@@ -391,9 +438,14 @@ namespace Azure.ResourceManager.EventGrid.Models
         [WirePath("operatorType")]
         internal FilterOperatorType OperatorType { get; set; }
 
+        /// <summary> Gets or sets the key. </summary>
         [WirePath("key")]
         public string Key { get; set; }
 
+        /// <summary> Creates a GA-compatible Event Grid filter model from a serialized payload. </summary>
+        /// <param name="data"> The serialized model payload. </param>
+        /// <param name="options"> The model reader/writer options. </param>
+        /// <returns> The deserialized GA-compatible Event Grid filter model. </returns>
         protected virtual EventGridFilter PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<EventGridFilter>)this).GetFormatFromOptions(options) : options.Format;
@@ -404,6 +456,9 @@ namespace Azure.ResourceManager.EventGrid.Models
             };
         }
 
+        /// <summary> Serializes this GA-compatible Event Grid filter model. </summary>
+        /// <param name="options"> The model reader/writer options. </param>
+        /// <returns> The serialized model payload. </returns>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<EventGridFilter>)this).GetFormatFromOptions(options) : options.Format;
@@ -425,6 +480,9 @@ namespace Azure.ResourceManager.EventGrid.Models
             writer.WriteEndObject();
         }
 
+        /// <summary> Writes the JSON representation of this GA-compatible Event Grid filter model. </summary>
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The model reader/writer options. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<EventGridFilter>)this).GetFormatFromOptions(options) : options.Format;
@@ -444,6 +502,10 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         EventGridFilter IJsonModel<EventGridFilter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
+        /// <summary> Creates a GA-compatible Event Grid filter model from its JSON representation. </summary>
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The model reader/writer options. </param>
+        /// <returns> The deserialized GA-compatible Event Grid filter model. </returns>
         protected virtual EventGridFilter JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<EventGridFilter>)this).GetFormatFromOptions(options) : options.Format;
@@ -513,6 +575,7 @@ namespace Azure.ResourceManager.EventGrid.Models
     {
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
+        /// <summary> Initializes a new instance of the <see cref="EventGridInputSchemaMapping"/> class. </summary>
         protected EventGridInputSchemaMapping()
         {
         }
@@ -531,6 +594,10 @@ namespace Azure.ResourceManager.EventGrid.Models
         [WirePath("inputSchemaMappingType")]
         internal InputSchemaMappingType InputSchemaMappingType { get; set; }
 
+        /// <summary> Creates a GA-compatible Event Grid input schema mapping model from a serialized payload. </summary>
+        /// <param name="data"> The serialized model payload. </param>
+        /// <param name="options"> The model reader/writer options. </param>
+        /// <returns> The deserialized GA-compatible Event Grid input schema mapping model. </returns>
         protected virtual EventGridInputSchemaMapping PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<EventGridInputSchemaMapping>)this).GetFormatFromOptions(options) : options.Format;
@@ -541,6 +608,9 @@ namespace Azure.ResourceManager.EventGrid.Models
             };
         }
 
+        /// <summary> Serializes this GA-compatible Event Grid input schema mapping model. </summary>
+        /// <param name="options"> The model reader/writer options. </param>
+        /// <returns> The serialized model payload. </returns>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<EventGridInputSchemaMapping>)this).GetFormatFromOptions(options) : options.Format;
@@ -562,6 +632,9 @@ namespace Azure.ResourceManager.EventGrid.Models
             writer.WriteEndObject();
         }
 
+        /// <summary> Writes the JSON representation of this GA-compatible Event Grid input schema mapping model. </summary>
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The model reader/writer options. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<EventGridInputSchemaMapping>)this).GetFormatFromOptions(options) : options.Format;
@@ -576,6 +649,10 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         EventGridInputSchemaMapping IJsonModel<EventGridInputSchemaMapping>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
+        /// <summary> Creates a GA-compatible Event Grid input schema mapping model from its JSON representation. </summary>
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The model reader/writer options. </param>
+        /// <returns> The deserialized GA-compatible Event Grid input schema mapping model. </returns>
         protected virtual EventGridInputSchemaMapping JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<EventGridInputSchemaMapping>)this).GetFormatFromOptions(options) : options.Format;
@@ -609,6 +686,7 @@ namespace Azure.ResourceManager.EventGrid.Models
     {
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
+        /// <summary> Initializes a new instance of the <see cref="EventSubscriptionDestination"/> class. </summary>
         protected EventSubscriptionDestination()
         {
         }
@@ -627,6 +705,10 @@ namespace Azure.ResourceManager.EventGrid.Models
         [WirePath("endpointType")]
         internal EndpointType EndpointType { get; set; }
 
+        /// <summary> Creates a GA-compatible event subscription destination model from a serialized payload. </summary>
+        /// <param name="data"> The serialized model payload. </param>
+        /// <param name="options"> The model reader/writer options. </param>
+        /// <returns> The deserialized GA-compatible event subscription destination model. </returns>
         protected virtual EventSubscriptionDestination PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<EventSubscriptionDestination>)this).GetFormatFromOptions(options) : options.Format;
@@ -637,6 +719,9 @@ namespace Azure.ResourceManager.EventGrid.Models
             };
         }
 
+        /// <summary> Serializes this GA-compatible event subscription destination model. </summary>
+        /// <param name="options"> The model reader/writer options. </param>
+        /// <returns> The serialized model payload. </returns>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<EventSubscriptionDestination>)this).GetFormatFromOptions(options) : options.Format;
@@ -658,6 +743,9 @@ namespace Azure.ResourceManager.EventGrid.Models
             writer.WriteEndObject();
         }
 
+        /// <summary> Writes the JSON representation of this GA-compatible event subscription destination model. </summary>
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The model reader/writer options. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<EventSubscriptionDestination>)this).GetFormatFromOptions(options) : options.Format;
@@ -672,6 +760,10 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         EventSubscriptionDestination IJsonModel<EventSubscriptionDestination>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
+        /// <summary> Creates a GA-compatible event subscription destination model from its JSON representation. </summary>
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The model reader/writer options. </param>
+        /// <returns> The deserialized GA-compatible event subscription destination model. </returns>
         protected virtual EventSubscriptionDestination JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<EventSubscriptionDestination>)this).GetFormatFromOptions(options) : options.Format;
@@ -723,6 +815,7 @@ namespace Azure.ResourceManager.EventGrid.Models
     {
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
+        /// <summary> Initializes a new instance of the <see cref="StaticRoutingEnrichment"/> class. </summary>
         protected StaticRoutingEnrichment()
         {
         }
@@ -739,12 +832,17 @@ namespace Azure.ResourceManager.EventGrid.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Gets or sets the key. </summary>
         [WirePath("key")]
         public string Key { get; set; }
 
         [WirePath("valueType")]
         internal StaticRoutingEnrichmentType ValueType { get; set; }
 
+        /// <summary> Creates a GA-compatible static routing enrichment model from a serialized payload. </summary>
+        /// <param name="data"> The serialized model payload. </param>
+        /// <param name="options"> The model reader/writer options. </param>
+        /// <returns> The deserialized GA-compatible static routing enrichment model. </returns>
         protected virtual StaticRoutingEnrichment PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<StaticRoutingEnrichment>)this).GetFormatFromOptions(options) : options.Format;
@@ -755,6 +853,9 @@ namespace Azure.ResourceManager.EventGrid.Models
             };
         }
 
+        /// <summary> Serializes this GA-compatible static routing enrichment model. </summary>
+        /// <param name="options"> The model reader/writer options. </param>
+        /// <returns> The serialized model payload. </returns>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<StaticRoutingEnrichment>)this).GetFormatFromOptions(options) : options.Format;
@@ -776,6 +877,9 @@ namespace Azure.ResourceManager.EventGrid.Models
             writer.WriteEndObject();
         }
 
+        /// <summary> Writes the JSON representation of this GA-compatible static routing enrichment model. </summary>
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The model reader/writer options. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<StaticRoutingEnrichment>)this).GetFormatFromOptions(options) : options.Format;
@@ -795,6 +899,10 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         StaticRoutingEnrichment IJsonModel<StaticRoutingEnrichment>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
+        /// <summary> Creates a GA-compatible static routing enrichment model from its JSON representation. </summary>
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The model reader/writer options. </param>
+        /// <returns> The deserialized GA-compatible static routing enrichment model. </returns>
         protected virtual StaticRoutingEnrichment JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<StaticRoutingEnrichment>)this).GetFormatFromOptions(options) : options.Format;

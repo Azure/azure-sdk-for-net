@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 #nullable disable
-#pragma warning disable CS1591
 
 using Microsoft.TypeSpec.Generator.Customizations;
 
@@ -11,6 +10,7 @@ namespace Azure.ResourceManager.EventGrid.Models
     [CodeGenSuppress("EventTypeInfo")]
     public partial class PartnerNamespaceChannelPatch
     {
+        /// <summary> Gets or sets the partner topic event type information. </summary>
         [WirePath("properties.partnerTopicInfo.eventTypeInfo")]
         public PartnerTopicEventTypeInfo EventTypeInfo
         {

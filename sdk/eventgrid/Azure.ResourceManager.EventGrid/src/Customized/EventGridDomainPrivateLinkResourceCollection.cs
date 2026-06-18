@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 #nullable disable
-#pragma warning disable CS1591
 
 using System;
 using System.Collections;
@@ -18,11 +17,13 @@ using Azure.ResourceManager.EventGrid.Mocking;
 
 namespace Azure.ResourceManager.EventGrid
 {
+    /// <summary> Represents a collection of Event Grid domain private link resources. </summary>
     public partial class EventGridDomainPrivateLinkResourceCollection : ArmCollection, IAsyncEnumerable<EventGridDomainPrivateLinkResource>, IEnumerable<EventGridDomainPrivateLinkResource>
     {
         private readonly ClientDiagnostics _privateLinkResourcesClientDiagnostics;
         private readonly PrivateLinkResources _privateLinkResourcesRestClient;
 
+        /// <summary> Initializes a new instance of the <see cref="EventGridDomainPrivateLinkResourceCollection"/> class. </summary>
         protected EventGridDomainPrivateLinkResourceCollection()
         {
         }
@@ -44,6 +45,10 @@ namespace Azure.ResourceManager.EventGrid
             }
         }
 
+        /// <summary> Gets a specific private link resource. </summary>
+        /// <param name="privateLinkResourceName"> The name of the private link resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> The requested resource. </returns>
         public virtual async Task<Response<EventGridDomainPrivateLinkResource>> GetAsync(string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
@@ -52,6 +57,10 @@ namespace Azure.ResourceManager.EventGrid
             return PrivateLinkResourceCompat.Convert(response, PrivateLinkResourceCompat.ToDomainResource(Client, response.Value));
         }
 
+        /// <summary> Gets a specific private link resource. </summary>
+        /// <param name="privateLinkResourceName"> The name of the private link resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> The requested resource. </returns>
         public virtual Response<EventGridDomainPrivateLinkResource> Get(string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
@@ -60,6 +69,11 @@ namespace Azure.ResourceManager.EventGrid
             return PrivateLinkResourceCompat.Convert(response, PrivateLinkResourceCompat.ToDomainResource(Client, response.Value));
         }
 
+        /// <summary> Gets all private link resources. </summary>
+        /// <param name="filter"> The filter to apply to the operation. </param>
+        /// <param name="top"> The maximum number of items to return. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A pageable sequence of resources. </returns>
         public virtual AsyncPageable<EventGridDomainPrivateLinkResource> GetAllAsync(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext { CancellationToken = cancellationToken };
@@ -77,6 +91,11 @@ namespace Azure.ResourceManager.EventGrid
                 item => PrivateLinkResourceCompat.ToDomainResource(Client, item));
         }
 
+        /// <summary> Gets all private link resources. </summary>
+        /// <param name="filter"> The filter to apply to the operation. </param>
+        /// <param name="top"> The maximum number of items to return. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A pageable sequence of resources. </returns>
         public virtual Pageable<EventGridDomainPrivateLinkResource> GetAll(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext { CancellationToken = cancellationToken };
@@ -94,6 +113,10 @@ namespace Azure.ResourceManager.EventGrid
                 item => PrivateLinkResourceCompat.ToDomainResource(Client, item));
         }
 
+        /// <summary> Checks whether a specific private link resource exists. </summary>
+        /// <param name="privateLinkResourceName"> The name of the private link resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A response indicating whether the resource exists. </returns>
         public virtual async Task<Response<bool>> ExistsAsync(string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
@@ -119,6 +142,10 @@ namespace Azure.ResourceManager.EventGrid
             }
         }
 
+        /// <summary> Checks whether a specific private link resource exists. </summary>
+        /// <param name="privateLinkResourceName"> The name of the private link resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A response indicating whether the resource exists. </returns>
         public virtual Response<bool> Exists(string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
@@ -144,6 +171,10 @@ namespace Azure.ResourceManager.EventGrid
             }
         }
 
+        /// <summary> Gets a specific private link resource if it exists. </summary>
+        /// <param name="privateLinkResourceName"> The name of the private link resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> The resource if it exists; otherwise, an empty response. </returns>
         public virtual async Task<NullableResponse<EventGridDomainPrivateLinkResource>> GetIfExistsAsync(string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
@@ -169,6 +200,10 @@ namespace Azure.ResourceManager.EventGrid
             }
         }
 
+        /// <summary> Gets a specific private link resource if it exists. </summary>
+        /// <param name="privateLinkResourceName"> The name of the private link resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> The resource if it exists; otherwise, an empty response. </returns>
         public virtual NullableResponse<EventGridDomainPrivateLinkResource> GetIfExists(string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));

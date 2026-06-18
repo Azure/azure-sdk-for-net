@@ -1,4 +1,3 @@
-#pragma warning disable CS1591
 #pragma warning disable SA1402
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
@@ -30,6 +29,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         private Uri _schemaUri;
         private bool? _isInDefaultSet;
 
+        /// <summary> Initializes a new instance of the <see cref="EventTypeUnderTopic"/> class. </summary>
         public EventTypeUnderTopic()
         {
         }
@@ -44,6 +44,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Gets or sets the display name. </summary>
         [WirePath("properties.displayName")]
         public string DisplayName
         {
@@ -51,6 +52,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             set => _displayName = value;
         }
 
+        /// <summary> Gets or sets the description. </summary>
         [WirePath("properties.description")]
         public string Description
         {
@@ -58,6 +60,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             set => _description = value;
         }
 
+        /// <summary> Gets or sets the schema uri. </summary>
         [WirePath("properties.schemaUrl")]
         public Uri SchemaUri
         {
@@ -65,6 +68,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             set => _schemaUri = value;
         }
 
+        /// <summary> Gets or sets the is in default set. </summary>
         [WirePath("properties.isInDefaultSet")]
         public bool? IsInDefaultSet
         {
@@ -72,6 +76,10 @@ namespace Azure.ResourceManager.EventGrid.Models
             set => _isInDefaultSet = value;
         }
 
+        /// <summary> Creates a GA-compatible event type under topic model from a serialized payload. </summary>
+        /// <param name="data"> The serialized model payload. </param>
+        /// <param name="options"> The model reader/writer options. </param>
+        /// <returns> The deserialized GA-compatible event type under topic model. </returns>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<EventTypeUnderTopic>)this).GetFormatFromOptions(options) : options.Format;
@@ -82,6 +90,9 @@ namespace Azure.ResourceManager.EventGrid.Models
             };
         }
 
+        /// <summary> Serializes this GA-compatible event type under topic model. </summary>
+        /// <param name="options"> The model reader/writer options. </param>
+        /// <returns> The serialized model payload. </returns>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<EventTypeUnderTopic>)this).GetFormatFromOptions(options) : options.Format;
@@ -103,6 +114,9 @@ namespace Azure.ResourceManager.EventGrid.Models
             writer.WriteEndObject();
         }
 
+        /// <summary> Writes the JSON representation of this GA-compatible event type under topic model. </summary>
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The model reader/writer options. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<EventTypeUnderTopic>)this).GetFormatFromOptions(options) : options.Format;
@@ -142,6 +156,10 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         EventTypeUnderTopic IJsonModel<EventTypeUnderTopic>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (EventTypeUnderTopic)JsonModelCreateCore(ref reader, options);
 
+        /// <summary> Creates a GA-compatible event type under topic model from its JSON representation. </summary>
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The model reader/writer options. </param>
+        /// <returns> The deserialized GA-compatible event type under topic model. </returns>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<EventTypeUnderTopic>)this).GetFormatFromOptions(options) : options.Format;
@@ -220,6 +238,7 @@ namespace Azure.ResourceManager.EventGrid.Models
     {
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
+        /// <summary> Initializes a new instance of the <see cref="PartnerDetails"/> class. </summary>
         public PartnerDetails()
         {
         }
@@ -232,15 +251,22 @@ namespace Azure.ResourceManager.EventGrid.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Gets or sets the description. </summary>
         [WirePath("description")]
         public string Description { get; set; }
 
+        /// <summary> Gets or sets the long description. </summary>
         [WirePath("longDescription")]
         public string LongDescription { get; set; }
 
+        /// <summary> Gets or sets the setup URI. </summary>
         [WirePath("setupUri")]
         public Uri SetupUri { get; set; }
 
+        /// <summary> Creates a GA-compatible partner details model from a serialized payload. </summary>
+        /// <param name="data"> The serialized model payload. </param>
+        /// <param name="options"> The model reader/writer options. </param>
+        /// <returns> The deserialized GA-compatible partner details model. </returns>
         protected virtual PartnerDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<PartnerDetails>)this).GetFormatFromOptions(options) : options.Format;
@@ -251,6 +277,9 @@ namespace Azure.ResourceManager.EventGrid.Models
             };
         }
 
+        /// <summary> Serializes this GA-compatible partner details model. </summary>
+        /// <param name="options"> The model reader/writer options. </param>
+        /// <returns> The serialized model payload. </returns>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<PartnerDetails>)this).GetFormatFromOptions(options) : options.Format;
@@ -272,6 +301,9 @@ namespace Azure.ResourceManager.EventGrid.Models
             writer.WriteEndObject();
         }
 
+        /// <summary> Writes the JSON representation of this GA-compatible partner details model. </summary>
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The model reader/writer options. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<PartnerDetails>)this).GetFormatFromOptions(options) : options.Format;
@@ -299,6 +331,10 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         PartnerDetails IJsonModel<PartnerDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
+        /// <summary> Creates a GA-compatible partner details model from its JSON representation. </summary>
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The model reader/writer options. </param>
+        /// <returns> The deserialized GA-compatible partner details model. </returns>
         protected virtual PartnerDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<PartnerDetails>)this).GetFormatFromOptions(options) : options.Format;
@@ -356,6 +392,7 @@ namespace Azure.ResourceManager.EventGrid.Models
     {
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
+        /// <summary> Initializes a new instance of the <see cref="TopicTypeAdditionalEnforcedPermission"/> class. </summary>
         public TopicTypeAdditionalEnforcedPermission()
         {
         }
@@ -367,12 +404,18 @@ namespace Azure.ResourceManager.EventGrid.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Gets or sets the permission name. </summary>
         [WirePath("permissionName")]
         public string PermissionName { get; set; }
 
+        /// <summary> Gets or sets a value indicating whether the permission is a data action. </summary>
         [WirePath("isDataAction")]
         public bool? IsDataAction { get; set; }
 
+        /// <summary> Creates a GA-compatible topic type additional enforced permission model from a serialized payload. </summary>
+        /// <param name="data"> The serialized model payload. </param>
+        /// <param name="options"> The model reader/writer options. </param>
+        /// <returns> The deserialized GA-compatible topic type additional enforced permission model. </returns>
         protected virtual TopicTypeAdditionalEnforcedPermission PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<TopicTypeAdditionalEnforcedPermission>)this).GetFormatFromOptions(options) : options.Format;
@@ -383,6 +426,9 @@ namespace Azure.ResourceManager.EventGrid.Models
             };
         }
 
+        /// <summary> Serializes this GA-compatible topic type additional enforced permission model. </summary>
+        /// <param name="options"> The model reader/writer options. </param>
+        /// <returns> The serialized model payload. </returns>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<TopicTypeAdditionalEnforcedPermission>)this).GetFormatFromOptions(options) : options.Format;
@@ -404,6 +450,9 @@ namespace Azure.ResourceManager.EventGrid.Models
             writer.WriteEndObject();
         }
 
+        /// <summary> Writes the JSON representation of this GA-compatible topic type additional enforced permission model. </summary>
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The model reader/writer options. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<TopicTypeAdditionalEnforcedPermission>)this).GetFormatFromOptions(options) : options.Format;
@@ -426,6 +475,10 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         TopicTypeAdditionalEnforcedPermission IJsonModel<TopicTypeAdditionalEnforcedPermission>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
+        /// <summary> Creates a GA-compatible topic type additional enforced permission model from its JSON representation. </summary>
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The model reader/writer options. </param>
+        /// <returns> The deserialized GA-compatible topic type additional enforced permission model. </returns>
         protected virtual TopicTypeAdditionalEnforcedPermission JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<TopicTypeAdditionalEnforcedPermission>)this).GetFormatFromOptions(options) : options.Format;

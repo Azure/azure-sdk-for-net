@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 #nullable disable
-#pragma warning disable CS1591
 
 using System.Collections.Generic;
 using Azure.Core;
@@ -12,6 +11,8 @@ namespace Azure.ResourceManager.EventGrid.Models
 {
     public static partial class ArmEventGridModelFactory
     {
+        /// <summary> Creates a Event Grid Private Link Resource Data model. </summary>
+        /// <returns> The operation result. </returns>
         public static global::Azure.ResourceManager.EventGrid.EventGridPrivateLinkResourceData EventGridPrivateLinkResourceData(
             ResourceIdentifier id = default,
             string name = default,

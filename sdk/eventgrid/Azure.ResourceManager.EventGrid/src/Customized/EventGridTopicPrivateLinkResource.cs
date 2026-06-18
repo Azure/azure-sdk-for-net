@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 #nullable disable
-#pragma warning disable CS1591
 
 using System;
 using System.ClientModel.Primitives;
@@ -18,11 +17,14 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.EventGrid
 {
+    /// <summary> Represents an Event Grid topic private link resource. </summary>
     public partial class EventGridTopicPrivateLinkResource : ArmResource, IJsonModel<EventGridPrivateLinkResourceData>, IPersistableModel<EventGridPrivateLinkResourceData>
     {
         private readonly EventGridPrivateLinkResourceData _data;
+        /// <summary> Gets the resource type for this resource. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.EventGrid/topics/privateLinkResources";
 
+        /// <summary> Initializes a new instance of the <see cref="EventGridTopicPrivateLinkResource"/> class. </summary>
         protected EventGridTopicPrivateLinkResource()
         {
         }
@@ -38,10 +40,18 @@ namespace Azure.ResourceManager.EventGrid
             ValidateResourceId(id);
         }
 
+        /// <summary> Gets a value indicating whether this resource instance has data. </summary>
         public virtual bool HasData { get; }
 
+        /// <summary> Gets the resource data. </summary>
         public virtual EventGridPrivateLinkResourceData Data => HasData ? _data : throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
 
+        /// <summary> Creates a resource identifier for a Event Grid topic private link resource. </summary>
+        /// <param name="subscriptionId"> The subscription ID. </param>
+        /// <param name="resourceGroupName"> The resource group name. </param>
+        /// <param name="parentName"> The parent resource name. </param>
+        /// <param name="privateLinkResourceName"> The name of the private link resource. </param>
+        /// <returns> The resource identifier. </returns>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string parentName, string privateLinkResourceName)
             => new ResourceIdentifier($"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/topics/{parentName}/privateLinkResources/{privateLinkResourceName}");
 
@@ -54,6 +64,9 @@ namespace Azure.ResourceManager.EventGrid
             }
         }
 
+        /// <summary> Gets the latest state of this private link resource. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> The requested resource. </returns>
         public virtual async Task<Response<EventGridTopicPrivateLinkResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             ResourceIdentifier resourceGroupId = ResourceGroupResource.CreateResourceIdentifier(Id.SubscriptionId, Id.ResourceGroupName);
@@ -62,6 +75,9 @@ namespace Azure.ResourceManager.EventGrid
             return PrivateLinkResourceCompat.Convert(response, PrivateLinkResourceCompat.ToTopicResource(Client, response.Value));
         }
 
+        /// <summary> Gets the latest state of this private link resource. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> The requested resource. </returns>
         public virtual Response<EventGridTopicPrivateLinkResource> Get(CancellationToken cancellationToken = default)
         {
             ResourceIdentifier resourceGroupId = ResourceGroupResource.CreateResourceIdentifier(Id.SubscriptionId, Id.ResourceGroupName);

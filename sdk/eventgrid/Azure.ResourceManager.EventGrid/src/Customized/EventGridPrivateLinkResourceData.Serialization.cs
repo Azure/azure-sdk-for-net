@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 #nullable disable
-#pragma warning disable CS1591
 
 using System;
 using System.ClientModel.Primitives;
@@ -17,6 +16,9 @@ namespace Azure.ResourceManager.EventGrid
 {
     public partial class EventGridPrivateLinkResourceData
     {
+        /// <summary> Writes the JSON representation of this Event Grid Private Link Resource Data. </summary>
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The model reader/writer options. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<EventGridPrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;

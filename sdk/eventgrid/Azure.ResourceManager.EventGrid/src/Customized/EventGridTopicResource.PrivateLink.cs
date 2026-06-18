@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 #nullable disable
-#pragma warning disable CS1591
 
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,17 +13,27 @@ namespace Azure.ResourceManager.EventGrid
 {
     public partial class EventGridTopicResource
     {
+        /// <summary> Gets the private link resources for this Event Grid topic. </summary>
+        /// <returns> The requested resource. </returns>
         public virtual EventGridTopicPrivateLinkResourceCollection GetEventGridTopicPrivateLinkResources()
         {
             return GetCachedClient(client => new EventGridTopicPrivateLinkResourceCollection(client, Id));
         }
 
+        /// <summary> Gets a specific private link resource. </summary>
+        /// <param name="privateLinkResourceName"> The name of the private link resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> The requested resource. </returns>
         [ForwardsClientCalls]
         public virtual async Task<Response<EventGridTopicPrivateLinkResource>> GetEventGridTopicPrivateLinkResourceAsync(string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
             return await GetEventGridTopicPrivateLinkResources().GetAsync(privateLinkResourceName, cancellationToken).ConfigureAwait(false);
         }
 
+        /// <summary> Gets a specific private link resource. </summary>
+        /// <param name="privateLinkResourceName"> The name of the private link resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> The requested resource. </returns>
         [ForwardsClientCalls]
         public virtual Response<EventGridTopicPrivateLinkResource> GetEventGridTopicPrivateLinkResource(string privateLinkResourceName, CancellationToken cancellationToken = default)
         {

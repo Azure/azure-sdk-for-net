@@ -1,4 +1,3 @@
-#pragma warning disable CS1591
 #pragma warning disable SA1402
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
@@ -13,6 +12,7 @@ namespace Azure.ResourceManager.EventGrid.Models
     // These shims preserve GA member names that still need SDK-side forwarding after the Swagger -> TypeSpec migration.
     public partial class NamespaceTopicEventSubscriptionPatch
     {
+        /// <summary> Gets or sets the expiration time. </summary>
         [WirePath("properties.expirationTimeUtc")]
         public DateTimeOffset? ExpireOn
         {
@@ -27,6 +27,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
     public partial class PartnerNamespaceChannelPatch
     {
+        /// <summary> Gets or sets the expiration time if the channel is not activated. </summary>
         [WirePath("properties.expirationTimeIfNotActivatedUtc")]
         public DateTimeOffset? ExpireOnIfNotActivated
         {
@@ -41,9 +42,11 @@ namespace Azure.ResourceManager.EventGrid.Models
 
     public partial class WebHookEventSubscriptionDestination
     {
+        /// <summary> Gets the base endpoint URI. </summary>
         [WirePath("properties.endpointBaseUrl")]
         public Uri BaseEndpoint => Properties is null ? default : Properties.BaseEndpoint;
 
+        /// <summary> Gets or sets the endpoint URI. </summary>
         [WirePath("properties.endpointUrl")]
         public Uri Endpoint
         {
@@ -55,6 +58,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
         }
 
+        /// <summary> Gets or sets the URI or Microsoft Entra application ID. </summary>
         [WirePath("properties.azureActiveDirectoryApplicationIdOrUri")]
         public string UriOrAzureActiveDirectoryApplicationId
         {

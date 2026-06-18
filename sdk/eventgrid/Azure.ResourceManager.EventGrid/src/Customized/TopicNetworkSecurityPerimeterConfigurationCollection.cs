@@ -7,8 +7,6 @@
 
 #nullable disable
 
-#pragma warning disable CS1591
-
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -21,6 +19,9 @@ namespace Azure.ResourceManager.EventGrid
 {
     public partial class TopicNetworkSecurityPerimeterConfigurationCollection : IEnumerable<NetworkSecurityPerimeterConfigurationData>, IAsyncEnumerable<NetworkSecurityPerimeterConfigurationData>
     {
+        /// <summary> Gets all network security perimeter configurations. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A pageable sequence of resources. </returns>
         public virtual AsyncPageable<NetworkSecurityPerimeterConfigurationData> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext { CancellationToken = cancellationToken };
@@ -34,6 +35,9 @@ namespace Azure.ResourceManager.EventGrid
                 "TopicNetworkSecurityPerimeterConfigurationCollection.GetAll");
         }
 
+        /// <summary> Gets all network security perimeter configurations. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A pageable sequence of resources. </returns>
         public virtual Pageable<NetworkSecurityPerimeterConfigurationData> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext { CancellationToken = cancellationToken };
@@ -47,11 +51,16 @@ namespace Azure.ResourceManager.EventGrid
                 "TopicNetworkSecurityPerimeterConfigurationCollection.GetAll");
         }
 
+        /// <summary> Gets an async enumerator for the collection. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> The requested resource. </returns>
         public virtual IAsyncEnumerator<NetworkSecurityPerimeterConfigurationData> GetAsyncEnumerator(CancellationToken cancellationToken = default)
         {
             return GetAllAsync(cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
 
+        /// <summary> Gets an enumerator for the collection. </summary>
+        /// <returns> The requested resource. </returns>
         public virtual IEnumerator<NetworkSecurityPerimeterConfigurationData> GetEnumerator()
         {
             return GetAll().GetEnumerator();
@@ -63,4 +72,3 @@ namespace Azure.ResourceManager.EventGrid
         }
     }
 }
-#pragma warning restore CS1591

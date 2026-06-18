@@ -7,8 +7,6 @@
 
 #nullable disable
 
-#pragma warning disable CS1591
-
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -19,23 +17,40 @@ namespace Azure.ResourceManager.EventGrid
 {
     public partial class TopicNetworkSecurityPerimeterConfigurationResource
     {
+        /// <summary> Creates a resource identifier for a topic network security perimeter configuration resource. </summary>
+        /// <param name="subscriptionId"> The subscription ID. </param>
+        /// <param name="resourceGroupName"> The resource group name. </param>
+        /// <param name="resourceName"> The resource name. </param>
+        /// <param name="perimeterGuid"> The network security perimeter GUID. </param>
+        /// <param name="associationName"> The network security perimeter association name. </param>
+        /// <returns> The resource identifier. </returns>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName, string perimeterGuid, string associationName)
         {
             return CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName, $"{perimeterGuid}.{associationName}");
         }
 
+        /// <summary> Gets this network security perimeter configuration resource. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> The requested resource. </returns>
         public virtual Task<Response<TopicNetworkSecurityPerimeterConfigurationResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             (string perimeterGuid, string associationName) = NetworkSecurityPerimeterConfigurationCompat.SplitAssociationName(Id);
             return GetAsync(perimeterGuid, associationName, cancellationToken);
         }
 
+        /// <summary> Gets this network security perimeter configuration resource. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> The requested resource. </returns>
         public virtual Response<TopicNetworkSecurityPerimeterConfigurationResource> Get(CancellationToken cancellationToken = default)
         {
             (string perimeterGuid, string associationName) = NetworkSecurityPerimeterConfigurationCompat.SplitAssociationName(Id);
             return Get(perimeterGuid, associationName, cancellationToken);
         }
 
+        /// <summary> Reconciles this network security perimeter configuration resource. </summary>
+        /// <param name="waitUntil"> The condition to wait for before the operation completes. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An operation to reconcile the resource. </returns>
         public virtual async Task<ArmOperation<TopicNetworkSecurityPerimeterConfigurationResource>> ReconcileAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             (string perimeterGuid, string associationName) = NetworkSecurityPerimeterConfigurationCompat.SplitAssociationName(Id);
@@ -45,6 +60,10 @@ namespace Azure.ResourceManager.EventGrid
             return new NetworkSecurityPerimeterConfigurationCompatOperation<TopicNetworkSecurityPerimeterConfigurationResource>(operation, data => new TopicNetworkSecurityPerimeterConfigurationResource(Client, data));
         }
 
+        /// <summary> Reconciles this network security perimeter configuration resource. </summary>
+        /// <param name="waitUntil"> The condition to wait for before the operation completes. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An operation to reconcile the resource. </returns>
         public virtual ArmOperation<TopicNetworkSecurityPerimeterConfigurationResource> Reconcile(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             (string perimeterGuid, string associationName) = NetworkSecurityPerimeterConfigurationCompat.SplitAssociationName(Id);
@@ -54,4 +73,3 @@ namespace Azure.ResourceManager.EventGrid
         }
     }
 }
-#pragma warning restore CS1591

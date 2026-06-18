@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 #nullable disable
-#pragma warning disable CS1591
 
 using Microsoft.TypeSpec.Generator.Customizations;
 
@@ -13,6 +12,7 @@ namespace Azure.ResourceManager.EventGrid.Models
     [CodeGenSuppress("EventTimeSourceField")]
     public partial class EventGridJsonInputSchemaMapping
     {
+        /// <summary> Gets or sets the JSON path that maps to the event ID field. </summary>
         [WirePath("properties.id.sourceField")]
         public string IdSourceField
         {
@@ -24,6 +24,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
         }
 
+        /// <summary> Gets or sets the JSON path that maps to the topic field. </summary>
         [WirePath("properties.topic.sourceField")]
         public string TopicSourceField
         {
@@ -35,6 +36,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
         }
 
+        /// <summary> Gets or sets the JSON path that maps to the event time field. </summary>
         [WirePath("properties.eventTime.sourceField")]
         public string EventTimeSourceField
         {

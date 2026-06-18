@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// be used automatically.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyEncryptionKeyUri"/> is null. </exception>
-        public CustomerManagedKeyEncryption(string keyEncryptionKeyUri)
+        public CustomerManagedKeyEncryption(Uri keyEncryptionKeyUri)
         {
             Argument.AssertNotNull(keyEncryptionKeyUri, nameof(keyEncryptionKeyUri));
 
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// will help user to mitigate the issue and re-enable the CMK key.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CustomerManagedKeyEncryption(string keyEncryptionKeyUri, KeyEncryptionKeyIdentity keyEncryptionKeyIdentity, KeyEncryptionKeyStatus? keyEncryptionKeyStatus, string keyEncryptionKeyStatusFriendlyDescription, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CustomerManagedKeyEncryption(Uri keyEncryptionKeyUri, KeyEncryptionKeyIdentity keyEncryptionKeyIdentity, KeyEncryptionKeyStatus? keyEncryptionKeyStatus, string keyEncryptionKeyStatusFriendlyDescription, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             KeyEncryptionKeyUri = keyEncryptionKeyUri;
             KeyEncryptionKeyIdentity = keyEncryptionKeyIdentity;
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// be used automatically.
         /// </summary>
         [WirePath("keyEncryptionKeyUrl")]
-        public string KeyEncryptionKeyUri { get; set; }
+        public Uri KeyEncryptionKeyUri { get; set; }
 
         /// <summary>
         /// All identity configuration for Customer-managed key settings defining which identity should be used to auth to Key Vault. This is an optional property.

@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 #nullable disable
-#pragma warning disable CS1591
 
 using Azure.Core;
 using Azure.ResourceManager.EventGrid.Models;
@@ -10,9 +9,10 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    [CodeGenSuppress("PrivateEndpointId")]
     public partial class EventGridPrivateEndpointConnectionData
     {
+        /// <summary> The Id of the private endpoint. </summary>
+        [CodeGenMember("PrivateEndpointId")]
         [WirePath("properties.privateEndpoint.id")]
         public ResourceIdentifier PrivateEndpointId
         {

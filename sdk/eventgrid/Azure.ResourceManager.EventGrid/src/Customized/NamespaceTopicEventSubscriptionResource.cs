@@ -3,8 +3,6 @@
 
 #nullable disable
 
-#pragma warning disable CS1591
-
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -16,6 +14,11 @@ namespace Azure.ResourceManager.EventGrid
 {
     public partial class NamespaceTopicEventSubscriptionResource
     {
+        /// <summary> Adds a tag to the resource. </summary>
+        /// <param name="key"> The tag key. </param>
+        /// <param name="value"> The tag value. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> The updated resource. </returns>
         [ForwardsClientCalls]
         public virtual async Task<Response<NamespaceTopicEventSubscriptionResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
@@ -29,6 +32,11 @@ namespace Azure.ResourceManager.EventGrid
             return Response.FromValue(result.Value, result.GetRawResponse());
         }
 
+        /// <summary> Adds a tag to the resource. </summary>
+        /// <param name="key"> The tag key. </param>
+        /// <param name="value"> The tag value. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> The updated resource. </returns>
         [ForwardsClientCalls]
         public virtual Response<NamespaceTopicEventSubscriptionResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
@@ -42,6 +50,10 @@ namespace Azure.ResourceManager.EventGrid
             return Response.FromValue(result.Value, result.GetRawResponse());
         }
 
+        /// <summary> Replaces the resource tags. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> The updated resource. </returns>
         [ForwardsClientCalls]
         public virtual async Task<Response<NamespaceTopicEventSubscriptionResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
@@ -57,6 +69,10 @@ namespace Azure.ResourceManager.EventGrid
             return Response.FromValue(result.Value, result.GetRawResponse());
         }
 
+        /// <summary> Replaces the resource tags. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> The updated resource. </returns>
         [ForwardsClientCalls]
         public virtual Response<NamespaceTopicEventSubscriptionResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
@@ -72,6 +88,10 @@ namespace Azure.ResourceManager.EventGrid
             return Response.FromValue(result.Value, result.GetRawResponse());
         }
 
+        /// <summary> Removes a tag from the resource. </summary>
+        /// <param name="key"> The tag key. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> The updated resource. </returns>
         [ForwardsClientCalls]
         public virtual async Task<Response<NamespaceTopicEventSubscriptionResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
@@ -84,6 +104,10 @@ namespace Azure.ResourceManager.EventGrid
             return Response.FromValue(result.Value, result.GetRawResponse());
         }
 
+        /// <summary> Removes a tag from the resource. </summary>
+        /// <param name="key"> The tag key. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> The updated resource. </returns>
         [ForwardsClientCalls]
         public virtual Response<NamespaceTopicEventSubscriptionResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
@@ -118,5 +142,4 @@ namespace Azure.ResourceManager.EventGrid
             return patch;
         }
     }
-#pragma warning restore CS1591
 }

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 throw new FormatException($"The model {nameof(CustomerManagedKeyEncryption)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("keyEncryptionKeyUrl"u8);
-            writer.WriteStringValue(KeyEncryptionKeyUri);
+            writer.WriteStringValue(KeyEncryptionKeyUri.AbsoluteUri);
             if (Optional.IsDefined(KeyEncryptionKeyIdentity))
             {
                 writer.WritePropertyName("keyEncryptionKeyIdentity"u8);
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            string keyEncryptionKeyUri = default;
+            Uri keyEncryptionKeyUri = default;
             KeyEncryptionKeyIdentity keyEncryptionKeyIdentity = default;
             KeyEncryptionKeyStatus? keyEncryptionKeyStatus = default;
             string keyEncryptionKeyStatusFriendlyDescription = default;
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 if (prop.NameEquals("keyEncryptionKeyUrl"u8))
                 {
-                    keyEncryptionKeyUri = prop.Value.GetString();
+                    keyEncryptionKeyUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("keyEncryptionKeyIdentity"u8))

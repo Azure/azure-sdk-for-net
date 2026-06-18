@@ -27,6 +27,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <summary> Gets a specific private link resource. </summary>
         /// <param name="privateLinkResourceName"> The name of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> The requested resource. </returns>
         [ForwardsClientCalls]
         public virtual async Task<Response<PartnerNamespacePrivateLinkResource>> GetPartnerNamespacePrivateLinkResourceAsync(string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
@@ -36,6 +37,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <summary> Gets a specific private link resource. </summary>
         /// <param name="privateLinkResourceName"> The name of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> The requested resource. </returns>
         [ForwardsClientCalls]
         public virtual Response<PartnerNamespacePrivateLinkResource> GetPartnerNamespacePrivateLinkResource(string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
@@ -43,6 +45,10 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary> Adds a tag to the resource. </summary>
+        /// <param name="key"> The tag key. </param>
+        /// <param name="value"> The tag value. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> The updated resource. </returns>
         [ForwardsClientCalls]
         public virtual async Task<Response<PartnerNamespaceResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
@@ -69,6 +75,10 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary> Adds a tag to the resource. </summary>
+        /// <param name="key"> The tag key. </param>
+        /// <param name="value"> The tag value. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> The updated resource. </returns>
         [ForwardsClientCalls]
         public virtual Response<PartnerNamespaceResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
@@ -95,6 +105,9 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary> Removes a tag from the resource. </summary>
+        /// <param name="key"> The tag key. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> The updated resource. </returns>
         [ForwardsClientCalls]
         public virtual async Task<Response<PartnerNamespaceResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
@@ -121,6 +134,9 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary> Removes a tag from the resource. </summary>
+        /// <param name="key"> The tag key. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> The updated resource. </returns>
         [ForwardsClientCalls]
         public virtual Response<PartnerNamespaceResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
@@ -147,6 +163,9 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary> Replaces the resource tags. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> The updated resource. </returns>
         [ForwardsClientCalls]
         public virtual async Task<Response<PartnerNamespaceResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
@@ -173,6 +192,9 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary> Replaces the resource tags. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> The updated resource. </returns>
         [ForwardsClientCalls]
         public virtual Response<PartnerNamespaceResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {

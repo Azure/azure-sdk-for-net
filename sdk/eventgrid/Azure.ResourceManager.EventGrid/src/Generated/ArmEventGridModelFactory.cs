@@ -1883,7 +1883,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// will help user to mitigate the issue and re-enable the CMK key.
         /// </param>
         /// <returns> A new <see cref="Models.CustomerManagedKeyEncryption"/> instance for mocking. </returns>
-        public static CustomerManagedKeyEncryption CustomerManagedKeyEncryption(string keyEncryptionKeyUri = default, KeyEncryptionKeyIdentity keyEncryptionKeyIdentity = default, KeyEncryptionKeyStatus? keyEncryptionKeyStatus = default, string keyEncryptionKeyStatusFriendlyDescription = default)
+        public static CustomerManagedKeyEncryption CustomerManagedKeyEncryption(Uri keyEncryptionKeyUri = default, KeyEncryptionKeyIdentity keyEncryptionKeyIdentity = default, KeyEncryptionKeyStatus? keyEncryptionKeyStatus = default, string keyEncryptionKeyStatusFriendlyDescription = default)
         {
             return new CustomerManagedKeyEncryption(keyEncryptionKeyUri, keyEncryptionKeyIdentity, keyEncryptionKeyStatus, keyEncryptionKeyStatusFriendlyDescription, default);
         }
