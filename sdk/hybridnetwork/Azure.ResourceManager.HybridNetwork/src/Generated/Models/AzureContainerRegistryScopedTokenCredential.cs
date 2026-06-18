@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="acrToken"> The credential value. </param>
         /// <param name="acrServerUri"> The Acr server url. </param>
         /// <param name="repositories"> The repositories that could be accessed using the current credential. </param>
-        /// <param name="expiry"> The UTC time when credential will expire. </param>
-        internal AzureContainerRegistryScopedTokenCredential(CredentialType credentialType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string username, string acrToken, Uri acrServerUri, IList<string> repositories, DateTimeOffset? expiry) : base(credentialType, additionalBinaryDataProperties)
+        /// <param name="expiryOn"> The UTC time when credential will expire. </param>
+        internal AzureContainerRegistryScopedTokenCredential(CredentialType credentialType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string username, string acrToken, Uri acrServerUri, IList<string> repositories, DateTimeOffset? expiryOn) : base(credentialType, additionalBinaryDataProperties)
         {
             Username = username;
             AcrToken = acrToken;
             AcrServerUri = acrServerUri;
             Repositories = repositories;
-            Expiry = expiry;
+            ExpiryOn = expiryOn;
         }
 
         /// <summary> The username of the credential. </summary>
@@ -50,6 +50,6 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         public IList<string> Repositories { get; }
 
         /// <summary> The UTC time when credential will expire. </summary>
-        public DateTimeOffset? Expiry { get; }
+        public DateTimeOffset? ExpiryOn { get; }
     }
 }

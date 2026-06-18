@@ -14,51 +14,51 @@ using Azure.ResourceManager.HybridNetwork;
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary> Artifact profile properties. </summary>
-    public partial class NSDArtifactProfile : IJsonModel<NSDArtifactProfile>
+    public partial class NsdArtifactProfile : IJsonModel<NsdArtifactProfile>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual NSDArtifactProfile PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual NsdArtifactProfile PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NSDArtifactProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NsdArtifactProfile>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeNSDArtifactProfile(document.RootElement, options);
+                        return DeserializeNsdArtifactProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NSDArtifactProfile)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NsdArtifactProfile)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NSDArtifactProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NsdArtifactProfile>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerHybridNetworkContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(NSDArtifactProfile)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NsdArtifactProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<NSDArtifactProfile>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<NsdArtifactProfile>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        NSDArtifactProfile IPersistableModel<NSDArtifactProfile>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        NsdArtifactProfile IPersistableModel<NsdArtifactProfile>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<NSDArtifactProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NsdArtifactProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<NSDArtifactProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NsdArtifactProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NSDArtifactProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NsdArtifactProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NSDArtifactProfile)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NsdArtifactProfile)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(ArtifactStoreReference))
             {
@@ -108,24 +108,24 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        NSDArtifactProfile IJsonModel<NSDArtifactProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        NsdArtifactProfile IJsonModel<NsdArtifactProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual NSDArtifactProfile JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual NsdArtifactProfile JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NSDArtifactProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NsdArtifactProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NSDArtifactProfile)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NsdArtifactProfile)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeNSDArtifactProfile(document.RootElement, options);
+            return DeserializeNsdArtifactProfile(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static NSDArtifactProfile DeserializeNSDArtifactProfile(JsonElement element, ModelReaderWriterOptions options)
+        internal static NsdArtifactProfile DeserializeNsdArtifactProfile(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new NSDArtifactProfile(artifactStoreReference, artifactName, artifactVersion, additionalBinaryDataProperties);
+            return new NsdArtifactProfile(artifactStoreReference, artifactName, artifactVersion, additionalBinaryDataProperties);
         }
     }
 }

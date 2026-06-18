@@ -105,10 +105,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Expiry))
+            if (Optional.IsDefined(ExpiryOn))
             {
                 writer.WritePropertyName("expiry"u8);
-                writer.WriteStringValue(Expiry.Value, "O");
+                writer.WriteStringValue(ExpiryOn.Value, "O");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             string acrToken = default;
             Uri acrServerUri = default;
             IList<string> repositories = default;
-            DateTimeOffset? expiry = default;
+            DateTimeOffset? expiryOn = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("credentialType"u8))
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    expiry = prop.Value.GetDateTimeOffset("O");
+                    expiryOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 acrToken,
                 acrServerUri,
                 repositories ?? new ChangeTrackingList<string>(),
-                expiry);
+                expiryOn);
         }
     }
 }

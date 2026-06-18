@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="configurationType"> The value which indicates if NF  values are secrets. </param>
         /// <param name="roleOverrideValues"> The role configuration override values from the user. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkFunctionPropertiesFormat(ProvisioningState? provisioningState, string publisherName, PublisherScope? publisherScope, string networkFunctionDefinitionGroupName, string networkFunctionDefinitionVersion, string networkFunctionDefinitionOfferingLocation, DeploymentResourceIdReference networkFunctionDefinitionVersionResourceReference, NfviType? nfviType, ResourceIdentifier nfviId, bool? allowSoftwareUpdate, NetworkFunctionConfigurationType configurationType, IList<string> roleOverrideValues, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkFunctionPropertiesFormat(ProvisioningState? provisioningState, string publisherName, PublisherScope? publisherScope, string networkFunctionDefinitionGroupName, string networkFunctionDefinitionVersion, AzureLocation? networkFunctionDefinitionOfferingLocation, DeploymentResourceIdReference networkFunctionDefinitionVersionResourceReference, NfviType? nfviType, ResourceIdentifier nfviId, bool? allowSoftwareUpdate, NetworkFunctionConfigurationType configurationType, IList<string> roleOverrideValues, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             PublisherName = publisherName;
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         public string NetworkFunctionDefinitionVersion { get; set; }
 
         /// <summary> The location of the network function definition offering. </summary>
-        public string NetworkFunctionDefinitionOfferingLocation { get; set; }
+        public AzureLocation? NetworkFunctionDefinitionOfferingLocation { get; set; }
 
         /// <summary> The network function definition version resource reference. </summary>
         public DeploymentResourceIdReference NetworkFunctionDefinitionVersionResourceReference { get; set; }

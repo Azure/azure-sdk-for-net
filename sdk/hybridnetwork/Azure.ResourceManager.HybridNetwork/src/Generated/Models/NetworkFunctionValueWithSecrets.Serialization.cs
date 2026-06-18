@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             PublisherScope? publisherScope = default;
             string networkFunctionDefinitionGroupName = default;
             string networkFunctionDefinitionVersion = default;
-            string networkFunctionDefinitionOfferingLocation = default;
+            AzureLocation? networkFunctionDefinitionOfferingLocation = default;
             DeploymentResourceIdReference networkFunctionDefinitionVersionResourceReference = default;
             NfviType? nfviType = default;
             ResourceIdentifier nfviId = default;
@@ -159,7 +159,11 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
                 if (prop.NameEquals("networkFunctionDefinitionOfferingLocation"u8))
                 {
-                    networkFunctionDefinitionOfferingLocation = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    networkFunctionDefinitionOfferingLocation = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("networkFunctionDefinitionVersionResourceReference"u8))

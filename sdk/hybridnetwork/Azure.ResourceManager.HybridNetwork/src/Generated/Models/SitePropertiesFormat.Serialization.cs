@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 writer.WritePropertyName("nfvis"u8);
                 writer.WriteStartArray();
-                foreach (NFVIs item in Nfvis)
+                foreach (NfvIs item in Nfvis)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 return null;
             }
             ProvisioningState? provisioningState = default;
-            IList<NFVIs> nfvis = default;
+            IList<NfvIs> nfvis = default;
             IReadOnlyList<ReferencedResource> referencedSiteNetworkServices = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -162,10 +162,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    List<NFVIs> array = new List<NFVIs>();
+                    List<NfvIs> array = new List<NfvIs>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(NFVIs.DeserializeNFVIs(item, options));
+                        array.Add(NfvIs.DeserializeNfvIs(item, options));
                     }
                     nfvis = array;
                     continue;
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SitePropertiesFormat(provisioningState, nfvis ?? new ChangeTrackingList<NFVIs>(), referencedSiteNetworkServices ?? new ChangeTrackingList<ReferencedResource>(), additionalBinaryDataProperties);
+            return new SitePropertiesFormat(provisioningState, nfvis ?? new ChangeTrackingList<NfvIs>(), referencedSiteNetworkServices ?? new ChangeTrackingList<ReferencedResource>(), additionalBinaryDataProperties);
         }
     }
 }

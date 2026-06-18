@@ -14,11 +14,11 @@ using Azure.ResourceManager.HybridNetwork;
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary> The AzureOperatorNexusCluster NFVI detail. </summary>
-    public partial class AzureOperatorNexusClusterNfviDetails : NFVIs, IJsonModel<AzureOperatorNexusClusterNfviDetails>
+    public partial class AzureOperatorNexusClusterNfviDetails : NfvIs, IJsonModel<AzureOperatorNexusClusterNfviDetails>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override NFVIs PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override NfvIs PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AzureOperatorNexusClusterNfviDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override NFVIs JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override NfvIs JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AzureOperatorNexusClusterNfviDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

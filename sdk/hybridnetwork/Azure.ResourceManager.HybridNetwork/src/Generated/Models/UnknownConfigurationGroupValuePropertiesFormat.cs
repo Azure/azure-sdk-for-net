@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
@@ -21,7 +22,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="configurationGroupSchemaResourceReference"> The configuration group schema resource reference. </param>
         /// <param name="configurationType"> The value which indicates if configuration values are secrets. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownConfigurationGroupValuePropertiesFormat(ProvisioningState? provisioningState, string publisherName, PublisherScope? publisherScope, string configurationGroupSchemaName, string configurationGroupSchemaOfferingLocation, DeploymentResourceIdReference configurationGroupSchemaResourceReference, ConfigurationGroupValueConfigurationType configurationType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(provisioningState, publisherName, publisherScope, configurationGroupSchemaName, configurationGroupSchemaOfferingLocation, configurationGroupSchemaResourceReference, configurationType != default ? configurationType : "unknown", additionalBinaryDataProperties)
+        internal UnknownConfigurationGroupValuePropertiesFormat(ProvisioningState? provisioningState, string publisherName, PublisherScope? publisherScope, string configurationGroupSchemaName, AzureLocation? configurationGroupSchemaOfferingLocation, DeploymentResourceIdReference configurationGroupSchemaResourceReference, ConfigurationGroupValueConfigurationType configurationType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(provisioningState, publisherName, publisherScope, configurationGroupSchemaName, configurationGroupSchemaOfferingLocation, configurationGroupSchemaResourceReference, configurationType != default ? configurationType : "unknown", additionalBinaryDataProperties)
         {
         }
     }

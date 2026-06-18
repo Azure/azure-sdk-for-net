@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="configurationGroupSchemaResourceReference"> The configuration group schema resource reference. </param>
         /// <param name="configurationType"> The value which indicates if configuration values are secrets. </param>
         /// <returns> A new <see cref="Models.ConfigurationGroupValuePropertiesFormat"/> instance for mocking. </returns>
-        public static ConfigurationGroupValuePropertiesFormat ConfigurationGroupValuePropertiesFormat(ProvisioningState? provisioningState = default, string publisherName = default, PublisherScope? publisherScope = default, string configurationGroupSchemaName = default, string configurationGroupSchemaOfferingLocation = default, DeploymentResourceIdReference configurationGroupSchemaResourceReference = default, string configurationType = default)
+        public static ConfigurationGroupValuePropertiesFormat ConfigurationGroupValuePropertiesFormat(ProvisioningState? provisioningState = default, string publisherName = default, PublisherScope? publisherScope = default, string configurationGroupSchemaName = default, AzureLocation? configurationGroupSchemaOfferingLocation = default, DeploymentResourceIdReference configurationGroupSchemaResourceReference = default, string configurationType = default)
         {
             return new UnknownConfigurationGroupValuePropertiesFormat(
                 provisioningState,
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="configurationGroupSchemaResourceReference"> The configuration group schema resource reference. </param>
         /// <param name="secretConfigurationValue"> Name and value pairs that define the configuration value secrets. It can be a well formed escaped JSON string. </param>
         /// <returns> A new <see cref="Models.ConfigurationValueWithSecrets"/> instance for mocking. </returns>
-        public static ConfigurationValueWithSecrets ConfigurationValueWithSecrets(ProvisioningState? provisioningState = default, string publisherName = default, PublisherScope? publisherScope = default, string configurationGroupSchemaName = default, string configurationGroupSchemaOfferingLocation = default, DeploymentResourceIdReference configurationGroupSchemaResourceReference = default, string secretConfigurationValue = default)
+        public static ConfigurationValueWithSecrets ConfigurationValueWithSecrets(ProvisioningState? provisioningState = default, string publisherName = default, PublisherScope? publisherScope = default, string configurationGroupSchemaName = default, AzureLocation? configurationGroupSchemaOfferingLocation = default, DeploymentResourceIdReference configurationGroupSchemaResourceReference = default, string secretConfigurationValue = default)
         {
             return new ConfigurationValueWithSecrets(
                 provisioningState,
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="configurationGroupSchemaResourceReference"> The configuration group schema resource reference. </param>
         /// <param name="configurationValue"> Name and value pairs that define the configuration value. It can be a well formed escaped JSON string. </param>
         /// <returns> A new <see cref="Models.ConfigurationValueWithoutSecrets"/> instance for mocking. </returns>
-        public static ConfigurationValueWithoutSecrets ConfigurationValueWithoutSecrets(ProvisioningState? provisioningState = default, string publisherName = default, PublisherScope? publisherScope = default, string configurationGroupSchemaName = default, string configurationGroupSchemaOfferingLocation = default, DeploymentResourceIdReference configurationGroupSchemaResourceReference = default, string configurationValue = default)
+        public static ConfigurationValueWithoutSecrets ConfigurationValueWithoutSecrets(ProvisioningState? provisioningState = default, string publisherName = default, PublisherScope? publisherScope = default, string configurationGroupSchemaName = default, AzureLocation? configurationGroupSchemaOfferingLocation = default, DeploymentResourceIdReference configurationGroupSchemaResourceReference = default, string configurationValue = default)
         {
             return new ConfigurationValueWithoutSecrets(
                 provisioningState,
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="configurationType"> The value which indicates if NF  values are secrets. </param>
         /// <param name="roleOverrideValues"> The role configuration override values from the user. </param>
         /// <returns> A new <see cref="Models.NetworkFunctionPropertiesFormat"/> instance for mocking. </returns>
-        public static NetworkFunctionPropertiesFormat NetworkFunctionPropertiesFormat(ProvisioningState? provisioningState = default, string publisherName = default, PublisherScope? publisherScope = default, string networkFunctionDefinitionGroupName = default, string networkFunctionDefinitionVersion = default, string networkFunctionDefinitionOfferingLocation = default, DeploymentResourceIdReference networkFunctionDefinitionVersionResourceReference = default, NfviType? nfviType = default, ResourceIdentifier nfviId = default, bool? allowSoftwareUpdate = default, string configurationType = default, IEnumerable<string> roleOverrideValues = default)
+        public static NetworkFunctionPropertiesFormat NetworkFunctionPropertiesFormat(ProvisioningState? provisioningState = default, string publisherName = default, PublisherScope? publisherScope = default, string networkFunctionDefinitionGroupName = default, string networkFunctionDefinitionVersion = default, AzureLocation? networkFunctionDefinitionOfferingLocation = default, DeploymentResourceIdReference networkFunctionDefinitionVersionResourceReference = default, NfviType? nfviType = default, ResourceIdentifier nfviId = default, bool? allowSoftwareUpdate = default, string configurationType = default, IEnumerable<string> roleOverrideValues = default)
         {
             roleOverrideValues ??= new ChangeTrackingList<string>();
 
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="roleOverrideValues"> The role configuration override values from the user. </param>
         /// <param name="secretDeploymentValues"> The JSON-serialized secret deployment values from the user. This contains secrets like passwords,keys etc. </param>
         /// <returns> A new <see cref="Models.NetworkFunctionValueWithSecrets"/> instance for mocking. </returns>
-        public static NetworkFunctionValueWithSecrets NetworkFunctionValueWithSecrets(ProvisioningState? provisioningState = default, string publisherName = default, PublisherScope? publisherScope = default, string networkFunctionDefinitionGroupName = default, string networkFunctionDefinitionVersion = default, string networkFunctionDefinitionOfferingLocation = default, DeploymentResourceIdReference networkFunctionDefinitionVersionResourceReference = default, NfviType? nfviType = default, ResourceIdentifier nfviId = default, bool? allowSoftwareUpdate = default, IEnumerable<string> roleOverrideValues = default, string secretDeploymentValues = default)
+        public static NetworkFunctionValueWithSecrets NetworkFunctionValueWithSecrets(ProvisioningState? provisioningState = default, string publisherName = default, PublisherScope? publisherScope = default, string networkFunctionDefinitionGroupName = default, string networkFunctionDefinitionVersion = default, AzureLocation? networkFunctionDefinitionOfferingLocation = default, DeploymentResourceIdReference networkFunctionDefinitionVersionResourceReference = default, NfviType? nfviType = default, ResourceIdentifier nfviId = default, bool? allowSoftwareUpdate = default, IEnumerable<string> roleOverrideValues = default, string secretDeploymentValues = default)
         {
             roleOverrideValues ??= new ChangeTrackingList<string>();
 
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="roleOverrideValues"> The role configuration override values from the user. </param>
         /// <param name="deploymentValues"> The JSON-serialized deployment values from the user. </param>
         /// <returns> A new <see cref="Models.NetworkFunctionValueWithoutSecrets"/> instance for mocking. </returns>
-        public static NetworkFunctionValueWithoutSecrets NetworkFunctionValueWithoutSecrets(ProvisioningState? provisioningState = default, string publisherName = default, PublisherScope? publisherScope = default, string networkFunctionDefinitionGroupName = default, string networkFunctionDefinitionVersion = default, string networkFunctionDefinitionOfferingLocation = default, DeploymentResourceIdReference networkFunctionDefinitionVersionResourceReference = default, NfviType? nfviType = default, ResourceIdentifier nfviId = default, bool? allowSoftwareUpdate = default, IEnumerable<string> roleOverrideValues = default, string deploymentValues = default)
+        public static NetworkFunctionValueWithoutSecrets NetworkFunctionValueWithoutSecrets(ProvisioningState? provisioningState = default, string publisherName = default, PublisherScope? publisherScope = default, string networkFunctionDefinitionGroupName = default, string networkFunctionDefinitionVersion = default, AzureLocation? networkFunctionDefinitionOfferingLocation = default, DeploymentResourceIdReference networkFunctionDefinitionVersionResourceReference = default, NfviType? nfviType = default, ResourceIdentifier nfviId = default, bool? allowSoftwareUpdate = default, IEnumerable<string> roleOverrideValues = default, string deploymentValues = default)
         {
             roleOverrideValues ??= new ChangeTrackingList<string>();
 
@@ -817,7 +817,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="managedResourceGroupConfiguration"></param>
         /// <param name="storageResourceId"> The created storage resource id. </param>
         /// <returns> A new <see cref="Models.ArtifactStorePropertiesFormat"/> instance for mocking. </returns>
-        public static ArtifactStorePropertiesFormat ArtifactStorePropertiesFormat(ProvisioningState? provisioningState = default, ArtifactStoreType? storeType = default, BackingResourcePublicNetworkAccess? backingResourcePublicNetworkAccess = default, ArtifactReplicationStrategy? replicationStrategy = default, ArtifactStorePropertiesFormatManagedResourceGroupConfiguration managedResourceGroupConfiguration = default, ResourceIdentifier storageResourceId = default)
+        public static ArtifactStorePropertiesFormat ArtifactStorePropertiesFormat(ProvisioningState? provisioningState = default, ArtifactStoreType? storeType = default, BackingResourcePublicNetworkAccess? backingResourcePublicNetworkAccess = default, ArtifactReplicationStrategy? replicationStrategy = default, ArtifactStorePropertiesFormatManagedResourceGroupConfiguration managedResourceGroupConfiguration = default, AzureLocation? storageResourceId = default)
         {
             return new ArtifactStorePropertiesFormat(
                 provisioningState,
@@ -929,9 +929,9 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="acrToken"> The credential value. </param>
         /// <param name="acrServerUri"> The Acr server url. </param>
         /// <param name="repositories"> The repositories that could be accessed using the current credential. </param>
-        /// <param name="expiry"> The UTC time when credential will expire. </param>
+        /// <param name="expiryOn"> The UTC time when credential will expire. </param>
         /// <returns> A new <see cref="Models.AzureContainerRegistryScopedTokenCredential"/> instance for mocking. </returns>
-        public static AzureContainerRegistryScopedTokenCredential AzureContainerRegistryScopedTokenCredential(string username = default, string acrToken = default, Uri acrServerUri = default, IEnumerable<string> repositories = default, DateTimeOffset? expiry = default)
+        public static AzureContainerRegistryScopedTokenCredential AzureContainerRegistryScopedTokenCredential(string username = default, string acrToken = default, Uri acrServerUri = default, IEnumerable<string> repositories = default, DateTimeOffset? expiryOn = default)
         {
             repositories ??= new ChangeTrackingList<string>();
 
@@ -942,19 +942,19 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 acrToken,
                 acrServerUri,
                 repositories.ToList(),
-                expiry);
+                expiryOn);
         }
 
         /// <summary> The azure storage account credential definition. </summary>
         /// <param name="storageAccountId"> The storage account Id. </param>
         /// <param name="containerCredentials"> The containers that could be accessed using the current credential. </param>
-        /// <param name="expiry"> The UTC time when credential will expire. </param>
+        /// <param name="expiryOn"> The UTC time when credential will expire. </param>
         /// <returns> A new <see cref="Models.AzureStorageAccountCredential"/> instance for mocking. </returns>
-        public static AzureStorageAccountCredential AzureStorageAccountCredential(ResourceIdentifier storageAccountId = default, IEnumerable<AzureStorageAccountContainerCredential> containerCredentials = default, DateTimeOffset? expiry = default)
+        public static AzureStorageAccountCredential AzureStorageAccountCredential(ResourceIdentifier storageAccountId = default, IEnumerable<AzureStorageAccountContainerCredential> containerCredentials = default, DateTimeOffset? expiryOn = default)
         {
             containerCredentials ??= new ChangeTrackingList<AzureStorageAccountContainerCredential>();
 
-            return new AzureStorageAccountCredential(CredentialType.AzureStorageAccountToken, additionalBinaryDataProperties: null, storageAccountId, containerCredentials.ToList(), expiry);
+            return new AzureStorageAccountCredential(CredentialType.AzureStorageAccountToken, additionalBinaryDataProperties: null, storageAccountId, containerCredentials.ToList(), expiryOn);
         }
 
         /// <summary> The azure storage account container credential definition. </summary>
@@ -995,9 +995,9 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="nfvis"> List of NFVIs. </param>
         /// <param name="referencedSiteNetworkServices"> The list of site network services on the site. </param>
         /// <returns> A new <see cref="Models.SitePropertiesFormat"/> instance for mocking. </returns>
-        public static SitePropertiesFormat SitePropertiesFormat(ProvisioningState? provisioningState = default, IEnumerable<NFVIs> nfvis = default, IEnumerable<ReferencedResource> referencedSiteNetworkServices = default)
+        public static SitePropertiesFormat SitePropertiesFormat(ProvisioningState? provisioningState = default, IEnumerable<NfvIs> nfvis = default, IEnumerable<ReferencedResource> referencedSiteNetworkServices = default)
         {
-            nfvis ??= new ChangeTrackingList<NFVIs>();
+            nfvis ??= new ChangeTrackingList<NfvIs>();
             referencedSiteNetworkServices ??= new ChangeTrackingList<ReferencedResource>();
 
             return new SitePropertiesFormat(provisioningState, nfvis.ToList(), referencedSiteNetworkServices.ToList(), additionalBinaryDataProperties: null);
@@ -1044,7 +1044,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="lastStateNetworkServiceDesignVersionName"> The network service design version for the site network service. </param>
         /// <param name="lastStateConfigurationGroupValueReferencedResources"> The last state of the site network service resource. </param>
         /// <returns> A new <see cref="Models.SiteNetworkServicePropertiesFormat"/> instance for mocking. </returns>
-        public static SiteNetworkServicePropertiesFormat SiteNetworkServicePropertiesFormat(ProvisioningState? provisioningState = default, ManagedResourceGroupConfiguration managedResourceGroupConfiguration = default, ResourceIdentifier siteReferenceId = default, string publisherName = default, PublisherScope? publisherScope = default, string networkServiceDesignGroupName = default, string networkServiceDesignVersionName = default, string networkServiceDesignVersionOfferingLocation = default, DeploymentResourceIdReference networkServiceDesignVersionResourceReference = default, IDictionary<string, ReferencedResource> desiredStateConfigurationGroupValueReferencedResources = default, string lastStateNetworkServiceDesignVersionName = default, IReadOnlyDictionary<string, ReferencedResource> lastStateConfigurationGroupValueReferencedResources = default)
+        public static SiteNetworkServicePropertiesFormat SiteNetworkServicePropertiesFormat(ProvisioningState? provisioningState = default, ManagedResourceGroupConfiguration managedResourceGroupConfiguration = default, ResourceIdentifier siteReferenceId = default, string publisherName = default, PublisherScope? publisherScope = default, string networkServiceDesignGroupName = default, string networkServiceDesignVersionName = default, AzureLocation? networkServiceDesignVersionOfferingLocation = default, DeploymentResourceIdReference networkServiceDesignVersionResourceReference = default, IDictionary<string, ReferencedResource> desiredStateConfigurationGroupValueReferencedResources = default, string lastStateNetworkServiceDesignVersionName = default, IReadOnlyDictionary<string, ReferencedResource> lastStateConfigurationGroupValueReferencedResources = default)
         {
             desiredStateConfigurationGroupValueReferencedResources ??= new ChangeTrackingDictionary<string, ReferencedResource>();
             lastStateConfigurationGroupValueReferencedResources ??= new ChangeTrackingDictionary<string, ReferencedResource>();

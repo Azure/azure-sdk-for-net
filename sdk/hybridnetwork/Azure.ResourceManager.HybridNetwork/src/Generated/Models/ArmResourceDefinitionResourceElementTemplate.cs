@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="parameterValues"> Name and value pairs that define the parameter values. It can be  a well formed escaped JSON string. </param>
         /// <param name="artifactProfile"> Artifact profile properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ArmResourceDefinitionResourceElementTemplate(TemplateType? templateType, string parameterValues, NSDArtifactProfile artifactProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ArmResourceDefinitionResourceElementTemplate(TemplateType? templateType, string parameterValues, NsdArtifactProfile artifactProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TemplateType = templateType;
             ParameterValues = parameterValues;
@@ -41,6 +41,6 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         public string ParameterValues { get; set; }
 
         /// <summary> Artifact profile properties. </summary>
-        public NSDArtifactProfile ArtifactProfile { get; set; }
+        public NsdArtifactProfile ArtifactProfile { get; set; }
     }
 }

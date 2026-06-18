@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="configurationType"> The value which indicates if configuration values are secrets. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="configurationValue"> Name and value pairs that define the configuration value. It can be a well formed escaped JSON string. </param>
-        internal ConfigurationValueWithoutSecrets(ProvisioningState? provisioningState, string publisherName, PublisherScope? publisherScope, string configurationGroupSchemaName, string configurationGroupSchemaOfferingLocation, DeploymentResourceIdReference configurationGroupSchemaResourceReference, ConfigurationGroupValueConfigurationType configurationType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string configurationValue) : base(provisioningState, publisherName, publisherScope, configurationGroupSchemaName, configurationGroupSchemaOfferingLocation, configurationGroupSchemaResourceReference, configurationType, additionalBinaryDataProperties)
+        internal ConfigurationValueWithoutSecrets(ProvisioningState? provisioningState, string publisherName, PublisherScope? publisherScope, string configurationGroupSchemaName, AzureLocation? configurationGroupSchemaOfferingLocation, DeploymentResourceIdReference configurationGroupSchemaResourceReference, ConfigurationGroupValueConfigurationType configurationType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string configurationValue) : base(provisioningState, publisherName, publisherScope, configurationGroupSchemaName, configurationGroupSchemaOfferingLocation, configurationGroupSchemaResourceReference, configurationType, additionalBinaryDataProperties)
         {
             ConfigurationValue = configurationValue;
         }

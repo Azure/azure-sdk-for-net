@@ -10,13 +10,13 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    internal partial class UnknownNFVIs : NFVIs
+    internal partial class UnknownNfvIs : NfvIs
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownNFVIs"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownNfvIs"/>. </summary>
         /// <param name="name"> Name of the nfvi. </param>
         /// <param name="nfviType"> The NFVI type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownNFVIs(string name, NfviType nfviType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(name, nfviType != default ? nfviType : "unknown", additionalBinaryDataProperties)
+        internal UnknownNfvIs(string name, NfviType nfviType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(name, nfviType != default ? nfviType : "unknown", additionalBinaryDataProperties)
         {
         }
     }

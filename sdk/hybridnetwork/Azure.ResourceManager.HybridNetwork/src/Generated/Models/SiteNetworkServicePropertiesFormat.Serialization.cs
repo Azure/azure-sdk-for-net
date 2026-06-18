@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.HybridNetwork;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             if (options.Format != "W" && Optional.IsDefined(NetworkServiceDesignVersionOfferingLocation))
             {
                 writer.WritePropertyName("networkServiceDesignVersionOfferingLocation"u8);
-                writer.WriteStringValue(NetworkServiceDesignVersionOfferingLocation);
+                writer.WriteStringValue(NetworkServiceDesignVersionOfferingLocation.Value);
             }
             if (Optional.IsDefined(NetworkServiceDesignVersionResourceReference))
             {
@@ -195,7 +196,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             PublisherScope? publisherScope = default;
             string networkServiceDesignGroupName = default;
             string networkServiceDesignVersionName = default;
-            string networkServiceDesignVersionOfferingLocation = default;
+            AzureLocation? networkServiceDesignVersionOfferingLocation = default;
             DeploymentResourceIdReference networkServiceDesignVersionResourceReference = default;
             IDictionary<string, ReferencedResource> desiredStateConfigurationGroupValueReferencedResources = default;
             string lastStateNetworkServiceDesignVersionName = default;
@@ -256,7 +257,11 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
                 if (prop.NameEquals("networkServiceDesignVersionOfferingLocation"u8))
                 {
-                    networkServiceDesignVersionOfferingLocation = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    networkServiceDesignVersionOfferingLocation = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("networkServiceDesignVersionResourceReference"u8))

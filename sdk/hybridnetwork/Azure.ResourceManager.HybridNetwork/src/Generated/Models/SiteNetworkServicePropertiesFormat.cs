@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="lastStateNetworkServiceDesignVersionName"> The network service design version for the site network service. </param>
         /// <param name="lastStateConfigurationGroupValueReferencedResources"> The last state of the site network service resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SiteNetworkServicePropertiesFormat(ProvisioningState? provisioningState, ManagedResourceGroupConfiguration managedResourceGroupConfiguration, ReferencedResource siteReference, string publisherName, PublisherScope? publisherScope, string networkServiceDesignGroupName, string networkServiceDesignVersionName, string networkServiceDesignVersionOfferingLocation, DeploymentResourceIdReference networkServiceDesignVersionResourceReference, IDictionary<string, ReferencedResource> desiredStateConfigurationGroupValueReferencedResources, string lastStateNetworkServiceDesignVersionName, IReadOnlyDictionary<string, ReferencedResource> lastStateConfigurationGroupValueReferencedResources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SiteNetworkServicePropertiesFormat(ProvisioningState? provisioningState, ManagedResourceGroupConfiguration managedResourceGroupConfiguration, ReferencedResource siteReference, string publisherName, PublisherScope? publisherScope, string networkServiceDesignGroupName, string networkServiceDesignVersionName, AzureLocation? networkServiceDesignVersionOfferingLocation, DeploymentResourceIdReference networkServiceDesignVersionResourceReference, IDictionary<string, ReferencedResource> desiredStateConfigurationGroupValueReferencedResources, string lastStateNetworkServiceDesignVersionName, IReadOnlyDictionary<string, ReferencedResource> lastStateConfigurationGroupValueReferencedResources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             ManagedResourceGroupConfiguration = managedResourceGroupConfiguration;
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         public string NetworkServiceDesignVersionName { get; }
 
         /// <summary> The location of the network service design offering. </summary>
-        public string NetworkServiceDesignVersionOfferingLocation { get; }
+        public AzureLocation? NetworkServiceDesignVersionOfferingLocation { get; }
 
         /// <summary> The network service design version resource reference. </summary>
         public DeploymentResourceIdReference NetworkServiceDesignVersionResourceReference { get; set; }

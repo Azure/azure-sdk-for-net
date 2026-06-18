@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             if (options.Format != "W" && Optional.IsDefined(ConfigurationGroupSchemaOfferingLocation))
             {
                 writer.WritePropertyName("configurationGroupSchemaOfferingLocation"u8);
-                writer.WriteStringValue(ConfigurationGroupSchemaOfferingLocation);
+                writer.WriteStringValue(ConfigurationGroupSchemaOfferingLocation.Value);
             }
             if (Optional.IsDefined(ConfigurationGroupSchemaResourceReference))
             {

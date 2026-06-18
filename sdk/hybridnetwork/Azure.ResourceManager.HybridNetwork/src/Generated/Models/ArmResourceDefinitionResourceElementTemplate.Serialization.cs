@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
             TemplateType? templateType = default;
             string parameterValues = default;
-            NSDArtifactProfile artifactProfile = default;
+            NsdArtifactProfile artifactProfile = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    artifactProfile = NSDArtifactProfile.DeserializeNSDArtifactProfile(prop.Value, options);
+                    artifactProfile = NsdArtifactProfile.DeserializeNsdArtifactProfile(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

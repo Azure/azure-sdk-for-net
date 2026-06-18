@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             if (Optional.IsDefined(NetworkFunctionDefinitionOfferingLocation))
             {
                 writer.WritePropertyName("networkFunctionDefinitionOfferingLocation"u8);
-                writer.WriteStringValue(NetworkFunctionDefinitionOfferingLocation);
+                writer.WriteStringValue(NetworkFunctionDefinitionOfferingLocation.Value);
             }
             if (Optional.IsDefined(NetworkFunctionDefinitionVersionResourceReference))
             {

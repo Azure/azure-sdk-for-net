@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.HybridNetwork;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             string publisherName = default;
             PublisherScope? publisherScope = default;
             string configurationGroupSchemaName = default;
-            string configurationGroupSchemaOfferingLocation = default;
+            AzureLocation? configurationGroupSchemaOfferingLocation = default;
             DeploymentResourceIdReference configurationGroupSchemaResourceReference = default;
             ConfigurationGroupValueConfigurationType configurationType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -146,7 +147,11 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
                 if (prop.NameEquals("configurationGroupSchemaOfferingLocation"u8))
                 {
-                    configurationGroupSchemaOfferingLocation = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    configurationGroupSchemaOfferingLocation = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("configurationGroupSchemaResourceReference"u8))

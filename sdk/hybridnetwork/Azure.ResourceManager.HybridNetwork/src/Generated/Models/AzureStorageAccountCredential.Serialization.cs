@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Expiry))
+            if (Optional.IsDefined(ExpiryOn))
             {
                 writer.WritePropertyName("expiry"u8);
-                writer.WriteStringValue(Expiry.Value, "O");
+                writer.WriteStringValue(ExpiryOn.Value, "O");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             ResourceIdentifier storageAccountId = default;
             IList<AzureStorageAccountContainerCredential> containerCredentials = default;
-            DateTimeOffset? expiry = default;
+            DateTimeOffset? expiryOn = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("credentialType"u8))
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    expiry = prop.Value.GetDateTimeOffset("O");
+                    expiryOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AzureStorageAccountCredential(credentialType, additionalBinaryDataProperties, storageAccountId, containerCredentials ?? new ChangeTrackingList<AzureStorageAccountContainerCredential>(), expiry);
+            return new AzureStorageAccountCredential(credentialType, additionalBinaryDataProperties, storageAccountId, containerCredentials ?? new ChangeTrackingList<AzureStorageAccountContainerCredential>(), expiryOn);
         }
     }
 }

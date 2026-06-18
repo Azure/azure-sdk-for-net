@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
@@ -35,7 +36,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="configurationGroupSchemaResourceReference"> The configuration group schema resource reference. </param>
         /// <param name="configurationType"> The value which indicates if configuration values are secrets. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConfigurationGroupValuePropertiesFormat(ProvisioningState? provisioningState, string publisherName, PublisherScope? publisherScope, string configurationGroupSchemaName, string configurationGroupSchemaOfferingLocation, DeploymentResourceIdReference configurationGroupSchemaResourceReference, ConfigurationGroupValueConfigurationType configurationType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConfigurationGroupValuePropertiesFormat(ProvisioningState? provisioningState, string publisherName, PublisherScope? publisherScope, string configurationGroupSchemaName, AzureLocation? configurationGroupSchemaOfferingLocation, DeploymentResourceIdReference configurationGroupSchemaResourceReference, ConfigurationGroupValueConfigurationType configurationType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             PublisherName = publisherName;
@@ -60,7 +61,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         public string ConfigurationGroupSchemaName { get; }
 
         /// <summary> The location of the configuration group schema offering. </summary>
-        public string ConfigurationGroupSchemaOfferingLocation { get; }
+        public AzureLocation? ConfigurationGroupSchemaOfferingLocation { get; }
 
         /// <summary> The configuration group schema resource reference. </summary>
         public DeploymentResourceIdReference ConfigurationGroupSchemaResourceReference { get; set; }

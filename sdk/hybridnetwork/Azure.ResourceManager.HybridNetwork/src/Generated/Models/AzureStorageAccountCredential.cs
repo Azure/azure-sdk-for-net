@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="storageAccountId"> The storage account Id. </param>
         /// <param name="containerCredentials"> The containers that could be accessed using the current credential. </param>
-        /// <param name="expiry"> The UTC time when credential will expire. </param>
-        internal AzureStorageAccountCredential(CredentialType credentialType, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier storageAccountId, IList<AzureStorageAccountContainerCredential> containerCredentials, DateTimeOffset? expiry) : base(credentialType, additionalBinaryDataProperties)
+        /// <param name="expiryOn"> The UTC time when credential will expire. </param>
+        internal AzureStorageAccountCredential(CredentialType credentialType, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier storageAccountId, IList<AzureStorageAccountContainerCredential> containerCredentials, DateTimeOffset? expiryOn) : base(credentialType, additionalBinaryDataProperties)
         {
             StorageAccountId = storageAccountId;
             ContainerCredentials = containerCredentials;
-            Expiry = expiry;
+            ExpiryOn = expiryOn;
         }
 
         /// <summary> The storage account Id. </summary>
@@ -41,6 +41,6 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         public IList<AzureStorageAccountContainerCredential> ContainerCredentials { get; }
 
         /// <summary> The UTC time when credential will expire. </summary>
-        public DateTimeOffset? Expiry { get; }
+        public DateTimeOffset? ExpiryOn { get; }
     }
 }

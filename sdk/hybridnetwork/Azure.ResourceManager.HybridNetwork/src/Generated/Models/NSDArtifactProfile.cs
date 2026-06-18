@@ -12,22 +12,22 @@ using Azure.Core;
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary> Artifact profile properties. </summary>
-    public partial class NSDArtifactProfile
+    public partial class NsdArtifactProfile
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="NSDArtifactProfile"/>. </summary>
-        public NSDArtifactProfile()
+        /// <summary> Initializes a new instance of <see cref="NsdArtifactProfile"/>. </summary>
+        public NsdArtifactProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="NSDArtifactProfile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NsdArtifactProfile"/>. </summary>
         /// <param name="artifactStoreReference"> The artifact store resource id. </param>
         /// <param name="artifactName"> Artifact name. </param>
         /// <param name="artifactVersion"> Artifact version. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NSDArtifactProfile(ReferencedResource artifactStoreReference, string artifactName, string artifactVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NsdArtifactProfile(ReferencedResource artifactStoreReference, string artifactName, string artifactVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ArtifactStoreReference = artifactStoreReference;
             ArtifactName = artifactName;

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="managedResourceGroupConfiguration"></param>
         /// <param name="storageResourceId"> The created storage resource id. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ArtifactStorePropertiesFormat(ProvisioningState? provisioningState, ArtifactStoreType? storeType, BackingResourcePublicNetworkAccess? backingResourcePublicNetworkAccess, ArtifactReplicationStrategy? replicationStrategy, ArtifactStorePropertiesFormatManagedResourceGroupConfiguration managedResourceGroupConfiguration, ResourceIdentifier storageResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ArtifactStorePropertiesFormat(ProvisioningState? provisioningState, ArtifactStoreType? storeType, BackingResourcePublicNetworkAccess? backingResourcePublicNetworkAccess, ArtifactReplicationStrategy? replicationStrategy, ArtifactStorePropertiesFormatManagedResourceGroupConfiguration managedResourceGroupConfiguration, AzureLocation? storageResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             StoreType = storeType;
@@ -57,6 +57,6 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         public ArtifactStorePropertiesFormatManagedResourceGroupConfiguration ManagedResourceGroupConfiguration { get; set; }
 
         /// <summary> The created storage resource id. </summary>
-        public ResourceIdentifier StorageResourceId { get; }
+        public AzureLocation? StorageResourceId { get; }
     }
 }
