@@ -72,12 +72,6 @@ namespace Azure.ResourceManager.SecurityCenter
 
 #nullable disable
 
-#pragma warning disable CS0618
-#pragma warning disable CS0169
-#pragma warning disable SA1508
-#pragma warning disable SA1516
-#pragma warning disable CA1822
-
 namespace Azure.ResourceManager.SecurityCenter
 {
     // Compatibility customization: preserves Azure.ResourceManager.SecurityCenter 1.1.0 public API shape during the MPG migration.
@@ -125,12 +119,6 @@ namespace Azure.ResourceManager.SecurityCenter
 
 #nullable disable
 
-#pragma warning disable CS0618
-#pragma warning disable CS0169
-#pragma warning disable SA1508
-#pragma warning disable SA1516
-#pragma warning disable CA1822
-
 namespace Azure.ResourceManager.SecurityCenter
 {
     // Compatibility customization: preserves Azure.ResourceManager.SecurityCenter 1.1.0 public API shape during the MPG migration.
@@ -140,12 +128,10 @@ namespace Azure.ResourceManager.SecurityCenter
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("Data")]
     public partial class SecurityConnectorGovernanceRuleResource
     {
-#pragma warning disable CS0618 // Type is retained for API compatibility.
         /// <summary>
         /// Gets the Data value preserved from the previous public API surface.
         /// </summary>
         public virtual Azure.ResourceManager.SecurityCenter.GovernanceRuleData Data { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
-#pragma warning restore CS0618
         /// <summary>
         /// Provides a compatibility shim for the ExecuteRule operation preserved from the previous public API surface.
         /// </summary>

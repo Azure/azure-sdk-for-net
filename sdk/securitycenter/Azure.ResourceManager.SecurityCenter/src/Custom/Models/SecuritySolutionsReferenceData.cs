@@ -3,8 +3,6 @@
 
 #nullable disable
 
-#pragma warning disable AZC0032 // Legacy compatibility type name from previous GA API surface.
-
 using System;
 using System.ComponentModel;
 using Azure.Core;

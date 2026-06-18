@@ -3,12 +3,6 @@
 
 #nullable disable
 
-#pragma warning disable CS0618
-#pragma warning disable CS0169
-#pragma warning disable SA1508
-#pragma warning disable SA1516
-#pragma warning disable CA1822
-
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     // Compatibility customization: preserves Azure.ResourceManager.SecurityCenter 1.1.0 public API shape during the MPG migration.
@@ -18,8 +12,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
     public readonly partial struct SecurityCenterCloudPermission : System.IEquatable<Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudPermission>
     {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
         /// <summary>
         /// Initializes a new instance of the <see cref="SecurityCenterCloudPermission"/> type for compatibility with the previous public API surface.
         /// </summary>
