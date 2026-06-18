@@ -17,6 +17,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// Gets or sets the Configuration value preserved from the previous public API surface.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public new Azure.ResourceManager.SecurityCenter.Models.DefenderCspmAwsOfferingVmScannersConfiguration Configuration { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public new DefenderCspmAwsOfferingVmScannersConfiguration Configuration { get; set; }
     }
 }

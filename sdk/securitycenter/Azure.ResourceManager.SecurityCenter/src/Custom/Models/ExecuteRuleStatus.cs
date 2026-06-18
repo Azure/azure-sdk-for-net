@@ -3,7 +3,10 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.ComponentModel;
+using System.Text.Json;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -12,17 +15,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// Provides a compatibility shim for the ExecuteRuleStatus class.
     /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public partial class ExecuteRuleStatus : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.Models.ExecuteRuleStatus>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.Models.ExecuteRuleStatus>
+    public partial class ExecuteRuleStatus : IJsonModel<ExecuteRuleStatus>, IPersistableModel<ExecuteRuleStatus>
     {
         internal ExecuteRuleStatus() { }
         /// <summary>
         /// Gets the OperationId value preserved from the previous public API surface.
         /// </summary>
-        public string OperationId { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
-        Azure.ResourceManager.SecurityCenter.Models.ExecuteRuleStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.Models.ExecuteRuleStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.Models.ExecuteRuleStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.SecurityCenter.Models.ExecuteRuleStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.Models.ExecuteRuleStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.Models.ExecuteRuleStatus>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.Models.ExecuteRuleStatus>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
+        public string OperationId { get; }
+        ExecuteRuleStatus IJsonModel<ExecuteRuleStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) { throw new NotSupportedException("This API is no longer supported by the service."); }
+        void IJsonModel<ExecuteRuleStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+        ExecuteRuleStatus IPersistableModel<ExecuteRuleStatus>.Create(System.BinaryData data, ModelReaderWriterOptions options) { throw new NotSupportedException("This API is no longer supported by the service."); }
+        string IPersistableModel<ExecuteRuleStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) { throw new NotSupportedException("This API is no longer supported by the service."); }
+        System.BinaryData IPersistableModel<ExecuteRuleStatus>.Write(ModelReaderWriterOptions options) { throw new NotSupportedException("This API is no longer supported by the service."); }
     }
 }

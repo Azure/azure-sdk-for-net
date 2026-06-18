@@ -3,16 +3,20 @@
 
 #nullable disable
 
+using System.ClientModel.Primitives;
 using System.ComponentModel;
+using System.Text.Json;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    // The latest TypeSpec removed this legacy resource or operation path, so the generator cannot emit the previous GA management-plane method; keep a hidden shim for ApiCompat and throw because the service path is no longer supported.
+    // The latest TypeSpec no longer describes this legacy resource data shape, so the generator cannot emit the previous GA model. Keep a hidden stateful shim for ApiCompat.
     /// <summary>
     /// Provides a compatibility shim for the CustomAssessmentAutomationData class.
     /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public partial class CustomAssessmentAutomationData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.CustomAssessmentAutomationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.CustomAssessmentAutomationData>
+    public partial class CustomAssessmentAutomationData : ResourceData, IJsonModel<CustomAssessmentAutomationData>, IPersistableModel<CustomAssessmentAutomationData>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CustomAssessmentAutomationData"/> type for compatibility with the previous public API surface.
@@ -21,41 +25,41 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary>
         /// Gets or sets the AssessmentKey value preserved from the previous public API surface.
         /// </summary>
-        public string AssessmentKey { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public string AssessmentKey { get; set; }
         /// <summary>
         /// Gets or sets the CompressedQuery value preserved from the previous public API surface.
         /// </summary>
-        public string CompressedQuery { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public string CompressedQuery { get; set; }
         /// <summary>
         /// Gets or sets the Description value preserved from the previous public API surface.
         /// </summary>
-        public string Description { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public string Description { get; set; }
         /// <summary>
         /// Gets or sets the DisplayName value preserved from the previous public API surface.
         /// </summary>
-        public string DisplayName { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public string DisplayName { get; set; }
         /// <summary>
         /// Gets or sets the RemediationDescription value preserved from the previous public API surface.
         /// </summary>
-        public string RemediationDescription { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public string RemediationDescription { get; set; }
         /// <summary>
         /// Gets or sets the Severity value preserved from the previous public API surface.
         /// </summary>
-        public Azure.ResourceManager.SecurityCenter.Models.CustomAssessmentSeverity? Severity { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public CustomAssessmentSeverity? Severity { get; set; }
         /// <summary>
         /// Gets or sets the SupportedCloud value preserved from the previous public API surface.
         /// </summary>
-        public Azure.ResourceManager.SecurityCenter.Models.CustomAssessmentAutomationSupportedCloud? SupportedCloud { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public CustomAssessmentAutomationSupportedCloud? SupportedCloud { get; set; }
         /// <summary>
         /// Provides a compatibility shim for the JsonModelWriteCore operation preserved from the previous public API surface.
         /// </summary>
         /// <param name="writer">The value preserved for API compatibility.</param>
         /// <param name="options">The value preserved for API compatibility.</param>
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.SecurityCenter.CustomAssessmentAutomationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.CustomAssessmentAutomationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.CustomAssessmentAutomationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.SecurityCenter.CustomAssessmentAutomationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.CustomAssessmentAutomationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.CustomAssessmentAutomationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.CustomAssessmentAutomationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+        CustomAssessmentAutomationData IJsonModel<CustomAssessmentAutomationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
+        void IJsonModel<CustomAssessmentAutomationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+        CustomAssessmentAutomationData IPersistableModel<CustomAssessmentAutomationData>.Create(System.BinaryData data, ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
+        string IPersistableModel<CustomAssessmentAutomationData>.GetFormatFromOptions(ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
+        System.BinaryData IPersistableModel<CustomAssessmentAutomationData>.Write(ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
     }
 }

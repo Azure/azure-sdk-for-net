@@ -3,7 +3,10 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.ComponentModel;
+using System.Text.Json;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -12,7 +15,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// Provides a compatibility shim for the GcpCredentialsDetailsProperties class.
     /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public partial class GcpCredentialsDetailsProperties : Azure.ResourceManager.SecurityCenter.Models.AuthenticationDetailsProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.Models.GcpCredentialsDetailsProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.Models.GcpCredentialsDetailsProperties>
+    public partial class GcpCredentialsDetailsProperties : AuthenticationDetailsProperties, IJsonModel<GcpCredentialsDetailsProperties>, IPersistableModel<GcpCredentialsDetailsProperties>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="GcpCredentialsDetailsProperties"/> type for compatibility with the previous public API surface.
@@ -32,57 +35,57 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary>
         /// Gets or sets the AuthProviderX509CertUri value preserved from the previous public API surface.
         /// </summary>
-        public System.Uri AuthProviderX509CertUri { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public System.Uri AuthProviderX509CertUri { get; set; }
         /// <summary>
         /// Gets or sets the AuthUri value preserved from the previous public API surface.
         /// </summary>
-        public System.Uri AuthUri { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public System.Uri AuthUri { get; set; }
         /// <summary>
         /// Gets or sets the ClientEmail value preserved from the previous public API surface.
         /// </summary>
-        public string ClientEmail { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public string ClientEmail { get; set; }
         /// <summary>
         /// Gets or sets the ClientId value preserved from the previous public API surface.
         /// </summary>
-        public string ClientId { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public string ClientId { get; set; }
         /// <summary>
         /// Gets or sets the ClientX509CertUri value preserved from the previous public API surface.
         /// </summary>
-        public System.Uri ClientX509CertUri { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public System.Uri ClientX509CertUri { get; set; }
         /// <summary>
         /// Gets or sets the GcpCredentialType value preserved from the previous public API surface.
         /// </summary>
-        public string GcpCredentialType { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public string GcpCredentialType { get; set; }
         /// <summary>
         /// Gets or sets the OrganizationId value preserved from the previous public API surface.
         /// </summary>
-        public string OrganizationId { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public string OrganizationId { get; set; }
         /// <summary>
         /// Gets or sets the PrivateKey value preserved from the previous public API surface.
         /// </summary>
-        public string PrivateKey { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public string PrivateKey { get; set; }
         /// <summary>
         /// Gets or sets the PrivateKeyId value preserved from the previous public API surface.
         /// </summary>
-        public string PrivateKeyId { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public string PrivateKeyId { get; set; }
         /// <summary>
         /// Gets or sets the ProjectId value preserved from the previous public API surface.
         /// </summary>
-        public string ProjectId { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public string ProjectId { get; set; }
         /// <summary>
         /// Gets or sets the TokenUri value preserved from the previous public API surface.
         /// </summary>
-        public System.Uri TokenUri { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public System.Uri TokenUri { get; set; }
         /// <summary>
         /// Provides a compatibility shim for the JsonModelWriteCore operation preserved from the previous public API surface.
         /// </summary>
         /// <param name="writer">The value preserved for API compatibility.</param>
         /// <param name="options">The value preserved for API compatibility.</param>
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.SecurityCenter.Models.GcpCredentialsDetailsProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.Models.GcpCredentialsDetailsProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.Models.GcpCredentialsDetailsProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.SecurityCenter.Models.GcpCredentialsDetailsProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.Models.GcpCredentialsDetailsProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.Models.GcpCredentialsDetailsProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.Models.GcpCredentialsDetailsProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+        GcpCredentialsDetailsProperties IJsonModel<GcpCredentialsDetailsProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) { throw new NotSupportedException("This API is no longer supported by the service."); }
+        void IJsonModel<GcpCredentialsDetailsProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+        GcpCredentialsDetailsProperties IPersistableModel<GcpCredentialsDetailsProperties>.Create(System.BinaryData data, ModelReaderWriterOptions options) { throw new NotSupportedException("This API is no longer supported by the service."); }
+        string IPersistableModel<GcpCredentialsDetailsProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) { throw new NotSupportedException("This API is no longer supported by the service."); }
+        System.BinaryData IPersistableModel<GcpCredentialsDetailsProperties>.Write(ModelReaderWriterOptions options) { throw new NotSupportedException("This API is no longer supported by the service."); }
     }
 }

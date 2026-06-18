@@ -3,7 +3,10 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.ComponentModel;
+using System.Text.Json;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -12,7 +15,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// Provides a compatibility shim for the ProxyServerProperties class.
     /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public partial class ProxyServerProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.Models.ProxyServerProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.Models.ProxyServerProperties>
+    public partial class ProxyServerProperties : IJsonModel<ProxyServerProperties>, IPersistableModel<ProxyServerProperties>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ProxyServerProperties"/> type for compatibility with the previous public API surface.
@@ -21,21 +24,21 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary>
         /// Gets or sets the IP value preserved from the previous public API surface.
         /// </summary>
-        public string IP { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public string IP { get; set; }
         /// <summary>
         /// Gets or sets the Port value preserved from the previous public API surface.
         /// </summary>
-        public string Port { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public string Port { get; set; }
         /// <summary>
         /// Provides a compatibility shim for the JsonModelWriteCore operation preserved from the previous public API surface.
         /// </summary>
         /// <param name="writer">The value preserved for API compatibility.</param>
         /// <param name="options">The value preserved for API compatibility.</param>
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.SecurityCenter.Models.ProxyServerProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.Models.ProxyServerProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.Models.ProxyServerProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.SecurityCenter.Models.ProxyServerProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.Models.ProxyServerProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.Models.ProxyServerProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.Models.ProxyServerProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+        ProxyServerProperties IJsonModel<ProxyServerProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) { throw new NotSupportedException("This API is no longer supported by the service."); }
+        void IJsonModel<ProxyServerProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+        ProxyServerProperties IPersistableModel<ProxyServerProperties>.Create(System.BinaryData data, ModelReaderWriterOptions options) { throw new NotSupportedException("This API is no longer supported by the service."); }
+        string IPersistableModel<ProxyServerProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) { throw new NotSupportedException("This API is no longer supported by the service."); }
+        System.BinaryData IPersistableModel<ProxyServerProperties>.Write(ModelReaderWriterOptions options) { throw new NotSupportedException("This API is no longer supported by the service."); }
     }
 }

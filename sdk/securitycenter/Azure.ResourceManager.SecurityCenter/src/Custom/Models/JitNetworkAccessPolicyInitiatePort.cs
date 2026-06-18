@@ -17,6 +17,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// Gets the EndOn value preserved from the previous public API surface.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public System.DateTimeOffset EndOn { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public System.DateTimeOffset EndOn { get; }
     }
 }

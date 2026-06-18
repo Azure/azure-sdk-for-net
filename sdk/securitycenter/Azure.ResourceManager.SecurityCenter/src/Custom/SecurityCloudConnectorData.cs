@@ -3,16 +3,20 @@
 
 #nullable disable
 
+using System.ClientModel.Primitives;
 using System.ComponentModel;
+using System.Text.Json;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    // The latest TypeSpec removed this legacy resource or operation path, so the generator cannot emit the previous GA management-plane method; keep a hidden shim for ApiCompat and throw because the service path is no longer supported.
+    // The latest TypeSpec no longer describes this legacy resource data shape, so the generator cannot emit the previous GA model. Keep a hidden stateful shim for ApiCompat.
     /// <summary>
     /// Provides a compatibility shim for the SecurityCloudConnectorData class.
     /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public partial class SecurityCloudConnectorData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.SecurityCloudConnectorData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.SecurityCloudConnectorData>
+    public partial class SecurityCloudConnectorData : ResourceData, IJsonModel<SecurityCloudConnectorData>, IPersistableModel<SecurityCloudConnectorData>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="SecurityCloudConnectorData"/> type for compatibility with the previous public API surface.
@@ -21,21 +25,21 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary>
         /// Gets or sets the AuthenticationDetails value preserved from the previous public API surface.
         /// </summary>
-        public Azure.ResourceManager.SecurityCenter.Models.AuthenticationDetailsProperties AuthenticationDetails { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public AuthenticationDetailsProperties AuthenticationDetails { get; set; }
         /// <summary>
         /// Gets or sets the HybridComputeSettings value preserved from the previous public API surface.
         /// </summary>
-        public Azure.ResourceManager.SecurityCenter.Models.HybridComputeSettingsProperties HybridComputeSettings { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public HybridComputeSettingsProperties HybridComputeSettings { get; set; }
         /// <summary>
         /// Provides a compatibility shim for the JsonModelWriteCore operation preserved from the previous public API surface.
         /// </summary>
         /// <param name="writer">The value preserved for API compatibility.</param>
         /// <param name="options">The value preserved for API compatibility.</param>
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.SecurityCenter.SecurityCloudConnectorData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.SecurityCloudConnectorData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.SecurityCloudConnectorData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.SecurityCenter.SecurityCloudConnectorData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.SecurityCloudConnectorData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.SecurityCloudConnectorData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.SecurityCloudConnectorData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+        SecurityCloudConnectorData IJsonModel<SecurityCloudConnectorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
+        void IJsonModel<SecurityCloudConnectorData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+        SecurityCloudConnectorData IPersistableModel<SecurityCloudConnectorData>.Create(System.BinaryData data, ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
+        string IPersistableModel<SecurityCloudConnectorData>.GetFormatFromOptions(ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
+        System.BinaryData IPersistableModel<SecurityCloudConnectorData>.Write(ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
     }
 }

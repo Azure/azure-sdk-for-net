@@ -17,31 +17,31 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// Gets or sets the IsAutoProvisioningEnabled value preserved from the previous public API surface.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public bool? IsAutoProvisioningEnabled { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public bool? IsAutoProvisioningEnabled { get; set; }
         /// <summary>
         /// Gets or sets the IsContainerVulnerabilityAssessmentEnabled value preserved from the previous public API surface.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public bool? IsContainerVulnerabilityAssessmentEnabled { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public bool? IsContainerVulnerabilityAssessmentEnabled { get; set; }
         /// <summary>
         /// Gets or sets the ContainerVulnerabilityAssessmentCloudRoleArn value preserved from the previous public API surface.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public string ContainerVulnerabilityAssessmentCloudRoleArn { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public string ContainerVulnerabilityAssessmentCloudRoleArn { get; set; }
         /// <summary>
         /// Gets or sets the ContainerVulnerabilityAssessmentTaskCloudRoleArn value preserved from the previous public API surface.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public string ContainerVulnerabilityAssessmentTaskCloudRoleArn { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public string ContainerVulnerabilityAssessmentTaskCloudRoleArn { get; set; }
         /// <summary>
         /// Gets or sets the KubernetesScubaReaderCloudRoleArn value preserved from the previous public API surface.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public string KubernetesScubaReaderCloudRoleArn { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public string KubernetesScubaReaderCloudRoleArn { get; set; }
         /// <summary>
         /// Gets or sets the ScubaExternalId value preserved from the previous public API surface.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public string ScubaExternalId { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public string ScubaExternalId { get; set; }
     }
 }

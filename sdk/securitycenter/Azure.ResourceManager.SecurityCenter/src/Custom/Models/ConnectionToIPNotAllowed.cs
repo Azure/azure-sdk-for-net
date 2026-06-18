@@ -3,7 +3,11 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Text.Json;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -12,24 +16,24 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// Provides a compatibility shim for the ConnectionToIPNotAllowed class.
     /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public partial class ConnectionToIPNotAllowed : Azure.ResourceManager.SecurityCenter.Models.AllowlistCustomAlertRule, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.Models.ConnectionToIPNotAllowed>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.Models.ConnectionToIPNotAllowed>
+    public partial class ConnectionToIPNotAllowed : AllowlistCustomAlertRule, IJsonModel<ConnectionToIPNotAllowed>, IPersistableModel<ConnectionToIPNotAllowed>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ConnectionToIPNotAllowed"/> type for compatibility with the previous public API surface.
         /// </summary>
         /// <param name="isEnabled">The value preserved for API compatibility.</param>
         /// <param name="allowlistValues">The value preserved for API compatibility.</param>
-        public ConnectionToIPNotAllowed(bool isEnabled, System.Collections.Generic.IEnumerable<string> allowlistValues) : base(default(bool), default(System.Collections.Generic.IEnumerable<string>)) { }
+        public ConnectionToIPNotAllowed(bool isEnabled, IEnumerable<string> allowlistValues) : base(default(bool), default(IEnumerable<string>)) { }
         /// <summary>
         /// Provides a compatibility shim for the JsonModelWriteCore operation preserved from the previous public API surface.
         /// </summary>
         /// <param name="writer">The value preserved for API compatibility.</param>
         /// <param name="options">The value preserved for API compatibility.</param>
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.SecurityCenter.Models.ConnectionToIPNotAllowed System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.Models.ConnectionToIPNotAllowed>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.Models.ConnectionToIPNotAllowed>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.SecurityCenter.Models.ConnectionToIPNotAllowed System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.Models.ConnectionToIPNotAllowed>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.Models.ConnectionToIPNotAllowed>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.Models.ConnectionToIPNotAllowed>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+        ConnectionToIPNotAllowed IJsonModel<ConnectionToIPNotAllowed>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) { throw new NotSupportedException("This API is no longer supported by the service."); }
+        void IJsonModel<ConnectionToIPNotAllowed>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+        ConnectionToIPNotAllowed IPersistableModel<ConnectionToIPNotAllowed>.Create(System.BinaryData data, ModelReaderWriterOptions options) { throw new NotSupportedException("This API is no longer supported by the service."); }
+        string IPersistableModel<ConnectionToIPNotAllowed>.GetFormatFromOptions(ModelReaderWriterOptions options) { throw new NotSupportedException("This API is no longer supported by the service."); }
+        System.BinaryData IPersistableModel<ConnectionToIPNotAllowed>.Write(ModelReaderWriterOptions options) { throw new NotSupportedException("This API is no longer supported by the service."); }
     }
 }

@@ -17,6 +17,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// Gets the Name value preserved from the previous public API surface.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public string Name { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public string Name { get; }
     }
 }

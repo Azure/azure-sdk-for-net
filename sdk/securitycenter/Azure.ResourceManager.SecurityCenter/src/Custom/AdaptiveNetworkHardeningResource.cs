@@ -25,11 +25,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary>
         /// Gets the Data value preserved from the previous public API surface.
         /// </summary>
-        public virtual Azure.ResourceManager.SecurityCenter.AdaptiveNetworkHardeningData Data { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public virtual Azure.ResourceManager.SecurityCenter.AdaptiveNetworkHardeningData Data { get; } = new Azure.ResourceManager.SecurityCenter.AdaptiveNetworkHardeningData();
         /// <summary>
         /// Gets the HasData value preserved from the previous public API surface.
         /// </summary>
-        public virtual bool HasData { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public virtual bool HasData { get; } = true;
         /// <summary>
         /// Provides a compatibility shim for the CreateResourceIdentifier operation preserved from the previous public API surface.
         /// </summary>

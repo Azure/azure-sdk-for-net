@@ -3,8 +3,8 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
+using ResourceSubResource = Azure.ResourceManager.Resources.Models.SubResource;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -15,6 +15,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public SecureScoreControlDefinitionItem() { }
 
         /// <summary> The Azure resource links of the assessment definitions. </summary>
-        public IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> AssessmentDefinitions => throw new NotSupportedException("This API is no longer supported by the service.");
+        public IReadOnlyList<ResourceSubResource> AssessmentDefinitions { get; } = new List<ResourceSubResource>();
     }
 }

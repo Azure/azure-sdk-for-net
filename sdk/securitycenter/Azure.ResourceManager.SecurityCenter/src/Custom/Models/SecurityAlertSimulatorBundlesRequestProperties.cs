@@ -3,6 +3,8 @@
 
 #nullable disable
 
+using System.Collections.Generic;
+
 using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
@@ -17,10 +19,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary>
         /// Initializes a new instance of the <see cref="SecurityAlertSimulatorBundlesRequestProperties"/> type for compatibility with the previous public API surface.
         /// </summary>
-        public SecurityAlertSimulatorBundlesRequestProperties() : base(default(SecurityCenterKind)) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
+        public SecurityAlertSimulatorBundlesRequestProperties() : base(default(SecurityCenterKind)) { }
         /// <summary>
         /// Gets the Bundles value preserved from the previous public API surface.
         /// </summary>
-        public System.Collections.Generic.IList<Azure.ResourceManager.SecurityCenter.Models.SecurityAlertSimulatorBundleType> Bundles { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public IList<SecurityAlertSimulatorBundleType> Bundles { get; } = new List<SecurityAlertSimulatorBundleType>();
     }
 }

@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="pricingName">The value preserved for API compatibility.</param>
         /// <param name="cancellationToken">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
-[Azure.Core.ForwardsClientCalls]
+        [Azure.Core.ForwardsClientCalls]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static Azure.Response<Azure.ResourceManager.SecurityCenter.SecurityCenterPricingResource> GetSecurityCenterPricing(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string pricingName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
         /// <summary>
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="topologyResourceName">The value preserved for API compatibility.</param>
         /// <param name="cancellationToken">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
-[Azure.Core.ForwardsClientCalls]
+        [Azure.Core.ForwardsClientCalls]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static Azure.Response<Azure.ResourceManager.SecurityCenter.Models.SecurityTopologyResource> GetTopology(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, Azure.Core.AzureLocation ascLocation, string topologyResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
         /// <summary>
@@ -536,10 +536,10 @@ namespace Azure.ResourceManager.SecurityCenter
 namespace Azure.ResourceManager.SecurityCenter
 {
     // The latest TypeSpec removed this legacy resource or operation path, so the generator cannot emit the previous GA management-plane method; keep a hidden shim for ApiCompat and throw because the service path is no longer supported.
-/// <summary>
-/// Provides a compatibility shim for the SecurityCenterExtensions class.
-/// </summary>
-public static partial class SecurityCenterExtensions
+    /// <summary>
+    /// Provides a compatibility shim for the SecurityCenterExtensions class.
+    /// </summary>
+    public static partial class SecurityCenterExtensions
     {
         /// <summary>
         /// Provides a compatibility shim for the GetAdaptiveApplicationControlGroupResource operation preserved from the previous public API surface.

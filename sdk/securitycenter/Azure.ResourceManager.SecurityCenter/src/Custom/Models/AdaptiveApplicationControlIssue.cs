@@ -3,6 +3,8 @@
 
 #nullable disable
 
+using System;
+
 using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
@@ -12,78 +14,79 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// Provides a compatibility shim for the AdaptiveApplicationControlIssue structure.
     /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public readonly partial struct AdaptiveApplicationControlIssue : System.IEquatable<Azure.ResourceManager.SecurityCenter.Models.AdaptiveApplicationControlIssue>
+    public readonly partial struct AdaptiveApplicationControlIssue : IEquatable<AdaptiveApplicationControlIssue>
     {
+        private readonly string _value;
         /// <summary>
         /// Initializes a new instance of the <see cref="AdaptiveApplicationControlIssue"/> type for compatibility with the previous public API surface.
         /// </summary>
         /// <param name="value">The value preserved for API compatibility.</param>
-        public AdaptiveApplicationControlIssue(string value) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
+        public AdaptiveApplicationControlIssue(string value) => _value = value ?? throw new ArgumentNullException(nameof(value));
         /// <summary>
         /// Gets the ExecutableViolationsAudited value preserved from the previous public API surface.
         /// </summary>
-        public static Azure.ResourceManager.SecurityCenter.Models.AdaptiveApplicationControlIssue ExecutableViolationsAudited { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public static AdaptiveApplicationControlIssue ExecutableViolationsAudited { get; } = new AdaptiveApplicationControlIssue("ExecutableViolationsAudited");
         /// <summary>
         /// Gets the MsiAndScriptViolationsAudited value preserved from the previous public API surface.
         /// </summary>
-        public static Azure.ResourceManager.SecurityCenter.Models.AdaptiveApplicationControlIssue MsiAndScriptViolationsAudited { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public static AdaptiveApplicationControlIssue MsiAndScriptViolationsAudited { get; } = new AdaptiveApplicationControlIssue("MsiAndScriptViolationsAudited");
         /// <summary>
         /// Gets the MsiAndScriptViolationsBlocked value preserved from the previous public API surface.
         /// </summary>
-        public static Azure.ResourceManager.SecurityCenter.Models.AdaptiveApplicationControlIssue MsiAndScriptViolationsBlocked { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public static AdaptiveApplicationControlIssue MsiAndScriptViolationsBlocked { get; } = new AdaptiveApplicationControlIssue("MsiAndScriptViolationsBlocked");
         /// <summary>
         /// Gets the RulesViolatedManually value preserved from the previous public API surface.
         /// </summary>
-        public static Azure.ResourceManager.SecurityCenter.Models.AdaptiveApplicationControlIssue RulesViolatedManually { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public static AdaptiveApplicationControlIssue RulesViolatedManually { get; } = new AdaptiveApplicationControlIssue("RulesViolatedManually");
         /// <summary>
         /// Gets the ViolationsAudited value preserved from the previous public API surface.
         /// </summary>
-        public static Azure.ResourceManager.SecurityCenter.Models.AdaptiveApplicationControlIssue ViolationsAudited { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public static AdaptiveApplicationControlIssue ViolationsAudited { get; } = new AdaptiveApplicationControlIssue("ViolationsAudited");
         /// <summary>
         /// Gets the ViolationsBlocked value preserved from the previous public API surface.
         /// </summary>
-        public static Azure.ResourceManager.SecurityCenter.Models.AdaptiveApplicationControlIssue ViolationsBlocked { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public static AdaptiveApplicationControlIssue ViolationsBlocked { get; } = new AdaptiveApplicationControlIssue("ViolationsBlocked");
         /// <summary>
         /// Provides a compatibility shim for the Equals operation preserved from the previous public API surface.
         /// </summary>
         /// <param name="other">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
-        public bool Equals(Azure.ResourceManager.SecurityCenter.Models.AdaptiveApplicationControlIssue other) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
+        public bool Equals(AdaptiveApplicationControlIssue other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
         /// <summary>
         /// Provides a compatibility shim for the Equals operation preserved from the previous public API surface.
         /// </summary>
         /// <param name="obj">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
-        public override bool Equals(object obj) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
+        public override bool Equals(object obj) => obj is AdaptiveApplicationControlIssue other && Equals(other);
         /// <summary>
         /// Provides a compatibility shim for the GetHashCode operation preserved from the previous public API surface.
         /// </summary>
         /// <returns>The compatibility result.</returns>
-        public override int GetHashCode() { throw new System.NotSupportedException("This API is no longer supported by the service."); }
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <summary>
         /// Provides a compatibility operator preserved from the previous public API surface.
         /// </summary>
         /// <param name="left">The value used by the compatibility operator.</param>
         /// <param name="right">The value used by the compatibility operator.</param>
         /// <returns>The compatibility operator result.</returns>
-        public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.AdaptiveApplicationControlIssue left, Azure.ResourceManager.SecurityCenter.Models.AdaptiveApplicationControlIssue right) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
+        public static bool operator ==(AdaptiveApplicationControlIssue left, AdaptiveApplicationControlIssue right) => left.Equals(right);
         /// <summary>
         /// Provides a compatibility conversion operator preserved from the previous public API surface.
         /// </summary>
         /// <param name="value">The value preserved for API compatibility.</param>
         /// <returns>The converted compatibility value.</returns>
-        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.AdaptiveApplicationControlIssue(string value) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
+        public static implicit operator AdaptiveApplicationControlIssue(string value) => new AdaptiveApplicationControlIssue(value);
         /// <summary>
         /// Provides a compatibility operator preserved from the previous public API surface.
         /// </summary>
         /// <param name="left">The value used by the compatibility operator.</param>
         /// <param name="right">The value used by the compatibility operator.</param>
         /// <returns>The compatibility operator result.</returns>
-        public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.AdaptiveApplicationControlIssue left, Azure.ResourceManager.SecurityCenter.Models.AdaptiveApplicationControlIssue right) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
+        public static bool operator !=(AdaptiveApplicationControlIssue left, AdaptiveApplicationControlIssue right) => !left.Equals(right);
         /// <summary>
         /// Provides a compatibility shim for the ToString operation preserved from the previous public API surface.
         /// </summary>
         /// <returns>The compatibility result.</returns>
-        public override string ToString() { throw new System.NotSupportedException("This API is no longer supported by the service."); }
+        public override string ToString() => _value ?? string.Empty;
     }
 }

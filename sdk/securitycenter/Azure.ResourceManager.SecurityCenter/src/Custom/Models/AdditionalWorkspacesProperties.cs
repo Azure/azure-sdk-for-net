@@ -17,6 +17,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// Gets or sets the WorkspaceType value preserved from the previous public API surface.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public Azure.ResourceManager.SecurityCenter.Models.AdditionalWorkspaceType? WorkspaceType { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public AdditionalWorkspaceType? WorkspaceType { get; set; }
     }
 }

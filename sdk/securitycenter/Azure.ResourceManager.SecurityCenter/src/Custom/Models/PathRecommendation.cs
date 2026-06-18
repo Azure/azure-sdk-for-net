@@ -3,7 +3,11 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Text.Json;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -12,7 +16,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// Provides a compatibility shim for the PathRecommendation class.
     /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public partial class PathRecommendation : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.Models.PathRecommendation>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.Models.PathRecommendation>
+    public partial class PathRecommendation : IJsonModel<PathRecommendation>, IPersistableModel<PathRecommendation>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="PathRecommendation"/> type for compatibility with the previous public API surface.
@@ -21,49 +25,49 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary>
         /// Gets or sets the Action value preserved from the previous public API surface.
         /// </summary>
-        public Azure.ResourceManager.SecurityCenter.Models.RecommendationAction? Action { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public RecommendationAction? Action { get; set; }
         /// <summary>
         /// Gets or sets the ConfigurationStatus value preserved from the previous public API surface.
         /// </summary>
-        public Azure.ResourceManager.SecurityCenter.Models.SecurityCenterConfigurationStatus? ConfigurationStatus { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public SecurityCenterConfigurationStatus? ConfigurationStatus { get; set; }
         /// <summary>
         /// Gets or sets the FileType value preserved from the previous public API surface.
         /// </summary>
-        public Azure.ResourceManager.SecurityCenter.Models.PathRecommendationFileType? FileType { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public PathRecommendationFileType? FileType { get; set; }
         /// <summary>
         /// Gets or sets the IotSecurityRecommendationType value preserved from the previous public API surface.
         /// </summary>
-        public Azure.ResourceManager.SecurityCenter.Models.IotSecurityRecommendationType? IotSecurityRecommendationType { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public IotSecurityRecommendationType? IotSecurityRecommendationType { get; set; }
         /// <summary>
         /// Gets or sets the IsCommon value preserved from the previous public API surface.
         /// </summary>
-        public bool? IsCommon { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public bool? IsCommon { get; set; }
         /// <summary>
         /// Gets or sets the Path value preserved from the previous public API surface.
         /// </summary>
-        public string Path { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public string Path { get; set; }
         /// <summary>
         /// Gets or sets the PublisherInfo value preserved from the previous public API surface.
         /// </summary>
-        public Azure.ResourceManager.SecurityCenter.Models.SecurityCenterPublisherInfo PublisherInfo { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public SecurityCenterPublisherInfo PublisherInfo { get; set; }
         /// <summary>
         /// Gets the Usernames value preserved from the previous public API surface.
         /// </summary>
-        public System.Collections.Generic.IList<Azure.ResourceManager.SecurityCenter.Models.UserRecommendation> Usernames { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public IList<UserRecommendation> Usernames { get; } = new List<UserRecommendation>();
         /// <summary>
         /// Gets the UserSids value preserved from the previous public API surface.
         /// </summary>
-        public System.Collections.Generic.IList<string> UserSids { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public IList<string> UserSids { get; } = new List<string>();
         /// <summary>
         /// Provides a compatibility shim for the JsonModelWriteCore operation preserved from the previous public API surface.
         /// </summary>
         /// <param name="writer">The value preserved for API compatibility.</param>
         /// <param name="options">The value preserved for API compatibility.</param>
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.SecurityCenter.Models.PathRecommendation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.Models.PathRecommendation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.Models.PathRecommendation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.SecurityCenter.Models.PathRecommendation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.Models.PathRecommendation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.Models.PathRecommendation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.Models.PathRecommendation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+        PathRecommendation IJsonModel<PathRecommendation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) { throw new NotSupportedException("This API is no longer supported by the service."); }
+        void IJsonModel<PathRecommendation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+        PathRecommendation IPersistableModel<PathRecommendation>.Create(System.BinaryData data, ModelReaderWriterOptions options) { throw new NotSupportedException("This API is no longer supported by the service."); }
+        string IPersistableModel<PathRecommendation>.GetFormatFromOptions(ModelReaderWriterOptions options) { throw new NotSupportedException("This API is no longer supported by the service."); }
+        System.BinaryData IPersistableModel<PathRecommendation>.Write(ModelReaderWriterOptions options) { throw new NotSupportedException("This API is no longer supported by the service."); }
     }
 }

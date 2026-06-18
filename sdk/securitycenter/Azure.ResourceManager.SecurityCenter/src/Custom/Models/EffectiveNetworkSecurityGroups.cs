@@ -3,7 +3,11 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Text.Json;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -11,8 +15,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary>
     /// Provides a compatibility shim for the EffectiveNetworkSecurityGroups class.
     /// </summary>
-[EditorBrowsable(EditorBrowsableState.Never)]
-    public partial class EffectiveNetworkSecurityGroups : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.Models.EffectiveNetworkSecurityGroups>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.Models.EffectiveNetworkSecurityGroups>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public partial class EffectiveNetworkSecurityGroups : IJsonModel<EffectiveNetworkSecurityGroups>, IPersistableModel<EffectiveNetworkSecurityGroups>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="EffectiveNetworkSecurityGroups"/> type for compatibility with the previous public API surface.
@@ -21,21 +25,21 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary>
         /// Gets or sets the NetworkInterface value preserved from the previous public API surface.
         /// </summary>
-        public string NetworkInterface { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public string NetworkInterface { get; set; }
         /// <summary>
         /// Gets the NetworkSecurityGroups value preserved from the previous public API surface.
         /// </summary>
-        public System.Collections.Generic.IList<string> NetworkSecurityGroups { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public IList<string> NetworkSecurityGroups { get; } = new List<string>();
         /// <summary>
         /// Provides a compatibility shim for the JsonModelWriteCore operation preserved from the previous public API surface.
         /// </summary>
         /// <param name="writer">The value preserved for API compatibility.</param>
         /// <param name="options">The value preserved for API compatibility.</param>
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.SecurityCenter.Models.EffectiveNetworkSecurityGroups System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.Models.EffectiveNetworkSecurityGroups>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.Models.EffectiveNetworkSecurityGroups>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.SecurityCenter.Models.EffectiveNetworkSecurityGroups System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.Models.EffectiveNetworkSecurityGroups>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.Models.EffectiveNetworkSecurityGroups>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.Models.EffectiveNetworkSecurityGroups>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+        EffectiveNetworkSecurityGroups IJsonModel<EffectiveNetworkSecurityGroups>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) { throw new NotSupportedException("This API is no longer supported by the service."); }
+        void IJsonModel<EffectiveNetworkSecurityGroups>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+        EffectiveNetworkSecurityGroups IPersistableModel<EffectiveNetworkSecurityGroups>.Create(System.BinaryData data, ModelReaderWriterOptions options) { throw new NotSupportedException("This API is no longer supported by the service."); }
+        string IPersistableModel<EffectiveNetworkSecurityGroups>.GetFormatFromOptions(ModelReaderWriterOptions options) { throw new NotSupportedException("This API is no longer supported by the service."); }
+        System.BinaryData IPersistableModel<EffectiveNetworkSecurityGroups>.Write(ModelReaderWriterOptions options) { throw new NotSupportedException("This API is no longer supported by the service."); }
     }
 }

@@ -3,7 +3,11 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Text.Json;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -12,7 +16,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// Provides a compatibility shim for the AwsEnvironment class.
     /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public partial class AwsEnvironment : Azure.ResourceManager.SecurityCenter.Models.SecurityConnectorEnvironment, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.Models.AwsEnvironment>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.Models.AwsEnvironment>
+    public partial class AwsEnvironment : SecurityConnectorEnvironment, IJsonModel<AwsEnvironment>, IPersistableModel<AwsEnvironment>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="AwsEnvironment"/> type for compatibility with the previous public API surface.
@@ -21,29 +25,29 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary>
         /// Gets the AccountName value preserved from the previous public API surface.
         /// </summary>
-        public string AccountName { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public string AccountName { get; }
         /// <summary>
         /// Gets or sets the OrganizationalData value preserved from the previous public API surface.
         /// </summary>
-        public Azure.ResourceManager.SecurityCenter.Models.AwsOrganizationalInfo OrganizationalData { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public AwsOrganizationalInfo OrganizationalData { get; set; }
         /// <summary>
         /// Gets the Regions value preserved from the previous public API surface.
         /// </summary>
-        public System.Collections.Generic.IList<string> Regions { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public IList<string> Regions { get; } = new List<string>();
         /// <summary>
         /// Gets or sets the ScanInterval value preserved from the previous public API surface.
         /// </summary>
-        public long? ScanInterval { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public long? ScanInterval { get; set; }
         /// <summary>
         /// Provides a compatibility shim for the JsonModelWriteCore operation preserved from the previous public API surface.
         /// </summary>
         /// <param name="writer">The value preserved for API compatibility.</param>
         /// <param name="options">The value preserved for API compatibility.</param>
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.SecurityCenter.Models.AwsEnvironment System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.Models.AwsEnvironment>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.Models.AwsEnvironment>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.SecurityCenter.Models.AwsEnvironment System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.Models.AwsEnvironment>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.Models.AwsEnvironment>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.Models.AwsEnvironment>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+        AwsEnvironment IJsonModel<AwsEnvironment>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) { throw new NotSupportedException("This API is no longer supported by the service."); }
+        void IJsonModel<AwsEnvironment>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+        AwsEnvironment IPersistableModel<AwsEnvironment>.Create(System.BinaryData data, ModelReaderWriterOptions options) { throw new NotSupportedException("This API is no longer supported by the service."); }
+        string IPersistableModel<AwsEnvironment>.GetFormatFromOptions(ModelReaderWriterOptions options) { throw new NotSupportedException("This API is no longer supported by the service."); }
+        System.BinaryData IPersistableModel<AwsEnvironment>.Write(ModelReaderWriterOptions options) { throw new NotSupportedException("This API is no longer supported by the service."); }
     }
 }

@@ -3,7 +3,11 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Text.Json;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -12,7 +16,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// Provides a compatibility shim for the RecommendedSecurityRule class.
     /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public partial class RecommendedSecurityRule : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.Models.RecommendedSecurityRule>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.Models.RecommendedSecurityRule>
+    public partial class RecommendedSecurityRule : IJsonModel<RecommendedSecurityRule>, IPersistableModel<RecommendedSecurityRule>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="RecommendedSecurityRule"/> type for compatibility with the previous public API surface.
@@ -21,33 +25,33 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary>
         /// Gets or sets the DestinationPort value preserved from the previous public API surface.
         /// </summary>
-        public int? DestinationPort { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public int? DestinationPort { get; set; }
         /// <summary>
         /// Gets or sets the Direction value preserved from the previous public API surface.
         /// </summary>
-        public Azure.ResourceManager.SecurityCenter.Models.SecurityTrafficDirection? Direction { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public SecurityTrafficDirection? Direction { get; set; }
         /// <summary>
         /// Gets the IPAddresses value preserved from the previous public API surface.
         /// </summary>
-        public System.Collections.Generic.IList<string> IPAddresses { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public IList<string> IPAddresses { get; } = new List<string>();
         /// <summary>
         /// Gets or sets the Name value preserved from the previous public API surface.
         /// </summary>
-        public string Name { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public string Name { get; set; }
         /// <summary>
         /// Gets the Protocols value preserved from the previous public API surface.
         /// </summary>
-        public System.Collections.Generic.IList<Azure.ResourceManager.SecurityCenter.Models.SecurityTransportProtocol> Protocols { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public IList<SecurityTransportProtocol> Protocols { get; } = new List<SecurityTransportProtocol>();
         /// <summary>
         /// Provides a compatibility shim for the JsonModelWriteCore operation preserved from the previous public API surface.
         /// </summary>
         /// <param name="writer">The value preserved for API compatibility.</param>
         /// <param name="options">The value preserved for API compatibility.</param>
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.SecurityCenter.Models.RecommendedSecurityRule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.Models.RecommendedSecurityRule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.Models.RecommendedSecurityRule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.SecurityCenter.Models.RecommendedSecurityRule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.Models.RecommendedSecurityRule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.Models.RecommendedSecurityRule>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.Models.RecommendedSecurityRule>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+        RecommendedSecurityRule IJsonModel<RecommendedSecurityRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) { throw new NotSupportedException("This API is no longer supported by the service."); }
+        void IJsonModel<RecommendedSecurityRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+        RecommendedSecurityRule IPersistableModel<RecommendedSecurityRule>.Create(System.BinaryData data, ModelReaderWriterOptions options) { throw new NotSupportedException("This API is no longer supported by the service."); }
+        string IPersistableModel<RecommendedSecurityRule>.GetFormatFromOptions(ModelReaderWriterOptions options) { throw new NotSupportedException("This API is no longer supported by the service."); }
+        System.BinaryData IPersistableModel<RecommendedSecurityRule>.Write(ModelReaderWriterOptions options) { throw new NotSupportedException("This API is no longer supported by the service."); }
     }
 }

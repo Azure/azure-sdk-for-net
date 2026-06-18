@@ -3,6 +3,8 @@
 
 #nullable disable
 
+using System;
+
 using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
@@ -12,58 +14,59 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// Provides a compatibility shim for the DefenderForServersScanningMode structure.
     /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public readonly partial struct DefenderForServersScanningMode : System.IEquatable<Azure.ResourceManager.SecurityCenter.Models.DefenderForServersScanningMode>
+    public readonly partial struct DefenderForServersScanningMode : IEquatable<DefenderForServersScanningMode>
     {
+        private readonly string _value;
         /// <summary>
         /// Initializes a new instance of the <see cref="DefenderForServersScanningMode"/> type for compatibility with the previous public API surface.
         /// </summary>
         /// <param name="value">The value preserved for API compatibility.</param>
-        public DefenderForServersScanningMode(string value) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
+        public DefenderForServersScanningMode(string value) => _value = value ?? throw new ArgumentNullException(nameof(value));
         /// <summary>
         /// Gets the Default value preserved from the previous public API surface.
         /// </summary>
-        public static Azure.ResourceManager.SecurityCenter.Models.DefenderForServersScanningMode Default { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public static DefenderForServersScanningMode Default { get; } = new DefenderForServersScanningMode("Default");
         /// <summary>
         /// Provides a compatibility shim for the Equals operation preserved from the previous public API surface.
         /// </summary>
         /// <param name="other">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
-        public bool Equals(Azure.ResourceManager.SecurityCenter.Models.DefenderForServersScanningMode other) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
+        public bool Equals(DefenderForServersScanningMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
         /// <summary>
         /// Provides a compatibility shim for the Equals operation preserved from the previous public API surface.
         /// </summary>
         /// <param name="obj">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
-        public override bool Equals(object obj) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
+        public override bool Equals(object obj) => obj is DefenderForServersScanningMode other && Equals(other);
         /// <summary>
         /// Provides a compatibility shim for the GetHashCode operation preserved from the previous public API surface.
         /// </summary>
         /// <returns>The compatibility result.</returns>
-        public override int GetHashCode() { throw new System.NotSupportedException("This API is no longer supported by the service."); }
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <summary>
         /// Provides a compatibility operator preserved from the previous public API surface.
         /// </summary>
         /// <param name="left">The value used by the compatibility operator.</param>
         /// <param name="right">The value used by the compatibility operator.</param>
         /// <returns>The compatibility operator result.</returns>
-        public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.DefenderForServersScanningMode left, Azure.ResourceManager.SecurityCenter.Models.DefenderForServersScanningMode right) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
+        public static bool operator ==(DefenderForServersScanningMode left, DefenderForServersScanningMode right) => left.Equals(right);
         /// <summary>
         /// Provides a compatibility conversion operator preserved from the previous public API surface.
         /// </summary>
         /// <param name="value">The value preserved for API compatibility.</param>
         /// <returns>The converted compatibility value.</returns>
-        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.DefenderForServersScanningMode(string value) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
+        public static implicit operator DefenderForServersScanningMode(string value) => new DefenderForServersScanningMode(value);
         /// <summary>
         /// Provides a compatibility operator preserved from the previous public API surface.
         /// </summary>
         /// <param name="left">The value used by the compatibility operator.</param>
         /// <param name="right">The value used by the compatibility operator.</param>
         /// <returns>The compatibility operator result.</returns>
-        public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.DefenderForServersScanningMode left, Azure.ResourceManager.SecurityCenter.Models.DefenderForServersScanningMode right) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
+        public static bool operator !=(DefenderForServersScanningMode left, DefenderForServersScanningMode right) => !left.Equals(right);
         /// <summary>
         /// Provides a compatibility shim for the ToString operation preserved from the previous public API surface.
         /// </summary>
         /// <returns>The compatibility result.</returns>
-        public override string ToString() { throw new System.NotSupportedException("This API is no longer supported by the service."); }
+        public override string ToString() => _value ?? string.Empty;
     }
 }

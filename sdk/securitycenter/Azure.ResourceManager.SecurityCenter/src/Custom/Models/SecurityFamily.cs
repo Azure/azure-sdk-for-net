@@ -17,6 +17,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// Gets the VulnerabilityAssessment value preserved from the previous public API surface.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static Azure.ResourceManager.SecurityCenter.Models.SecurityFamily VulnerabilityAssessment { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public static SecurityFamily VulnerabilityAssessment { get; }
     }
 }

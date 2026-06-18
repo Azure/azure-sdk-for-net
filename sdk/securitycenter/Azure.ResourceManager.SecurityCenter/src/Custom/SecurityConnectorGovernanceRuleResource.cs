@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary>
         /// Gets the HasData value preserved from the previous public API surface.
         /// </summary>
-        public virtual bool HasData => throw new System.NotSupportedException("This API is no longer supported by the service.");
+        public virtual bool HasData { get; } = true;
         /// <summary>
         /// Provides a compatibility shim for the Delete operation preserved from the previous public API surface.
         /// </summary>
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary>
         /// Gets the Data value preserved from the previous public API surface.
         /// </summary>
-        public virtual Azure.ResourceManager.SecurityCenter.GovernanceRuleData Data { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public virtual Azure.ResourceManager.SecurityCenter.GovernanceRuleData Data { get; } = new Azure.ResourceManager.SecurityCenter.GovernanceRuleData();
         /// <summary>
         /// Provides a compatibility shim for the ExecuteRule operation preserved from the previous public API surface.
         /// </summary>

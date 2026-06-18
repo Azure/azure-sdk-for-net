@@ -3,16 +3,19 @@
 
 #nullable disable
 
+using System.ClientModel.Primitives;
 using System.ComponentModel;
+using System.Text.Json;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    // The latest TypeSpec removed this legacy resource or operation path, so the generator cannot emit the previous GA management-plane method; keep a hidden shim for ApiCompat and throw because the service path is no longer supported.
+    // The latest TypeSpec no longer describes this legacy resource data shape, so the generator cannot emit the previous GA model. Keep a hidden stateful shim for ApiCompat.
     /// <summary>
     /// Provides a compatibility shim for the CustomEntityStoreAssignmentData class.
     /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public partial class CustomEntityStoreAssignmentData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.CustomEntityStoreAssignmentData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.CustomEntityStoreAssignmentData>
+    public partial class CustomEntityStoreAssignmentData : ResourceData, IJsonModel<CustomEntityStoreAssignmentData>, IPersistableModel<CustomEntityStoreAssignmentData>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CustomEntityStoreAssignmentData"/> type for compatibility with the previous public API surface.
@@ -21,21 +24,21 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary>
         /// Gets or sets the EntityStoreDatabaseLink value preserved from the previous public API surface.
         /// </summary>
-        public string EntityStoreDatabaseLink { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public string EntityStoreDatabaseLink { get; set; }
         /// <summary>
         /// Gets or sets the Principal value preserved from the previous public API surface.
         /// </summary>
-        public string Principal { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public string Principal { get; set; }
         /// <summary>
         /// Provides a compatibility shim for the JsonModelWriteCore operation preserved from the previous public API surface.
         /// </summary>
         /// <param name="writer">The value preserved for API compatibility.</param>
         /// <param name="options">The value preserved for API compatibility.</param>
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.SecurityCenter.CustomEntityStoreAssignmentData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.CustomEntityStoreAssignmentData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.CustomEntityStoreAssignmentData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.SecurityCenter.CustomEntityStoreAssignmentData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.CustomEntityStoreAssignmentData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.CustomEntityStoreAssignmentData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.CustomEntityStoreAssignmentData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+        CustomEntityStoreAssignmentData IJsonModel<CustomEntityStoreAssignmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
+        void IJsonModel<CustomEntityStoreAssignmentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+        CustomEntityStoreAssignmentData IPersistableModel<CustomEntityStoreAssignmentData>.Create(System.BinaryData data, ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
+        string IPersistableModel<CustomEntityStoreAssignmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
+        System.BinaryData IPersistableModel<CustomEntityStoreAssignmentData>.Write(ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
     }
 }

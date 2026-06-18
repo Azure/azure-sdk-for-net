@@ -3,7 +3,10 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.ComponentModel;
+using System.Text.Json;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -12,7 +15,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// Provides a compatibility shim for the DefenderForDevOpsGithubOffering class.
     /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public partial class DefenderForDevOpsGithubOffering : Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudOffering, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.Models.DefenderForDevOpsGithubOffering>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.Models.DefenderForDevOpsGithubOffering>
+    public partial class DefenderForDevOpsGithubOffering : SecurityCenterCloudOffering, IJsonModel<DefenderForDevOpsGithubOffering>, IPersistableModel<DefenderForDevOpsGithubOffering>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="DefenderForDevOpsGithubOffering"/> type for compatibility with the previous public API surface.
@@ -23,11 +26,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// </summary>
         /// <param name="writer">The value preserved for API compatibility.</param>
         /// <param name="options">The value preserved for API compatibility.</param>
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.SecurityCenter.Models.DefenderForDevOpsGithubOffering System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.Models.DefenderForDevOpsGithubOffering>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.Models.DefenderForDevOpsGithubOffering>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.SecurityCenter.Models.DefenderForDevOpsGithubOffering System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.Models.DefenderForDevOpsGithubOffering>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.Models.DefenderForDevOpsGithubOffering>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.Models.DefenderForDevOpsGithubOffering>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+        DefenderForDevOpsGithubOffering IJsonModel<DefenderForDevOpsGithubOffering>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) { throw new NotSupportedException("This API is no longer supported by the service."); }
+        void IJsonModel<DefenderForDevOpsGithubOffering>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+        DefenderForDevOpsGithubOffering IPersistableModel<DefenderForDevOpsGithubOffering>.Create(System.BinaryData data, ModelReaderWriterOptions options) { throw new NotSupportedException("This API is no longer supported by the service."); }
+        string IPersistableModel<DefenderForDevOpsGithubOffering>.GetFormatFromOptions(ModelReaderWriterOptions options) { throw new NotSupportedException("This API is no longer supported by the service."); }
+        System.BinaryData IPersistableModel<DefenderForDevOpsGithubOffering>.Write(ModelReaderWriterOptions options) { throw new NotSupportedException("This API is no longer supported by the service."); }
     }
 }

@@ -3,16 +3,21 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.ComponentModel;
+using System.Text.Json;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    // The latest TypeSpec removed this legacy resource or operation path, so the generator cannot emit the previous GA management-plane method; keep a hidden shim for ApiCompat and throw because the service path is no longer supported.
+    // The latest TypeSpec no longer describes this legacy resource data shape, so the generator cannot emit the previous GA model. Keep a hidden stateful shim for ApiCompat.
     /// <summary>
     /// Provides a compatibility shim for the SoftwareInventoryData class.
     /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public partial class SoftwareInventoryData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.SoftwareInventoryData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.SoftwareInventoryData>
+    public partial class SoftwareInventoryData : ResourceData, IJsonModel<SoftwareInventoryData>, IPersistableModel<SoftwareInventoryData>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="SoftwareInventoryData"/> type for compatibility with the previous public API surface.
@@ -21,49 +26,49 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary>
         /// Gets or sets the DeviceId value preserved from the previous public API surface.
         /// </summary>
-        public string DeviceId { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public string DeviceId { get; set; }
         /// <summary>
         /// Gets or sets the EndOfSupportDate value preserved from the previous public API surface.
         /// </summary>
-        public string EndOfSupportDate { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public string EndOfSupportDate { get; set; }
         /// <summary>
         /// Gets or sets the EndOfSupportStatus value preserved from the previous public API surface.
         /// </summary>
-        public Azure.ResourceManager.SecurityCenter.Models.EndOfSupportStatus? EndOfSupportStatus { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public EndOfSupportStatus? EndOfSupportStatus { get; set; }
         /// <summary>
         /// Gets or sets the FirstSeenOn value preserved from the previous public API surface.
         /// </summary>
-        public System.DateTimeOffset? FirstSeenOn { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public DateTimeOffset? FirstSeenOn { get; set; }
         /// <summary>
         /// Gets or sets the NumberOfKnownVulnerabilities value preserved from the previous public API surface.
         /// </summary>
-        public int? NumberOfKnownVulnerabilities { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public int? NumberOfKnownVulnerabilities { get; set; }
         /// <summary>
         /// Gets or sets the OSPlatform value preserved from the previous public API surface.
         /// </summary>
-        public string OSPlatform { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public string OSPlatform { get; set; }
         /// <summary>
         /// Gets or sets the SoftwareName value preserved from the previous public API surface.
         /// </summary>
-        public string SoftwareName { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public string SoftwareName { get; set; }
         /// <summary>
         /// Gets or sets the Vendor value preserved from the previous public API surface.
         /// </summary>
-        public string Vendor { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public string Vendor { get; set; }
         /// <summary>
         /// Gets or sets the Version value preserved from the previous public API surface.
         /// </summary>
-        public string Version { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public string Version { get; set; }
         /// <summary>
         /// Provides a compatibility shim for the JsonModelWriteCore operation preserved from the previous public API surface.
         /// </summary>
         /// <param name="writer">The value preserved for API compatibility.</param>
         /// <param name="options">The value preserved for API compatibility.</param>
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.SecurityCenter.SoftwareInventoryData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.SoftwareInventoryData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.SoftwareInventoryData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.SecurityCenter.SoftwareInventoryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.SoftwareInventoryData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.SoftwareInventoryData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.SoftwareInventoryData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+        SoftwareInventoryData IJsonModel<SoftwareInventoryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
+        void IJsonModel<SoftwareInventoryData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+        SoftwareInventoryData IPersistableModel<SoftwareInventoryData>.Create(System.BinaryData data, ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
+        string IPersistableModel<SoftwareInventoryData>.GetFormatFromOptions(ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
+        System.BinaryData IPersistableModel<SoftwareInventoryData>.Write(ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
     }
 }

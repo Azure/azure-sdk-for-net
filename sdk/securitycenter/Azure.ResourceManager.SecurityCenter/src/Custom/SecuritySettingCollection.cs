@@ -8,10 +8,10 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.SecurityCenter
 {
     // The latest TypeSpec removed this legacy resource or operation path, so the generator cannot emit the previous GA management-plane method; keep a hidden shim for ApiCompat and throw because the service path is no longer supported.
-/// <summary>
-/// Provides a compatibility shim for the SecuritySettingCollection class.
-/// </summary>
-public partial class SecuritySettingCollection
+    /// <summary>
+    /// Provides a compatibility shim for the SecuritySettingCollection class.
+    /// </summary>
+    public partial class SecuritySettingCollection
     {
         /// <summary>
         /// Provides a compatibility shim for the CreateOrUpdate operation preserved from the previous public API surface.

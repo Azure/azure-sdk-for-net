@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Gets the Data value preserved from the previous public API surface.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual SecurityApplicationData Data => throw new System.NotSupportedException("This API is no longer supported by the service.");
+        public virtual SecurityApplicationData Data { get; } = new SecurityApplicationData();
         /// <summary>
         /// Provides a compatibility shim for the Update operation preserved from the previous public API surface.
         /// </summary>

@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary>
     /// Provides a compatibility shim for the AwsAssumeRoleAuthenticationDetailsProperties class.
     /// </summary>
-[EditorBrowsable(EditorBrowsableState.Never)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class AwsAssumeRoleAuthenticationDetailsProperties : AuthenticationDetailsProperties
     {
         /// <summary>
@@ -19,22 +19,22 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// </summary>
         /// <param name="awsAssumeRoleArn">The value preserved for API compatibility.</param>
         /// <param name="awsExternalId">The value preserved for API compatibility.</param>
-        public AwsAssumeRoleAuthenticationDetailsProperties(string awsAssumeRoleArn, System.Guid awsExternalId) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
+        public AwsAssumeRoleAuthenticationDetailsProperties(string awsAssumeRoleArn, System.Guid awsExternalId) { }
         /// <summary>
         /// Gets or sets the AwsAssumeRoleArn value preserved from the previous public API surface.
         /// </summary>
-        public string AwsAssumeRoleArn { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public string AwsAssumeRoleArn { get; set; }
         /// <summary>
         /// Gets or sets the AwsExternalId value preserved from the previous public API surface.
         /// </summary>
-        public System.Guid AwsExternalId { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public System.Guid AwsExternalId { get; set; }
         /// <summary>
         /// Gets or sets the AccountId value preserved from the previous public API surface.
         /// </summary>
-        public string AccountId { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public string AccountId { get; set; }
         /// <summary>
         /// Gets or sets the RoleArn value preserved from the previous public API surface.
         /// </summary>
-        public string RoleArn { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public string RoleArn { get; set; }
     }
 }

@@ -3,6 +3,8 @@
 
 #nullable disable
 
+using System;
+
 using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
@@ -12,66 +14,67 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// Provides a compatibility shim for the SecurityAlertMinimalSeverity structure.
     /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public readonly partial struct SecurityAlertMinimalSeverity : System.IEquatable<Azure.ResourceManager.SecurityCenter.Models.SecurityAlertMinimalSeverity>
+    public readonly partial struct SecurityAlertMinimalSeverity : IEquatable<SecurityAlertMinimalSeverity>
     {
+        private readonly string _value;
         /// <summary>
         /// Initializes a new instance of the <see cref="SecurityAlertMinimalSeverity"/> type for compatibility with the previous public API surface.
         /// </summary>
         /// <param name="value">The value preserved for API compatibility.</param>
-        public SecurityAlertMinimalSeverity(string value) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
+        public SecurityAlertMinimalSeverity(string value) => _value = value ?? throw new ArgumentNullException(nameof(value));
         /// <summary>
         /// Gets the High value preserved from the previous public API surface.
         /// </summary>
-        public static Azure.ResourceManager.SecurityCenter.Models.SecurityAlertMinimalSeverity High { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public static SecurityAlertMinimalSeverity High { get; } = new SecurityAlertMinimalSeverity("High");
         /// <summary>
         /// Gets the Low value preserved from the previous public API surface.
         /// </summary>
-        public static Azure.ResourceManager.SecurityCenter.Models.SecurityAlertMinimalSeverity Low { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public static SecurityAlertMinimalSeverity Low { get; } = new SecurityAlertMinimalSeverity("Low");
         /// <summary>
         /// Gets the Medium value preserved from the previous public API surface.
         /// </summary>
-        public static Azure.ResourceManager.SecurityCenter.Models.SecurityAlertMinimalSeverity Medium { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public static SecurityAlertMinimalSeverity Medium { get; } = new SecurityAlertMinimalSeverity("Medium");
         /// <summary>
         /// Provides a compatibility shim for the Equals operation preserved from the previous public API surface.
         /// </summary>
         /// <param name="other">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
-        public bool Equals(Azure.ResourceManager.SecurityCenter.Models.SecurityAlertMinimalSeverity other) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
+        public bool Equals(SecurityAlertMinimalSeverity other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
         /// <summary>
         /// Provides a compatibility shim for the Equals operation preserved from the previous public API surface.
         /// </summary>
         /// <param name="obj">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
-        public override bool Equals(object obj) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
+        public override bool Equals(object obj) => obj is SecurityAlertMinimalSeverity other && Equals(other);
         /// <summary>
         /// Provides a compatibility shim for the GetHashCode operation preserved from the previous public API surface.
         /// </summary>
         /// <returns>The compatibility result.</returns>
-        public override int GetHashCode() { throw new System.NotSupportedException("This API is no longer supported by the service."); }
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <summary>
         /// Provides a compatibility operator preserved from the previous public API surface.
         /// </summary>
         /// <param name="left">The value used by the compatibility operator.</param>
         /// <param name="right">The value used by the compatibility operator.</param>
         /// <returns>The compatibility operator result.</returns>
-        public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.SecurityAlertMinimalSeverity left, Azure.ResourceManager.SecurityCenter.Models.SecurityAlertMinimalSeverity right) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
+        public static bool operator ==(SecurityAlertMinimalSeverity left, SecurityAlertMinimalSeverity right) => left.Equals(right);
         /// <summary>
         /// Provides a compatibility conversion operator preserved from the previous public API surface.
         /// </summary>
         /// <param name="value">The value preserved for API compatibility.</param>
         /// <returns>The converted compatibility value.</returns>
-        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.SecurityAlertMinimalSeverity(string value) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
+        public static implicit operator SecurityAlertMinimalSeverity(string value) => new SecurityAlertMinimalSeverity(value);
         /// <summary>
         /// Provides a compatibility operator preserved from the previous public API surface.
         /// </summary>
         /// <param name="left">The value used by the compatibility operator.</param>
         /// <param name="right">The value used by the compatibility operator.</param>
         /// <returns>The compatibility operator result.</returns>
-        public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.SecurityAlertMinimalSeverity left, Azure.ResourceManager.SecurityCenter.Models.SecurityAlertMinimalSeverity right) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
+        public static bool operator !=(SecurityAlertMinimalSeverity left, SecurityAlertMinimalSeverity right) => !left.Equals(right);
         /// <summary>
         /// Provides a compatibility shim for the ToString operation preserved from the previous public API surface.
         /// </summary>
         /// <returns>The compatibility result.</returns>
-        public override string ToString() { throw new System.NotSupportedException("This API is no longer supported by the service."); }
+        public override string ToString() => _value ?? string.Empty;
     }
 }

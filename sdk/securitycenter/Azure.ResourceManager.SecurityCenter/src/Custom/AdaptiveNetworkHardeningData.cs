@@ -3,16 +3,22 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Text.Json;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    // The latest TypeSpec removed this legacy resource or operation path, so the generator cannot emit the previous GA management-plane method; keep a hidden shim for ApiCompat and throw because the service path is no longer supported.
+    // The latest TypeSpec no longer describes this legacy resource data shape, so the generator cannot emit the previous GA model. Keep a hidden stateful shim for ApiCompat.
     /// <summary>
     /// Provides a compatibility shim for the AdaptiveNetworkHardeningData class.
     /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public partial class AdaptiveNetworkHardeningData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.AdaptiveNetworkHardeningData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.AdaptiveNetworkHardeningData>
+    public partial class AdaptiveNetworkHardeningData : ResourceData, IJsonModel<AdaptiveNetworkHardeningData>, IPersistableModel<AdaptiveNetworkHardeningData>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="AdaptiveNetworkHardeningData"/> type for compatibility with the previous public API surface.
@@ -21,25 +27,25 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary>
         /// Gets the EffectiveNetworkSecurityGroups value preserved from the previous public API surface.
         /// </summary>
-        public System.Collections.Generic.IList<Azure.ResourceManager.SecurityCenter.Models.EffectiveNetworkSecurityGroups> EffectiveNetworkSecurityGroups { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public IList<EffectiveNetworkSecurityGroups> EffectiveNetworkSecurityGroups { get; } = new List<EffectiveNetworkSecurityGroups>();
         /// <summary>
         /// Gets the Rules value preserved from the previous public API surface.
         /// </summary>
-        public System.Collections.Generic.IList<Azure.ResourceManager.SecurityCenter.Models.RecommendedSecurityRule> Rules { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public IList<RecommendedSecurityRule> Rules { get; } = new List<RecommendedSecurityRule>();
         /// <summary>
         /// Gets or sets the RulesCalculatedOn value preserved from the previous public API surface.
         /// </summary>
-        public System.DateTimeOffset? RulesCalculatedOn { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public DateTimeOffset? RulesCalculatedOn { get; set; }
         /// <summary>
         /// Provides a compatibility shim for the JsonModelWriteCore operation preserved from the previous public API surface.
         /// </summary>
         /// <param name="writer">The value preserved for API compatibility.</param>
         /// <param name="options">The value preserved for API compatibility.</param>
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.SecurityCenter.AdaptiveNetworkHardeningData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.AdaptiveNetworkHardeningData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.AdaptiveNetworkHardeningData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.SecurityCenter.AdaptiveNetworkHardeningData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.AdaptiveNetworkHardeningData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.AdaptiveNetworkHardeningData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.AdaptiveNetworkHardeningData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+        AdaptiveNetworkHardeningData IJsonModel<AdaptiveNetworkHardeningData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
+        void IJsonModel<AdaptiveNetworkHardeningData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+        AdaptiveNetworkHardeningData IPersistableModel<AdaptiveNetworkHardeningData>.Create(System.BinaryData data, ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
+        string IPersistableModel<AdaptiveNetworkHardeningData>.GetFormatFromOptions(ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
+        System.BinaryData IPersistableModel<AdaptiveNetworkHardeningData>.Write(ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
     }
 }

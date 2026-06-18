@@ -21,10 +21,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary>
         /// Gets or sets the MinimalSeverity value preserved from the previous public API surface.
         /// </summary>
-        public Azure.ResourceManager.SecurityCenter.Models.SecurityAlertMinimalSeverity? MinimalSeverity { get; set; }
+        public SecurityAlertMinimalSeverity? MinimalSeverity { get; set; }
         /// <summary>
         /// Gets or sets the State value preserved from the previous public API surface.
         /// </summary>
-        public Azure.ResourceManager.SecurityCenter.Models.SecurityAlertNotificationState? State { get; set; }
+        public SecurityAlertNotificationState? State { get; set; }
     }
 }

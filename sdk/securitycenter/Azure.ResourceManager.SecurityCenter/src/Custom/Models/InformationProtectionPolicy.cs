@@ -3,7 +3,12 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Text.Json;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -12,7 +17,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// Provides a compatibility shim for the InformationProtectionPolicy class.
     /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public partial class InformationProtectionPolicy : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.Models.InformationProtectionPolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.Models.InformationProtectionPolicy>
+    public partial class InformationProtectionPolicy : ResourceData, IJsonModel<InformationProtectionPolicy>, IPersistableModel<InformationProtectionPolicy>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="InformationProtectionPolicy"/> type for compatibility with the previous public API surface.
@@ -21,29 +26,29 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary>
         /// Gets the InformationTypes value preserved from the previous public API surface.
         /// </summary>
-        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.SecurityCenter.Models.SecurityInformationTypeInfo> InformationTypes { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public IDictionary<string, SecurityInformationTypeInfo> InformationTypes { get; } = new Dictionary<string, SecurityInformationTypeInfo>();
         /// <summary>
         /// Gets the Labels value preserved from the previous public API surface.
         /// </summary>
-        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.SecurityCenter.Models.SensitivityLabel> Labels { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public IDictionary<string, SensitivityLabel> Labels { get; } = new Dictionary<string, SensitivityLabel>();
         /// <summary>
         /// Gets the LastModifiedUtc value preserved from the previous public API surface.
         /// </summary>
-        public System.DateTimeOffset? LastModifiedUtc { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public System.DateTimeOffset? LastModifiedUtc { get; }
         /// <summary>
         /// Gets the Version value preserved from the previous public API surface.
         /// </summary>
-        public string Version { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public string Version { get; }
         /// <summary>
         /// Provides a compatibility shim for the JsonModelWriteCore operation preserved from the previous public API surface.
         /// </summary>
         /// <param name="writer">The value preserved for API compatibility.</param>
         /// <param name="options">The value preserved for API compatibility.</param>
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.SecurityCenter.Models.InformationProtectionPolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.Models.InformationProtectionPolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.Models.InformationProtectionPolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.SecurityCenter.Models.InformationProtectionPolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.Models.InformationProtectionPolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.Models.InformationProtectionPolicy>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.Models.InformationProtectionPolicy>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+        InformationProtectionPolicy IJsonModel<InformationProtectionPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) { throw new NotSupportedException("This API is no longer supported by the service."); }
+        void IJsonModel<InformationProtectionPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+        InformationProtectionPolicy IPersistableModel<InformationProtectionPolicy>.Create(System.BinaryData data, ModelReaderWriterOptions options) { throw new NotSupportedException("This API is no longer supported by the service."); }
+        string IPersistableModel<InformationProtectionPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) { throw new NotSupportedException("This API is no longer supported by the service."); }
+        System.BinaryData IPersistableModel<InformationProtectionPolicy>.Write(ModelReaderWriterOptions options) { throw new NotSupportedException("This API is no longer supported by the service."); }
     }
 }

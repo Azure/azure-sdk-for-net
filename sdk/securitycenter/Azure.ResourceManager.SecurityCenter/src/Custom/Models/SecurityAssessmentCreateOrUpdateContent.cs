@@ -14,10 +14,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     public partial class SecurityAssessmentCreateOrUpdateContent
     {
         /// <summary>
-        /// Provides a compatibility shim for the NotSupportedException operation preserved from the previous public API surface.
+        /// Gets the LinksAzurePortalUri value preserved from the previous public API surface.
         /// </summary>
-        /// <returns>The compatibility result.</returns>
-        public Uri LinksAzurePortalUri => throw new NotSupportedException("This API is no longer supported by the service.");
+        public Uri LinksAzurePortalUri { get; }
         /// <summary>
         /// Gets or sets the Status value preserved from the previous public API surface.
         /// </summary>

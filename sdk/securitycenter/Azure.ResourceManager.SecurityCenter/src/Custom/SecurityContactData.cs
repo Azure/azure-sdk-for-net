@@ -4,10 +4,11 @@
 #nullable disable
 
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    // The latest TypeSpec removed this legacy resource or operation path, so the generator cannot emit the previous GA management-plane method; keep a hidden shim for ApiCompat and throw because the service path is no longer supported.
+    // The latest TypeSpec no longer describes this legacy data property, so the generator cannot emit the previous GA member. Keep a hidden stateful shim for ApiCompat.
     /// <summary>
     /// Provides a compatibility shim for the SecurityContactData class.
     /// </summary>
@@ -17,6 +18,6 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Gets or sets the AlertNotifications value preserved from the previous public API surface.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public Azure.ResourceManager.SecurityCenter.Models.SecurityContactPropertiesAlertNotifications AlertNotifications { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public SecurityContactPropertiesAlertNotifications AlertNotifications { get; set; }
     }
 }

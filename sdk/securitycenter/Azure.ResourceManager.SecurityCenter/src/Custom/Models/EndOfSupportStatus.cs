@@ -3,6 +3,8 @@
 
 #nullable disable
 
+using System;
+
 using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
@@ -12,74 +14,75 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// Provides a compatibility shim for the EndOfSupportStatus structure.
     /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public readonly partial struct EndOfSupportStatus : System.IEquatable<Azure.ResourceManager.SecurityCenter.Models.EndOfSupportStatus>
+    public readonly partial struct EndOfSupportStatus : IEquatable<EndOfSupportStatus>
     {
+        private readonly string _value;
         /// <summary>
         /// Initializes a new instance of the <see cref="EndOfSupportStatus"/> type for compatibility with the previous public API surface.
         /// </summary>
         /// <param name="value">The value preserved for API compatibility.</param>
-        public EndOfSupportStatus(string value) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
+        public EndOfSupportStatus(string value) => _value = value ?? throw new ArgumentNullException(nameof(value));
         /// <summary>
         /// Gets the NoLongerSupported value preserved from the previous public API surface.
         /// </summary>
-        public static Azure.ResourceManager.SecurityCenter.Models.EndOfSupportStatus NoLongerSupported { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public static EndOfSupportStatus NoLongerSupported { get; } = new EndOfSupportStatus("NoLongerSupported");
         /// <summary>
         /// Gets the None value preserved from the previous public API surface.
         /// </summary>
-        public static Azure.ResourceManager.SecurityCenter.Models.EndOfSupportStatus None { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public static EndOfSupportStatus None { get; } = new EndOfSupportStatus("None");
         /// <summary>
         /// Gets the UpcomingNoLongerSupported value preserved from the previous public API surface.
         /// </summary>
-        public static Azure.ResourceManager.SecurityCenter.Models.EndOfSupportStatus UpcomingNoLongerSupported { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public static EndOfSupportStatus UpcomingNoLongerSupported { get; } = new EndOfSupportStatus("UpcomingNoLongerSupported");
         /// <summary>
         /// Gets the UpcomingVersionNoLongerSupported value preserved from the previous public API surface.
         /// </summary>
-        public static Azure.ResourceManager.SecurityCenter.Models.EndOfSupportStatus UpcomingVersionNoLongerSupported { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public static EndOfSupportStatus UpcomingVersionNoLongerSupported { get; } = new EndOfSupportStatus("UpcomingVersionNoLongerSupported");
         /// <summary>
         /// Gets the VersionNoLongerSupported value preserved from the previous public API surface.
         /// </summary>
-        public static Azure.ResourceManager.SecurityCenter.Models.EndOfSupportStatus VersionNoLongerSupported { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public static EndOfSupportStatus VersionNoLongerSupported { get; } = new EndOfSupportStatus("VersionNoLongerSupported");
         /// <summary>
         /// Provides a compatibility shim for the Equals operation preserved from the previous public API surface.
         /// </summary>
         /// <param name="other">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
-        public bool Equals(Azure.ResourceManager.SecurityCenter.Models.EndOfSupportStatus other) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
+        public bool Equals(EndOfSupportStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
         /// <summary>
         /// Provides a compatibility shim for the Equals operation preserved from the previous public API surface.
         /// </summary>
         /// <param name="obj">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
-        public override bool Equals(object obj) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
+        public override bool Equals(object obj) => obj is EndOfSupportStatus other && Equals(other);
         /// <summary>
         /// Provides a compatibility shim for the GetHashCode operation preserved from the previous public API surface.
         /// </summary>
         /// <returns>The compatibility result.</returns>
-        public override int GetHashCode() { throw new System.NotSupportedException("This API is no longer supported by the service."); }
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <summary>
         /// Provides a compatibility operator preserved from the previous public API surface.
         /// </summary>
         /// <param name="left">The value used by the compatibility operator.</param>
         /// <param name="right">The value used by the compatibility operator.</param>
         /// <returns>The compatibility operator result.</returns>
-        public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.EndOfSupportStatus left, Azure.ResourceManager.SecurityCenter.Models.EndOfSupportStatus right) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
+        public static bool operator ==(EndOfSupportStatus left, EndOfSupportStatus right) => left.Equals(right);
         /// <summary>
         /// Provides a compatibility conversion operator preserved from the previous public API surface.
         /// </summary>
         /// <param name="value">The value preserved for API compatibility.</param>
         /// <returns>The converted compatibility value.</returns>
-        public static implicit operator Azure.ResourceManager.SecurityCenter.Models.EndOfSupportStatus(string value) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
+        public static implicit operator EndOfSupportStatus(string value) => new EndOfSupportStatus(value);
         /// <summary>
         /// Provides a compatibility operator preserved from the previous public API surface.
         /// </summary>
         /// <param name="left">The value used by the compatibility operator.</param>
         /// <param name="right">The value used by the compatibility operator.</param>
         /// <returns>The compatibility operator result.</returns>
-        public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.EndOfSupportStatus left, Azure.ResourceManager.SecurityCenter.Models.EndOfSupportStatus right) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
+        public static bool operator !=(EndOfSupportStatus left, EndOfSupportStatus right) => !left.Equals(right);
         /// <summary>
         /// Provides a compatibility shim for the ToString operation preserved from the previous public API surface.
         /// </summary>
         /// <returns>The compatibility result.</returns>
-        public override string ToString() { throw new System.NotSupportedException("This API is no longer supported by the service."); }
+        public override string ToString() => _value ?? string.Empty;
     }
 }

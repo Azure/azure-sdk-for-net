@@ -17,16 +17,16 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// Gets or sets the IsAuditLogsAutoProvisioningEnabled value preserved from the previous public API surface.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public bool? IsAuditLogsAutoProvisioningEnabled { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public bool? IsAuditLogsAutoProvisioningEnabled { get; set; }
         /// <summary>
         /// Gets or sets the IsDefenderAgentAutoProvisioningEnabled value preserved from the previous public API surface.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public bool? IsDefenderAgentAutoProvisioningEnabled { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public bool? IsDefenderAgentAutoProvisioningEnabled { get; set; }
         /// <summary>
         /// Gets or sets the IsPolicyAgentAutoProvisioningEnabled value preserved from the previous public API surface.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public bool? IsPolicyAgentAutoProvisioningEnabled { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        public bool? IsPolicyAgentAutoProvisioningEnabled { get; set; }
     }
 }
