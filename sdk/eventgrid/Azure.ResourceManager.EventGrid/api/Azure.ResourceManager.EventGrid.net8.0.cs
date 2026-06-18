@@ -2193,7 +2193,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public AlternativeAuthenticationNameSource(string value) { throw null; }
         public static Azure.ResourceManager.EventGrid.Models.AlternativeAuthenticationNameSource ClientCertificateDns { get { throw null; } }
         public static Azure.ResourceManager.EventGrid.Models.AlternativeAuthenticationNameSource ClientCertificateEmail { get { throw null; } }
-        public static Azure.ResourceManager.EventGrid.Models.AlternativeAuthenticationNameSource ClientCertificateIp { get { throw null; } }
+        public static Azure.ResourceManager.EventGrid.Models.AlternativeAuthenticationNameSource ClientCertificateIP { get { throw null; } }
         public static Azure.ResourceManager.EventGrid.Models.AlternativeAuthenticationNameSource ClientCertificateSubject { get { throw null; } }
         public static Azure.ResourceManager.EventGrid.Models.AlternativeAuthenticationNameSource ClientCertificateUri { get { throw null; } }
         public bool Equals(Azure.ResourceManager.EventGrid.Models.AlternativeAuthenticationNameSource other) { throw null; }
@@ -2208,7 +2208,7 @@ namespace Azure.ResourceManager.EventGrid.Models
     public static partial class ArmEventGridModelFactory
     {
         public static Azure.ResourceManager.EventGrid.Models.AdvancedFilter AdvancedFilter(string operatorType = null, string key = null) { throw null; }
-        public static Azure.ResourceManager.EventGrid.Models.AzureADPartnerClientAuthentication AzureADPartnerClientAuthentication(string azureActiveDirectoryTenantId = null, string azureActiveDirectoryApplicationIdOrUri = null) { throw null; }
+        public static Azure.ResourceManager.EventGrid.Models.AzureADPartnerClientAuthentication AzureADPartnerClientAuthentication(string azureActiveDirectoryTenantId = null, System.Uri azureActiveDirectoryApplicationIdOrUri = null) { throw null; }
         public static Azure.ResourceManager.EventGrid.Models.AzureFunctionEventSubscriptionDestination AzureFunctionEventSubscriptionDestination(Azure.Core.ResourceIdentifier resourceId = null, int? maxEventsPerBatch = default(int?), int? preferredBatchSizeInKilobytes = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventGrid.Models.DeliveryAttributeMapping> deliveryAttributeMappings = null) { throw null; }
         public static Azure.ResourceManager.EventGrid.Models.BoolEqualsAdvancedFilter BoolEqualsAdvancedFilter(string key = null, bool? value = default(bool?)) { throw null; }
         public static Azure.ResourceManager.EventGrid.Models.BoolEqualsFilter BoolEqualsFilter(string key = null, bool? value = default(bool?)) { throw null; }
@@ -2383,7 +2383,7 @@ namespace Azure.ResourceManager.EventGrid.Models
     public partial class AzureADPartnerClientAuthentication : Azure.ResourceManager.EventGrid.Models.PartnerClientAuthentication, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventGrid.Models.AzureADPartnerClientAuthentication>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventGrid.Models.AzureADPartnerClientAuthentication>
     {
         public AzureADPartnerClientAuthentication() { }
-        public string AzureActiveDirectoryApplicationIdOrUri { get { throw null; } set { } }
+        public System.Uri AzureActiveDirectoryApplicationIdOrUri { get { throw null; } set { } }
         public string AzureActiveDirectoryTenantId { get { throw null; } set { } }
         protected override Azure.ResourceManager.EventGrid.Models.PartnerClientAuthentication JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }

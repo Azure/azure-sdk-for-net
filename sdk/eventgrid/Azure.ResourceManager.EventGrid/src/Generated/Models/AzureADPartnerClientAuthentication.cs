@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> The Microsoft Entra ID Application ID or URI to get the access token that will be included as the bearer token in delivery requests. </summary>
         [WirePath("properties.azureActiveDirectoryApplicationIdOrUri")]
-        public string AzureActiveDirectoryApplicationIdOrUri
+        public Uri AzureActiveDirectoryApplicationIdOrUri
         {
             get
             {

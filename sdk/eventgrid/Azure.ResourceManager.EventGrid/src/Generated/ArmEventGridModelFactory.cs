@@ -576,7 +576,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="azureActiveDirectoryTenantId"> The Microsoft Entra ID Tenant ID to get the access token that will be included as the bearer token in delivery requests. </param>
         /// <param name="azureActiveDirectoryApplicationIdOrUri"> The Microsoft Entra ID Application ID or URI to get the access token that will be included as the bearer token in delivery requests. </param>
         /// <returns> A new <see cref="Models.AzureADPartnerClientAuthentication"/> instance for mocking. </returns>
-        public static AzureADPartnerClientAuthentication AzureADPartnerClientAuthentication(string azureActiveDirectoryTenantId = default, string azureActiveDirectoryApplicationIdOrUri = default)
+        public static AzureADPartnerClientAuthentication AzureADPartnerClientAuthentication(string azureActiveDirectoryTenantId = default, Uri azureActiveDirectoryApplicationIdOrUri = default)
         {
             return new AzureADPartnerClientAuthentication(default, default, azureActiveDirectoryTenantId is null && azureActiveDirectoryApplicationIdOrUri is null ? default : new AzureADPartnerClientAuthenticationProperties(azureActiveDirectoryTenantId, azureActiveDirectoryApplicationIdOrUri, default));
         }

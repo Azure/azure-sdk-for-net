@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             if (Optional.IsDefined(AzureActiveDirectoryApplicationIdOrUri))
             {
                 writer.WritePropertyName("azureActiveDirectoryApplicationIdOrUri"u8);
-                writer.WriteStringValue(AzureActiveDirectoryApplicationIdOrUri);
+                writer.WriteStringValue(AzureActiveDirectoryApplicationIdOrUri.AbsoluteUri);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 return null;
             }
             string azureActiveDirectoryTenantId = default;
-            string azureActiveDirectoryApplicationIdOrUri = default;
+            Uri azureActiveDirectoryApplicationIdOrUri = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -138,7 +138,11 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
                 if (prop.NameEquals("azureActiveDirectoryApplicationIdOrUri"u8))
                 {
-                    azureActiveDirectoryApplicationIdOrUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    azureActiveDirectoryApplicationIdOrUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (options.Format != "W")

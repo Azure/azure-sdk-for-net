@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> ClientCertificateUri. </summary>
         private const string ClientCertificateUriValue = "ClientCertificateUri";
         /// <summary> ClientCertificateIp. </summary>
-        private const string ClientCertificateIpValue = "ClientCertificateIp";
+        private const string ClientCertificateIPValue = "ClientCertificateIp";
         /// <summary> ClientCertificateEmail. </summary>
         private const string ClientCertificateEmailValue = "ClientCertificateEmail";
 
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static AlternativeAuthenticationNameSource ClientCertificateUri { get; } = new AlternativeAuthenticationNameSource(ClientCertificateUriValue);
 
         /// <summary> ClientCertificateIp. </summary>
-        public static AlternativeAuthenticationNameSource ClientCertificateIp { get; } = new AlternativeAuthenticationNameSource(ClientCertificateIpValue);
+        public static AlternativeAuthenticationNameSource ClientCertificateIP { get; } = new AlternativeAuthenticationNameSource(ClientCertificateIPValue);
 
         /// <summary> ClientCertificateEmail. </summary>
         public static AlternativeAuthenticationNameSource ClientCertificateEmail { get; } = new AlternativeAuthenticationNameSource(ClientCertificateEmailValue);

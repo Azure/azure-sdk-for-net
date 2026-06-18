@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="azureActiveDirectoryTenantId"> The Microsoft Entra ID Tenant ID to get the access token that will be included as the bearer token in delivery requests. </param>
         /// <param name="azureActiveDirectoryApplicationIdOrUri"> The Microsoft Entra ID Application ID or URI to get the access token that will be included as the bearer token in delivery requests. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AzureADPartnerClientAuthenticationProperties(string azureActiveDirectoryTenantId, string azureActiveDirectoryApplicationIdOrUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AzureADPartnerClientAuthenticationProperties(string azureActiveDirectoryTenantId, Uri azureActiveDirectoryApplicationIdOrUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AzureActiveDirectoryTenantId = azureActiveDirectoryTenantId;
             AzureActiveDirectoryApplicationIdOrUri = azureActiveDirectoryApplicationIdOrUri;
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> The Microsoft Entra ID Application ID or URI to get the access token that will be included as the bearer token in delivery requests. </summary>
         [WirePath("azureActiveDirectoryApplicationIdOrUri")]
-        public string AzureActiveDirectoryApplicationIdOrUri { get; set; }
+        public Uri AzureActiveDirectoryApplicationIdOrUri { get; set; }
     }
 }

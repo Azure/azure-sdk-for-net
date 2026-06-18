@@ -5,10 +5,10 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    [CodeGenSuppress("CloudEventSchemaV10")]
     public readonly partial struct EventGridInputSchema
     {
         /// <summary> CloudEventSchemaV1_0. </summary>
+        [CodeGenMember("CloudEventSchemaV10")]
         public static EventGridInputSchema CloudEventSchemaV1_0 { get; } = new("CloudEventSchemaV1_0");
     }
 }
