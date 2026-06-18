@@ -141,33 +141,6 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="op"> Gets the Op. </param>
-        /// <param name="schema"> Schema name of the column to update. </param>
-        /// <param name="table"> Table name of the column to update. </param>
-        /// <param name="column"> Column name to update. </param>
-        /// <param name="sensitivityLabel"> The sensitivity label information to apply on a column. </param>
-        /// <returns> A new <see cref="Models.SensitivityLabelUpdate"/> instance for mocking. </returns>
-        public static SensitivityLabelUpdate SensitivityLabelUpdate(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SensitivityLabelUpdateKind? op = default, string schema = default, string table = default, string column = default, SensitivityLabelData sensitivityLabel = default)
-        {
-            return new SensitivityLabelUpdate(
-                id,
-                name,
-                resourceType,
-                systemData,
-                op is null && schema is null && table is null && column is null && sensitivityLabel is null ? default : new SensitivityLabelUpdateProperties(
-                    op.GetValueOrDefault(),
-                    schema,
-                    table,
-                    column,
-                    sensitivityLabel,
-                    default),
-                default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="createMode">
@@ -1643,24 +1616,6 @@ namespace Azure.ResourceManager.Sql.Models
                 resourceType,
                 systemData,
                 results is null ? default : new DatabaseSqlVulnerabilityAssessmentRuleBaselineProperties((results ?? new ChangeTrackingList<IList<string>>()).ToList(), default),
-                default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="isLatestScan"> The latest scan flag. </param>
-        /// <param name="results"> The rule baseline result. </param>
-        /// <returns> A new <see cref="Models.SqlVulnerabilityAssessmentBaselineRuleCreateOrUpdateContent"/> instance for mocking. </returns>
-        public static SqlVulnerabilityAssessmentBaselineRuleCreateOrUpdateContent SqlVulnerabilityAssessmentBaselineRuleCreateOrUpdateContent(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, bool? isLatestScan = default, IEnumerable<IList<string>> results = default)
-        {
-            return new SqlVulnerabilityAssessmentBaselineRuleCreateOrUpdateContent(
-                id,
-                name,
-                resourceType,
-                systemData,
-                isLatestScan is null && results is null ? default : new DatabaseSqlVulnerabilityAssessmentRuleBaselineInputProperties(isLatestScan.GetValueOrDefault(), (results ?? new ChangeTrackingList<IList<string>>()).ToList(), default),
                 default);
         }
 
@@ -5112,26 +5067,6 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="op"> Gets the Op. </param>
-        /// <param name="schema"> Schema name of the column to update. </param>
-        /// <param name="table"> Table name of the column to update. </param>
-        /// <param name="column"> Column name to update. </param>
-        /// <returns> A new <see cref="Models.RecommendedSensitivityLabelUpdate"/> instance for mocking. </returns>
-        public static RecommendedSensitivityLabelUpdate RecommendedSensitivityLabelUpdate(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, RecommendedSensitivityLabelUpdateKind? op = default, string schema = default, string table = default, string column = default)
-        {
-            return new RecommendedSensitivityLabelUpdate(
-                id,
-                name,
-                resourceType,
-                systemData,
-                op is null && schema is null && table is null && column is null ? default : new RecommendedSensitivityLabelUpdateProperties(op.GetValueOrDefault(), schema, table, column, default),
-                default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="workspaces"> List of all synapselink workspaces. </param>
         /// <returns> A new <see cref="Models.SqlSynapseLinkWorkspace"/> instance for mocking. </returns>
         public static SqlSynapseLinkWorkspace SqlSynapseLinkWorkspace(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<SqlSynapseLinkWorkspaceInfo> workspaces = default)
@@ -5229,10 +5164,10 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="privateBlob"> The base64 encoded certificate private blob. </param>
         /// <param name="certPassword"> The certificate password. </param>
+        /// <param name="privateBlob"> The base64 encoded certificate private blob. </param>
         /// <returns> A new <see cref="Models.TdeCertificate"/> instance for mocking. </returns>
-        public static TdeCertificate TdeCertificate(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string privateBlob = default, string certPassword = default)
+        public static TdeCertificate TdeCertificate(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string certPassword = default, string privateBlob = default)
         {
             return new TdeCertificate(
                 id,
@@ -5241,6 +5176,14 @@ namespace Azure.ResourceManager.Sql.Models
                 systemData,
                 privateBlob is null && certPassword is null ? default : new TdeCertificateProperties(privateBlob, certPassword, default),
                 default);
+        }
+
+        /// <param name="privateBlob"> The base64 encoded certificate private blob. </param>
+        /// <param name="certPassword"> The certificate password. </param>
+        /// <returns> A new <see cref="Models.TdeCertificateProperties"/> instance for mocking. </returns>
+        public static TdeCertificateProperties TdeCertificateProperties(string privateBlob = default, string certPassword = default)
+        {
+            return new TdeCertificateProperties(privateBlob, certPassword, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -5294,45 +5237,6 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="operationMode"> Operation mode of the operation: Import, Export, or PolybaseImport. </param>
-        /// <param name="storageKeyType"> Storage key type: StorageAccessKey, SharedAccessKey or ManagedIdentity. </param>
-        /// <param name="storageKey"> Storage key for the storage account. If StorageKeyType is ManagedIdentity, this field should specify the Managed Identity's resource ID. </param>
-        /// <param name="storageUri"> Storage Uri for the storage account. </param>
-        /// <param name="administratorLogin"> Administrator login name. If AuthenticationType is ManagedIdentity, this field should specify the Managed Identity's resource ID. </param>
-        /// <param name="administratorLoginPassword"> Administrator login password. If AuthenticationType is ManagedIdentity, this field should not be specified. </param>
-        /// <param name="authenticationType"> Authentication type used to access the SQL: Sql, ADPassword or ManagedIdentity. </param>
-        /// <param name="databaseEdition"> Database edition for the newly created database in the case of an import operation. </param>
-        /// <param name="serviceObjectiveName"> Database service level objective for the newly created database in the case of an import operation. </param>
-        /// <param name="maxSizeBytes"> Database max size in bytes for the newly created database in the case of an import operation. </param>
-        /// <param name="networkIsolation"> Optional resource information to enable network isolation for request. </param>
-        /// <returns> A new <see cref="Models.SqlDatabaseExtension"/> instance for mocking. </returns>
-        public static SqlDatabaseExtension SqlDatabaseExtension(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DatabaseExtensionOperationMode? operationMode = default, StorageKeyType? storageKeyType = default, string storageKey = default, Uri storageUri = default, string administratorLogin = default, string administratorLoginPassword = default, string authenticationType = default, string databaseEdition = default, string serviceObjectiveName = default, string maxSizeBytes = default, NetworkIsolationSettings networkIsolation = default)
-        {
-            return new SqlDatabaseExtension(
-                id,
-                name,
-                resourceType,
-                systemData,
-                operationMode is null && storageKeyType is null && storageKey is null && storageUri is null && administratorLogin is null && administratorLoginPassword is null && authenticationType is null && databaseEdition is null && serviceObjectiveName is null && maxSizeBytes is null && networkIsolation is null ? default : new DatabaseExtensionsProperties(
-                    operationMode.GetValueOrDefault(),
-                    storageKeyType.GetValueOrDefault(),
-                    storageKey,
-                    storageUri,
-                    administratorLogin,
-                    administratorLoginPassword,
-                    authenticationType,
-                    databaseEdition,
-                    serviceObjectiveName,
-                    maxSizeBytes,
-                    networkIsolation,
-                    default),
-                default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="requestId"> Request Id. </param>
         /// <param name="requestType"> Request type. </param>
         /// <param name="lastModifiedTime"> Last modified time. </param>
@@ -5363,24 +5267,6 @@ namespace Azure.ResourceManager.Sql.Models
                     blobUri,
                     (privateEndpointConnections ?? new ChangeTrackingList<PrivateEndpointConnectionRequestStatus>()).ToList(),
                     default),
-                default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="isLatestScan"> The latest scan flag. </param>
-        /// <param name="results"> The rule baseline result list. </param>
-        /// <returns> A new <see cref="Models.SqlVulnerabilityAssessmentBaselineCreateOrUpdateContent"/> instance for mocking. </returns>
-        public static SqlVulnerabilityAssessmentBaselineCreateOrUpdateContent SqlVulnerabilityAssessmentBaselineCreateOrUpdateContent(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, bool? isLatestScan = default, IDictionary<string, IList<IList<string>>> results = default)
-        {
-            return new SqlVulnerabilityAssessmentBaselineCreateOrUpdateContent(
-                id,
-                name,
-                resourceType,
-                systemData,
-                isLatestScan is null && results is null ? default : new DatabaseSqlVulnerabilityAssessmentRuleBaselineListInputProperties(isLatestScan.GetValueOrDefault(), results ?? new ChangeTrackingDictionary<string, IList<IList<string>>>(), default),
                 default);
         }
 
@@ -6822,6 +6708,47 @@ namespace Azure.ResourceManager.Sql.Models
                 default);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.SqlDatabaseExtension"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="operationMode"> Operation mode of the operation: Import, Export, or PolybaseImport. </param>
+        /// <param name="storageKeyType"> Storage key type: StorageAccessKey, SharedAccessKey or ManagedIdentity. </param>
+        /// <param name="storageKey"> Storage key for the storage account. If StorageKeyType is ManagedIdentity, this field should specify the Managed Identity's resource ID. </param>
+        /// <param name="storageUri"> Storage Uri for the storage account. </param>
+        /// <param name="administratorLogin"> Administrator login name. If AuthenticationType is ManagedIdentity, this field should specify the Managed Identity's resource ID. </param>
+        /// <param name="administratorLoginPassword"> Administrator login password. If AuthenticationType is ManagedIdentity, this field should not be specified. </param>
+        /// <param name="authenticationType"> Authentication type used to access the SQL: Sql, ADPassword or ManagedIdentity. </param>
+        /// <param name="databaseEdition"> Database edition for the newly created database in the case of an import operation. </param>
+        /// <param name="serviceObjectiveName"> Database service level objective for the newly created database in the case of an import operation. </param>
+        /// <param name="maxSizeBytes"> Database max size in bytes for the newly created database in the case of an import operation. </param>
+        /// <param name="networkIsolation"> Optional resource information to enable network isolation for request. </param>
+        /// <returns> A new <see cref="Models.SqlDatabaseExtension"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SqlDatabaseExtension SqlDatabaseExtension(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DatabaseExtensionOperationMode? operationMode = default, StorageKeyType? storageKeyType = default, string storageKey = default, Uri storageUri = default, string administratorLogin = default, string administratorLoginPassword = default, string authenticationType = default, string databaseEdition = default, string serviceObjectiveName = default, string maxSizeBytes = default, NetworkIsolationSettings networkIsolation = default)
+        {
+            return new SqlDatabaseExtension(
+                id,
+                name,
+                resourceType,
+                systemData,
+                operationMode is null && storageKeyType is null && storageKey is null && storageUri is null && administratorLogin is null && administratorLoginPassword is null && authenticationType is null && databaseEdition is null && serviceObjectiveName is null && maxSizeBytes is null && networkIsolation is null ? default : new DatabaseExtensionsProperties(
+                    operationMode.GetValueOrDefault(),
+                    storageKeyType.GetValueOrDefault(),
+                    storageKey,
+                    storageUri,
+                    administratorLogin,
+                    administratorLoginPassword,
+                    authenticationType,
+                    databaseEdition,
+                    serviceObjectiveName,
+                    maxSizeBytes,
+                    networkIsolation,
+                    default),
+                default);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Sql.SqlDatabaseData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -7157,6 +7084,46 @@ namespace Azure.ResourceManager.Sql.Models
                 performCutover,
                 encryptionProtectorAutoRotation,
                 default), tags ?? new ChangeTrackingDictionary<string, string>(), default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SqlVulnerabilityAssessmentBaselineCreateOrUpdateContent"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="isLatestScan"> The latest scan flag. </param>
+        /// <param name="results"> The rule baseline result list. </param>
+        /// <returns> A new <see cref="Models.SqlVulnerabilityAssessmentBaselineCreateOrUpdateContent"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SqlVulnerabilityAssessmentBaselineCreateOrUpdateContent SqlVulnerabilityAssessmentBaselineCreateOrUpdateContent(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, bool? isLatestScan = default, IDictionary<string, IList<IList<string>>> results = default)
+        {
+            return new SqlVulnerabilityAssessmentBaselineCreateOrUpdateContent(
+                id,
+                name,
+                resourceType,
+                systemData,
+                isLatestScan is null && results is null ? default : new DatabaseSqlVulnerabilityAssessmentRuleBaselineListInputProperties(isLatestScan.GetValueOrDefault(), results ?? new ChangeTrackingDictionary<string, IList<IList<string>>>(), default),
+                default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SqlVulnerabilityAssessmentBaselineRuleCreateOrUpdateContent"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="isLatestScan"> The latest scan flag. </param>
+        /// <param name="results"> The rule baseline result. </param>
+        /// <returns> A new <see cref="Models.SqlVulnerabilityAssessmentBaselineRuleCreateOrUpdateContent"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SqlVulnerabilityAssessmentBaselineRuleCreateOrUpdateContent SqlVulnerabilityAssessmentBaselineRuleCreateOrUpdateContent(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, bool? isLatestScan = default, IEnumerable<IList<string>> results = default)
+        {
+            return new SqlVulnerabilityAssessmentBaselineRuleCreateOrUpdateContent(
+                id,
+                name,
+                resourceType,
+                systemData,
+                isLatestScan is null && results is null ? default : new DatabaseSqlVulnerabilityAssessmentRuleBaselineInputProperties(isLatestScan.GetValueOrDefault(), (results ?? new ChangeTrackingList<IList<string>>()).ToList(), default),
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Sql.DataMaskingPolicyData"/>. </summary>
@@ -7553,6 +7520,57 @@ namespace Azure.ResourceManager.Sql.Models
                     clientClassificationSource,
                     default),
                 managedBy,
+                default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SensitivityLabelUpdate"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="op"></param>
+        /// <param name="schema"> Schema name of the column to update. </param>
+        /// <param name="table"> Table name of the column to update. </param>
+        /// <param name="column"> Column name to update. </param>
+        /// <param name="sensitivityLabel"> The sensitivity label information to apply on a column. </param>
+        /// <returns> A new <see cref="Models.SensitivityLabelUpdate"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SensitivityLabelUpdate SensitivityLabelUpdate(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SensitivityLabelUpdateKind? op = default, string schema = default, string table = default, string column = default, SensitivityLabelData sensitivityLabel = default)
+        {
+            return new SensitivityLabelUpdate(
+                id,
+                name,
+                resourceType,
+                systemData,
+                op is null && schema is null && table is null && column is null && sensitivityLabel is null ? default : new SensitivityLabelUpdateProperties(
+                    op.GetValueOrDefault(),
+                    schema,
+                    table,
+                    column,
+                    sensitivityLabel,
+                    default),
+                default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.RecommendedSensitivityLabelUpdate"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="op"></param>
+        /// <param name="schema"> Schema name of the column to update. </param>
+        /// <param name="table"> Table name of the column to update. </param>
+        /// <param name="column"> Column name to update. </param>
+        /// <returns> A new <see cref="Models.RecommendedSensitivityLabelUpdate"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static RecommendedSensitivityLabelUpdate RecommendedSensitivityLabelUpdate(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, RecommendedSensitivityLabelUpdateKind? op = default, string schema = default, string table = default, string column = default)
+        {
+            return new RecommendedSensitivityLabelUpdate(
+                id,
+                name,
+                resourceType,
+                systemData,
+                op is null && schema is null && table is null && column is null ? default : new RecommendedSensitivityLabelUpdateProperties(op.GetValueOrDefault(), schema, table, column, default),
                 default);
         }
 

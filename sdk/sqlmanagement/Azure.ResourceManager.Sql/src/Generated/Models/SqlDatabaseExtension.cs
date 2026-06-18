@@ -41,46 +41,6 @@ namespace Azure.ResourceManager.Sql.Models
         [WirePath("properties")]
         internal DatabaseExtensionsProperties Properties { get; set; }
 
-        /// <summary> Operation mode of the operation: Import, Export, or PolybaseImport. </summary>
-        [WirePath("properties.operationMode")]
-        public DatabaseExtensionOperationMode? OperationMode
-        {
-            get
-            {
-                return Properties is null ? default : Properties.OperationMode;
-            }
-        }
-
-        /// <summary> Storage key type: StorageAccessKey, SharedAccessKey or ManagedIdentity. </summary>
-        [WirePath("properties.storageKeyType")]
-        public StorageKeyType? StorageKeyType
-        {
-            get
-            {
-                return Properties is null ? default : Properties.StorageKeyType;
-            }
-        }
-
-        /// <summary> Storage key for the storage account. If StorageKeyType is ManagedIdentity, this field should specify the Managed Identity's resource ID. </summary>
-        [WirePath("properties.storageKey")]
-        public string StorageKey
-        {
-            get
-            {
-                return Properties is null ? default : Properties.StorageKey;
-            }
-        }
-
-        /// <summary> Storage Uri for the storage account. </summary>
-        [WirePath("properties.storageUri")]
-        public Uri StorageUri
-        {
-            get
-            {
-                return Properties is null ? default : Properties.StorageUri;
-            }
-        }
-
         /// <summary> Administrator login name. If AuthenticationType is ManagedIdentity, this field should specify the Managed Identity's resource ID. </summary>
         [WirePath("properties.administratorLogin")]
         public string AdministratorLogin
@@ -204,6 +164,84 @@ namespace Azure.ResourceManager.Sql.Models
                     Properties = new DatabaseExtensionsProperties();
                 }
                 Properties.NetworkIsolation = value;
+            }
+        }
+
+        /// <summary> Operation mode of the operation: Import, Export, or PolybaseImport. </summary>
+        [WirePath("properties.operationMode")]
+        public DatabaseExtensionOperationMode? OperationMode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OperationMode;
+            }
+            set
+            {
+                if (value.HasValue)
+                {
+                    if (Properties is null)
+                    {
+                        Properties = new DatabaseExtensionsProperties();
+                    }
+                    Properties.OperationMode = value.Value;
+                }
+            }
+        }
+
+        /// <summary> Storage key type: StorageAccessKey, SharedAccessKey or ManagedIdentity. </summary>
+        [WirePath("properties.storageKeyType")]
+        public StorageKeyType? StorageKeyType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StorageKeyType;
+            }
+            set
+            {
+                if (value.HasValue)
+                {
+                    if (Properties is null)
+                    {
+                        Properties = new DatabaseExtensionsProperties();
+                    }
+                    Properties.StorageKeyType = value.Value;
+                }
+            }
+        }
+
+        /// <summary> Storage key for the storage account. If StorageKeyType is ManagedIdentity, this field should specify the Managed Identity's resource ID. </summary>
+        [WirePath("properties.storageKey")]
+        public string StorageKey
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StorageKey;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseExtensionsProperties();
+                }
+                Properties.StorageKey = value;
+            }
+        }
+
+        /// <summary> Storage Uri for the storage account. </summary>
+        [WirePath("properties.storageUri")]
+        public Uri StorageUri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StorageUri;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseExtensionsProperties();
+                }
+                Properties.StorageUri = value;
             }
         }
     }

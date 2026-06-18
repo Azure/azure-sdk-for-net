@@ -41,16 +41,6 @@ namespace Azure.ResourceManager.Sql.Models
         [WirePath("properties")]
         internal TdeCertificateProperties Properties { get; set; }
 
-        /// <summary> The base64 encoded certificate private blob. </summary>
-        [WirePath("properties.privateBlob")]
-        public string PrivateBlob
-        {
-            get
-            {
-                return Properties is null ? default : Properties.PrivateBlob;
-            }
-        }
-
         /// <summary> The certificate password. </summary>
         [WirePath("properties.certPassword")]
         public string CertPassword
@@ -66,6 +56,24 @@ namespace Azure.ResourceManager.Sql.Models
                     Properties = new TdeCertificateProperties();
                 }
                 Properties.CertPassword = value;
+            }
+        }
+
+        /// <summary> The base64 encoded certificate private blob. </summary>
+        [WirePath("properties.privateBlob")]
+        public string PrivateBlob
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateBlob;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TdeCertificateProperties();
+                }
+                Properties.PrivateBlob = value;
             }
         }
     }

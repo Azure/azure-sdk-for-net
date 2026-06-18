@@ -16,15 +16,15 @@ namespace Azure.ResourceManager.Sql.Models
     {
         private readonly string _value;
         /// <summary> None. </summary>
-        private const string NoneValue = "None";
+        private const string TlsNoneValue = "None";
         /// <summary> 1.0. </summary>
-        private const string _10Value = "1.0";
+        private const string Tls1_0Value = "1.0";
         /// <summary> 1.1. </summary>
-        private const string _11Value = "1.1";
+        private const string Tls1_1Value = "1.1";
         /// <summary> 1.2. </summary>
-        private const string _12Value = "1.2";
+        private const string Tls1_2Value = "1.2";
         /// <summary> 1.3. </summary>
-        private const string _13Value = "1.3";
+        private const string Tls1_3Value = "1.3";
 
         /// <summary> Initializes a new instance of <see cref="SqlMinimalTlsVersion"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -35,6 +35,21 @@ namespace Azure.ResourceManager.Sql.Models
 
             _value = value;
         }
+
+        /// <summary> None. </summary>
+        public static SqlMinimalTlsVersion TlsNone { get; } = new SqlMinimalTlsVersion(TlsNoneValue);
+
+        /// <summary> 1.0. </summary>
+        public static SqlMinimalTlsVersion Tls1_0 { get; } = new SqlMinimalTlsVersion(Tls1_0Value);
+
+        /// <summary> 1.1. </summary>
+        public static SqlMinimalTlsVersion Tls1_1 { get; } = new SqlMinimalTlsVersion(Tls1_1Value);
+
+        /// <summary> 1.2. </summary>
+        public static SqlMinimalTlsVersion Tls1_2 { get; } = new SqlMinimalTlsVersion(Tls1_2Value);
+
+        /// <summary> 1.3. </summary>
+        public static SqlMinimalTlsVersion Tls1_3 { get; } = new SqlMinimalTlsVersion(Tls1_3Value);
 
         /// <summary> Determines if two <see cref="SqlMinimalTlsVersion"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

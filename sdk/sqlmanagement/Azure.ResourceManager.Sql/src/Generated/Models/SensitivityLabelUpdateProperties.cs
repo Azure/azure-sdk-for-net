@@ -11,7 +11,6 @@ using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> Properties of an operation executed on a sensitivity label. </summary>
     internal partial class SensitivityLabelUpdateProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -22,13 +21,8 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="schema"> Schema name of the column to update. </param>
         /// <param name="table"> Table name of the column to update. </param>
         /// <param name="column"> Column name to update. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="schema"/>, <paramref name="table"/> or <paramref name="column"/> is null. </exception>
         public SensitivityLabelUpdateProperties(SensitivityLabelUpdateKind op, string schema, string table, string column)
         {
-            Argument.AssertNotNull(schema, nameof(schema));
-            Argument.AssertNotNull(table, nameof(table));
-            Argument.AssertNotNull(column, nameof(column));
-
             Op = op;
             Schema = schema;
             Table = table;
@@ -51,22 +45,6 @@ namespace Azure.ResourceManager.Sql.Models
             SensitivityLabel = sensitivityLabel;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> Gets the Op. </summary>
-        [WirePath("op")]
-        public SensitivityLabelUpdateKind Op { get; }
-
-        /// <summary> Schema name of the column to update. </summary>
-        [WirePath("schema")]
-        public string Schema { get; }
-
-        /// <summary> Table name of the column to update. </summary>
-        [WirePath("table")]
-        public string Table { get; }
-
-        /// <summary> Column name to update. </summary>
-        [WirePath("column")]
-        public string Column { get; }
 
         /// <summary> The sensitivity label information to apply on a column. </summary>
         [WirePath("sensitivityLabel")]

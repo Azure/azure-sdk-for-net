@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Sql.Models
             string queryId = default;
             string startTime = default;
             string endTime = default;
-            IList<QueryMetricInterval> intervals = default;
+            IReadOnlyList<QueryMetricInterval> intervals = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

@@ -11,7 +11,6 @@ using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> Contains the database information after a successful Import, Export, or PolybaseImport. </summary>
     internal partial class DatabaseExtensionsProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -22,12 +21,8 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="storageKeyType"> Storage key type: StorageAccessKey, SharedAccessKey or ManagedIdentity. </param>
         /// <param name="storageKey"> Storage key for the storage account. If StorageKeyType is ManagedIdentity, this field should specify the Managed Identity's resource ID. </param>
         /// <param name="storageUri"> Storage Uri for the storage account. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="storageKey"/> or <paramref name="storageUri"/> is null. </exception>
         public DatabaseExtensionsProperties(DatabaseExtensionOperationMode operationMode, StorageKeyType storageKeyType, string storageKey, Uri storageUri)
         {
-            Argument.AssertNotNull(storageKey, nameof(storageKey));
-            Argument.AssertNotNull(storageUri, nameof(storageUri));
-
             OperationMode = operationMode;
             StorageKeyType = storageKeyType;
             StorageKey = storageKey;
@@ -62,22 +57,6 @@ namespace Azure.ResourceManager.Sql.Models
             NetworkIsolation = networkIsolation;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> Operation mode of the operation: Import, Export, or PolybaseImport. </summary>
-        [WirePath("operationMode")]
-        public DatabaseExtensionOperationMode OperationMode { get; }
-
-        /// <summary> Storage key type: StorageAccessKey, SharedAccessKey or ManagedIdentity. </summary>
-        [WirePath("storageKeyType")]
-        public StorageKeyType StorageKeyType { get; }
-
-        /// <summary> Storage key for the storage account. If StorageKeyType is ManagedIdentity, this field should specify the Managed Identity's resource ID. </summary>
-        [WirePath("storageKey")]
-        public string StorageKey { get; }
-
-        /// <summary> Storage Uri for the storage account. </summary>
-        [WirePath("storageUri")]
-        public Uri StorageUri { get; }
 
         /// <summary> Administrator login name. If AuthenticationType is ManagedIdentity, this field should specify the Managed Identity's resource ID. </summary>
         [WirePath("administratorLogin")]

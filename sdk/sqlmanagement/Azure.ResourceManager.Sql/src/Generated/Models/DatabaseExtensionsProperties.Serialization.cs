@@ -13,7 +13,6 @@ using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> Contains the database information after a successful Import, Export, or PolybaseImport. </summary>
     internal partial class DatabaseExtensionsProperties : IJsonModel<DatabaseExtensionsProperties>
     {
         /// <summary> Initializes a new instance of <see cref="DatabaseExtensionsProperties"/> for deserialization. </summary>

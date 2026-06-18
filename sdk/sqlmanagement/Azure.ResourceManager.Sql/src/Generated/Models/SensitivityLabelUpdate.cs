@@ -41,46 +41,6 @@ namespace Azure.ResourceManager.Sql.Models
         [WirePath("properties")]
         internal SensitivityLabelUpdateProperties Properties { get; set; }
 
-        /// <summary> Gets the Op. </summary>
-        [WirePath("properties.op")]
-        public SensitivityLabelUpdateKind? Op
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Op;
-            }
-        }
-
-        /// <summary> Schema name of the column to update. </summary>
-        [WirePath("properties.schema")]
-        public string Schema
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Schema;
-            }
-        }
-
-        /// <summary> Table name of the column to update. </summary>
-        [WirePath("properties.table")]
-        public string Table
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Table;
-            }
-        }
-
-        /// <summary> Column name to update. </summary>
-        [WirePath("properties.column")]
-        public string Column
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Column;
-            }
-        }
-
         /// <summary> The sensitivity label information to apply on a column. </summary>
         [WirePath("properties.sensitivityLabel")]
         public SensitivityLabelData SensitivityLabel
@@ -96,6 +56,81 @@ namespace Azure.ResourceManager.Sql.Models
                     Properties = new SensitivityLabelUpdateProperties();
                 }
                 Properties.SensitivityLabel = value;
+            }
+        }
+
+        /// <summary> Gets or sets the Op. </summary>
+        [WirePath("properties.op")]
+        public SensitivityLabelUpdateKind? Op
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Op;
+            }
+            set
+            {
+                if (value.HasValue)
+                {
+                    if (Properties is null)
+                    {
+                        Properties = new SensitivityLabelUpdateProperties();
+                    }
+                    Properties.Op = value.Value;
+                }
+            }
+        }
+
+        /// <summary> Schema name of the column to update. </summary>
+        [WirePath("properties.schema")]
+        public string Schema
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Schema;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SensitivityLabelUpdateProperties();
+                }
+                Properties.Schema = value;
+            }
+        }
+
+        /// <summary> Table name of the column to update. </summary>
+        [WirePath("properties.table")]
+        public string Table
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Table;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SensitivityLabelUpdateProperties();
+                }
+                Properties.Table = value;
+            }
+        }
+
+        /// <summary> Column name to update. </summary>
+        [WirePath("properties.column")]
+        public string Column
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Column;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SensitivityLabelUpdateProperties();
+                }
+                Properties.Column = value;
             }
         }
     }

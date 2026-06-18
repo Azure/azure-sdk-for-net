@@ -308,14 +308,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="skip"> The number of elements in the collection to skip. </param>
         /// <param name="top"> The number of elements to return from the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SqlServerJobExecutionData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SqlServerJobExecutionData> GetByJobExecutionAsync(DateTimeOffset? createTimeMin = default, DateTimeOffset? createTimeMax = default, DateTimeOffset? endTimeMin = default, DateTimeOffset? endTimeMax = default, bool? isActive = default, long? skip = default, long? top = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SqlServerJobExecutionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SqlServerJobExecutionResource> GetByJobExecutionAsync(DateTimeOffset? createTimeMin = default, DateTimeOffset? createTimeMax = default, DateTimeOffset? endTimeMin = default, DateTimeOffset? endTimeMax = default, bool? isActive = default, long? skip = default, long? top = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new JobTargetExecutionsGetByJobExecutionAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SqlServerJobExecutionData, SqlServerJobExecutionResource>(new JobTargetExecutionsGetByJobExecutionAsyncCollectionResultOfT(
                 _jobTargetExecutionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.Sql
                 skip,
                 top,
                 context,
-                "SqlServerJobExecutionResource.GetByJobExecution");
+                "SqlServerJobExecutionResource.GetByJobExecution"), data => new SqlServerJobExecutionResource(Client, data));
         }
 
         /// <summary>
@@ -363,14 +363,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="skip"> The number of elements in the collection to skip. </param>
         /// <param name="top"> The number of elements to return from the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SqlServerJobExecutionData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SqlServerJobExecutionData> GetByJobExecution(DateTimeOffset? createTimeMin = default, DateTimeOffset? createTimeMax = default, DateTimeOffset? endTimeMin = default, DateTimeOffset? endTimeMax = default, bool? isActive = default, long? skip = default, long? top = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SqlServerJobExecutionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SqlServerJobExecutionResource> GetByJobExecution(DateTimeOffset? createTimeMin = default, DateTimeOffset? createTimeMax = default, DateTimeOffset? endTimeMin = default, DateTimeOffset? endTimeMax = default, bool? isActive = default, long? skip = default, long? top = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new JobTargetExecutionsGetByJobExecutionCollectionResultOfT(
+            return new PageableWrapper<SqlServerJobExecutionData, SqlServerJobExecutionResource>(new JobTargetExecutionsGetByJobExecutionCollectionResultOfT(
                 _jobTargetExecutionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.Sql
                 skip,
                 top,
                 context,
-                "SqlServerJobExecutionResource.GetByJobExecution");
+                "SqlServerJobExecutionResource.GetByJobExecution"), data => new SqlServerJobExecutionResource(Client, data));
         }
 
         /// <summary>

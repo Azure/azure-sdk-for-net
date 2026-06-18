@@ -14,7 +14,7 @@ using Azure.ResourceManager.Sql;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Properties of a TDE certificate. </summary>
-    internal partial class TdeCertificateProperties : IJsonModel<TdeCertificateProperties>
+    public partial class TdeCertificateProperties : IJsonModel<TdeCertificateProperties>
     {
         /// <summary> Initializes a new instance of <see cref="TdeCertificateProperties"/> for deserialization. </summary>
         internal TdeCertificateProperties()

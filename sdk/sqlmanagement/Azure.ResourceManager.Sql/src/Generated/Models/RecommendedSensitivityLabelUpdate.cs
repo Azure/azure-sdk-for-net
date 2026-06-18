@@ -41,13 +41,24 @@ namespace Azure.ResourceManager.Sql.Models
         [WirePath("properties")]
         internal RecommendedSensitivityLabelUpdateProperties Properties { get; set; }
 
-        /// <summary> Gets the Op. </summary>
+        /// <summary> Gets or sets the Op. </summary>
         [WirePath("properties.op")]
         public RecommendedSensitivityLabelUpdateKind? Op
         {
             get
             {
                 return Properties is null ? default : Properties.Op;
+            }
+            set
+            {
+                if (value.HasValue)
+                {
+                    if (Properties is null)
+                    {
+                        Properties = new RecommendedSensitivityLabelUpdateProperties();
+                    }
+                    Properties.Op = value.Value;
+                }
             }
         }
 
@@ -59,6 +70,14 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return Properties is null ? default : Properties.Schema;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RecommendedSensitivityLabelUpdateProperties();
+                }
+                Properties.Schema = value;
+            }
         }
 
         /// <summary> Table name of the column to update. </summary>
@@ -69,6 +88,14 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return Properties is null ? default : Properties.Table;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RecommendedSensitivityLabelUpdateProperties();
+                }
+                Properties.Table = value;
+            }
         }
 
         /// <summary> Column name to update. </summary>
@@ -78,6 +105,14 @@ namespace Azure.ResourceManager.Sql.Models
             get
             {
                 return Properties is null ? default : Properties.Column;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RecommendedSensitivityLabelUpdateProperties();
+                }
+                Properties.Column = value;
             }
         }
     }

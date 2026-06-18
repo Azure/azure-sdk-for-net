@@ -13,7 +13,6 @@ using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> Properties of an operation executed on a sensitivity label. </summary>
     internal partial class SensitivityLabelUpdateProperties : IJsonModel<SensitivityLabelUpdateProperties>
     {
         /// <summary> Initializes a new instance of <see cref="SensitivityLabelUpdateProperties"/> for deserialization. </summary>

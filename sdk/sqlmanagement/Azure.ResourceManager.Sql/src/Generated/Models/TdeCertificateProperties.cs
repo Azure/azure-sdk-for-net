@@ -12,7 +12,7 @@ using Azure.ResourceManager.Sql;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Properties of a TDE certificate. </summary>
-    internal partial class TdeCertificateProperties
+    public partial class TdeCertificateProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -37,10 +37,6 @@ namespace Azure.ResourceManager.Sql.Models
             CertPassword = certPassword;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> The base64 encoded certificate private blob. </summary>
-        [WirePath("privateBlob")]
-        public string PrivateBlob { get; }
 
         /// <summary> The certificate password. </summary>
         [WirePath("certPassword")]
