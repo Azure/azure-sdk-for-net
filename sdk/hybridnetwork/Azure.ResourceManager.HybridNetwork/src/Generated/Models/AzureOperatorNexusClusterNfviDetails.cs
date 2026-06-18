@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary> The AzureOperatorNexusCluster NFVI detail. </summary>
-    public partial class AzureOperatorNexusClusterNfviDetails : NfvIs
+    public partial class AzureOperatorNexusClusterNfviDetails : NfviEntry
     {
         /// <summary> Initializes a new instance of <see cref="AzureOperatorNexusClusterNfviDetails"/>. </summary>
         public AzureOperatorNexusClusterNfviDetails() : base(NfviType.AzureOperatorNexus)

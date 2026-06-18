@@ -817,7 +817,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="managedResourceGroupConfiguration"></param>
         /// <param name="storageResourceId"> The created storage resource id. </param>
         /// <returns> A new <see cref="Models.ArtifactStorePropertiesFormat"/> instance for mocking. </returns>
-        public static ArtifactStorePropertiesFormat ArtifactStorePropertiesFormat(ProvisioningState? provisioningState = default, ArtifactStoreType? storeType = default, BackingResourcePublicNetworkAccess? backingResourcePublicNetworkAccess = default, ArtifactReplicationStrategy? replicationStrategy = default, ArtifactStorePropertiesFormatManagedResourceGroupConfiguration managedResourceGroupConfiguration = default, AzureLocation? storageResourceId = default)
+        public static ArtifactStorePropertiesFormat ArtifactStorePropertiesFormat(ProvisioningState? provisioningState = default, ArtifactStoreType? storeType = default, BackingResourcePublicNetworkAccess? backingResourcePublicNetworkAccess = default, ArtifactReplicationStrategy? replicationStrategy = default, ArtifactStorePropertiesFormatManagedResourceGroupConfiguration managedResourceGroupConfiguration = default, ResourceIdentifier storageResourceId = default)
         {
             return new ArtifactStorePropertiesFormat(
                 provisioningState,
@@ -995,9 +995,9 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="nfvis"> List of NFVIs. </param>
         /// <param name="referencedSiteNetworkServices"> The list of site network services on the site. </param>
         /// <returns> A new <see cref="Models.SitePropertiesFormat"/> instance for mocking. </returns>
-        public static SitePropertiesFormat SitePropertiesFormat(ProvisioningState? provisioningState = default, IEnumerable<NfvIs> nfvis = default, IEnumerable<ReferencedResourceById> referencedSiteNetworkServices = default)
+        public static SitePropertiesFormat SitePropertiesFormat(ProvisioningState? provisioningState = default, IEnumerable<NfviEntry> nfvis = default, IEnumerable<ReferencedResourceById> referencedSiteNetworkServices = default)
         {
-            nfvis ??= new ChangeTrackingList<NfvIs>();
+            nfvis ??= new ChangeTrackingList<NfviEntry>();
             referencedSiteNetworkServices ??= new ChangeTrackingList<ReferencedResourceById>();
 
             return new SitePropertiesFormat(provisioningState, nfvis.ToList(), referencedSiteNetworkServices.ToList(), additionalBinaryDataProperties: null);
@@ -1077,7 +1077,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="siteNetworkServiceReferenceId"> Resource ID. </param>
         /// <param name="longRunningOperation"> The type of long-running operation the user wants to cancel, such as 'Put'. </param>
         /// <returns> A new <see cref="Models.CancelInformation"/> instance for mocking. </returns>
-        public static CancelInformation CancelInformation(ResourceIdentifier siteNetworkServiceReferenceId = default, LongRunningOperation? longRunningOperation = default)
+        public static CancelInformation CancelInformation(ResourceIdentifier siteNetworkServiceReferenceId = default, CancelableLongRunningOperationType? longRunningOperation = default)
         {
             return new CancelInformation(new ReferencedResourceById(siteNetworkServiceReferenceId, null), longRunningOperation, additionalBinaryDataProperties: null);
         }

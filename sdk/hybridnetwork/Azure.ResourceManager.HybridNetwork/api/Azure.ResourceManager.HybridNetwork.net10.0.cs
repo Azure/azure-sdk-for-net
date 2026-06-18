@@ -903,14 +903,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         public static Azure.ResourceManager.HybridNetwork.ArtifactStoreData ArtifactStoreData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.HybridNetwork.Models.ArtifactStorePropertiesFormat properties = null) { throw null; }
         public static Azure.ResourceManager.HybridNetwork.Models.ArtifactStoreNetworkFabricControllerEndPoints ArtifactStoreNetworkFabricControllerEndPoints(System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridNetwork.Models.ReferencedResourceById> networkFabricControllerIds = null) { throw null; }
         public static Azure.ResourceManager.HybridNetwork.Models.ArtifactStorePrivateEndPointsFormat ArtifactStorePrivateEndPointsFormat(System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridNetwork.Models.ReferencedResourceById> manualPrivateEndPointConnections = null) { throw null; }
-        public static Azure.ResourceManager.HybridNetwork.Models.ArtifactStorePropertiesFormat ArtifactStorePropertiesFormat(Azure.ResourceManager.HybridNetwork.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.HybridNetwork.Models.ProvisioningState?), Azure.ResourceManager.HybridNetwork.Models.ArtifactStoreType? storeType = default(Azure.ResourceManager.HybridNetwork.Models.ArtifactStoreType?), Azure.ResourceManager.HybridNetwork.Models.BackingResourcePublicNetworkAccess? backingResourcePublicNetworkAccess = default(Azure.ResourceManager.HybridNetwork.Models.BackingResourcePublicNetworkAccess?), Azure.ResourceManager.HybridNetwork.Models.ArtifactReplicationStrategy? replicationStrategy = default(Azure.ResourceManager.HybridNetwork.Models.ArtifactReplicationStrategy?), Azure.ResourceManager.HybridNetwork.Models.ArtifactStorePropertiesFormatManagedResourceGroupConfiguration managedResourceGroupConfiguration = null, Azure.Core.AzureLocation? storageResourceId = default(Azure.Core.AzureLocation?)) { throw null; }
+        public static Azure.ResourceManager.HybridNetwork.Models.ArtifactStorePropertiesFormat ArtifactStorePropertiesFormat(Azure.ResourceManager.HybridNetwork.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.HybridNetwork.Models.ProvisioningState?), Azure.ResourceManager.HybridNetwork.Models.ArtifactStoreType? storeType = default(Azure.ResourceManager.HybridNetwork.Models.ArtifactStoreType?), Azure.ResourceManager.HybridNetwork.Models.BackingResourcePublicNetworkAccess? backingResourcePublicNetworkAccess = default(Azure.ResourceManager.HybridNetwork.Models.BackingResourcePublicNetworkAccess?), Azure.ResourceManager.HybridNetwork.Models.ArtifactReplicationStrategy? replicationStrategy = default(Azure.ResourceManager.HybridNetwork.Models.ArtifactReplicationStrategy?), Azure.ResourceManager.HybridNetwork.Models.ArtifactStorePropertiesFormatManagedResourceGroupConfiguration managedResourceGroupConfiguration = null, Azure.Core.ResourceIdentifier storageResourceId = null) { throw null; }
         public static Azure.ResourceManager.HybridNetwork.Models.AzureArcKubernetesNetworkFunctionTemplate AzureArcKubernetesNetworkFunctionTemplate(System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridNetwork.Models.AzureArcKubernetesNetworkFunctionApplication> networkFunctionApplications = null) { throw null; }
         public static Azure.ResourceManager.HybridNetwork.Models.AzureContainerRegistryScopedTokenCredential AzureContainerRegistryScopedTokenCredential(string username = null, string acrToken = null, System.Uri acrServerUri = null, System.Collections.Generic.IEnumerable<string> repositories = null, System.DateTimeOffset? expiryOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.HybridNetwork.Models.AzureCoreNetworkFunctionTemplate AzureCoreNetworkFunctionTemplate(System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridNetwork.Models.AzureCoreNetworkFunctionApplication> networkFunctionApplications = null) { throw null; }
         public static Azure.ResourceManager.HybridNetwork.Models.AzureOperatorNexusNetworkFunctionTemplate AzureOperatorNexusNetworkFunctionTemplate(System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridNetwork.Models.AzureOperatorNexusNetworkFunctionApplication> networkFunctionApplications = null) { throw null; }
         public static Azure.ResourceManager.HybridNetwork.Models.AzureStorageAccountContainerCredential AzureStorageAccountContainerCredential(string containerName = null, System.Uri containerSasUri = null) { throw null; }
         public static Azure.ResourceManager.HybridNetwork.Models.AzureStorageAccountCredential AzureStorageAccountCredential(Azure.Core.ResourceIdentifier storageAccountId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridNetwork.Models.AzureStorageAccountContainerCredential> containerCredentials = null, System.DateTimeOffset? expiryOn = default(System.DateTimeOffset?)) { throw null; }
-        public static Azure.ResourceManager.HybridNetwork.Models.CancelInformation CancelInformation(Azure.Core.ResourceIdentifier siteNetworkServiceReferenceId = null, Azure.ResourceManager.HybridNetwork.Models.LongRunningOperation? longRunningOperation = default(Azure.ResourceManager.HybridNetwork.Models.LongRunningOperation?)) { throw null; }
+        public static Azure.ResourceManager.HybridNetwork.Models.CancelInformation CancelInformation(Azure.Core.ResourceIdentifier siteNetworkServiceReferenceId = null, Azure.ResourceManager.HybridNetwork.Models.CancelableLongRunningOperationType? longRunningOperation = default(Azure.ResourceManager.HybridNetwork.Models.CancelableLongRunningOperationType?)) { throw null; }
         public static Azure.ResourceManager.HybridNetwork.ComponentData ComponentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.HybridNetwork.Models.ComponentProperties properties = null) { throw null; }
         public static Azure.ResourceManager.HybridNetwork.Models.ComponentKubernetesResources ComponentKubernetesResources(System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridNetwork.Models.KubernetesDeployment> deployments = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridNetwork.Models.KubernetesPod> pods = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridNetwork.Models.KubernetesReplicaSet> replicaSets = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridNetwork.Models.KubernetesStatefulSet> statefulSets = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridNetwork.Models.KubernetesDaemonSet> daemonSets = null) { throw null; }
         public static Azure.ResourceManager.HybridNetwork.Models.ComponentProperties ComponentProperties(Azure.ResourceManager.HybridNetwork.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.HybridNetwork.Models.ProvisioningState?), string deploymentProfile = null, Azure.ResourceManager.HybridNetwork.Models.DeploymentStatusProperties deploymentStatus = null) { throw null; }
@@ -953,7 +953,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         public static Azure.ResourceManager.HybridNetwork.SiteData SiteData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.HybridNetwork.Models.SitePropertiesFormat properties = null) { throw null; }
         public static Azure.ResourceManager.HybridNetwork.SiteNetworkServiceData SiteNetworkServiceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.HybridNetwork.Models.SiteNetworkServicePropertiesFormat properties = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.HybridNetwork.Models.HybridNetworkSku sku = null) { throw null; }
         public static Azure.ResourceManager.HybridNetwork.Models.SiteNetworkServicePropertiesFormat SiteNetworkServicePropertiesFormat(Azure.ResourceManager.HybridNetwork.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.HybridNetwork.Models.ProvisioningState?), Azure.ResourceManager.HybridNetwork.Models.ManagedResourceGroupConfiguration managedResourceGroupConfiguration = null, Azure.Core.ResourceIdentifier siteReferenceId = null, string publisherName = null, Azure.ResourceManager.HybridNetwork.Models.PublisherScope? publisherScope = default(Azure.ResourceManager.HybridNetwork.Models.PublisherScope?), string networkServiceDesignGroupName = null, string networkServiceDesignVersionName = null, Azure.Core.AzureLocation? networkServiceDesignVersionOfferingLocation = default(Azure.Core.AzureLocation?), Azure.ResourceManager.HybridNetwork.Models.DeploymentResourceIdReference networkServiceDesignVersionResourceReference = null, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.HybridNetwork.Models.ReferencedResourceById> desiredStateConfigurationGroupValueReferencedResources = null, string lastStateNetworkServiceDesignVersionName = null, System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.HybridNetwork.Models.ReferencedResourceById> lastStateConfigurationGroupValueReferencedResources = null) { throw null; }
-        public static Azure.ResourceManager.HybridNetwork.Models.SitePropertiesFormat SitePropertiesFormat(Azure.ResourceManager.HybridNetwork.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.HybridNetwork.Models.ProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridNetwork.Models.NfvIs> nfvis = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridNetwork.Models.ReferencedResourceById> referencedSiteNetworkServices = null) { throw null; }
+        public static Azure.ResourceManager.HybridNetwork.Models.SitePropertiesFormat SitePropertiesFormat(Azure.ResourceManager.HybridNetwork.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.HybridNetwork.Models.ProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridNetwork.Models.NfviEntry> nfvis = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridNetwork.Models.ReferencedResourceById> referencedSiteNetworkServices = null) { throw null; }
         public static Azure.ResourceManager.HybridNetwork.Models.TagsObject TagsObject(System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.HybridNetwork.Models.VirtualNetworkFunctionDefinitionVersion VirtualNetworkFunctionDefinitionVersion(Azure.ResourceManager.HybridNetwork.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.HybridNetwork.Models.ProvisioningState?), Azure.ResourceManager.HybridNetwork.Models.VersionState? versionState = default(Azure.ResourceManager.HybridNetwork.Models.VersionState?), string description = null, string deployParameters = null, Azure.ResourceManager.HybridNetwork.Models.VirtualNetworkFunctionTemplate networkFunctionTemplate = null) { throw null; }
     }
@@ -1165,7 +1165,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         public Azure.ResourceManager.HybridNetwork.Models.ArtifactStorePropertiesFormatManagedResourceGroupConfiguration ManagedResourceGroupConfiguration { get { throw null; } set { } }
         public Azure.ResourceManager.HybridNetwork.Models.ProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.HybridNetwork.Models.ArtifactReplicationStrategy? ReplicationStrategy { get { throw null; } set { } }
-        public Azure.Core.AzureLocation? StorageResourceId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier StorageResourceId { get { throw null; } }
         public Azure.ResourceManager.HybridNetwork.Models.ArtifactStoreType? StoreType { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.HybridNetwork.Models.ArtifactStorePropertiesFormat JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1230,13 +1230,13 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         public static bool operator !=(Azure.ResourceManager.HybridNetwork.Models.ArtifactType left, Azure.ResourceManager.HybridNetwork.Models.ArtifactType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class AzureArcK8SClusterNfviDetails : Azure.ResourceManager.HybridNetwork.Models.NfvIs, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridNetwork.Models.AzureArcK8SClusterNfviDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.Models.AzureArcK8SClusterNfviDetails>
+    public partial class AzureArcK8SClusterNfviDetails : Azure.ResourceManager.HybridNetwork.Models.NfviEntry, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridNetwork.Models.AzureArcK8SClusterNfviDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.Models.AzureArcK8SClusterNfviDetails>
     {
         public AzureArcK8SClusterNfviDetails() { }
         public Azure.Core.ResourceIdentifier CustomLocationReferenceId { get { throw null; } set { } }
-        protected override Azure.ResourceManager.HybridNetwork.Models.NfvIs JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override Azure.ResourceManager.HybridNetwork.Models.NfviEntry JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override Azure.ResourceManager.HybridNetwork.Models.NfvIs PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override Azure.ResourceManager.HybridNetwork.Models.NfviEntry PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HybridNetwork.Models.AzureArcK8SClusterNfviDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridNetwork.Models.AzureArcK8SClusterNfviDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridNetwork.Models.AzureArcK8SClusterNfviDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1417,13 +1417,13 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.Models.AzureCoreNetworkFunctionVhdApplication>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.Models.AzureCoreNetworkFunctionVhdApplication>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AzureCoreNfviDetails : Azure.ResourceManager.HybridNetwork.Models.NfvIs, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridNetwork.Models.AzureCoreNfviDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.Models.AzureCoreNfviDetails>
+    public partial class AzureCoreNfviDetails : Azure.ResourceManager.HybridNetwork.Models.NfviEntry, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridNetwork.Models.AzureCoreNfviDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.Models.AzureCoreNfviDetails>
     {
         public AzureCoreNfviDetails() { }
         public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
-        protected override Azure.ResourceManager.HybridNetwork.Models.NfvIs JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override Azure.ResourceManager.HybridNetwork.Models.NfviEntry JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override Azure.ResourceManager.HybridNetwork.Models.NfvIs PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override Azure.ResourceManager.HybridNetwork.Models.NfviEntry PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HybridNetwork.Models.AzureCoreNfviDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridNetwork.Models.AzureCoreNfviDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridNetwork.Models.AzureCoreNfviDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1487,13 +1487,13 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.Models.AzureOperatorNexusArmTemplateDeployMappingRuleProfile>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.Models.AzureOperatorNexusArmTemplateDeployMappingRuleProfile>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AzureOperatorNexusClusterNfviDetails : Azure.ResourceManager.HybridNetwork.Models.NfvIs, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridNetwork.Models.AzureOperatorNexusClusterNfviDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.Models.AzureOperatorNexusClusterNfviDetails>
+    public partial class AzureOperatorNexusClusterNfviDetails : Azure.ResourceManager.HybridNetwork.Models.NfviEntry, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridNetwork.Models.AzureOperatorNexusClusterNfviDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.Models.AzureOperatorNexusClusterNfviDetails>
     {
         public AzureOperatorNexusClusterNfviDetails() { }
         public Azure.Core.ResourceIdentifier CustomLocationReferenceId { get { throw null; } set { } }
-        protected override Azure.ResourceManager.HybridNetwork.Models.NfvIs JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override Azure.ResourceManager.HybridNetwork.Models.NfviEntry JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override Azure.ResourceManager.HybridNetwork.Models.NfvIs PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override Azure.ResourceManager.HybridNetwork.Models.NfviEntry PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.HybridNetwork.Models.AzureOperatorNexusClusterNfviDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridNetwork.Models.AzureOperatorNexusClusterNfviDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridNetwork.Models.AzureOperatorNexusClusterNfviDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1634,10 +1634,27 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         public static bool operator !=(Azure.ResourceManager.HybridNetwork.Models.BackingResourcePublicNetworkAccess left, Azure.ResourceManager.HybridNetwork.Models.BackingResourcePublicNetworkAccess right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct CancelableLongRunningOperationType : System.IEquatable<Azure.ResourceManager.HybridNetwork.Models.CancelableLongRunningOperationType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public CancelableLongRunningOperationType(string value) { throw null; }
+        public static Azure.ResourceManager.HybridNetwork.Models.CancelableLongRunningOperationType Put { get { throw null; } }
+        public static Azure.ResourceManager.HybridNetwork.Models.CancelableLongRunningOperationType Unknown { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.HybridNetwork.Models.CancelableLongRunningOperationType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.HybridNetwork.Models.CancelableLongRunningOperationType left, Azure.ResourceManager.HybridNetwork.Models.CancelableLongRunningOperationType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.HybridNetwork.Models.CancelableLongRunningOperationType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.HybridNetwork.Models.CancelableLongRunningOperationType? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.HybridNetwork.Models.CancelableLongRunningOperationType left, Azure.ResourceManager.HybridNetwork.Models.CancelableLongRunningOperationType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class CancelInformation : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridNetwork.Models.CancelInformation>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.Models.CancelInformation>
     {
         public CancelInformation() { }
-        public Azure.ResourceManager.HybridNetwork.Models.LongRunningOperation? LongRunningOperation { get { throw null; } set { } }
+        public Azure.ResourceManager.HybridNetwork.Models.CancelableLongRunningOperationType? LongRunningOperation { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SiteNetworkServiceReferenceId { get { throw null; } }
         protected virtual Azure.ResourceManager.HybridNetwork.Models.CancelInformation JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -2142,23 +2159,6 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.Models.KubernetesStatefulSet>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.Models.KubernetesStatefulSet>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct LongRunningOperation : System.IEquatable<Azure.ResourceManager.HybridNetwork.Models.LongRunningOperation>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public LongRunningOperation(string value) { throw null; }
-        public static Azure.ResourceManager.HybridNetwork.Models.LongRunningOperation Put { get { throw null; } }
-        public static Azure.ResourceManager.HybridNetwork.Models.LongRunningOperation Unknown { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.HybridNetwork.Models.LongRunningOperation other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.HybridNetwork.Models.LongRunningOperation left, Azure.ResourceManager.HybridNetwork.Models.LongRunningOperation right) { throw null; }
-        public static implicit operator Azure.ResourceManager.HybridNetwork.Models.LongRunningOperation (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.HybridNetwork.Models.LongRunningOperation? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.HybridNetwork.Models.LongRunningOperation left, Azure.ResourceManager.HybridNetwork.Models.LongRunningOperation right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class ManagedResourceGroupConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridNetwork.Models.ManagedResourceGroupConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.Models.ManagedResourceGroupConfiguration>
     {
         public ManagedResourceGroupConfiguration() { }
@@ -2394,19 +2394,19 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.Models.NfviDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.Models.NfviDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public abstract partial class NfvIs : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridNetwork.Models.NfvIs>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.Models.NfvIs>
+    public abstract partial class NfviEntry : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridNetwork.Models.NfviEntry>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.Models.NfviEntry>
     {
-        internal NfvIs() { }
+        internal NfviEntry() { }
         public string Name { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.HybridNetwork.Models.NfvIs JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.HybridNetwork.Models.NfviEntry JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.HybridNetwork.Models.NfvIs PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.HybridNetwork.Models.NfviEntry PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.HybridNetwork.Models.NfvIs System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridNetwork.Models.NfvIs>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridNetwork.Models.NfvIs>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.HybridNetwork.Models.NfvIs System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.Models.NfvIs>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.Models.NfvIs>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.Models.NfvIs>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.HybridNetwork.Models.NfviEntry System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridNetwork.Models.NfviEntry>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridNetwork.Models.NfviEntry>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HybridNetwork.Models.NfviEntry System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.Models.NfviEntry>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.Models.NfviEntry>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.Models.NfviEntry>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct NfviType : System.IEquatable<Azure.ResourceManager.HybridNetwork.Models.NfviType>
@@ -2700,7 +2700,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     public partial class SitePropertiesFormat : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridNetwork.Models.SitePropertiesFormat>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.Models.SitePropertiesFormat>
     {
         public SitePropertiesFormat() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.HybridNetwork.Models.NfvIs> Nfvis { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.HybridNetwork.Models.NfviEntry> Nfvis { get { throw null; } }
         public Azure.ResourceManager.HybridNetwork.Models.ProvisioningState? ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.HybridNetwork.Models.ReferencedResourceById> ReferencedSiteNetworkServices { get { throw null; } }
         protected virtual Azure.ResourceManager.HybridNetwork.Models.SitePropertiesFormat JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

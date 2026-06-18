@@ -14,23 +14,23 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// The NFVI object.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureCoreNfviDetails"/>, <see cref="AzureArcK8SClusterNfviDetails"/>, and <see cref="AzureOperatorNexusClusterNfviDetails"/>.
     /// </summary>
-    public abstract partial class NfvIs
+    public abstract partial class NfviEntry
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="NfvIs"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NfviEntry"/>. </summary>
         /// <param name="nfviType"> The NFVI type. </param>
-        private protected NfvIs(NfviType nfviType)
+        private protected NfviEntry(NfviType nfviType)
         {
             NfviType = nfviType;
         }
 
-        /// <summary> Initializes a new instance of <see cref="NfvIs"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NfviEntry"/>. </summary>
         /// <param name="name"> Name of the nfvi. </param>
         /// <param name="nfviType"> The NFVI type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NfvIs(string name, NfviType nfviType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NfviEntry(string name, NfviType nfviType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             NfviType = nfviType;

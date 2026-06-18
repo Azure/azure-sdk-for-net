@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 return null;
             }
             ReferencedResourceById siteNetworkServiceReference = default;
-            LongRunningOperation? longRunningOperation = default;
+            CancelableLongRunningOperationType? longRunningOperation = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    longRunningOperation = new LongRunningOperation(prop.Value.GetString());
+                    longRunningOperation = new CancelableLongRunningOperationType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

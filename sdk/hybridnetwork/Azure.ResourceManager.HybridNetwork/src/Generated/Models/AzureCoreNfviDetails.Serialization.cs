@@ -15,11 +15,11 @@ using Azure.ResourceManager.HybridNetwork;
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary> The Azure Core NFVI detail. </summary>
-    public partial class AzureCoreNfviDetails : NfvIs, IJsonModel<AzureCoreNfviDetails>
+    public partial class AzureCoreNfviDetails : NfviEntry, IJsonModel<AzureCoreNfviDetails>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override NfvIs PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override NfviEntry PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AzureCoreNfviDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override NfvIs JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override NfviEntry JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AzureCoreNfviDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

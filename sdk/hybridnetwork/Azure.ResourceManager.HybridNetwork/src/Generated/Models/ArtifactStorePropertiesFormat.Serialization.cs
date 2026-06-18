@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             if (options.Format != "W" && Optional.IsDefined(StorageResourceId))
             {
                 writer.WritePropertyName("storageResourceId"u8);
-                writer.WriteStringValue(StorageResourceId.Value);
+                writer.WriteStringValue(StorageResourceId);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             BackingResourcePublicNetworkAccess? backingResourcePublicNetworkAccess = default;
             ArtifactReplicationStrategy? replicationStrategy = default;
             ArtifactStorePropertiesFormatManagedResourceGroupConfiguration managedResourceGroupConfiguration = default;
-            AzureLocation? storageResourceId = default;
+            ResourceIdentifier storageResourceId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    storageResourceId = new AzureLocation(prop.Value.GetString());
+                    storageResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
