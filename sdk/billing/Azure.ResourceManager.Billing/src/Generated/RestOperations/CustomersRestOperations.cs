@@ -6,39 +6,44 @@
 #nullable disable
 
 using System;
-using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Billing.Models;
 
 namespace Azure.ResourceManager.Billing
 {
-    internal partial class CustomersRestOperations
+    internal partial class Customers
     {
-        private readonly TelemetryDetails _userAgent;
-        private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of CustomersRestOperations. </summary>
+        /// <summary> Initializes a new instance of Customers for mocking. </summary>
+        protected Customers()
+        {
+        }
+
+        /// <summary> Initializes a new instance of Customers. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="applicationId"> The application id to use for user agent. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public CustomersRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="apiVersion"></param>
+        internal Customers(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
-            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
-            _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-04-01";
-            _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+            ClientDiagnostics = clientDiagnostics;
+            _endpoint = endpoint;
+            Pipeline = pipeline;
+            _apiVersion = apiVersion;
         }
 
-        internal RequestUriBuilder CreateGetRequestUri(string billingAccountName, string billingProfileName, string customerName)
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
+        internal HttpMessage CreateGetRequest(string billingAccountName, string billingProfileName, string customerName, RequestContext context)
         {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
             uri.AppendPath(billingAccountName, true);
@@ -46,102 +51,31 @@ namespace Azure.ResourceManager.Billing
             uri.AppendPath(billingProfileName, true);
             uri.AppendPath("/customers/", false);
             uri.AppendPath(customerName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateGetRequest(string billingAccountName, string billingProfileName, string customerName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
-            uri.AppendPath(billingAccountName, true);
-            uri.AppendPath("/billingProfiles/", false);
-            uri.AppendPath(billingProfileName, true);
-            uri.AppendPath("/customers/", false);
-            uri.AppendPath(customerName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Gets a customer by its ID. The operation is supported only for billing accounts with agreement type Microsoft Partner Agreement. </summary>
-        /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
-        /// <param name="billingProfileName"> The ID that uniquely identifies a billing profile. </param>
-        /// <param name="customerName"> The ID that uniquely identifies a customer. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/> or <paramref name="customerName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/> or <paramref name="customerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<BillingCustomerData>> GetAsync(string billingAccountName, string billingProfileName, string customerName, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateGetByBillingProfileRequest(string billingAccountName, string billingProfileName, string expand, string filter, string orderBy, long? maxCount, long? skip, bool? count, string search, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
-            Argument.AssertNotNullOrEmpty(billingProfileName, nameof(billingProfileName));
-            Argument.AssertNotNullOrEmpty(customerName, nameof(customerName));
-
-            using var message = CreateGetRequest(billingAccountName, billingProfileName, customerName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        BillingCustomerData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = BillingCustomerData.DeserializeBillingCustomerData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((BillingCustomerData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Gets a customer by its ID. The operation is supported only for billing accounts with agreement type Microsoft Partner Agreement. </summary>
-        /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
-        /// <param name="billingProfileName"> The ID that uniquely identifies a billing profile. </param>
-        /// <param name="customerName"> The ID that uniquely identifies a customer. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/> or <paramref name="customerName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/> or <paramref name="customerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<BillingCustomerData> Get(string billingAccountName, string billingProfileName, string customerName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
-            Argument.AssertNotNullOrEmpty(billingProfileName, nameof(billingProfileName));
-            Argument.AssertNotNullOrEmpty(customerName, nameof(customerName));
-
-            using var message = CreateGetRequest(billingAccountName, billingProfileName, customerName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        BillingCustomerData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = BillingCustomerData.DeserializeBillingCustomerData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((BillingCustomerData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListByBillingProfileRequestUri(string billingAccountName, string billingProfileName, string expand, string filter, string orderBy, long? top, long? skip, bool? count, string search)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
             uri.AppendPath(billingAccountName, true);
             uri.AppendPath("/billingProfiles/", false);
             uri.AppendPath(billingProfileName, true);
             uri.AppendPath("/customers", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (expand != null)
             {
                 uri.AppendQuery("expand", expand, true);
@@ -154,236 +88,155 @@ namespace Azure.ResourceManager.Billing
             {
                 uri.AppendQuery("orderBy", orderBy, true);
             }
-            if (top != null)
+            if (maxCount != null)
             {
-                uri.AppendQuery("top", top.Value, true);
+                uri.AppendQuery("top", TypeFormatters.ConvertToString(maxCount), true);
             }
             if (skip != null)
             {
-                uri.AppendQuery("skip", skip.Value, true);
+                uri.AppendQuery("skip", TypeFormatters.ConvertToString(skip), true);
             }
             if (count != null)
             {
-                uri.AppendQuery("count", count.Value, true);
+                uri.AppendQuery("count", TypeFormatters.ConvertToString(count), true);
             }
             if (search != null)
             {
                 uri.AppendQuery("search", search, true);
             }
-            return uri;
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
         }
 
-        internal HttpMessage CreateListByBillingProfileRequest(string billingAccountName, string billingProfileName, string expand, string filter, string orderBy, long? top, long? skip, bool? count, string search)
+        internal HttpMessage CreateNextGetByBillingProfileRequest(Uri nextPage, string billingAccountName, string billingProfileName, string expand, string filter, string orderBy, long? maxCount, long? skip, bool? count, string search, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetBillingPermissionsRequest(string billingAccountName, string billingProfileName, string customerName, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
             uri.AppendPath(billingAccountName, true);
             uri.AppendPath("/billingProfiles/", false);
             uri.AppendPath(billingProfileName, true);
-            uri.AppendPath("/customers", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (expand != null)
+            uri.AppendPath("/customers/", false);
+            uri.AppendPath(customerName, true);
+            uri.AppendPath("/billingPermissions", false);
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("expand", expand, true);
+                uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (filter != null)
-            {
-                uri.AppendQuery("filter", filter, true);
-            }
-            if (orderBy != null)
-            {
-                uri.AppendQuery("orderBy", orderBy, true);
-            }
-            if (top != null)
-            {
-                uri.AppendQuery("top", top.Value, true);
-            }
-            if (skip != null)
-            {
-                uri.AppendQuery("skip", skip.Value, true);
-            }
-            if (count != null)
-            {
-                uri.AppendQuery("count", count.Value, true);
-            }
-            if (search != null)
-            {
-                uri.AppendQuery("search", search, true);
-            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Lists the customers that are billed to a billing profile. The operation is supported only for billing accounts with agreement type Microsoft Partner Agreement. </summary>
-        /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
-        /// <param name="billingProfileName"> The ID that uniquely identifies a billing profile. </param>
-        /// <param name="expand"> May be used to expand enabledAzurePlans and resellers. </param>
-        /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
-        /// <param name="orderBy"> The orderby query option allows clients to request resources in a particular order. </param>
-        /// <param name="top"> The top query option requests the number of items in the queried collection to be included in the result. The maximum supported value for top is 50. </param>
-        /// <param name="skip"> The skip query option requests the number of items in the queried collection that are to be skipped and not included in the result. </param>
-        /// <param name="count"> The count query option allows clients to request a count of the matching resources included with the resources in the response. </param>
-        /// <param name="search"> The search query option allows clients to request items within a collection matching a free-text search expression. search is only supported for string fields. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> or <paramref name="billingProfileName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="billingProfileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CustomerListResult>> ListByBillingProfileAsync(string billingAccountName, string billingProfileName, string expand = null, string filter = null, string orderBy = null, long? top = null, long? skip = null, bool? count = null, string search = null, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateNextGetBillingPermissionsRequest(Uri nextPage, string billingAccountName, string billingProfileName, string customerName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
-            Argument.AssertNotNullOrEmpty(billingProfileName, nameof(billingProfileName));
-
-            using var message = CreateListByBillingProfileRequest(billingAccountName, billingProfileName, expand, filter, orderBy, top, skip, count, search);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            if (nextPage.IsAbsoluteUri)
             {
-                case 200:
-                    {
-                        CustomerListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = CustomerListResult.DeserializeCustomerListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
+                uri.Reset(nextPage);
             }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
         }
 
-        /// <summary> Lists the customers that are billed to a billing profile. The operation is supported only for billing accounts with agreement type Microsoft Partner Agreement. </summary>
-        /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
-        /// <param name="billingProfileName"> The ID that uniquely identifies a billing profile. </param>
-        /// <param name="expand"> May be used to expand enabledAzurePlans and resellers. </param>
-        /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
-        /// <param name="orderBy"> The orderby query option allows clients to request resources in a particular order. </param>
-        /// <param name="top"> The top query option requests the number of items in the queried collection to be included in the result. The maximum supported value for top is 50. </param>
-        /// <param name="skip"> The skip query option requests the number of items in the queried collection that are to be skipped and not included in the result. </param>
-        /// <param name="count"> The count query option allows clients to request a count of the matching resources included with the resources in the response. </param>
-        /// <param name="search"> The search query option allows clients to request items within a collection matching a free-text search expression. search is only supported for string fields. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> or <paramref name="billingProfileName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="billingProfileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CustomerListResult> ListByBillingProfile(string billingAccountName, string billingProfileName, string expand = null, string filter = null, string orderBy = null, long? top = null, long? skip = null, bool? count = null, string search = null, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateCheckAccessBillingPermissionsRequest(string billingAccountName, string billingProfileName, string customerName, RequestContent content, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
-            Argument.AssertNotNullOrEmpty(billingProfileName, nameof(billingProfileName));
-
-            using var message = CreateListByBillingProfileRequest(billingAccountName, billingProfileName, expand, filter, orderBy, top, skip, count, search);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
+            uri.AppendPath(billingAccountName, true);
+            uri.AppendPath("/billingProfiles/", false);
+            uri.AppendPath(billingProfileName, true);
+            uri.AppendPath("/customers/", false);
+            uri.AppendPath(customerName, true);
+            uri.AppendPath("/checkAccess", false);
+            if (_apiVersion != null)
             {
-                case 200:
-                    {
-                        CustomerListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = CustomerListResult.DeserializeCustomerListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
+                uri.AppendQuery("api-version", _apiVersion, true);
             }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
+            request.Content = content;
+            return message;
         }
 
-        internal RequestUriBuilder CreateGetByBillingAccountRequestUri(string billingAccountName, string customerName)
+        internal HttpMessage CreateGetByBillingAccountRequest(string billingAccountName, string customerName, RequestContext context)
         {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
             uri.AppendPath(billingAccountName, true);
             uri.AppendPath("/customers/", false);
             uri.AppendPath(customerName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateGetByBillingAccountRequest(string billingAccountName, string customerName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
-            uri.AppendPath(billingAccountName, true);
-            uri.AppendPath("/customers/", false);
-            uri.AppendPath(customerName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Gets a customer by its ID at billing account level. The operation is supported only for billing accounts with agreement type Microsoft Partner Agreement. </summary>
-        /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
-        /// <param name="customerName"> The ID that uniquely identifies a customer. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> or <paramref name="customerName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="customerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<BillingCustomerData>> GetByBillingAccountAsync(string billingAccountName, string customerName, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateGetByBillingAccountRequest(string billingAccountName, string expand, string filter, string orderBy, long? maxCount, long? skip, bool? count, string search, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
-            Argument.AssertNotNullOrEmpty(customerName, nameof(customerName));
-
-            using var message = CreateGetByBillingAccountRequest(billingAccountName, customerName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        BillingCustomerData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = BillingCustomerData.DeserializeBillingCustomerData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((BillingCustomerData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Gets a customer by its ID at billing account level. The operation is supported only for billing accounts with agreement type Microsoft Partner Agreement. </summary>
-        /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
-        /// <param name="customerName"> The ID that uniquely identifies a customer. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> or <paramref name="customerName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="customerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<BillingCustomerData> GetByBillingAccount(string billingAccountName, string customerName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
-            Argument.AssertNotNullOrEmpty(customerName, nameof(customerName));
-
-            using var message = CreateGetByBillingAccountRequest(billingAccountName, customerName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        BillingCustomerData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = BillingCustomerData.DeserializeBillingCustomerData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((BillingCustomerData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListByBillingAccountRequestUri(string billingAccountName, string expand, string filter, string orderBy, long? top, long? skip, bool? count, string search)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
             uri.AppendPath(billingAccountName, true);
             uri.AppendPath("/customers", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (expand != null)
             {
                 uri.AppendQuery("expand", expand, true);
@@ -396,316 +249,51 @@ namespace Azure.ResourceManager.Billing
             {
                 uri.AppendQuery("orderBy", orderBy, true);
             }
-            if (top != null)
+            if (maxCount != null)
             {
-                uri.AppendQuery("top", top.Value, true);
+                uri.AppendQuery("top", TypeFormatters.ConvertToString(maxCount), true);
             }
             if (skip != null)
             {
-                uri.AppendQuery("skip", skip.Value, true);
+                uri.AppendQuery("skip", TypeFormatters.ConvertToString(skip), true);
             }
             if (count != null)
             {
-                uri.AppendQuery("count", count.Value, true);
+                uri.AppendQuery("count", TypeFormatters.ConvertToString(count), true);
             }
             if (search != null)
             {
                 uri.AppendQuery("search", search, true);
             }
-            return uri;
-        }
-
-        internal HttpMessage CreateListByBillingAccountRequest(string billingAccountName, string expand, string filter, string orderBy, long? top, long? skip, bool? count, string search)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
-            uri.AppendPath(billingAccountName, true);
-            uri.AppendPath("/customers", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (expand != null)
-            {
-                uri.AppendQuery("expand", expand, true);
-            }
-            if (filter != null)
-            {
-                uri.AppendQuery("filter", filter, true);
-            }
-            if (orderBy != null)
-            {
-                uri.AppendQuery("orderBy", orderBy, true);
-            }
-            if (top != null)
-            {
-                uri.AppendQuery("top", top.Value, true);
-            }
-            if (skip != null)
-            {
-                uri.AppendQuery("skip", skip.Value, true);
-            }
-            if (count != null)
-            {
-                uri.AppendQuery("count", count.Value, true);
-            }
-            if (search != null)
-            {
-                uri.AppendQuery("search", search, true);
-            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Lists the customers that are billed to a billing account. The operation is supported only for billing accounts with agreement type Microsoft Partner Agreement. </summary>
-        /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
-        /// <param name="expand"> May be used to expand enabledAzurePlans and resellers. </param>
-        /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
-        /// <param name="orderBy"> The orderby query option allows clients to request resources in a particular order. </param>
-        /// <param name="top"> The top query option requests the number of items in the queried collection to be included in the result. The maximum supported value for top is 50. </param>
-        /// <param name="skip"> The skip query option requests the number of items in the queried collection that are to be skipped and not included in the result. </param>
-        /// <param name="count"> The count query option allows clients to request a count of the matching resources included with the resources in the response. </param>
-        /// <param name="search"> The search query option allows clients to request items within a collection matching a free-text search expression. search is only supported for string fields. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CustomerListResult>> ListByBillingAccountAsync(string billingAccountName, string expand = null, string filter = null, string orderBy = null, long? top = null, long? skip = null, bool? count = null, string search = null, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateNextGetByBillingAccountRequest(Uri nextPage, string billingAccountName, string expand, string filter, string orderBy, long? maxCount, long? skip, bool? count, string search, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
-
-            using var message = CreateListByBillingAccountRequest(billingAccountName, expand, filter, orderBy, top, skip, count, search);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            if (nextPage.IsAbsoluteUri)
             {
-                case 200:
-                    {
-                        CustomerListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = CustomerListResult.DeserializeCustomerListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
+                uri.Reset(nextPage);
             }
-        }
-
-        /// <summary> Lists the customers that are billed to a billing account. The operation is supported only for billing accounts with agreement type Microsoft Partner Agreement. </summary>
-        /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
-        /// <param name="expand"> May be used to expand enabledAzurePlans and resellers. </param>
-        /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
-        /// <param name="orderBy"> The orderby query option allows clients to request resources in a particular order. </param>
-        /// <param name="top"> The top query option requests the number of items in the queried collection to be included in the result. The maximum supported value for top is 50. </param>
-        /// <param name="skip"> The skip query option requests the number of items in the queried collection that are to be skipped and not included in the result. </param>
-        /// <param name="count"> The count query option allows clients to request a count of the matching resources included with the resources in the response. </param>
-        /// <param name="search"> The search query option allows clients to request items within a collection matching a free-text search expression. search is only supported for string fields. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CustomerListResult> ListByBillingAccount(string billingAccountName, string expand = null, string filter = null, string orderBy = null, long? top = null, long? skip = null, bool? count = null, string search = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
-
-            using var message = CreateListByBillingAccountRequest(billingAccountName, expand, filter, orderBy, top, skip, count, search);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
+            else
             {
-                case 200:
-                    {
-                        CustomerListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = CustomerListResult.DeserializeCustomerListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
+                uri.Reset(new Uri(_endpoint, nextPage));
             }
-        }
-
-        internal RequestUriBuilder CreateListByBillingProfileNextPageRequestUri(string nextLink, string billingAccountName, string billingProfileName, string expand, string filter, string orderBy, long? top, long? skip, bool? count, string search)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            return uri;
-        }
-
-        internal HttpMessage CreateListByBillingProfileNextPageRequest(string nextLink, string billingAccountName, string billingProfileName, string expand, string filter, string orderBy, long? top, long? skip, bool? count, string search)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Lists the customers that are billed to a billing profile. The operation is supported only for billing accounts with agreement type Microsoft Partner Agreement. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
-        /// <param name="billingProfileName"> The ID that uniquely identifies a billing profile. </param>
-        /// <param name="expand"> May be used to expand enabledAzurePlans and resellers. </param>
-        /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
-        /// <param name="orderBy"> The orderby query option allows clients to request resources in a particular order. </param>
-        /// <param name="top"> The top query option requests the number of items in the queried collection to be included in the result. The maximum supported value for top is 50. </param>
-        /// <param name="skip"> The skip query option requests the number of items in the queried collection that are to be skipped and not included in the result. </param>
-        /// <param name="count"> The count query option allows clients to request a count of the matching resources included with the resources in the response. </param>
-        /// <param name="search"> The search query option allows clients to request items within a collection matching a free-text search expression. search is only supported for string fields. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="billingAccountName"/> or <paramref name="billingProfileName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="billingProfileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CustomerListResult>> ListByBillingProfileNextPageAsync(string nextLink, string billingAccountName, string billingProfileName, string expand = null, string filter = null, string orderBy = null, long? top = null, long? skip = null, bool? count = null, string search = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
-            Argument.AssertNotNullOrEmpty(billingProfileName, nameof(billingProfileName));
-
-            using var message = CreateListByBillingProfileNextPageRequest(nextLink, billingAccountName, billingProfileName, expand, filter, orderBy, top, skip, count, search);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        CustomerListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = CustomerListResult.DeserializeCustomerListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Lists the customers that are billed to a billing profile. The operation is supported only for billing accounts with agreement type Microsoft Partner Agreement. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
-        /// <param name="billingProfileName"> The ID that uniquely identifies a billing profile. </param>
-        /// <param name="expand"> May be used to expand enabledAzurePlans and resellers. </param>
-        /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
-        /// <param name="orderBy"> The orderby query option allows clients to request resources in a particular order. </param>
-        /// <param name="top"> The top query option requests the number of items in the queried collection to be included in the result. The maximum supported value for top is 50. </param>
-        /// <param name="skip"> The skip query option requests the number of items in the queried collection that are to be skipped and not included in the result. </param>
-        /// <param name="count"> The count query option allows clients to request a count of the matching resources included with the resources in the response. </param>
-        /// <param name="search"> The search query option allows clients to request items within a collection matching a free-text search expression. search is only supported for string fields. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="billingAccountName"/> or <paramref name="billingProfileName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="billingProfileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CustomerListResult> ListByBillingProfileNextPage(string nextLink, string billingAccountName, string billingProfileName, string expand = null, string filter = null, string orderBy = null, long? top = null, long? skip = null, bool? count = null, string search = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
-            Argument.AssertNotNullOrEmpty(billingProfileName, nameof(billingProfileName));
-
-            using var message = CreateListByBillingProfileNextPageRequest(nextLink, billingAccountName, billingProfileName, expand, filter, orderBy, top, skip, count, search);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        CustomerListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = CustomerListResult.DeserializeCustomerListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListByBillingAccountNextPageRequestUri(string nextLink, string billingAccountName, string expand, string filter, string orderBy, long? top, long? skip, bool? count, string search)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            return uri;
-        }
-
-        internal HttpMessage CreateListByBillingAccountNextPageRequest(string nextLink, string billingAccountName, string expand, string filter, string orderBy, long? top, long? skip, bool? count, string search)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Headers.SetValue("Accept", "application/json");
             return message;
-        }
-
-        /// <summary> Lists the customers that are billed to a billing account. The operation is supported only for billing accounts with agreement type Microsoft Partner Agreement. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
-        /// <param name="expand"> May be used to expand enabledAzurePlans and resellers. </param>
-        /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
-        /// <param name="orderBy"> The orderby query option allows clients to request resources in a particular order. </param>
-        /// <param name="top"> The top query option requests the number of items in the queried collection to be included in the result. The maximum supported value for top is 50. </param>
-        /// <param name="skip"> The skip query option requests the number of items in the queried collection that are to be skipped and not included in the result. </param>
-        /// <param name="count"> The count query option allows clients to request a count of the matching resources included with the resources in the response. </param>
-        /// <param name="search"> The search query option allows clients to request items within a collection matching a free-text search expression. search is only supported for string fields. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="billingAccountName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CustomerListResult>> ListByBillingAccountNextPageAsync(string nextLink, string billingAccountName, string expand = null, string filter = null, string orderBy = null, long? top = null, long? skip = null, bool? count = null, string search = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
-
-            using var message = CreateListByBillingAccountNextPageRequest(nextLink, billingAccountName, expand, filter, orderBy, top, skip, count, search);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        CustomerListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = CustomerListResult.DeserializeCustomerListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Lists the customers that are billed to a billing account. The operation is supported only for billing accounts with agreement type Microsoft Partner Agreement. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
-        /// <param name="expand"> May be used to expand enabledAzurePlans and resellers. </param>
-        /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
-        /// <param name="orderBy"> The orderby query option allows clients to request resources in a particular order. </param>
-        /// <param name="top"> The top query option requests the number of items in the queried collection to be included in the result. The maximum supported value for top is 50. </param>
-        /// <param name="skip"> The skip query option requests the number of items in the queried collection that are to be skipped and not included in the result. </param>
-        /// <param name="count"> The count query option allows clients to request a count of the matching resources included with the resources in the response. </param>
-        /// <param name="search"> The search query option allows clients to request items within a collection matching a free-text search expression. search is only supported for string fields. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="billingAccountName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CustomerListResult> ListByBillingAccountNextPage(string nextLink, string billingAccountName, string expand = null, string filter = null, string orderBy = null, long? top = null, long? skip = null, bool? count = null, string search = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
-
-            using var message = CreateListByBillingAccountNextPageRequest(nextLink, billingAccountName, expand, filter, orderBy, top, skip, count, search);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        CustomerListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = CustomerListResult.DeserializeCustomerListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
         }
     }
 }

@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network.Samples
             VirtualNetworkApplianceResource virtualNetworkAppliance = client.GetVirtualNetworkApplianceResource(virtualNetworkApplianceResourceId);
 
             // invoke the operation
-            await virtualNetworkAppliance.DeleteAsync(WaitUntil.Completed);
+            await virtualNetworkAppliance.DeleteAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }

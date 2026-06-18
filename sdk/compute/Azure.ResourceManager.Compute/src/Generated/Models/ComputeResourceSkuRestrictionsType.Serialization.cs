@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Compute.Models
 {
     internal static partial class ComputeResourceSkuRestrictionsTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ComputeResourceSkuRestrictionsType value) => value switch
         {
             ComputeResourceSkuRestrictionsType.Location => "Location",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.Compute.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ComputeResourceSkuRestrictionsType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static ComputeResourceSkuRestrictionsType ToComputeResourceSkuRestrictionsType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Location")) return ComputeResourceSkuRestrictionsType.Location;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Zone")) return ComputeResourceSkuRestrictionsType.Zone;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Location"))
+            {
+                return ComputeResourceSkuRestrictionsType.Location;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Zone"))
+            {
+                return ComputeResourceSkuRestrictionsType.Zone;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ComputeResourceSkuRestrictionsType value.");
         }
     }

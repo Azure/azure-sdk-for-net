@@ -7,53 +7,43 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.HybridCompute.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.HybridCompute
 {
     /// <summary>
-    /// A Class representing a HybridComputeMachine along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HybridComputeMachineResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetHybridComputeMachineResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetHybridComputeMachine method.
+    /// A class representing a HybridComputeMachine along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HybridComputeMachineResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetHybridComputeMachines method.
     /// </summary>
     public partial class HybridComputeMachineResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="HybridComputeMachineResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="machineName"> The machineName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string machineName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _hybridComputeMachineMachinesClientDiagnostics;
-        private readonly MachinesRestOperations _hybridComputeMachineMachinesRestClient;
-        private readonly ClientDiagnostics _defaultClientDiagnostics;
-        private readonly HybridComputeManagementRestOperations _defaultRestClient;
+        private readonly ClientDiagnostics _machinesClientDiagnostics;
+        private readonly Machines _machinesRestClient;
+        private readonly ClientDiagnostics _privateLinkScopesClientDiagnostics;
+        private readonly PrivateLinkScopes _privateLinkScopesRestClient;
         private readonly ClientDiagnostics _networkProfileClientDiagnostics;
-        private readonly NetworkProfileRestOperations _networkProfileRestClient;
-        private readonly ClientDiagnostics _hybridComputePrivateLinkScopePrivateLinkScopesClientDiagnostics;
-        private readonly PrivateLinkScopesRestOperations _hybridComputePrivateLinkScopePrivateLinkScopesRestClient;
+        private readonly NetworkProfile _networkProfileRestClient;
+        private readonly ClientDiagnostics _hybridComputeClientClientDiagnostics;
+        private readonly HybridComputeClient _hybridComputeClientRestClient;
         private readonly HybridComputeMachineData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.HybridCompute/machines";
 
-        /// <summary> Initializes a new instance of the <see cref="HybridComputeMachineResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of HybridComputeMachineResource for mocking. </summary>
         protected HybridComputeMachineResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="HybridComputeMachineResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridComputeMachineResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal HybridComputeMachineResource(ArmClient client, HybridComputeMachineData data) : this(client, data.Id)
@@ -62,224 +52,99 @@ namespace Azure.ResourceManager.HybridCompute
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="HybridComputeMachineResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridComputeMachineResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal HybridComputeMachineResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _hybridComputeMachineMachinesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridCompute", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string hybridComputeMachineMachinesApiVersion);
-            _hybridComputeMachineMachinesRestClient = new MachinesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, hybridComputeMachineMachinesApiVersion);
-            _defaultClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridCompute", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _defaultRestClient = new HybridComputeManagementRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _networkProfileClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridCompute", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _networkProfileRestClient = new NetworkProfileRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _hybridComputePrivateLinkScopePrivateLinkScopesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridCompute", HybridComputePrivateLinkScopeResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(HybridComputePrivateLinkScopeResource.ResourceType, out string hybridComputePrivateLinkScopePrivateLinkScopesApiVersion);
-            _hybridComputePrivateLinkScopePrivateLinkScopesRestClient = new PrivateLinkScopesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, hybridComputePrivateLinkScopePrivateLinkScopesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string hybridComputeMachineApiVersion);
+            _machinesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridCompute", ResourceType.Namespace, Diagnostics);
+            _machinesRestClient = new Machines(_machinesClientDiagnostics, Pipeline, Endpoint, hybridComputeMachineApiVersion ?? "2025-09-16-preview");
+            _privateLinkScopesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridCompute", ResourceType.Namespace, Diagnostics);
+            _privateLinkScopesRestClient = new PrivateLinkScopes(_privateLinkScopesClientDiagnostics, Pipeline, Endpoint, hybridComputeMachineApiVersion ?? "2025-09-16-preview");
+            _networkProfileClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridCompute", ResourceType.Namespace, Diagnostics);
+            _networkProfileRestClient = new NetworkProfile(_networkProfileClientDiagnostics, Pipeline, Endpoint, hybridComputeMachineApiVersion ?? "2025-09-16-preview");
+            _hybridComputeClientClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridCompute", ResourceType.Namespace, Diagnostics);
+            _hybridComputeClientRestClient = new HybridComputeClient(_hybridComputeClientClientDiagnostics, Pipeline, Endpoint, hybridComputeMachineApiVersion ?? "2025-09-16-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual HybridComputeMachineData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="machineName"> The machineName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string machineName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-        }
-
-        /// <summary> Gets an object representing a HybridComputeLicenseProfileResource along with the instance operations that can be performed on it in the HybridComputeMachine. </summary>
-        /// <returns> Returns a <see cref="HybridComputeLicenseProfileResource"/> object. </returns>
-        public virtual HybridComputeLicenseProfileResource GetHybridComputeLicenseProfile()
-        {
-            return new HybridComputeLicenseProfileResource(Client, Id.AppendChildResource("licenseProfiles", "default"));
-        }
-
-        /// <summary> Gets a collection of HybridComputeMachineExtensionResources in the HybridComputeMachine. </summary>
-        /// <returns> An object representing collection of HybridComputeMachineExtensionResources and their operations over a HybridComputeMachineExtensionResource. </returns>
-        public virtual HybridComputeMachineExtensionCollection GetHybridComputeMachineExtensions()
-        {
-            return GetCachedClient(client => new HybridComputeMachineExtensionCollection(client, Id));
-        }
-
-        /// <summary>
-        /// The operation to get the extension.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/extensions/{extensionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MachineExtensions_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-31-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HybridComputeMachineExtensionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="extensionName"> The name of the machine extension. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="extensionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<HybridComputeMachineExtensionResource>> GetHybridComputeMachineExtensionAsync(string extensionName, CancellationToken cancellationToken = default)
-        {
-            return await GetHybridComputeMachineExtensions().GetAsync(extensionName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// The operation to get the extension.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/extensions/{extensionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MachineExtensions_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-31-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HybridComputeMachineExtensionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="extensionName"> The name of the machine extension. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="extensionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<HybridComputeMachineExtensionResource> GetHybridComputeMachineExtension(string extensionName, CancellationToken cancellationToken = default)
-        {
-            return GetHybridComputeMachineExtensions().Get(extensionName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of MachineRunCommandResources in the HybridComputeMachine. </summary>
-        /// <returns> An object representing collection of MachineRunCommandResources and their operations over a MachineRunCommandResource. </returns>
-        public virtual MachineRunCommandCollection GetMachineRunCommands()
-        {
-            return GetCachedClient(client => new MachineRunCommandCollection(client, Id));
-        }
-
-        /// <summary>
-        /// The operation to get a run command.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/runCommands/{runCommandName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MachineRunCommands_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-31-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineRunCommandResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="runCommandName"> The name of the run command. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="runCommandName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="runCommandName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<MachineRunCommandResource>> GetMachineRunCommandAsync(string runCommandName, CancellationToken cancellationToken = default)
-        {
-            return await GetMachineRunCommands().GetAsync(runCommandName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// The operation to get a run command.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/runCommands/{runCommandName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MachineRunCommands_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-31-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineRunCommandResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="runCommandName"> The name of the run command. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="runCommandName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="runCommandName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<MachineRunCommandResource> GetMachineRunCommand(string runCommandName, CancellationToken cancellationToken = default)
-        {
-            return GetMachineRunCommands().Get(runCommandName, cancellationToken);
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Retrieves information about the model view or the instance view of a hybrid machine.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Machines_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Machines_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-31-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-16-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HybridComputeMachineResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HybridComputeMachineResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<HybridComputeMachineResource>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HybridComputeMachineResource>> GetAsync(string expand = default, CancellationToken cancellationToken = default)
         {
-            using var scope = _hybridComputeMachineMachinesClientDiagnostics.CreateScope("HybridComputeMachineResource.Get");
+            using DiagnosticScope scope = _machinesClientDiagnostics.CreateScope("HybridComputeMachineResource.Get");
             scope.Start();
             try
             {
-                var response = await _hybridComputeMachineMachinesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _machinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<HybridComputeMachineData> response = Response.FromValue(HybridComputeMachineData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new HybridComputeMachineResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -293,123 +158,43 @@ namespace Azure.ResourceManager.HybridCompute
         /// Retrieves information about the model view or the instance view of a hybrid machine.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Machines_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Machines_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-31-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-16-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HybridComputeMachineResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HybridComputeMachineResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<HybridComputeMachineResource> Get(string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<HybridComputeMachineResource> Get(string expand = default, CancellationToken cancellationToken = default)
         {
-            using var scope = _hybridComputeMachineMachinesClientDiagnostics.CreateScope("HybridComputeMachineResource.Get");
+            using DiagnosticScope scope = _machinesClientDiagnostics.CreateScope("HybridComputeMachineResource.Get");
             scope.Start();
             try
             {
-                var response = _hybridComputeMachineMachinesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _machinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<HybridComputeMachineData> response = Response.FromValue(HybridComputeMachineData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new HybridComputeMachineResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// The operation to delete a hybrid machine.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Machines_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-31-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HybridComputeMachineResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _hybridComputeMachineMachinesClientDiagnostics.CreateScope("HybridComputeMachineResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = await _hybridComputeMachineMachinesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var uri = _hybridComputeMachineMachinesRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new HybridComputeArmOperation(response, rehydrationToken);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// The operation to delete a hybrid machine.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Machines_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-31-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HybridComputeMachineResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _hybridComputeMachineMachinesClientDiagnostics.CreateScope("HybridComputeMachineResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = _hybridComputeMachineMachinesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var uri = _hybridComputeMachineMachinesRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new HybridComputeArmOperation(response, rehydrationToken);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
             }
             catch (Exception e)
             {
@@ -422,20 +207,20 @@ namespace Azure.ResourceManager.HybridCompute
         /// The operation to update a hybrid machine.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Machines_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> Machines_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-31-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-16-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HybridComputeMachineResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HybridComputeMachineResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -446,11 +231,21 @@ namespace Azure.ResourceManager.HybridCompute
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _hybridComputeMachineMachinesClientDiagnostics.CreateScope("HybridComputeMachineResource.Update");
+            using DiagnosticScope scope = _machinesClientDiagnostics.CreateScope("HybridComputeMachineResource.Update");
             scope.Start();
             try
             {
-                var response = await _hybridComputeMachineMachinesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _machinesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, HybridComputeMachinePatch.ToRequestContent(patch), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<HybridComputeMachineData> response = Response.FromValue(HybridComputeMachineData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new HybridComputeMachineResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -464,20 +259,20 @@ namespace Azure.ResourceManager.HybridCompute
         /// The operation to update a hybrid machine.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Machines_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> Machines_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-31-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-16-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HybridComputeMachineResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HybridComputeMachineResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -488,11 +283,21 @@ namespace Azure.ResourceManager.HybridCompute
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _hybridComputeMachineMachinesClientDiagnostics.CreateScope("HybridComputeMachineResource.Update");
+            using DiagnosticScope scope = _machinesClientDiagnostics.CreateScope("HybridComputeMachineResource.Update");
             scope.Start();
             try
             {
-                var response = _hybridComputeMachineMachinesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _machinesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, HybridComputeMachinePatch.ToRequestContent(patch), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<HybridComputeMachineData> response = Response.FromValue(HybridComputeMachineData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new HybridComputeMachineResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -503,38 +308,94 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary>
-        /// The operation to assess patches on a hybrid machine identity in Azure.
+        /// The operation to delete a hybrid machine.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{name}/assessPatches</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Machines_AssessPatches</description>
+        /// <term> Operation Id. </term>
+        /// <description> Machines_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-31-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-16-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HybridComputeMachineResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HybridComputeMachineResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<MachineAssessPatchesResult>> AssessPatchesAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _hybridComputeMachineMachinesClientDiagnostics.CreateScope("HybridComputeMachineResource.AssessPatches");
+            using DiagnosticScope scope = _machinesClientDiagnostics.CreateScope("HybridComputeMachineResource.Delete");
             scope.Start();
             try
             {
-                var response = await _hybridComputeMachineMachinesRestClient.AssessPatchesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new HybridComputeArmOperation<MachineAssessPatchesResult>(new MachineAssessPatchesResultOperationSource(), _hybridComputeMachineMachinesClientDiagnostics, Pipeline, _hybridComputeMachineMachinesRestClient.CreateAssessPatchesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _machinesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                HybridComputeArmOperation operation = new HybridComputeArmOperation(_machinesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// The operation to delete a hybrid machine.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Machines_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-16-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HybridComputeMachineResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _machinesClientDiagnostics.CreateScope("HybridComputeMachineResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _machinesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                HybridComputeArmOperation operation = new HybridComputeArmOperation(_machinesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -548,20 +409,75 @@ namespace Azure.ResourceManager.HybridCompute
         /// The operation to assess patches on a hybrid machine identity in Azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{name}/assessPatches</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{name}/assessPatches. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Machines_AssessPatches</description>
+        /// <term> Operation Id. </term>
+        /// <description> Machines_AssessPatches. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-31-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-16-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HybridComputeMachineResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HybridComputeMachineResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation<MachineAssessPatchesResult>> AssessPatchesAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _machinesClientDiagnostics.CreateScope("HybridComputeMachineResource.AssessPatches");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _machinesRestClient.CreateAssessPatchesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                HybridComputeArmOperation<MachineAssessPatchesResult> operation = new HybridComputeArmOperation<MachineAssessPatchesResult>(
+                    new MachineAssessPatchesResultOperationSource(),
+                    _machinesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// The operation to assess patches on a hybrid machine identity in Azure.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{name}/assessPatches. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Machines_AssessPatches. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-16-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HybridComputeMachineResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -569,15 +485,124 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation<MachineAssessPatchesResult> AssessPatches(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _hybridComputeMachineMachinesClientDiagnostics.CreateScope("HybridComputeMachineResource.AssessPatches");
+            using DiagnosticScope scope = _machinesClientDiagnostics.CreateScope("HybridComputeMachineResource.AssessPatches");
             scope.Start();
             try
             {
-                var response = _hybridComputeMachineMachinesRestClient.AssessPatches(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new HybridComputeArmOperation<MachineAssessPatchesResult>(new MachineAssessPatchesResultOperationSource(), _hybridComputeMachineMachinesClientDiagnostics, Pipeline, _hybridComputeMachineMachinesRestClient.CreateAssessPatchesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _machinesRestClient.CreateAssessPatchesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                HybridComputeArmOperation<MachineAssessPatchesResult> operation = new HybridComputeArmOperation<MachineAssessPatchesResult>(
+                    new MachineAssessPatchesResultOperationSource(),
+                    _machinesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Returns a Azure Arc PrivateLinkScope's validation details for a given machine.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/privateLinkScopes/current. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Machines_GetValidationDetailsForMachine. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-16-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HybridComputeMachineResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<PrivateLinkScopeValidationDetails>> GetValidationDetailsForMachinePrivateLinkScopeAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _privateLinkScopesClientDiagnostics.CreateScope("HybridComputeMachineResource.GetValidationDetailsForMachinePrivateLinkScope");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _privateLinkScopesRestClient.CreateGetValidationDetailsForMachinePrivateLinkScopeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<PrivateLinkScopeValidationDetails> response = Response.FromValue(PrivateLinkScopeValidationDetails.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Returns a Azure Arc PrivateLinkScope's validation details for a given machine.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/privateLinkScopes/current. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Machines_GetValidationDetailsForMachine. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-16-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HybridComputeMachineResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<PrivateLinkScopeValidationDetails> GetValidationDetailsForMachinePrivateLinkScope(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _privateLinkScopesClientDiagnostics.CreateScope("HybridComputeMachineResource.GetValidationDetailsForMachinePrivateLinkScope");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _privateLinkScopesRestClient.CreateGetValidationDetailsForMachinePrivateLinkScopeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<PrivateLinkScopeValidationDetails> response = Response.FromValue(PrivateLinkScopeValidationDetails.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
             }
             catch (Exception e)
             {
@@ -590,20 +615,20 @@ namespace Azure.ResourceManager.HybridCompute
         /// The operation to install patches on a hybrid machine identity in Azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{name}/installPatches</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{name}/installPatches. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Machines_InstallPatches</description>
+        /// <term> Operation Id. </term>
+        /// <description> Machines_InstallPatches. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-31-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-16-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HybridComputeMachineResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HybridComputeMachineResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -615,14 +640,27 @@ namespace Azure.ResourceManager.HybridCompute
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _hybridComputeMachineMachinesClientDiagnostics.CreateScope("HybridComputeMachineResource.InstallPatches");
+            using DiagnosticScope scope = _machinesClientDiagnostics.CreateScope("HybridComputeMachineResource.InstallPatches");
             scope.Start();
             try
             {
-                var response = await _hybridComputeMachineMachinesRestClient.InstallPatchesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new HybridComputeArmOperation<MachineInstallPatchesResult>(new MachineInstallPatchesResultOperationSource(), _hybridComputeMachineMachinesClientDiagnostics, Pipeline, _hybridComputeMachineMachinesRestClient.CreateInstallPatchesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _machinesRestClient.CreateInstallPatchesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, MachineInstallPatchesContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                HybridComputeArmOperation<MachineInstallPatchesResult> operation = new HybridComputeArmOperation<MachineInstallPatchesResult>(
+                    new MachineInstallPatchesResultOperationSource(),
+                    _machinesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -636,20 +674,20 @@ namespace Azure.ResourceManager.HybridCompute
         /// The operation to install patches on a hybrid machine identity in Azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{name}/installPatches</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{name}/installPatches. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Machines_InstallPatches</description>
+        /// <term> Operation Id. </term>
+        /// <description> Machines_InstallPatches. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-31-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-16-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HybridComputeMachineResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HybridComputeMachineResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -661,14 +699,241 @@ namespace Azure.ResourceManager.HybridCompute
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _hybridComputeMachineMachinesClientDiagnostics.CreateScope("HybridComputeMachineResource.InstallPatches");
+            using DiagnosticScope scope = _machinesClientDiagnostics.CreateScope("HybridComputeMachineResource.InstallPatches");
             scope.Start();
             try
             {
-                var response = _hybridComputeMachineMachinesRestClient.InstallPatches(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new HybridComputeArmOperation<MachineInstallPatchesResult>(new MachineInstallPatchesResultOperationSource(), _hybridComputeMachineMachinesClientDiagnostics, Pipeline, _hybridComputeMachineMachinesRestClient.CreateInstallPatchesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _machinesRestClient.CreateInstallPatchesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, MachineInstallPatchesContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                HybridComputeArmOperation<MachineInstallPatchesResult> operation = new HybridComputeArmOperation<MachineInstallPatchesResult>(
+                    new MachineInstallPatchesResultOperationSource(),
+                    _machinesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// The operation to get network information of hybrid machine
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/networkProfile. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Machines_NetworkProfileGet. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-16-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HybridComputeMachineResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<HybridComputeNetworkProfile>> GetNetworkProfileAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _networkProfileClientDiagnostics.CreateScope("HybridComputeMachineResource.GetNetworkProfile");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkProfileRestClient.CreateGetNetworkProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<HybridComputeNetworkProfile> response = Response.FromValue(HybridComputeNetworkProfile.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// The operation to get network information of hybrid machine
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/networkProfile. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Machines_NetworkProfileGet. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-16-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HybridComputeMachineResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<HybridComputeNetworkProfile> GetNetworkProfile(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _networkProfileClientDiagnostics.CreateScope("HybridComputeMachineResource.GetNetworkProfile");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkProfileRestClient.CreateGetNetworkProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<HybridComputeNetworkProfile> response = Response.FromValue(HybridComputeNetworkProfile.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// The operation to Setup Machine Extensions.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/addExtensions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Machines_SetupExtensions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-16-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HybridComputeMachineResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Parameters supplied to the Setup Extensions operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<SetupExtensionContent>> SetupExtensionsAsync(WaitUntil waitUntil, SetupExtensionContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = _hybridComputeClientClientDiagnostics.CreateScope("HybridComputeMachineResource.SetupExtensions");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _hybridComputeClientRestClient.CreateSetupExtensionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, SetupExtensionContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                HybridComputeArmOperation<SetupExtensionContent> operation = new HybridComputeArmOperation<SetupExtensionContent>(
+                    new SetupExtensionContentOperationSource(),
+                    _hybridComputeClientClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// The operation to Setup Machine Extensions.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/addExtensions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Machines_SetupExtensions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-16-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HybridComputeMachineResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Parameters supplied to the Setup Extensions operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<SetupExtensionContent> SetupExtensions(WaitUntil waitUntil, SetupExtensionContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = _hybridComputeClientClientDiagnostics.CreateScope("HybridComputeMachineResource.SetupExtensions");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _hybridComputeClientRestClient.CreateSetupExtensionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, SetupExtensionContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                HybridComputeArmOperation<SetupExtensionContent> operation = new HybridComputeArmOperation<SetupExtensionContent>(
+                    new SetupExtensionContentOperationSource(),
+                    _hybridComputeClientClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -682,16 +947,20 @@ namespace Azure.ResourceManager.HybridCompute
         /// The operation to Upgrade Machine Extensions.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/upgradeExtensions</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/upgradeExtensions. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>UpgradeExtensions</description>
+        /// <term> Operation Id. </term>
+        /// <description> Machines_UpgradeExtensions. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-31-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-16-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HybridComputeMachineResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -703,14 +972,21 @@ namespace Azure.ResourceManager.HybridCompute
         {
             Argument.AssertNotNull(extensionUpgradeParameters, nameof(extensionUpgradeParameters));
 
-            using var scope = _defaultClientDiagnostics.CreateScope("HybridComputeMachineResource.UpgradeExtensions");
+            using DiagnosticScope scope = _hybridComputeClientClientDiagnostics.CreateScope("HybridComputeMachineResource.UpgradeExtensions");
             scope.Start();
             try
             {
-                var response = await _defaultRestClient.UpgradeExtensionsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionUpgradeParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new HybridComputeArmOperation(_defaultClientDiagnostics, Pipeline, _defaultRestClient.CreateUpgradeExtensionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionUpgradeParameters).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _hybridComputeClientRestClient.CreateUpgradeExtensionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, MachineExtensionUpgrade.ToRequestContent(extensionUpgradeParameters), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                HybridComputeArmOperation operation = new HybridComputeArmOperation(_hybridComputeClientClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -724,16 +1000,20 @@ namespace Azure.ResourceManager.HybridCompute
         /// The operation to Upgrade Machine Extensions.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/upgradeExtensions</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/upgradeExtensions. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>UpgradeExtensions</description>
+        /// <term> Operation Id. </term>
+        /// <description> Machines_UpgradeExtensions. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-31-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-16-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HybridComputeMachineResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -745,14 +1025,21 @@ namespace Azure.ResourceManager.HybridCompute
         {
             Argument.AssertNotNull(extensionUpgradeParameters, nameof(extensionUpgradeParameters));
 
-            using var scope = _defaultClientDiagnostics.CreateScope("HybridComputeMachineResource.UpgradeExtensions");
+            using DiagnosticScope scope = _hybridComputeClientClientDiagnostics.CreateScope("HybridComputeMachineResource.UpgradeExtensions");
             scope.Start();
             try
             {
-                var response = _defaultRestClient.UpgradeExtensions(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionUpgradeParameters, cancellationToken);
-                var operation = new HybridComputeArmOperation(_defaultClientDiagnostics, Pipeline, _defaultRestClient.CreateUpgradeExtensionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionUpgradeParameters).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _hybridComputeClientRestClient.CreateUpgradeExtensionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, MachineExtensionUpgrade.ToRequestContent(extensionUpgradeParameters), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                HybridComputeArmOperation operation = new HybridComputeArmOperation(_hybridComputeClientClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -762,171 +1049,7 @@ namespace Azure.ResourceManager.HybridCompute
             }
         }
 
-        /// <summary>
-        /// The operation to get network information of hybrid machine
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/networkProfile</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkProfile_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-31-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<HybridComputeNetworkProfile>> GetNetworkProfileAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _networkProfileClientDiagnostics.CreateScope("HybridComputeMachineResource.GetNetworkProfile");
-            scope.Start();
-            try
-            {
-                var response = await _networkProfileRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// The operation to get network information of hybrid machine
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/networkProfile</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkProfile_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-31-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<HybridComputeNetworkProfile> GetNetworkProfile(CancellationToken cancellationToken = default)
-        {
-            using var scope = _networkProfileClientDiagnostics.CreateScope("HybridComputeMachineResource.GetNetworkProfile");
-            scope.Start();
-            try
-            {
-                var response = _networkProfileRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Returns a Azure Arc PrivateLinkScope's validation details for a given machine.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/privateLinkScopes/current</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateLinkScopes_GetValidationDetailsForMachine</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-31-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HybridComputePrivateLinkScopeResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PrivateLinkScopeValidationDetails>> GetValidationDetailsForMachinePrivateLinkScopeAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _hybridComputePrivateLinkScopePrivateLinkScopesClientDiagnostics.CreateScope("HybridComputeMachineResource.GetValidationDetailsForMachinePrivateLinkScope");
-            scope.Start();
-            try
-            {
-                var response = await _hybridComputePrivateLinkScopePrivateLinkScopesRestClient.GetValidationDetailsForMachineAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Returns a Azure Arc PrivateLinkScope's validation details for a given machine.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/privateLinkScopes/current</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateLinkScopes_GetValidationDetailsForMachine</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-31-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HybridComputePrivateLinkScopeResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PrivateLinkScopeValidationDetails> GetValidationDetailsForMachinePrivateLinkScope(CancellationToken cancellationToken = default)
-        {
-            using var scope = _hybridComputePrivateLinkScopePrivateLinkScopesClientDiagnostics.CreateScope("HybridComputeMachineResource.GetValidationDetailsForMachinePrivateLinkScope");
-            scope.Start();
-            try
-            {
-                var response = _hybridComputePrivateLinkScopePrivateLinkScopesRestClient.GetValidationDetailsForMachine(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Machines_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-31-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HybridComputeMachineResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -936,29 +1059,35 @@ namespace Azure.ResourceManager.HybridCompute
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _hybridComputeMachineMachinesClientDiagnostics.CreateScope("HybridComputeMachineResource.AddTag");
+            using DiagnosticScope scope = _machinesClientDiagnostics.CreateScope("HybridComputeMachineResource.AddTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _hybridComputeMachineMachinesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new HybridComputeMachineResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _machinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, default, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<HybridComputeMachineData> response = Response.FromValue(HybridComputeMachineData.FromResponse(result), result);
+                    return Response.FromValue(new HybridComputeMachineResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new HybridComputeMachinePatch();
-                    foreach (var tag in current.Tags)
+                    HybridComputeMachineData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    HybridComputeMachinePatch patch = new HybridComputeMachinePatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    Response<HybridComputeMachineResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -968,27 +1097,7 @@ namespace Azure.ResourceManager.HybridCompute
             }
         }
 
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Machines_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-31-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HybridComputeMachineResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -998,29 +1107,35 @@ namespace Azure.ResourceManager.HybridCompute
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _hybridComputeMachineMachinesClientDiagnostics.CreateScope("HybridComputeMachineResource.AddTag");
+            using DiagnosticScope scope = _machinesClientDiagnostics.CreateScope("HybridComputeMachineResource.AddTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _hybridComputeMachineMachinesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
-                    return Response.FromValue(new HybridComputeMachineResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _machinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, default, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<HybridComputeMachineData> response = Response.FromValue(HybridComputeMachineData.FromResponse(result), result);
+                    return Response.FromValue(new HybridComputeMachineResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new HybridComputeMachinePatch();
-                    foreach (var tag in current.Tags)
+                    HybridComputeMachineData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    HybridComputeMachinePatch patch = new HybridComputeMachinePatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    Response<HybridComputeMachineResource> result = Update(patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -1030,54 +1145,40 @@ namespace Azure.ResourceManager.HybridCompute
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Machines_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-31-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HybridComputeMachineResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<HybridComputeMachineResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _hybridComputeMachineMachinesClientDiagnostics.CreateScope("HybridComputeMachineResource.SetTags");
+            using DiagnosticScope scope = _machinesClientDiagnostics.CreateScope("HybridComputeMachineResource.SetTags");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _hybridComputeMachineMachinesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new HybridComputeMachineResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _machinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, default, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<HybridComputeMachineData> response = Response.FromValue(HybridComputeMachineData.FromResponse(result), result);
+                    return Response.FromValue(new HybridComputeMachineResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new HybridComputeMachinePatch();
+                    HybridComputeMachineData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    HybridComputeMachinePatch patch = new HybridComputeMachinePatch();
                     patch.Tags.ReplaceWith(tags);
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    Response<HybridComputeMachineResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -1087,54 +1188,40 @@ namespace Azure.ResourceManager.HybridCompute
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Machines_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-31-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HybridComputeMachineResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<HybridComputeMachineResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _hybridComputeMachineMachinesClientDiagnostics.CreateScope("HybridComputeMachineResource.SetTags");
+            using DiagnosticScope scope = _machinesClientDiagnostics.CreateScope("HybridComputeMachineResource.SetTags");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _hybridComputeMachineMachinesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
-                    return Response.FromValue(new HybridComputeMachineResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _machinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, default, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<HybridComputeMachineData> response = Response.FromValue(HybridComputeMachineData.FromResponse(result), result);
+                    return Response.FromValue(new HybridComputeMachineResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new HybridComputeMachinePatch();
+                    HybridComputeMachineData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    HybridComputeMachinePatch patch = new HybridComputeMachinePatch();
                     patch.Tags.ReplaceWith(tags);
-                    var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    Response<HybridComputeMachineResource> result = Update(patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -1144,27 +1231,7 @@ namespace Azure.ResourceManager.HybridCompute
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Machines_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-31-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HybridComputeMachineResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -1172,29 +1239,35 @@ namespace Azure.ResourceManager.HybridCompute
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _hybridComputeMachineMachinesClientDiagnostics.CreateScope("HybridComputeMachineResource.RemoveTag");
+            using DiagnosticScope scope = _machinesClientDiagnostics.CreateScope("HybridComputeMachineResource.RemoveTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _hybridComputeMachineMachinesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new HybridComputeMachineResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _machinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, default, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<HybridComputeMachineData> response = Response.FromValue(HybridComputeMachineData.FromResponse(result), result);
+                    return Response.FromValue(new HybridComputeMachineResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new HybridComputeMachinePatch();
-                    foreach (var tag in current.Tags)
+                    HybridComputeMachineData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    HybridComputeMachinePatch patch = new HybridComputeMachinePatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    Response<HybridComputeMachineResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -1204,27 +1277,7 @@ namespace Azure.ResourceManager.HybridCompute
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Machines_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-31-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HybridComputeMachineResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -1232,29 +1285,35 @@ namespace Azure.ResourceManager.HybridCompute
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _hybridComputeMachineMachinesClientDiagnostics.CreateScope("HybridComputeMachineResource.RemoveTag");
+            using DiagnosticScope scope = _machinesClientDiagnostics.CreateScope("HybridComputeMachineResource.RemoveTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _hybridComputeMachineMachinesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
-                    return Response.FromValue(new HybridComputeMachineResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _machinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, default, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<HybridComputeMachineData> response = Response.FromValue(HybridComputeMachineData.FromResponse(result), result);
+                    return Response.FromValue(new HybridComputeMachineResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new HybridComputeMachinePatch();
-                    foreach (var tag in current.Tags)
+                    HybridComputeMachineData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    HybridComputeMachinePatch patch = new HybridComputeMachinePatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    Response<HybridComputeMachineResource> result = Update(patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -1262,6 +1321,95 @@ namespace Azure.ResourceManager.HybridCompute
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Gets a collection of HybridComputeLicenseProfiles in the <see cref="HybridComputeMachineResource"/>. </summary>
+        /// <returns> An object representing collection of HybridComputeLicenseProfiles and their operations over a HybridComputeLicenseProfileResource. </returns>
+        public virtual HybridComputeLicenseProfileCollection GetHybridComputeLicenseProfiles()
+        {
+            return GetCachedClient(client => new HybridComputeLicenseProfileCollection(client, Id));
+        }
+
+        /// <summary> Retrieves information about the view of a license profile. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<HybridComputeLicenseProfileResource>> GetHybridComputeLicenseProfileAsync(CancellationToken cancellationToken = default)
+        {
+            return await GetHybridComputeLicenseProfiles().GetAsync(cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Retrieves information about the view of a license profile. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual Response<HybridComputeLicenseProfileResource> GetHybridComputeLicenseProfile(CancellationToken cancellationToken = default)
+        {
+            return GetHybridComputeLicenseProfiles().Get(cancellationToken);
+        }
+
+        /// <summary> Gets a collection of HybridComputeMachineExtensions in the <see cref="HybridComputeMachineResource"/>. </summary>
+        /// <returns> An object representing collection of HybridComputeMachineExtensions and their operations over a HybridComputeMachineExtensionResource. </returns>
+        public virtual HybridComputeMachineExtensionCollection GetHybridComputeMachineExtensions()
+        {
+            return GetCachedClient(client => new HybridComputeMachineExtensionCollection(client, Id));
+        }
+
+        /// <summary> The operation to get the extension. </summary>
+        /// <param name="extensionName"> The name of the machine extension. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="extensionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<HybridComputeMachineExtensionResource>> GetHybridComputeMachineExtensionAsync(string extensionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
+
+            return await GetHybridComputeMachineExtensions().GetAsync(extensionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> The operation to get the extension. </summary>
+        /// <param name="extensionName"> The name of the machine extension. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="extensionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<HybridComputeMachineExtensionResource> GetHybridComputeMachineExtension(string extensionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
+
+            return GetHybridComputeMachineExtensions().Get(extensionName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of HybridComputeMachineRunCommands in the <see cref="HybridComputeMachineResource"/>. </summary>
+        /// <returns> An object representing collection of HybridComputeMachineRunCommands and their operations over a HybridComputeMachineRunCommandResource. </returns>
+        public virtual HybridComputeMachineRunCommandCollection GetHybridComputeMachineRunCommands()
+        {
+            return GetCachedClient(client => new HybridComputeMachineRunCommandCollection(client, Id));
+        }
+
+        /// <summary> The operation to get a run command. </summary>
+        /// <param name="runCommandName"> The name of the run command. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="runCommandName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="runCommandName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<HybridComputeMachineRunCommandResource>> GetHybridComputeMachineRunCommandAsync(string runCommandName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(runCommandName, nameof(runCommandName));
+
+            return await GetHybridComputeMachineRunCommands().GetAsync(runCommandName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> The operation to get a run command. </summary>
+        /// <param name="runCommandName"> The name of the run command. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="runCommandName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="runCommandName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<HybridComputeMachineRunCommandResource> GetHybridComputeMachineRunCommand(string runCommandName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(runCommandName, nameof(runCommandName));
+
+            return GetHybridComputeMachineRunCommands().Get(runCommandName, cancellationToken);
         }
     }
 }

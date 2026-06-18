@@ -7,44 +7,36 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Billing
 {
     /// <summary>
-    /// A Class representing a BillingAssociatedTenant along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BillingAssociatedTenantResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetBillingAssociatedTenantResource method.
-    /// Otherwise you can get one from its parent resource <see cref="BillingAccountResource"/> using the GetBillingAssociatedTenant method.
+    /// A class representing a BillingAssociatedTenant along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BillingAssociatedTenantResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="BillingAccountResource"/> using the GetBillingAssociatedTenants method.
     /// </summary>
     public partial class BillingAssociatedTenantResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="BillingAssociatedTenantResource"/> instance. </summary>
-        /// <param name="billingAccountName"> The billingAccountName. </param>
-        /// <param name="associatedTenantName"> The associatedTenantName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string billingAccountName, string associatedTenantName)
-        {
-            var resourceId = $"/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/associatedTenants/{associatedTenantName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _billingAssociatedTenantAssociatedTenantsClientDiagnostics;
-        private readonly AssociatedTenantsRestOperations _billingAssociatedTenantAssociatedTenantsRestClient;
+        private readonly ClientDiagnostics _associatedTenantsClientDiagnostics;
+        private readonly AssociatedTenants _associatedTenantsRestClient;
         private readonly BillingAssociatedTenantData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Billing/billingAccounts/associatedTenants";
 
-        /// <summary> Initializes a new instance of the <see cref="BillingAssociatedTenantResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of BillingAssociatedTenantResource for mocking. </summary>
         protected BillingAssociatedTenantResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="BillingAssociatedTenantResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingAssociatedTenantResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal BillingAssociatedTenantResource(ArmClient client, BillingAssociatedTenantData data) : this(client, data.Id)
@@ -53,71 +45,91 @@ namespace Azure.ResourceManager.Billing
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="BillingAssociatedTenantResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingAssociatedTenantResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal BillingAssociatedTenantResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _billingAssociatedTenantAssociatedTenantsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string billingAssociatedTenantAssociatedTenantsApiVersion);
-            _billingAssociatedTenantAssociatedTenantsRestClient = new AssociatedTenantsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, billingAssociatedTenantAssociatedTenantsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string billingAssociatedTenantApiVersion);
+            _associatedTenantsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
+            _associatedTenantsRestClient = new AssociatedTenants(_associatedTenantsClientDiagnostics, Pipeline, Endpoint, billingAssociatedTenantApiVersion ?? "2024-04-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual BillingAssociatedTenantData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="billingAccountName"> The billingAccountName. </param>
+        /// <param name="associatedTenantName"> The associatedTenantName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string billingAccountName, string associatedTenantName)
+        {
+            string resourceId = $"/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/associatedTenants/{associatedTenantName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets an associated tenant by ID.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/associatedTenants/{associatedTenantName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/associatedTenants/{associatedTenantName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AssociatedTenants_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AssociatedTenants_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingAssociatedTenantResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingAssociatedTenantResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<BillingAssociatedTenantResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _billingAssociatedTenantAssociatedTenantsClientDiagnostics.CreateScope("BillingAssociatedTenantResource.Get");
+            using DiagnosticScope scope = _associatedTenantsClientDiagnostics.CreateScope("BillingAssociatedTenantResource.Get");
             scope.Start();
             try
             {
-                var response = await _billingAssociatedTenantAssociatedTenantsRestClient.GetAsync(Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _associatedTenantsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<BillingAssociatedTenantData> response = Response.FromValue(BillingAssociatedTenantData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new BillingAssociatedTenantResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -131,33 +143,41 @@ namespace Azure.ResourceManager.Billing
         /// Gets an associated tenant by ID.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/associatedTenants/{associatedTenantName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/associatedTenants/{associatedTenantName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AssociatedTenants_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AssociatedTenants_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingAssociatedTenantResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingAssociatedTenantResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<BillingAssociatedTenantResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _billingAssociatedTenantAssociatedTenantsClientDiagnostics.CreateScope("BillingAssociatedTenantResource.Get");
+            using DiagnosticScope scope = _associatedTenantsClientDiagnostics.CreateScope("BillingAssociatedTenantResource.Get");
             scope.Start();
             try
             {
-                var response = _billingAssociatedTenantAssociatedTenantsRestClient.Get(Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _associatedTenantsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<BillingAssociatedTenantData> response = Response.FromValue(BillingAssociatedTenantData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new BillingAssociatedTenantResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -171,20 +191,20 @@ namespace Azure.ResourceManager.Billing
         /// Deletes an associated tenant for a billing account.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/associatedTenants/{associatedTenantName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/associatedTenants/{associatedTenantName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AssociatedTenants_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> AssociatedTenants_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingAssociatedTenantResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingAssociatedTenantResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -192,14 +212,21 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _billingAssociatedTenantAssociatedTenantsClientDiagnostics.CreateScope("BillingAssociatedTenantResource.Delete");
+            using DiagnosticScope scope = _associatedTenantsClientDiagnostics.CreateScope("BillingAssociatedTenantResource.Delete");
             scope.Start();
             try
             {
-                var response = await _billingAssociatedTenantAssociatedTenantsRestClient.DeleteAsync(Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new BillingArmOperation(_billingAssociatedTenantAssociatedTenantsClientDiagnostics, Pipeline, _billingAssociatedTenantAssociatedTenantsRestClient.CreateDeleteRequest(Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _associatedTenantsRestClient.CreateDeleteRequest(Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                BillingArmOperation operation = new BillingArmOperation(_associatedTenantsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -213,20 +240,20 @@ namespace Azure.ResourceManager.Billing
         /// Deletes an associated tenant for a billing account.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/associatedTenants/{associatedTenantName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/associatedTenants/{associatedTenantName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AssociatedTenants_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> AssociatedTenants_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingAssociatedTenantResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingAssociatedTenantResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -234,14 +261,21 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _billingAssociatedTenantAssociatedTenantsClientDiagnostics.CreateScope("BillingAssociatedTenantResource.Delete");
+            using DiagnosticScope scope = _associatedTenantsClientDiagnostics.CreateScope("BillingAssociatedTenantResource.Delete");
             scope.Start();
             try
             {
-                var response = _billingAssociatedTenantAssociatedTenantsRestClient.Delete(Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new BillingArmOperation(_billingAssociatedTenantAssociatedTenantsClientDiagnostics, Pipeline, _billingAssociatedTenantAssociatedTenantsRestClient.CreateDeleteRequest(Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _associatedTenantsRestClient.CreateDeleteRequest(Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                BillingArmOperation operation = new BillingArmOperation(_associatedTenantsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -252,23 +286,23 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary>
-        /// Create or update an associated tenant for the billing account.
+        /// Update a BillingAssociatedTenant.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/associatedTenants/{associatedTenantName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/associatedTenants/{associatedTenantName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AssociatedTenants_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> AssociatedTenants_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingAssociatedTenantResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingAssociatedTenantResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -280,14 +314,27 @@ namespace Azure.ResourceManager.Billing
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _billingAssociatedTenantAssociatedTenantsClientDiagnostics.CreateScope("BillingAssociatedTenantResource.Update");
+            using DiagnosticScope scope = _associatedTenantsClientDiagnostics.CreateScope("BillingAssociatedTenantResource.Update");
             scope.Start();
             try
             {
-                var response = await _billingAssociatedTenantAssociatedTenantsRestClient.CreateOrUpdateAsync(Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new BillingArmOperation<BillingAssociatedTenantResource>(new BillingAssociatedTenantOperationSource(Client), _billingAssociatedTenantAssociatedTenantsClientDiagnostics, Pipeline, _billingAssociatedTenantAssociatedTenantsRestClient.CreateCreateOrUpdateRequest(Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _associatedTenantsRestClient.CreateCreateOrUpdateRequest(Id.Parent.Name, Id.Name, BillingAssociatedTenantData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                BillingArmOperation<BillingAssociatedTenantResource> operation = new BillingArmOperation<BillingAssociatedTenantResource>(
+                    new BillingAssociatedTenantResourceOperationSource(Client),
+                    _associatedTenantsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -298,23 +345,23 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary>
-        /// Create or update an associated tenant for the billing account.
+        /// Update a BillingAssociatedTenant.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/associatedTenants/{associatedTenantName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/associatedTenants/{associatedTenantName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AssociatedTenants_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> AssociatedTenants_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingAssociatedTenantResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingAssociatedTenantResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -326,14 +373,27 @@ namespace Azure.ResourceManager.Billing
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _billingAssociatedTenantAssociatedTenantsClientDiagnostics.CreateScope("BillingAssociatedTenantResource.Update");
+            using DiagnosticScope scope = _associatedTenantsClientDiagnostics.CreateScope("BillingAssociatedTenantResource.Update");
             scope.Start();
             try
             {
-                var response = _billingAssociatedTenantAssociatedTenantsRestClient.CreateOrUpdate(Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new BillingArmOperation<BillingAssociatedTenantResource>(new BillingAssociatedTenantOperationSource(Client), _billingAssociatedTenantAssociatedTenantsClientDiagnostics, Pipeline, _billingAssociatedTenantAssociatedTenantsRestClient.CreateCreateOrUpdateRequest(Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _associatedTenantsRestClient.CreateCreateOrUpdateRequest(Id.Parent.Name, Id.Name, BillingAssociatedTenantData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                BillingArmOperation<BillingAssociatedTenantResource> operation = new BillingArmOperation<BillingAssociatedTenantResource>(
+                    new BillingAssociatedTenantResourceOperationSource(Client),
+                    _associatedTenantsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -343,27 +403,7 @@ namespace Azure.ResourceManager.Billing
             }
         }
 
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/associatedTenants/{associatedTenantName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AssociatedTenants_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingAssociatedTenantResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -373,23 +413,29 @@ namespace Azure.ResourceManager.Billing
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _billingAssociatedTenantAssociatedTenantsClientDiagnostics.CreateScope("BillingAssociatedTenantResource.AddTag");
+            using DiagnosticScope scope = _associatedTenantsClientDiagnostics.CreateScope("BillingAssociatedTenantResource.AddTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _billingAssociatedTenantAssociatedTenantsRestClient.GetAsync(Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new BillingAssociatedTenantResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _associatedTenantsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<BillingAssociatedTenantData> response = Response.FromValue(BillingAssociatedTenantData.FromResponse(result), result);
+                    return Response.FromValue(new BillingAssociatedTenantResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    BillingAssociatedTenantData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     current.Tags[key] = value;
-                    var result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<BillingAssociatedTenantResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -400,27 +446,7 @@ namespace Azure.ResourceManager.Billing
             }
         }
 
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/associatedTenants/{associatedTenantName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AssociatedTenants_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingAssociatedTenantResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -430,23 +456,29 @@ namespace Azure.ResourceManager.Billing
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _billingAssociatedTenantAssociatedTenantsClientDiagnostics.CreateScope("BillingAssociatedTenantResource.AddTag");
+            using DiagnosticScope scope = _associatedTenantsClientDiagnostics.CreateScope("BillingAssociatedTenantResource.AddTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _billingAssociatedTenantAssociatedTenantsRestClient.Get(Id.Parent.Name, Id.Name, cancellationToken);
-                    return Response.FromValue(new BillingAssociatedTenantResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _associatedTenantsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<BillingAssociatedTenantData> response = Response.FromValue(BillingAssociatedTenantData.FromResponse(result), result);
+                    return Response.FromValue(new BillingAssociatedTenantResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    BillingAssociatedTenantData current = Get(cancellationToken: cancellationToken).Value.Data;
                     current.Tags[key] = value;
-                    var result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
+                    ArmOperation<BillingAssociatedTenantResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -457,52 +489,38 @@ namespace Azure.ResourceManager.Billing
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/associatedTenants/{associatedTenantName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AssociatedTenants_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingAssociatedTenantResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<BillingAssociatedTenantResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _billingAssociatedTenantAssociatedTenantsClientDiagnostics.CreateScope("BillingAssociatedTenantResource.SetTags");
+            using DiagnosticScope scope = _associatedTenantsClientDiagnostics.CreateScope("BillingAssociatedTenantResource.SetTags");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _billingAssociatedTenantAssociatedTenantsRestClient.GetAsync(Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new BillingAssociatedTenantResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _associatedTenantsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<BillingAssociatedTenantData> response = Response.FromValue(BillingAssociatedTenantData.FromResponse(result), result);
+                    return Response.FromValue(new BillingAssociatedTenantResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    BillingAssociatedTenantData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     current.Tags.ReplaceWith(tags);
-                    var result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<BillingAssociatedTenantResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -513,52 +531,38 @@ namespace Azure.ResourceManager.Billing
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/associatedTenants/{associatedTenantName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AssociatedTenants_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingAssociatedTenantResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<BillingAssociatedTenantResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _billingAssociatedTenantAssociatedTenantsClientDiagnostics.CreateScope("BillingAssociatedTenantResource.SetTags");
+            using DiagnosticScope scope = _associatedTenantsClientDiagnostics.CreateScope("BillingAssociatedTenantResource.SetTags");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _billingAssociatedTenantAssociatedTenantsRestClient.Get(Id.Parent.Name, Id.Name, cancellationToken);
-                    return Response.FromValue(new BillingAssociatedTenantResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _associatedTenantsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<BillingAssociatedTenantData> response = Response.FromValue(BillingAssociatedTenantData.FromResponse(result), result);
+                    return Response.FromValue(new BillingAssociatedTenantResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    BillingAssociatedTenantData current = Get(cancellationToken: cancellationToken).Value.Data;
                     current.Tags.ReplaceWith(tags);
-                    var result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
+                    ArmOperation<BillingAssociatedTenantResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -569,27 +573,7 @@ namespace Azure.ResourceManager.Billing
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/associatedTenants/{associatedTenantName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AssociatedTenants_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingAssociatedTenantResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -597,23 +581,29 @@ namespace Azure.ResourceManager.Billing
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _billingAssociatedTenantAssociatedTenantsClientDiagnostics.CreateScope("BillingAssociatedTenantResource.RemoveTag");
+            using DiagnosticScope scope = _associatedTenantsClientDiagnostics.CreateScope("BillingAssociatedTenantResource.RemoveTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _billingAssociatedTenantAssociatedTenantsRestClient.GetAsync(Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new BillingAssociatedTenantResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _associatedTenantsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<BillingAssociatedTenantData> response = Response.FromValue(BillingAssociatedTenantData.FromResponse(result), result);
+                    return Response.FromValue(new BillingAssociatedTenantResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    BillingAssociatedTenantData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     current.Tags.Remove(key);
-                    var result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<BillingAssociatedTenantResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -624,27 +614,7 @@ namespace Azure.ResourceManager.Billing
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/associatedTenants/{associatedTenantName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AssociatedTenants_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingAssociatedTenantResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -652,23 +622,29 @@ namespace Azure.ResourceManager.Billing
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _billingAssociatedTenantAssociatedTenantsClientDiagnostics.CreateScope("BillingAssociatedTenantResource.RemoveTag");
+            using DiagnosticScope scope = _associatedTenantsClientDiagnostics.CreateScope("BillingAssociatedTenantResource.RemoveTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _billingAssociatedTenantAssociatedTenantsRestClient.Get(Id.Parent.Name, Id.Name, cancellationToken);
-                    return Response.FromValue(new BillingAssociatedTenantResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _associatedTenantsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<BillingAssociatedTenantData> response = Response.FromValue(BillingAssociatedTenantData.FromResponse(result), result);
+                    return Response.FromValue(new BillingAssociatedTenantResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    BillingAssociatedTenantData current = Get(cancellationToken: cancellationToken).Value.Data;
                     current.Tags.Remove(key);
-                    var result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
+                    ArmOperation<BillingAssociatedTenantResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }

@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Network.Samples
             BackendAddressPoolResource backendAddressPool = client.GetBackendAddressPoolResource(backendAddressPoolResourceId);
 
             // invoke the operation
-            await backendAddressPool.DeleteAsync(WaitUntil.Completed);
+            await backendAddressPool.DeleteAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -131,17 +131,15 @@ namespace Azure.ResourceManager.Network.Samples
             {
                 LoadBalancerBackendAddresses = {new LoadBalancerBackendAddress
 {
-Name = "address1",
 VirtualNetworkId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/vnetlb"),
 IPAddress = "10.0.0.4",
 }, new LoadBalancerBackendAddress
 {
-Name = "address2",
 VirtualNetworkId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/vnetlb"),
 IPAddress = "10.0.0.5",
 }},
             };
-            ArmOperation<BackendAddressPoolResource> lro = await backendAddressPool.UpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<BackendAddressPoolResource> lro = await backendAddressPool.UpdateAsync(WaitUntil.Completed, data, cancellationToken: System.Threading.CancellationToken.None);
             BackendAddressPoolResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -177,7 +175,7 @@ IPAddress = "10.0.0.5",
             {
                 IPAddress = "10.0.0.4",
             };
-            ArmOperation<BackendAddressInboundNatRulePortMappings> lro = await backendAddressPool.GetInboundNatRulePortMappingsLoadBalancerAsync(WaitUntil.Completed, content);
+            ArmOperation<BackendAddressInboundNatRulePortMappings> lro = await backendAddressPool.GetInboundNatRulePortMappingsLoadBalancerAsync(WaitUntil.Completed, content, cancellationToken: System.Threading.CancellationToken.None);
             BackendAddressInboundNatRulePortMappings result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");

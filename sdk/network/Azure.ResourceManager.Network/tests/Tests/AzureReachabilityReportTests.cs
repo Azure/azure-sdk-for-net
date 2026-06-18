@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Network.Tests
             {
                 AzureLocations = { "West US" }
             };
-            Operation<AzureReachabilityReport> reportOperation = await GetResourceGroup("NetworkWatcherRG").GetNetworkWatchers().Get("NetworkWatcher_westus").Value.GetAzureReachabilityReportAsync(WaitUntil.Completed, parameters);
+            Operation<AzureReachabilityReport> reportOperation = await GetResourceGroup("NetworkWatcherRG").GetNetworkWatchers().Get("NetworkWatcher_westus").Value.GetAzureReachabilityReportAsync(WaitUntil.Completed, parameters, System.Threading.CancellationToken.None);
             Response<AzureReachabilityReport> report = await reportOperation.WaitForCompletionAsync();
             ;
 
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network.Tests
             {
                 AzureLocations = { "West US" }
             };
-            Operation<AzureReachabilityReport> reportOperation = await GetResourceGroup("NetworkWatcherRG").GetNetworkWatchers().Get("NetworkWatcher_westus").Value.GetAzureReachabilityReportAsync(WaitUntil.Completed, parameters);
+            Operation<AzureReachabilityReport> reportOperation = await GetResourceGroup("NetworkWatcherRG").GetNetworkWatchers().Get("NetworkWatcher_westus").Value.GetAzureReachabilityReportAsync(WaitUntil.Completed, parameters, System.Threading.CancellationToken.None);
             Response<AzureReachabilityReport> report = await reportOperation.WaitForCompletionAsync();
             ;
 
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Network.Tests
             {
                 AzureLocations = { "West US" }
             };
-            Operation<AzureReachabilityReport> reportOperation = await GetResourceGroup("NetworkWatcherRG").GetNetworkWatchers().Get("NetworkWatcher_westus").Value.GetAzureReachabilityReportAsync(WaitUntil.Completed, parameters);
+            Operation<AzureReachabilityReport> reportOperation = await GetResourceGroup("NetworkWatcherRG").GetNetworkWatchers().Get("NetworkWatcher_westus").Value.GetAzureReachabilityReportAsync(WaitUntil.Completed, parameters, System.Threading.CancellationToken.None);
             Response<AzureReachabilityReport> report = await reportOperation.WaitForCompletionAsync();
             ;
 

@@ -8,16 +8,80 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class VpnClientIPsecParameters : IUtf8JsonSerializable, IJsonModel<VpnClientIPsecParameters>
+    /// <summary> An IPSec parameters for a virtual network gateway P2S connection. </summary>
+    public partial class VpnClientIPsecParameters : IJsonModel<VpnClientIPsecParameters>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VpnClientIPsecParameters>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="VpnClientIPsecParameters"/> for deserialization. </summary>
+        internal VpnClientIPsecParameters()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual VpnClientIPsecParameters PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<VpnClientIPsecParameters>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeVpnClientIPsecParameters(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VpnClientIPsecParameters)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<VpnClientIPsecParameters>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(VpnClientIPsecParameters)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<VpnClientIPsecParameters>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        VpnClientIPsecParameters IPersistableModel<VpnClientIPsecParameters>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<VpnClientIPsecParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="vpnClientIPsecParameters"> The <see cref="VpnClientIPsecParameters"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(VpnClientIPsecParameters vpnClientIPsecParameters)
+        {
+            if (vpnClientIPsecParameters == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(vpnClientIPsecParameters, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="VpnClientIPsecParameters"/> from. </param>
+        internal static VpnClientIPsecParameters FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeVpnClientIPsecParameters(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<VpnClientIPsecParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,20 +93,19 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VpnClientIPsecParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VpnClientIPsecParameters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VpnClientIPsecParameters)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("saLifeTimeSeconds"u8);
             writer.WriteNumberValue(SaLifeTimeSeconds);
             writer.WritePropertyName("saDataSizeKilobytes"u8);
             writer.WriteNumberValue(SaDataSizeKilobytes);
             writer.WritePropertyName("ipsecEncryption"u8);
-            writer.WriteStringValue(IPsecEncryption.ToString());
+            writer.WriteStringValue(IpsecEncryption.ToString());
             writer.WritePropertyName("ipsecIntegrity"u8);
-            writer.WriteStringValue(IPsecIntegrity.ToString());
+            writer.WriteStringValue(IpsecIntegrity.ToString());
             writer.WritePropertyName("ikeEncryption"u8);
             writer.WriteStringValue(IkeEncryption.ToString());
             writer.WritePropertyName("ikeIntegrity"u8);
@@ -51,15 +114,15 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStringValue(DhGroup.ToString());
             writer.WritePropertyName("pfsGroup"u8);
             writer.WriteStringValue(PfsGroup.ToString());
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -68,22 +131,27 @@ namespace Azure.ResourceManager.Network.Models
             }
         }
 
-        VpnClientIPsecParameters IJsonModel<VpnClientIPsecParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        VpnClientIPsecParameters IJsonModel<VpnClientIPsecParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual VpnClientIPsecParameters JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VpnClientIPsecParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VpnClientIPsecParameters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VpnClientIPsecParameters)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeVpnClientIPsecParameters(document.RootElement, options);
         }
 
-        internal static VpnClientIPsecParameters DeserializeVpnClientIPsecParameters(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static VpnClientIPsecParameters DeserializeVpnClientIPsecParameters(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -96,56 +164,54 @@ namespace Azure.ResourceManager.Network.Models
             IkeIntegrity ikeIntegrity = default;
             DHGroup dhGroup = default;
             PfsGroup pfsGroup = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("saLifeTimeSeconds"u8))
+                if (prop.NameEquals("saLifeTimeSeconds"u8))
                 {
-                    saLifeTimeSeconds = property.Value.GetInt32();
+                    saLifeTimeSeconds = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("saDataSizeKilobytes"u8))
+                if (prop.NameEquals("saDataSizeKilobytes"u8))
                 {
-                    saDataSizeKilobytes = property.Value.GetInt32();
+                    saDataSizeKilobytes = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("ipsecEncryption"u8))
+                if (prop.NameEquals("ipsecEncryption"u8))
                 {
-                    ipsecEncryption = new IPsecEncryption(property.Value.GetString());
+                    ipsecEncryption = new IPsecEncryption(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("ipsecIntegrity"u8))
+                if (prop.NameEquals("ipsecIntegrity"u8))
                 {
-                    ipsecIntegrity = new IPsecIntegrity(property.Value.GetString());
+                    ipsecIntegrity = new IPsecIntegrity(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("ikeEncryption"u8))
+                if (prop.NameEquals("ikeEncryption"u8))
                 {
-                    ikeEncryption = new IkeEncryption(property.Value.GetString());
+                    ikeEncryption = new IkeEncryption(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("ikeIntegrity"u8))
+                if (prop.NameEquals("ikeIntegrity"u8))
                 {
-                    ikeIntegrity = new IkeIntegrity(property.Value.GetString());
+                    ikeIntegrity = new IkeIntegrity(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("dhGroup"u8))
+                if (prop.NameEquals("dhGroup"u8))
                 {
-                    dhGroup = new DHGroup(property.Value.GetString());
+                    dhGroup = new DHGroup(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("pfsGroup"u8))
+                if (prop.NameEquals("pfsGroup"u8))
                 {
-                    pfsGroup = new PfsGroup(property.Value.GetString());
+                    pfsGroup = new PfsGroup(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new VpnClientIPsecParameters(
                 saLifeTimeSeconds,
                 saDataSizeKilobytes,
@@ -155,151 +221,7 @@ namespace Azure.ResourceManager.Network.Models
                 ikeIntegrity,
                 dhGroup,
                 pfsGroup,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SaLifeTimeSeconds), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  saLifeTimeSeconds: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("  saLifeTimeSeconds: ");
-                builder.AppendLine($"{SaLifeTimeSeconds}");
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SaDataSizeKilobytes), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  saDataSizeKilobytes: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("  saDataSizeKilobytes: ");
-                builder.AppendLine($"{SaDataSizeKilobytes}");
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IPsecEncryption), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  ipsecEncryption: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("  ipsecEncryption: ");
-                builder.AppendLine($"'{IPsecEncryption.ToString()}'");
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IPsecIntegrity), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  ipsecIntegrity: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("  ipsecIntegrity: ");
-                builder.AppendLine($"'{IPsecIntegrity.ToString()}'");
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IkeEncryption), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  ikeEncryption: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("  ikeEncryption: ");
-                builder.AppendLine($"'{IkeEncryption.ToString()}'");
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IkeIntegrity), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  ikeIntegrity: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("  ikeIntegrity: ");
-                builder.AppendLine($"'{IkeIntegrity.ToString()}'");
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DhGroup), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  dhGroup: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("  dhGroup: ");
-                builder.AppendLine($"'{DhGroup.ToString()}'");
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PfsGroup), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  pfsGroup: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("  pfsGroup: ");
-                builder.AppendLine($"'{PfsGroup.ToString()}'");
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<VpnClientIPsecParameters>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<VpnClientIPsecParameters>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(VpnClientIPsecParameters)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        VpnClientIPsecParameters IPersistableModel<VpnClientIPsecParameters>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<VpnClientIPsecParameters>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeVpnClientIPsecParameters(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(VpnClientIPsecParameters)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<VpnClientIPsecParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

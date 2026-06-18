@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Network.Samples
             NetworkVirtualApplianceConnectionResource networkVirtualApplianceConnection = client.GetNetworkVirtualApplianceConnectionResource(networkVirtualApplianceConnectionResourceId);
 
             // invoke the operation
-            await networkVirtualApplianceConnection.DeleteAsync(WaitUntil.Completed);
+            await networkVirtualApplianceConnection.DeleteAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -118,9 +118,8 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/M
                     InboundRouteMapId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualHubs/virtualHub1/routeMaps/routeMap1"),
                     OutboundRouteMapId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualHubs/virtualHub1/routeMaps/routeMap2"),
                 },
-                Name = "connection1",
             };
-            ArmOperation<NetworkVirtualApplianceConnectionResource> lro = await networkVirtualApplianceConnection.UpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<NetworkVirtualApplianceConnectionResource> lro = await networkVirtualApplianceConnection.UpdateAsync(WaitUntil.Completed, data, cancellationToken: System.Threading.CancellationToken.None);
             NetworkVirtualApplianceConnectionResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

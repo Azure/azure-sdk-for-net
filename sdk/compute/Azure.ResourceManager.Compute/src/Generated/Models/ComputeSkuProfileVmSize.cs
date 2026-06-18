@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Specifies the VM Size. </summary>
     public partial class ComputeSkuProfileVmSize
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ComputeSkuProfileVmSize"/>. </summary>
         public ComputeSkuProfileVmSize()
@@ -53,16 +24,17 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="ComputeSkuProfileVmSize"/>. </summary>
         /// <param name="name"> Specifies the name of the VM Size. </param>
         /// <param name="rank"> Specifies the rank (a.k.a priority) associated with the VM Size. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeSkuProfileVmSize(string name, int? rank, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ComputeSkuProfileVmSize(string name, int? rank, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Rank = rank;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Specifies the name of the VM Size. </summary>
         public string Name { get; set; }
+
         /// <summary> Specifies the rank (a.k.a priority) associated with the VM Size. </summary>
         public int? Rank { get; set; }
     }

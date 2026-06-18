@@ -1,15 +1,18 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.Metrics;
 using System.Globalization;
 using System.Net.Http;
 using System.Text.Json;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.NetworkSdkStats;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
 using OpenTelemetry;
 using OpenTelemetry.Metrics;
@@ -38,6 +41,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
 
         internal MeterProvider? _statsbeatMeterProvider;
 
+        // Wall-clock throttle for the Attach observable gauge so it emits at most once per
+        // AttachEmissionInterval even though the shared reader collects every 15 min.
+        private long _lastAttachEmissionTicks;
+
+        /// <summary>
+        /// Records Network SDKStats on the shared statsbeat <see cref="MeterProvider"/>.
+        /// </summary>
+        internal NetworkSdkStatsManager? NetworkSdkStatsManager { get; }
+
         /// <summary>
         /// Background task that fetches the SDK statistics configuration and builds the
         /// distro-path <see cref="MeterProvider"/>. Exposed for tests to await deterministic
@@ -58,10 +70,20 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
 
             _customer_Ikey = connectionStringVars.InstrumentationKey;
 
-            // The Attach gauge is created up-front for both code paths so that any
-            // background MeterProvider that comes online later (distro path) immediately
-            // picks it up.
-            s_myMeter.CreateObservableGauge(StatsbeatConstants.AttachStatsbeatMetricName, () => GetAttachStatsbeat());
+            // IEnumerable<Measurement<T>> overload lets the callback yield zero measurements
+            // while throttled - see GetAttachStatsbeat. Created up-front for both code paths
+            // so that any background MeterProvider that comes online later (distro path)
+            // immediately picks it up.
+            s_myMeter.CreateObservableGauge(StatsbeatConstants.AttachStatsbeatMetricName, GetAttachStatsbeat);
+
+            try
+            {
+                NetworkSdkStatsManager = new NetworkSdkStatsManager(connectionStringVars, platform);
+            }
+            catch
+            {
+                // Internal telemetry - swallow.
+            }
 
             var routeToDistroEndpoint =
                 AppContext.TryGetSwitch(StatsbeatConstants.RouteSdkStatsToDistroEndpointSwitchName, out var enabled)
@@ -167,8 +189,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
 
         private void BuildMeterProvider(string connectionString)
         {
-            // EnableStatsbeat=false avoids a recursive Statsbeat construction inside the
-            // transmitter we're about to attach.
+            // One MeterProvider for both long and short-interval stats. The reader runs at
+            // the Network (15 min) cadence. Delta temporality + the Attach throttle keep the
+            // long-interval instruments on their native 24 hr cadence. EnableStatsbeat=false
+            // avoids a recursive Statsbeat construction inside the transmitter we're about to
+            // attach.
             var exporterOptions = new AzureMonitorExporterOptions
             {
                 DisableOfflineStorage = true,
@@ -180,7 +205,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
                 .AddMeter(StatsbeatConstants.AttachStatsbeatMeterName)
                 .AddMeter(StatsbeatConstants.FeatureStatsbeatMeterName)
                 .AddMeter(StatsbeatConstants.DistroFeatureSdkStatsMeterName)
-                .AddReader(new PeriodicExportingMetricReader(new AzureMonitorMetricExporter(exporterOptions), StatsbeatConstants.GeneralStatsbeatInterval)
+                .AddMeter(StatsbeatConstants.NetworkSdkStatsMeterName)
+                .AddReader(new PeriodicExportingMetricReader(new AzureMonitorMetricExporter(exporterOptions), StatsbeatConstants.NetworkStatsbeatInterval)
                 { TemporalityPreference = MetricReaderTemporalityPreference.Delta })
                 .Build();
         }
@@ -192,8 +218,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
             // If the version information is not yet available, wait up to five minutes —
             // it really should be done in one minute or less (whenever the first Export
             // call occurs, and otel does metrics at least once a minute). After the first
-            // attach metric emission, the AttachStatsbeatInterval above (24 hours by
-            // default) takes over sending metrics.
+            // attach metric emission, the AttachEmissionInterval (24 hours by default)
+            // takes over sending metrics.
             _ = Task.Run(async () =>
             {
                 DateTime giveUpTime = DateTime.Now.AddMinutes(5);
@@ -248,8 +274,25 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
             return StatsbeatConstants.SdkStatsConfigUrl_NonEU;
         }
 
-        private Measurement<int> GetAttachStatsbeat()
+        private IEnumerable<Measurement<int>> GetAttachStatsbeat()
         {
+            // Emit at most once per AttachEmissionInterval. Delta temporality means
+            // skipped intervals don't produce an exported metric point.
+            long previousTicks = Volatile.Read(ref _lastAttachEmissionTicks);
+            long nowTicks = DateTime.UtcNow.Ticks;
+            if (previousTicks != 0
+                && nowTicks - previousTicks < StatsbeatConstants.AttachEmissionInterval.Ticks)
+            {
+                yield break;
+            }
+
+            // CAS before doing any work so a racing reader can't double-emit.
+            if (Interlocked.CompareExchange(ref _lastAttachEmissionTicks, nowTicks, previousTicks) != previousTicks)
+            {
+                yield break;
+            }
+
+            Measurement<int> measurement;
             try
             {
                 if (_resourceProvider == null)
@@ -257,23 +300,26 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
                     SetResourceProviderDetails(_platform);
                 }
 
-                return
-                    new Measurement<int>(1,
-                        new("rp", _resourceProvider),
-                        new("rpId", _resourceProviderId),
-                        new("attach", s_attachMode),
-                        new("cikey", _customer_Ikey),
-                        new("runtimeVersion", s_runtimeVersion),
-                        new("language", "dotnet"),
-                        // We don't memoize this version because it can be updated up to a minute into the application startup
-                        new("version", SdkVersionUtils.GetVersion()),
-                        new("os", _operatingSystem));
+                measurement = new Measurement<int>(1,
+                    new("rp", _resourceProvider),
+                    new("rpId", _resourceProviderId),
+                    new("attach", s_attachMode),
+                    new("cikey", _customer_Ikey),
+                    new("runtimeVersion", s_runtimeVersion),
+                    new("language", "dotnet"),
+                    // We don't memoize this version because it can be updated up to a minute into the application startup
+                    new("version", SdkVersionUtils.GetVersion()),
+                    new("os", _operatingSystem));
             }
             catch (Exception ex)
             {
                 AzureMonitorExporterEventSource.Log.StatsbeatFailed(ex);
-                return new Measurement<int>();
+                // Rewind the throttle so we retry on the next collection.
+                Volatile.Write(ref _lastAttachEmissionTicks, previousTicks);
+                yield break;
             }
+
+            yield return measurement;
         }
 
         internal static VmMetadataResponse? GetVmMetadataResponse()

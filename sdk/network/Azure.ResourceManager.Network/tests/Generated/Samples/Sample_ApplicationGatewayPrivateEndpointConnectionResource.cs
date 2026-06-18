@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network.Samples
             ApplicationGatewayPrivateEndpointConnectionResource applicationGatewayPrivateEndpointConnection = client.GetApplicationGatewayPrivateEndpointConnectionResource(applicationGatewayPrivateEndpointConnectionResourceId);
 
             // invoke the operation
-            await applicationGatewayPrivateEndpointConnection.DeleteAsync(WaitUntil.Completed);
+            await applicationGatewayPrivateEndpointConnection.DeleteAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -103,9 +103,8 @@ namespace Azure.ResourceManager.Network.Samples
                     Status = "Approved",
                     Description = "approved it for some reason.",
                 },
-                Name = "connection1",
             };
-            ArmOperation<ApplicationGatewayPrivateEndpointConnectionResource> lro = await applicationGatewayPrivateEndpointConnection.UpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<ApplicationGatewayPrivateEndpointConnectionResource> lro = await applicationGatewayPrivateEndpointConnection.UpdateAsync(WaitUntil.Completed, data, cancellationToken: System.Threading.CancellationToken.None);
             ApplicationGatewayPrivateEndpointConnectionResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

@@ -12,46 +12,69 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary>
-    /// A class representing the InboundSecurityRule data model.
-    /// NVA Inbound Security Rule resource.
-    /// </summary>
+    /// <summary> NVA Inbound Security Rule resource. </summary>
     public partial class InboundSecurityRuleData : NetworkResourceData
     {
         /// <summary> Initializes a new instance of <see cref="InboundSecurityRuleData"/>. </summary>
         public InboundSecurityRuleData()
         {
-            Rules = new ChangeTrackingList<InboundSecurityRules>();
         }
 
         /// <summary> Initializes a new instance of <see cref="InboundSecurityRuleData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="ruleType"> Rule Type. This should be either AutoExpire or Permanent. Auto Expire Rule only creates NSG rules. Permanent Rule creates NSG rule and SLB LB Rule. </param>
-        /// <param name="rules"> List of allowed rules. </param>
-        /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        internal InboundSecurityRuleData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, InboundSecurityRuleType? ruleType, IList<InboundSecurityRules> rules, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="properties"> The properties of the Inbound Security Rules. </param>
+        internal InboundSecurityRuleData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, InboundSecurityRuleProperties properties) : base(id, additionalBinaryDataProperties, name, @type)
         {
-            ETag = etag;
-            RuleType = ruleType;
-            Rules = rules;
-            ProvisioningState = provisioningState;
+            Properties = properties;
         }
 
-        /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        [WirePath("etag")]
-        public ETag? ETag { get; }
+        /// <summary> The properties of the Inbound Security Rules. </summary>
+        [WirePath("properties")]
+        internal InboundSecurityRuleProperties Properties { get; set; }
+
         /// <summary> Rule Type. This should be either AutoExpire or Permanent. Auto Expire Rule only creates NSG rules. Permanent Rule creates NSG rule and SLB LB Rule. </summary>
         [WirePath("properties.ruleType")]
-        public InboundSecurityRuleType? RuleType { get; set; }
+        public InboundSecurityRuleType? RuleType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RuleType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new InboundSecurityRuleProperties();
+                }
+                Properties.RuleType = value;
+            }
+        }
+
         /// <summary> List of allowed rules. </summary>
         [WirePath("properties.rules")]
-        public IList<InboundSecurityRules> Rules { get; }
+        public IList<InboundSecurityRules> Rules
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new InboundSecurityRuleProperties();
+                }
+                return Properties.Rules;
+            }
+        }
+
         /// <summary> The provisioning state of the resource. </summary>
         [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }

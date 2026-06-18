@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Network
 {
+    /// <summary></summary>
     public partial class NetworkVirtualApplianceConnectionResource : IJsonModel<NetworkVirtualApplianceConnectionData>
     {
-        private static NetworkVirtualApplianceConnectionData s_dataDeserializationInstance;
-        private static NetworkVirtualApplianceConnectionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<NetworkVirtualApplianceConnectionData> s_dataDeserializationInstance;
 
+        private static IJsonModel<NetworkVirtualApplianceConnectionData> DataDeserializationInstance => s_dataDeserializationInstance ??= new NetworkVirtualApplianceConnectionData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NetworkVirtualApplianceConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetworkVirtualApplianceConnectionData>)Data).Write(writer, options);
 
-        NetworkVirtualApplianceConnectionData IJsonModel<NetworkVirtualApplianceConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkVirtualApplianceConnectionData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NetworkVirtualApplianceConnectionData IJsonModel<NetworkVirtualApplianceConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<NetworkVirtualApplianceConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkVirtualApplianceConnectionData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         NetworkVirtualApplianceConnectionData IPersistableModel<NetworkVirtualApplianceConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkVirtualApplianceConnectionData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<NetworkVirtualApplianceConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkVirtualApplianceConnectionData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<NetworkVirtualApplianceConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

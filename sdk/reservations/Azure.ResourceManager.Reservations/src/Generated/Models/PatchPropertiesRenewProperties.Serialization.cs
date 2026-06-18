@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Reservations;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    internal partial class PatchPropertiesRenewProperties : IUtf8JsonSerializable, IJsonModel<PatchPropertiesRenewProperties>
+    /// <summary> The PatchPropertiesRenewProperties. </summary>
+    internal partial class PatchPropertiesRenewProperties : IJsonModel<PatchPropertiesRenewProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PatchPropertiesRenewProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual PatchPropertiesRenewProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PatchPropertiesRenewProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializePatchPropertiesRenewProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PatchPropertiesRenewProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PatchPropertiesRenewProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerReservationsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(PatchPropertiesRenewProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<PatchPropertiesRenewProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PatchPropertiesRenewProperties IPersistableModel<PatchPropertiesRenewProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<PatchPropertiesRenewProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PatchPropertiesRenewProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,26 +69,25 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PatchPropertiesRenewProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PatchPropertiesRenewProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PatchPropertiesRenewProperties)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(PurchaseProperties))
             {
                 writer.WritePropertyName("purchaseProperties"u8);
                 writer.WriteObjectValue(PurchaseProperties, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -56,78 +96,50 @@ namespace Azure.ResourceManager.Reservations.Models
             }
         }
 
-        PatchPropertiesRenewProperties IJsonModel<PatchPropertiesRenewProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PatchPropertiesRenewProperties IJsonModel<PatchPropertiesRenewProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual PatchPropertiesRenewProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PatchPropertiesRenewProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PatchPropertiesRenewProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PatchPropertiesRenewProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializePatchPropertiesRenewProperties(document.RootElement, options);
         }
 
-        internal static PatchPropertiesRenewProperties DeserializePatchPropertiesRenewProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static PatchPropertiesRenewProperties DeserializePatchPropertiesRenewProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ReservationPurchaseContent purchaseProperties = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("purchaseProperties"u8))
+                if (prop.NameEquals("purchaseProperties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    purchaseProperties = ReservationPurchaseContent.DeserializeReservationPurchaseContent(property.Value, options);
+                    purchaseProperties = ReservationPurchaseContent.DeserializeReservationPurchaseContent(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new PatchPropertiesRenewProperties(purchaseProperties, serializedAdditionalRawData);
+            return new PatchPropertiesRenewProperties(purchaseProperties, additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<PatchPropertiesRenewProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<PatchPropertiesRenewProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerReservationsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(PatchPropertiesRenewProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        PatchPropertiesRenewProperties IPersistableModel<PatchPropertiesRenewProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<PatchPropertiesRenewProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializePatchPropertiesRenewProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(PatchPropertiesRenewProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<PatchPropertiesRenewProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
