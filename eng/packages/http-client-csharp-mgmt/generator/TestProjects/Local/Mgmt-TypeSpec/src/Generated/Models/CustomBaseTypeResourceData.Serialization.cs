@@ -12,10 +12,10 @@ using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
-using Azure.Generator.MgmtTypeSpec.Tests.Models;
+using Azure.Generator.MgmtTypeSpec.Tests;
 using Azure.ResourceManager.Models;
 
-namespace Azure.Generator.MgmtTypeSpec.Tests
+namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
     /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
     public partial class CustomBaseTypeResourceData : TrackedResourceData, IJsonModel<CustomBaseTypeResourceData>

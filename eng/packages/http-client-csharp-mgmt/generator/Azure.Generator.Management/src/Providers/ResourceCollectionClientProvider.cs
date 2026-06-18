@@ -210,7 +210,7 @@ namespace Azure.Generator.Management.Providers
 
         internal string ResourceName => _resource.ResourceName;
         internal ResourceScope ResourceScope => _resource.ResourceScope;
-        internal ModelProvider ResourceData => _resource.ResourceData;
+        internal TypeProvider ResourceData => _resource.ResourceData;
 
         protected override TypeProvider[] BuildSerializationProviders() => [];
 
