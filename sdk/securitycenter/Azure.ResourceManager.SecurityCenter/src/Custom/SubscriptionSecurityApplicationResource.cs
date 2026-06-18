@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Gets the Data value preserved from the previous public API surface.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual SecurityApplicationData Data { get; } = new SecurityApplicationData();
+        public virtual SecurityApplicationData Data => _data is null ? null : new SecurityApplicationData(_data);
         /// <summary>
         /// Provides a compatibility shim for the Update operation preserved from the previous public API surface.
         /// </summary>

@@ -22,6 +22,18 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Initializes a new instance of the <see cref="SecurityApplicationData"/> type for compatibility with the previous public API surface.
         /// </summary>
         public SecurityApplicationData() { }
+
+        internal SecurityApplicationData(SecurityConnectorApplicationData data)
+            : base(data.Id, data.Name, data.ResourceType, data.SystemData, data.Properties, new ChangeTrackingDictionary<string, System.BinaryData>())
+        {
+            Description = data.Description;
+            DisplayName = data.DisplayName;
+            SourceResourceType = data.SourceResourceType;
+            foreach (System.BinaryData conditionSet in data.ConditionSets)
+            {
+                ConditionSets.Add(conditionSet);
+            }
+        }
         /// <summary>
         /// Gets the ConditionSets value preserved from the previous public API surface.
         /// </summary>

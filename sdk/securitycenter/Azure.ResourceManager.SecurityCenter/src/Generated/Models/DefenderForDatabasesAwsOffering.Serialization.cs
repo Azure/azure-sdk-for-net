@@ -14,51 +14,51 @@ using Azure.ResourceManager.SecurityCenter;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The Defender for Databases AWS offering. </summary>
-    public partial class DefenderFoDatabasesAwsOffering : SecurityCenterCloudOffering, IJsonModel<DefenderFoDatabasesAwsOffering>
+    public partial class DefenderForDatabasesAwsOffering : SecurityCenterCloudOffering, IJsonModel<DefenderForDatabasesAwsOffering>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override SecurityCenterCloudOffering PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DefenderFoDatabasesAwsOffering>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DefenderForDatabasesAwsOffering>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDefenderFoDatabasesAwsOffering(document.RootElement, options);
+                        return DeserializeDefenderForDatabasesAwsOffering(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DefenderFoDatabasesAwsOffering)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DefenderForDatabasesAwsOffering)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DefenderFoDatabasesAwsOffering>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DefenderForDatabasesAwsOffering>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityCenterContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DefenderFoDatabasesAwsOffering)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DefenderForDatabasesAwsOffering)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DefenderFoDatabasesAwsOffering>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<DefenderForDatabasesAwsOffering>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DefenderFoDatabasesAwsOffering IPersistableModel<DefenderFoDatabasesAwsOffering>.Create(BinaryData data, ModelReaderWriterOptions options) => (DefenderFoDatabasesAwsOffering)PersistableModelCreateCore(data, options);
+        DefenderForDatabasesAwsOffering IPersistableModel<DefenderForDatabasesAwsOffering>.Create(BinaryData data, ModelReaderWriterOptions options) => (DefenderForDatabasesAwsOffering)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DefenderFoDatabasesAwsOffering>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DefenderForDatabasesAwsOffering>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DefenderFoDatabasesAwsOffering>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DefenderForDatabasesAwsOffering>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DefenderFoDatabasesAwsOffering>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DefenderForDatabasesAwsOffering>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DefenderFoDatabasesAwsOffering)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DefenderForDatabasesAwsOffering)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(ArcAutoProvisioning))
@@ -94,24 +94,24 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DefenderFoDatabasesAwsOffering IJsonModel<DefenderFoDatabasesAwsOffering>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DefenderFoDatabasesAwsOffering)JsonModelCreateCore(ref reader, options);
+        DefenderForDatabasesAwsOffering IJsonModel<DefenderForDatabasesAwsOffering>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DefenderForDatabasesAwsOffering)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override SecurityCenterCloudOffering JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DefenderFoDatabasesAwsOffering>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DefenderForDatabasesAwsOffering>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DefenderFoDatabasesAwsOffering)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DefenderForDatabasesAwsOffering)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDefenderFoDatabasesAwsOffering(document.RootElement, options);
+            return DeserializeDefenderForDatabasesAwsOffering(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DefenderFoDatabasesAwsOffering DeserializeDefenderFoDatabasesAwsOffering(JsonElement element, ModelReaderWriterOptions options)
+        internal static DefenderForDatabasesAwsOffering DeserializeDefenderForDatabasesAwsOffering(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -120,9 +120,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             OfferingType offeringType = default;
             string description = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            DefenderFoDatabasesAwsOfferingArcAutoProvisioning arcAutoProvisioning = default;
-            DefenderFoDatabasesAwsOfferingRds rds = default;
-            DefenderFoDatabasesAwsOfferingDatabasesDspm databasesDspm = default;
+            DefenderForDatabasesAwsOfferingArcAutoProvisioning arcAutoProvisioning = default;
+            DefenderForDatabasesAwsOfferingRds rds = default;
+            DefenderForDatabasesAwsOfferingDatabasesDspm databasesDspm = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("offeringType"u8))
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    arcAutoProvisioning = DefenderFoDatabasesAwsOfferingArcAutoProvisioning.DeserializeDefenderFoDatabasesAwsOfferingArcAutoProvisioning(prop.Value, options);
+                    arcAutoProvisioning = DefenderForDatabasesAwsOfferingArcAutoProvisioning.DeserializeDefenderForDatabasesAwsOfferingArcAutoProvisioning(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("rds"u8))
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    rds = DefenderFoDatabasesAwsOfferingRds.DeserializeDefenderFoDatabasesAwsOfferingRds(prop.Value, options);
+                    rds = DefenderForDatabasesAwsOfferingRds.DeserializeDefenderForDatabasesAwsOfferingRds(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("databasesDspm"u8))
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    databasesDspm = DefenderFoDatabasesAwsOfferingDatabasesDspm.DeserializeDefenderFoDatabasesAwsOfferingDatabasesDspm(prop.Value, options);
+                    databasesDspm = DefenderForDatabasesAwsOfferingDatabasesDspm.DeserializeDefenderForDatabasesAwsOfferingDatabasesDspm(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DefenderFoDatabasesAwsOffering(
+            return new DefenderForDatabasesAwsOffering(
                 offeringType,
                 description,
                 additionalBinaryDataProperties,

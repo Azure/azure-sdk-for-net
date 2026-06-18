@@ -11,21 +11,21 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The RDS configuration. </summary>
-    public partial class DefenderFoDatabasesAwsOfferingRds
+    public partial class DefenderForDatabasesAwsOfferingRds
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DefenderFoDatabasesAwsOfferingRds"/>. </summary>
-        public DefenderFoDatabasesAwsOfferingRds()
+        /// <summary> Initializes a new instance of <see cref="DefenderForDatabasesAwsOfferingRds"/>. </summary>
+        public DefenderForDatabasesAwsOfferingRds()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DefenderFoDatabasesAwsOfferingRds"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefenderForDatabasesAwsOfferingRds"/>. </summary>
         /// <param name="enabled"> Is RDS protection enabled. </param>
         /// <param name="cloudRoleArn"> The cloud role ARN in AWS for this feature. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DefenderFoDatabasesAwsOfferingRds(bool? enabled, string cloudRoleArn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DefenderForDatabasesAwsOfferingRds(bool? enabled, string cloudRoleArn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Enabled = enabled;
             CloudRoleArn = cloudRoleArn;

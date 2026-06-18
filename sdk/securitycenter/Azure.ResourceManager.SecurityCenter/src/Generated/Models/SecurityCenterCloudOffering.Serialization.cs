@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary>
     /// The security offering details
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CspmMonitorAwsOffering"/>, <see cref="DefenderForContainersAwsOffering"/>, <see cref="DefenderForServersAwsOffering"/>, <see cref="DefenderFoDatabasesAwsOffering"/>, <see cref="CspmMonitorGcpOffering"/>, <see cref="DefenderForServersGcpOffering"/>, <see cref="DefenderForDatabasesGcpOffering"/>, <see cref="DefenderForContainersGcpOffering"/>, <see cref="CspmMonitorGithubOffering"/>, <see cref="CspmMonitorAzureDevOpsOffering"/>, <see cref="DefenderCspmAwsOffering"/>, <see cref="DefenderCspmGcpOffering"/>, <see cref="CspmMonitorGitLabOffering"/>, <see cref="CspmMonitorDockerHubOffering"/>, <see cref="DefenderForContainersDockerHubOffering"/>, <see cref="DefenderCspmDockerHubOffering"/>, <see cref="CspmMonitorJFrogOffering"/>, <see cref="DefenderForContainersJFrogOffering"/>, and <see cref="DefenderCspmJFrogOffering"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CspmMonitorAwsOffering"/>, <see cref="DefenderForContainersAwsOffering"/>, <see cref="DefenderForServersAwsOffering"/>, <see cref="DefenderForDatabasesAwsOffering"/>, <see cref="CspmMonitorGcpOffering"/>, <see cref="DefenderForServersGcpOffering"/>, <see cref="DefenderForDatabasesGcpOffering"/>, <see cref="DefenderForContainersGcpOffering"/>, <see cref="CspmMonitorGithubOffering"/>, <see cref="CspmMonitorAzureDevOpsOffering"/>, <see cref="DefenderCspmAwsOffering"/>, <see cref="DefenderCspmGcpOffering"/>, <see cref="CspmMonitorGitLabOffering"/>, <see cref="CspmMonitorDockerHubOffering"/>, <see cref="DefenderForContainersDockerHubOffering"/>, <see cref="DefenderCspmDockerHubOffering"/>, <see cref="CspmMonitorJFrogOffering"/>, <see cref="DefenderForContainersJFrogOffering"/>, and <see cref="DefenderCspmJFrogOffering"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownSecurityCenterCloudOffering))]
     public abstract partial class SecurityCenterCloudOffering : IJsonModel<SecurityCenterCloudOffering>
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     case "DefenderForServersAws":
                         return DefenderForServersAwsOffering.DeserializeDefenderForServersAwsOffering(element, options);
                     case "DefenderForDatabasesAws":
-                        return DefenderFoDatabasesAwsOffering.DeserializeDefenderFoDatabasesAwsOffering(element, options);
+                        return DefenderForDatabasesAwsOffering.DeserializeDefenderForDatabasesAwsOffering(element, options);
                     case "CspmMonitorGcp":
                         return CspmMonitorGcpOffering.DeserializeCspmMonitorGcpOffering(element, options);
                     case "DefenderForServersGcp":

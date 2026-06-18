@@ -11,21 +11,21 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The databases data security posture management (DSPM) configuration. </summary>
-    public partial class DefenderFoDatabasesAwsOfferingDatabasesDspm
+    public partial class DefenderForDatabasesAwsOfferingDatabasesDspm
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DefenderFoDatabasesAwsOfferingDatabasesDspm"/>. </summary>
-        public DefenderFoDatabasesAwsOfferingDatabasesDspm()
+        /// <summary> Initializes a new instance of <see cref="DefenderForDatabasesAwsOfferingDatabasesDspm"/>. </summary>
+        public DefenderForDatabasesAwsOfferingDatabasesDspm()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DefenderFoDatabasesAwsOfferingDatabasesDspm"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefenderForDatabasesAwsOfferingDatabasesDspm"/>. </summary>
         /// <param name="enabled"> Is databases data security posture management (DSPM) protection enabled. </param>
         /// <param name="cloudRoleArn"> The cloud role ARN in AWS for this feature. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DefenderFoDatabasesAwsOfferingDatabasesDspm(bool? enabled, string cloudRoleArn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DefenderForDatabasesAwsOfferingDatabasesDspm(bool? enabled, string cloudRoleArn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Enabled = enabled;
             CloudRoleArn = cloudRoleArn;

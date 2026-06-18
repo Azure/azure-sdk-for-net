@@ -1908,10 +1908,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="arcAutoProvisioning"> The ARC autoprovisioning configuration. </param>
         /// <param name="rds"> The RDS configuration. </param>
         /// <param name="databasesDspm"> The databases data security posture management (DSPM) configuration. </param>
-        /// <returns> A new <see cref="Models.DefenderFoDatabasesAwsOffering"/> instance for mocking. </returns>
-        public static DefenderFoDatabasesAwsOffering DefenderFoDatabasesAwsOffering(string description = default, DefenderFoDatabasesAwsOfferingArcAutoProvisioning arcAutoProvisioning = default, DefenderFoDatabasesAwsOfferingRds rds = default, DefenderFoDatabasesAwsOfferingDatabasesDspm databasesDspm = default)
+        /// <returns> A new <see cref="Models.DefenderForDatabasesAwsOffering"/> instance for mocking. </returns>
+        public static DefenderForDatabasesAwsOffering DefenderForDatabasesAwsOffering(string description = default, DefenderForDatabasesAwsOfferingArcAutoProvisioning arcAutoProvisioning = default, DefenderForDatabasesAwsOfferingRds rds = default, DefenderForDatabasesAwsOfferingDatabasesDspm databasesDspm = default)
         {
-            return new DefenderFoDatabasesAwsOffering(
+            return new DefenderForDatabasesAwsOffering(
                 default,
                 description,
                 default,
@@ -1923,26 +1923,26 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="enabled"> Is arc auto provisioning enabled. </param>
         /// <param name="configuration"> Configuration for servers Arc auto provisioning for a given environment. </param>
         /// <param name="cloudRoleArn"> The cloud role ARN in AWS for this feature. </param>
-        /// <returns> A new <see cref="Models.DefenderFoDatabasesAwsOfferingArcAutoProvisioning"/> instance for mocking. </returns>
-        public static DefenderFoDatabasesAwsOfferingArcAutoProvisioning DefenderFoDatabasesAwsOfferingArcAutoProvisioning(bool? enabled = default, ArcAutoProvisioningConfiguration configuration = default, string cloudRoleArn = default)
+        /// <returns> A new <see cref="Models.DefenderForDatabasesAwsOfferingArcAutoProvisioning"/> instance for mocking. </returns>
+        public static DefenderForDatabasesAwsOfferingArcAutoProvisioning DefenderForDatabasesAwsOfferingArcAutoProvisioning(bool? enabled = default, ArcAutoProvisioningConfiguration configuration = default, string cloudRoleArn = default)
         {
-            return new DefenderFoDatabasesAwsOfferingArcAutoProvisioning(enabled, configuration, default, cloudRoleArn);
+            return new DefenderForDatabasesAwsOfferingArcAutoProvisioning(enabled, configuration, default, cloudRoleArn);
         }
 
         /// <param name="enabled"> Is RDS protection enabled. </param>
         /// <param name="cloudRoleArn"> The cloud role ARN in AWS for this feature. </param>
-        /// <returns> A new <see cref="Models.DefenderFoDatabasesAwsOfferingRds"/> instance for mocking. </returns>
-        public static DefenderFoDatabasesAwsOfferingRds DefenderFoDatabasesAwsOfferingRds(bool? enabled = default, string cloudRoleArn = default)
+        /// <returns> A new <see cref="Models.DefenderForDatabasesAwsOfferingRds"/> instance for mocking. </returns>
+        public static DefenderForDatabasesAwsOfferingRds DefenderForDatabasesAwsOfferingRds(bool? enabled = default, string cloudRoleArn = default)
         {
-            return new DefenderFoDatabasesAwsOfferingRds(enabled, cloudRoleArn, default);
+            return new DefenderForDatabasesAwsOfferingRds(enabled, cloudRoleArn, default);
         }
 
         /// <param name="enabled"> Is databases data security posture management (DSPM) protection enabled. </param>
         /// <param name="cloudRoleArn"> The cloud role ARN in AWS for this feature. </param>
-        /// <returns> A new <see cref="Models.DefenderFoDatabasesAwsOfferingDatabasesDspm"/> instance for mocking. </returns>
-        public static DefenderFoDatabasesAwsOfferingDatabasesDspm DefenderFoDatabasesAwsOfferingDatabasesDspm(bool? enabled = default, string cloudRoleArn = default)
+        /// <returns> A new <see cref="Models.DefenderForDatabasesAwsOfferingDatabasesDspm"/> instance for mocking. </returns>
+        public static DefenderForDatabasesAwsOfferingDatabasesDspm DefenderForDatabasesAwsOfferingDatabasesDspm(bool? enabled = default, string cloudRoleArn = default)
         {
-            return new DefenderFoDatabasesAwsOfferingDatabasesDspm(enabled, cloudRoleArn, default);
+            return new DefenderForDatabasesAwsOfferingDatabasesDspm(enabled, cloudRoleArn, default);
         }
 
         /// <param name="description"> The offering description. </param>

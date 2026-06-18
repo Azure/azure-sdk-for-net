@@ -11,19 +11,19 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The ARC autoprovisioning configuration. </summary>
-    public partial class DefenderFoDatabasesAwsOfferingArcAutoProvisioning : ArcAutoProvisioningAws
+    public partial class DefenderForDatabasesAwsOfferingArcAutoProvisioning : ArcAutoProvisioningAws
     {
-        /// <summary> Initializes a new instance of <see cref="DefenderFoDatabasesAwsOfferingArcAutoProvisioning"/>. </summary>
-        public DefenderFoDatabasesAwsOfferingArcAutoProvisioning()
+        /// <summary> Initializes a new instance of <see cref="DefenderForDatabasesAwsOfferingArcAutoProvisioning"/>. </summary>
+        public DefenderForDatabasesAwsOfferingArcAutoProvisioning()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DefenderFoDatabasesAwsOfferingArcAutoProvisioning"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefenderForDatabasesAwsOfferingArcAutoProvisioning"/>. </summary>
         /// <param name="enabled"> Is arc auto provisioning enabled. </param>
         /// <param name="configuration"> Configuration for servers Arc auto provisioning for a given environment. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="cloudRoleArn"> The cloud role ARN in AWS for this feature. </param>
-        internal DefenderFoDatabasesAwsOfferingArcAutoProvisioning(bool? enabled, ArcAutoProvisioningConfiguration configuration, IDictionary<string, BinaryData> additionalBinaryDataProperties, string cloudRoleArn) : base(enabled, configuration, additionalBinaryDataProperties, cloudRoleArn)
+        internal DefenderForDatabasesAwsOfferingArcAutoProvisioning(bool? enabled, ArcAutoProvisioningConfiguration configuration, IDictionary<string, BinaryData> additionalBinaryDataProperties, string cloudRoleArn) : base(enabled, configuration, additionalBinaryDataProperties, cloudRoleArn)
         {
         }
     }

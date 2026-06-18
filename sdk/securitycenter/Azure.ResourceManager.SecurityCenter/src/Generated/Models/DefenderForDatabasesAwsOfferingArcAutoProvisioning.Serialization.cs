@@ -14,51 +14,51 @@ using Azure.ResourceManager.SecurityCenter;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The ARC autoprovisioning configuration. </summary>
-    public partial class DefenderFoDatabasesAwsOfferingArcAutoProvisioning : ArcAutoProvisioningAws, IJsonModel<DefenderFoDatabasesAwsOfferingArcAutoProvisioning>
+    public partial class DefenderForDatabasesAwsOfferingArcAutoProvisioning : ArcAutoProvisioningAws, IJsonModel<DefenderForDatabasesAwsOfferingArcAutoProvisioning>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ArcAutoProvisioning PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DefenderFoDatabasesAwsOfferingArcAutoProvisioning>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DefenderForDatabasesAwsOfferingArcAutoProvisioning>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDefenderFoDatabasesAwsOfferingArcAutoProvisioning(document.RootElement, options);
+                        return DeserializeDefenderForDatabasesAwsOfferingArcAutoProvisioning(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DefenderFoDatabasesAwsOfferingArcAutoProvisioning)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DefenderForDatabasesAwsOfferingArcAutoProvisioning)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DefenderFoDatabasesAwsOfferingArcAutoProvisioning>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DefenderForDatabasesAwsOfferingArcAutoProvisioning>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityCenterContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DefenderFoDatabasesAwsOfferingArcAutoProvisioning)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DefenderForDatabasesAwsOfferingArcAutoProvisioning)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DefenderFoDatabasesAwsOfferingArcAutoProvisioning>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<DefenderForDatabasesAwsOfferingArcAutoProvisioning>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DefenderFoDatabasesAwsOfferingArcAutoProvisioning IPersistableModel<DefenderFoDatabasesAwsOfferingArcAutoProvisioning>.Create(BinaryData data, ModelReaderWriterOptions options) => (DefenderFoDatabasesAwsOfferingArcAutoProvisioning)PersistableModelCreateCore(data, options);
+        DefenderForDatabasesAwsOfferingArcAutoProvisioning IPersistableModel<DefenderForDatabasesAwsOfferingArcAutoProvisioning>.Create(BinaryData data, ModelReaderWriterOptions options) => (DefenderForDatabasesAwsOfferingArcAutoProvisioning)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DefenderFoDatabasesAwsOfferingArcAutoProvisioning>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DefenderForDatabasesAwsOfferingArcAutoProvisioning>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DefenderFoDatabasesAwsOfferingArcAutoProvisioning>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DefenderForDatabasesAwsOfferingArcAutoProvisioning>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,34 +69,34 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DefenderFoDatabasesAwsOfferingArcAutoProvisioning>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DefenderForDatabasesAwsOfferingArcAutoProvisioning>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DefenderFoDatabasesAwsOfferingArcAutoProvisioning)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DefenderForDatabasesAwsOfferingArcAutoProvisioning)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DefenderFoDatabasesAwsOfferingArcAutoProvisioning IJsonModel<DefenderFoDatabasesAwsOfferingArcAutoProvisioning>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DefenderFoDatabasesAwsOfferingArcAutoProvisioning)JsonModelCreateCore(ref reader, options);
+        DefenderForDatabasesAwsOfferingArcAutoProvisioning IJsonModel<DefenderForDatabasesAwsOfferingArcAutoProvisioning>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DefenderForDatabasesAwsOfferingArcAutoProvisioning)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ArcAutoProvisioning JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DefenderFoDatabasesAwsOfferingArcAutoProvisioning>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DefenderForDatabasesAwsOfferingArcAutoProvisioning>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DefenderFoDatabasesAwsOfferingArcAutoProvisioning)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DefenderForDatabasesAwsOfferingArcAutoProvisioning)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDefenderFoDatabasesAwsOfferingArcAutoProvisioning(document.RootElement, options);
+            return DeserializeDefenderForDatabasesAwsOfferingArcAutoProvisioning(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DefenderFoDatabasesAwsOfferingArcAutoProvisioning DeserializeDefenderFoDatabasesAwsOfferingArcAutoProvisioning(JsonElement element, ModelReaderWriterOptions options)
+        internal static DefenderForDatabasesAwsOfferingArcAutoProvisioning DeserializeDefenderForDatabasesAwsOfferingArcAutoProvisioning(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DefenderFoDatabasesAwsOfferingArcAutoProvisioning(enabled, configuration, additionalBinaryDataProperties, cloudRoleArn);
+            return new DefenderForDatabasesAwsOfferingArcAutoProvisioning(enabled, configuration, additionalBinaryDataProperties, cloudRoleArn);
         }
     }
 }
