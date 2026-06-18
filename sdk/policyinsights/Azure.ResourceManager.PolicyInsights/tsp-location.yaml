@@ -1,4 +1,4 @@
 directory: specification/policyinsights/resource-manager/Microsoft.PolicyInsights/PolicyInsights
-commit: 85ffde044491db4316ff9fd48896c0adaf7afb94
-repo: cxznmhdcxz/azure-rest-api-specs
+commit: 56a3385114a17aeb2cc77bb0aad96d360adb766b
+repo: Azure/azure-rest-api-specs
 emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json
