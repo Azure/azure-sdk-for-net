@@ -207,6 +207,16 @@ namespace Azure.ResourceManager.Automation
         public virtual Azure.ResourceManager.Automation.AutomationWebhookCollection GetAutomationWebhooks() { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Automation.Models.DeletedRunbook> GetDeletedRunbooks(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Automation.Models.DeletedRunbook> GetDeletedRunbooksAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ObsoleteAttribute("This DscCompilationJob compatibility API is not supported in the TypeSpec-based SDK and always throws NotSupportedException.")]
+        public virtual Azure.Response<Azure.ResourceManager.Automation.DscCompilationJobResource> GetDscCompilationJob(string compilationJobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ObsoleteAttribute("This DscCompilationJob compatibility API is not supported in the TypeSpec-based SDK and always throws NotSupportedException.")]
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Automation.DscCompilationJobResource>> GetDscCompilationJobAsync(string compilationJobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ObsoleteAttribute("This DscCompilationJob compatibility API is not supported in the TypeSpec-based SDK and always throws NotSupportedException.")]
+        public virtual Azure.ResourceManager.Automation.DscCompilationJobCollection GetDscCompilationJobs() { throw null; }
+        [System.ObsoleteAttribute("This DscCompilationJob compatibility API is not supported in the TypeSpec-based SDK and always throws NotSupportedException.")]
+        public virtual Azure.Pageable<Azure.ResourceManager.Automation.Models.AutomationJobStream> GetDscCompilationJobStreams(System.Guid jobId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ObsoleteAttribute("This DscCompilationJob compatibility API is not supported in the TypeSpec-based SDK and always throws NotSupportedException.")]
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Automation.Models.AutomationJobStream> GetDscCompilationJobStreamsAsync(System.Guid jobId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Automation.DscConfigurationResource> GetDscConfiguration(string configurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Automation.DscConfigurationResource>> GetDscConfigurationAsync(string configurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Automation.DscConfigurationCollection GetDscConfigurations() { throw null; }
@@ -244,6 +254,10 @@ namespace Azure.ResourceManager.Automation
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationCollectionItem> GetSoftwareUpdateConfigurationsAsync(string clientRequestId = null, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Automation.Models.AutomationAccountStatistics> GetStatistics(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Automation.Models.AutomationAccountStatistics> GetStatisticsAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ObsoleteAttribute("This DscCompilationJob compatibility API is not supported in the TypeSpec-based SDK and always throws NotSupportedException.")]
+        public virtual Azure.Response<Azure.ResourceManager.Automation.Models.AutomationJobStream> GetStreamDscCompilationJob(System.Guid jobId, string jobStreamId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ObsoleteAttribute("This DscCompilationJob compatibility API is not supported in the TypeSpec-based SDK and always throws NotSupportedException.")]
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Automation.Models.AutomationJobStream>> GetStreamDscCompilationJobAsync(System.Guid jobId, string jobStreamId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Automation.Models.AutomationUsage> GetUsages(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Automation.Models.AutomationUsage> GetUsagesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Automation.Models.AgentRegistration> RegenerateKeyAgentRegistrationInformation(Azure.ResourceManager.Automation.Models.AgentRegistrationRegenerateKeyContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -503,6 +517,8 @@ namespace Azure.ResourceManager.Automation
         public static Azure.ResourceManager.Automation.AutomationWebhookResource GetAutomationWebhookResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.Automation.Models.DeletedAutomationAccount> GetDeletedAutomationAccountsBySubscription(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.Automation.Models.DeletedAutomationAccount> GetDeletedAutomationAccountsBySubscriptionAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ObsoleteAttribute("This DscCompilationJob compatibility API is not supported in the TypeSpec-based SDK and always throws NotSupportedException.")]
+        public static Azure.ResourceManager.Automation.DscCompilationJobResource GetDscCompilationJobResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Automation.DscConfigurationResource GetDscConfigurationResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Automation.DscNodeConfigurationResource GetDscNodeConfigurationResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Automation.DscNodeResource GetDscNodeResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -1134,6 +1150,102 @@ namespace Azure.ResourceManager.Automation
         public static Azure.ResourceManager.Automation.AzureResourceManagerAutomationContext Default { get { throw null; } }
         protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
     }
+    [System.ObsoleteAttribute("This DscCompilationJob compatibility API is not supported in the TypeSpec-based SDK and always throws NotSupportedException.")]
+    public partial class DscCompilationJobCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Automation.DscCompilationJobResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Automation.DscCompilationJobResource>, System.Collections.IEnumerable
+    {
+        [System.ObsoleteAttribute("This DscCompilationJob compatibility API is not supported in the TypeSpec-based SDK and always throws NotSupportedException.")]
+        protected DscCompilationJobCollection() { }
+        [System.ObsoleteAttribute("This DscCompilationJob compatibility API is not supported in the TypeSpec-based SDK and always throws NotSupportedException.")]
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Automation.DscCompilationJobResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string compilationJobName, Azure.ResourceManager.Automation.Models.DscCompilationJobCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ObsoleteAttribute("This DscCompilationJob compatibility API is not supported in the TypeSpec-based SDK and always throws NotSupportedException.")]
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Automation.DscCompilationJobResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string compilationJobName, Azure.ResourceManager.Automation.Models.DscCompilationJobCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ObsoleteAttribute("This DscCompilationJob compatibility API is not supported in the TypeSpec-based SDK and always throws NotSupportedException.")]
+        public virtual Azure.Response<bool> Exists(string compilationJobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ObsoleteAttribute("This DscCompilationJob compatibility API is not supported in the TypeSpec-based SDK and always throws NotSupportedException.")]
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string compilationJobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ObsoleteAttribute("This DscCompilationJob compatibility API is not supported in the TypeSpec-based SDK and always throws NotSupportedException.")]
+        public virtual Azure.Response<Azure.ResourceManager.Automation.DscCompilationJobResource> Get(string compilationJobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ObsoleteAttribute("This DscCompilationJob compatibility API is not supported in the TypeSpec-based SDK and always throws NotSupportedException.")]
+        public virtual Azure.Pageable<Azure.ResourceManager.Automation.DscCompilationJobResource> GetAll(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ObsoleteAttribute("This DscCompilationJob compatibility API is not supported in the TypeSpec-based SDK and always throws NotSupportedException.")]
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Automation.DscCompilationJobResource> GetAllAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ObsoleteAttribute("This DscCompilationJob compatibility API is not supported in the TypeSpec-based SDK and always throws NotSupportedException.")]
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Automation.DscCompilationJobResource>> GetAsync(string compilationJobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ObsoleteAttribute("This DscCompilationJob compatibility API is not supported in the TypeSpec-based SDK and always throws NotSupportedException.")]
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Automation.DscCompilationJobResource> GetIfExists(string compilationJobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ObsoleteAttribute("This DscCompilationJob compatibility API is not supported in the TypeSpec-based SDK and always throws NotSupportedException.")]
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Automation.DscCompilationJobResource>> GetIfExistsAsync(string compilationJobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Automation.DscCompilationJobResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Automation.DscCompilationJobResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Automation.DscCompilationJobResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Automation.DscCompilationJobResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    [System.ObsoleteAttribute("This DscCompilationJob compatibility API is not supported in the TypeSpec-based SDK and always throws NotSupportedException.")]
+    public partial class DscCompilationJobData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.DscCompilationJobData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.DscCompilationJobData>
+    {
+        [System.ObsoleteAttribute("This DscCompilationJob compatibility API is not supported in the TypeSpec-based SDK and always throws NotSupportedException.")]
+        public DscCompilationJobData() { }
+        [System.ObsoleteAttribute("This DscCompilationJob compatibility API is not supported in the TypeSpec-based SDK and always throws NotSupportedException.")]
+        public string ConfigurationName { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This DscCompilationJob compatibility API is not supported in the TypeSpec-based SDK and always throws NotSupportedException.")]
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
+        [System.ObsoleteAttribute("This DscCompilationJob compatibility API is not supported in the TypeSpec-based SDK and always throws NotSupportedException.")]
+        public System.DateTimeOffset? EndOn { get { throw null; } }
+        [System.ObsoleteAttribute("This DscCompilationJob compatibility API is not supported in the TypeSpec-based SDK and always throws NotSupportedException.")]
+        public string Exception { get { throw null; } }
+        [System.ObsoleteAttribute("This DscCompilationJob compatibility API is not supported in the TypeSpec-based SDK and always throws NotSupportedException.")]
+        public System.Guid? JobId { get { throw null; } }
+        [System.ObsoleteAttribute("This DscCompilationJob compatibility API is not supported in the TypeSpec-based SDK and always throws NotSupportedException.")]
+        public System.DateTimeOffset? LastModifiedOn { get { throw null; } }
+        [System.ObsoleteAttribute("This DscCompilationJob compatibility API is not supported in the TypeSpec-based SDK and always throws NotSupportedException.")]
+        public System.DateTimeOffset? LastStatusModifiedOn { get { throw null; } }
+        [System.ObsoleteAttribute("This DscCompilationJob compatibility API is not supported in the TypeSpec-based SDK and always throws NotSupportedException.")]
+        public System.Collections.Generic.IDictionary<string, string> Parameters { get { throw null; } }
+        [System.ObsoleteAttribute("This DscCompilationJob compatibility API is not supported in the TypeSpec-based SDK and always throws NotSupportedException.")]
+        public Azure.ResourceManager.Automation.Models.JobProvisioningState? ProvisioningState { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This DscCompilationJob compatibility API is not supported in the TypeSpec-based SDK and always throws NotSupportedException.")]
+        public string RunOn { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This DscCompilationJob compatibility API is not supported in the TypeSpec-based SDK and always throws NotSupportedException.")]
+        public string StartedBy { get { throw null; } }
+        [System.ObsoleteAttribute("This DscCompilationJob compatibility API is not supported in the TypeSpec-based SDK and always throws NotSupportedException.")]
+        public System.DateTimeOffset? StartOn { get { throw null; } }
+        [System.ObsoleteAttribute("This DscCompilationJob compatibility API is not supported in the TypeSpec-based SDK and always throws NotSupportedException.")]
+        public Azure.ResourceManager.Automation.Models.AutomationJobStatus? Status { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This DscCompilationJob compatibility API is not supported in the TypeSpec-based SDK and always throws NotSupportedException.")]
+        public string StatusDetails { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.DscCompilationJobData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.DscCompilationJobData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.DscCompilationJobData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.DscCompilationJobData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.DscCompilationJobData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.DscCompilationJobData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.DscCompilationJobData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.ObsoleteAttribute("This DscCompilationJob compatibility API is not supported in the TypeSpec-based SDK and always throws NotSupportedException.")]
+    public partial class DscCompilationJobResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.DscCompilationJobData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.DscCompilationJobData>
+    {
+        [System.ObsoleteAttribute("This DscCompilationJob compatibility API is not supported in the TypeSpec-based SDK and always throws NotSupportedException.")]
+        public static readonly Azure.Core.ResourceType ResourceType;
+        [System.ObsoleteAttribute("This DscCompilationJob compatibility API is not supported in the TypeSpec-based SDK and always throws NotSupportedException.")]
+        protected DscCompilationJobResource() { }
+        [System.ObsoleteAttribute("This DscCompilationJob compatibility API is not supported in the TypeSpec-based SDK and always throws NotSupportedException.")]
+        public virtual Azure.ResourceManager.Automation.DscCompilationJobData Data { get { throw null; } }
+        [System.ObsoleteAttribute("This DscCompilationJob compatibility API is not supported in the TypeSpec-based SDK and always throws NotSupportedException.")]
+        public virtual bool HasData { get { throw null; } }
+        [System.ObsoleteAttribute("This DscCompilationJob compatibility API is not supported in the TypeSpec-based SDK and always throws NotSupportedException.")]
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string automationAccountName, string compilationJobName) { throw null; }
+        [System.ObsoleteAttribute("This DscCompilationJob compatibility API is not supported in the TypeSpec-based SDK and always throws NotSupportedException.")]
+        public virtual Azure.Response<Azure.ResourceManager.Automation.DscCompilationJobResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ObsoleteAttribute("This DscCompilationJob compatibility API is not supported in the TypeSpec-based SDK and always throws NotSupportedException.")]
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Automation.DscCompilationJobResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Automation.DscCompilationJobData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.DscCompilationJobData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.DscCompilationJobData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.DscCompilationJobData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.DscCompilationJobData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.DscCompilationJobData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.DscCompilationJobData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        [System.ObsoleteAttribute("This DscCompilationJob compatibility API is not supported in the TypeSpec-based SDK and always throws NotSupportedException.")]
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Automation.DscCompilationJobResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Automation.Models.DscCompilationJobCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ObsoleteAttribute("This DscCompilationJob compatibility API is not supported in the TypeSpec-based SDK and always throws NotSupportedException.")]
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Automation.DscCompilationJobResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Automation.Models.DscCompilationJobCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
     public partial class DscConfigurationCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Automation.DscConfigurationResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Automation.DscConfigurationResource>, System.Collections.IEnumerable
     {
         protected DscConfigurationCollection() { }
@@ -1667,6 +1779,8 @@ namespace Azure.ResourceManager.Automation.Mocking
         public virtual Azure.ResourceManager.Automation.AutomationVariableResource GetAutomationVariableResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Automation.AutomationWatcherResource GetAutomationWatcherResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Automation.AutomationWebhookResource GetAutomationWebhookResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        [System.ObsoleteAttribute("This DscCompilationJob compatibility API is not supported in the TypeSpec-based SDK and always throws NotSupportedException.")]
+        public virtual Azure.ResourceManager.Automation.DscCompilationJobResource GetDscCompilationJobResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Automation.DscConfigurationResource GetDscConfigurationResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Automation.DscNodeConfigurationResource GetDscNodeConfigurationResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Automation.DscNodeResource GetDscNodeResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -1852,6 +1966,10 @@ namespace Azure.ResourceManager.Automation.Models
         public static Azure.ResourceManager.Automation.Models.DeletedAutomationAccount DeletedAutomationAccount(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.ResourceIdentifier automationAccountResourceId = null, string automationAccountId = null, string locationPropertiesLocation = null, System.DateTimeOffset? deletedOn = default(System.DateTimeOffset?), Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) { throw null; }
         public static Azure.ResourceManager.Automation.Models.DeletedAutomationAccount DeletedAutomationAccount(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.Core.ResourceIdentifier automationAccountResourceId = null, string automationAccountId = null, string locationPropertiesLocation = null, System.DateTimeOffset? deletedOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.Automation.Models.DeletedRunbook DeletedRunbook(string runbookId = null, string runbookType = null, string runtime = null, string runtimeEnvironment = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? deletedOn = default(System.DateTimeOffset?), string id = null, string name = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) { throw null; }
+        [System.ObsoleteAttribute("This DscCompilationJob compatibility API is not supported in the TypeSpec-based SDK and always throws NotSupportedException.")]
+        public static Azure.ResourceManager.Automation.Models.DscCompilationJobCreateOrUpdateContent DscCompilationJobCreateOrUpdateContent(string name = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IDictionary<string, string> tags = null, string configurationName = null, System.Collections.Generic.IDictionary<string, string> parameters = null, bool? isIncrementNodeConfigurationBuildRequired = default(bool?)) { throw null; }
+        [System.ObsoleteAttribute("This DscCompilationJob compatibility API is not supported in the TypeSpec-based SDK and always throws NotSupportedException.")]
+        public static Azure.ResourceManager.Automation.DscCompilationJobData DscCompilationJobData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string configurationName = null, string startedBy = null, System.Guid? jobId = default(System.Guid?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), Azure.ResourceManager.Automation.Models.JobProvisioningState? provisioningState = default(Azure.ResourceManager.Automation.Models.JobProvisioningState?), string runOn = null, Azure.ResourceManager.Automation.Models.AutomationJobStatus? status = default(Azure.ResourceManager.Automation.Models.AutomationJobStatus?), string statusDetails = null, System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), string exception = null, System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastStatusModifiedOn = default(System.DateTimeOffset?), System.Collections.Generic.IDictionary<string, string> parameters = null) { throw null; }
         public static Azure.ResourceManager.Automation.Models.DscConfigurationAssociationProperty DscConfigurationAssociationProperty(string configurationName = null) { throw null; }
         public static Azure.ResourceManager.Automation.Models.DscConfigurationCreateOrUpdateContent DscConfigurationCreateOrUpdateContent(bool? isLogVerboseEnabled = default(bool?), bool? isLogProgressEnabled = default(bool?), Azure.ResourceManager.Automation.Models.AutomationContentSource source = null, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Automation.Models.DscConfigurationParameterDefinition> parameters = null, string description = null, string name = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.Automation.Models.DscConfigurationCreateOrUpdateContent DscConfigurationCreateOrUpdateContent(string name = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IDictionary<string, string> tags = null, bool? isLogVerboseEnabled = default(bool?), bool? isLogProgressEnabled = default(bool?), Azure.ResourceManager.Automation.Models.AutomationContentSource source = null, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Automation.Models.DscConfigurationParameterDefinition> parameters = null, string description = null) { throw null; }
@@ -3183,6 +3301,30 @@ namespace Azure.ResourceManager.Automation.Models
         Azure.ResourceManager.Automation.Models.DeletedRunbook System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.DeletedRunbook>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.DeletedRunbook>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.DeletedRunbook>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.ObsoleteAttribute("This DscCompilationJob compatibility API is not supported in the TypeSpec-based SDK and always throws NotSupportedException.")]
+    public partial class DscCompilationJobCreateOrUpdateContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.DscCompilationJobCreateOrUpdateContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.DscCompilationJobCreateOrUpdateContent>
+    {
+        [System.ObsoleteAttribute("This DscCompilationJob compatibility API is not supported in the TypeSpec-based SDK and always throws NotSupportedException.")]
+        public DscCompilationJobCreateOrUpdateContent(Azure.ResourceManager.Automation.Models.DscConfigurationAssociationProperty configuration) { }
+        [System.ObsoleteAttribute("This DscCompilationJob compatibility API is not supported in the TypeSpec-based SDK and always throws NotSupportedException.")]
+        public string ConfigurationName { get { throw null; } }
+        [System.ObsoleteAttribute("This DscCompilationJob compatibility API is not supported in the TypeSpec-based SDK and always throws NotSupportedException.")]
+        public bool? IsIncrementNodeConfigurationBuildRequired { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This DscCompilationJob compatibility API is not supported in the TypeSpec-based SDK and always throws NotSupportedException.")]
+        public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This DscCompilationJob compatibility API is not supported in the TypeSpec-based SDK and always throws NotSupportedException.")]
+        public string Name { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This DscCompilationJob compatibility API is not supported in the TypeSpec-based SDK and always throws NotSupportedException.")]
+        public System.Collections.Generic.IDictionary<string, string> Parameters { get { throw null; } }
+        [System.ObsoleteAttribute("This DscCompilationJob compatibility API is not supported in the TypeSpec-based SDK and always throws NotSupportedException.")]
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.DscCompilationJobCreateOrUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.DscCompilationJobCreateOrUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.DscCompilationJobCreateOrUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.DscCompilationJobCreateOrUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.DscCompilationJobCreateOrUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.DscCompilationJobCreateOrUpdateContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.DscCompilationJobCreateOrUpdateContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class DscConfigurationAssociationProperty : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.DscConfigurationAssociationProperty>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.DscConfigurationAssociationProperty>
     {
