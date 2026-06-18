@@ -55,7 +55,7 @@ ResponseItem request = ResponseItem.CreateUserMessageItem("Hello, tell me a joke
 ResponseResult response = await responseClient.CreateResponseAsync([request]);
 ```
 
-5. Make sure the repone has completed, create new response item with the agent response and put it to the `MemoryUpdateOptions` object.
+5. Make sure the response has completed, create new response item with the agent response and put it to the `MemoryUpdateOptions` object.
 
 Synchronous sample:
 ```C# Snippet:Sample_WriteOutput_MemoryTool_Sync
