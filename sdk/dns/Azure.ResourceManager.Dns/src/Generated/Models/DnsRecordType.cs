@@ -12,29 +12,29 @@ namespace Azure.ResourceManager.Dns.Models
     {
         /// <summary> A. </summary>
         A,
-        /// <summary> AAAA. </summary>
-        AAAA,
-        /// <summary> CAA. </summary>
-        CAA,
-        /// <summary> CNAME. </summary>
-        CNAME,
+        /// <summary> Aaaa. </summary>
+        Aaaa,
+        /// <summary> Caa. </summary>
+        Caa,
+        /// <summary> Cname. </summary>
+        Cname,
         /// <summary> MX. </summary>
         MX,
         /// <summary> NS. </summary>
         NS,
-        /// <summary> PTR. </summary>
-        PTR,
-        /// <summary> SOA. </summary>
-        SOA,
-        /// <summary> SRV. </summary>
-        SRV,
-        /// <summary> TXT. </summary>
-        TXT,
-        /// <summary> TLSA. </summary>
-        TLSA,
+        /// <summary> Ptr. </summary>
+        Ptr,
+        /// <summary> Soa. </summary>
+        Soa,
+        /// <summary> Srv. </summary>
+        Srv,
+        /// <summary> Txt. </summary>
+        Txt,
+        /// <summary> Tlsa. </summary>
+        Tlsa,
         /// <summary> DS. </summary>
         DS,
-        /// <summary> NAPTR. </summary>
-        NAPTR
+        /// <summary> Naptr. </summary>
+        Naptr
     }
 }
