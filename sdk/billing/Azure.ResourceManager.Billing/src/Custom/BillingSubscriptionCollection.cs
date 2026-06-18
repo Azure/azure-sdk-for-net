@@ -1,250 +1,90 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable disable
-
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Billing.Models;
 
 namespace Azure.ResourceManager.Billing
 {
-    /// <summary>
-    /// A class representing a collection of <see cref="BillingSubscriptionResource"/> and their operations.
-    /// Each <see cref="BillingSubscriptionResource"/> in the collection will belong to the same instance of <see cref="TenantResource"/>.
-    /// To get a <see cref="BillingSubscriptionCollection"/> instance call the GetBillingSubscriptions method from an instance of <see cref="TenantResource"/>.
-    /// </summary>
-    public partial class BillingSubscriptionCollection : ArmCollection, IEnumerable<BillingSubscriptionResource>, IAsyncEnumerable<BillingSubscriptionResource>
+    // Back-compat overloads for GA 1.2.2 callers. Two distinct root causes:
+    //   1. The new MPG generator emits GetAll with individual query parameters; this
+    //      shim forwards the GA Options aggregate to the generated method.
+    //   2. The new MPG generator added an optional `expand` parameter to Get/Exists/
+    //      GetIfExists and a host of query parameters to GetAll; ApiCompat treats the
+    //      new optional-param signatures as different members, so explicit overloads
+    //      matching the GA shape are required for source-compat (no behavior change).
+    public partial class BillingSubscriptionCollection
     {
-        /// <summary>
-        /// Gets a subscription by its ID. The operation is currently supported for billing accounts with agreement type Microsoft Customer Agreement, Microsoft Partner Agreement and Microsoft Online Services Program.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions/{billingSubscriptionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingSubscriptions_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingSubscriptionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="billingSubscriptionName"> The ID that uniquely identifies a subscription. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="billingSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingSubscriptionName"/> is null. </exception>
+        /// <summary> Back-compat overload for GA 1.2.2 callers that pass an Options aggregate. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<Response<BillingSubscriptionResource>> GetAsync(string billingSubscriptionName, CancellationToken cancellationToken)
-            => await GetAsync(billingSubscriptionName, null, cancellationToken).ConfigureAwait(false);
+        public virtual AsyncPageable<BillingSubscriptionResource> GetAllAsync(BillingSubscriptionCollectionGetAllOptions options, CancellationToken cancellationToken = default)
+        {
+            return GetAllAsync(count: options?.Count, expand: options?.Expand, filter: options?.Filter, includeDeleted: options?.IncludeDeleted, includeFailed: options?.IncludeFailed, includeTenantSubscriptions: options?.IncludeTenantSubscriptions, orderBy: options?.OrderBy, search: options?.Search, skip: options?.Skip, maxCount: options?.Top, cancellationToken: cancellationToken);
+        }
 
-        /// <summary>
-        /// Gets a subscription by its ID. The operation is currently supported for billing accounts with agreement type Microsoft Customer Agreement, Microsoft Partner Agreement and Microsoft Online Services Program.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions/{billingSubscriptionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingSubscriptions_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingSubscriptionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="billingSubscriptionName"> The ID that uniquely identifies a subscription. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="billingSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingSubscriptionName"/> is null. </exception>
+        /// <summary> Back-compat overload for GA 1.2.2 callers that pass an Options aggregate. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Pageable<BillingSubscriptionResource> GetAll(BillingSubscriptionCollectionGetAllOptions options, CancellationToken cancellationToken = default)
+        {
+            return GetAll(count: options?.Count, expand: options?.Expand, filter: options?.Filter, includeDeleted: options?.IncludeDeleted, includeFailed: options?.IncludeFailed, includeTenantSubscriptions: options?.IncludeTenantSubscriptions, orderBy: options?.OrderBy, search: options?.Search, skip: options?.Skip, maxCount: options?.Top, cancellationToken: cancellationToken);
+        }
+
+        /// <summary> Back-compat overload for GA 1.2.2 callers. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Task<Response<BillingSubscriptionResource>> GetAsync(string billingSubscriptionName, CancellationToken cancellationToken)
+        {
+            return GetAsync(billingSubscriptionName, expand: default, cancellationToken: cancellationToken);
+        }
+
+        /// <summary> Back-compat overload for GA 1.2.2 callers. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<BillingSubscriptionResource> Get(string billingSubscriptionName, CancellationToken cancellationToken)
-            => Get(billingSubscriptionName, null, cancellationToken);
+        {
+            return Get(billingSubscriptionName, expand: default, cancellationToken: cancellationToken);
+        }
 
-        /// <summary>
-        /// Lists the subscriptions for a billing account. The operation is currently supported for billing accounts with agreement type Microsoft Customer Agreement, Microsoft Partner Agreement and Microsoft Online Services Program.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingSubscriptions_ListByBillingAccount</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingSubscriptionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BillingSubscriptionResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <summary> Back-compat parameterless overload for GA 1.2.2 callers. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<BillingSubscriptionResource> GetAllAsync(CancellationToken cancellationToken)
-            => GetAllAsync(null, cancellationToken);
+        {
+            return GetAllAsync(includeDeleted: default, includeTenantSubscriptions: default, includeFailed: default, expand: default, filter: default, orderBy: default, maxCount: default, skip: default, count: default, search: default, cancellationToken: cancellationToken);
+        }
 
-        /// <summary>
-        /// Lists the subscriptions for a billing account. The operation is currently supported for billing accounts with agreement type Microsoft Customer Agreement, Microsoft Partner Agreement and Microsoft Online Services Program.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingSubscriptions_ListByBillingAccount</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingSubscriptionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BillingSubscriptionResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <summary> Back-compat parameterless overload for GA 1.2.2 callers. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<BillingSubscriptionResource> GetAll(CancellationToken cancellationToken)
-            => GetAll(null, cancellationToken);
+        {
+            return GetAll(includeDeleted: default, includeTenantSubscriptions: default, includeFailed: default, expand: default, filter: default, orderBy: default, maxCount: default, skip: default, count: default, search: default, cancellationToken: cancellationToken);
+        }
 
-        /// <summary>
-        /// Checks to see if the resource exists in azure.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions/{billingSubscriptionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingSubscriptions_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingSubscriptionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="billingSubscriptionName"> The ID that uniquely identifies a subscription. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="billingSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingSubscriptionName"/> is null. </exception>
+        /// <summary> Back-compat overload for GA 1.2.2 callers. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<Response<bool>> ExistsAsync(string billingSubscriptionName, CancellationToken cancellationToken)
-            => await ExistsAsync(billingSubscriptionName, null, cancellationToken).ConfigureAwait(false);
+        public virtual Task<Response<bool>> ExistsAsync(string billingSubscriptionName, CancellationToken cancellationToken)
+        {
+            return ExistsAsync(billingSubscriptionName, expand: default, cancellationToken: cancellationToken);
+        }
 
-        /// <summary>
-        /// Checks to see if the resource exists in azure.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions/{billingSubscriptionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingSubscriptions_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingSubscriptionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="billingSubscriptionName"> The ID that uniquely identifies a subscription. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="billingSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingSubscriptionName"/> is null. </exception>
+        /// <summary> Back-compat overload for GA 1.2.2 callers. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<bool> Exists(string billingSubscriptionName, CancellationToken cancellationToken)
-            => Exists(billingSubscriptionName, null, cancellationToken);
+        {
+            return Exists(billingSubscriptionName, expand: default, cancellationToken: cancellationToken);
+        }
 
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions/{billingSubscriptionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingSubscriptions_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingSubscriptionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="billingSubscriptionName"> The ID that uniquely identifies a subscription. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="billingSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingSubscriptionName"/> is null. </exception>
+        /// <summary> Back-compat overload for GA 1.2.2 callers. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<NullableResponse<BillingSubscriptionResource>> GetIfExistsAsync(string billingSubscriptionName, CancellationToken cancellationToken)
-            => await GetIfExistsAsync(billingSubscriptionName, null, cancellationToken).ConfigureAwait(false);
+        public virtual Task<NullableResponse<BillingSubscriptionResource>> GetIfExistsAsync(string billingSubscriptionName, CancellationToken cancellationToken)
+        {
+            return GetIfExistsAsync(billingSubscriptionName, expand: default, cancellationToken: cancellationToken);
+        }
 
-        /// <summary>
-        /// Tries to get details for this resource from the service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions/{billingSubscriptionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingSubscriptions_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingSubscriptionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="billingSubscriptionName"> The ID that uniquely identifies a subscription. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="billingSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingSubscriptionName"/> is null. </exception>
+        /// <summary> Back-compat overload for GA 1.2.2 callers. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual NullableResponse<BillingSubscriptionResource> GetIfExists(string billingSubscriptionName, CancellationToken cancellationToken)
-            => GetIfExists(billingSubscriptionName, null, cancellationToken);
+        {
+            return GetIfExists(billingSubscriptionName, expand: default, cancellationToken: cancellationToken);
+        }
     }
 }
