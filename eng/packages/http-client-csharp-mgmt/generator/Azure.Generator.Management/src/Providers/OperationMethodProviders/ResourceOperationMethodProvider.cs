@@ -139,9 +139,10 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             {
                 // If explicit resource client is provided, use it to avoid incorrect lookup
                 // when multiple resources share the same model
-                if (explicitResourceClient != null && explicitResourceClient.ResourceData.Type == originalBodyType)
+                if (explicitResourceClient != null && explicitResourceClient.IsResourceDataType(originalBodyType))
                 {
                     wrappedResourceClient = explicitResourceClient;
+                    originalBodyType = wrappedResourceClient.ResourceData.Type;
                     returnBodyType = wrappedResourceClient.Type;
                     return;
                 }
@@ -151,9 +152,10 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 if (enclosingType is ResourceCollectionClientProvider collectionProvider)
                 {
                     // Check if the collection's resource data type matches the response body type
-                    if (collectionProvider.ResourceData.Type == originalBodyType)
+                    if (collectionProvider.Resource.IsResourceDataType(originalBodyType))
                     {
                         wrappedResourceClient = collectionProvider.Resource;
+                        originalBodyType = wrappedResourceClient.ResourceData.Type;
                         returnBodyType = wrappedResourceClient.Type;
                         return;
                     }
@@ -162,9 +164,10 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 else if (enclosingType is ResourceClientProvider resourceProvider)
                 {
                     // Check if this resource's data type matches the response body type
-                    if (resourceProvider.ResourceData.Type == originalBodyType)
+                    if (resourceProvider.IsResourceDataType(originalBodyType))
                     {
                         wrappedResourceClient = resourceProvider;
+                        originalBodyType = wrappedResourceClient.ResourceData.Type;
                         returnBodyType = wrappedResourceClient.Type;
                         return;
                     }
@@ -472,7 +475,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             if (_returnBodyResourceClient != null)
             {
                 // Resource type - pass client to operation source constructor
-                var operationSourceType = ManagementClientGenerator.Instance.OutputLibrary.OperationSourceDict[_returnBodyResourceClient.Type].Type;
+                var operationSourceType = ManagementClientGenerator.Instance.OutputLibrary.GetOperationSource(_returnBodyResourceClient).Type;
                 operationSourceInstance = New.Instance(operationSourceType, This.As<ArmResource>().Client());
             }
             else if (_originalBodyType != null)
