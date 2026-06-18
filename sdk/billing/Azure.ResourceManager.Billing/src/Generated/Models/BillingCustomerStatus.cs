@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -14,53 +15,82 @@ namespace Azure.ResourceManager.Billing.Models
     public readonly partial struct BillingCustomerStatus : IEquatable<BillingCustomerStatus>
     {
         private readonly string _value;
+        /// <summary> Other. </summary>
+        private const string OtherValue = "Other";
+        /// <summary> Active. </summary>
+        private const string ActiveValue = "Active";
+        /// <summary> Pending. </summary>
+        private const string PendingValue = "Pending";
+        /// <summary> Disabled. </summary>
+        private const string DisabledValue = "Disabled";
+        /// <summary> Warned. </summary>
+        private const string WarnedValue = "Warned";
+        /// <summary> Deleted. </summary>
+        private const string DeletedValue = "Deleted";
+        /// <summary> UnderReview. </summary>
+        private const string UnderReviewValue = "UnderReview";
 
         /// <summary> Initializes a new instance of <see cref="BillingCustomerStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BillingCustomerStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string OtherValue = "Other";
-        private const string ActiveValue = "Active";
-        private const string PendingValue = "Pending";
-        private const string DisabledValue = "Disabled";
-        private const string WarnedValue = "Warned";
-        private const string DeletedValue = "Deleted";
-        private const string UnderReviewValue = "UnderReview";
+            _value = value;
+        }
 
         /// <summary> Other. </summary>
         public static BillingCustomerStatus Other { get; } = new BillingCustomerStatus(OtherValue);
+
         /// <summary> Active. </summary>
         public static BillingCustomerStatus Active { get; } = new BillingCustomerStatus(ActiveValue);
+
         /// <summary> Pending. </summary>
         public static BillingCustomerStatus Pending { get; } = new BillingCustomerStatus(PendingValue);
+
         /// <summary> Disabled. </summary>
         public static BillingCustomerStatus Disabled { get; } = new BillingCustomerStatus(DisabledValue);
+
         /// <summary> Warned. </summary>
         public static BillingCustomerStatus Warned { get; } = new BillingCustomerStatus(WarnedValue);
+
         /// <summary> Deleted. </summary>
         public static BillingCustomerStatus Deleted { get; } = new BillingCustomerStatus(DeletedValue);
+
         /// <summary> UnderReview. </summary>
         public static BillingCustomerStatus UnderReview { get; } = new BillingCustomerStatus(UnderReviewValue);
+
         /// <summary> Determines if two <see cref="BillingCustomerStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BillingCustomerStatus left, BillingCustomerStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BillingCustomerStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BillingCustomerStatus left, BillingCustomerStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BillingCustomerStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BillingCustomerStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BillingCustomerStatus(string value) => new BillingCustomerStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BillingCustomerStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BillingCustomerStatus?(string value) => value == null ? null : new BillingCustomerStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BillingCustomerStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BillingCustomerStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.HybridNetwork;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     public readonly partial struct HybridNetworkSkuName : IEquatable<HybridNetworkSkuName>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="HybridNetworkSkuName"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public HybridNetworkSkuName(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string BasicValue = "Basic";
         private const string StandardValue = "Standard";
 
-        /// <summary> Basic. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridNetworkSkuName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public HybridNetworkSkuName(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Basic. </summary>
         public static HybridNetworkSkuName Basic { get; } = new HybridNetworkSkuName(BasicValue);
-        /// <summary> Standard. </summary>
+
+        /// <summary> Gets the Standard. </summary>
         public static HybridNetworkSkuName Standard { get; } = new HybridNetworkSkuName(StandardValue);
+
         /// <summary> Determines if two <see cref="HybridNetworkSkuName"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(HybridNetworkSkuName left, HybridNetworkSkuName right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="HybridNetworkSkuName"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(HybridNetworkSkuName left, HybridNetworkSkuName right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="HybridNetworkSkuName"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="HybridNetworkSkuName"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator HybridNetworkSkuName(string value) => new HybridNetworkSkuName(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="HybridNetworkSkuName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator HybridNetworkSkuName?(string value) => value == null ? null : new HybridNetworkSkuName(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is HybridNetworkSkuName other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(HybridNetworkSkuName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

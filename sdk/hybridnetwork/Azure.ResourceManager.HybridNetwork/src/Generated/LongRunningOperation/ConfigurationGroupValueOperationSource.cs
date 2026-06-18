@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.HybridNetwork
 {
-    internal class ConfigurationGroupValueOperationSource : IOperationSource<ConfigurationGroupValueResource>
+    /// <summary></summary>
+    internal partial class ConfigurationGroupValueOperationSource : IOperationSource<ConfigurationGroupValueResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal ConfigurationGroupValueOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         ConfigurationGroupValueResource IOperationSource<ConfigurationGroupValueResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ConfigurationGroupValueData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHybridNetworkContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            ConfigurationGroupValueData data = ConfigurationGroupValueData.DeserializeConfigurationGroupValueData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new ConfigurationGroupValueResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<ConfigurationGroupValueResource> IOperationSource<ConfigurationGroupValueResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ConfigurationGroupValueData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHybridNetworkContext.Default);
-            return await Task.FromResult(new ConfigurationGroupValueResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            ConfigurationGroupValueData data = ConfigurationGroupValueData.DeserializeConfigurationGroupValueData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ConfigurationGroupValueResource(_client, data);
         }
     }
 }
