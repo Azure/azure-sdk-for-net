@@ -1,18 +1,10 @@
 # Sample on getting the responses from hosted Agent in Azure.AI.Extensions.OpenAI.
 
-**Note:** This feature is in the preview, to use it, please disable the `AAIP001` warning.
-
-```C#
-#pragma warning disable AAIP001
-```
-
-Hosted agents simplify the custom agent deployment on fully controlled environment [see more](https://learn.microsoft.com/azure/ai-foundry/agents/concepts/hosted-agents). `Azure.AI.Projects` allow interactions with hosted agents using `HostedAgentDefinition`. In this example we will deploy the hosted agent and use it from the `Azure.AI.Extensions.OpenAI`.
-
 ## Hosted Agent Deployment prerequisites
 
 In this example we will build the docker image for hosted Agent based of the simple [sample](https://github.com/Azure/azure-sdk-for-python/blob/main/sdk/agentserver/azure-ai-agentserver-responses/samples/sample_01_getting_started.py). The service defined in this file just gets the request, adds "Echo: " to it and sends it back using the responses protocol.
 
-## Run the sample
+## Hosted agent deployment
 `Azure.AI.Projects` can be used only to create an `ProjectsAgentVersion` object, however hosted object represents the running container, which exposes the OpenAI-compatible API.
 1. Create Azure Container registry in the same resource group and region as Microsoft Foundry project. Find the docker login at Settings>Access keys section at the left panel of created container registry in the Azure portal. Check the box "Admin user" to generate the password for the default user account marked as `<DOCKER_USERNAME>` below.
 2. Assign the `AcrPull` role to the project's Managed Identity for the Azure Container Registry.
@@ -57,13 +49,12 @@ docker login <DOCKER_USERNAME>.azurecr.io
 docker push <DOCKER_USERNAME>.azurecr.io/<DOCKER_USERNAME>/workflow-agent:latest
 ```
 
-# Run the sample.
+## Run the sample.
 
 1. Read the environment variables, which will be used in the next steps.
 
 ```C# Snippet:Sample_CreateAgentClient_HostedAgent
 var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
-var containerImage = System.Environment.GetEnvironmentVariable("FOUNDRY_AGENT_CONTAINER_IMAGE");
 var dockerImage = System.Environment.GetEnvironmentVariable("AGENT_DOCKER_IMAGE");
 Uri uriEndpoint = new(projectEndpoint);
 DefaultAzureCredential credential = new();
@@ -81,7 +72,7 @@ private static HostedAgentDefinition GetAgentDefinition(string dockerImage)
         memory: "1Gi"
     )
     {
-        Image = dockerImage,
+        ContainerConfiguration = new(dockerImage)
     };
     return agentDefinition;
 }
@@ -109,7 +100,7 @@ HostedAgentDefinition agentDefinition = GetAgentDefinition(
 ProjectsAgentVersionCreationOptions creationOptions = new(agentDefinition);
 creationOptions.Metadata["enableVnextExperience"] = "true";
 ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
-    agentName: "myHostedAgent",
+    agentName: "myHostedAgent1",
     options: creationOptions);
 ```
 
@@ -145,7 +136,7 @@ if (agentVersion.Status != AgentVersionStatus.Active)
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateTheEndpoint_HostedAgent_Sync
-AgentEndpoint config = new()
+AgentEndpointConfiguration config = new()
 {
     VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100)]),
     Protocols = { AgentEndpointProtocol.Responses }
@@ -162,7 +153,7 @@ Console.WriteLine($"The Agent {patchedRecord.Name} was patched.");
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateTheEndpoint_HostedAgent_Async
-AgentEndpoint config = new()
+AgentEndpointConfiguration config = new()
 {
     VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100)]),
     Protocols = { AgentEndpointProtocol.Responses }
@@ -177,29 +168,18 @@ ProjectsAgentRecord patchedRecord = await projectClient.AgentAdministrationClien
 Console.WriteLine($"The Agent {patchedRecord.Name} was patched.");
 ```
 
-6. Create the response client to communicate with an Agent and get the response.
-**Note:** In this scenario we cannot use the `ProjectOpenAIClient` from `projectClient.ProjectOpenAIClient` property as we need to access customized endpoint, for the Agent, we have created. We set its name in `ProjectOpenAIClientOptions`.
+6. Create the response client to communicate with an Agent and get the response. In this case we will use `GetProjectResponsesClientForAgentEndpoint` method.
 
 Synchronous sample:
 ```C# Snippet:Sample_GetResponseFromAgentEndpoint_HostedAgent_Sync
-ProjectOpenAIClientOptions responsesOptions = new()
-{
-    AgentName = agentVersion.Name
-};
-ProjectOpenAIClient openAIClient = new(uriEndpoint, credential, responsesOptions);
-ProjectResponsesClient responseClient = openAIClient.GetProjectResponsesClient();
+ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(agentVersion.Name);
 ResponseResult response = responseClient.CreateResponse("Hello, tell me a joke.");
 Console.WriteLine(response.GetOutputText());
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_GetResponseFromAgentEndpoint_HostedAgent_Async
-ProjectOpenAIClientOptions responsesOptions = new()
-{
-    AgentName = agentVersion.Name
-};
-ProjectOpenAIClient openAIClient = new(uriEndpoint, credential, responsesOptions);
-ProjectResponsesClient responseClient = openAIClient.GetProjectResponsesClient();
+ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(agentVersion.Name);
 ResponseResult response = await responseClient.CreateResponseAsync("Hello, tell me a joke.");
 Console.WriteLine(response.GetOutputText());
 ```
@@ -208,10 +188,10 @@ Console.WriteLine(response.GetOutputText());
 
 Synchronous sample:
 ```C# Snippet:DeleteHostedAgent_HostedAgent_Sync
-projectClient.AgentAdministrationClient.DeleteAgent(agentVersion.Name);
+projectClient.AgentAdministrationClient.DeleteAgent(agentVersion.Name, force: true);
 ```
 
 Asynchronous sample:
 ```C# Snippet:DeleteHostedAgent_HostedAgent_Async
-await projectClient.AgentAdministrationClient.DeleteAgentAsync(agentVersion.Name);
+await projectClient.AgentAdministrationClient.DeleteAgentAsync(agentVersion.Name, force: true);
 ```

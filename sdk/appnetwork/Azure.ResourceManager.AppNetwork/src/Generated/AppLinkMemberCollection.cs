@@ -27,8 +27,6 @@ namespace Azure.ResourceManager.AppNetwork
     {
         private readonly ClientDiagnostics _appLinkMembersClientDiagnostics;
         private readonly AppLinkMembers _appLinkMembersRestClient;
-        private readonly ClientDiagnostics _upgradeHistoriesClientDiagnostics;
-        private readonly UpgradeHistories _upgradeHistoriesRestClient;
 
         /// <summary> Initializes a new instance of AppLinkMemberCollection for mocking. </summary>
         protected AppLinkMemberCollection()
@@ -43,8 +41,6 @@ namespace Azure.ResourceManager.AppNetwork
             TryGetApiVersion(AppLinkMemberResource.ResourceType, out string appLinkMemberApiVersion);
             _appLinkMembersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppNetwork", AppLinkMemberResource.ResourceType.Namespace, Diagnostics);
             _appLinkMembersRestClient = new AppLinkMembers(_appLinkMembersClientDiagnostics, Pipeline, Endpoint, appLinkMemberApiVersion ?? "2025-08-01-preview");
-            _upgradeHistoriesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppNetwork", AppLinkMemberResource.ResourceType.Namespace, Diagnostics);
-            _upgradeHistoriesRestClient = new UpgradeHistories(_upgradeHistoriesClientDiagnostics, Pipeline, Endpoint, appLinkMemberApiVersion ?? "2025-08-01-preview");
             ValidateResourceId(id);
         }
 
@@ -97,7 +93,7 @@ namespace Azure.ResourceManager.AppNetwork
                 HttpMessage message = _appLinkMembersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, appLinkMemberName, AppLinkMemberData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppNetworkArmOperation<AppLinkMemberResource> operation = new AppNetworkArmOperation<AppLinkMemberResource>(
-                    new AppLinkMemberOperationSource(Client),
+                    new AppLinkMemberResourceOperationSource(Client),
                     _appLinkMembersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -155,7 +151,7 @@ namespace Azure.ResourceManager.AppNetwork
                 HttpMessage message = _appLinkMembersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, appLinkMemberName, AppLinkMemberData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppNetworkArmOperation<AppLinkMemberResource> operation = new AppNetworkArmOperation<AppLinkMemberResource>(
-                    new AppLinkMemberOperationSource(Client),
+                    new AppLinkMemberResourceOperationSource(Client),
                     _appLinkMembersClientDiagnostics,
                     Pipeline,
                     message.Request,

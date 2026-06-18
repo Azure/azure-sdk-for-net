@@ -30,6 +30,6 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> The ID of the referenced container. </summary>
-        public string ContainerId { get; }
+        public string ContainerId { get; set; }
     }
 }

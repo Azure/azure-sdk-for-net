@@ -37,15 +37,12 @@ public sealed class AgentHostBuilder
     {
         _builder = WebApplication.CreateSlimBuilder(args ?? Array.Empty<string>());
 
-        // Register version registry + middleware
+        // Pre-register a shared registry instance so protocols can register before Build().
         VersionRegistry = new ServerVersionRegistry();
         _builder.Services.AddSingleton(VersionRegistry);
-        _builder.Services.AddSingleton<ServerVersionMiddleware>();
-        _builder.Services.AddSingleton<RequestIdBaggagePropagator>();
-        _builder.Services.AddSingleton<InboundRequestLoggingMiddleware>();
 
-        // Register default options
-        _builder.Services.Configure<AgentHostOptions>(_ => { });
+        // Register all Core middleware services (TryAdd — won't duplicate the registry above).
+        _builder.Services.AddAgentServerCore();
     }
 
     /// <summary>
@@ -180,10 +177,8 @@ public sealed class AgentHostBuilder
         // Log startup configuration
         LogStartupConfiguration(app, shutdownTimeout);
 
-        // Middleware pipeline
-        app.UseMiddleware<ServerVersionMiddleware>();
-        app.UseMiddleware<RequestIdBaggagePropagator>();
-        app.UseMiddleware<InboundRequestLoggingMiddleware>();
+        // Middleware pipeline (also enables WebSocket upgrade handling)
+        app.UseAgentServerCore();
 
         // Health endpoint
         app.MapHealthEndpoint();
@@ -204,13 +199,14 @@ public sealed class AgentHostBuilder
         // Platform environment
         logger.LogInformation(
             "AgentServer platform environment: IsHosted={IsHosted} AgentName={AgentName} AgentVersion={AgentVersion} " +
-            "Port={Port} SessionId={SessionId} SseKeepAliveInterval={SseKeepAliveInterval}",
+            "Port={Port} SessionId={SessionId} SseKeepAliveInterval={SseKeepAliveInterval} WebSocketKeepAliveInterval={WebSocketKeepAliveInterval}",
             FoundryEnvironment.IsHosted,
             FoundryEnvironment.AgentName ?? "(not set)",
             FoundryEnvironment.AgentVersion ?? "(not set)",
             FoundryEnvironment.Port,
             FoundryEnvironment.SessionId ?? "(not set)",
-            FoundryEnvironment.SseKeepAliveInterval == Timeout.InfiniteTimeSpan ? "disabled" : FoundryEnvironment.SseKeepAliveInterval.ToString());
+            FoundryEnvironment.SseKeepAliveInterval == Timeout.InfiniteTimeSpan ? "disabled" : FoundryEnvironment.SseKeepAliveInterval.ToString(),
+            FoundryEnvironment.WebSocketKeepAliveInterval == Timeout.InfiniteTimeSpan ? "disabled" : FoundryEnvironment.WebSocketKeepAliveInterval.ToString());
 
         // Connectivity (mask sensitive values)
         logger.LogInformation(

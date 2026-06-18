@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Billing.Models
     public readonly partial struct InstanceFlexibility : IEquatable<InstanceFlexibility>
     {
         private readonly string _value;
+        /// <summary> On. </summary>
+        private const string OnValue = "On";
+        /// <summary> Off. </summary>
+        private const string OffValue = "Off";
 
         /// <summary> Initializes a new instance of <see cref="InstanceFlexibility"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public InstanceFlexibility(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string OnValue = "On";
-        private const string OffValue = "Off";
+            _value = value;
+        }
 
         /// <summary> On. </summary>
         public static InstanceFlexibility On { get; } = new InstanceFlexibility(OnValue);
+
         /// <summary> Off. </summary>
         public static InstanceFlexibility Off { get; } = new InstanceFlexibility(OffValue);
+
         /// <summary> Determines if two <see cref="InstanceFlexibility"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(InstanceFlexibility left, InstanceFlexibility right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="InstanceFlexibility"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(InstanceFlexibility left, InstanceFlexibility right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="InstanceFlexibility"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="InstanceFlexibility"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator InstanceFlexibility(string value) => new InstanceFlexibility(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="InstanceFlexibility"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator InstanceFlexibility?(string value) => value == null ? null : new InstanceFlexibility(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is InstanceFlexibility other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(InstanceFlexibility other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

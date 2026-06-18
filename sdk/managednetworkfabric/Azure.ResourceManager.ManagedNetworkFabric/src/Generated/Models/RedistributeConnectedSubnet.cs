@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     public readonly partial struct RedistributeConnectedSubnet : IEquatable<RedistributeConnectedSubnet>
     {
         private readonly string _value;
+        /// <summary> RedistributeConnectedSubnets-True. </summary>
+        private const string TrueValue = "True";
+        /// <summary> RedistributeConnectedSubnets-False. </summary>
+        private const string FalseValue = "False";
 
         /// <summary> Initializes a new instance of <see cref="RedistributeConnectedSubnet"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RedistributeConnectedSubnet(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string TrueValue = "True";
-        private const string FalseValue = "False";
-
-        /// <summary> True. </summary>
+        /// <summary> RedistributeConnectedSubnets-True. </summary>
         public static RedistributeConnectedSubnet True { get; } = new RedistributeConnectedSubnet(TrueValue);
-        /// <summary> False. </summary>
+
+        /// <summary> RedistributeConnectedSubnets-False. </summary>
         public static RedistributeConnectedSubnet False { get; } = new RedistributeConnectedSubnet(FalseValue);
+
         /// <summary> Determines if two <see cref="RedistributeConnectedSubnet"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RedistributeConnectedSubnet left, RedistributeConnectedSubnet right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RedistributeConnectedSubnet"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RedistributeConnectedSubnet left, RedistributeConnectedSubnet right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RedistributeConnectedSubnet"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RedistributeConnectedSubnet"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RedistributeConnectedSubnet(string value) => new RedistributeConnectedSubnet(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RedistributeConnectedSubnet"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RedistributeConnectedSubnet?(string value) => value == null ? null : new RedistributeConnectedSubnet(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RedistributeConnectedSubnet other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RedistributeConnectedSubnet other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.ServiceBus
                 HttpMessage message = _namespacesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ServiceBusNamespacePatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ServiceBusArmOperation<ServiceBusNamespaceResource> operation = new ServiceBusArmOperation<ServiceBusNamespaceResource>(
-                    new ServiceBusNamespaceOperationSource(Client),
+                    new ServiceBusNamespaceResourceOperationSource(Client),
                     _namespacesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.ServiceBus
                 HttpMessage message = _namespacesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ServiceBusNamespacePatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ServiceBusArmOperation<ServiceBusNamespaceResource> operation = new ServiceBusArmOperation<ServiceBusNamespaceResource>(
-                    new ServiceBusNamespaceOperationSource(Client),
+                    new ServiceBusNamespaceResourceOperationSource(Client),
                     _namespacesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -742,7 +742,7 @@ namespace Azure.ResourceManager.ServiceBus
                 else
                 {
                     ServiceBusNamespaceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    ServiceBusNamespacePatch patch = new ServiceBusNamespacePatch();
+                    ServiceBusNamespacePatch patch = new ServiceBusNamespacePatch(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -790,7 +790,7 @@ namespace Azure.ResourceManager.ServiceBus
                 else
                 {
                     ServiceBusNamespaceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    ServiceBusNamespacePatch patch = new ServiceBusNamespacePatch();
+                    ServiceBusNamespacePatch patch = new ServiceBusNamespacePatch(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -837,7 +837,7 @@ namespace Azure.ResourceManager.ServiceBus
                 else
                 {
                     ServiceBusNamespaceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    ServiceBusNamespacePatch patch = new ServiceBusNamespacePatch();
+                    ServiceBusNamespacePatch patch = new ServiceBusNamespacePatch(current.Location);
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<ServiceBusNamespaceResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -880,7 +880,7 @@ namespace Azure.ResourceManager.ServiceBus
                 else
                 {
                     ServiceBusNamespaceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    ServiceBusNamespacePatch patch = new ServiceBusNamespacePatch();
+                    ServiceBusNamespacePatch patch = new ServiceBusNamespacePatch(current.Location);
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<ServiceBusNamespaceResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -922,7 +922,7 @@ namespace Azure.ResourceManager.ServiceBus
                 else
                 {
                     ServiceBusNamespaceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    ServiceBusNamespacePatch patch = new ServiceBusNamespacePatch();
+                    ServiceBusNamespacePatch patch = new ServiceBusNamespacePatch(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -968,7 +968,7 @@ namespace Azure.ResourceManager.ServiceBus
                 else
                 {
                     ServiceBusNamespaceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    ServiceBusNamespacePatch patch = new ServiceBusNamespacePatch();
+                    ServiceBusNamespacePatch patch = new ServiceBusNamespacePatch(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

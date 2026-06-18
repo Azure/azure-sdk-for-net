@@ -87,6 +87,11 @@ namespace Azure.AI.Projects.Agents
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
+            if (Optional.IsDefined(State))
+            {
+                writer.WritePropertyName("state"u8);
+                writer.WriteStringValue(State.Value.ToString());
+            }
             if (Optional.IsCollectionDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
@@ -168,11 +173,12 @@ namespace Azure.AI.Projects.Agents
                 return null;
             }
             string name = default;
+            AgentState? state = default;
             IDictionary<string, string> metadata = default;
             string description = default;
             ProjectsAgentDefinition definition = default;
             AgentBlueprintReference blueprintReference = default;
-            AgentEndpoint agentEndpoint = default;
+            AgentEndpointConfiguration agentEndpoint = default;
             AgentCard agentCard = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -180,6 +186,15 @@ namespace Azure.AI.Projects.Agents
                 if (prop.NameEquals("name"u8))
                 {
                     name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("state"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    state = new AgentState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("metadata"u8))
@@ -228,7 +243,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    agentEndpoint = AgentEndpoint.DeserializeAgentEndpoint(prop.Value, options);
+                    agentEndpoint = AgentEndpointConfiguration.DeserializeAgentEndpointConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("agent_card"u8))
@@ -247,6 +262,7 @@ namespace Azure.AI.Projects.Agents
             }
             return new InternalCreateAgentRequest(
                 name,
+                state,
                 metadata ?? new ChangeTrackingDictionary<string, string>(),
                 description,
                 definition,

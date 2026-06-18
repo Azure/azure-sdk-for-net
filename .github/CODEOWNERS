@@ -36,15 +36,28 @@
 # Catch all
 /sdk/                                                              @jsquire
 
+####################
+# End-to-End Samples
+####################
+
+# Samples catch-all
+/samples/                                                          @jsquire
+
+#PRLabel: Voice Live
+/samples/voicelive/                                                @emilyjiji @xitzhang @pankopon @amber-yujueWang
+
 # ######## Core Libraries ########
 
 # PRLabel: %Azure.Core
-/sdk/core/                                                         @Azure/azure-sdk-write-net-core
+/sdk/core/                                                         @m-nash @Azure/azure-sdk-write-net-core
+/sdk/core/Azure.Core/**/Identity/                                  @christothes @JonathanCrd @Azure/azure-sdk-write-identity
 
 # ServiceLabel: %Azure.Core
+# ServiceOwners:                                                   @m-nash @Azure/azure-sdk-write-net-core
 # AzureSdkOwners:                                                  @m-nash
 
 # ServiceLabel: %System.ClientModel
+# ServiceOwners:                                                   @m-nash @Azure/azure-sdk-write-net-core
 # AzureSdkOwners:                                                  @m-nash
 
 # PRLabel: %Azure.Identity
@@ -54,20 +67,22 @@
 # AzureSdkOwners:                                                  @JonathanCrd
 
 # PRLabel: %Extensions
-/sdk/extensions/                                                   @jsquire
+/sdk/extensions/                                                   @jsquire @Azure/azure-sdk-write-net-core
 
 # ServiceLabel: %Extensions
+# ServiceOwners:                                                   @jsquire @Azure/azure-sdk-write-net-core
 # AzureSdkOwners:                                                  @jsquire
 
 ####################
 # Client Libraries
 ####################
 
+
 # PRLabel: %AI Agents
-/sdk/agentserver/    @ankitbko @RaviPidaparthi
+/sdk/agentserver/    @ankitbko @RaviPidaparthi @vangarp
 
 # ServiceLabel: %AI Agents
-# ServiceOwners: @ankitbko @RaviPidaparthi
+# ServiceOwners: @ankitbko @RaviPidaparthi @vangarp
 
 # PRLabel: %AI Model Inference %AI Projects
 /sdk/ai/    @dargilco @glharper @nick863 @trangevi @trrwilson
@@ -85,10 +100,10 @@
 # ServiceOwners: @dargilco @nick863 @trangevi
 
 # PRLabel: %App Configuration
-/sdk/appconfiguration/    @avanigupta @linglingye001 @zhiyuanliang-ms
+/sdk/appconfiguration/    @avanigupta @jimmyca15 @linglingye001 @mrm9084 @zhiyuanliang-ms
 
 # ServiceLabel: %App Configuration
-# ServiceOwners: @avanigupta @linglingye001 @zhiyuanliang-ms
+# ServiceOwners: @avanigupta @linglingye001 @mrm9084 @zhiyuanliang-ms
 
 # PRLabel: %Attestation
 /sdk/attestation/Azure.Security.Attestation/    @anilba06 @Azure/azure-sdk-write-attestation @gkostal
@@ -118,10 +133,10 @@
 /sdk/tools/Azure.SdkAnalyzers/    @jsquire @m-nash @m-redding
 
 # PRLabel: %Batch
-/sdk/batch/    @cRui861 @dpwatrous @skapur12 @wanghoppe @wiboris
+/sdk/batch/    @cRui861 @dpwatrous @iwang2 @lilinvictorms @skapur12 @wanghoppe @wiboris @xingwu1
 
 # ServiceLabel: %Batch
-# ServiceOwners: @dpwatrous @wiboris
+# ServiceOwners: @dpwatrous @iwang2 @lilinvictorms @wiboris @xingwu1
 
 # PRLabel: %Cognitive - Anomaly Detector
 /sdk/anomalydetector/    @conhua @juaduan @mengaims @moreOver0
@@ -189,8 +204,11 @@
 # PRLabel: %Cognitive - Translator
 /sdk/translation/    @jrjrguo
 
+# PRLabel: %Cognitive - Translator
+/sdk/translation/Azure.AI.Translation.Text/    @jrjrguo @quentinRobinson
+
 # ServiceLabel: %Cognitive - Translator
-# ServiceOwners: @jrjrguo
+# ServiceOwners: @jrjrguo @quentinRobinson
 
 # PRLabel: %Communication
 /sdk/communication/    @acsdevx-msft
@@ -199,16 +217,19 @@
 # ServiceOwners: @Azure/azure-sdk-write-communication
 
 # PRLabel: %Communication - Call Automation
-/sdk/communication/Azure.Communication.CallAutomation/    @fhaghbin-msft @juntuchen-msft @minwoolee-msft @v-dharmarajv
+/sdk/communication/Azure.Communication.CallAutomation/    @juntuchen-msft @minwoolee-msft
+
+# ServiceLabel: %Communication - Call Automation
+# ServiceOwners: @juntuchen-msft @minwoolee-msft
 
 # PRLabel: %Communication - Chat
 /sdk/communication/Azure.Communication.Chat/    @LuChen-Microsoft
 
 # PRLabel: %Communication - Common
-/sdk/communication/Azure.Communication.Common/    @AikoBB @Azure/acs-identity-sdk @maximrytych-ms @mjafferi-msft
+/sdk/communication/Azure.Communication.Common/    @alvinjiang-msft @anjulgarg @Joeleniqs @jorge-beauregard
 
 # PRLabel: %Communication - Identity
-/sdk/communication/Azure.Communication.Identity/    @AikoBB @Azure/acs-identity-sdk @maximrytych-ms @mjafferi-msft
+/sdk/communication/Azure.Communication.Identity/    @alvinjiang-msft @anjulgarg @Joeleniqs @jorge-beauregard
 
 # PRLabel: %Communication - Phone Numbers
 /sdk/communication/Azure.Communication.PhoneNumbers/    @besh2014 @gfeitosa-msft @ihuseynov-msft @ilyapaliakou-msft @kirill-linnik @phermanov-msft
@@ -258,6 +279,16 @@
 # ServiceLabel: %Digital Twins
 # ServiceOwners: @Aashish93-stack @abhinav-ghai @efriesner @johngallardo @Satya-Kolluri @sjiherzig
 
+# PRLabel: %EngSys
+/sdk/template/    @danieljurek @weshaggard
+
+# PRLabel: %EngSys
+/sdk/template/Azure.Template/    @danieljurek
+
+# AzureSdkOwners: @danieljurek @weshaggard
+# ServiceLabel: %EngSys
+# ServiceOwners: @danieljurek @weshaggard
+
 # PRLabel: %Event Grid
 /sdk/eventgrid/    @Kishp01 @rajeshka @shankarsama
 
@@ -268,17 +299,17 @@
 # ServiceOwners: @Kishp01 @rajeshka @shankarsama
 
 # PRLabel: %Event Hubs
-/sdk/eventhub/    @axisc @hmlam @j7nw4r @jsquire @sjkwak
+/sdk/eventhub/    @axisc @hmlam @j7nw4r @jsquire @sagar0207 @sjkwak @SwayGom
 
 # PRLabel: %Event Hubs %Functions
-/sdk/eventhub/Microsoft.Azure.WebJobs.Extensions.EventHubs/    @axisc @hmlam @j7nw4r @jsquire @sjkwak
+/sdk/eventhub/Microsoft.Azure.WebJobs.Extensions.EventHubs/    @axisc @hmlam @j7nw4r @jsquire @sagar0207 @sjkwak @SwayGom
 
 # AzureSdkOwners: @jsquire
 # ServiceLabel: %Event Hubs
-# ServiceOwners: @axisc @hmlam @j7nw4r @sjkwak
+# ServiceOwners: @axisc @hmlam @j7nw4r @sagar0207 @sjkwak @SwayGom
 
 # PRLabel: %Functions %Service Bus
-/sdk/servicebus/Microsoft.Azure.WebJobs.Extensions.ServiceBus/    @EldertGrootenboer @j7nw4r @jsquire @skarri-microsoft
+/sdk/servicebus/Microsoft.Azure.WebJobs.Extensions.ServiceBus/    @EldertGrootenboer @j7nw4r @jsquire @sagar0207 @skarri-microsoft @SwayGom
 
 # AzureSdkOwners: @jsquire
 # ServiceLabel: %Functions
@@ -411,11 +442,11 @@
 # ServiceOwners: @efrainretana @mattgotteiner
 
 # PRLabel: %Service Bus
-/sdk/servicebus/    @EldertGrootenboer @j7nw4r @jsquire @skarri-microsoft
+/sdk/servicebus/    @EldertGrootenboer @j7nw4r @jsquire @sagar0207 @skarri-microsoft @SwayGom
 
 # AzureSdkOwners: @jsquire
 # ServiceLabel: %Service Bus
-# ServiceOwners: @EldertGrootenboer @j7nw4r @skarri-microsoft
+# ServiceOwners: @EldertGrootenboer @j7nw4r @sagar0207 @skarri-microsoft @SwayGom
 
 # PRLabel: %SignalR
 /sdk/signalr/    @chenkennt @JialinXin @vicancy @Y-Sindo
@@ -506,7 +537,7 @@
 /sdk/webpubsub/    @JialinXin @KrzysztofCwalina @vicancy
 
 # PRLabel: %WebPubSub
-/sdk/webpubsub/Microsoft.Azure.WebJobs.Extensions.WebPubSub/    @vicancy
+/sdk/webpubsub/Microsoft.Azure.WebJobs.Extensions.WebPubSub/    @JialinXin @vicancy @Y-Sindo
 
 # ServiceLabel: %WebPubSub
 # ServiceOwners: @JialinXin @vicancy
@@ -933,10 +964,10 @@
 /sdk/communication/Azure.ResourceManager.Communication/            @ArcturusZhang @ArthurMa1978
 
 # PRLabel: %Compute - Fleet
-/sdk/computefleet/Azure.ResourceManager.*/                         @sahilarora92
+/sdk/computefleet/Azure.ResourceManager.*/                         @diyellap @sabanermsft
 
 # ServiceLabel: %Compute - Fleet %Mgmt
-# ServiceOwners:                                                   @sahilarora92
+# ServiceOwners:                                                   @diyellap @sabanermsft
 
 # PRLabel: %Confidential Ledger
 /sdk/confidentialledger/Azure.ResourceManager.*/                   @Azure/azure-sdk-write-acl
@@ -1209,10 +1240,11 @@
 ################
 
 # GitHub integration, CODEOWNERS, and bot rules
-/.github/                                                          @jsquire @ronniegeraghty @m-redding @ArthurMa1978
+/.github/                                                          @jsquire @m-redding @ArthurMa1978
 /.github/workflows/                                                @jsquire @m-redding @Azure/azure-sdk-eng
 /.github/CODEOWNERS                                                @jsquire @m-redding @Azure/azure-sdk-eng
 /.github/copilot-instructions.md                                   @jsquire @m-redding @praveenkuttappan @maririos
+/.github/skills/                                                   @azure/azsdk-cli @m-nash @jsquire
 
 # PRLabel: %EngSys
 /sdk/template/                                                     @hallipr @weshaggard @benbp @jsquire
@@ -1226,8 +1258,7 @@
 /.config/1espt/                                                    @benbp @weshaggard
 /.vscode/                                                          @jsquire @m-redding
 /.devcontainer/                                                    @jsquire @m-redding
-/doc/                                                              @jsquire @scottaddie
-/samples/                                                          @jsquire @m-redding
+/doc/                                                              @jsquire
 
 # Repository configuration that should not be overridden
 /sdk/**/NuGet.*                                                    @Azure/azure-sdk-write-net-core @jsquire

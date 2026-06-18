@@ -1,14 +1,12 @@
 # Release History
 
-## 1.10.0-beta.1 (Unreleased)
+## 1.10.0 (2026-06-18)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added a `Description` property on `ConfigurationSetting` and `ConfigurationSnapshot` to associate descriptive text with settings and snapshots.
+- Added `SettingFields.Description` so `Description` can be requested when retrieving configuration settings.
+- Added support for `2024-09-01` and `2026-04-01` (default) service API versions.
 
 ## 1.9.0 (2026-02-27)
 

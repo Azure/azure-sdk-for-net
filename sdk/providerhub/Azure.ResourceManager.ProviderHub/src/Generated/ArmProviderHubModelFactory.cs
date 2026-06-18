@@ -19,7 +19,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmProviderHubModelFactory
     {
-        /// <summary> The ResourceProviderAuthorization. </summary>
         /// <param name="applicationId"> The application id. </param>
         /// <param name="roleDefinitionId"> The role definition id. </param>
         /// <param name="managedByRoleDefinitionId"> The managed by role definition id. </param>
@@ -36,12 +35,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 roleDefinitionId,
                 managedByRoleDefinitionId,
                 managedByAuthorization,
-                allowedThirdPartyExtensions.ToList(),
+                (allowedThirdPartyExtensions ?? new ChangeTrackingList<ThirdPartyExtension>()).ToList(),
                 groupingTag,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> Managed by authorization. </summary>
         /// <param name="additionalAuthorizations"></param>
         /// <param name="managedByResourceRoleDefinitionId"> The managed by resource role definition ID for the application. </param>
         /// <param name="doesAllowManagedByInheritance"> Indicates whether the managed by resource role definition ID should be inherited. </param>
@@ -50,7 +48,45 @@ namespace Azure.ResourceManager.ProviderHub.Models
         {
             additionalAuthorizations ??= new ChangeTrackingList<ProviderAdditionalAuthorization>();
 
-            return new ResourceProviderManagedByAuthorization(additionalAuthorizations.ToList(), managedByResourceRoleDefinitionId, doesAllowManagedByInheritance, additionalBinaryDataProperties: null);
+            return new ResourceProviderManagedByAuthorization((additionalAuthorizations ?? new ChangeTrackingList<ProviderAdditionalAuthorization>()).ToList(), managedByResourceRoleDefinitionId, doesAllowManagedByInheritance, default);
+        }
+
+        /// <param name="applicationId"></param>
+        /// <param name="roleDefinitionId"></param>
+        /// <returns> A new <see cref="Models.ProviderAdditionalAuthorization"/> instance for mocking. </returns>
+        public static ProviderAdditionalAuthorization ProviderAdditionalAuthorization(string applicationId = default, string roleDefinitionId = default)
+        {
+            return new ProviderAdditionalAuthorization(applicationId, roleDefinitionId, default);
+        }
+
+        /// <param name="name"> Name of third party extension. </param>
+        /// <returns> A new <see cref="Models.ThirdPartyExtension"/> instance for mocking. </returns>
+        public static ThirdPartyExtension ThirdPartyExtension(string name = default)
+        {
+            return new ThirdPartyExtension(name, default);
+        }
+
+        /// <param name="serviceName"> The service name. </param>
+        /// <param name="status"> The status. </param>
+        /// <returns> A new <see cref="Models.ResourceProviderService"/> instance for mocking. </returns>
+        public static ResourceProviderService ResourceProviderService(string serviceName = default, ResourceProviderServiceStatus? status = default)
+        {
+            return new ResourceProviderService(serviceName, status, default);
+        }
+
+        /// <param name="requiredFeaturesPolicy"> The required feature policy. </param>
+        /// <returns> A new <see cref="Models.ProviderFeaturesRule"/> instance for mocking. </returns>
+        public static ProviderFeaturesRule ProviderFeaturesRule(FeaturesPolicy requiredFeaturesPolicy = default)
+        {
+            return new ProviderFeaturesRule(requiredFeaturesPolicy, default);
+        }
+
+        /// <param name="optInHeaders"> The opt in headers. </param>
+        /// <param name="optOutHeaders"> The opt out headers. </param>
+        /// <returns> A new <see cref="Models.ProviderRequestHeaderOptions"/> instance for mocking. </returns>
+        public static ProviderRequestHeaderOptions ProviderRequestHeaderOptions(OptInHeaderType? optInHeaders = default, OptOutHeaderType? optOutHeaders = default)
+        {
+            return new ProviderRequestHeaderOptions(optInHeaders, optOutHeaders, default);
         }
 
         /// <param name="name"> The resource type name. </param>
@@ -109,36 +145,78 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 additionalOptions,
                 crossTenantTokenValidation,
                 resourceValidation,
-                allowedUnauthorizedActions.ToList(),
-                allowedUnauthorizedActionsExtensions.ToList(),
-                authorizationActionMappings.ToList(),
-                linkedAccessChecks.ToList(),
+                (allowedUnauthorizedActions ?? new ChangeTrackingList<string>()).ToList(),
+                (allowedUnauthorizedActionsExtensions ?? new ChangeTrackingList<AllowedUnauthorizedActionsExtension>()).ToList(),
+                (authorizationActionMappings ?? new ChangeTrackingList<AuthorizationActionMapping>()).ToList(),
+                (linkedAccessChecks ?? new ChangeTrackingList<LinkedAccessCheck>()).ToList(),
                 defaultApiVersion,
-                loggingRules.ToList(),
-                throttlingRules.ToList(),
-                endpoints.ToList(),
+                (loggingRules ?? new ChangeTrackingList<LoggingRule>()).ToList(),
+                (throttlingRules ?? new ChangeTrackingList<ThrottlingRule>()).ToList(),
+                (endpoints ?? new ChangeTrackingList<ResourceProviderEndpoint>()).ToList(),
                 marketplaceType,
-                managementType is null ? default : new IdentityManagement(managementType, null),
+                managementType is null ? default : new IdentityManagement(managementType, default),
                 metadata,
-                requiredFeatures.ToList(),
-                requiredFeaturesPolicy is null ? default : new ProviderFeaturesRule(requiredFeaturesPolicy.Value, null),
-                subscriptionStateRules.ToList(),
-                serviceTreeInfos.ToList(),
+                (requiredFeatures ?? new ChangeTrackingList<string>()).ToList(),
+                requiredFeaturesPolicy is null ? default : new ProviderFeaturesRule(requiredFeaturesPolicy.GetValueOrDefault(), default),
+                (subscriptionStateRules ?? new ChangeTrackingList<ProviderSubscriptionStateRule>()).ToList(),
+                (serviceTreeInfos ?? new ChangeTrackingList<ServiceTreeInfo>()).ToList(),
                 requestHeaderOptions,
                 skuLink,
-                disallowedActionVerbs.ToList(),
+                (disallowedActionVerbs ?? new ChangeTrackingList<string>()).ToList(),
                 templateDeploymentPolicy,
-                extendedLocations.ToList(),
-                linkedOperationRules.ToList(),
+                (extendedLocations ?? new ChangeTrackingList<ProviderHubExtendedLocationOptions>()).ToList(),
+                (linkedOperationRules ?? new ChangeTrackingList<LinkedOperationRule>()).ToList(),
                 resourceDeletionPolicy,
                 quotaRule,
-                notifications.ToList(),
-                linkedNotificationRules.ToList(),
-                asyncOperationPollingRules is null ? default : new ResourceProviderAuthorizationRules(asyncOperationPollingRules, null),
-                additionalBinaryDataProperties: null);
+                (notifications ?? new ChangeTrackingList<ProviderNotification>()).ToList(),
+                (linkedNotificationRules ?? new ChangeTrackingList<LinkedNotificationRule>()).ToList(),
+                asyncOperationPollingRules is null ? default : new ResourceProviderAuthorizationRules(asyncOperationPollingRules, default),
+                default);
         }
 
-        /// <summary> The LoggingHiddenPropertyPaths. </summary>
+        /// <param name="action"> The action. </param>
+        /// <param name="intent"> The intent. </param>
+        /// <returns> A new <see cref="Models.AllowedUnauthorizedActionsExtension"/> instance for mocking. </returns>
+        public static AllowedUnauthorizedActionsExtension AllowedUnauthorizedActionsExtension(string action = default, AllowedUnauthorizedActionIntent? intent = default)
+        {
+            return new AllowedUnauthorizedActionsExtension(action, intent, default);
+        }
+
+        /// <param name="original"> The original action name. </param>
+        /// <param name="desired"> The desired action name. </param>
+        /// <returns> A new <see cref="Models.AuthorizationActionMapping"/> instance for mocking. </returns>
+        public static AuthorizationActionMapping AuthorizationActionMapping(string original = default, string desired = default)
+        {
+            return new AuthorizationActionMapping(original, desired, default);
+        }
+
+        /// <param name="actionName"> The action name. </param>
+        /// <param name="linkedProperty"> The linked property. </param>
+        /// <param name="linkedAction"> The linked action. </param>
+        /// <param name="linkedActionVerb"> The linked action verb. </param>
+        /// <param name="linkedType"> The linked type. </param>
+        /// <returns> A new <see cref="Models.LinkedAccessCheck"/> instance for mocking. </returns>
+        public static LinkedAccessCheck LinkedAccessCheck(string actionName = default, string linkedProperty = default, string linkedAction = default, string linkedActionVerb = default, string linkedType = default)
+        {
+            return new LinkedAccessCheck(
+                actionName,
+                linkedProperty,
+                linkedAction,
+                linkedActionVerb,
+                linkedType,
+                default);
+        }
+
+        /// <param name="action"> The action. </param>
+        /// <param name="direction"> The direction. </param>
+        /// <param name="detailLevel"> The detail level. </param>
+        /// <param name="hiddenPropertyPaths"> The hidden property paths. </param>
+        /// <returns> A new <see cref="Models.LoggingRule"/> instance for mocking. </returns>
+        public static LoggingRule LoggingRule(string action = default, LoggingDirection direction = default, LoggingDetail detailLevel = default, LoggingHiddenPropertyPaths hiddenPropertyPaths = default)
+        {
+            return new LoggingRule(action, direction, detailLevel, hiddenPropertyPaths, default);
+        }
+
         /// <param name="hiddenPathsOnRequest"> The hidden paths on request. </param>
         /// <param name="hiddenPathsOnResponse"> The hidden paths on response. </param>
         /// <returns> A new <see cref="Models.LoggingHiddenPropertyPaths"/> instance for mocking. </returns>
@@ -147,10 +225,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
             hiddenPathsOnRequest ??= new ChangeTrackingList<string>();
             hiddenPathsOnResponse ??= new ChangeTrackingList<string>();
 
-            return new LoggingHiddenPropertyPaths(hiddenPathsOnRequest.ToList(), hiddenPathsOnResponse.ToList(), additionalBinaryDataProperties: null);
+            return new LoggingHiddenPropertyPaths((hiddenPathsOnRequest ?? new ChangeTrackingList<string>()).ToList(), (hiddenPathsOnResponse ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
-        /// <summary> The ThrottlingRule. </summary>
         /// <param name="action"> The action. </param>
         /// <param name="metrics"> The metrics. </param>
         /// <param name="requiredFeatures"> The required features. </param>
@@ -162,7 +239,16 @@ namespace Azure.ResourceManager.ProviderHub.Models
             requiredFeatures ??= new ChangeTrackingList<string>();
             applicationId ??= new ChangeTrackingList<string>();
 
-            return new ThrottlingRule(action, metrics.ToList(), requiredFeatures.ToList(), applicationId.ToList(), additionalBinaryDataProperties: null);
+            return new ThrottlingRule(action, (metrics ?? new ChangeTrackingList<ThrottlingMetric>()).ToList(), (requiredFeatures ?? new ChangeTrackingList<string>()).ToList(), (applicationId ?? new ChangeTrackingList<string>()).ToList(), default);
+        }
+
+        /// <param name="metricType"> The throttling metric type. </param>
+        /// <param name="limit"> The limit. </param>
+        /// <param name="interval"> The interval. </param>
+        /// <returns> A new <see cref="Models.ThrottlingMetric"/> instance for mocking. </returns>
+        public static ThrottlingMetric ThrottlingMetric(ThrottlingMetricType metricType = default, long limit = default, TimeSpan? interval = default)
+        {
+            return new ThrottlingMetric(metricType, limit, interval, default);
         }
 
         /// <param name="isEnabled"> Whether the endpoint is enabled. </param>
@@ -183,18 +269,17 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
             return new ResourceProviderEndpoint(
                 isEnabled,
-                apiVersions.ToList(),
+                (apiVersions ?? new ChangeTrackingList<string>()).ToList(),
                 endpointUri,
-                locations.ToList(),
-                requiredFeatures.ToList(),
-                requiredFeaturesPolicy is null ? default : new ProviderFeaturesRule(requiredFeaturesPolicy.Value, null),
+                (locations ?? new ChangeTrackingList<AzureLocation>()).ToList(),
+                (requiredFeatures ?? new ChangeTrackingList<string>()).ToList(),
+                requiredFeaturesPolicy is null ? default : new ProviderFeaturesRule(requiredFeaturesPolicy.GetValueOrDefault(), default),
                 timeout,
                 endpointType,
                 skuLink,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> The ProviderSubscriptionStateRule. </summary>
         /// <param name="state"> The subscription state. </param>
         /// <param name="allowedActions"> The allowed actions. </param>
         /// <returns> A new <see cref="Models.ProviderSubscriptionStateRule"/> instance for mocking. </returns>
@@ -202,10 +287,35 @@ namespace Azure.ResourceManager.ProviderHub.Models
         {
             allowedActions ??= new ChangeTrackingList<string>();
 
-            return new ProviderSubscriptionStateRule(state, allowedActions.ToList(), additionalBinaryDataProperties: null);
+            return new ProviderSubscriptionStateRule(state, (allowedActions ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
-        /// <summary> The LinkedOperationRule. </summary>
+        /// <param name="serviceId"> The service id. </param>
+        /// <param name="componentId"> The component id. </param>
+        /// <param name="readiness"> The readiness. </param>
+        /// <returns> A new <see cref="Models.ServiceTreeInfo"/> instance for mocking. </returns>
+        public static ServiceTreeInfo ServiceTreeInfo(string serviceId = default, string componentId = default, ServiceTreeReadiness? readiness = default)
+        {
+            return new ServiceTreeInfo(serviceId, componentId, readiness, default);
+        }
+
+        /// <param name="capabilities"> The capabilities. </param>
+        /// <param name="preflightOptions"> The preflight options. </param>
+        /// <param name="preflightNotifications"> The preflight notifications. </param>
+        /// <returns> A new <see cref="Models.TemplateDeploymentPolicy"/> instance for mocking. </returns>
+        public static TemplateDeploymentPolicy TemplateDeploymentPolicy(TemplateDeploymentCapability capabilities = default, TemplateDeploymentPreflightOption preflightOptions = default, TemplateDeploymentPreflightNotification? preflightNotifications = default)
+        {
+            return new TemplateDeploymentPolicy(capabilities, preflightOptions, preflightNotifications, default);
+        }
+
+        /// <param name="locationType"> The type. </param>
+        /// <param name="supportedLocationPolicy"></param>
+        /// <returns> A new <see cref="Models.ProviderHubExtendedLocationOptions"/> instance for mocking. </returns>
+        public static ProviderHubExtendedLocationOptions ProviderHubExtendedLocationOptions(ProviderExtendedLocationType? locationType = default, ResourceTypeExtendedLocationPolicy? supportedLocationPolicy = default)
+        {
+            return new ProviderHubExtendedLocationOptions(locationType, supportedLocationPolicy, default);
+        }
+
         /// <param name="linkedOperation"> The linked operation. </param>
         /// <param name="linkedAction"> The linked action. </param>
         /// <param name="dependsOnTypes"> Depends on types. </param>
@@ -214,10 +324,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         {
             dependsOnTypes ??= new ChangeTrackingList<string>();
 
-            return new LinkedOperationRule(linkedOperation, linkedAction, dependsOnTypes.ToList(), additionalBinaryDataProperties: null);
+            return new LinkedOperationRule(linkedOperation, linkedAction, (dependsOnTypes ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
-        /// <summary> The ProviderQuotaRule. </summary>
         /// <param name="quotaPolicy"> The quota policy. </param>
         /// <param name="locationRules"> The location rules. </param>
         /// <param name="requiredFeatures"> The required features. </param>
@@ -227,10 +336,26 @@ namespace Azure.ResourceManager.ProviderHub.Models
             locationRules ??= new ChangeTrackingList<ProviderLocationQuotaRule>();
             requiredFeatures ??= new ChangeTrackingList<string>();
 
-            return new ProviderQuotaRule(quotaPolicy, locationRules.ToList(), requiredFeatures.ToList(), additionalBinaryDataProperties: null);
+            return new ProviderQuotaRule(quotaPolicy, (locationRules ?? new ChangeTrackingList<ProviderLocationQuotaRule>()).ToList(), (requiredFeatures ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
-        /// <summary> The LinkedNotificationRule. </summary>
+        /// <param name="policy"> The policy. </param>
+        /// <param name="quotaId"> The quota id. </param>
+        /// <param name="location"> The location. </param>
+        /// <returns> A new <see cref="Models.ProviderLocationQuotaRule"/> instance for mocking. </returns>
+        public static ProviderLocationQuotaRule ProviderLocationQuotaRule(ProviderQuotaPolicy? policy = default, string quotaId = default, AzureLocation? location = default)
+        {
+            return new ProviderLocationQuotaRule(policy, quotaId, location, default);
+        }
+
+        /// <param name="notificationType"> The notification type. </param>
+        /// <param name="skipNotifications"> Whether notifications should be skipped. </param>
+        /// <returns> A new <see cref="Models.ProviderNotification"/> instance for mocking. </returns>
+        public static ProviderNotification ProviderNotification(ProviderNotificationType? notificationType = default, SkipNotification? skipNotifications = default)
+        {
+            return new ProviderNotification(notificationType, skipNotifications, default);
+        }
+
         /// <param name="actions"> The actions. </param>
         /// <param name="actionsOnFailedOperation"> The actions on failed operation. </param>
         /// <param name="fastPathActions"> The fast path actions. </param>
@@ -245,15 +370,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
             fastPathActionsOnFailedOperation ??= new ChangeTrackingList<string>();
 
             return new LinkedNotificationRule(
-                actions.ToList(),
-                actionsOnFailedOperation.ToList(),
-                fastPathActions.ToList(),
-                fastPathActionsOnFailedOperation.ToList(),
+                (actions ?? new ChangeTrackingList<string>()).ToList(),
+                (actionsOnFailedOperation ?? new ChangeTrackingList<string>()).ToList(),
+                (fastPathActions ?? new ChangeTrackingList<string>()).ToList(),
+                (fastPathActionsOnFailedOperation ?? new ChangeTrackingList<string>()).ToList(),
                 linkedNotificationTimeout,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> The AsyncOperationPollingRules. </summary>
         /// <param name="authorizationActions"> The authorization actions. </param>
         /// <param name="additionalOptions"> The additional options. </param>
         /// <returns> A new <see cref="Models.AsyncOperationPollingRules"/> instance for mocking. </returns>
@@ -261,7 +385,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         {
             authorizationActions ??= new ChangeTrackingList<string>();
 
-            return new AsyncOperationPollingRules(authorizationActions.ToList(), additionalOptions, additionalBinaryDataProperties: null);
+            return new AsyncOperationPollingRules((authorizationActions ?? new ChangeTrackingList<string>()).ToList(), additionalOptions, default);
         }
 
         /// <param name="schemaOwners"> The schema owners. </param>
@@ -291,25 +415,24 @@ namespace Azure.ResourceManager.ProviderHub.Models
             canaryManifestOwners ??= new ChangeTrackingList<string>();
 
             return new ResourceProviderManagement(
-                schemaOwners.ToList(),
-                manifestOwners.ToList(),
-                authorizationOwners.ToList(),
+                (schemaOwners ?? new ChangeTrackingList<string>()).ToList(),
+                (manifestOwners ?? new ChangeTrackingList<string>()).ToList(),
+                (authorizationOwners ?? new ChangeTrackingList<string>()).ToList(),
                 incidentRoutingService,
                 incidentRoutingTeam,
                 incidentContactEmail,
-                serviceTreeInfos.ToList(),
+                (serviceTreeInfos ?? new ChangeTrackingList<ServiceTreeInfo>()).ToList(),
                 resourceAccessPolicy,
-                resourceAccessRoleList.ToList(),
-                expeditedRolloutSubmitters.ToList(),
-                serverFailureResponseMessageType is null ? default : new ResourceProviderErrorResponseMessageOptions(serverFailureResponseMessageType, null),
+                (resourceAccessRoleList ?? new ChangeTrackingList<ResourceAccessRole>()).ToList(),
+                (expeditedRolloutSubmitters ?? new ChangeTrackingList<string>()).ToList(),
+                serverFailureResponseMessageType is null ? default : new ResourceProviderErrorResponseMessageOptions(serverFailureResponseMessageType, default),
                 expeditedRolloutMetadata,
-                canaryManifestOwners.ToList(),
+                (canaryManifestOwners ?? new ChangeTrackingList<string>()).ToList(),
                 profitCenterCode,
                 profitCenterProgramId,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> The ResourceAccessRole. </summary>
         /// <param name="allowedGroupClaims"> The allowed group claims. </param>
         /// <param name="actions"> The actions. </param>
         /// <returns> A new <see cref="Models.ResourceAccessRole"/> instance for mocking. </returns>
@@ -318,10 +441,17 @@ namespace Azure.ResourceManager.ProviderHub.Models
             allowedGroupClaims ??= new ChangeTrackingList<string>();
             actions ??= new ChangeTrackingList<string>();
 
-            return new ResourceAccessRole(allowedGroupClaims.ToList(), actions.ToList(), additionalBinaryDataProperties: null);
+            return new ResourceAccessRole((allowedGroupClaims ?? new ChangeTrackingList<string>()).ToList(), (actions ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
-        /// <summary> The ResourceProviderCapabilities. </summary>
+        /// <param name="isEnabled"> Expedited rollout enabled?. </param>
+        /// <param name="expeditedRolloutIntent"> Expedited rollout intent. </param>
+        /// <returns> A new <see cref="Models.ExpeditedRolloutMetadata"/> instance for mocking. </returns>
+        public static ExpeditedRolloutMetadata ExpeditedRolloutMetadata(bool? isEnabled = default, ExpeditedRolloutIntent? expeditedRolloutIntent = default)
+        {
+            return new ExpeditedRolloutMetadata(isEnabled, expeditedRolloutIntent, default);
+        }
+
         /// <param name="quotaId"> The quota id. </param>
         /// <param name="effect"> The effect. </param>
         /// <param name="requiredFeatures"> The required features. </param>
@@ -330,19 +460,17 @@ namespace Azure.ResourceManager.ProviderHub.Models
         {
             requiredFeatures ??= new ChangeTrackingList<string>();
 
-            return new ResourceProviderCapabilities(quotaId, effect, requiredFeatures.ToList(), additionalBinaryDataProperties: null);
+            return new ResourceProviderCapabilities(quotaId, effect, (requiredFeatures ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
-        /// <summary> The ReRegisterSubscriptionMetadata. </summary>
         /// <param name="isEnabled"> Whether it's enabled or not. </param>
         /// <param name="concurrencyLimit"> The concurrency limit. </param>
         /// <returns> A new <see cref="Models.ReRegisterSubscriptionMetadata"/> instance for mocking. </returns>
         public static ReRegisterSubscriptionMetadata ReRegisterSubscriptionMetadata(bool isEnabled = default, int? concurrencyLimit = default)
         {
-            return new ReRegisterSubscriptionMetadata(isEnabled, concurrencyLimit, additionalBinaryDataProperties: null);
+            return new ReRegisterSubscriptionMetadata(isEnabled, concurrencyLimit, default);
         }
 
-        /// <summary> The FanoutLinkedNotificationRule. </summary>
         /// <param name="tokenAuthConfiguration"> The token auth configuration. </param>
         /// <param name="actions"> The actions. </param>
         /// <param name="endpoints"> The endpoints. </param>
@@ -353,19 +481,44 @@ namespace Azure.ResourceManager.ProviderHub.Models
             actions ??= new ChangeTrackingList<string>();
             endpoints ??= new ChangeTrackingList<ResourceProviderEndpoint>();
 
-            return new FanoutLinkedNotificationRule(tokenAuthConfiguration, actions.ToList(), endpoints.ToList(), dstsConfiguration, additionalBinaryDataProperties: null);
+            return new FanoutLinkedNotificationRule(tokenAuthConfiguration, (actions ?? new ChangeTrackingList<string>()).ToList(), (endpoints ?? new ChangeTrackingList<ResourceProviderEndpoint>()).ToList(), dstsConfiguration, default);
         }
 
-        /// <summary> The CheckinManifestContent. </summary>
+        /// <param name="authenticationScheme"> The authentication scheme. </param>
+        /// <param name="signedRequestScope"> The signed request scope. </param>
+        /// <param name="disableCertificateAuthenticationFallback"> Whether certification authentication fallback is disabled. </param>
+        /// <returns> A new <see cref="Models.TokenAuthConfiguration"/> instance for mocking. </returns>
+        public static TokenAuthConfiguration TokenAuthConfiguration(ProviderAuthenticationScheme? authenticationScheme = default, SignedRequestScope? signedRequestScope = default, bool? disableCertificateAuthenticationFallback = default)
+        {
+            return new TokenAuthConfiguration(authenticationScheme, signedRequestScope, disableCertificateAuthenticationFallback, default);
+        }
+
+        /// <param name="serviceName"> The service name. </param>
+        /// <param name="serviceDnsName"> This is a URI property. </param>
+        /// <returns> A new <see cref="Models.ProviderDstsConfiguration"/> instance for mocking. </returns>
+        public static ProviderDstsConfiguration ProviderDstsConfiguration(string serviceName = default, string serviceDnsName = default)
+        {
+            return new ProviderDstsConfiguration(serviceName, serviceDnsName, default);
+        }
+
         /// <param name="environment"> The environment supplied to the checkin manifest operation. </param>
         /// <param name="baselineArmManifestLocation"> The baseline ARM manifest location supplied to the checkin manifest operation. </param>
         /// <returns> A new <see cref="Models.CheckinManifestContent"/> instance for mocking. </returns>
         public static CheckinManifestContent CheckinManifestContent(string environment = default, AzureLocation baselineArmManifestLocation = default)
         {
-            return new CheckinManifestContent(environment, baselineArmManifestLocation, additionalBinaryDataProperties: null);
+            return new CheckinManifestContent(environment, baselineArmManifestLocation, default);
         }
 
-        /// <summary> Properties of an Operation. </summary>
+        /// <param name="isCheckedIn"> Whether the manifest is checked in. </param>
+        /// <param name="statusMessage"> The status message. </param>
+        /// <param name="pullRequest"> The pull request. </param>
+        /// <param name="commitId"> The commit id. </param>
+        /// <returns> A new <see cref="Models.CheckinManifestInfo"/> instance for mocking. </returns>
+        public static CheckinManifestInfo CheckinManifestInfo(bool isCheckedIn = default, string statusMessage = default, string pullRequest = default, string commitId = default)
+        {
+            return new CheckinManifestInfo(isCheckedIn, statusMessage, pullRequest, commitId, default);
+        }
+
         /// <param name="name"> Name of the operation. </param>
         /// <param name="isDataAction"> Indicates whether the operation applies to data-plane. </param>
         /// <param name="origin"> The origin. </param>
@@ -382,7 +535,17 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 display,
                 actionType,
                 properties,
-                additionalBinaryDataProperties: null);
+                default);
+        }
+
+        /// <param name="provider"> The provider. </param>
+        /// <param name="resource"> The resource. </param>
+        /// <param name="operation"> The operation. </param>
+        /// <param name="description"> The description. </param>
+        /// <returns> A new <see cref="Models.OperationsDisplayDefinition"/> instance for mocking. </returns>
+        public static OperationsDisplayDefinition OperationsDisplayDefinition(string provider = default, string resource = default, string operation = default, string description = default)
+        {
+            return new OperationsDisplayDefinition(provider, resource, operation, description, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -390,19 +553,78 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="operationsContentContents"> Operations content. </param>
-        /// <returns> A new <see cref="ProviderHub.OperationsPutContentData"/> instance for mocking. </returns>
-        public static OperationsPutContentData OperationsPutContentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<LocalizedOperationDefinition> operationsContentContents = default)
+        /// <returns> A new <see cref="Models.OperationsPutContent"/> instance for mocking. </returns>
+        public static OperationsPutContent OperationsPutContent(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<LocalizedOperationDefinition> operationsContentContents = default)
         {
-            return new OperationsPutContentData(
+            return new OperationsPutContent(
                 id,
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                operationsContentContents is null ? default : new OperationsContentProperties((operationsContentContents ?? new ChangeTrackingList<LocalizedOperationDefinition>()).ToList(), null));
+                operationsContentContents is null ? default : new OperationsContentProperties((operationsContentContents ?? new ChangeTrackingList<LocalizedOperationDefinition>()).ToList(), default),
+                default);
         }
 
-        /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
+        /// <param name="name"> Name of the operation. </param>
+        /// <param name="isDataAction"> Indicates whether the operation applies to data-plane. </param>
+        /// <param name="origin"> The origin. </param>
+        /// <param name="display"> Display information of the operation. </param>
+        /// <param name="actionType"> The action type. </param>
+        /// <returns> A new <see cref="Models.LocalizedOperationDefinition"/> instance for mocking. </returns>
+        public static LocalizedOperationDefinition LocalizedOperationDefinition(string name = default, bool? isDataAction = default, OperationOrigins? origin = default, LocalizedOperationDisplayDefinition display = default, OperationActionType? actionType = default)
+        {
+            return new LocalizedOperationDefinition(
+                name,
+                isDataAction,
+                origin,
+                display,
+                actionType,
+                default);
+        }
+
+        /// <param name="default"> Display information of the operation. </param>
+        /// <param name="en"> Display information of the operation for en locale. </param>
+        /// <param name="cs"> Display information of the operation for cs locale. </param>
+        /// <param name="de"> Display information of the operation for de locale. </param>
+        /// <param name="es"> Display information of the operation for es locale. </param>
+        /// <param name="fr"> Display information of the operation for fr locale. </param>
+        /// <param name="hu"> Display information of the operation for hu locale. </param>
+        /// <param name="it"> Display information of the operation for it locale. </param>
+        /// <param name="ja"> Display information of the operation for ja locale. </param>
+        /// <param name="ko"> Display information of the operation for ko locale. </param>
+        /// <param name="nl"> Display information of the operation for nl locale. </param>
+        /// <param name="pl"> Display information of the operation for pl locale. </param>
+        /// <param name="ptBR"> Display information of the operation for pt-BR locale. </param>
+        /// <param name="ptPT"> Display information of the operation for pt-PT locale. </param>
+        /// <param name="ru"> Display information of the operation for ru locale. </param>
+        /// <param name="sv"> Display information of the operation for sv locale. </param>
+        /// <param name="zhHans"> Display information of the operation for zh-Hans locale. </param>
+        /// <param name="zhHant"> Display information of the operation for zh-Hant locale. </param>
+        /// <returns> A new <see cref="Models.LocalizedOperationDisplayDefinition"/> instance for mocking. </returns>
+        public static LocalizedOperationDisplayDefinition LocalizedOperationDisplayDefinition(OperationsDisplayDefinition @default = default, OperationsDisplayDefinition en = default, OperationsDisplayDefinition cs = default, OperationsDisplayDefinition de = default, OperationsDisplayDefinition es = default, OperationsDisplayDefinition fr = default, OperationsDisplayDefinition hu = default, OperationsDisplayDefinition it = default, OperationsDisplayDefinition ja = default, OperationsDisplayDefinition ko = default, OperationsDisplayDefinition nl = default, OperationsDisplayDefinition pl = default, OperationsDisplayDefinition ptBR = default, OperationsDisplayDefinition ptPT = default, OperationsDisplayDefinition ru = default, OperationsDisplayDefinition sv = default, OperationsDisplayDefinition zhHans = default, OperationsDisplayDefinition zhHant = default)
+        {
+            return new LocalizedOperationDisplayDefinition(
+                @default,
+                en,
+                cs,
+                de,
+                es,
+                fr,
+                hu,
+                it,
+                ja,
+                ko,
+                nl,
+                pl,
+                ptBR,
+                ptPT,
+                ru,
+                sv,
+                zhHans,
+                zhHant,
+                default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -416,8 +638,17 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                default);
+        }
+
+        /// <param name="provisioningState"> The provisioned state of the resource. </param>
+        /// <param name="specification"> The specification. </param>
+        /// <param name="status"> The status. </param>
+        /// <returns> A new <see cref="Models.CustomRolloutProperties"/> instance for mocking. </returns>
+        public static CustomRolloutProperties CustomRolloutProperties(ProviderHubProvisioningState? provisioningState = default, CustomRolloutSpecification specification = default, CustomRolloutStatus status = default)
+        {
+            return new CustomRolloutProperties(provisioningState, specification, status, default);
         }
 
         /// <param name="autoProvisionConfig"> The auto provisioning configuration. </param>
@@ -435,26 +666,32 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
             return new CustomRolloutSpecification(
                 autoProvisionConfig,
-                canaryRegions is null ? default : new TrafficRegions((canaryRegions ?? new ChangeTrackingList<AzureLocation>()).ToList(), null),
-                releaseScopes.ToList(),
+                canaryRegions is null ? default : new TrafficRegions((canaryRegions ?? new ChangeTrackingList<AzureLocation>()).ToList(), default),
+                (releaseScopes ?? new ChangeTrackingList<string>()).ToList(),
                 refreshSubscriptionRegistration,
                 skipReleaseScopeValidation,
                 providerRegistration,
-                resourceTypeRegistrations.ToList(),
-                additionalBinaryDataProperties: null);
+                (resourceTypeRegistrations ?? new ChangeTrackingList<ResourceTypeRegistrationData>()).ToList(),
+                default);
         }
 
-        /// <summary> The TrafficRegions. </summary>
+        /// <param name="isStorageEnabled"></param>
+        /// <param name="isResourceGraphEnabled"></param>
+        /// <returns> A new <see cref="Models.CustomRolloutAutoProvisionConfig"/> instance for mocking. </returns>
+        public static CustomRolloutAutoProvisionConfig CustomRolloutAutoProvisionConfig(bool? isStorageEnabled = default, bool? isResourceGraphEnabled = default)
+        {
+            return new CustomRolloutAutoProvisionConfig(isStorageEnabled, isResourceGraphEnabled, default);
+        }
+
         /// <param name="regions"></param>
         /// <returns> A new <see cref="Models.TrafficRegions"/> instance for mocking. </returns>
         public static TrafficRegions TrafficRegions(IEnumerable<AzureLocation> regions = default)
         {
             regions ??= new ChangeTrackingList<AzureLocation>();
 
-            return new TrafficRegions(regions.ToList(), additionalBinaryDataProperties: null);
+            return new TrafficRegions((regions ?? new ChangeTrackingList<AzureLocation>()).ToList(), default);
         }
 
-        /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -469,12 +706,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 properties,
-                kind);
+                kind,
+                default);
         }
 
-        /// <summary> The ThirdPartyProviderAuthorization. </summary>
         /// <param name="authorizations"> The authorizations. </param>
         /// <param name="managedByTenantId"> The managed by tenant id. </param>
         /// <returns> A new <see cref="Models.ThirdPartyProviderAuthorization"/> instance for mocking. </returns>
@@ -482,10 +718,17 @@ namespace Azure.ResourceManager.ProviderHub.Models
         {
             authorizations ??= new ChangeTrackingList<LightHouseAuthorization>();
 
-            return new ThirdPartyProviderAuthorization(authorizations.ToList(), managedByTenantId, additionalBinaryDataProperties: null);
+            return new ThirdPartyProviderAuthorization((authorizations ?? new ChangeTrackingList<LightHouseAuthorization>()).ToList(), managedByTenantId, default);
         }
 
-        /// <summary> The SubscriptionLifecycleNotificationSpecifications. </summary>
+        /// <param name="principalId"> The principal id. </param>
+        /// <param name="roleDefinitionId"> The role definition id. </param>
+        /// <returns> A new <see cref="Models.LightHouseAuthorization"/> instance for mocking. </returns>
+        public static LightHouseAuthorization LightHouseAuthorization(string principalId = default, string roleDefinitionId = default)
+        {
+            return new LightHouseAuthorization(principalId, roleDefinitionId, default);
+        }
+
         /// <param name="subscriptionStateOverrideActions"> The subscription state override actions. </param>
         /// <param name="softDeleteTtl"> The soft delete TTL. </param>
         /// <returns> A new <see cref="Models.SubscriptionLifecycleNotificationSpecifications"/> instance for mocking. </returns>
@@ -493,10 +736,17 @@ namespace Azure.ResourceManager.ProviderHub.Models
         {
             subscriptionStateOverrideActions ??= new ChangeTrackingList<SubscriptionStateOverrideAction>();
 
-            return new SubscriptionLifecycleNotificationSpecifications(subscriptionStateOverrideActions.ToList(), softDeleteTtl, additionalBinaryDataProperties: null);
+            return new SubscriptionLifecycleNotificationSpecifications((subscriptionStateOverrideActions ?? new ChangeTrackingList<SubscriptionStateOverrideAction>()).ToList(), softDeleteTtl, default);
         }
 
-        /// <summary> The TemplateDeploymentOptions. </summary>
+        /// <param name="state"> The state. </param>
+        /// <param name="action"> The action. </param>
+        /// <returns> A new <see cref="Models.SubscriptionStateOverrideAction"/> instance for mocking. </returns>
+        public static SubscriptionStateOverrideAction SubscriptionStateOverrideAction(SubscriptionTransitioningState state = default, SubscriptionNotificationOperation action = default)
+        {
+            return new SubscriptionStateOverrideAction(state, action, default);
+        }
+
         /// <param name="isPreflightSupported"> Whether preflight is supported. </param>
         /// <param name="preflightOptions"> The preflight options. </param>
         /// <returns> A new <see cref="Models.TemplateDeploymentOptions"/> instance for mocking. </returns>
@@ -504,20 +754,28 @@ namespace Azure.ResourceManager.ProviderHub.Models
         {
             preflightOptions ??= new ChangeTrackingList<PreflightOption>();
 
-            return new TemplateDeploymentOptions(isPreflightSupported, preflightOptions.ToList(), additionalBinaryDataProperties: null);
+            return new TemplateDeploymentOptions(isPreflightSupported, (preflightOptions ?? new ChangeTrackingList<PreflightOption>()).ToList(), default);
         }
 
-        /// <summary> The SubscriberSetting. </summary>
+        /// <param name="maxChildResourceConsistencyJobLimit"> The max child resource consistency job limit. </param>
+        /// <param name="encryptedKey"> The encrypted key. </param>
+        /// <param name="accountName"> The account name. </param>
+        /// <param name="subscriptionId"> The subscription id. </param>
+        /// <returns> A new <see cref="Models.ResourceHydrationAccount"/> instance for mocking. </returns>
+        public static ResourceHydrationAccount ResourceHydrationAccount(long? maxChildResourceConsistencyJobLimit = default, string encryptedKey = default, string accountName = default, string subscriptionId = default)
+        {
+            return new ResourceHydrationAccount(maxChildResourceConsistencyJobLimit, encryptedKey, accountName, subscriptionId, default);
+        }
+
         /// <param name="filterRules"> The filter rules. </param>
         /// <returns> A new <see cref="Models.SubscriberSetting"/> instance for mocking. </returns>
         public static SubscriberSetting SubscriberSetting(IEnumerable<ProviderFilterRule> filterRules = default)
         {
             filterRules ??= new ChangeTrackingList<ProviderFilterRule>();
 
-            return new SubscriberSetting(filterRules.ToList(), additionalBinaryDataProperties: null);
+            return new SubscriberSetting((filterRules ?? new ChangeTrackingList<ProviderFilterRule>()).ToList(), default);
         }
 
-        /// <summary> The ProviderFilterRule. </summary>
         /// <param name="filterQuery"> The filter query. </param>
         /// <param name="endpointInformation"> The endpoint information. </param>
         /// <returns> A new <see cref="Models.ProviderFilterRule"/> instance for mocking. </returns>
@@ -525,10 +783,18 @@ namespace Azure.ResourceManager.ProviderHub.Models
         {
             endpointInformation ??= new ChangeTrackingList<ProviderEndpointInformation>();
 
-            return new ProviderFilterRule(filterQuery, endpointInformation.ToList(), additionalBinaryDataProperties: null);
+            return new ProviderFilterRule(filterQuery, (endpointInformation ?? new ChangeTrackingList<ProviderEndpointInformation>()).ToList(), default);
         }
 
-        /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
+        /// <param name="endpoint"> The endpoint. </param>
+        /// <param name="endpointType"> The endpoint type. </param>
+        /// <param name="schemaVersion"> The schema version. </param>
+        /// <returns> A new <see cref="Models.ProviderEndpointInformation"/> instance for mocking. </returns>
+        public static ProviderEndpointInformation ProviderEndpointInformation(string endpoint = default, ProviderNotificationEndpointType? endpointType = default, string schemaVersion = default)
+        {
+            return new ProviderEndpointInformation(endpoint, endpointType, schemaVersion, default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -543,9 +809,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 properties,
-                kind);
+                kind,
+                default);
         }
 
         /// <param name="routingType"> The resource routing type. </param>
@@ -657,19 +923,19 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 additionalOptions,
                 crossTenantTokenValidation,
                 regionality,
-                endpoints.ToList(),
-                extensionOptionsResourceCreationBegin is null ? default : new ResourceTypeExtensionOptions(extensionOptionsResourceCreationBegin, null),
+                (endpoints ?? new ChangeTrackingList<ResourceTypeEndpoint>()).ToList(),
+                extensionOptionsResourceCreationBegin is null ? default : new ResourceTypeExtensionOptions(extensionOptionsResourceCreationBegin, default),
                 marketplaceType,
-                swaggerSpecifications.ToList(),
-                allowedUnauthorizedActions.ToList(),
-                allowedUnauthorizedActionsExtensions.ToList(),
-                authorizationActionMappings.ToList(),
-                linkedAccessChecks.ToList(),
+                (swaggerSpecifications ?? new ChangeTrackingList<SwaggerSpecification>()).ToList(),
+                (allowedUnauthorizedActions ?? new ChangeTrackingList<string>()).ToList(),
+                (allowedUnauthorizedActionsExtensions ?? new ChangeTrackingList<AllowedUnauthorizedActionsExtension>()).ToList(),
+                (authorizationActionMappings ?? new ChangeTrackingList<AuthorizationActionMapping>()).ToList(),
+                (linkedAccessChecks ?? new ChangeTrackingList<LinkedAccessCheck>()).ToList(),
                 defaultApiVersion,
-                loggingRules.ToList(),
-                throttlingRules.ToList(),
-                requiredFeatures.ToList(),
-                requiredFeaturesPolicy is null ? default : new ProviderFeaturesRule(requiredFeaturesPolicy.Value, null),
+                (loggingRules ?? new ChangeTrackingList<LoggingRule>()).ToList(),
+                (throttlingRules ?? new ChangeTrackingList<ThrottlingRule>()).ToList(),
+                (requiredFeatures ?? new ChangeTrackingList<string>()).ToList(),
+                requiredFeaturesPolicy is null ? default : new ProviderFeaturesRule(requiredFeaturesPolicy.GetValueOrDefault(), default),
                 isAsyncOperationEnabled,
                 provisioningState,
                 isThirdPartyS2SEnabled,
@@ -677,58 +943,58 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 isPureProxy,
                 identityManagement,
                 checkNameAvailabilitySpecifications,
-                disallowedActionVerbs.ToList(),
-                serviceTreeInfos.ToList(),
+                (disallowedActionVerbs ?? new ChangeTrackingList<string>()).ToList(),
+                (serviceTreeInfos ?? new ChangeTrackingList<ServiceTreeInfo>()).ToList(),
                 requestHeaderOptions,
-                subscriptionStateRules.ToList(),
+                (subscriptionStateRules ?? new ChangeTrackingList<ProviderSubscriptionStateRule>()).ToList(),
                 templateDeploymentOptions,
-                extendedLocations.ToList(),
+                (extendedLocations ?? new ChangeTrackingList<ProviderHubExtendedLocationOptions>()).ToList(),
                 resourceMovePolicy,
                 resourceDeletionPolicy,
-                resourceConcurrencyControlOptions,
+                resourceConcurrencyControlOptions ?? new ChangeTrackingDictionary<string, ResourceConcurrencyControlOption>(),
                 resourceGraphConfiguration,
                 management,
-                isNoncompliantCollectionResponseAllowed is null ? default : new OpenApiConfiguration(new OpenApiValidation(isNoncompliantCollectionResponseAllowed, null), null),
+                isNoncompliantCollectionResponseAllowed is null ? default : new OpenApiConfiguration(new OpenApiValidation(isNoncompliantCollectionResponseAllowed, default), default),
                 onBehalfOfTokens,
                 category,
                 resourceValidation,
-                disallowedEndUserOperations.ToList(),
-                metadata,
+                (disallowedEndUserOperations ?? new ChangeTrackingList<string>()).ToList(),
+                metadata ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 skuLink,
                 quotaRule,
-                notifications.ToList(),
-                linkedNotificationRules.ToList(),
-                asyncOperationPollingRules is null ? default : new ResourceProviderAuthorizationRules(asyncOperationPollingRules, null),
+                (notifications ?? new ChangeTrackingList<ProviderNotification>()).ToList(),
+                (linkedNotificationRules ?? new ChangeTrackingList<LinkedNotificationRule>()).ToList(),
+                asyncOperationPollingRules is null ? default : new ResourceProviderAuthorizationRules(asyncOperationPollingRules, default),
                 tokenAuthConfiguration,
                 templateDeploymentPolicy,
                 isEmptyRoleAssignmentsAllowed,
                 policyExecutionType,
-                availabilityZonePolicy is null ? default : new ResourceTypeRegistrationAvailabilityZoneRule(availabilityZonePolicy, null),
+                availabilityZonePolicy is null ? default : new ResourceTypeRegistrationAvailabilityZoneRule(availabilityZonePolicy, default),
                 dstsConfiguration,
-                asyncTimeoutRules.ToList(),
-                commonApiVersions.ToList(),
-                apiProfiles.ToList(),
-                linkedOperationRules.ToList(),
+                (asyncTimeoutRules ?? new ChangeTrackingList<AsyncTimeoutRule>()).ToList(),
+                (commonApiVersions ?? new ChangeTrackingList<string>()).ToList(),
+                (apiProfiles ?? new ChangeTrackingList<ResourceTypeRegistrationApiProfile>()).ToList(),
+                (linkedOperationRules ?? new ChangeTrackingList<LinkedOperationRule>()).ToList(),
                 legacyName,
-                legacyNames.ToList(),
-                allowedTemplateDeploymentReferenceActions.ToList(),
+                (legacyNames ?? new ChangeTrackingList<string>()).ToList(),
+                (allowedTemplateDeploymentReferenceActions ?? new ChangeTrackingList<string>()).ToList(),
                 legacyPolicy,
                 manifestLink,
                 capacityRule,
-                isAddOnPlanConversionAllowed is null ? default : new ResourceTypeRegistrationMarketplaceOptions(isAddOnPlanConversionAllowed, null),
-                allowedResourceNames.ToList(),
+                isAddOnPlanConversionAllowed is null ? default : new ResourceTypeRegistrationMarketplaceOptions(isAddOnPlanConversionAllowed, default),
+                (allowedResourceNames ?? new ChangeTrackingList<AllowedResourceName>()).ToList(),
                 resourceCache,
-                resourceQueryManagementFilterOption is null ? default : new ProviderResourceQueryManagement(resourceQueryManagementFilterOption, null),
+                resourceQueryManagementFilterOption is null ? default : new ProviderResourceQueryManagement(resourceQueryManagementFilterOption, default),
                 areTagsSupported,
                 resourceManagementOptions,
                 groupingTag,
                 isAddResourceListTargetLocationsAllowed,
-                commonApiVersionsMergeMode is null ? default : new ResourceTypeCommonAttributeManagement(commonApiVersionsMergeMode, null),
-                routingRuleHostResourceType is null ? default : new ResourceTypeRegistrationRoutingRule(routingRuleHostResourceType, null),
+                commonApiVersionsMergeMode is null ? default : new ResourceTypeCommonAttributeManagement(commonApiVersionsMergeMode, default),
+                routingRuleHostResourceType is null ? default : new ResourceTypeRegistrationRoutingRule(routingRuleHostResourceType, default),
                 frontdoorRequestMode,
                 resourceSubType,
                 asyncOperationResourceTypeName,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <param name="kind"> Resource type endpoint kind. This Metadata is also used by portal/tooling/etc to render different UX experiences for resources of the same type. </param>
@@ -759,24 +1025,23 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new ResourceTypeEndpoint(
                 kind,
                 isEnabled,
-                apiVersions.ToList(),
-                locations.ToList(),
-                requiredFeatures.ToList(),
-                requiredFeaturesPolicy is null ? default : new ProviderFeaturesRule(requiredFeaturesPolicy.Value, null),
-                extensions.ToList(),
+                (apiVersions ?? new ChangeTrackingList<string>()).ToList(),
+                (locations ?? new ChangeTrackingList<AzureLocation>()).ToList(),
+                (requiredFeatures ?? new ChangeTrackingList<string>()).ToList(),
+                requiredFeaturesPolicy is null ? default : new ProviderFeaturesRule(requiredFeaturesPolicy.GetValueOrDefault(), default),
+                (extensions ?? new ChangeTrackingList<ResourceTypeExtension>()).ToList(),
                 timeout,
                 endpointType,
                 tokenAuthConfiguration,
                 skuLink,
                 endpointUri,
                 apiVersion,
-                zones.ToList(),
+                (zones ?? new ChangeTrackingList<string>()).ToList(),
                 dstsConfiguration,
                 dataBoundary,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> The ResourceTypeExtension. </summary>
         /// <param name="endpointUri"> The endpoint uri. </param>
         /// <param name="extensionCategories"> The extension categories. </param>
         /// <param name="timeout"> The timeout. </param>
@@ -785,10 +1050,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         {
             extensionCategories ??= new ChangeTrackingList<ResourceTypeExtensionCategory>();
 
-            return new ResourceTypeExtension(endpointUri, extensionCategories.ToList(), timeout, additionalBinaryDataProperties: null);
+            return new ResourceTypeExtension(endpointUri, (extensionCategories ?? new ChangeTrackingList<ResourceTypeExtensionCategory>()).ToList(), timeout, default);
         }
 
-        /// <summary> The ExtensionOptions. </summary>
         /// <param name="request"> The request. </param>
         /// <param name="response"> The response. </param>
         /// <returns> A new <see cref="Models.ExtensionOptions"/> instance for mocking. </returns>
@@ -797,10 +1061,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
             request ??= new ChangeTrackingList<ExtensionOptionType>();
             response ??= new ChangeTrackingList<ExtensionOptionType>();
 
-            return new ExtensionOptions(request.ToList(), response.ToList(), additionalBinaryDataProperties: null);
+            return new ExtensionOptions((request ?? new ChangeTrackingList<ExtensionOptionType>()).ToList(), (response ?? new ChangeTrackingList<ExtensionOptionType>()).ToList(), default);
         }
 
-        /// <summary> The SwaggerSpecification. </summary>
         /// <param name="apiVersions"> The api versions. </param>
         /// <param name="swaggerSpecFolderUri"> The swagger spec folder uri. </param>
         /// <returns> A new <see cref="Models.SwaggerSpecification"/> instance for mocking. </returns>
@@ -808,10 +1071,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         {
             apiVersions ??= new ChangeTrackingList<string>();
 
-            return new SwaggerSpecification(apiVersions.ToList(), swaggerSpecFolderUri, additionalBinaryDataProperties: null);
+            return new SwaggerSpecification((apiVersions ?? new ChangeTrackingList<string>()).ToList(), swaggerSpecFolderUri, default);
         }
 
-        /// <summary> The IdentityManagementProperties. </summary>
         /// <param name="managementType"> The type. </param>
         /// <param name="applicationId"> The application id. </param>
         /// <param name="applicationIds"> The application ids. </param>
@@ -822,10 +1084,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
             applicationIds ??= new ChangeTrackingList<string>();
             delegationAppIds ??= new ChangeTrackingList<string>();
 
-            return new IdentityManagementProperties(managementType, applicationId, applicationIds.ToList(), delegationAppIds.ToList(), additionalBinaryDataProperties: null);
+            return new IdentityManagementProperties(managementType, applicationId, (applicationIds ?? new ChangeTrackingList<string>()).ToList(), (delegationAppIds ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
-        /// <summary> The CheckNameAvailabilitySpecifications. </summary>
         /// <param name="isDefaultValidationEnabled"> Whether default validation is enabled. </param>
         /// <param name="resourceTypesWithCustomValidation"> The resource types with custom validation. </param>
         /// <returns> A new <see cref="Models.CheckNameAvailabilitySpecifications"/> instance for mocking. </returns>
@@ -833,10 +1094,57 @@ namespace Azure.ResourceManager.ProviderHub.Models
         {
             resourceTypesWithCustomValidation ??= new ChangeTrackingList<string>();
 
-            return new CheckNameAvailabilitySpecifications(isDefaultValidationEnabled, resourceTypesWithCustomValidation.ToList(), additionalBinaryDataProperties: null);
+            return new CheckNameAvailabilitySpecifications(isDefaultValidationEnabled, (resourceTypesWithCustomValidation ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
-        /// <summary> The legacy policy. </summary>
+        /// <param name="isValidationRequired"> Whether validation is required. </param>
+        /// <param name="isCrossResourceGroupMoveEnabled"> Whether cross resource group move is enabled. </param>
+        /// <param name="isCrossSubscriptionMoveEnabled"> Whether cross subscription move is enabled. </param>
+        /// <returns> A new <see cref="Models.ResourceMovePolicy"/> instance for mocking. </returns>
+        public static ResourceMovePolicy ResourceMovePolicy(bool? isValidationRequired = default, bool? isCrossResourceGroupMoveEnabled = default, bool? isCrossSubscriptionMoveEnabled = default)
+        {
+            return new ResourceMovePolicy(isValidationRequired, isCrossResourceGroupMoveEnabled, isCrossSubscriptionMoveEnabled, default);
+        }
+
+        /// <param name="policy"> The policy. </param>
+        /// <returns> A new <see cref="Models.ResourceConcurrencyControlOption"/> instance for mocking. </returns>
+        public static ResourceConcurrencyControlOption ResourceConcurrencyControlOption(ResourceConcurrencyPolicy? policy = default)
+        {
+            return new ResourceConcurrencyControlOption(policy, default);
+        }
+
+        /// <param name="isEnabled"> Whether it's enabled. </param>
+        /// <param name="apiVersion"> The api version. </param>
+        /// <returns> A new <see cref="Models.ResourceGraphConfiguration"/> instance for mocking. </returns>
+        public static ResourceGraphConfiguration ResourceGraphConfiguration(bool? isEnabled = default, string apiVersion = default)
+        {
+            return new ResourceGraphConfiguration(isEnabled, apiVersion, default);
+        }
+
+        /// <param name="actionName"> The action name. </param>
+        /// <param name="lifeTime"> This is a TimeSpan property. </param>
+        /// <returns> A new <see cref="Models.ResourceTypeOnBehalfOfToken"/> instance for mocking. </returns>
+        public static ResourceTypeOnBehalfOfToken ResourceTypeOnBehalfOfToken(string actionName = default, string lifeTime = default)
+        {
+            return new ResourceTypeOnBehalfOfToken(actionName, lifeTime, default);
+        }
+
+        /// <param name="actionName"></param>
+        /// <param name="timeout"> This is a TimeSpan property. </param>
+        /// <returns> A new <see cref="Models.AsyncTimeoutRule"/> instance for mocking. </returns>
+        public static AsyncTimeoutRule AsyncTimeoutRule(string actionName = default, string timeout = default)
+        {
+            return new AsyncTimeoutRule(actionName, timeout, default);
+        }
+
+        /// <param name="profileVersion"> Profile version. </param>
+        /// <param name="apiVersion"> Api version. </param>
+        /// <returns> A new <see cref="Models.ResourceTypeRegistrationApiProfile"/> instance for mocking. </returns>
+        public static ResourceTypeRegistrationApiProfile ResourceTypeRegistrationApiProfile(string profileVersion = default, string apiVersion = default)
+        {
+            return new ResourceTypeRegistrationApiProfile(profileVersion, apiVersion, default);
+        }
+
         /// <param name="disallowedLegacyOperations"></param>
         /// <param name="disallowedConditions"></param>
         /// <returns> A new <see cref="Models.ResourceTypeRegistrationLegacyPolicy"/> instance for mocking. </returns>
@@ -845,10 +1153,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
             disallowedLegacyOperations ??= new ChangeTrackingList<ProviderLegacyOperation>();
             disallowedConditions ??= new ChangeTrackingList<LegacyDisallowedCondition>();
 
-            return new ResourceTypeRegistrationLegacyPolicy(disallowedLegacyOperations.ToList(), disallowedConditions.ToList(), additionalBinaryDataProperties: null);
+            return new ResourceTypeRegistrationLegacyPolicy((disallowedLegacyOperations ?? new ChangeTrackingList<ProviderLegacyOperation>()).ToList(), (disallowedConditions ?? new ChangeTrackingList<LegacyDisallowedCondition>()).ToList(), default);
         }
 
-        /// <summary> The LegacyDisallowedCondition. </summary>
         /// <param name="disallowedLegacyOperations"> The disallowed legacy operations. </param>
         /// <param name="feature"> Feature string. </param>
         /// <returns> A new <see cref="Models.LegacyDisallowedCondition"/> instance for mocking. </returns>
@@ -856,7 +1163,31 @@ namespace Azure.ResourceManager.ProviderHub.Models
         {
             disallowedLegacyOperations ??= new ChangeTrackingList<ProviderLegacyOperation>();
 
-            return new LegacyDisallowedCondition(disallowedLegacyOperations.ToList(), feature, additionalBinaryDataProperties: null);
+            return new LegacyDisallowedCondition((disallowedLegacyOperations ?? new ChangeTrackingList<ProviderLegacyOperation>()).ToList(), feature, default);
+        }
+
+        /// <param name="capacityPolicy"> Capacity policy. </param>
+        /// <param name="skuAlias"> Sku alias. </param>
+        /// <returns> A new <see cref="Models.ResourceTypeRegistrationCapacityRule"/> instance for mocking. </returns>
+        public static ResourceTypeRegistrationCapacityRule ResourceTypeRegistrationCapacityRule(ResourceTypeRegistrationCapacityPolicy? capacityPolicy = default, string skuAlias = default)
+        {
+            return new ResourceTypeRegistrationCapacityRule(capacityPolicy, skuAlias, default);
+        }
+
+        /// <param name="name"> Resource name. </param>
+        /// <param name="getActionVerb"> Get action verb. </param>
+        /// <returns> A new <see cref="Models.AllowedResourceName"/> instance for mocking. </returns>
+        public static AllowedResourceName AllowedResourceName(string name = default, string getActionVerb = default)
+        {
+            return new AllowedResourceName(name, getActionVerb, default);
+        }
+
+        /// <param name="isResourceCacheEnabled"> Enable resource cache. </param>
+        /// <param name="resourceCacheExpirationTimespan"> Resource cache expiration timespan. This is a TimeSpan property. </param>
+        /// <returns> A new <see cref="Models.ResourceTypeRegistrationResourceCache"/> instance for mocking. </returns>
+        public static ResourceTypeRegistrationResourceCache ResourceTypeRegistrationResourceCache(bool? isResourceCacheEnabled = default, string resourceCacheExpirationTimespan = default)
+        {
+            return new ResourceTypeRegistrationResourceCache(isResourceCacheEnabled, resourceCacheExpirationTimespan, default);
         }
 
         /// <param name="batchProvisioningSupportSupportedOperations"> Supported operations. </param>
@@ -867,10 +1198,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         {
             deleteDependencies ??= new ChangeTrackingList<ResourceTypeRegistrationDeleteDependency>();
 
-            return new ResourceTypeRegistrationResourceManagementOptions(batchProvisioningSupportSupportedOperations is null ? default : new BatchProvisioningSupport(batchProvisioningSupportSupportedOperations, null), deleteDependencies.ToList(), nestedProvisioningSupportMinimumApiVersion is null ? default : new NestedProvisioningSupport(nestedProvisioningSupportMinimumApiVersion, null), additionalBinaryDataProperties: null);
+            return new ResourceTypeRegistrationResourceManagementOptions(batchProvisioningSupportSupportedOperations is null ? default : new BatchProvisioningSupport(batchProvisioningSupportSupportedOperations, default), (deleteDependencies ?? new ChangeTrackingList<ResourceTypeRegistrationDeleteDependency>()).ToList(), nestedProvisioningSupportMinimumApiVersion is null ? default : new NestedProvisioningSupport(nestedProvisioningSupportMinimumApiVersion, default), default);
         }
 
-        /// <summary> The ResourceTypeRegistrationDeleteDependency. </summary>
         /// <param name="requiredFeatures"> Required features. </param>
         /// <param name="linkedProperty"> Linked property. </param>
         /// <param name="linkedType"> Linked type. </param>
@@ -879,10 +1209,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         {
             requiredFeatures ??= new ChangeTrackingList<string>();
 
-            return new ResourceTypeRegistrationDeleteDependency(requiredFeatures.ToList(), linkedProperty, linkedType, additionalBinaryDataProperties: null);
+            return new ResourceTypeRegistrationDeleteDependency((requiredFeatures ?? new ChangeTrackingList<string>()).ToList(), linkedProperty, linkedType, default);
         }
 
-        /// <summary> The CustomRolloutStatus. </summary>
         /// <param name="completedRegions"> The completed regions. </param>
         /// <param name="failedOrSkippedRegions"> The failed or skipped regions. </param>
         /// <param name="manifestCheckinStatus"> The manifest checkin status. </param>
@@ -892,10 +1221,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
             completedRegions ??= new ChangeTrackingList<AzureLocation>();
             failedOrSkippedRegions ??= new ChangeTrackingDictionary<string, ExtendedErrorInfo>();
 
-            return new CustomRolloutStatus(completedRegions.ToList(), failedOrSkippedRegions, manifestCheckinStatus, additionalBinaryDataProperties: null);
+            return new CustomRolloutStatus((completedRegions ?? new ChangeTrackingList<AzureLocation>()).ToList(), failedOrSkippedRegions ?? new ChangeTrackingDictionary<string, ExtendedErrorInfo>(), manifestCheckinStatus, default);
         }
 
-        /// <summary> Error information. </summary>
         /// <param name="code"> The error code. </param>
         /// <param name="target"> The target of the error. </param>
         /// <param name="message"> The error message. </param>
@@ -911,21 +1239,19 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 code,
                 target,
                 message,
-                details.ToList(),
-                additionalInfo.ToList(),
-                additionalBinaryDataProperties: null);
+                (details ?? new ChangeTrackingList<ExtendedErrorInfo>()).ToList(),
+                (additionalInfo ?? new ChangeTrackingList<TypedErrorInfo>()).ToList(),
+                default);
         }
 
-        /// <summary> Error information. </summary>
         /// <param name="typedErrorInfoType"> The type of the error. </param>
         /// <param name="info"> The error information. </param>
         /// <returns> A new <see cref="Models.TypedErrorInfo"/> instance for mocking. </returns>
         public static TypedErrorInfo TypedErrorInfo(string typedErrorInfoType = default, BinaryData info = default)
         {
-            return new TypedErrorInfo(typedErrorInfoType, info, additionalBinaryDataProperties: null);
+            return new TypedErrorInfo(typedErrorInfoType, info, default);
         }
 
-        /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -939,8 +1265,17 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                default);
+        }
+
+        /// <param name="provisioningState"> The provisioned state of the resource. </param>
+        /// <param name="specification"> The default rollout specification. </param>
+        /// <param name="status"> The default rollout status. </param>
+        /// <returns> A new <see cref="Models.DefaultRolloutProperties"/> instance for mocking. </returns>
+        public static DefaultRolloutProperties DefaultRolloutProperties(ProviderHubProvisioningState? provisioningState = default, DefaultRolloutSpecification specification = default, DefaultRolloutStatus status = default)
+        {
+            return new DefaultRolloutProperties(provisioningState, specification, status, default);
         }
 
         /// <param name="isExpeditedRolloutEnabled"> Indicates whether expedited rollout is enabled/disabled. </param>
@@ -959,7 +1294,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             resourceTypeRegistrations ??= new ChangeTrackingList<ResourceTypeRegistrationData>();
 
             return new DefaultRolloutSpecification(
-                isExpeditedRolloutEnabled is null ? default : new ExpeditedRolloutDefinition(isExpeditedRolloutEnabled, null),
+                isExpeditedRolloutEnabled is null ? default : new ExpeditedRolloutDefinition(isExpeditedRolloutEnabled, default),
                 canary,
                 lowTraffic,
                 mediumTraffic,
@@ -967,12 +1302,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 restOfTheWorldGroupOne,
                 restOfTheWorldGroupTwo,
                 providerRegistration,
-                resourceTypeRegistrations.ToList(),
+                (resourceTypeRegistrations ?? new ChangeTrackingList<ResourceTypeRegistrationData>()).ToList(),
                 autoProvisionConfig,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> The CanaryTrafficRegionRolloutConfiguration. </summary>
         /// <param name="skipRegions"> The skip regions. </param>
         /// <param name="regions"> The regions. </param>
         /// <returns> A new <see cref="Models.CanaryTrafficRegionRolloutConfiguration"/> instance for mocking. </returns>
@@ -981,10 +1315,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
             skipRegions ??= new ChangeTrackingList<AzureLocation>();
             regions ??= new ChangeTrackingList<AzureLocation>();
 
-            return new CanaryTrafficRegionRolloutConfiguration(skipRegions.ToList(), regions.ToList(), additionalBinaryDataProperties: null);
+            return new CanaryTrafficRegionRolloutConfiguration((skipRegions ?? new ChangeTrackingList<AzureLocation>()).ToList(), (regions ?? new ChangeTrackingList<AzureLocation>()).ToList(), default);
         }
 
-        /// <summary> The TrafficRegionRolloutConfiguration. </summary>
         /// <param name="regions"></param>
         /// <param name="waitDuration"> The wait duration. </param>
         /// <returns> A new <see cref="Models.TrafficRegionRolloutConfiguration"/> instance for mocking. </returns>
@@ -992,10 +1325,17 @@ namespace Azure.ResourceManager.ProviderHub.Models
         {
             regions ??= new ChangeTrackingList<AzureLocation>();
 
-            return new TrafficRegionRolloutConfiguration(regions.ToList(), additionalBinaryDataProperties: null, waitDuration);
+            return new TrafficRegionRolloutConfiguration((regions ?? new ChangeTrackingList<AzureLocation>()).ToList(), default, waitDuration);
         }
 
-        /// <summary> The DefaultRolloutStatus. </summary>
+        /// <param name="isStorageEnabled"> Whether auto provisioning for storage is enabled. </param>
+        /// <param name="isResourceGraphEnabled"> Whether auto provisioning for resource graph is enabled. </param>
+        /// <returns> A new <see cref="Models.DefaultRolloutAutoProvisionConfig"/> instance for mocking. </returns>
+        public static DefaultRolloutAutoProvisionConfig DefaultRolloutAutoProvisionConfig(bool? isStorageEnabled = default, bool? isResourceGraphEnabled = default)
+        {
+            return new DefaultRolloutAutoProvisionConfig(isStorageEnabled, isResourceGraphEnabled, default);
+        }
+
         /// <param name="completedRegions"> The completed regions. </param>
         /// <param name="failedOrSkippedRegions"> The failed or skipped regions. </param>
         /// <param name="nextTrafficRegion"> The next traffic region. </param>
@@ -1009,16 +1349,15 @@ namespace Azure.ResourceManager.ProviderHub.Models
             failedOrSkippedRegions ??= new ChangeTrackingDictionary<string, ExtendedErrorInfo>();
 
             return new DefaultRolloutStatus(
-                completedRegions.ToList(),
-                failedOrSkippedRegions,
-                additionalBinaryDataProperties: null,
+                (completedRegions ?? new ChangeTrackingList<AzureLocation>()).ToList(),
+                failedOrSkippedRegions ?? new ChangeTrackingDictionary<string, ExtendedErrorInfo>(),
+                default,
                 nextTrafficRegion,
                 nextTrafficRegionScheduledOn,
                 subscriptionReregistrationResult,
                 manifestCheckinStatus);
         }
 
-        /// <summary> The RolloutStatusBase. </summary>
         /// <param name="completedRegions"> The completed regions. </param>
         /// <param name="failedOrSkippedRegions"> The failed or skipped regions. </param>
         /// <returns> A new <see cref="Models.RolloutStatusBase"/> instance for mocking. </returns>
@@ -1027,15 +1366,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
             completedRegions ??= new ChangeTrackingList<AzureLocation>();
             failedOrSkippedRegions ??= new ChangeTrackingDictionary<string, ExtendedErrorInfo>();
 
-            return new RolloutStatusBase(completedRegions.ToList(), failedOrSkippedRegions, additionalBinaryDataProperties: null);
+            return new RolloutStatusBase((completedRegions ?? new ChangeTrackingList<AzureLocation>()).ToList(), failedOrSkippedRegions ?? new ChangeTrackingDictionary<string, ExtendedErrorInfo>(), default);
         }
 
-        /// <summary> The ProviderFrontloadPayload. </summary>
         /// <param name="properties"> Properties of the frontload payload. </param>
         /// <returns> A new <see cref="Models.ProviderFrontloadPayload"/> instance for mocking. </returns>
         public static ProviderFrontloadPayload ProviderFrontloadPayload(ProviderFrontloadPayloadProperties properties = default)
         {
-            return new ProviderFrontloadPayload(properties, additionalBinaryDataProperties: null);
+            return new ProviderFrontloadPayload(properties, default);
         }
 
         /// <param name="operationType"> The operation type. </param>
@@ -1063,22 +1401,21 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 copyFromLocation,
                 environmentType,
                 serviceFeatureFlag,
-                includeResourceTypes.ToList(),
-                excludeResourceTypes.ToList(),
-                overrideManifestLevelFieldsResourceHydrationAccounts is null ? default : new ManifestLevelPropertyBag((overrideManifestLevelFieldsResourceHydrationAccounts ?? new ChangeTrackingList<ResourceHydrationAccount>()).ToList(), null),
+                (includeResourceTypes ?? new ChangeTrackingList<string>()).ToList(),
+                (excludeResourceTypes ?? new ChangeTrackingList<string>()).ToList(),
+                overrideManifestLevelFieldsResourceHydrationAccounts is null ? default : new ManifestLevelPropertyBag((overrideManifestLevelFieldsResourceHydrationAccounts ?? new ChangeTrackingList<ResourceHydrationAccount>()).ToList(), default),
                 overrideEndpointLevelFields,
-                ignoreFields.ToList(),
-                additionalBinaryDataProperties: null);
+                (ignoreFields ?? new ChangeTrackingList<string>()).ToList(),
+                default);
         }
 
-        /// <summary> The ManifestLevelPropertyBag. </summary>
         /// <param name="resourceHydrationAccounts"> The resource hydration accounts. </param>
         /// <returns> A new <see cref="Models.ManifestLevelPropertyBag"/> instance for mocking. </returns>
         public static ManifestLevelPropertyBag ManifestLevelPropertyBag(IEnumerable<ResourceHydrationAccount> resourceHydrationAccounts = default)
         {
             resourceHydrationAccounts ??= new ChangeTrackingList<ResourceHydrationAccount>();
 
-            return new ManifestLevelPropertyBag(resourceHydrationAccounts.ToList(), additionalBinaryDataProperties: null);
+            return new ManifestLevelPropertyBag((resourceHydrationAccounts ?? new ChangeTrackingList<ResourceHydrationAccount>()).ToList(), default);
         }
 
         /// <param name="enabled"> Whether it's enabled. </param>
@@ -1094,7 +1431,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="apiVersion"> The api version. </param>
         /// <param name="zones"> The zones. </param>
         /// <returns> A new <see cref="Models.ResourceTypeEndpointBase"/> instance for mocking. </returns>
-        public static ResourceTypeEndpointBase ResourceTypeEndpointBase(bool enabled = default, IEnumerable<string> apiVersions = default, Uri endpointUri = default, IEnumerable<string> locations = default, IEnumerable<string> requiredFeatures = default, FeaturesPolicy? requiredFeaturesPolicy = default, TimeSpan timeout = default, ProviderEndpointType endpointType = default, ProviderDstsConfiguration dstsConfiguration = default, string skuLink = default, string apiVersion = default, IEnumerable<string> zones = default)
+        public static ResourceTypeEndpointBase ResourceTypeEndpointBase(bool enabled = default, IEnumerable<string> apiVersions = default, Uri endpointUri = default, IEnumerable<string> locations = default, IEnumerable<string> requiredFeatures = default, FeaturesPolicy requiredFeaturesPolicy = default, TimeSpan timeout = default, ProviderEndpointType endpointType = default, ProviderDstsConfiguration dstsConfiguration = default, string skuLink = default, string apiVersion = default, IEnumerable<string> zones = default)
         {
             apiVersions ??= new ChangeTrackingList<string>();
             locations ??= new ChangeTrackingList<string>();
@@ -1103,21 +1440,20 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
             return new ResourceTypeEndpointBase(
                 enabled,
-                apiVersions.ToList(),
+                (apiVersions ?? new ChangeTrackingList<string>()).ToList(),
                 endpointUri,
-                locations.ToList(),
-                requiredFeatures.ToList(),
-                requiredFeaturesPolicy is null ? default : new ProviderFeaturesRule(requiredFeaturesPolicy.Value, null),
+                (locations ?? new ChangeTrackingList<string>()).ToList(),
+                (requiredFeatures ?? new ChangeTrackingList<string>()).ToList(),
+                new ProviderFeaturesRule(requiredFeaturesPolicy, default),
                 timeout,
                 endpointType,
                 dstsConfiguration,
                 skuLink,
                 apiVersion,
-                zones.ToList(),
-                additionalBinaryDataProperties: null);
+                (zones ?? new ChangeTrackingList<string>()).ToList(),
+                default);
         }
 
-        /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1131,11 +1467,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                default);
         }
 
-        /// <summary> The NotificationRegistrationProperties. </summary>
         /// <param name="notificationMode"> The notification mode. </param>
         /// <param name="messageScope"> The message scope. </param>
         /// <param name="includedEvents"> The included events. </param>
@@ -1150,13 +1485,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new NotificationRegistrationProperties(
                 notificationMode,
                 messageScope,
-                includedEvents.ToList(),
-                notificationEndpoints.ToList(),
+                (includedEvents ?? new ChangeTrackingList<string>()).ToList(),
+                (notificationEndpoints ?? new ChangeTrackingList<NotificationEndpoint>()).ToList(),
                 provisioningState,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> The NotificationEndpoint. </summary>
         /// <param name="notificationDestination"> The notification destination. </param>
         /// <param name="locations"> The locations. </param>
         /// <returns> A new <see cref="Models.NotificationEndpoint"/> instance for mocking. </returns>
@@ -1164,10 +1498,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         {
             locations ??= new ChangeTrackingList<AzureLocation>();
 
-            return new NotificationEndpoint(notificationDestination, locations.ToList(), additionalBinaryDataProperties: null);
+            return new NotificationEndpoint(notificationDestination, (locations ?? new ChangeTrackingList<AzureLocation>()).ToList(), default);
         }
 
-        /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1181,11 +1514,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                default);
         }
 
-        /// <summary> The ResourceTypeSkuProperties. </summary>
         /// <param name="skuSettings"> The sku settings. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <returns> A new <see cref="Models.ResourceTypeSkuProperties"/> instance for mocking. </returns>
@@ -1193,10 +1525,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         {
             skuSettings ??= new ChangeTrackingList<ResourceTypeSkuSetting>();
 
-            return new ResourceTypeSkuProperties(skuSettings.ToList(), provisioningState, additionalBinaryDataProperties: null);
+            return new ResourceTypeSkuProperties((skuSettings ?? new ChangeTrackingList<ResourceTypeSkuSetting>()).ToList(), provisioningState, default);
         }
 
-        /// <summary> The ResourceTypeSkuSetting. </summary>
         /// <param name="name"> The name. </param>
         /// <param name="tier"> The tier. </param>
         /// <param name="size"> The size. </param>
@@ -1225,17 +1556,16 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 size,
                 family,
                 kind,
-                locations.ToList(),
-                locationInfo.ToList(),
-                requiredQuotaIds.ToList(),
-                requiredFeatures.ToList(),
+                (locations ?? new ChangeTrackingList<string>()).ToList(),
+                (locationInfo ?? new ChangeTrackingList<ResourceTypeSkuLocationInfo>()).ToList(),
+                (requiredQuotaIds ?? new ChangeTrackingList<string>()).ToList(),
+                (requiredFeatures ?? new ChangeTrackingList<string>()).ToList(),
                 capacity,
-                costs.ToList(),
-                capabilities.ToList(),
-                additionalBinaryDataProperties: null);
+                (costs ?? new ChangeTrackingList<ResourceTypeSkuCost>()).ToList(),
+                (capabilities ?? new ChangeTrackingList<ResourceSkuCapability>()).ToList(),
+                default);
         }
 
-        /// <summary> The ResourceTypeSkuLocationInfo. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="zones"> The zones. </param>
         /// <param name="zoneDetails"> The zone details. </param>
@@ -1250,14 +1580,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
             return new ResourceTypeSkuLocationInfo(
                 location,
-                zones.ToList(),
-                zoneDetails.ToList(),
-                extendedLocations.ToList(),
+                (zones ?? new ChangeTrackingList<string>()).ToList(),
+                (zoneDetails ?? new ChangeTrackingList<ResourceTypeSkuZoneDetail>()).ToList(),
+                (extendedLocations ?? new ChangeTrackingList<string>()).ToList(),
                 locationType,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> The ResourceTypeSkuZoneDetail. </summary>
         /// <param name="name"> The name. </param>
         /// <param name="capabilities"> The capabilities. </param>
         /// <returns> A new <see cref="Models.ResourceTypeSkuZoneDetail"/> instance for mocking. </returns>
@@ -1266,10 +1595,36 @@ namespace Azure.ResourceManager.ProviderHub.Models
             name ??= new ChangeTrackingList<string>();
             capabilities ??= new ChangeTrackingList<ResourceSkuCapability>();
 
-            return new ResourceTypeSkuZoneDetail(name.ToList(), capabilities.ToList(), additionalBinaryDataProperties: null);
+            return new ResourceTypeSkuZoneDetail((name ?? new ChangeTrackingList<string>()).ToList(), (capabilities ?? new ChangeTrackingList<ResourceSkuCapability>()).ToList(), default);
         }
 
-        /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
+        /// <param name="name"> The name. </param>
+        /// <param name="value"> The value. </param>
+        /// <returns> A new <see cref="Models.ResourceSkuCapability"/> instance for mocking. </returns>
+        public static ResourceSkuCapability ResourceSkuCapability(string name = default, string value = default)
+        {
+            return new ResourceSkuCapability(name, value, default);
+        }
+
+        /// <param name="minimum"> The minimum. </param>
+        /// <param name="maximum"> The maximum. </param>
+        /// <param name="default"> The default. </param>
+        /// <param name="scaleType"> The scale type. </param>
+        /// <returns> A new <see cref="Models.ResourceTypeSkuCapacity"/> instance for mocking. </returns>
+        public static ResourceTypeSkuCapacity ResourceTypeSkuCapacity(int minimum = default, int? maximum = default, int? @default = default, ResourceTypeSkuScaleType? scaleType = default)
+        {
+            return new ResourceTypeSkuCapacity(minimum, maximum, @default, scaleType, default);
+        }
+
+        /// <param name="meterId"> The meter id. </param>
+        /// <param name="quantity"> The quantity. </param>
+        /// <param name="extendedUnit"> The extended unit. </param>
+        /// <returns> A new <see cref="Models.ResourceTypeSkuCost"/> instance for mocking. </returns>
+        public static ResourceTypeSkuCost ResourceTypeSkuCost(string meterId = default, int? quantity = default, string extendedUnit = default)
+        {
+            return new ResourceTypeSkuCost(meterId, quantity, extendedUnit, default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1283,11 +1638,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                default);
         }
 
-        /// <summary> The ProviderAuthorizedApplicationProperties. </summary>
         /// <param name="providerAuthorization"></param>
         /// <param name="dataAuthorizations"> The authorizations that determine the level of data access permissions on the specified resource types. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
@@ -1296,10 +1650,17 @@ namespace Azure.ResourceManager.ProviderHub.Models
         {
             dataAuthorizations ??= new ChangeTrackingList<ApplicationDataAuthorization>();
 
-            return new ProviderAuthorizedApplicationProperties(providerAuthorization, dataAuthorizations.ToList(), provisioningState, additionalBinaryDataProperties: null);
+            return new ProviderAuthorizedApplicationProperties(providerAuthorization, (dataAuthorizations ?? new ChangeTrackingList<ApplicationDataAuthorization>()).ToList(), provisioningState, default);
         }
 
-        /// <summary> The ApplicationDataAuthorization. </summary>
+        /// <param name="roleDefinitionId"> The role definition ID for the application. </param>
+        /// <param name="managedByRoleDefinitionId"> The managed by role definition ID for the application. </param>
+        /// <returns> A new <see cref="Models.ApplicationProviderAuthorization"/> instance for mocking. </returns>
+        public static ApplicationProviderAuthorization ApplicationProviderAuthorization(string roleDefinitionId = default, string managedByRoleDefinitionId = default)
+        {
+            return new ApplicationProviderAuthorization(roleDefinitionId, managedByRoleDefinitionId, default);
+        }
+
         /// <param name="role"> The ownership role the application has on the resource types. The service owner role gives the application owner permissions. The limited owner role gives elevated permissions but does not allow all the permissions of a service owner, such as read/write on internal metadata. </param>
         /// <param name="resourceTypes"> The resource types from the defined resource types in the provider namespace that the application can access. If no resource types are specified and the role is service owner, the default is * which is all resource types. </param>
         /// <returns> A new <see cref="Models.ApplicationDataAuthorization"/> instance for mocking. </returns>
@@ -1307,7 +1668,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         {
             resourceTypes ??= new ChangeTrackingList<string>();
 
-            return new ApplicationDataAuthorization(role, resourceTypes.ToList(), additionalBinaryDataProperties: null);
+            return new ApplicationDataAuthorization(role, (resourceTypes ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1327,23 +1688,21 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                providerMonitorSettingProvisioningState is null ? default : new ProviderMonitorSettingProperties(providerMonitorSettingProvisioningState, null));
+                providerMonitorSettingProvisioningState is null ? default : new ProviderMonitorSettingProperties(providerMonitorSettingProvisioningState, default),
+                default);
         }
 
-        /// <summary> The ResourceManagementAction. </summary>
         /// <param name="resources"> resource management action content. </param>
         /// <returns> A new <see cref="Models.ResourceManagementAction"/> instance for mocking. </returns>
         public static ResourceManagementAction ResourceManagementAction(IEnumerable<ResourceManagementEntity> resources = default)
         {
             resources ??= new ChangeTrackingList<ResourceManagementEntity>();
 
-            return new ResourceManagementAction(resources.ToList(), additionalBinaryDataProperties: null);
+            return new ResourceManagementAction((resources ?? new ChangeTrackingList<ResourceManagementEntity>()).ToList(), default);
         }
 
-        /// <summary> The ResourceManagementEntity. </summary>
         /// <param name="resourceId"> The resource id. </param>
         /// <param name="homeTenantId"> The home tenant id. </param>
         /// <param name="location"> The location. </param>
@@ -1351,19 +1710,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <returns> A new <see cref="Models.ResourceManagementEntity"/> instance for mocking. </returns>
         public static ResourceManagementEntity ResourceManagementEntity(ResourceIdentifier resourceId = default, string homeTenantId = default, AzureLocation? location = default, string status = default)
         {
-            return new ResourceManagementEntity(resourceId, homeTenantId, location, status, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.CheckinManifestInfo"/>. </summary>
-        /// <param name="isCheckedIn"></param>
-        /// <param name="statusMessage"></param>
-        /// <param name="pullRequest"></param>
-        /// <param name="commitId"></param>
-        /// <returns> A new <see cref="Models.CheckinManifestInfo"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static CheckinManifestInfo CheckinManifestInfo(bool isCheckedIn, string statusMessage, string pullRequest, string commitId)
-        {
-            return new CheckinManifestInfo(isCheckedIn, statusMessage, pullRequest, commitId, additionalBinaryDataProperties: null);
+            return new ResourceManagementEntity(resourceId, homeTenantId, location, status, default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LinkedOperationRule"/>. </summary>
@@ -1371,9 +1718,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="linkedAction"></param>
         /// <returns> A new <see cref="Models.LinkedOperationRule"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static LinkedOperationRule LinkedOperationRule(LinkedOperation linkedOperation, LinkedAction linkedAction)
+        public static LinkedOperationRule LinkedOperationRule(LinkedOperation linkedOperation = default, LinkedAction linkedAction = default)
         {
-            return LinkedOperationRule(linkedOperation, linkedAction, dependsOnTypes: default);
+            return new LinkedOperationRule(linkedOperation, linkedAction, default, default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ProviderResourceType"/>. </summary>
@@ -1403,54 +1750,41 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="resourceDeletionPolicy"></param>
         /// <returns> A new <see cref="Models.ProviderResourceType"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ProviderResourceType ProviderResourceType(string name, ResourceRoutingType? routingType, ResourceValidation? resourceValidation, IEnumerable<string> allowedUnauthorizedActions, IEnumerable<AuthorizationActionMapping> authorizationActionMappings, IEnumerable<LinkedAccessCheck> linkedAccessChecks, string defaultApiVersion, IEnumerable<LoggingRule> loggingRules, IEnumerable<ThrottlingRule> throttlingRules, IEnumerable<ResourceProviderEndpoint> endpoints, MarketplaceType? marketplaceType, IdentityManagementType? managementType, BinaryData metadata, IEnumerable<string> requiredFeatures, FeaturesPolicy? requiredFeaturesPolicy, IEnumerable<ProviderSubscriptionStateRule> subscriptionStateRules, IEnumerable<ServiceTreeInfo> serviceTreeInfos, OptInHeaderType? optInHeaders, string skuLink, IEnumerable<string> disallowedActionVerbs, TemplateDeploymentPolicy templateDeploymentPolicy, IEnumerable<ProviderHubExtendedLocationOptions> extendedLocations, IEnumerable<LinkedOperationRule> linkedOperationRules, ManifestResourceDeletionPolicy? resourceDeletionPolicy)
+        public static ProviderResourceType ProviderResourceType(string name = default, ResourceRoutingType? routingType = default, ResourceValidation? resourceValidation = default, IEnumerable<string> allowedUnauthorizedActions = default, IEnumerable<AuthorizationActionMapping> authorizationActionMappings = default, IEnumerable<LinkedAccessCheck> linkedAccessChecks = default, string defaultApiVersion = default, IEnumerable<LoggingRule> loggingRules = default, IEnumerable<ThrottlingRule> throttlingRules = default, IEnumerable<ResourceProviderEndpoint> endpoints = default, MarketplaceType? marketplaceType = default, IdentityManagementType? managementType = default, BinaryData metadata = default, IEnumerable<string> requiredFeatures = default, FeaturesPolicy? requiredFeaturesPolicy = default, IEnumerable<ProviderSubscriptionStateRule> subscriptionStateRules = default, IEnumerable<ServiceTreeInfo> serviceTreeInfos = default, OptInHeaderType? optInHeaders = default, string skuLink = default, IEnumerable<string> disallowedActionVerbs = default, TemplateDeploymentPolicy templateDeploymentPolicy = default, IEnumerable<ProviderHubExtendedLocationOptions> extendedLocations = default, IEnumerable<LinkedOperationRule> linkedOperationRules = default, ManifestResourceDeletionPolicy? resourceDeletionPolicy = default)
         {
-            allowedUnauthorizedActions ??= new ChangeTrackingList<string>();
-            authorizationActionMappings ??= new ChangeTrackingList<AuthorizationActionMapping>();
-            linkedAccessChecks ??= new ChangeTrackingList<LinkedAccessCheck>();
-            loggingRules ??= new ChangeTrackingList<LoggingRule>();
-            throttlingRules ??= new ChangeTrackingList<ThrottlingRule>();
-            endpoints ??= new ChangeTrackingList<ResourceProviderEndpoint>();
-            requiredFeatures ??= new ChangeTrackingList<string>();
-            subscriptionStateRules ??= new ChangeTrackingList<ProviderSubscriptionStateRule>();
-            serviceTreeInfos ??= new ChangeTrackingList<ServiceTreeInfo>();
-            disallowedActionVerbs ??= new ChangeTrackingList<string>();
-            extendedLocations ??= new ChangeTrackingList<ProviderHubExtendedLocationOptions>();
-            linkedOperationRules ??= new ChangeTrackingList<LinkedOperationRule>();
-
             return new ProviderResourceType(
                 name,
                 routingType,
                 default,
                 default,
                 resourceValidation,
-                allowedUnauthorizedActions.ToList(),
+                (allowedUnauthorizedActions ?? new ChangeTrackingList<string>()).ToList(),
                 default,
-                authorizationActionMappings.ToList(),
-                linkedAccessChecks.ToList(),
+                (authorizationActionMappings ?? new ChangeTrackingList<AuthorizationActionMapping>()).ToList(),
+                (linkedAccessChecks ?? new ChangeTrackingList<LinkedAccessCheck>()).ToList(),
                 defaultApiVersion,
-                loggingRules.ToList(),
-                throttlingRules.ToList(),
-                endpoints.ToList(),
+                (loggingRules ?? new ChangeTrackingList<LoggingRule>()).ToList(),
+                (throttlingRules ?? new ChangeTrackingList<ThrottlingRule>()).ToList(),
+                (endpoints ?? new ChangeTrackingList<ResourceProviderEndpoint>()).ToList(),
                 marketplaceType,
-                default,
+                managementType is null ? default : new IdentityManagement(managementType, default),
                 metadata,
-                requiredFeatures.ToList(),
-                default,
-                subscriptionStateRules.ToList(),
-                serviceTreeInfos.ToList(),
-                default,
+                (requiredFeatures ?? new ChangeTrackingList<string>()).ToList(),
+                requiredFeaturesPolicy is null ? default : new ProviderFeaturesRule(requiredFeaturesPolicy.GetValueOrDefault(), default),
+                (subscriptionStateRules ?? new ChangeTrackingList<ProviderSubscriptionStateRule>()).ToList(),
+                (serviceTreeInfos ?? new ChangeTrackingList<ServiceTreeInfo>()).ToList(),
+                optInHeaders is null ? default : new ProviderRequestHeaderOptions(optInHeaders, default, default),
                 skuLink,
-                disallowedActionVerbs.ToList(),
+                (disallowedActionVerbs ?? new ChangeTrackingList<string>()).ToList(),
                 templateDeploymentPolicy,
-                extendedLocations.ToList(),
-                linkedOperationRules.ToList(),
+                (extendedLocations ?? new ChangeTrackingList<ProviderHubExtendedLocationOptions>()).ToList(),
+                (linkedOperationRules ?? new ChangeTrackingList<LinkedOperationRule>()).ToList(),
                 resourceDeletionPolicy,
                 default,
                 default,
                 default,
                 default,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ResourceProviderEndpoint"/>. </summary>
@@ -1463,9 +1797,19 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="timeout"></param>
         /// <returns> A new <see cref="Models.ResourceProviderEndpoint"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ResourceProviderEndpoint ResourceProviderEndpoint(bool? isEnabled, IEnumerable<string> apiVersions, Uri endpointUri, IEnumerable<AzureLocation> locations, IEnumerable<string> requiredFeatures, FeaturesPolicy? requiredFeaturesPolicy, TimeSpan? timeout)
+        public static ResourceProviderEndpoint ResourceProviderEndpoint(bool? isEnabled = default, IEnumerable<string> apiVersions = default, Uri endpointUri = default, IEnumerable<AzureLocation> locations = default, IEnumerable<string> requiredFeatures = default, FeaturesPolicy? requiredFeaturesPolicy = default, TimeSpan? timeout = default)
         {
-            return ResourceProviderEndpoint(isEnabled, apiVersions, endpointUri, locations, requiredFeatures, requiredFeaturesPolicy, timeout, endpointType: default, skuLink: default);
+            return new ResourceProviderEndpoint(
+                isEnabled,
+                (apiVersions ?? new ChangeTrackingList<string>()).ToList(),
+                endpointUri,
+                (locations ?? new ChangeTrackingList<AzureLocation>()).ToList(),
+                (requiredFeatures ?? new ChangeTrackingList<string>()).ToList(),
+                requiredFeaturesPolicy is null ? default : new ProviderFeaturesRule(requiredFeaturesPolicy.GetValueOrDefault(), default),
+                timeout,
+                default,
+                default,
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.TemplateDeploymentPolicy"/>. </summary>
@@ -1473,31 +1817,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="preflightOptions"></param>
         /// <returns> A new <see cref="Models.TemplateDeploymentPolicy"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static TemplateDeploymentPolicy TemplateDeploymentPolicy(TemplateDeploymentCapability capabilities, TemplateDeploymentPreflightOption preflightOptions)
+        public static TemplateDeploymentPolicy TemplateDeploymentPolicy(TemplateDeploymentCapability capabilities = default, TemplateDeploymentPreflightOption preflightOptions = default)
         {
-            return new TemplateDeploymentPolicy(capabilities, preflightOptions, default, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.CustomRolloutProperties"/>. </summary>
-        /// <param name="provisioningState"> The provisioned state of the resource. </param>
-        /// <param name="specification"> The specification. </param>
-        /// <param name="status"> The status. </param>
-        /// <returns> A new <see cref="Models.CustomRolloutProperties"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static CustomRolloutProperties CustomRolloutProperties(ProviderHubProvisioningState? provisioningState, CustomRolloutSpecification specification, CustomRolloutStatus status)
-        {
-            return new CustomRolloutProperties(provisioningState, specification, status, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DefaultRolloutProperties"/>. </summary>
-        /// <param name="provisioningState"> The provisioned state of the resource. </param>
-        /// <param name="specification"> The default rollout specification. </param>
-        /// <param name="status"> The default rollout status. </param>
-        /// <returns> A new <see cref="Models.DefaultRolloutProperties"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DefaultRolloutProperties DefaultRolloutProperties(ProviderHubProvisioningState? provisioningState, DefaultRolloutSpecification specification, DefaultRolloutStatus status)
-        {
-            return new DefaultRolloutProperties(provisioningState, specification, status, additionalBinaryDataProperties: null);
+            return new TemplateDeploymentPolicy(capabilities, preflightOptions, default, default);
         }
 
         /// <summary> Initializes a new instance of <see cref="ProviderHub.ProviderRegistrationData"/>. </summary>
@@ -1510,7 +1832,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ProviderRegistrationData ProviderRegistrationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ProviderRegistrationProperties properties)
         {
-            return ProviderRegistrationData(id, name, resourceType, systemData, properties, kind: default);
+            return new ProviderRegistrationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default,
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="ProviderHub.ResourceTypeRegistrationData"/>. </summary>
@@ -1523,7 +1852,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ResourceTypeRegistrationData ResourceTypeRegistrationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceTypeRegistrationProperties properties)
         {
-            return ResourceTypeRegistrationData(id, name, resourceType, systemData, properties, kind: default);
+            return new ResourceTypeRegistrationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default,
+                default);
         }
     }
 }

@@ -13,140 +13,216 @@ using Azure.ResourceManager.StorageCache.Models;
 
 namespace Azure.ResourceManager.StorageCache
 {
-    /// <summary>
-    /// A class representing the AutoExportJob data model.
-    /// An auto export job instance. Follows Azure Resource Manager standards: https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/resource-api-reference.md
-    /// </summary>
+    /// <summary> An auto export job instance. Follows Azure Resource Manager standards: https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/resource-api-reference.md. </summary>
     public partial class AutoExportJobData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AutoExportJobData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public AutoExportJobData(AzureLocation location) : base(location)
         {
-            AutoExportPrefixes = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AutoExportJobData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="provisioningState"> ARM provisioning state. </param>
-        /// <param name="adminStatus"> The administrative status of the auto export job. Possible values: 'Enable', 'Disable'. Passing in a value of 'Disable' will disable the current active auto export job. By default it is set to 'Enable'. </param>
-        /// <param name="autoExportPrefixes"> An array of blob paths/prefixes that get auto exported to the cluster namespace. It has '/' as the default value. Number of maximum allowed paths for now is 1. </param>
-        /// <param name="state"> The operational state of auto export. InProgress indicates the export is running.  Disabling indicates the user has requested to disable the export but the disabling is still in progress. Disabled indicates auto export has been disabled.  DisableFailed indicates the disabling has failed.  Failed means the export was unable to continue, due to a fatal error. </param>
-        /// <param name="statusCode"> Server-defined status code for auto export job. </param>
-        /// <param name="statusMessage"> Server-defined status message for auto export job. </param>
-        /// <param name="totalFilesExported"> Total files exported since the start of the export. This is accumulative, some files may be counted repeatedly. </param>
-        /// <param name="totalMiBExported"> Total data (in MiB) exported since the start of the export. This is accumulative, some files may be counted repeatedly. </param>
-        /// <param name="totalFilesFailed"> Total files failed to be export since the last successfully completed iteration. This is accumulative, some files may be counted repeatedly. </param>
-        /// <param name="exportIterationCount"> Number of iterations completed since the start of the export. </param>
-        /// <param name="lastSuccessfulIterationCompletionTimeUTC"> Time (in UTC) of the last successfully completed export iteration. Look at logging container for details. </param>
-        /// <param name="currentIterationFilesDiscovered"> Files discovered for export in current iteration. It may increase while more export items are found. </param>
-        /// <param name="currentIterationMiBDiscovered"> Data (in MiB) discovered for export in current iteration. It may increase while more export items are found. </param>
-        /// <param name="currentIterationFilesExported"> Files that have been exported in current iteration. </param>
-        /// <param name="currentIterationMiBExported"> Data (in MiB) that have been exported in current iteration. </param>
-        /// <param name="currentIterationFilesFailed"> Files failed to export in current iteration. </param>
-        /// <param name="lastStartedTimeUTC"> The time (in UTC) the latest auto export job started. </param>
-        /// <param name="lastCompletionTimeUTC"> The time (in UTC) of the last completed auto export job. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AutoExportJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AutoExportJobProvisioningStateType? provisioningState, AutoExportJobAdminStatus? adminStatus, IList<string> autoExportPrefixes, AutoExportStatusType? state, string statusCode, string statusMessage, long? totalFilesExported, long? totalMiBExported, long? totalFilesFailed, int? exportIterationCount, DateTimeOffset? lastSuccessfulIterationCompletionTimeUTC, long? currentIterationFilesDiscovered, long? currentIterationMiBDiscovered, long? currentIterationFilesExported, long? currentIterationMiBExported, long? currentIterationFilesFailed, DateTimeOffset? lastStartedTimeUTC, DateTimeOffset? lastCompletionTimeUTC, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Properties of the auto export job. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AutoExportJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AutoExportJobProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
-            ProvisioningState = provisioningState;
-            AdminStatus = adminStatus;
-            AutoExportPrefixes = autoExportPrefixes;
-            State = state;
-            StatusCode = statusCode;
-            StatusMessage = statusMessage;
-            TotalFilesExported = totalFilesExported;
-            TotalMiBExported = totalMiBExported;
-            TotalFilesFailed = totalFilesFailed;
-            ExportIterationCount = exportIterationCount;
-            LastSuccessfulIterationCompletionTimeUTC = lastSuccessfulIterationCompletionTimeUTC;
-            CurrentIterationFilesDiscovered = currentIterationFilesDiscovered;
-            CurrentIterationMiBDiscovered = currentIterationMiBDiscovered;
-            CurrentIterationFilesExported = currentIterationFilesExported;
-            CurrentIterationMiBExported = currentIterationMiBExported;
-            CurrentIterationFilesFailed = currentIterationFilesFailed;
-            LastStartedTimeUTC = lastStartedTimeUTC;
-            LastCompletionTimeUTC = lastCompletionTimeUTC;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AutoExportJobData"/> for deserialization. </summary>
-        internal AutoExportJobData()
-        {
-        }
+        /// <summary> Properties of the auto export job. </summary>
+        internal AutoExportJobProperties Properties { get; set; }
 
         /// <summary> ARM provisioning state. </summary>
-        public AutoExportJobProvisioningStateType? ProvisioningState { get; }
+        public AutoExportJobProvisioningStateType? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> The administrative status of the auto export job. Possible values: 'Enable', 'Disable'. Passing in a value of 'Disable' will disable the current active auto export job. By default it is set to 'Enable'. </summary>
-        public AutoExportJobAdminStatus? AdminStatus { get; set; }
+        public AutoExportJobAdminStatus? AdminStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AdminStatus;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AutoExportJobProperties();
+                }
+                Properties.AdminStatus = value;
+            }
+        }
+
         /// <summary> An array of blob paths/prefixes that get auto exported to the cluster namespace. It has '/' as the default value. Number of maximum allowed paths for now is 1. </summary>
-        public IList<string> AutoExportPrefixes { get; }
+        public IList<string> AutoExportPrefixes
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new AutoExportJobProperties();
+                }
+                return Properties.AutoExportPrefixes;
+            }
+        }
+
         /// <summary> The operational state of auto export. InProgress indicates the export is running.  Disabling indicates the user has requested to disable the export but the disabling is still in progress. Disabled indicates auto export has been disabled.  DisableFailed indicates the disabling has failed.  Failed means the export was unable to continue, due to a fatal error. </summary>
-        public AutoExportStatusType? State { get; set; }
+        public AutoExportStatusType? State
+        {
+            get
+            {
+                return Properties is null ? default : Properties.State;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AutoExportJobProperties();
+                }
+                Properties.State = value;
+            }
+        }
+
         /// <summary> Server-defined status code for auto export job. </summary>
-        public string StatusCode { get; }
+        public string StatusCode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StatusCode;
+            }
+        }
+
         /// <summary> Server-defined status message for auto export job. </summary>
-        public string StatusMessage { get; }
+        public string StatusMessage
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StatusMessage;
+            }
+        }
+
         /// <summary> Total files exported since the start of the export. This is accumulative, some files may be counted repeatedly. </summary>
-        public long? TotalFilesExported { get; }
+        public long? TotalFilesExported
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TotalFilesExported;
+            }
+        }
+
         /// <summary> Total data (in MiB) exported since the start of the export. This is accumulative, some files may be counted repeatedly. </summary>
-        public long? TotalMiBExported { get; }
+        public long? TotalMiBExported
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TotalMiBExported;
+            }
+        }
+
         /// <summary> Total files failed to be export since the last successfully completed iteration. This is accumulative, some files may be counted repeatedly. </summary>
-        public long? TotalFilesFailed { get; }
+        public long? TotalFilesFailed
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TotalFilesFailed;
+            }
+        }
+
         /// <summary> Number of iterations completed since the start of the export. </summary>
-        public int? ExportIterationCount { get; }
+        public int? ExportIterationCount
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExportIterationCount;
+            }
+        }
+
         /// <summary> Time (in UTC) of the last successfully completed export iteration. Look at logging container for details. </summary>
-        public DateTimeOffset? LastSuccessfulIterationCompletionTimeUTC { get; }
+        public DateTimeOffset? LastSuccessfulIterationCompletionTimeUTC
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastSuccessfulIterationCompletionTimeUTC;
+            }
+        }
+
         /// <summary> Files discovered for export in current iteration. It may increase while more export items are found. </summary>
-        public long? CurrentIterationFilesDiscovered { get; }
+        public long? CurrentIterationFilesDiscovered
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CurrentIterationFilesDiscovered;
+            }
+        }
+
         /// <summary> Data (in MiB) discovered for export in current iteration. It may increase while more export items are found. </summary>
-        public long? CurrentIterationMiBDiscovered { get; }
+        public long? CurrentIterationMiBDiscovered
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CurrentIterationMiBDiscovered;
+            }
+        }
+
         /// <summary> Files that have been exported in current iteration. </summary>
-        public long? CurrentIterationFilesExported { get; }
+        public long? CurrentIterationFilesExported
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CurrentIterationFilesExported;
+            }
+        }
+
         /// <summary> Data (in MiB) that have been exported in current iteration. </summary>
-        public long? CurrentIterationMiBExported { get; }
+        public long? CurrentIterationMiBExported
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CurrentIterationMiBExported;
+            }
+        }
+
         /// <summary> Files failed to export in current iteration. </summary>
-        public long? CurrentIterationFilesFailed { get; }
+        public long? CurrentIterationFilesFailed
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CurrentIterationFilesFailed;
+            }
+        }
+
         /// <summary> The time (in UTC) the latest auto export job started. </summary>
-        public DateTimeOffset? LastStartedTimeUTC { get; }
+        public DateTimeOffset? LastStartedTimeUTC
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastStartedTimeUTC;
+            }
+        }
+
         /// <summary> The time (in UTC) of the last completed auto export job. </summary>
-        public DateTimeOffset? LastCompletionTimeUTC { get; }
+        public DateTimeOffset? LastCompletionTimeUTC
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastCompletionTimeUTC;
+            }
+        }
     }
 }

@@ -28,8 +28,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     {
         private readonly ClientDiagnostics _zoosClientDiagnostics;
         private readonly Zoos _zoosRestClient;
-        private readonly ClientDiagnostics _zooRecommendationClientDiagnostics;
-        private readonly ZooRecommendation _zooRecommendationRestClient;
 
         /// <summary> Initializes a new instance of ZooCollection for mocking. </summary>
         protected ZooCollection()
@@ -44,8 +42,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             TryGetApiVersion(ZooResource.ResourceType, out string zooApiVersion);
             _zoosClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ZooResource.ResourceType.Namespace, Diagnostics);
             _zoosRestClient = new Zoos(_zoosClientDiagnostics, Pipeline, Endpoint, zooApiVersion ?? "2024-05-01");
-            _zooRecommendationClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ZooResource.ResourceType.Namespace, Diagnostics);
-            _zooRecommendationRestClient = new ZooRecommendation(_zooRecommendationClientDiagnostics, Pipeline, Endpoint, zooApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 
@@ -98,7 +94,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 HttpMessage message = _zoosRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, zooName, ZooData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 TestsArmOperation<ZooResource> operation = new TestsArmOperation<ZooResource>(
-                    new ZooOperationSource(Client),
+                    new ZooResourceOperationSource(Client),
                     _zoosClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -157,7 +153,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 HttpMessage message = _zoosRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, zooName, ZooData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 TestsArmOperation<ZooResource> operation = new TestsArmOperation<ZooResource>(
-                    new ZooOperationSource(Client),
+                    new ZooResourceOperationSource(Client),
                     _zoosClientDiagnostics,
                     Pipeline,
                     message.Request,

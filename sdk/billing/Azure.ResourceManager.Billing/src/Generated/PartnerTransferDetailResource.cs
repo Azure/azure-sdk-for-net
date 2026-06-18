@@ -6,47 +6,36 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Billing.Models;
 
 namespace Azure.ResourceManager.Billing
 {
     /// <summary>
-    /// A Class representing a PartnerTransferDetail along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PartnerTransferDetailResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetPartnerTransferDetailResource method.
-    /// Otherwise you can get one from its parent resource <see cref="BillingProfileCustomerResource"/> using the GetPartnerTransferDetail method.
+    /// A class representing a PartnerTransferDetail along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PartnerTransferDetailResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="BillingProfileCustomerResource"/> using the GetPartnerTransferDetails method.
     /// </summary>
     public partial class PartnerTransferDetailResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="PartnerTransferDetailResource"/> instance. </summary>
-        /// <param name="billingAccountName"> The billingAccountName. </param>
-        /// <param name="billingProfileName"> The billingProfileName. </param>
-        /// <param name="customerName"> The customerName. </param>
-        /// <param name="transferName"> The transferName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string billingAccountName, string billingProfileName, string customerName, string transferName)
-        {
-            var resourceId = $"/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/customers/{customerName}/transfers/{transferName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _partnerTransferDetailPartnerTransfersClientDiagnostics;
-        private readonly PartnerTransfersRestOperations _partnerTransferDetailPartnerTransfersRestClient;
+        private readonly ClientDiagnostics _partnerTransfersClientDiagnostics;
+        private readonly PartnerTransfers _partnerTransfersRestClient;
         private readonly PartnerTransferDetailData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Billing/billingAccounts/billingProfiles/customers/transfers";
 
-        /// <summary> Initializes a new instance of the <see cref="PartnerTransferDetailResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of PartnerTransferDetailResource for mocking. </summary>
         protected PartnerTransferDetailResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="PartnerTransferDetailResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="PartnerTransferDetailResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal PartnerTransferDetailResource(ArmClient client, PartnerTransferDetailData data) : this(client, data.Id)
@@ -55,71 +44,93 @@ namespace Azure.ResourceManager.Billing
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="PartnerTransferDetailResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="PartnerTransferDetailResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal PartnerTransferDetailResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _partnerTransferDetailPartnerTransfersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string partnerTransferDetailPartnerTransfersApiVersion);
-            _partnerTransferDetailPartnerTransfersRestClient = new PartnerTransfersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, partnerTransferDetailPartnerTransfersApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string partnerTransferDetailApiVersion);
+            _partnerTransfersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
+            _partnerTransfersRestClient = new PartnerTransfers(_partnerTransfersClientDiagnostics, Pipeline, Endpoint, partnerTransferDetailApiVersion ?? "2024-04-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual PartnerTransferDetailData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="billingAccountName"> The billingAccountName. </param>
+        /// <param name="billingProfileName"> The billingProfileName. </param>
+        /// <param name="customerName"> The customerName. </param>
+        /// <param name="transferName"> The transferName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string billingAccountName, string billingProfileName, string customerName, string transferName)
+        {
+            string resourceId = $"/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/customers/{customerName}/transfers/{transferName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets a transfer request by ID. The operation is supported only for billing accounts with agreement type Microsoft Partner Agreement.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/customers/{customerName}/transfers/{transferName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/customers/{customerName}/transfers/{transferName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PartnerTransfers_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PartnerTransfers_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PartnerTransferDetailResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PartnerTransferDetailResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<PartnerTransferDetailResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _partnerTransferDetailPartnerTransfersClientDiagnostics.CreateScope("PartnerTransferDetailResource.Get");
+            using DiagnosticScope scope = _partnerTransfersClientDiagnostics.CreateScope("PartnerTransferDetailResource.Get");
             scope.Start();
             try
             {
-                var response = await _partnerTransferDetailPartnerTransfersRestClient.GetAsync(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _partnerTransfersRestClient.CreateGetRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<PartnerTransferDetailData> response = Response.FromValue(PartnerTransferDetailData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new PartnerTransferDetailResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -133,33 +144,41 @@ namespace Azure.ResourceManager.Billing
         /// Gets a transfer request by ID. The operation is supported only for billing accounts with agreement type Microsoft Partner Agreement.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/customers/{customerName}/transfers/{transferName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/customers/{customerName}/transfers/{transferName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PartnerTransfers_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PartnerTransfers_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PartnerTransferDetailResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PartnerTransferDetailResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<PartnerTransferDetailResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _partnerTransferDetailPartnerTransfersClientDiagnostics.CreateScope("PartnerTransferDetailResource.Get");
+            using DiagnosticScope scope = _partnerTransfersClientDiagnostics.CreateScope("PartnerTransferDetailResource.Get");
             scope.Start();
             try
             {
-                var response = _partnerTransferDetailPartnerTransfersRestClient.Get(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _partnerTransfersRestClient.CreateGetRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<PartnerTransferDetailData> response = Response.FromValue(PartnerTransferDetailData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new PartnerTransferDetailResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -170,23 +189,119 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary>
-        /// Sends a request to a user in a customer's billing account to transfer billing ownership of their subscriptions. The operation is supported only for billing accounts with agreement type Microsoft Partner Agreement.
+        /// Cancels a transfer request. The operation is supported only for billing accounts with agreement type Microsoft Partner Agreement.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/customers/{customerName}/transfers/{transferName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/customers/{customerName}/transfers/{transferName}/cancel. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PartnerTransfers_Initiate</description>
+        /// <term> Operation Id. </term>
+        /// <description> PartnerTransfers_Cancel. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PartnerTransferDetailResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PartnerTransferDetailResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<PartnerTransferDetailResource>> CancelAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _partnerTransfersClientDiagnostics.CreateScope("PartnerTransferDetailResource.Cancel");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _partnerTransfersRestClient.CreateCancelRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<PartnerTransferDetailData> response = Response.FromValue(PartnerTransferDetailData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new PartnerTransferDetailResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Cancels a transfer request. The operation is supported only for billing accounts with agreement type Microsoft Partner Agreement.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/customers/{customerName}/transfers/{transferName}/cancel. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PartnerTransfers_Cancel. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PartnerTransferDetailResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<PartnerTransferDetailResource> Cancel(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _partnerTransfersClientDiagnostics.CreateScope("PartnerTransferDetailResource.Cancel");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _partnerTransfersRestClient.CreateCancelRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<PartnerTransferDetailData> response = Response.FromValue(PartnerTransferDetailData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new PartnerTransferDetailResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update a PartnerTransferDetail.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/customers/{customerName}/transfers/{transferName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PartnerTransfers_Initiate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PartnerTransferDetailResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -198,16 +313,24 @@ namespace Azure.ResourceManager.Billing
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _partnerTransferDetailPartnerTransfersClientDiagnostics.CreateScope("PartnerTransferDetailResource.Update");
+            using DiagnosticScope scope = _partnerTransfersClientDiagnostics.CreateScope("PartnerTransferDetailResource.Update");
             scope.Start();
             try
             {
-                var response = await _partnerTransferDetailPartnerTransfersRestClient.InitiateAsync(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var uri = _partnerTransferDetailPartnerTransfersRestClient.CreateInitiateRequestUri(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new BillingArmOperation<PartnerTransferDetailResource>(Response.FromValue(new PartnerTransferDetailResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _partnerTransfersRestClient.CreateInitiateRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, PartnerTransferDetailCreateOrUpdateContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<PartnerTransferDetailData> response = Response.FromValue(PartnerTransferDetailData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                BillingArmOperation<PartnerTransferDetailResource> operation = new BillingArmOperation<PartnerTransferDetailResource>(Response.FromValue(new PartnerTransferDetailResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -218,23 +341,23 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary>
-        /// Sends a request to a user in a customer's billing account to transfer billing ownership of their subscriptions. The operation is supported only for billing accounts with agreement type Microsoft Partner Agreement.
+        /// Update a PartnerTransferDetail.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/customers/{customerName}/transfers/{transferName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/customers/{customerName}/transfers/{transferName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PartnerTransfers_Initiate</description>
+        /// <term> Operation Id. </term>
+        /// <description> PartnerTransfers_Initiate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PartnerTransferDetailResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PartnerTransferDetailResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -246,93 +369,25 @@ namespace Azure.ResourceManager.Billing
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _partnerTransferDetailPartnerTransfersClientDiagnostics.CreateScope("PartnerTransferDetailResource.Update");
+            using DiagnosticScope scope = _partnerTransfersClientDiagnostics.CreateScope("PartnerTransferDetailResource.Update");
             scope.Start();
             try
             {
-                var response = _partnerTransferDetailPartnerTransfersRestClient.Initiate(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var uri = _partnerTransferDetailPartnerTransfersRestClient.CreateInitiateRequestUri(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new BillingArmOperation<PartnerTransferDetailResource>(Response.FromValue(new PartnerTransferDetailResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _partnerTransfersRestClient.CreateInitiateRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, PartnerTransferDetailCreateOrUpdateContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<PartnerTransferDetailData> response = Response.FromValue(PartnerTransferDetailData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                BillingArmOperation<PartnerTransferDetailResource> operation = new BillingArmOperation<PartnerTransferDetailResource>(Response.FromValue(new PartnerTransferDetailResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Cancels a transfer request. The operation is supported only for billing accounts with agreement type Microsoft Partner Agreement.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/customers/{customerName}/transfers/{transferName}/cancel</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PartnerTransfers_Cancel</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PartnerTransferDetailResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PartnerTransferDetailResource>> CancelAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _partnerTransferDetailPartnerTransfersClientDiagnostics.CreateScope("PartnerTransferDetailResource.Cancel");
-            scope.Start();
-            try
-            {
-                var response = await _partnerTransferDetailPartnerTransfersRestClient.CancelAsync(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new PartnerTransferDetailResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Cancels a transfer request. The operation is supported only for billing accounts with agreement type Microsoft Partner Agreement.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/customers/{customerName}/transfers/{transferName}/cancel</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PartnerTransfers_Cancel</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PartnerTransferDetailResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PartnerTransferDetailResource> Cancel(CancellationToken cancellationToken = default)
-        {
-            using var scope = _partnerTransferDetailPartnerTransfersClientDiagnostics.CreateScope("PartnerTransferDetailResource.Cancel");
-            scope.Start();
-            try
-            {
-                var response = _partnerTransferDetailPartnerTransfersRestClient.Cancel(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                return Response.FromValue(new PartnerTransferDetailResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

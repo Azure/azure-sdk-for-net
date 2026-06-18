@@ -82,10 +82,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (Optional.IsDefined(PlannedByMicrosoft))
+            if (Optional.IsDefined(IsPlannedByMicrosoft))
             {
                 writer.WritePropertyName("plannedByMicrosoft"u8);
-                writer.WriteBooleanValue(PlannedByMicrosoft.Value);
+                writer.WriteBooleanValue(IsPlannedByMicrosoft.Value);
             }
             if (Optional.IsDefined(StatusReason))
             {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 return null;
             }
             FoundryAutoUpgradeMode? mode = default;
-            bool? plannedByMicrosoft = default;
+            bool? isPlannedByMicrosoft = default;
             string statusReason = default;
             DateTimeOffset? scheduledOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    plannedByMicrosoft = prop.Value.GetBoolean();
+                    isPlannedByMicrosoft = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("statusReason"u8))
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new FoundryAutoUpgrade(mode, plannedByMicrosoft, statusReason, scheduledOn, additionalBinaryDataProperties);
+            return new FoundryAutoUpgrade(mode, isPlannedByMicrosoft, statusReason, scheduledOn, additionalBinaryDataProperties);
         }
     }
 }

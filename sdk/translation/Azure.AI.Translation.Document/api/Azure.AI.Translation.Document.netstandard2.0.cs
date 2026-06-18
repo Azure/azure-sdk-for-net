@@ -37,6 +37,8 @@ namespace Azure.AI.Translation.Document
         public System.DateTimeOffset CreatedOn { get { throw null; } }
         public Azure.ResponseError Error { get { throw null; } }
         public string Id { get { throw null; } }
+        public int? ImageCharacterDetected { get { throw null; } }
+        public int? ImageCharged { get { throw null; } }
         public System.DateTimeOffset LastModified { get { throw null; } }
         public System.Uri SourceDocumentUri { get { throw null; } }
         public Azure.AI.Translation.Document.DocumentTranslationStatus Status { get { throw null; } }
@@ -58,7 +60,7 @@ namespace Azure.AI.Translation.Document
     }
     public partial class DocumentTranslateContent : System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Document.DocumentTranslateContent>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Document.DocumentTranslateContent>
     {
-        public DocumentTranslateContent(Azure.AI.Translation.Document.MultipartFormFileData document) { }
+        public DocumentTranslateContent(Azure.AI.Translation.Document.MultipartFormFileData multipartDocument) { }
         public DocumentTranslateContent(Azure.AI.Translation.Document.MultipartFormFileData document, System.Collections.Generic.IList<Azure.AI.Translation.Document.MultipartFormFileData> glossaries) { }
         public Azure.AI.Translation.Document.MultipartFormFileData MultipartDocument { get { throw null; } }
         public System.Collections.Generic.IList<Azure.AI.Translation.Document.MultipartFormFileData> MultipartGlossary { get { throw null; } }
@@ -138,14 +140,22 @@ namespace Azure.AI.Translation.Document
         public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> StartTranslationAsync(Azure.WaitUntil waitUntil, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.AI.Translation.Document.DocumentTranslationOperation> StartTranslationAsync(System.Collections.Generic.IEnumerable<Azure.AI.Translation.Document.DocumentTranslationInput> inputs, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public static partial class DocumentTranslationClientHostExtensions
+    {
+        public static System.ClientModel.Primitives.IClientBuilder AddDocumentTranslationClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddDocumentTranslationClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<Azure.AI.Translation.Document.DocumentTranslationClientSettings> configureSettings) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedDocumentTranslationClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedDocumentTranslationClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<Azure.AI.Translation.Document.DocumentTranslationClientSettings> configureSettings) { throw null; }
+    }
     public partial class DocumentTranslationClientOptions : Azure.Core.ClientOptions
     {
-        public DocumentTranslationClientOptions(Azure.AI.Translation.Document.DocumentTranslationClientOptions.ServiceVersion version = Azure.AI.Translation.Document.DocumentTranslationClientOptions.ServiceVersion.V2024_11_01_Preview) { }
+        public DocumentTranslationClientOptions(Azure.AI.Translation.Document.DocumentTranslationClientOptions.ServiceVersion version = Azure.AI.Translation.Document.DocumentTranslationClientOptions.ServiceVersion.V2025_12_01_Preview) { }
         public Azure.AI.Translation.Document.DocumentTranslationAudience? Audience { get { throw null; } set { } }
         public enum ServiceVersion
         {
             V2024_05_01 = 1,
             V2024_11_01_Preview = 2,
+            V2025_12_01_Preview = 3,
         }
     }
     public partial class DocumentTranslationClientSettings : System.ClientModel.Primitives.ClientSettings
@@ -322,6 +332,13 @@ namespace Azure.AI.Translation.Document
         public virtual System.Threading.Tasks.Task<Azure.Response<System.BinaryData>> TranslateAsync(string targetLanguage, Azure.AI.Translation.Document.DocumentTranslateContent documentTranslateContent, string sourceLanguage, string category, bool? allowFallback, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> TranslateAsync(string targetLanguage, Azure.Core.RequestContent content, string contentType, string sourceLanguage, string category, bool? allowFallback, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> TranslateAsync(string targetLanguage, Azure.Core.RequestContent content, string contentType, string sourceLanguage = null, string category = null, bool? allowFallback = default(bool?), bool? translateTextWithinImage = default(bool?), Azure.RequestContext context = null) { throw null; }
+    }
+    public static partial class SingleDocumentTranslationClientHostExtensions
+    {
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedSingleDocumentTranslationClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedSingleDocumentTranslationClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<Azure.AI.Translation.Document.SingleDocumentTranslationClientSettings> configureSettings) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddSingleDocumentTranslationClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddSingleDocumentTranslationClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<Azure.AI.Translation.Document.SingleDocumentTranslationClientSettings> configureSettings) { throw null; }
     }
     public partial class SingleDocumentTranslationClientSettings : System.ClientModel.Primitives.ClientSettings
     {

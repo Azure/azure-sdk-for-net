@@ -6,49 +6,36 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.NetApp.Models;
 
 namespace Azure.ResourceManager.NetApp
 {
     /// <summary>
-    /// A Class representing a NetAppSubvolumeInfo along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetAppSubvolumeInfoResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetNetAppSubvolumeInfoResource method.
-    /// Otherwise you can get one from its parent resource <see cref="NetAppVolumeResource"/> using the GetNetAppSubvolumeInfo method.
+    /// A class representing a NetAppSubvolumeInfo along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetAppSubvolumeInfoResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="NetAppVolumeResource"/> using the GetNetAppSubvolumeInfos method.
     /// </summary>
     public partial class NetAppSubvolumeInfoResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="NetAppSubvolumeInfoResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="accountName"> The accountName. </param>
-        /// <param name="poolName"> The poolName. </param>
-        /// <param name="volumeName"> The volumeName. </param>
-        /// <param name="subvolumeName"> The subvolumeName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, string subvolumeName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/capacityPools/{poolName}/volumes/{volumeName}/subvolumes/{subvolumeName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _netAppSubvolumeInfoSubvolumesClientDiagnostics;
-        private readonly SubvolumesRestOperations _netAppSubvolumeInfoSubvolumesRestClient;
+        private readonly ClientDiagnostics _subvolumesClientDiagnostics;
+        private readonly Subvolumes _subvolumesRestClient;
         private readonly NetAppSubvolumeInfoData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.NetApp/netAppAccounts/capacityPools/volumes/subvolumes";
 
-        /// <summary> Initializes a new instance of the <see cref="NetAppSubvolumeInfoResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of NetAppSubvolumeInfoResource for mocking. </summary>
         protected NetAppSubvolumeInfoResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="NetAppSubvolumeInfoResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppSubvolumeInfoResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal NetAppSubvolumeInfoResource(ArmClient client, NetAppSubvolumeInfoData data) : this(client, data.Id)
@@ -57,71 +44,95 @@ namespace Azure.ResourceManager.NetApp
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="NetAppSubvolumeInfoResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppSubvolumeInfoResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NetAppSubvolumeInfoResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _netAppSubvolumeInfoSubvolumesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetApp", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string netAppSubvolumeInfoSubvolumesApiVersion);
-            _netAppSubvolumeInfoSubvolumesRestClient = new SubvolumesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, netAppSubvolumeInfoSubvolumesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string netAppSubvolumeInfoApiVersion);
+            _subvolumesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetApp", ResourceType.Namespace, Diagnostics);
+            _subvolumesRestClient = new Subvolumes(_subvolumesClientDiagnostics, Pipeline, Endpoint, netAppSubvolumeInfoApiVersion ?? "2026-01-15-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual NetAppSubvolumeInfoData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="accountName"> The accountName. </param>
+        /// <param name="poolName"> The poolName. </param>
+        /// <param name="volumeName"> The volumeName. </param>
+        /// <param name="subvolumeName"> The subvolumeName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, string subvolumeName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/capacityPools/{poolName}/volumes/{volumeName}/subvolumes/{subvolumeName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Returns the path associated with the subvolumeName provided
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/capacityPools/{poolName}/volumes/{volumeName}/subvolumes/{subvolumeName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/capacityPools/{poolName}/volumes/{volumeName}/subvolumes/{subvolumeName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Subvolumes_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SubvolumeInfos_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetAppSubvolumeInfoResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetAppSubvolumeInfoResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<NetAppSubvolumeInfoResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _netAppSubvolumeInfoSubvolumesClientDiagnostics.CreateScope("NetAppSubvolumeInfoResource.Get");
+            using DiagnosticScope scope = _subvolumesClientDiagnostics.CreateScope("NetAppSubvolumeInfoResource.Get");
             scope.Start();
             try
             {
-                var response = await _netAppSubvolumeInfoSubvolumesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _subvolumesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<NetAppSubvolumeInfoData> response = Response.FromValue(NetAppSubvolumeInfoData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetAppSubvolumeInfoResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -135,118 +146,42 @@ namespace Azure.ResourceManager.NetApp
         /// Returns the path associated with the subvolumeName provided
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/capacityPools/{poolName}/volumes/{volumeName}/subvolumes/{subvolumeName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/capacityPools/{poolName}/volumes/{volumeName}/subvolumes/{subvolumeName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Subvolumes_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SubvolumeInfos_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetAppSubvolumeInfoResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetAppSubvolumeInfoResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<NetAppSubvolumeInfoResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _netAppSubvolumeInfoSubvolumesClientDiagnostics.CreateScope("NetAppSubvolumeInfoResource.Get");
+            using DiagnosticScope scope = _subvolumesClientDiagnostics.CreateScope("NetAppSubvolumeInfoResource.Get");
             scope.Start();
             try
             {
-                var response = _netAppSubvolumeInfoSubvolumesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _subvolumesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<NetAppSubvolumeInfoData> response = Response.FromValue(NetAppSubvolumeInfoData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetAppSubvolumeInfoResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Delete subvolume
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/capacityPools/{poolName}/volumes/{volumeName}/subvolumes/{subvolumeName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Subvolumes_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetAppSubvolumeInfoResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _netAppSubvolumeInfoSubvolumesClientDiagnostics.CreateScope("NetAppSubvolumeInfoResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = await _netAppSubvolumeInfoSubvolumesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new NetAppArmOperation(_netAppSubvolumeInfoSubvolumesClientDiagnostics, Pipeline, _netAppSubvolumeInfoSubvolumesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Delete subvolume
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/capacityPools/{poolName}/volumes/{volumeName}/subvolumes/{subvolumeName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Subvolumes_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetAppSubvolumeInfoResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _netAppSubvolumeInfoSubvolumesClientDiagnostics.CreateScope("NetAppSubvolumeInfoResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = _netAppSubvolumeInfoSubvolumesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new NetAppArmOperation(_netAppSubvolumeInfoSubvolumesClientDiagnostics, Pipeline, _netAppSubvolumeInfoSubvolumesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
             }
             catch (Exception e)
             {
@@ -259,20 +194,20 @@ namespace Azure.ResourceManager.NetApp
         /// Patch a subvolume
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/capacityPools/{poolName}/volumes/{volumeName}/subvolumes/{subvolumeName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/capacityPools/{poolName}/volumes/{volumeName}/subvolumes/{subvolumeName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Subvolumes_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> SubvolumeInfos_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetAppSubvolumeInfoResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetAppSubvolumeInfoResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -284,14 +219,27 @@ namespace Azure.ResourceManager.NetApp
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _netAppSubvolumeInfoSubvolumesClientDiagnostics.CreateScope("NetAppSubvolumeInfoResource.Update");
+            using DiagnosticScope scope = _subvolumesClientDiagnostics.CreateScope("NetAppSubvolumeInfoResource.Update");
             scope.Start();
             try
             {
-                var response = await _netAppSubvolumeInfoSubvolumesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new NetAppArmOperation<NetAppSubvolumeInfoResource>(new NetAppSubvolumeInfoOperationSource(Client), _netAppSubvolumeInfoSubvolumesClientDiagnostics, Pipeline, _netAppSubvolumeInfoSubvolumesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _subvolumesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, NetAppSubvolumeInfoPatch.ToRequestContent(patch), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                NetAppArmOperation<NetAppSubvolumeInfoResource> operation = new NetAppArmOperation<NetAppSubvolumeInfoResource>(
+                    new NetAppSubvolumeInfoResourceOperationSource(Client),
+                    _subvolumesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -305,20 +253,20 @@ namespace Azure.ResourceManager.NetApp
         /// Patch a subvolume
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/capacityPools/{poolName}/volumes/{volumeName}/subvolumes/{subvolumeName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/capacityPools/{poolName}/volumes/{volumeName}/subvolumes/{subvolumeName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Subvolumes_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> SubvolumeInfos_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetAppSubvolumeInfoResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetAppSubvolumeInfoResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -330,14 +278,125 @@ namespace Azure.ResourceManager.NetApp
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _netAppSubvolumeInfoSubvolumesClientDiagnostics.CreateScope("NetAppSubvolumeInfoResource.Update");
+            using DiagnosticScope scope = _subvolumesClientDiagnostics.CreateScope("NetAppSubvolumeInfoResource.Update");
             scope.Start();
             try
             {
-                var response = _netAppSubvolumeInfoSubvolumesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch, cancellationToken);
-                var operation = new NetAppArmOperation<NetAppSubvolumeInfoResource>(new NetAppSubvolumeInfoOperationSource(Client), _netAppSubvolumeInfoSubvolumesClientDiagnostics, Pipeline, _netAppSubvolumeInfoSubvolumesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _subvolumesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, NetAppSubvolumeInfoPatch.ToRequestContent(patch), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                NetAppArmOperation<NetAppSubvolumeInfoResource> operation = new NetAppArmOperation<NetAppSubvolumeInfoResource>(
+                    new NetAppSubvolumeInfoResourceOperationSource(Client),
+                    _subvolumesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete subvolume
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/capacityPools/{poolName}/volumes/{volumeName}/subvolumes/{subvolumeName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SubvolumeInfos_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-15-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetAppSubvolumeInfoResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _subvolumesClientDiagnostics.CreateScope("NetAppSubvolumeInfoResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _subvolumesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                NetAppArmOperation operation = new NetAppArmOperation(_subvolumesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete subvolume
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/capacityPools/{poolName}/volumes/{volumeName}/subvolumes/{subvolumeName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SubvolumeInfos_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-15-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetAppSubvolumeInfoResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _subvolumesClientDiagnostics.CreateScope("NetAppSubvolumeInfoResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _subvolumesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                NetAppArmOperation operation = new NetAppArmOperation(_subvolumesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -351,20 +410,20 @@ namespace Azure.ResourceManager.NetApp
         /// Get details of the specified subvolume
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/capacityPools/{poolName}/volumes/{volumeName}/subvolumes/{subvolumeName}/getMetadata</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/capacityPools/{poolName}/volumes/{volumeName}/subvolumes/{subvolumeName}/getMetadata. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Subvolumes_GetMetadata</description>
+        /// <term> Operation Id. </term>
+        /// <description> SubvolumeInfos_GetMetadata. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetAppSubvolumeInfoResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetAppSubvolumeInfoResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -372,14 +431,27 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation<NetAppSubvolumeMetadata>> GetMetadataAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _netAppSubvolumeInfoSubvolumesClientDiagnostics.CreateScope("NetAppSubvolumeInfoResource.GetMetadata");
+            using DiagnosticScope scope = _subvolumesClientDiagnostics.CreateScope("NetAppSubvolumeInfoResource.GetMetadata");
             scope.Start();
             try
             {
-                var response = await _netAppSubvolumeInfoSubvolumesRestClient.GetMetadataAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new NetAppArmOperation<NetAppSubvolumeMetadata>(new NetAppSubvolumeMetadataOperationSource(), _netAppSubvolumeInfoSubvolumesClientDiagnostics, Pipeline, _netAppSubvolumeInfoSubvolumesRestClient.CreateGetMetadataRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _subvolumesRestClient.CreateGetMetadataRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                NetAppArmOperation<NetAppSubvolumeMetadata> operation = new NetAppArmOperation<NetAppSubvolumeMetadata>(
+                    new NetAppSubvolumeMetadataOperationSource(),
+                    _subvolumesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -393,20 +465,20 @@ namespace Azure.ResourceManager.NetApp
         /// Get details of the specified subvolume
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/capacityPools/{poolName}/volumes/{volumeName}/subvolumes/{subvolumeName}/getMetadata</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/capacityPools/{poolName}/volumes/{volumeName}/subvolumes/{subvolumeName}/getMetadata. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Subvolumes_GetMetadata</description>
+        /// <term> Operation Id. </term>
+        /// <description> SubvolumeInfos_GetMetadata. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetAppSubvolumeInfoResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetAppSubvolumeInfoResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -414,14 +486,27 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation<NetAppSubvolumeMetadata> GetMetadata(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _netAppSubvolumeInfoSubvolumesClientDiagnostics.CreateScope("NetAppSubvolumeInfoResource.GetMetadata");
+            using DiagnosticScope scope = _subvolumesClientDiagnostics.CreateScope("NetAppSubvolumeInfoResource.GetMetadata");
             scope.Start();
             try
             {
-                var response = _netAppSubvolumeInfoSubvolumesRestClient.GetMetadata(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new NetAppArmOperation<NetAppSubvolumeMetadata>(new NetAppSubvolumeMetadataOperationSource(), _netAppSubvolumeInfoSubvolumesClientDiagnostics, Pipeline, _netAppSubvolumeInfoSubvolumesRestClient.CreateGetMetadataRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _subvolumesRestClient.CreateGetMetadataRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                NetAppArmOperation<NetAppSubvolumeMetadata> operation = new NetAppArmOperation<NetAppSubvolumeMetadata>(
+                    new NetAppSubvolumeMetadataOperationSource(),
+                    _subvolumesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)

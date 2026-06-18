@@ -357,6 +357,23 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 }
             }
             #endregion
+
+            #region Snippet:ContentUnderstandingInvoiceToLlmInput
+            // The fields above can also be packaged into a single LLM-ready text block.
+            // ToLlmInput renders all extracted fields as YAML front matter followed by
+            // the markdown body, so an LLM can consume both structured data and document text
+            // in one shot. For advanced options, see Sample_Advanced_ToLlmInput.
+            string llmText = result.ToLlmInput();
+            Console.WriteLine(llmText);
+            #endregion
+
+            #region Assertion:ContentUnderstandingInvoiceToLlmInput
+            Assert.IsNotNull(llmText, "LLM input text should not be null");
+            Assert.That(llmText, Does.StartWith("---\n"));
+            Assert.That(llmText, Does.Contain("contentType: document"));
+            Assert.That(llmText, Does.Contain("fields:"));
+            Console.WriteLine($"Invoice LLM input text generated ({llmText.Length} characters)");
+            #endregion
         }
     }
 }

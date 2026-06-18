@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
+## 1.0.0-beta.5 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,49 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.4 (2026-05-21)
+
+### Features Added
+
+- Replaced `invoke_agent` SERVER span with baggage-only propagation. W3C trace context propagation is now handled automatically by ASP.NET Core, so handler spans are parented directly under the caller's span.
+- Invocation and session IDs are propagated as Activity baggage for downstream correlation.
+- Unhandled exceptions now include the `x-platform-error-source` header classifying error
+  origin as `user` (invalid request), `platform` (SDK/infrastructure failure), or `upstream`
+  (developer handler failure) per container-image-spec §8. Platform errors include
+  `x-platform-error-detail` with diagnostic context.
+- WebSocket protocol support — new public abstract `InvocationWebSocketHandler`
+  base class (derived from `InvocationHandler`) declares abstract
+  `HandleWebSocketAsync(WebSocket, InvocationContext, CancellationToken)`
+  and defaults the inherited `HandleAsync` to HTTP `404 Not Found`. A
+  WebSocket-only agent therefore implements only `HandleWebSocketAsync`;
+  multi-protocol agents override both methods. Handlers that derive from
+  plain `InvocationHandler` continue to short-circuit `/invocations_ws`
+  to HTTP `404 Not Found`. The SDK accepts the upgrade
+  (`AcceptWebSocketAsync`), maps clean handler returns to RFC 6455 close
+  code `1000` (`NormalClosure`) and uncaught handler exceptions to `1011`
+  (`InternalServerError`), and preserves handler-initiated close codes
+  unchanged.
+- WebSocket Ping/Pong keep-alive — disabled by default; enable via the
+  `WS_KEEPALIVE_INTERVAL` environment variable (see
+  `Azure.AI.AgentServer.Core` 1.0.0-beta.24), which is wired through to
+  Kestrel's `WebSocketOptions.KeepAliveInterval`.
+- WebSocket telemetry — structured close-event log line carrying
+  `azure.ai.agentserver.invocations_ws.session_id`,
+  `azure.ai.agentserver.invocations_ws.close_code`, and
+  `azure.ai.agentserver.invocations_ws.duration_ms`.
+
+## 1.0.0-beta.3 (2026-04-22)
+
+### Features Added
+
+- All endpoints now return the `x-request-id` response header for request correlation (via Core
+  `RequestIdMiddleware`). Value is resolved from OTEL trace ID → incoming `x-request-id` header → GUID.
+
+### Other Changes
+
+- Migrated header name constants to use `PlatformHeaders` from Core package instead of
+  local `private const` declarations.
 
 ## 1.0.0-beta.2 (2026-04-17)
 

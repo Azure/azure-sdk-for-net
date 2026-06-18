@@ -17,6 +17,8 @@ using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests.Samples
 {
+    // This test uses service principal authentication to connect to Key Vault and Search service, so it only runs in V2024_07_01 and runs in playback with recorded credentials.
+    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2024_07_01)]
     public class EncryptedIndex : SearchTestBase
     {
         public EncryptedIndex(bool async, SearchClientOptions.ServiceVersion serviceVersion)
@@ -28,6 +30,7 @@ namespace Azure.Search.Documents.Tests.Samples
 
         [Test]
         [SyncOnly]
+        [PlaybackOnly("This test uses service principal authentication to connect to Key Vault and Search service, so it only runs in playback with recorded credentials.")]
         public async Task CreateDoubleEncryptedIndex()
         {
             string keyVaultUrl = TestEnvironment.KeyVaultUrl;

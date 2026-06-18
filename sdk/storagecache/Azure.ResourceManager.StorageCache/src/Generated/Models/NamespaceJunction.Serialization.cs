@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.StorageCache;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    public partial class NamespaceJunction : IUtf8JsonSerializable, IJsonModel<NamespaceJunction>
+    /// <summary> A namespace junction. </summary>
+    public partial class NamespaceJunction : IJsonModel<NamespaceJunction>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NamespaceJunction>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual NamespaceJunction PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NamespaceJunction>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeNamespaceJunction(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NamespaceJunction)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NamespaceJunction>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageCacheContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(NamespaceJunction)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<NamespaceJunction>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NamespaceJunction IPersistableModel<NamespaceJunction>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<NamespaceJunction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NamespaceJunction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NamespaceJunction>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NamespaceJunction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NamespaceJunction)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(NamespacePath))
             {
                 writer.WritePropertyName("namespacePath"u8);
@@ -54,15 +94,15 @@ namespace Azure.ResourceManager.StorageCache.Models
                 writer.WritePropertyName("nfsAccessPolicy"u8);
                 writer.WriteStringValue(NfsAccessPolicy);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -71,22 +111,27 @@ namespace Azure.ResourceManager.StorageCache.Models
             }
         }
 
-        NamespaceJunction IJsonModel<NamespaceJunction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NamespaceJunction IJsonModel<NamespaceJunction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual NamespaceJunction JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NamespaceJunction>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NamespaceJunction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NamespaceJunction)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeNamespaceJunction(document.RootElement, options);
         }
 
-        internal static NamespaceJunction DeserializeNamespaceJunction(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static NamespaceJunction DeserializeNamespaceJunction(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -95,68 +140,35 @@ namespace Azure.ResourceManager.StorageCache.Models
             string targetPath = default;
             string nfsExport = default;
             string nfsAccessPolicy = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("namespacePath"u8))
+                if (prop.NameEquals("namespacePath"u8))
                 {
-                    namespacePath = property.Value.GetString();
+                    namespacePath = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetPath"u8))
+                if (prop.NameEquals("targetPath"u8))
                 {
-                    targetPath = property.Value.GetString();
+                    targetPath = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("nfsExport"u8))
+                if (prop.NameEquals("nfsExport"u8))
                 {
-                    nfsExport = property.Value.GetString();
+                    nfsExport = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("nfsAccessPolicy"u8))
+                if (prop.NameEquals("nfsAccessPolicy"u8))
                 {
-                    nfsAccessPolicy = property.Value.GetString();
+                    nfsAccessPolicy = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new NamespaceJunction(namespacePath, targetPath, nfsExport, nfsAccessPolicy, serializedAdditionalRawData);
+            return new NamespaceJunction(namespacePath, targetPath, nfsExport, nfsAccessPolicy, additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<NamespaceJunction>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<NamespaceJunction>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageCacheContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(NamespaceJunction)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        NamespaceJunction IPersistableModel<NamespaceJunction>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<NamespaceJunction>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeNamespaceJunction(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(NamespaceJunction)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<NamespaceJunction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

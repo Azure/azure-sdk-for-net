@@ -11,27 +11,37 @@ namespace Azure.AI.Extensions.OpenAI
     public partial class ResponsesWorkIQPreviewTool : ResponsesTool
     {
         /// <summary> Initializes a new instance of <see cref="ResponsesWorkIQPreviewTool"/>. </summary>
-        /// <param name="workIqPreview"> The WorkIQ tool parameters. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workIqPreview"/> is null. </exception>
-        public ResponsesWorkIQPreviewTool(ResponsesWorkIQPreviewToolParameters workIqPreview) : base(ToolType.WorkIqPreview)
+        /// <param name="projectConnectionId"> The ID of the WorkIQ project connection. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectConnectionId"/> is null. </exception>
+        public ResponsesWorkIQPreviewTool(string projectConnectionId) : base(ToolType.WorkIqPreview)
         {
-            Argument.AssertNotNull(workIqPreview, nameof(workIqPreview));
+            Argument.AssertNotNull(projectConnectionId, nameof(projectConnectionId));
 
-            WorkIqPreview = workIqPreview;
+            ProjectConnectionId = projectConnectionId;
+            ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ResponsesWorkIQPreviewTool"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="projectConnectionId"> The ID of the WorkIQ project connection. </param>
         /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
         /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
-        /// <param name="workIqPreview"> The WorkIQ tool parameters. </param>
-        internal ResponsesWorkIQPreviewTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, ResponsesWorkIQPreviewToolParameters workIqPreview) : base(@type, additionalBinaryDataProperties)
+        /// <param name="toolConfigs">
+        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
+        /// Resolution order: exact tool name match takes priority over `*`.
+        /// Unknown tool names are silently ignored at runtime.
+        /// </param>
+        internal ResponsesWorkIQPreviewTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string projectConnectionId, string name, string description, IDictionary<string, ToolConfig> toolConfigs) : base(@type, additionalBinaryDataProperties)
         {
+            ProjectConnectionId = projectConnectionId;
             Name = name;
             Description = description;
-            WorkIqPreview = workIqPreview;
+            ToolConfigs = toolConfigs;
         }
+
+        /// <summary> The ID of the WorkIQ project connection. </summary>
+        public string ProjectConnectionId { get; set; }
 
         /// <summary> Optional user-defined name for this tool or configuration. </summary>
         public string Name { get; set; }
@@ -39,7 +49,11 @@ namespace Azure.AI.Extensions.OpenAI
         /// <summary> Optional user-defined description for this tool or configuration. </summary>
         public string Description { get; set; }
 
-        /// <summary> The WorkIQ tool parameters. </summary>
-        public ResponsesWorkIQPreviewToolParameters WorkIqPreview { get; set; }
+        /// <summary>
+        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
+        /// Resolution order: exact tool name match takes priority over `*`.
+        /// Unknown tool names are silently ignored at runtime.
+        /// </summary>
+        public IDictionary<string, ToolConfig> ToolConfigs { get; }
     }
 }

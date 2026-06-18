@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Function secrets. </summary>
+    /// <summary>
+    /// Function secrets.
+    /// Serialized Name: FunctionSecrets
+    /// </summary>
     public partial class FunctionSecrets
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="FunctionSecrets"/>. </summary>
-        /// <param name="key"> Secret key. </param>
-        /// <param name="triggerUri"> Trigger URL. </param>
+        /// <param name="key">
+        /// Secret key.
+        /// Serialized Name: FunctionSecrets.key
+        /// </param>
+        /// <param name="triggerUri">
+        /// Trigger URL.
+        /// Serialized Name: FunctionSecrets.trigger_url
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal FunctionSecrets(string key, Uri triggerUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,10 +70,16 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Secret key. </summary>
+        /// <summary>
+        /// Secret key.
+        /// Serialized Name: FunctionSecrets.key
+        /// </summary>
         [WirePath("key")]
         public string Key { get; }
-        /// <summary> Trigger URL. </summary>
+        /// <summary>
+        /// Trigger URL.
+        /// Serialized Name: FunctionSecrets.trigger_url
+        /// </summary>
         [WirePath("trigger_url")]
         public Uri TriggerUri { get; }
     }

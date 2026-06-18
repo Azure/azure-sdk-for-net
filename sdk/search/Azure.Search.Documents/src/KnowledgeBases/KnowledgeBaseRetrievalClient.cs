@@ -3,6 +3,7 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -27,7 +28,7 @@ namespace Azure.Search.Documents.KnowledgeBases
         /// <summary> Initializes a new instance of KnowledgeBaseRetrievalClient from a <see cref="KnowledgeBaseRetrievalClientSettings"/>. </summary>
         /// <param name="settings"> The settings for KnowledgeBaseRetrievalClient. </param>
         [Experimental("SCME0002")]
-        public KnowledgeBaseRetrievalClient(KnowledgeBaseRetrievalClientSettings settings) : this(settings?.Endpoint, settings?.KnowledgeBaseName, settings?.CredentialProvider as TokenCredential,  settings?.Options)
+        public KnowledgeBaseRetrievalClient(KnowledgeBaseRetrievalClientSettings settings) : this(settings?.Endpoint, settings?.KnowledgeBaseName, settings?.CredentialProvider as TokenCredential, settings?.Options)
         {
         }
 
@@ -56,5 +57,25 @@ namespace Azure.Search.Documents.KnowledgeBases
             _apiVersion = options.Version.ToVersionString();
             ClientDiagnostics = new ClientDiagnostics(options, true);
         }
+
+        /// <summary>
+        /// KnowledgeBase retrieves relevant data from backing stores.
+        /// </summary>
+        /// <param name="content">The content to send as the body of the request.</param>
+        /// <param name="context">The request context.</param>
+        /// <returns>The response returned from the service.</returns>
+        [ForwardsClientCalls]
+        public virtual Response Retrieve(RequestContent content, RequestContext context) =>
+            Retrieve(content, querySourceAuthorization: null, context);
+
+        /// <summary>
+        /// KnowledgeBase retrieves relevant data from backing stores.
+        /// </summary>
+        /// <param name="content">The content to send as the body of the request.</param>
+        /// <param name="context">The request context.</param>
+        /// <returns>The response returned from the service.</returns>
+        [ForwardsClientCalls]
+        public virtual Task<Response> RetrieveAsync(RequestContent content, RequestContext context) =>
+            RetrieveAsync(content, querySourceAuthorization: null, context);
     }
 }

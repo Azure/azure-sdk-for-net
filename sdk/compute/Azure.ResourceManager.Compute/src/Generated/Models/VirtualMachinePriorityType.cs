@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.Compute.Models
     public readonly partial struct VirtualMachinePriorityType : IEquatable<VirtualMachinePriorityType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="VirtualMachinePriorityType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public VirtualMachinePriorityType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string RegularValue = "Regular";
         private const string LowValue = "Low";
         private const string SpotValue = "Spot";
 
-        /// <summary> Regular. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachinePriorityType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public VirtualMachinePriorityType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Regular. </summary>
         public static VirtualMachinePriorityType Regular { get; } = new VirtualMachinePriorityType(RegularValue);
-        /// <summary> Low. </summary>
+
+        /// <summary> Gets the Low. </summary>
         public static VirtualMachinePriorityType Low { get; } = new VirtualMachinePriorityType(LowValue);
-        /// <summary> Spot. </summary>
+
+        /// <summary> Gets the Spot. </summary>
         public static VirtualMachinePriorityType Spot { get; } = new VirtualMachinePriorityType(SpotValue);
+
         /// <summary> Determines if two <see cref="VirtualMachinePriorityType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(VirtualMachinePriorityType left, VirtualMachinePriorityType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="VirtualMachinePriorityType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(VirtualMachinePriorityType left, VirtualMachinePriorityType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="VirtualMachinePriorityType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="VirtualMachinePriorityType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator VirtualMachinePriorityType(string value) => new VirtualMachinePriorityType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="VirtualMachinePriorityType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator VirtualMachinePriorityType?(string value) => value == null ? null : new VirtualMachinePriorityType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is VirtualMachinePriorityType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(VirtualMachinePriorityType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

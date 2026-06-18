@@ -7,155 +7,308 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary>
-    /// A class representing the BastionHost data model.
-    /// Bastion Host resource.
-    /// </summary>
+    /// <summary> Bastion Host resource. </summary>
     public partial class BastionHostData : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of <see cref="BastionHostData"/>. </summary>
         public BastionHostData()
         {
             Zones = new ChangeTrackingList<string>();
-            IPConfigurations = new ChangeTrackingList<BastionHostIPConfiguration>();
         }
 
         /// <summary> Initializes a new instance of <see cref="BastionHostData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="type"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Represents the bastion host resource. </param>
         /// <param name="zones"> A list of availability zones denoting where the resource needs to come from. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="sku"> The sku of this Bastion Host. </param>
-        /// <param name="ipConfigurations"> IP configuration of the Bastion Host resource. </param>
-        /// <param name="dnsName"> FQDN for the endpoint on which bastion host is accessible. </param>
-        /// <param name="virtualNetwork"> Reference to an existing virtual network required for Developer Bastion Host only. </param>
-        /// <param name="networkAcls"></param>
-        /// <param name="provisioningState"> The provisioning state of the bastion host resource. </param>
-        /// <param name="scaleUnits"> The scale units for the Bastion Host resource. </param>
-        /// <param name="disableCopyPaste"> Enable/Disable Copy/Paste feature of the Bastion Host resource. </param>
-        /// <param name="enableFileCopy"> Enable/Disable File Copy feature of the Bastion Host resource. </param>
-        /// <param name="enableIPConnect"> Enable/Disable IP Connect feature of the Bastion Host resource. </param>
-        /// <param name="enableShareableLink"> Enable/Disable Shareable Link of the Bastion Host resource. </param>
-        /// <param name="enableTunneling"> Enable/Disable Tunneling feature of the Bastion Host resource. </param>
-        /// <param name="enableKerberos"> Enable/Disable Kerberos feature of the Bastion Host resource. </param>
-        /// <param name="enableSessionRecording"> Enable/Disable Session Recording feature of the Bastion Host resource. </param>
-        /// <param name="enablePrivateOnlyBastion"> Enable/Disable Private Only feature of the Bastion Host resource. </param>
-        internal BastionHostData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<string> zones, ETag? etag, NetworkSku sku, IList<BastionHostIPConfiguration> ipConfigurations, string dnsName, WritableSubResource virtualNetwork, BastionHostPropertiesFormatNetworkAcls networkAcls, NetworkProvisioningState? provisioningState, int? scaleUnits, bool? disableCopyPaste, bool? enableFileCopy, bool? enableIPConnect, bool? enableShareableLink, bool? enableTunneling, bool? enableKerberos, bool? enableSessionRecording, bool? enablePrivateOnlyBastion) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
+        internal BastionHostData(ResourceIdentifier id, string name, string @type, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, BastionHostPropertiesFormat properties, IList<string> zones, ETag? eTag, NetworkSku sku) : base(id, name, @type, location, tags, additionalBinaryDataProperties)
         {
+            Properties = properties;
             Zones = zones;
-            ETag = etag;
+            ETag = eTag;
             Sku = sku;
-            IPConfigurations = ipConfigurations;
-            DnsName = dnsName;
-            VirtualNetwork = virtualNetwork;
-            NetworkAcls = networkAcls;
-            ProvisioningState = provisioningState;
-            ScaleUnits = scaleUnits;
-            DisableCopyPaste = disableCopyPaste;
-            EnableFileCopy = enableFileCopy;
-            EnableIPConnect = enableIPConnect;
-            EnableShareableLink = enableShareableLink;
-            EnableTunneling = enableTunneling;
-            EnableKerberos = enableKerberos;
-            EnableSessionRecording = enableSessionRecording;
-            EnablePrivateOnlyBastion = enablePrivateOnlyBastion;
         }
+
+        /// <summary> Represents the bastion host resource. </summary>
+        [WirePath("properties")]
+        internal BastionHostPropertiesFormat Properties { get; set; }
 
         /// <summary> A list of availability zones denoting where the resource needs to come from. </summary>
         [WirePath("zones")]
         public IList<string> Zones { get; }
+
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }
+
         /// <summary> The sku of this Bastion Host. </summary>
+        [WirePath("sku")]
         internal NetworkSku Sku { get; set; }
-        /// <summary> The name of the sku of this Bastion Host. </summary>
-        [WirePath("sku.name")]
-        public BastionHostSkuName? SkuName
-        {
-            get => Sku is null ? default : Sku.Name;
-            set
-            {
-                if (Sku is null)
-                    Sku = new NetworkSku();
-                Sku.Name = value;
-            }
-        }
 
         /// <summary> IP configuration of the Bastion Host resource. </summary>
         [WirePath("properties.ipConfigurations")]
-        public IList<BastionHostIPConfiguration> IPConfigurations { get; }
-        /// <summary> FQDN for the endpoint on which bastion host is accessible. </summary>
-        [WirePath("properties.dnsName")]
-        public string DnsName { get; set; }
-        /// <summary> Reference to an existing virtual network required for Developer Bastion Host only. </summary>
-        internal WritableSubResource VirtualNetwork { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.virtualNetwork.id")]
-        public ResourceIdentifier VirtualNetworkId
-        {
-            get => VirtualNetwork is null ? default : VirtualNetwork.Id;
-            set
-            {
-                if (VirtualNetwork is null)
-                    VirtualNetwork = new WritableSubResource();
-                VirtualNetwork.Id = value;
-            }
-        }
-
-        /// <summary> Gets or sets the network acls. </summary>
-        internal BastionHostPropertiesFormatNetworkAcls NetworkAcls { get; set; }
-        /// <summary> Sets the IP ACL rules for Developer Bastion Host. </summary>
-        [WirePath("properties.networkAcls.ipRules")]
-        public IList<BastionHostIPRule> NetworkAclsIPRules
+        public IList<BastionHostIPConfiguration> IpConfigurations
         {
             get
             {
-                if (NetworkAcls is null)
-                    NetworkAcls = new BastionHostPropertiesFormatNetworkAcls();
-                return NetworkAcls.IPRules;
+                if (Properties is null)
+                {
+                    Properties = new BastionHostPropertiesFormat();
+                }
+                return Properties.IpConfigurations;
+            }
+        }
+
+        /// <summary> FQDN for the endpoint on which bastion host is accessible. </summary>
+        [WirePath("properties.dnsName")]
+        public string DnsName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DnsName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BastionHostPropertiesFormat();
+                }
+                Properties.DnsName = value;
             }
         }
 
         /// <summary> The provisioning state of the bastion host resource. </summary>
         [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> The scale units for the Bastion Host resource. </summary>
         [WirePath("properties.scaleUnits")]
-        public int? ScaleUnits { get; set; }
+        public int? ScaleUnits
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ScaleUnits;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BastionHostPropertiesFormat();
+                }
+                Properties.ScaleUnits = value;
+            }
+        }
+
         /// <summary> Enable/Disable Copy/Paste feature of the Bastion Host resource. </summary>
         [WirePath("properties.disableCopyPaste")]
-        public bool? DisableCopyPaste { get; set; }
+        public bool? DisableCopyPaste
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisableCopyPaste;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BastionHostPropertiesFormat();
+                }
+                Properties.DisableCopyPaste = value;
+            }
+        }
+
         /// <summary> Enable/Disable File Copy feature of the Bastion Host resource. </summary>
         [WirePath("properties.enableFileCopy")]
-        public bool? EnableFileCopy { get; set; }
+        public bool? EnableFileCopy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnableFileCopy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BastionHostPropertiesFormat();
+                }
+                Properties.EnableFileCopy = value;
+            }
+        }
+
         /// <summary> Enable/Disable IP Connect feature of the Bastion Host resource. </summary>
         [WirePath("properties.enableIpConnect")]
-        public bool? EnableIPConnect { get; set; }
+        public bool? EnableIpConnect
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnableIpConnect;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BastionHostPropertiesFormat();
+                }
+                Properties.EnableIpConnect = value;
+            }
+        }
+
         /// <summary> Enable/Disable Shareable Link of the Bastion Host resource. </summary>
         [WirePath("properties.enableShareableLink")]
-        public bool? EnableShareableLink { get; set; }
+        public bool? EnableShareableLink
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnableShareableLink;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BastionHostPropertiesFormat();
+                }
+                Properties.EnableShareableLink = value;
+            }
+        }
+
         /// <summary> Enable/Disable Tunneling feature of the Bastion Host resource. </summary>
         [WirePath("properties.enableTunneling")]
-        public bool? EnableTunneling { get; set; }
+        public bool? EnableTunneling
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnableTunneling;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BastionHostPropertiesFormat();
+                }
+                Properties.EnableTunneling = value;
+            }
+        }
+
         /// <summary> Enable/Disable Kerberos feature of the Bastion Host resource. </summary>
         [WirePath("properties.enableKerberos")]
-        public bool? EnableKerberos { get; set; }
+        public bool? EnableKerberos
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnableKerberos;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BastionHostPropertiesFormat();
+                }
+                Properties.EnableKerberos = value;
+            }
+        }
+
         /// <summary> Enable/Disable Session Recording feature of the Bastion Host resource. </summary>
         [WirePath("properties.enableSessionRecording")]
-        public bool? EnableSessionRecording { get; set; }
+        public bool? EnableSessionRecording
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnableSessionRecording;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BastionHostPropertiesFormat();
+                }
+                Properties.EnableSessionRecording = value;
+            }
+        }
+
         /// <summary> Enable/Disable Private Only feature of the Bastion Host resource. </summary>
         [WirePath("properties.enablePrivateOnlyBastion")]
-        public bool? EnablePrivateOnlyBastion { get; set; }
+        public bool? EnablePrivateOnlyBastion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnablePrivateOnlyBastion;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BastionHostPropertiesFormat();
+                }
+                Properties.EnablePrivateOnlyBastion = value;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        [WirePath("properties.virtualNetwork.id")]
+        public ResourceIdentifier VirtualNetworkId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VirtualNetworkId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BastionHostPropertiesFormat();
+                }
+                Properties.VirtualNetworkId = value;
+            }
+        }
+
+        /// <summary> Sets the IP ACL rules for Developer Bastion Host. </summary>
+        [WirePath("properties.networkAcls.ipRules")]
+        public IList<BastionHostIPRule> NetworkAclsIpRules
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new BastionHostPropertiesFormat();
+                }
+                return Properties.NetworkAclsIpRules;
+            }
+        }
+
+        /// <summary> The name of the sku of this Bastion Host. </summary>
+        [WirePath("sku.name")]
+        public BastionHostSkuName? SkuName
+        {
+            get
+            {
+                return Sku is null ? default : Sku.Name;
+            }
+            set
+            {
+                if (Sku is null)
+                {
+                    Sku = new NetworkSku();
+                }
+                Sku.Name = value;
+            }
+        }
     }
 }

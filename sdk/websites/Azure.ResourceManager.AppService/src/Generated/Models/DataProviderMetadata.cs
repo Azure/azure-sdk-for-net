@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Additional configuration for a data providers. </summary>
+    /// <summary>
+    /// Additional configuration for a data providers
+    /// Serialized Name: DataProviderMetadata
+    /// </summary>
     public partial class DataProviderMetadata
     {
         /// <summary>
@@ -52,8 +55,11 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DataProviderMetadata"/>. </summary>
-        /// <param name="providerName"></param>
-        /// <param name="propertyBag"> Settings for the data provider. </param>
+        /// <param name="providerName"> Serialized Name: DataProviderMetadata.providerName. </param>
+        /// <param name="propertyBag">
+        /// Settings for the data provider
+        /// Serialized Name: DataProviderMetadata.propertyBag
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DataProviderMetadata(string providerName, IReadOnlyList<DataProviderKeyValuePair> propertyBag, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,10 +68,13 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets or sets the provider name. </summary>
+        /// <summary> Serialized Name: DataProviderMetadata.providerName. </summary>
         [WirePath("providerName")]
         public string ProviderName { get; set; }
-        /// <summary> Settings for the data provider. </summary>
+        /// <summary>
+        /// Settings for the data provider
+        /// Serialized Name: DataProviderMetadata.propertyBag
+        /// </summary>
         [WirePath("propertyBag")]
         public IReadOnlyList<DataProviderKeyValuePair> PropertyBag { get; }
     }

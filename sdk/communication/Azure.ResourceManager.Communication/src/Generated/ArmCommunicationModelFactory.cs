@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure;
 using Azure.Core;
@@ -19,6 +20,49 @@ namespace Azure.ResourceManager.Communication.Models
     public static partial class ArmCommunicationModelFactory
     {
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="hostName"> FQDN of the CommunicationService instance. </param>
+        /// <param name="dataLocation"> The location where the communication service stores its data at rest. </param>
+        /// <param name="notificationHubId"> Resource ID of an Azure Notification Hub linked to this resource. </param>
+        /// <param name="version"> Version of the CommunicationService resource. Probably you need the same or higher version of client SDKs. </param>
+        /// <param name="immutableResourceId"> The immutable resource Id of the communication service. </param>
+        /// <param name="linkedDomains"> List of email Domain resource Ids. </param>
+        /// <param name="publicNetworkAccess"> Allow, disallow, or let network security perimeter configuration control public network access to the protected resource. Value is optional but if passed in, it must be 'Enabled', 'Disabled' or 'SecuredByPerimeter'. </param>
+        /// <param name="isLocalAuthDisabled"> Disable local authentication for the CommunicationService. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <returns> A new <see cref="Communication.CommunicationServiceResourceData"/> instance for mocking. </returns>
+        public static CommunicationServiceResourceData CommunicationServiceResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, CommunicationServicesProvisioningState? provisioningState = default, string hostName = default, string dataLocation = default, ResourceIdentifier notificationHubId = default, string version = default, Guid? immutableResourceId = default, IEnumerable<string> linkedDomains = default, CommunicationPublicNetworkAccess? publicNetworkAccess = default, bool? isLocalAuthDisabled = default, ManagedServiceIdentity identity = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new CommunicationServiceResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                provisioningState is null && hostName is null && dataLocation is null && notificationHubId is null && version is null && immutableResourceId is null && linkedDomains is null && publicNetworkAccess is null && isLocalAuthDisabled is null ? default : new CommunicationServiceProperties(
+                    provisioningState,
+                    hostName,
+                    dataLocation,
+                    notificationHubId,
+                    version,
+                    immutableResourceId,
+                    (linkedDomains ?? new ChangeTrackingList<string>()).ToList(),
+                    publicNetworkAccess,
+                    isLocalAuthDisabled,
+                    default),
+                identity,
+                default);
+        }
+
         /// <param name="tags"> Tags of the service which is a list of key value pairs that describe the resource. </param>
         /// <param name="linkedDomains"> List of email Domain resource Ids. </param>
         /// <param name="publicNetworkAccess"> Allow, disallow, or let network security perimeter configuration control public network access to the protected resource. Value is optional but if passed in, it must be 'Enabled', 'Disabled' or 'SecuredByPerimeter'. </param>
@@ -29,37 +73,33 @@ namespace Azure.ResourceManager.Communication.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new CommunicationServiceResourcePatch(tags, additionalBinaryDataProperties: null, linkedDomains is null && publicNetworkAccess is null && disableLocalAuth is null ? default : new CommunicationServiceUpdateProperties((linkedDomains ?? new ChangeTrackingList<string>()).ToList(), publicNetworkAccess, disableLocalAuth, null), identity);
+            return new CommunicationServiceResourcePatch(tags ?? new ChangeTrackingDictionary<string, string>(), default, linkedDomains is null && publicNetworkAccess is null && disableLocalAuth is null ? default : new CommunicationServiceUpdateProperties((linkedDomains ?? new ChangeTrackingList<string>()).ToList(), publicNetworkAccess, disableLocalAuth, default), identity);
         }
 
-        /// <summary> An ARM resource with that can accept tags. </summary>
         /// <param name="tags"> Tags of the service which is a list of key value pairs that describe the resource. </param>
         /// <returns> A new <see cref="Models.CommunicationAcceptTags"/> instance for mocking. </returns>
         public static CommunicationAcceptTags CommunicationAcceptTags(IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new CommunicationAcceptTags(tags, additionalBinaryDataProperties: null);
+            return new CommunicationAcceptTags(tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
-        /// <summary> Description of an Azure Notification Hub to link to the communication service. </summary>
         /// <param name="resourceId"> The resource ID of the notification hub. </param>
         /// <param name="connectionString"> Connection string for the notification hub. </param>
         /// <returns> A new <see cref="Models.LinkNotificationHubContent"/> instance for mocking. </returns>
         public static LinkNotificationHubContent LinkNotificationHubContent(ResourceIdentifier resourceId = default, string connectionString = default)
         {
-            return new LinkNotificationHubContent(resourceId, connectionString, additionalBinaryDataProperties: null);
+            return new LinkNotificationHubContent(resourceId, connectionString, default);
         }
 
-        /// <summary> A notification hub that has been linked to the communication service. </summary>
         /// <param name="resourceId"> The resource ID of the notification hub. </param>
         /// <returns> A new <see cref="Models.LinkedNotificationHub"/> instance for mocking. </returns>
         public static LinkedNotificationHub LinkedNotificationHub(ResourceIdentifier resourceId = default)
         {
-            return new LinkedNotificationHub(resourceId, additionalBinaryDataProperties: null);
+            return new LinkedNotificationHub(resourceId, default);
         }
 
-        /// <summary> A class representing the access keys of a CommunicationService. </summary>
         /// <param name="primaryKey"> The primary access key. </param>
         /// <param name="secondaryKey"> The secondary access key. </param>
         /// <param name="primaryConnectionString"> CommunicationService connection string constructed via the primaryKey. </param>
@@ -67,17 +107,39 @@ namespace Azure.ResourceManager.Communication.Models
         /// <returns> A new <see cref="Models.CommunicationServiceKeys"/> instance for mocking. </returns>
         public static CommunicationServiceKeys CommunicationServiceKeys(string primaryKey = default, string secondaryKey = default, string primaryConnectionString = default, string secondaryConnectionString = default)
         {
-            return new CommunicationServiceKeys(primaryKey, secondaryKey, primaryConnectionString, secondaryConnectionString, additionalBinaryDataProperties: null);
+            return new CommunicationServiceKeys(primaryKey, secondaryKey, primaryConnectionString, secondaryConnectionString, default);
         }
 
-        /// <summary> The check availability result. </summary>
+        /// <param name="keyType"> The keyType to regenerate. Must be either 'primary' or 'secondary'(case-insensitive). </param>
+        /// <returns> A new <see cref="Models.RegenerateCommunicationServiceKeyContent"/> instance for mocking. </returns>
+        public static RegenerateCommunicationServiceKeyContent RegenerateCommunicationServiceKeyContent(CommunicationServiceKeyType? keyType = default)
+        {
+            return new RegenerateCommunicationServiceKeyContent(keyType, default);
+        }
+
+        /// <param name="name"> The name of the resource for which availability needs to be checked. </param>
+        /// <param name="resourceType"> The resource type. </param>
+        /// <returns> A new <see cref="Models.CommunicationServiceNameAvailabilityContent"/> instance for mocking. </returns>
+        public static CommunicationServiceNameAvailabilityContent CommunicationServiceNameAvailabilityContent(string name = default, ResourceType? resourceType = default)
+        {
+            return new CommunicationServiceNameAvailabilityContent(name, resourceType, default);
+        }
+
+        /// <param name="name"> The name of the resource for which availability needs to be checked. </param>
+        /// <param name="resourceType"> The resource type. </param>
+        /// <returns> A new <see cref="Models.CommunicationNameAvailabilityContent"/> instance for mocking. </returns>
+        public static CommunicationNameAvailabilityContent CommunicationNameAvailabilityContent(string name = default, ResourceType? resourceType = default)
+        {
+            return new CommunicationNameAvailabilityContent(name, resourceType, default);
+        }
+
         /// <param name="isNameAvailable"> Indicates if the resource name is available. </param>
         /// <param name="reason"> The reason why the given name is not available. </param>
         /// <param name="message"> Detailed reason why the given name is not available. </param>
         /// <returns> A new <see cref="Models.CommunicationNameAvailabilityResult"/> instance for mocking. </returns>
         public static CommunicationNameAvailabilityResult CommunicationNameAvailabilityResult(bool? isNameAvailable = default, CommunicationNameAvailabilityReason? reason = default, string message = default)
         {
-            return new CommunicationNameAvailabilityResult(isNameAvailable, reason, message, additionalBinaryDataProperties: null);
+            return new CommunicationNameAvailabilityResult(isNameAvailable, reason, message, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -104,22 +166,21 @@ namespace Azure.ResourceManager.Communication.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 provisioningState is null && dataLocation is null && fromSenderDomain is null && mailFromSenderDomain is null && domainManagement is null && verificationStates is null && verificationRecords is null && userEngagementTracking is null ? default : new DomainProperties(
                     provisioningState,
                     dataLocation,
                     fromSenderDomain,
                     mailFromSenderDomain,
-                    domainManagement.Value,
+                    domainManagement.GetValueOrDefault(),
                     verificationStates,
                     verificationRecords,
                     userEngagementTracking,
-                    null));
+                    default),
+                default);
         }
 
-        /// <summary> List of VerificationStatusRecord. </summary>
         /// <param name="domain"> A class that represents a VerificationStatus record. </param>
         /// <param name="spf"> A class that represents a VerificationStatus record. </param>
         /// <param name="dkim"> A class that represents a VerificationStatus record. </param>
@@ -134,19 +195,17 @@ namespace Azure.ResourceManager.Communication.Models
                 dkim,
                 dkim2,
                 dmarc,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> A class that represents a VerificationStatus record. </summary>
         /// <param name="status"> Status of the verification operation. </param>
         /// <param name="errorCode"> Error code. This property will only be present if the status is UnableToVerify. </param>
         /// <returns> A new <see cref="Models.DomainVerificationStatusRecord"/> instance for mocking. </returns>
         public static DomainVerificationStatusRecord DomainVerificationStatusRecord(DomainRecordVerificationStatus? status = default, string errorCode = default)
         {
-            return new DomainVerificationStatusRecord(status, errorCode, additionalBinaryDataProperties: null);
+            return new DomainVerificationStatusRecord(status, errorCode, default);
         }
 
-        /// <summary> List of DnsRecord. </summary>
         /// <param name="domain"> A class that represents a VerificationStatus record. </param>
         /// <param name="spf"> A class that represents a VerificationStatus record. </param>
         /// <param name="dkim"> A class that represents a VerificationStatus record. </param>
@@ -161,10 +220,9 @@ namespace Azure.ResourceManager.Communication.Models
                 dkim,
                 dkim2,
                 dmarc,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> A class that represents a VerificationStatus record. </summary>
         /// <param name="dnsRecordType"> Type of the DNS record. Example: TXT. </param>
         /// <param name="name"> Name of the DNS record. </param>
         /// <param name="value"> Value of the DNS record. </param>
@@ -172,7 +230,7 @@ namespace Azure.ResourceManager.Communication.Models
         /// <returns> A new <see cref="Models.VerificationDnsRecord"/> instance for mocking. </returns>
         public static VerificationDnsRecord VerificationDnsRecord(string dnsRecordType = default, string name = default, string value = default, int? timeToLiveInSeconds = default)
         {
-            return new VerificationDnsRecord(dnsRecordType, name, value, timeToLiveInSeconds, additionalBinaryDataProperties: null);
+            return new VerificationDnsRecord(dnsRecordType, name, value, timeToLiveInSeconds, default);
         }
 
         /// <param name="tags"> Tags of the service which is a list of key value pairs that describe the resource. </param>
@@ -182,15 +240,14 @@ namespace Azure.ResourceManager.Communication.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new CommunicationDomainResourcePatch(tags, additionalBinaryDataProperties: null, userEngagementTracking is null ? default : new UpdateDomainProperties(userEngagementTracking, null));
+            return new CommunicationDomainResourcePatch(tags ?? new ChangeTrackingDictionary<string, string>(), default, userEngagementTracking is null ? default : new UpdateDomainProperties(userEngagementTracking, default));
         }
 
-        /// <summary> Input parameter for verification APIs. </summary>
         /// <param name="verificationType"> Type of verification. </param>
         /// <returns> A new <see cref="Models.DomainsRecordVerificationContent"/> instance for mocking. </returns>
         public static DomainsRecordVerificationContent DomainsRecordVerificationContent(DomainRecordVerificationType verificationType = default)
         {
-            return new DomainsRecordVerificationContent(verificationType, additionalBinaryDataProperties: null);
+            return new DomainsRecordVerificationContent(verificationType, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -211,20 +268,19 @@ namespace Azure.ResourceManager.Communication.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                provisioningState is null && dataLocation is null ? default : new EmailServiceProperties(provisioningState, dataLocation, null));
+                provisioningState is null && dataLocation is null ? default : new EmailServiceProperties(provisioningState, dataLocation, default),
+                default);
         }
 
-        /// <summary> A class representing update parameters for EmailService resource. </summary>
         /// <param name="tags"> Tags of the service which is a list of key value pairs that describe the resource. </param>
         /// <returns> A new <see cref="Models.EmailServiceResourcePatch"/> instance for mocking. </returns>
         public static EmailServiceResourcePatch EmailServiceResourcePatch(IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new EmailServiceResourcePatch(tags, additionalBinaryDataProperties: null);
+            return new EmailServiceResourcePatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -243,8 +299,8 @@ namespace Azure.ResourceManager.Communication.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                dataLocation is null && username is null && displayName is null && provisioningState is null ? default : new SenderUsernameProperties(dataLocation, username, displayName, provisioningState, null));
+                dataLocation is null && username is null && displayName is null && provisioningState is null ? default : new SenderUsernameProperties(dataLocation, username, displayName, provisioningState, default),
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -262,8 +318,8 @@ namespace Azure.ResourceManager.Communication.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                username is null && entraApplicationId is null && tenantId is null ? default : new SmtpUsernameProperties(username, entraApplicationId, tenantId.Value, null));
+                username is null && entraApplicationId is null && tenantId is null ? default : new SmtpUsernameProperties(username, entraApplicationId, tenantId.GetValueOrDefault(), default),
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -282,8 +338,8 @@ namespace Azure.ResourceManager.Communication.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                listName is null && lastUpdatedOn is null && createdOn is null && dataLocation is null ? default : new SuppressionListProperties(listName, lastUpdatedOn, createdOn, dataLocation, null));
+                listName is null && lastUpdatedOn is null && createdOn is null && dataLocation is null ? default : new SuppressionListProperties(listName, lastUpdatedOn, createdOn, dataLocation, default),
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -304,7 +360,6 @@ namespace Azure.ResourceManager.Communication.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 email is null && firstName is null && lastName is null && notes is null && lastModified is null && dataLocation is null ? default : new SuppressionListAddressProperties(
                     email,
                     firstName,
@@ -312,7 +367,8 @@ namespace Azure.ResourceManager.Communication.Models
                     notes,
                     lastModified,
                     dataLocation,
-                    null));
+                    default),
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Communication.CommunicationServiceResourceData"/>. </summary>
@@ -333,21 +389,29 @@ namespace Azure.ResourceManager.Communication.Models
         /// <param name="publicNetworkAccess"> Allow, disallow, or let network security perimeter configuration control public network access to the protected resource. Value is optional but if passed in, it must be 'Enabled', 'Disabled' or 'SecuredByPerimeter'. </param>
         /// <param name="isLocalAuthDisabled"> Disable local authentication for the CommunicationService. </param>
         /// <returns> A new <see cref="Communication.CommunicationServiceResourceData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static CommunicationServiceResourceData CommunicationServiceResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ManagedServiceIdentity identity = default, CommunicationServicesProvisioningState? provisioningState = default, string hostName = default, string dataLocation = default, ResourceIdentifier notificationHubId = default, string version = default, Guid? immutableResourceId = default, IEnumerable<string> linkedDomains = default, CommunicationPublicNetworkAccess? publicNetworkAccess = default, bool? isLocalAuthDisabled = default)
         {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-            linkedDomains ??= new ChangeTrackingList<string>();
-
             return new CommunicationServiceResourceData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                default,
-                identity);
+                provisioningState is null && hostName is null && dataLocation is null && notificationHubId is null && version is null && immutableResourceId is null && linkedDomains is null && publicNetworkAccess is null && isLocalAuthDisabled is null ? default : new CommunicationServiceProperties(
+                    provisioningState,
+                    hostName,
+                    dataLocation,
+                    notificationHubId,
+                    version,
+                    immutableResourceId,
+                    (linkedDomains ?? new ChangeTrackingList<string>()).ToList(),
+                    publicNetworkAccess,
+                    isLocalAuthDisabled,
+                    default),
+                identity,
+                default);
         }
     }
 }

@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network.Samples
             FirewallPolicyDraftResource firewallPolicyDraft = client.GetFirewallPolicyDraftResource(firewallPolicyDraftResourceId);
 
             // invoke the operation
-            await firewallPolicyDraft.DeleteAsync(WaitUntil.Completed);
+            await firewallPolicyDraft.DeleteAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -152,7 +152,6 @@ Mode = FirewallPolicyIntrusionDetectionStateType.Deny,
 }},
                         BypassTrafficSettings = {new FirewallPolicyIntrusionDetectionBypassTrafficSpecifications
 {
-Name = "bypassRule1",
 Description = "Rule 1",
 Protocol = FirewallPolicyIntrusionDetectionProtocol.Tcp,
 SourceAddresses = {"1.2.3.4"},
@@ -162,7 +161,7 @@ DestinationPorts = {"*"},
                     },
                 },
             };
-            ArmOperation<FirewallPolicyDraftResource> lro = await firewallPolicyDraft.CreateOrUpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<FirewallPolicyDraftResource> lro = await firewallPolicyDraft.CreateOrUpdateAsync(WaitUntil.Completed, data, cancellationToken: System.Threading.CancellationToken.None);
             FirewallPolicyDraftResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

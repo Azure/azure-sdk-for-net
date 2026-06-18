@@ -45,34 +45,34 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
 
             // Assert
             ValidateResponse(response.GetRawResponse(), "GetCollections");
-            Assert.AreEqual(200, response.GetRawResponse().Status, "Expected successful response");
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200), "Expected successful response");
 
             StacCatalogCollections collections = response.Value;
-            Assert.IsNotNull(collections, "Collections should not be null");
-            Assert.IsNotNull(collections.Collections, "Collections array should not be null");
+            Assert.That(collections, Is.Not.Null, "Collections should not be null");
+            Assert.That(collections.Collections, Is.Not.Null, "Collections array should not be null");
 
             // Verify collections array exists
             int collectionCount = collections.Collections.Count;
             TestContext.WriteLine($"Number of collections: {collectionCount}");
 
             // Verify we have at least one collection
-            Assert.Greater(collectionCount, 0, "Should have at least one collection");
+            Assert.That(collectionCount, Is.GreaterThan(0), "Should have at least one collection");
 
             // Verify first collection has required STAC properties
             if (collectionCount > 0)
             {
                 StacCollectionResource firstCollection = collections.Collections[0];
 
-                Assert.IsNotNull(firstCollection.Id, "Collection should have 'id' property");
+                Assert.That(firstCollection.Id, Is.Not.Null, "Collection should have 'id' property");
                 string collectionId = firstCollection.Id;
                 ValidateNotNullOrEmpty(collectionId, "collection.id");
 
                 TestContext.WriteLine($"First collection ID: {collectionId}");
 
                 // Verify other STAC collection properties
-                Assert.IsNotNull(firstCollection.Type, "Collection should have 'type' property");
-                Assert.IsNotNull(firstCollection.Links, "Collection should have 'links' property");
-                Assert.IsNotNull(firstCollection.StacVersion, "Collection should have 'stac_version' property");
+                Assert.That(firstCollection.Type, Is.Not.Null, "Collection should have 'type' property");
+                Assert.That(firstCollection.Links, Is.Not.Null, "Collection should have 'links' property");
+                Assert.That(firstCollection.StacVersion, Is.Not.Null, "Collection should have 'stac_version' property");
 
                 if (firstCollection.Title != null)
                 {
@@ -106,29 +106,29 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
 
             // Assert
             ValidateResponse(response.GetRawResponse(), "GetCollection");
-            Assert.AreEqual(200, response.GetRawResponse().Status, "Expected successful response");
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200), "Expected successful response");
 
             StacCollectionResource collection = response.Value;
-            Assert.IsNotNull(collection, "Collection should not be null");
+            Assert.That(collection, Is.Not.Null, "Collection should not be null");
 
             // Verify collection ID matches
-            Assert.IsNotNull(collection.Id, "Response should contain 'id' property");
+            Assert.That(collection.Id, Is.Not.Null, "Response should contain 'id' property");
             string returnedId = collection.Id;
-            Assert.AreEqual(collectionId, returnedId, "Returned collection ID should match requested ID");
+            Assert.That(returnedId, Is.EqualTo(collectionId), "Returned collection ID should match requested ID");
 
             // Verify STAC collection required properties
-            Assert.IsNotNull(collection.Type, "Collection should have 'type' property");
-            Assert.AreEqual("Collection", collection.Type, "Type should be 'Collection'");
+            Assert.That(collection.Type, Is.Not.Null, "Collection should have 'type' property");
+            Assert.That(collection.Type, Is.EqualTo("Collection"), "Type should be 'Collection'");
 
-            Assert.IsNotNull(collection.StacVersion, "Collection should have 'stac_version' property");
+            Assert.That(collection.StacVersion, Is.Not.Null, "Collection should have 'stac_version' property");
             ValidateNotNullOrEmpty(collection.StacVersion, "stac_version");
             TestContext.WriteLine($"STAC version: {collection.StacVersion}");
 
-            Assert.IsNotNull(collection.Links, "Collection should have 'links' property");
-            Assert.Greater(collection.Links.Count, 0, "Links should have at least one item");
+            Assert.That(collection.Links, Is.Not.Null, "Collection should have 'links' property");
+            Assert.That(collection.Links.Count, Is.GreaterThan(0), "Links should have at least one item");
 
-            Assert.IsNotNull(collection.Extent, "Collection should have 'extent' property");
-            Assert.IsNotNull(collection.License, "Collection should have 'license' property");
+            Assert.That(collection.Extent, Is.Not.Null, "Collection should have 'extent' property");
+            Assert.That(collection.License, Is.Not.Null, "Collection should have 'license' property");
 
             // Log additional properties
             if (collection.Title != null)
@@ -170,15 +170,15 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
 
             // Assert
             ValidateResponse(response.GetRawResponse(), "GetConformanceClass");
-            Assert.AreEqual(200, response.GetRawResponse().Status, "Expected successful response");
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200), "Expected successful response");
 
             StacConformanceClasses conformance = response.Value;
-            Assert.IsNotNull(conformance, "Conformance should not be null");
-            Assert.IsNotNull(conformance.ConformsTo, "ConformsTo should not be null");
+            Assert.That(conformance, Is.Not.Null, "Conformance should not be null");
+            Assert.That(conformance.ConformsTo, Is.Not.Null, "ConformsTo should not be null");
 
             int conformanceCount = conformance.ConformsTo.Count;
             TestContext.WriteLine($"Number of conformance classes: {conformanceCount}");
-            Assert.Greater(conformanceCount, 0, "Should have at least one conformance class");
+            Assert.That(conformanceCount, Is.GreaterThan(0), "Should have at least one conformance class");
 
             // Log first few conformance URIs
             for (int i = 0; i < System.Math.Min(5, conformanceCount); i++)
@@ -211,17 +211,17 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
 
             // Assert
             ValidateResponse(response.GetRawResponse(), "GetPartitionType");
-            Assert.AreEqual(200, response.GetRawResponse().Status, "Expected successful response");
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200), "Expected successful response");
 
             PartitionType partitionType = response.Value;
-            Assert.IsNotNull(partitionType, "PartitionType should not be null");
-            Assert.IsNotNull(partitionType.Scheme, "Partition scheme should not be null");
+            Assert.That(partitionType, Is.Not.Null, "PartitionType should not be null");
+            Assert.That(partitionType.Scheme, Is.Not.Null, "Partition scheme should not be null");
 
             TestContext.WriteLine($"Partition scheme: {partitionType.Scheme}");
 
             // Verify scheme is a valid value
             string scheme = partitionType.Scheme.ToString();
-            Assert.IsNotNull(scheme, "Scheme should have a value");
+            Assert.That(scheme, Is.Not.Null, "Scheme should have a value");
 
             TestContext.WriteLine($"Successfully retrieved partition type: {scheme}");
         }
@@ -248,10 +248,10 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
 
             // Assert
             ValidateResponse(response.GetRawResponse(), "GetRenderOptions");
-            Assert.AreEqual(200, response.GetRawResponse().Status, "Expected successful response");
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200), "Expected successful response");
 
             IReadOnlyList<RenderConfiguration> renderOptions = response.Value;
-            Assert.IsNotNull(renderOptions, "RenderOptions should not be null");
+            Assert.That(renderOptions, Is.Not.Null, "RenderOptions should not be null");
 
             int optionCount = renderOptions.Count;
             TestContext.WriteLine($"Number of render options: {optionCount}");
@@ -259,7 +259,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             if (optionCount > 0)
             {
                 RenderConfiguration firstOption = renderOptions[0];
-                Assert.IsNotNull(firstOption.Id, "Render option should have ID");
+                Assert.That(firstOption.Id, Is.Not.Null, "Render option should have ID");
                 TestContext.WriteLine($"First render option ID: {firstOption.Id}");
 
                 if (firstOption.Name != null)
@@ -293,10 +293,10 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
 
             // Assert
             ValidateResponse(response.GetRawResponse(), "GetTileSettings");
-            Assert.AreEqual(200, response.GetRawResponse().Status, "Expected successful response");
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200), "Expected successful response");
 
             TileSettings tileSettings = response.Value;
-            Assert.IsNotNull(tileSettings, "TileSettings should not be null");
+            Assert.That(tileSettings, Is.Not.Null, "TileSettings should not be null");
 
             // Log available properties
             TestContext.WriteLine($"Max items per tile: {tileSettings.MaxItemsPerTile}");
@@ -332,10 +332,10 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
 
             // Assert
             ValidateResponse(response.GetRawResponse(), "GetMosaics");
-            Assert.AreEqual(200, response.GetRawResponse().Status, "Expected successful response");
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200), "Expected successful response");
 
             IReadOnlyList<StacMosaic> mosaics = response.Value;
-            Assert.IsNotNull(mosaics, "Mosaics should not be null");
+            Assert.That(mosaics, Is.Not.Null, "Mosaics should not be null");
 
             int mosaicCount = mosaics.Count;
             TestContext.WriteLine($"Number of mosaics: {mosaicCount}");
@@ -343,7 +343,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             if (mosaicCount > 0)
             {
                 StacMosaic firstMosaic = mosaics[0];
-                Assert.IsNotNull(firstMosaic.Id, "Mosaic should have ID");
+                Assert.That(firstMosaic.Id, Is.Not.Null, "Mosaic should have ID");
                 TestContext.WriteLine($"First mosaic ID: {firstMosaic.Id}");
 
                 if (firstMosaic.Name != null)
@@ -378,13 +378,13 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
 
             // Assert
             ValidateResponse(response, "GetCollectionQueryables");
-            Assert.AreEqual(200, response.Status, "Expected successful response");
+            Assert.That(response.Status, Is.EqualTo(200), "Expected successful response");
 
             // Parse JSON response
             using JsonDocument doc = JsonDocument.Parse(response.Content);
             JsonElement root = doc.RootElement;
 
-            Assert.IsTrue(root.TryGetProperty("properties", out JsonElement properties), "Response should have 'properties' key");
+            Assert.That(root.TryGetProperty("properties", out JsonElement properties), Is.True, "Response should have 'properties' key");
 
             int propertyCount = 0;
             foreach (JsonProperty prop in properties.EnumerateObject())
@@ -424,13 +424,13 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
 
             // Assert
             ValidateResponse(response, "GetQueryables");
-            Assert.AreEqual(200, response.Status, "Expected successful response");
+            Assert.That(response.Status, Is.EqualTo(200), "Expected successful response");
 
             // Parse JSON response
             using JsonDocument doc = JsonDocument.Parse(response.Content);
             JsonElement root = doc.RootElement;
 
-            Assert.IsTrue(root.TryGetProperty("properties", out JsonElement properties), "Response should have 'properties' key");
+            Assert.That(root.TryGetProperty("properties", out JsonElement properties), Is.True, "Response should have 'properties' key");
 
             int propertyCount = 0;
             foreach (JsonProperty prop in properties.EnumerateObject())
@@ -465,10 +465,10 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
 
             // Assert
             ValidateResponse(response.GetRawResponse(), "GetCollectionConfiguration");
-            Assert.AreEqual(200, response.GetRawResponse().Status, "Expected successful response");
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200), "Expected successful response");
 
             UserCollectionSettings config = response.Value;
-            Assert.IsNotNull(config, "Configuration should not be null");
+            Assert.That(config, Is.Not.Null, "Configuration should not be null");
 
             TestContext.WriteLine("Successfully retrieved collection configuration");
         }
@@ -507,11 +507,11 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
 
             // Assert
             ValidateResponse(response, "GetCollectionThumbnail");
-            Assert.AreEqual(200, response.Status, "Expected successful response");
+            Assert.That(response.Status, Is.EqualTo(200), "Expected successful response");
 
             // Read the streaming content
             System.IO.Stream contentStream = response.ContentStream;
-            Assert.IsNotNull(contentStream, "Content stream should not be null");
+            Assert.That(contentStream, Is.Not.Null, "Content stream should not be null");
 
             // Read into byte array
             using var memoryStream = new System.IO.MemoryStream();
@@ -519,8 +519,8 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             byte[] thumbnailBytes = memoryStream.ToArray();
 
             TestContext.WriteLine($"Thumbnail size: {thumbnailBytes.Length} bytes");
-            Assert.Greater(thumbnailBytes.Length, 0, "Thumbnail bytes should not be empty");
-            Assert.Greater(thumbnailBytes.Length, 100, "Thumbnail should be substantial");
+            Assert.That(thumbnailBytes.Length, Is.GreaterThan(0), "Thumbnail bytes should not be empty");
+            Assert.That(thumbnailBytes.Length, Is.GreaterThan(100), "Thumbnail should be substantial");
 
             // Check for common image format magic bytes
             bool isPng = thumbnailBytes.Length >= 8 &&
@@ -531,7 +531,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
                          thumbnailBytes[0] == 0xFF && thumbnailBytes[1] == 0xD8 &&
                          thumbnailBytes[2] == 0xFF;
 
-            Assert.IsTrue(isPng || isJpeg, "Thumbnail should be either PNG or JPEG format");
+            Assert.That(isPng || isJpeg, Is.True, "Thumbnail should be either PNG or JPEG format");
 
             if (isPng)
             {
@@ -587,12 +587,12 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
 
             // Assert
             ValidateResponse(response.GetRawResponse(), "CreateRenderOption");
-            Assert.AreEqual(201, response.GetRawResponse().Status, "Expected 201 Created response");
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(201), "Expected 201 Created response");
 
             RenderConfiguration createdOption = response.Value;
-            Assert.IsNotNull(createdOption, "Created render option should not be null");
-            Assert.AreEqual("test-natural-color", createdOption.Id, "ID should match");
-            Assert.AreEqual("Test Natural color", createdOption.Name, "Name should match");
+            Assert.That(createdOption, Is.Not.Null, "Created render option should not be null");
+            Assert.That(createdOption.Id, Is.EqualTo("test-natural-color"), "ID should match");
+            Assert.That(createdOption.Name, Is.EqualTo("Test Natural color"), "Name should match");
 
             TestContext.WriteLine($"Successfully created render option: {createdOption.Id}");
         }
@@ -619,12 +619,12 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
 
             // Assert
             ValidateResponse(response.GetRawResponse(), "GetRenderOption");
-            Assert.AreEqual(200, response.GetRawResponse().Status, "Expected successful response");
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200), "Expected successful response");
 
             RenderConfiguration renderOption = response.Value;
-            Assert.IsNotNull(renderOption, "Render option should not be null");
-            Assert.AreEqual("test-natural-color", renderOption.Id, "ID should match");
-            Assert.IsNotNull(renderOption.Name, "Name should not be null");
+            Assert.That(renderOption, Is.Not.Null, "Render option should not be null");
+            Assert.That(renderOption.Id, Is.EqualTo("test-natural-color"), "ID should match");
+            Assert.That(renderOption.Name, Is.Not.Null, "Name should not be null");
 
             TestContext.WriteLine($"Successfully retrieved render option: {renderOption.Id}");
         }
@@ -661,12 +661,12 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
 
             // Assert
             ValidateResponse(response.GetRawResponse(), "ReplaceRenderOption");
-            Assert.AreEqual(200, response.GetRawResponse().Status, "Expected successful response");
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200), "Expected successful response");
 
             RenderConfiguration updatedOption = response.Value;
-            Assert.IsNotNull(updatedOption, "Updated render option should not be null");
-            Assert.AreEqual("test-natural-color", updatedOption.Id, "ID should match");
-            Assert.AreEqual("RGB from visual assets - updated", updatedOption.Description, "Description should be updated");
+            Assert.That(updatedOption, Is.Not.Null, "Updated render option should not be null");
+            Assert.That(updatedOption.Id, Is.EqualTo("test-natural-color"), "ID should match");
+            Assert.That(updatedOption.Description, Is.EqualTo("RGB from visual assets - updated"), "Description should be updated");
 
             TestContext.WriteLine($"Successfully replaced render option: {updatedOption.Id}");
         }
@@ -702,7 +702,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
 
             // Verify it exists
             Response<RenderConfiguration> getResponse = await stacClient.GetRenderOptionAsync(collectionId, "test-render-opt-delete");
-            Assert.IsNotNull(getResponse.Value, "Render option should exist before deletion");
+            Assert.That(getResponse.Value, Is.Not.Null, "Render option should exist before deletion");
 
             // Act - Delete it
             Response deleteResponse = await stacClient.DeleteRenderOptionAsync(collectionId, "test-render-opt-delete");
@@ -721,7 +721,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             }
             catch (RequestFailedException ex)
             {
-                Assert.AreEqual(404, ex.Status, "Should return 404 for deleted resource");
+                Assert.That(ex.Status, Is.EqualTo(404), "Should return 404 for deleted resource");
                 TestContext.WriteLine("Verified render option was deleted");
             }
         }
@@ -767,12 +767,11 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
 
             // Assert
             ValidateResponse(response.GetRawResponse(), "AddMosaic");
-            Assert.IsTrue(response.GetRawResponse().Status == 201 || response.GetRawResponse().Status == 200,
-                "Expected 201 Created or 200 OK response");
+            Assert.That(response.GetRawResponse().Status == 201 || response.GetRawResponse().Status == 200, Is.True, "Expected 201 Created or 200 OK response");
 
             StacMosaic createdMosaic = response.Value;
-            Assert.IsNotNull(createdMosaic, "Created mosaic should not be null");
-            Assert.AreEqual("test-mosaic-1", createdMosaic.Id, "ID should match");
+            Assert.That(createdMosaic, Is.Not.Null, "Created mosaic should not be null");
+            Assert.That(createdMosaic.Id, Is.EqualTo("test-mosaic-1"), "ID should match");
 
             TestContext.WriteLine($"Successfully added mosaic: {createdMosaic.Id}");
         }
@@ -799,11 +798,11 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
 
             // Assert
             ValidateResponse(response.GetRawResponse(), "GetMosaic");
-            Assert.AreEqual(200, response.GetRawResponse().Status, "Expected successful response");
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200), "Expected successful response");
 
             StacMosaic mosaic = response.Value;
-            Assert.IsNotNull(mosaic, "Mosaic should not be null");
-            Assert.AreEqual("test-mosaic-1", mosaic.Id, "ID should match");
+            Assert.That(mosaic, Is.Not.Null, "Mosaic should not be null");
+            Assert.That(mosaic.Id, Is.EqualTo("test-mosaic-1"), "ID should match");
 
             TestContext.WriteLine($"Successfully retrieved mosaic: {mosaic.Id}");
         }
@@ -838,12 +837,12 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
 
             // Assert
             ValidateResponse(response.GetRawResponse(), "ReplaceMosaic");
-            Assert.AreEqual(200, response.GetRawResponse().Status, "Expected successful response");
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo(200), "Expected successful response");
 
             StacMosaic updatedMosaic = response.Value;
-            Assert.IsNotNull(updatedMosaic, "Updated mosaic should not be null");
-            Assert.AreEqual("test-mosaic-1", updatedMosaic.Id, "ID should match");
-            Assert.AreEqual("Test Mosaic Updated", updatedMosaic.Name, "Name should be updated");
+            Assert.That(updatedMosaic, Is.Not.Null, "Updated mosaic should not be null");
+            Assert.That(updatedMosaic.Id, Is.EqualTo("test-mosaic-1"), "ID should match");
+            Assert.That(updatedMosaic.Name, Is.EqualTo("Test Mosaic Updated"), "Name should be updated");
 
             TestContext.WriteLine($"Successfully replaced mosaic: {updatedMosaic.Id}");
         }
@@ -878,7 +877,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
 
             // Verify it exists
             Response<StacMosaic> getResponse = await stacClient.GetMosaicAsync(collectionId, "test-mosaic-delete");
-            Assert.IsNotNull(getResponse.Value, "Mosaic should exist before deletion");
+            Assert.That(getResponse.Value, Is.Not.Null, "Mosaic should exist before deletion");
 
             // Act - Delete it
             Response deleteResponse = await stacClient.DeleteMosaicAsync(collectionId, "test-mosaic-delete");
@@ -897,7 +896,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             }
             catch (RequestFailedException ex)
             {
-                Assert.AreEqual(404, ex.Status, "Should return 404 for deleted resource");
+                Assert.That(ex.Status, Is.EqualTo(404), "Should return 404 for deleted resource");
                 TestContext.WriteLine("Verified mosaic was deleted");
             }
         }

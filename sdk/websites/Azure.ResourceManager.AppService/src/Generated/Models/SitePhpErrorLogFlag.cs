@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Used for getting PHP error logging flag. </summary>
+    /// <summary>
+    /// Used for getting PHP error logging flag.
+    /// Serialized Name: SitePhpErrorLogFlag
+    /// </summary>
     public partial class SitePhpErrorLogFlag : ResourceData
     {
         /// <summary>
@@ -57,11 +60,26 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="localLogErrors"> Local log_errors setting. </param>
-        /// <param name="masterLogErrors"> Master log_errors setting. </param>
-        /// <param name="localLogErrorsMaxLength"> Local log_errors_max_len setting. </param>
-        /// <param name="masterLogErrorsMaxLength"> Master log_errors_max_len setting. </param>
-        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="localLogErrors">
+        /// Local log_errors setting.
+        /// Serialized Name: SitePhpErrorLogFlag.properties.localLogErrors
+        /// </param>
+        /// <param name="masterLogErrors">
+        /// Master log_errors setting.
+        /// Serialized Name: SitePhpErrorLogFlag.properties.masterLogErrors
+        /// </param>
+        /// <param name="localLogErrorsMaxLength">
+        /// Local log_errors_max_len setting.
+        /// Serialized Name: SitePhpErrorLogFlag.properties.localLogErrorsMaxLength
+        /// </param>
+        /// <param name="masterLogErrorsMaxLength">
+        /// Master log_errors_max_len setting.
+        /// Serialized Name: SitePhpErrorLogFlag.properties.masterLogErrorsMaxLength
+        /// </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SitePhpErrorLogFlag(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string localLogErrors, string masterLogErrors, string localLogErrorsMaxLength, string masterLogErrorsMaxLength, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -73,19 +91,34 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Local log_errors setting. </summary>
+        /// <summary>
+        /// Local log_errors setting.
+        /// Serialized Name: SitePhpErrorLogFlag.properties.localLogErrors
+        /// </summary>
         [WirePath("properties.localLogErrors")]
         public string LocalLogErrors { get; set; }
-        /// <summary> Master log_errors setting. </summary>
+        /// <summary>
+        /// Master log_errors setting.
+        /// Serialized Name: SitePhpErrorLogFlag.properties.masterLogErrors
+        /// </summary>
         [WirePath("properties.masterLogErrors")]
         public string MasterLogErrors { get; set; }
-        /// <summary> Local log_errors_max_len setting. </summary>
+        /// <summary>
+        /// Local log_errors_max_len setting.
+        /// Serialized Name: SitePhpErrorLogFlag.properties.localLogErrorsMaxLength
+        /// </summary>
         [WirePath("properties.localLogErrorsMaxLength")]
         public string LocalLogErrorsMaxLength { get; set; }
-        /// <summary> Master log_errors_max_len setting. </summary>
+        /// <summary>
+        /// Master log_errors_max_len setting.
+        /// Serialized Name: SitePhpErrorLogFlag.properties.masterLogErrorsMaxLength
+        /// </summary>
         [WirePath("properties.masterLogErrorsMaxLength")]
         public string MasterLogErrorsMaxLength { get; set; }
-        /// <summary> Kind of resource. </summary>
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
     }

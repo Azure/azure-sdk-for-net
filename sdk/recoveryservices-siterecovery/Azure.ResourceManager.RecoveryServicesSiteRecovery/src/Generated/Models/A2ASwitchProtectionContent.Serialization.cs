@@ -10,13 +10,55 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class A2ASwitchProtectionContent : IUtf8JsonSerializable, IJsonModel<A2ASwitchProtectionContent>
+    /// <summary> A2A specific switch protection input. </summary>
+    public partial class A2ASwitchProtectionContent : SwitchProtectionProviderSpecificContent, IJsonModel<A2ASwitchProtectionContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<A2ASwitchProtectionContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override SwitchProtectionProviderSpecificContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<A2ASwitchProtectionContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeA2ASwitchProtectionContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(A2ASwitchProtectionContent)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<A2ASwitchProtectionContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(A2ASwitchProtectionContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<A2ASwitchProtectionContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        A2ASwitchProtectionContent IPersistableModel<A2ASwitchProtectionContent>.Create(BinaryData data, ModelReaderWriterOptions options) => (A2ASwitchProtectionContent)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<A2ASwitchProtectionContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<A2ASwitchProtectionContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +70,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<A2ASwitchProtectionContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<A2ASwitchProtectionContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(A2ASwitchProtectionContent)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(RecoveryContainerId))
             {
@@ -44,7 +85,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 writer.WritePropertyName("vmDisks"u8);
                 writer.WriteStartArray();
-                foreach (var item in VmDisks)
+                foreach (A2AVmDiskDetails item in VmDisks)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -54,7 +95,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 writer.WritePropertyName("vmManagedDisks"u8);
                 writer.WriteStartArray();
-                foreach (var item in VmManagedDisks)
+                foreach (A2AVmManagedDiskDetails item in VmManagedDisks)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -105,6 +146,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("recoveryCapacityReservationGroupId"u8);
                 writer.WriteStringValue(RecoveryCapacityReservationGroupId);
             }
+            if (Optional.IsDefined(PlatformFaultDomain))
+            {
+                writer.WritePropertyName("platformFaultDomain"u8);
+                writer.WriteNumberValue(PlatformFaultDomain.Value);
+            }
             if (Optional.IsDefined(DiskEncryptionInfo))
             {
                 writer.WritePropertyName("diskEncryptionInfo"u8);
@@ -112,26 +158,33 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
         }
 
-        A2ASwitchProtectionContent IJsonModel<A2ASwitchProtectionContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        A2ASwitchProtectionContent IJsonModel<A2ASwitchProtectionContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (A2ASwitchProtectionContent)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override SwitchProtectionProviderSpecificContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<A2ASwitchProtectionContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<A2ASwitchProtectionContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(A2ASwitchProtectionContent)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeA2ASwitchProtectionContent(document.RootElement, options);
         }
 
-        internal static A2ASwitchProtectionContent DeserializeA2ASwitchProtectionContent(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static A2ASwitchProtectionContent DeserializeA2ASwitchProtectionContent(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            string instanceType = "A2A";
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             ResourceIdentifier recoveryContainerId = default;
             IList<A2AVmDiskDetails> vmDisks = default;
             IList<A2AVmManagedDiskDetails> vmManagedDisks = default;
@@ -144,145 +197,151 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             ResourceIdentifier recoveryProximityPlacementGroupId = default;
             ResourceIdentifier recoveryVirtualMachineScaleSetId = default;
             ResourceIdentifier recoveryCapacityReservationGroupId = default;
+            int? platformFaultDomain = default;
             SiteRecoveryDiskEncryptionInfo diskEncryptionInfo = default;
-            string instanceType = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("recoveryContainerId"u8))
+                if (prop.NameEquals("instanceType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    instanceType = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("recoveryContainerId"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    recoveryContainerId = new ResourceIdentifier(property.Value.GetString());
+                    recoveryContainerId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("vmDisks"u8))
+                if (prop.NameEquals("vmDisks"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<A2AVmDiskDetails> array = new List<A2AVmDiskDetails>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(A2AVmDiskDetails.DeserializeA2AVmDiskDetails(item, options));
                     }
                     vmDisks = array;
                     continue;
                 }
-                if (property.NameEquals("vmManagedDisks"u8))
+                if (prop.NameEquals("vmManagedDisks"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<A2AVmManagedDiskDetails> array = new List<A2AVmManagedDiskDetails>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(A2AVmManagedDiskDetails.DeserializeA2AVmManagedDiskDetails(item, options));
                     }
                     vmManagedDisks = array;
                     continue;
                 }
-                if (property.NameEquals("recoveryResourceGroupId"u8))
+                if (prop.NameEquals("recoveryResourceGroupId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    recoveryResourceGroupId = new ResourceIdentifier(property.Value.GetString());
+                    recoveryResourceGroupId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("recoveryCloudServiceId"u8))
+                if (prop.NameEquals("recoveryCloudServiceId"u8))
                 {
-                    recoveryCloudServiceId = property.Value.GetString();
+                    recoveryCloudServiceId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recoveryAvailabilitySetId"u8))
+                if (prop.NameEquals("recoveryAvailabilitySetId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    recoveryAvailabilitySetId = new ResourceIdentifier(property.Value.GetString());
+                    recoveryAvailabilitySetId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("policyId"u8))
+                if (prop.NameEquals("policyId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    policyId = new ResourceIdentifier(property.Value.GetString());
+                    policyId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("recoveryBootDiagStorageAccountId"u8))
+                if (prop.NameEquals("recoveryBootDiagStorageAccountId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    recoveryBootDiagStorageAccountId = new ResourceIdentifier(property.Value.GetString());
+                    recoveryBootDiagStorageAccountId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("recoveryAvailabilityZone"u8))
+                if (prop.NameEquals("recoveryAvailabilityZone"u8))
                 {
-                    recoveryAvailabilityZone = property.Value.GetString();
+                    recoveryAvailabilityZone = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recoveryProximityPlacementGroupId"u8))
+                if (prop.NameEquals("recoveryProximityPlacementGroupId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    recoveryProximityPlacementGroupId = new ResourceIdentifier(property.Value.GetString());
+                    recoveryProximityPlacementGroupId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("recoveryVirtualMachineScaleSetId"u8))
+                if (prop.NameEquals("recoveryVirtualMachineScaleSetId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    recoveryVirtualMachineScaleSetId = new ResourceIdentifier(property.Value.GetString());
+                    recoveryVirtualMachineScaleSetId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("recoveryCapacityReservationGroupId"u8))
+                if (prop.NameEquals("recoveryCapacityReservationGroupId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    recoveryCapacityReservationGroupId = new ResourceIdentifier(property.Value.GetString());
+                    recoveryCapacityReservationGroupId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("diskEncryptionInfo"u8))
+                if (prop.NameEquals("platformFaultDomain"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    diskEncryptionInfo = SiteRecoveryDiskEncryptionInfo.DeserializeSiteRecoveryDiskEncryptionInfo(property.Value, options);
+                    platformFaultDomain = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("instanceType"u8))
+                if (prop.NameEquals("diskEncryptionInfo"u8))
                 {
-                    instanceType = property.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    diskEncryptionInfo = SiteRecoveryDiskEncryptionInfo.DeserializeSiteRecoveryDiskEncryptionInfo(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new A2ASwitchProtectionContent(
                 instanceType,
-                serializedAdditionalRawData,
+                additionalBinaryDataProperties,
                 recoveryContainerId,
                 vmDisks ?? new ChangeTrackingList<A2AVmDiskDetails>(),
                 vmManagedDisks ?? new ChangeTrackingList<A2AVmManagedDiskDetails>(),
@@ -295,38 +354,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 recoveryProximityPlacementGroupId,
                 recoveryVirtualMachineScaleSetId,
                 recoveryCapacityReservationGroupId,
+                platformFaultDomain,
                 diskEncryptionInfo);
         }
-
-        BinaryData IPersistableModel<A2ASwitchProtectionContent>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<A2ASwitchProtectionContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(A2ASwitchProtectionContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        A2ASwitchProtectionContent IPersistableModel<A2ASwitchProtectionContent>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<A2ASwitchProtectionContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeA2ASwitchProtectionContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(A2ASwitchProtectionContent)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<A2ASwitchProtectionContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

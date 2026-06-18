@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Billing.Models
     public readonly partial struct BillingSpendingLimit : IEquatable<BillingSpendingLimit>
     {
         private readonly string _value;
+        /// <summary> Off. </summary>
+        private const string OffValue = "Off";
+        /// <summary> On. </summary>
+        private const string OnValue = "On";
 
         /// <summary> Initializes a new instance of <see cref="BillingSpendingLimit"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BillingSpendingLimit(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string OffValue = "Off";
-        private const string OnValue = "On";
+            _value = value;
+        }
 
         /// <summary> Off. </summary>
         public static BillingSpendingLimit Off { get; } = new BillingSpendingLimit(OffValue);
+
         /// <summary> On. </summary>
         public static BillingSpendingLimit On { get; } = new BillingSpendingLimit(OnValue);
+
         /// <summary> Determines if two <see cref="BillingSpendingLimit"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BillingSpendingLimit left, BillingSpendingLimit right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BillingSpendingLimit"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BillingSpendingLimit left, BillingSpendingLimit right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BillingSpendingLimit"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BillingSpendingLimit"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BillingSpendingLimit(string value) => new BillingSpendingLimit(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BillingSpendingLimit"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BillingSpendingLimit?(string value) => value == null ? null : new BillingSpendingLimit(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BillingSpendingLimit other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BillingSpendingLimit other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -12,22 +12,23 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary>
     /// Azure Operator Distributed Services network function application definition.
-    /// Please note <see cref="AzureOperatorNexusNetworkFunctionApplication"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="AzureOperatorNexusNetworkFunctionArmTemplateApplication"/> and <see cref="AzureOperatorNexusNetworkFunctionImageApplication"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureOperatorNexusNetworkFunctionImageApplication"/> and <see cref="AzureOperatorNexusNetworkFunctionArmTemplateApplication"/>.
     /// </summary>
     public abstract partial class AzureOperatorNexusNetworkFunctionApplication : NetworkFunctionApplication
     {
         /// <summary> Initializes a new instance of <see cref="AzureOperatorNexusNetworkFunctionApplication"/>. </summary>
-        protected AzureOperatorNexusNetworkFunctionApplication()
+        /// <param name="artifactType"> The artifact type. </param>
+        private protected AzureOperatorNexusNetworkFunctionApplication(AzureOperatorNexusArtifactType artifactType)
         {
+            ArtifactType = artifactType;
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureOperatorNexusNetworkFunctionApplication"/>. </summary>
         /// <param name="name"> The name of the network function application. </param>
         /// <param name="dependsOnProfile"> Depends on profile definition. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="artifactType"> The artifact type. </param>
-        internal AzureOperatorNexusNetworkFunctionApplication(string name, DependsOnProfile dependsOnProfile, IDictionary<string, BinaryData> serializedAdditionalRawData, AzureOperatorNexusArtifactType artifactType) : base(name, dependsOnProfile, serializedAdditionalRawData)
+        internal AzureOperatorNexusNetworkFunctionApplication(string name, DependsOnProfile dependsOnProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureOperatorNexusArtifactType artifactType) : base(name, dependsOnProfile, additionalBinaryDataProperties)
         {
             ArtifactType = artifactType;
         }

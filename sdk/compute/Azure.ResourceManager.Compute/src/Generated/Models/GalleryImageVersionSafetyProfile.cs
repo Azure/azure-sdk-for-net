@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -21,11 +22,11 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of <see cref="GalleryImageVersionSafetyProfile"/>. </summary>
         /// <param name="allowDeletionOfReplicatedLocations"> Indicates whether or not removing this Gallery Image Version from replicated regions is allowed. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="isReportedForPolicyViolation"> Indicates whether this image has been reported as violating Microsoft's policies. </param>
         /// <param name="policyViolations"> A list of Policy Violations that have been reported for this Gallery Image Version. </param>
         /// <param name="isBlockedDeletionBeforeEndOfLife"> Indicates whether or not the deletion is blocked for this Gallery Image Version if its End Of Life has not expired. </param>
-        internal GalleryImageVersionSafetyProfile(bool? allowDeletionOfReplicatedLocations, IDictionary<string, BinaryData> serializedAdditionalRawData, bool? isReportedForPolicyViolation, IReadOnlyList<GalleryImageVersionPolicyViolation> policyViolations, bool? isBlockedDeletionBeforeEndOfLife) : base(allowDeletionOfReplicatedLocations, serializedAdditionalRawData)
+        internal GalleryImageVersionSafetyProfile(bool? allowDeletionOfReplicatedLocations, IDictionary<string, BinaryData> additionalBinaryDataProperties, bool? isReportedForPolicyViolation, IReadOnlyList<GalleryImageVersionPolicyViolation> policyViolations, bool? isBlockedDeletionBeforeEndOfLife) : base(allowDeletionOfReplicatedLocations, additionalBinaryDataProperties)
         {
             IsReportedForPolicyViolation = isReportedForPolicyViolation;
             PolicyViolations = policyViolations;
@@ -34,8 +35,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Indicates whether this image has been reported as violating Microsoft's policies. </summary>
         public bool? IsReportedForPolicyViolation { get; }
+
         /// <summary> A list of Policy Violations that have been reported for this Gallery Image Version. </summary>
         public IReadOnlyList<GalleryImageVersionPolicyViolation> PolicyViolations { get; }
+
         /// <summary> Indicates whether or not the deletion is blocked for this Gallery Image Version if its End Of Life has not expired. </summary>
         public bool? IsBlockedDeletionBeforeEndOfLife { get; set; }
     }

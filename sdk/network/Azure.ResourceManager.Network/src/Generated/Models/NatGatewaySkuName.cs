@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct NatGatewaySkuName : IEquatable<NatGatewaySkuName>
     {
         private readonly string _value;
+        /// <summary> Standard. </summary>
+        private const string StandardValue = "Standard";
+        /// <summary> StandardV2. </summary>
+        private const string StandardV2Value = "StandardV2";
 
         /// <summary> Initializes a new instance of <see cref="NatGatewaySkuName"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NatGatewaySkuName(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string StandardValue = "Standard";
-        private const string StandardV2Value = "StandardV2";
+            _value = value;
+        }
 
         /// <summary> Standard. </summary>
         public static NatGatewaySkuName Standard { get; } = new NatGatewaySkuName(StandardValue);
+
         /// <summary> StandardV2. </summary>
         public static NatGatewaySkuName StandardV2 { get; } = new NatGatewaySkuName(StandardV2Value);
+
         /// <summary> Determines if two <see cref="NatGatewaySkuName"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NatGatewaySkuName left, NatGatewaySkuName right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NatGatewaySkuName"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NatGatewaySkuName left, NatGatewaySkuName right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NatGatewaySkuName"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NatGatewaySkuName"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NatGatewaySkuName(string value) => new NatGatewaySkuName(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NatGatewaySkuName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NatGatewaySkuName?(string value) => value == null ? null : new NatGatewaySkuName(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NatGatewaySkuName other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NatGatewaySkuName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

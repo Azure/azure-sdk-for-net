@@ -7,61 +7,86 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary>
     /// `Internet` - Advertise routes to internet community.
-    ///  `LocalAS` - Advertise routes to only localAS peers.
-    ///  `NoAdvertise` - Don't advertise routes to any peer.
+    /// `LocalAS` - Advertise routes to only localAS peers.
+    /// `NoAdvertise` - Don't advertise routes to any peer.
     /// `NoExport` - Don't export to next AS.
     /// `GShut` - Graceful Shutdown (GSHUT) withdraw routes before terminating BGP connection.
-    ///
     /// </summary>
     public readonly partial struct WellKnownCommunity : IEquatable<WellKnownCommunity>
     {
         private readonly string _value;
+        /// <summary> WellKnownCommunities-Internet. </summary>
+        private const string InternetValue = "Internet";
+        /// <summary> WellKnownCommunities-LocalAS. </summary>
+        private const string LocalASValue = "LocalAS";
+        /// <summary> WellKnownCommunities-NoAdvertise. </summary>
+        private const string NoAdvertiseValue = "NoAdvertise";
+        /// <summary> WellKnownCommunities-NoExport. </summary>
+        private const string NoExportValue = "NoExport";
+        /// <summary> WellKnownCommunities-GShut. </summary>
+        private const string GShutValue = "GShut";
 
         /// <summary> Initializes a new instance of <see cref="WellKnownCommunity"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public WellKnownCommunity(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string InternetValue = "Internet";
-        private const string LocalASValue = "LocalAS";
-        private const string NoAdvertiseValue = "NoAdvertise";
-        private const string NoExportValue = "NoExport";
-        private const string GShutValue = "GShut";
-
-        /// <summary> Internet. </summary>
+        /// <summary> WellKnownCommunities-Internet. </summary>
         public static WellKnownCommunity Internet { get; } = new WellKnownCommunity(InternetValue);
-        /// <summary> LocalAS. </summary>
+
+        /// <summary> WellKnownCommunities-LocalAS. </summary>
         public static WellKnownCommunity LocalAS { get; } = new WellKnownCommunity(LocalASValue);
-        /// <summary> NoAdvertise. </summary>
+
+        /// <summary> WellKnownCommunities-NoAdvertise. </summary>
         public static WellKnownCommunity NoAdvertise { get; } = new WellKnownCommunity(NoAdvertiseValue);
-        /// <summary> NoExport. </summary>
+
+        /// <summary> WellKnownCommunities-NoExport. </summary>
         public static WellKnownCommunity NoExport { get; } = new WellKnownCommunity(NoExportValue);
-        /// <summary> GShut. </summary>
+
+        /// <summary> WellKnownCommunities-GShut. </summary>
         public static WellKnownCommunity GShut { get; } = new WellKnownCommunity(GShutValue);
+
         /// <summary> Determines if two <see cref="WellKnownCommunity"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(WellKnownCommunity left, WellKnownCommunity right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="WellKnownCommunity"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(WellKnownCommunity left, WellKnownCommunity right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="WellKnownCommunity"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="WellKnownCommunity"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator WellKnownCommunity(string value) => new WellKnownCommunity(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="WellKnownCommunity"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator WellKnownCommunity?(string value) => value == null ? null : new WellKnownCommunity(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is WellKnownCommunity other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(WellKnownCommunity other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

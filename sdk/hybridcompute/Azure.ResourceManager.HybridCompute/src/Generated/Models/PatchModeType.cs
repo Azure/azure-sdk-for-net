@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.HybridCompute.Models
     public readonly partial struct PatchModeType : IEquatable<PatchModeType>
     {
         private readonly string _value;
+        /// <summary> ImageDefault. </summary>
+        private const string ImageDefaultValue = "ImageDefault";
+        /// <summary> AutomaticByPlatform. </summary>
+        private const string AutomaticByPlatformValue = "AutomaticByPlatform";
+        /// <summary> AutomaticByOS. </summary>
+        private const string AutomaticByOSValue = "AutomaticByOS";
+        /// <summary> Manual. </summary>
+        private const string ManualValue = "Manual";
 
         /// <summary> Initializes a new instance of <see cref="PatchModeType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PatchModeType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ImageDefaultValue = "ImageDefault";
-        private const string AutomaticByPlatformValue = "AutomaticByPlatform";
-        private const string AutomaticByOSValue = "AutomaticByOS";
-        private const string ManualValue = "Manual";
+            _value = value;
+        }
 
         /// <summary> ImageDefault. </summary>
         public static PatchModeType ImageDefault { get; } = new PatchModeType(ImageDefaultValue);
+
         /// <summary> AutomaticByPlatform. </summary>
         public static PatchModeType AutomaticByPlatform { get; } = new PatchModeType(AutomaticByPlatformValue);
+
         /// <summary> AutomaticByOS. </summary>
         public static PatchModeType AutomaticByOS { get; } = new PatchModeType(AutomaticByOSValue);
+
         /// <summary> Manual. </summary>
         public static PatchModeType Manual { get; } = new PatchModeType(ManualValue);
+
         /// <summary> Determines if two <see cref="PatchModeType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PatchModeType left, PatchModeType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PatchModeType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PatchModeType left, PatchModeType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PatchModeType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PatchModeType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PatchModeType(string value) => new PatchModeType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PatchModeType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PatchModeType?(string value) => value == null ? null : new PatchModeType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PatchModeType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PatchModeType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

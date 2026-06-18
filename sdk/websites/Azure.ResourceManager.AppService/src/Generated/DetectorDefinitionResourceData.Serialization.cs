@@ -180,11 +180,11 @@ namespace Azure.ResourceManager.AppService
                 name,
                 type,
                 systemData,
+                kind,
                 displayName,
                 description,
                 rank,
                 isEnabled,
-                kind,
                 serializedAdditionalRawData);
         }
 

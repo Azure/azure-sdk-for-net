@@ -32,7 +32,6 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Properties of a managed cluster. </param>
@@ -41,15 +40,16 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="extendedLocation"> The extended location of the Virtual Machine. </param>
         /// <param name="clusterIdentity"> The identity of the managed cluster, if configured. </param>
         /// <param name="kind"> This is primarily used to expose different UI experiences in the portal for different kinds. </param>
-        internal ContainerServiceManagedClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, ManagedClusterProperties properties, ETag? eTag, ManagedClusterSku sku, ExtendedLocation extendedLocation, ManagedClusterIdentity clusterIdentity, string kind) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerServiceManagedClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedClusterProperties properties, ETag? eTag, ManagedClusterSku sku, ExtendedLocation extendedLocation, ManagedClusterIdentity clusterIdentity, string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             ETag = eTag;
             Sku = sku;
             ExtendedLocation = extendedLocation;
             ClusterIdentity = clusterIdentity;
             Kind = kind;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Properties of a managed cluster. </summary>
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     Properties = new ManagedClusterProperties();
                 }
-                Properties.IsRbacEnabled = value.Value;
+                Properties.IsRbacEnabled = value;
             }
         }
 
@@ -358,7 +358,25 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     Properties = new ManagedClusterProperties();
                 }
-                Properties.SupportPlan = value.Value;
+                Properties.SupportPlan = value;
+            }
+        }
+
+        /// <summary> Whether to enable FIPS mode at the cluster level. When enabled, this setting enforces FIPS compliance for all AKS-managed components, such as the node operating system, addons, and [managed containerized components](https://aka.ms/aks/components/docs). See [Enable cluster-wide FIPS](https://aka.ms/aks/fips) for more details. When this property is enabled, all node pools in the cluster must also be FIPS-enabled. </summary>
+        [WirePath("properties.enableFIPS")]
+        public bool? IsFipsEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsFipsEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedClusterProperties();
+                }
+                Properties.IsFipsEnabled = value;
             }
         }
 
@@ -376,7 +394,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     Properties = new ManagedClusterProperties();
                 }
-                Properties.IsNamespaceResourcesEnabled = value.Value;
+                Properties.IsNamespaceResourcesEnabled = value;
             }
         }
 
@@ -530,7 +548,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     Properties = new ManagedClusterProperties();
                 }
-                Properties.IsLocalAccountsDisabled = value.Value;
+                Properties.IsLocalAccountsDisabled = value;
             }
         }
 
@@ -620,7 +638,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     Properties = new ManagedClusterProperties();
                 }
-                Properties.PublicNetworkAccess = value.Value;
+                Properties.PublicNetworkAccess = value;
             }
         }
 
@@ -724,6 +742,24 @@ namespace Azure.ResourceManager.ContainerService
             }
         }
 
+        /// <summary> Settings for hosted system addons. For more information, see https://aka.ms/aks/automatic/systemcomponents. </summary>
+        [WirePath("properties.hostedSystemProfile")]
+        public ManagedClusterHostedSystemProfile HostedSystemProfile
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HostedSystemProfile;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedClusterProperties();
+                }
+                Properties.HostedSystemProfile = value;
+            }
+        }
+
         /// <summary> Health monitor profile for the managed cluster. </summary>
         [WirePath("properties.healthMonitorProfile")]
         public ManagedClusterHealthMonitorProfile HealthMonitorProfile
@@ -784,7 +820,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     Properties = new ManagedClusterProperties();
                 }
-                Properties.NodeResourceGroupRestrictionLevel = value.Value;
+                Properties.NodeResourceGroupRestrictionLevel = value;
             }
         }
 
@@ -820,7 +856,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     Properties = new ManagedClusterProperties();
                 }
-                Properties.IsCostAnalysisEnabled = value.Value;
+                Properties.IsCostAnalysisEnabled = value;
             }
         }
 
@@ -838,7 +874,7 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     Properties = new ManagedClusterProperties();
                 }
-                Properties.IsAIToolchainOperatorEnabled = value.Value;
+                Properties.IsAIToolchainOperatorEnabled = value;
             }
         }
 
@@ -856,17 +892,17 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     Properties = new ManagedClusterProperties();
                 }
-                Properties.UpstreamSchedulerConfigMode = value.Value;
+                Properties.UpstreamSchedulerConfigMode = value;
             }
         }
 
-        /// <summary> Whether to enable hosted system addons for the cluster. </summary>
-        [WirePath("properties.hostedSystemProfile.enabled")]
-        public bool? IsHostedSystemAddonsEnabled
+        /// <summary> The scaling size of the control plane. Scaling sizes offer guaranteed capacity and predictable Kubernetes performance beyond standard tier defaults. Higher H sizes provide increased performance guarantees. See https://aka.ms/aks/hyperscale for performance metrics details for each size. </summary>
+        [WirePath("properties.controlPlaneScalingProfile.scalingSize")]
+        public ManagedClusterControlPlaneScalingSize? ScalingSize
         {
             get
             {
-                return Properties is null ? default : Properties.IsHostedSystemAddonsEnabled;
+                return Properties is null ? default : Properties.ScalingSize;
             }
             set
             {
@@ -874,7 +910,25 @@ namespace Azure.ResourceManager.ContainerService
                 {
                     Properties = new ManagedClusterProperties();
                 }
-                Properties.IsHostedSystemAddonsEnabled = value.Value;
+                Properties.ScalingSize = value;
+            }
+        }
+
+        /// <summary> The policy configuration for when to allow certain operations which require node re-image and trigger redeployment. For example, some operations, such as updating the .properties.ManagedClusterSecurityProfile.customCATrustCertificates field on an existing managed cluster, trigger rolling updates of the nodes. This setting allows control over when such updates are accepted. The default is 'Allow'. For a full list of covered operations see aka.ms/aks/nodedisruptionpolicy". </summary>
+        [WirePath("properties.nodeDisruptionProfile.nodeDisruptionPolicy")]
+        public NodeDisruptionPolicy? NodeDisruptionPolicy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NodeDisruptionPolicy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedClusterProperties();
+                }
+                Properties.NodeDisruptionPolicy = value;
             }
         }
 

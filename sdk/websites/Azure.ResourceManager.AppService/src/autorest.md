@@ -10,8 +10,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: AppService
 namespace: Azure.ResourceManager.AppService
-require: https://github.com/Azure/azure-rest-api-specs/blob/6dcfdfb7f4da9ec8a0f04b2970ea0b3f95eefa6b/specification/web/resource-manager/readme.md
-#tag: package-2024-11
+require: https://github.com/Azure/azure-rest-api-specs/blob/d44296304c89dc2e634690f90950c5d97181aeec/specification/web/resource-manager/Microsoft.Web/AppService/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -24,8 +23,8 @@ deserialize-null-collection-as-null-value: true
 use-model-reader-writer: true
 enable-bicep-serialization: true
 
-#mgmt-debug:
-#  show-serialized-names: true
+mgmt-debug:
+  show-serialized-names: true
 
 list-exception:
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}
@@ -114,13 +113,10 @@ override-operation-name:
   StaticSites_ListStaticSiteBuildFunctions: GetFunctions
   StaticSites_CreateZipDeploymentForStaticSiteBuild: CreateZipDeployment
   StaticSites_ListStaticSiteBuildFunctionAppSettings: GetFunctionAppSettings
-  AppServiceCertificateOrders_ValidatePurchaseInformation: ValidateAppServiceCertificateOrderPurchaseInformation
   Recommendations_ResetAllFilters: ResetAllRecommendationFilters
   StaticSites_PreviewWorkflow: PreviewStaticSiteWorkflow
   Provider_GetWebAppStacksForLocation: GetWebAppStacksByLocation
   GetSubscriptionDeploymentLocations: GetAppServiceDeploymentLocations
-  Domains_ListRecommendations: GetAppServiceDomainRecommendations
-  Domains_CheckAvailability: CheckAppServiceDomainRegistrationAvailability
   Recommendations_DisableRecommendationForSubscription: DisableAppServiceRecommendation
   WebApps_ListSnapshotsSlot: GetSlotSnapshots
   WebApps_ListSnapshotsFromDRSecondarySlot: GetSlotSnapshotsFromDRSecondary
@@ -188,7 +184,6 @@ acronym-mapping:
   SQL: Sql
 
 rename-mapping:
-  Address: RegistrationAddressInfo
   AddressResponse.properties.internalIpAddress: -|ip-address
   AddressResponse.properties.outboundIpAddresses: -|ip-address
   AddressResponse.properties.serviceIpAddress: -|ip-address
@@ -205,20 +200,6 @@ rename-mapping:
   AppleRegistration: AppServiceAppleRegistration
   ApplicationStackCollection: ApplicationStackListResult
   ApplicationStackResource.properties.name: StackName
-  AppServiceCertificate.keyVaultId: -|arm-id
-  AppServiceCertificate: AppServiceCertificateProperties
-  AppServiceCertificateCollection: AppServiceCertificateListResult
-  AppServiceCertificateOrder.properties.autoRenew: IsAutoRenew
-  AppServiceCertificateOrder.properties.expirationTime: ExpireOn
-  AppServiceCertificateOrder.properties.lastCertificateIssuanceTime: LastCertificateIssuedOn
-  AppServiceCertificateOrder.properties.nextAutoRenewalTimeStamp: NextAutoRenewTimeStamp
-  AppServiceCertificateOrderCollection: AppServiceCertificateOrderListResult
-  AppServiceCertificateOrderPatchResource.properties.autoRenew: IsAutoRenew
-  AppServiceCertificateOrderPatchResource: AppServiceCertificateOrderPatch
-  AppServiceCertificatePatchResource.properties.keyVaultId: -|arm-id
-  AppServiceCertificatePatchResource: AppServiceCertificatePatch
-  AppServiceCertificateResource.properties.keyVaultId: -|arm-id
-  AppServiceCertificateResource: AppServiceCertificate
   AppServiceEnvironment.suspended: IsSuspended
   AppServiceEnvironment.zoneRedundant: IsZoneRedundant
   AppServiceEnvironment: AppServiceEnvironmentProperties
@@ -229,7 +210,6 @@ rename-mapping:
   AppServiceEnvironmentResource.properties.suspended: IsSuspended
   AppServiceEnvironmentResource.properties.zoneRedundant: IsZoneRedundant
   AppServiceEnvironmentResource: AppServiceEnvironment
-  AppserviceGithubToken: AppServiceGithubToken
   AppServicePlan.properties.asyncScalingEnabled: IsAsyncScalingEnabled
   AppServicePlan.properties.elasticScaleEnabled: IsElasticScaleEnabled
   AppServicePlan.properties.freeOfferExpirationTime: FreeOfferExpireOn
@@ -305,7 +285,6 @@ rename-mapping:
   Certificate.properties.valid: IsValid
   Certificate: AppCertificate
   CertificateCollection: AppCertificateListResult
-  CertificateDetails.thumbprint: ThumbprintString
   CertificatePatchResource: AppCertificatePatch
   CertificatePatchResource.properties.keyVaultId: -|arm-id
   CertificatePatchResource.properties.thumbprint: ThumbprintString
@@ -314,7 +293,6 @@ rename-mapping:
   CheckNameResourceTypes.Site: WebSite
   CloningInfo.overwrite: CanOverwrite
   CloningInfo.sourceWebAppLocation: -|azure-location
-  Contact: RegistrationContactInfo
   ContainerThrottlingData: ContainerThrottlingInfo
   ContentHash: WebAppContentHash
   ContentLink: WebAppContentLink
@@ -327,7 +305,6 @@ rename-mapping:
   CsmPublishingProfileOptions: CsmPublishingProfile
   CsmUsageQuotaCollection: CsmUsageQuotaListResult
   CustomOpenIdConnectProvider.enabled: IsEnabled
-  Dapr.enabled: IsEnabled
   DaprConfig.enableApiLogging: IsApiLoggingEnabled
   DaprConfig.enabled: IsEnabled
   DaprConfig: AppDaprConfig
@@ -355,18 +332,6 @@ rename-mapping:
   Dimension.toBeExportedForShoebox: IsToBeExportedForShoebox
   Dimension: MetricDimension
   DnlResourceNameAvailability: DnlResourceNameAvailabilityResult
-  Domain.properties.autoRenew: IsAutoRenew
-  Domain.properties.expirationTime: ExpireOn
-  Domain.properties.privacy: IsDomainPrivacyEnabled
-  Domain.properties.readyForDnsRecordManagement: IsDnsRecordManagementReady
-  Domain: AppServiceDomain
-  DomainAvailabilityCheckResult.available: IsAvailable
-  DomainCollection: AppServiceDomainListResult
-  DomainControlCenterSsoRequest: DomainControlCenterSsoRequestInfo
-  DomainOwnershipIdentifierCollection: DomainOwnershipIdentifierListResult
-  DomainPatchResource.properties.autoRenew: IsAutoRenew
-  DomainPatchResource.properties.privacy: IsDomainPrivacyEnabled
-  DomainPatchResource.properties.readyForDnsRecordManagement: IsReadyForDnsRecordManagement
   EnabledConfig: WebAppEnabledConfig
   EndpointDetail.ipAddress: -|ip-address
   EnvironmentVariable: WebAppEnvironmentVariable
@@ -387,13 +352,14 @@ rename-mapping:
   FunctionsAlwaysReadyConfig.instanceCount: AlwaysReadyInstanceCount
   FunctionsAlwaysReadyConfig: FunctionAppAlwaysReadyConfig
   FunctionsDeploymentStorage: FunctionAppStorage
+  FunctionsDeploymentStorage.type: StorageType
+  FunctionsDeploymentStorageType: FunctionAppStorageType
   FunctionsDeploymentStorageAuthentication: FunctionAppStorageAuthentication
   FunctionsRuntime: FunctionAppRuntime
   FunctionsScaleAndConcurrency.instanceMemoryMB: FunctionAppInstanceMemoryMB
   FunctionsScaleAndConcurrency.maximumInstanceCount: FunctionAppMaximumInstanceCount
   FunctionsScaleAndConcurrency: FunctionAppScaleAndConcurrency
   FunctionsScaleAndConcurrencyTriggersHttp.perInstanceConcurrency: ConcurrentHttpPerInstanceConcurrency
-  FunctionStorageType: FunctionAppStorageType
   GeoRegionCollection: AppServiceGeoRegionListResult
   GitHub.enabled: IsEnabled
   GitHub: AppServiceGitHubProvider
@@ -441,7 +407,6 @@ rename-mapping:
   MSDeployLogEntryType: WebAppMSDeployLogEntryType
   MSDeployStatus.properties.complete: IsComplete
   NameIdentifier: AppServiceDomainNameIdentifier
-  NameIdentifierCollection: AppServiceDomainNameIdentifierListResult
   NetworkTrace: WebAppNetworkTrace
   Nonce: LoginFlowNonceSettings
   OpenAuthenticationAccessPolicies.policies: OpenAuthenticationPolicyList
@@ -507,9 +472,6 @@ rename-mapping:
   RunActionCorrelation: WebAppRunActionCorrelation
   RunCorrelation: WebAppRunCorrelation
   RuntimeName: FunctionAppRuntimeName
-  Scale: ContainerAppScale
-  ScaleRule: ContainerAppScaleRule
-  ScaleRuleAuth: ContainerAppScaleRuleAuth
   Site.properties.clientAffinityEnabled: IsClientAffinityEnabled
   Site.properties.clientAffinityPartitioningEnabled: IsClientAffinityPartitioningEnabled
   Site.properties.clientAffinityProxyEnabled: IsClientAffinityProxyEnabled
@@ -577,7 +539,6 @@ rename-mapping:
   SitePatchResource.properties.suspendedTill: SuspendOn
   SitePatchResource.properties.virtualNetworkSubnetId: -|arm-id
   SitePatchResource: SitePatchInfo
-  SiteSealRequest.lightTheme: IsLightTheme
   SiteSourceControl.properties.deploymentRollbackEnabled: IsDeploymentRollbackEnabled
   SkuCapacity: AppServiceSkuCapacity
   SkuDescription.locations: -|azure-location
@@ -629,8 +590,6 @@ rename-mapping:
   SupportTopic: DetectorSupportTopic
   SwiftVirtualNetwork.properties.subnetResourceId: -|arm-id
   SwiftVirtualNetwork.properties.swiftSupported: IsSwiftSupported
-  Template: ContainerAppTemplate
-  TldLegalAgreementCollection: TldLegalAgreementListResult
   TlsCipherSuites.TLS_AES_128_GCM_SHA256: TlsAes128GcmSha256
   TlsCipherSuites.TLS_AES_256_GCM_SHA384: TlsAes256GcmSha384
   TlsCipherSuites.TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256: TlsECDiffieHellmanECDsaWithAes128CbcSha256
@@ -650,9 +609,6 @@ rename-mapping:
   TlsCipherSuites.TLS_RSA_WITH_AES_256_GCM_SHA384: TlsRsaWithAes256GcmSha384
   TlsCipherSuites: AppServiceTlsCipherSuite
   TokenStore.enabled: IsEnabled
-  TopLevelDomain.properties.privacy: IsDomainPrivacySupported
-  TopLevelDomainAgreementOption.forTransfer: IsForTransfer
-  TopLevelDomainCollection: TopLevelDomainListResult
   TriggeredJobHistoryCollection: TriggeredJobHistoryListResult
   TriggeredWebJob.properties.storageAccountRequired: IsStorageAccountRequired
   TriggeredWebJob.properties.using_sdk: IsUsingSdk
@@ -704,27 +660,25 @@ rename-mapping:
   WorkflowTriggerListCallbackUrlQueries: WorkflowTriggerListCallbackUriQueries
   ApiDefinitionInfo.url: ApiDefinitionUriStringValue | string
   FunctionsDeploymentStorage.value: AzureStorageUriStringValue | string
+  Recommendation.properties.resourceId: -|arm-id
+  DeletedAppRestoreRequest.properties.deletedSiteId: -|arm-id
+  StaticSiteUserProvidedFunctionAppARMResource.properties.functionAppResourceId: -|arm-id
+  StaticSiteUserProvidedFunctionApp.properties.functionAppResourceId: -|arm-id
 
 prepend-rp-prefix:
   - ApiDefinitionInfo
   - ArmPlan
   - BillingMeter
   - BlobStorageTokenStore
-  - CertificateDetails
-  - CertificateEmail
   - CorsSettings
   - DatabaseBackupSetting
   - DatabaseType
   - DeploymentLocations
-  - DnsType
-  - DomainStatus
-  - DomainType
   - EndpointDependency
   - EndpointDetail
   - ForwardProxy
   - FtpsState
   - GeoRegion
-  - HostName
   - HostNameType
   - HostType
   - HttpLogsConfig
@@ -762,96 +716,96 @@ directive:
 # this operation is a LRO operation
   - remove-operation: Global_GetSubscriptionOperationWithAsyncResponse
 # ResourceId
-  - from: KubeEnvironments.json
+  - from: openapi.json
     where: $.definitions.StaticSiteUserProvidedFunctionAppARMResource.properties.properties.properties.functionAppResourceId
     transform: $["x-ms-format"] = "arm-id"
-  - from: CommonDefinitions.json
+  - from: openapi.json
     where: $.definitions.VnetInfo.properties.vnetResourceId
     transform: $["x-ms-format"] = "arm-id"
-  - from: Recommendations.json
+  - from: openapi.json
     where: $.definitions.Recommendation.properties.properties.properties.resourceId
     transform: $["x-ms-format"] = "arm-id"
-  - from: ResourceProvider.json
+  - from: openapi.json
     where: $.definitions.BillingMeter.properties.properties.properties.meterId
     transform: $["x-ms-format"] = "uuid"
-  - from: CommonDefinitions.json
+  - from: openapi.json
     where: $.definitions.CloningInfo.properties.sourceWebAppId
     transform: $["x-ms-format"] = "arm-id"
-  - from: CommonDefinitions.json
+  - from: openapi.json
     where: $.definitions.CloningInfo.properties.trafficManagerProfileId
     transform: $["x-ms-format"] = "arm-id"
-  - from: CommonDefinitions.json
+  - from: openapi.json
     where: $.definitions.SupportTopic.properties.pesId
     transform: $["x-ms-format"] = "arm-id"
-  - from: CommonDefinitions.json
+  - from: openapi.json
     where: $.definitions.VnetInfo.properties.vnetResourceId
     transform: $["x-ms-format"] = "arm-id"
-  - from: CommonDefinitions.json
+  - from: openapi.json
     where: $.definitions.VirtualNetworkProfile.properties.id
     transform: $["x-ms-format"] = "arm-id"
-  - from: CommonDefinitions.json
+  - from: openapi.json
     where: $.definitions.VirtualNetworkProfile.properties.type
     transform: $["x-ms-format"] = "resource-type"
-  - from: CommonDefinitions.json
+  - from: openapi.json
     where: $.definitions.HostingEnvironmentProfile.properties.id
     transform: $["x-ms-format"] = "arm-id"
-  - from: CommonDefinitions.json
+  - from: openapi.json
     where: $.definitions.HostingEnvironmentProfile.properties.type
     transform: $["x-ms-format"] = "resource-type"
-  - from: CommonDefinitions.json
+  - from: openapi.json
     where: $.definitions.KubeEnvironmentProfile.properties.id
     transform: $["x-ms-format"] = "arm-id"
-  - from: CommonDefinitions.json
+  - from: openapi.json
     where: $.definitions.KubeEnvironmentProfile.properties.type
     transform: $["x-ms-format"] = "resource-type"
-  - from: WebApps.json
+  - from: openapi.json
     where: $.definitions.DeletedAppRestoreRequest.properties.properties.properties.deletedSiteId
     transform: $["x-ms-format"] = "arm-id"
-  - from: ResourceProvider.json
+  - from: openapi.json
     where: $.definitions.SkuInfos.properties.resourceType
     transform: $["x-ms-format"] = "resource-type"
-  - from: AppServiceEnvironments.json
+  - from: openapi.json
     where: $.definitions.SkuInfo.properties.resourceType
     transform: $["x-ms-format"] = "resource-type"
-  - from: WebApps.json
+  - from: openapi.json
     where: $.definitions.SnapshotRecoverySource.properties.id
     transform: $["x-ms-format"] = "arm-id"
-#   - from: StaticSites.json
+#   - from: openapi.json
 #     where: $.definitions.StaticSiteUserProvidedFunctionApp.properties.properties.properties.functionAppResourceId
 #     transform: $["x-ms-format"] = "arm-id"
-  - from: StaticSites.json
+  - from: openapi.json
     where: $.definitions.StaticSiteUserProvidedFunctionAppARMResource.properties.properties.properties.functionAppResourceId
     transform: $["x-ms-format"] = "arm-id"
 # StaticSiteUserProvidedFunctionAppARMResource and StaticSiteUserProvidedFunctionApp are two models with exactly same properties but different names. Here we manually replace the references so that these two models are combined
-  - from: StaticSites.json
+  - from: openapi.json
     where: $.definitions.StaticSite.properties.userProvidedFunctionApps.items
     transform: $["$ref"] = "#/definitions/StaticSiteUserProvidedFunctionAppARMResource"
-  - from: StaticSites.json
-    where: $.definitions.StaticSiteBuildARMResource.properties.properties.properties.userProvidedFunctionApps.items
+  - from: openapi.json
+    where: $.definitions.StaticSiteBuildARMResourceProperties.properties.userProvidedFunctionApps.items
     transform: $["$ref"] = "#/definitions/StaticSiteUserProvidedFunctionAppARMResource"
 # Enum rename
-  - from: swagger-document
+  - from: openapi.json
     where: $.definitions.AppServiceCertificateOrder.properties.properties.properties.appServiceCertificateNotRenewableReasons.items
     transform: >
       $["x-ms-enum"]={
             "name": "AppServiceCertificateNotRenewableReason",
             "modelAsString": true
           }
-  - from: swagger-document
+  - from: openapi.json
     where: $.definitions.AppServiceCertificateOrderPatchResource.properties.properties.properties.appServiceCertificateNotRenewableReasons.items
     transform: >
       $["x-ms-enum"]={
             "name": "AppServiceCertificateNotRenewableReason",
             "modelAsString": true
           }
-  - from: swagger-document
+  - from: openapi.json
     where: $.definitions.Domain.properties.properties.properties.domainNotRenewableReasons.items
     transform: >
       $["x-ms-enum"]={
             "name": "DomainNotRenewableReasons",
             "modelAsString": true
           }
-  - from: swagger-document
+  - from: openapi.json
     where: $.definitions.DomainPatchResource.properties.properties.properties.domainNotRenewableReasons.items
     transform: >
       $["x-ms-enum"]={
@@ -859,7 +813,7 @@ directive:
             "modelAsString": true
           }
 # workaround incorrect definition in swagger before it's fixed. github issue 35146
-  - from: WebApps.json
+  - from: openapi.json
     where: $.definitions.KeyInfo
     transform: >
       $["properties"] = {
@@ -881,88 +835,88 @@ directive:
     reason: workaround incorrect definition in swagger before it's fixed. github issue 35146
 # get array
   - remove-operation: AppServicePlans_GetRouteForVnet
-  - from: swagger-document
+  - from: openapi.json
     where: $.definitions.AppServicePlan.properties.properties.properties.hostingEnvironmentProfile
     transform: >
         $["x-nullable"] = true;
-  - from: swagger-document
+  - from: openapi.json
     where: $.definitions.AppServicePlan.properties.properties.properties.spotExpirationTime
     transform: >
         $["x-nullable"] = true;
-  - from: swagger-document
+  - from: openapi.json
     where: $.definitions.AppServicePlan.properties.properties.properties.freeOfferExpirationTime
     transform: >
         $["x-nullable"] = true;
-  - from: swagger-document
+  - from: sopenapi.json
     where: $.definitions.AppServicePlan.properties.properties.properties.kubeEnvironmentProfile
     transform: >
         $["x-nullable"] = true;
-  - from: swagger-document
+  - from: openapi.json
     where: $.definitions.HostNameSslState.properties.toUpdate
     transform: >
         $["x-nullable"] = true;
-  - from: swagger-document
+  - from: openapi.json
     where: $.definitions.SiteConfig.properties.*
     transform: >
         $["x-nullable"] = true;
-  - from: swagger-document
+  - from: openapi.json
     where: $.definitions.SiteConfig
     transform: >
         $["x-ms-client-name"] = "SiteConfigProperties"
-  - from: swagger-document
+  - from: openapi.json
     where: $.definitions.SiteConfigResource
     transform: >
         $["x-ms-client-name"] = "SiteConfig"
-  - from: swagger-document
+  - from: openapi.json
     where: $.definitions.ApiManagementConfig.properties.*
     transform: >
         $["x-nullable"] = true;
-  - from: swagger-document
+  - from: openapi.json
     where: $.definitions.Site.properties.properties.properties.trafficManagerHostNames
     transform: >
         $["x-nullable"] = true;
-  - from: swagger-document
+  - from: openapi.json
     where: $.definitions.Site.properties.properties.properties.hostingEnvironmentProfile
     transform: >
         $["x-nullable"] = true;
-  - from: swagger-document
+  - from: openapi.json
     where: $.definitions.Site.properties.properties.properties.suspendedTill
     transform: >
         $["x-nullable"] = true;
-  - from: swagger-document
+  - from: openapi.json
     where: $.definitions.Site.properties.properties.properties.maxNumberOfWorkers
     transform: >
         $["x-nullable"] = true;
-  - from: swagger-document
+  - from: openapi.json
     where: $.definitions.Site.properties.properties.properties.cloningInfo
     transform: >
         $["x-nullable"] = true;
-  - from: swagger-document
+  - from: openapi.json
     where: $.definitions.Site.properties.properties.properties.slotSwapStatus
     transform: >
         $["x-nullable"] = true;
-  - from: swagger-document
+  - from: openapi.json
     where: $.definitions.Site.properties.properties.properties.inProgressOperationId
     transform: >
         $["x-nullable"] = true;
-  - from: swagger-document
+  - from: openapi.json
     where: $.definitions.SiteSourceControl.properties.properties.properties.gitHubActionConfiguration
     transform: >
         $["x-nullable"] = true;
-  - from: CommonDefinitions.json
+  - from: openapi.json
     where: $.definitions.LogSpecification.properties.blobDuration
     transform: >
         $["format"] = "duration";
-  - from: CommonDefinitions.json
+  - from: openapi.json
     where: $.definitions.MetricAvailability.properties.blobDuration
     transform: >
         $["format"] = "duration";
-  - from: WebApps.json
+  - from: openapi.json
     where: $.definitions.TriggeredJobRun.properties.duration
     transform: >
         $["format"] = "duration";
         $["x-ms-format"] = "duration-constant";
-  - from: WebApps.json
+  - from: openapi.json
     where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/syncfunctiontriggers'].post
     transform: >
         $['responses'] = {
@@ -975,13 +929,13 @@ directive:
             "default": {
                 "description": "App Service error response.",
                 "schema": {
-                    "$ref": "./CommonDefinitions.json#/definitions/DefaultErrorResponse"
+                    "$ref": "#/definitions/DefaultErrorResponse"
                 }
             }
         };
   # Fix for issue https://github.com/Azure/azure-sdk-for-net/issues/43295
-  - from: WebApps.json
-    where: $.definitions.TriggeredJobRun.properties.status
+  - from: openapi.json
+    where: $.definitions.TriggeredWebJobStatus
     transform: >
         $["enum"] = [
             "Success",
@@ -990,44 +944,29 @@ directive:
             "Aborted",
             "Running"
         ]
-  - from: WebApps.json
+  - from: openapi.json
     where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hybridConnectionRelays'].get
     transform: >
-        $['responses']['200']['schema']['$ref'] = "./AppServicePlans.json#/definitions/HybridConnectionCollection";
-  - from: WebApps.json
+        $['responses']['200']['schema']['$ref'] = "#/definitions/HybridConnectionCollection";
+  - from: openapi.json
     where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridConnectionRelays'].get
     transform: >
-        $['responses']['200']['schema']['$ref'] = "./AppServicePlans.json#/definitions/HybridConnectionCollection";
+        $['responses']['200']['schema']['$ref'] = "#/definitions/HybridConnectionCollection";
   # Fix https://github.com/Azure/azure-sdk-for-net/issues/47267, fix the issue of data type mismatch in the AsyncPageable return values.
-  - from: AppServicePlans.json
+  - from: openapi.json
     where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}/sites'].get
     transform: >
-        $['responses']['200']['schema']['$ref'] = "./CommonDefinitions.json#/definitions/WebAppCollection";
+        $['responses']['200']['schema']['$ref'] = "#/definitions/WebAppCollection";
   # The Enum name "StorageType" is shared by artifactsStorageType, cause the apicompat error
-  - from: CommonDefinitions.json
+  - from: openapi.json
     where: $.definitions.FunctionsDeployment.properties.storage.properties.type
     transform: >
         $["x-ms-enum"] = {
                 "name": "functionStorageType",
                 "modelAsString": true
               };
-  # Remove ContainerApps.json, ContainerAppsRevisions.json since Container Apps has been separated into another SDK
-  - from: ContainerApps.json
-    where: $.paths
-    transform: >
-      for (var path in $)
-      {
-          delete $[path];
-      }
-  - from: ContainerAppsRevisions.json
-    where: $.paths
-    transform: >
-      for (var path in $)
-      {
-          delete $[path];
-      }
   # Reuse defined DayOfWeek
-  - from: WebApps.json
+  - from: openapi.json
     where: $.definitions.RecurrenceSchedule.properties.weekDays
     transform: >
         $.items = {
@@ -1035,7 +974,7 @@ directive:
             "description": "The days of the week."
           };
   # Fix https://github.com/Azure/azure-sdk-for-net/issues/39126, fix the `ProcessThreadInfo` definition based on the return result
-  - from: WebApps.json
+  - from: openapi.json
     where: $.definitions
     transform: >
         $.ProcessThreadProperties = {
@@ -1058,7 +997,7 @@ directive:
               }
             }
           };
-  - from: WebApps.json
+  - from: openapi.json
     where: $.definitions.ProcessThreadInfo
     transform: >
         $.properties = {
@@ -1068,15 +1007,15 @@ directive:
               "type": "object"
             }
           };
-  - from: WebApps.json
-    where: $.definitions.ProcessInfo
+  - from: openapi.json
+    where: $.definitions.ProcessInfoProperties
     transform: >
-        $.properties.properties.properties.threads.items = {
+        $.properties.threads.items = {
             "$ref": "#/definitions/ProcessThreadProperties"
           };
   # Fix for issue: https://github.com/Azure/azure-sdk-for-net/issues/46854
   # TODO: Remove this workaround after the issue is resolved. Issue link: https://github.com/Azure/azure-rest-api-specs/issues/19022
-  - from: Certificates.json
+  - from: openapi.json
     where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/certificates/{name}'].put
     transform: >
         $["x-ms-long-running-operation"] = true;
@@ -1084,7 +1023,7 @@ directive:
             "200": {
                 "description": "OK.",
                 "schema": {
-                    "$ref": "./CommonDefinitions.json#/definitions/Certificate"
+                    "$ref": "#/definitions/Certificate"
                 }
             },
             "202": {
@@ -1093,8 +1032,25 @@ directive:
             "default": {
                 "description": "App Service error response.",
                 "schema": {
-                    "$ref": "./CommonDefinitions.json#/definitions/DefaultErrorResponse"
+                    "$ref": "#/definitions/DefaultErrorResponse"
                 }
             }
         };
+  # Remove unsupported */* produce
+  - from: openapi.json
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}/processes/{processId}/dump'].get
+    transform: >
+      $.produces = [ "application/json" ];
+  - from: openapi.json
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/processes/{processId}/dump'].get
+    transform: >
+      $.produces = [ "application/json" ];
+  - from: openapi.json
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/instances/{instanceId}/processes/{processId}/dump'].get
+    transform: >
+      $.produces = [ "application/json" ];
+  - from: openapi.json
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/processes/{processId}/dump'].get
+    transform: >
+      $.produces = [ "application/json" ];
 ```

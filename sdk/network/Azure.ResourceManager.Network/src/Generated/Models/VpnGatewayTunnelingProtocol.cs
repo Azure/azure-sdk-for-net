@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct VpnGatewayTunnelingProtocol : IEquatable<VpnGatewayTunnelingProtocol>
     {
         private readonly string _value;
+        /// <summary> IkeV2. </summary>
+        private const string IkeV2Value = "IkeV2";
+        /// <summary> OpenVPN. </summary>
+        private const string OpenVPNValue = "OpenVPN";
 
         /// <summary> Initializes a new instance of <see cref="VpnGatewayTunnelingProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public VpnGatewayTunnelingProtocol(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string IkeV2Value = "IkeV2";
-        private const string OpenVpnValue = "OpenVPN";
+            _value = value;
+        }
 
         /// <summary> IkeV2. </summary>
         public static VpnGatewayTunnelingProtocol IkeV2 { get; } = new VpnGatewayTunnelingProtocol(IkeV2Value);
+
         /// <summary> OpenVPN. </summary>
-        public static VpnGatewayTunnelingProtocol OpenVpn { get; } = new VpnGatewayTunnelingProtocol(OpenVpnValue);
+        public static VpnGatewayTunnelingProtocol OpenVPN { get; } = new VpnGatewayTunnelingProtocol(OpenVPNValue);
+
         /// <summary> Determines if two <see cref="VpnGatewayTunnelingProtocol"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(VpnGatewayTunnelingProtocol left, VpnGatewayTunnelingProtocol right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="VpnGatewayTunnelingProtocol"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(VpnGatewayTunnelingProtocol left, VpnGatewayTunnelingProtocol right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="VpnGatewayTunnelingProtocol"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="VpnGatewayTunnelingProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator VpnGatewayTunnelingProtocol(string value) => new VpnGatewayTunnelingProtocol(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="VpnGatewayTunnelingProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator VpnGatewayTunnelingProtocol?(string value) => value == null ? null : new VpnGatewayTunnelingProtocol(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is VpnGatewayTunnelingProtocol other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(VpnGatewayTunnelingProtocol other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

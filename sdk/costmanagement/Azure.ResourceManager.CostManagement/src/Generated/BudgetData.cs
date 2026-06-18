@@ -30,14 +30,14 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The properties of the budget. </param>
         /// <param name="eTag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
-        internal BudgetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, BudgetProperties properties, ETag? eTag) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BudgetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BudgetProperties properties, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             ETag = eTag;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The properties of the budget. </summary>
@@ -50,19 +50,22 @@ namespace Azure.ResourceManager.CostManagement
         /// The category of the budget.
         /// <list type="bullet"><item><description>'Cost' defines a Budget.</description></item><item><description>'ReservationUtilization' defines a Reservation Utilization Alert Rule.</description></item></list>
         /// </summary>
-        public CategoryType Category
+        public CategoryType? BudgetCategory
         {
             get
             {
-                return Properties is null ? default : Properties.Category;
+                return Properties is null ? default : Properties.BudgetCategory;
             }
             set
             {
-                if (Properties is null)
+                if (value.HasValue)
                 {
-                    Properties = new BudgetProperties();
+                    if (Properties is null)
+                    {
+                        Properties = new BudgetProperties();
+                    }
+                    Properties.BudgetCategory = value.Value;
                 }
-                Properties.Category = value;
             }
         }
 
@@ -83,7 +86,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     Properties = new BudgetProperties();
                 }
-                Properties.Amount = value.Value;
+                Properties.Amount = value;
             }
         }
 
@@ -97,19 +100,22 @@ namespace Azure.ResourceManager.CostManagement
         /// <list type="bullet"><item><description>Last7Days</description></item><item><description>Last30Days</description></item></list>
         /// Required for CategoryType(s): Cost, ReservationUtilization.
         /// </summary>
-        public TimeGrainType TimeGrain
+        public TimeGrainType? BudgetTimeGrain
         {
             get
             {
-                return Properties is null ? default : Properties.TimeGrain;
+                return Properties is null ? default : Properties.BudgetTimeGrain;
             }
             set
             {
-                if (Properties is null)
+                if (value.HasValue)
                 {
-                    Properties = new BudgetProperties();
+                    if (Properties is null)
+                    {
+                        Properties = new BudgetProperties();
+                    }
+                    Properties.BudgetTimeGrain = value.Value;
                 }
-                Properties.TimeGrain = value;
             }
         }
 

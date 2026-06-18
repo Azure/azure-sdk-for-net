@@ -31,16 +31,16 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The container group profile properties. </param>
-        /// <param name="tags"> Resource tags. </param>
         /// <param name="zones"> The availability zones. </param>
-        internal ContainerGroupProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation location, ContainerGroupProfileProperties properties, IDictionary<string, string> tags, IList<string> zones) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerGroupProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ContainerGroupProfileProperties properties, IList<string> zones, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             Zones = zones;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The container group profile properties. </summary>
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     Properties = new ContainerGroupProfileProperties();
                 }
-                Properties.Sku = value.Value;
+                Properties.Sku = value;
             }
         }
 
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     Properties = new ContainerGroupProfileProperties();
                 }
-                Properties.RestartPolicy = value.Value;
+                Properties.RestartPolicy = value;
             }
         }
 
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     Properties = new ContainerGroupProfileProperties();
                 }
-                Properties.ShutdownGracePeriod = value.Value;
+                Properties.ShutdownGracePeriod = value;
             }
         }
 
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     Properties = new ContainerGroupProfileProperties();
                 }
-                Properties.TimeToLive = value.Value;
+                Properties.TimeToLive = value;
             }
         }
 
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     Properties = new ContainerGroupProfileProperties();
                 }
-                Properties.Priority = value.Value;
+                Properties.Priority = value;
             }
         }
 
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     Properties = new ContainerGroupProfileProperties();
                 }
-                Properties.UseKrypton = value.Value;
+                Properties.UseKrypton = value;
             }
         }
 
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 {
                     Properties = new ContainerGroupProfileProperties();
                 }
-                Properties.OSType = value.Value;
+                Properties.OSType = value;
             }
         }
     }

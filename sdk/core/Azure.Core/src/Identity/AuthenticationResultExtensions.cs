@@ -12,7 +12,7 @@ namespace Azure.Identity
     {
         public static AccessToken ToAccessToken(this AuthenticationResult result)
         {
-            return new AccessToken(result.AccessToken, result.ExpiresOn, result.AuthenticationResultMetadata?.RefreshOn, result.TokenType);
+            return new AccessToken(result.AccessToken, result.ExpiresOn, result.AuthenticationResultMetadata?.RefreshOn, result.TokenType, result.BindingCertificate);
         }
     }
 }

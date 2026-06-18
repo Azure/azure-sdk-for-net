@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.PolicyInsights.Tests
             {
                 Top = 3, //The restricted parameter does not work, still return 8500+ items
             };
-            var list = await _metadataCollection.GetAllAsync(query).ToEnumerableAsync();
+            var list = await DefaultTenant.GetAllAsync(query).ToEnumerableAsync();
             Assert.IsNotEmpty(list);
         }
 

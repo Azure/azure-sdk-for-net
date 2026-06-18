@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Network.Samples
             HubIPConfigurationResource hubIPConfiguration = client.GetHubIPConfigurationResource(hubIPConfigurationResourceId);
 
             // invoke the operation
-            await hubIPConfiguration.DeleteAsync(WaitUntil.Completed);
+            await hubIPConfiguration.DeleteAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Network.Samples
                     Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/vnet1/subnets/subnet1"),
                 },
             };
-            ArmOperation<HubIPConfigurationResource> lro = await hubIPConfiguration.UpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<HubIPConfigurationResource> lro = await hubIPConfiguration.UpdateAsync(WaitUntil.Completed, data, cancellationToken: System.Threading.CancellationToken.None);
             HubIPConfigurationResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

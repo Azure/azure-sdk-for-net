@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Avs
                 HttpMessage message = _licensesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, licenseName.ToString(), AvsLicenseData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AvsArmOperation<AvsLicenseResource> operation = new AvsArmOperation<AvsLicenseResource>(
-                    new AvsLicenseOperationSource(Client),
+                    new AvsLicenseResourceOperationSource(Client),
                     _licensesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Avs
                 HttpMessage message = _licensesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, licenseName.ToString(), AvsLicenseData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AvsArmOperation<AvsLicenseResource> operation = new AvsArmOperation<AvsLicenseResource>(
-                    new AvsLicenseOperationSource(Client),
+                    new AvsLicenseResourceOperationSource(Client),
                     _licensesClientDiagnostics,
                     Pipeline,
                     message.Request,
