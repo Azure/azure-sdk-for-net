@@ -1,6 +1,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+// GA API compatibility: PartnerConfiguration is modeled as a ProxyResource in TypeSpec but the
+// old SDK exposed it as TrackedResourceData (with tags+location ctor). The generator cannot produce
+// the correct base class without changing the resource type hierarchy in the spec. This suppression
+// and full custom class are required until the spec/generator align on TrackedResource for this type.
+
 #nullable disable
 
 using System;

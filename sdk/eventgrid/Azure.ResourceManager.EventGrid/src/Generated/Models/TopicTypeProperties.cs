@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="TopicTypeProperties"/>. </summary>
-        internal TopicTypeProperties()
+        public TopicTypeProperties()
         {
             SupportedLocations = new ChangeTrackingList<string>();
             SupportedScopesForSource = new ChangeTrackingList<TopicTypeSourceScope>();
@@ -54,23 +54,23 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> Namespace of the provider of the topic type. </summary>
         [WirePath("provider")]
-        public string Provider { get; }
+        public string Provider { get; set; }
 
         /// <summary> Display Name for the topic type. </summary>
         [WirePath("displayName")]
-        public string DisplayName { get; }
+        public string DisplayName { get; set; }
 
         /// <summary> Description of the topic type. </summary>
         [WirePath("description")]
-        public string Description { get; }
+        public string Description { get; set; }
 
         /// <summary> Region type of the resource. </summary>
         [WirePath("resourceRegionType")]
-        public EventGridResourceRegionType? ResourceRegionType { get; }
+        public EventGridResourceRegionType? ResourceRegionType { get; set; }
 
         /// <summary> Provisioning state of the topic type. </summary>
         [WirePath("provisioningState")]
-        public TopicTypeProvisioningState? ProvisioningState { get; }
+        public TopicTypeProvisioningState? ProvisioningState { get; set; }
 
         /// <summary> List of locations supported by this topic type. </summary>
         [WirePath("supportedLocations")]
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> Source resource format. </summary>
         [WirePath("sourceResourceFormat")]
-        public string SourceResourceFormat { get; }
+        public string SourceResourceFormat { get; set; }
 
         /// <summary> Supported source scopes. </summary>
         [WirePath("supportedScopesForSource")]
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> Flag to indicate that a topic type can support both regional or global system topics. </summary>
         [WirePath("areRegionalAndGlobalSourcesSupported")]
-        public bool? AreRegionalAndGlobalSourcesSupported { get; }
+        public bool? AreRegionalAndGlobalSourcesSupported { get; set; }
 
         /// <summary> Permissions which are enforced for creating and updating system topics of this this topic type. </summary>
         [WirePath("additionalEnforcedPermissions")]

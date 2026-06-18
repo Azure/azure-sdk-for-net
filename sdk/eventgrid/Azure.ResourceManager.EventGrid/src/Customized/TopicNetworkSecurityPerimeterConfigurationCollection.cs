@@ -1,6 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+// GA API compatibility: The old SDK collection exposed GetAll/GetEnumerator returning
+// NetworkSecurityPerimeterConfigurationData directly. The generated collection uses a different
+// scope pattern, so these partial methods provide the legacy enumeration surface.
+
 #nullable disable
 
 #pragma warning disable CS1591

@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.EventGrid.Models;
 using Azure.ResourceManager.Models;
 
@@ -13,8 +16,197 @@ namespace Azure.ResourceManager.EventGrid
     /// <summary> Properties of a topic type info. </summary>
     public partial class TopicTypeData : ResourceData
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
+        /// <summary> Initializes a new instance of <see cref="TopicTypeData"/>. </summary>
+        public TopicTypeData()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TopicTypeData"/>. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Properties of the topic type info. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal TopicTypeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TopicTypeProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        {
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
         /// <summary> Properties of the topic type info. </summary>
         [WirePath("properties")]
-        internal TopicTypeProperties Properties { get; }
+        internal TopicTypeProperties Properties { get; set; }
+
+        /// <summary> Namespace of the provider of the topic type. </summary>
+        [WirePath("properties.provider")]
+        public string Provider
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Provider;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TopicTypeProperties();
+                }
+                Properties.Provider = value;
+            }
+        }
+
+        /// <summary> Display Name for the topic type. </summary>
+        [WirePath("properties.displayName")]
+        public string DisplayName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisplayName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TopicTypeProperties();
+                }
+                Properties.DisplayName = value;
+            }
+        }
+
+        /// <summary> Description of the topic type. </summary>
+        [WirePath("properties.description")]
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TopicTypeProperties();
+                }
+                Properties.Description = value;
+            }
+        }
+
+        /// <summary> Region type of the resource. </summary>
+        [WirePath("properties.resourceRegionType")]
+        public EventGridResourceRegionType? ResourceRegionType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResourceRegionType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TopicTypeProperties();
+                }
+                Properties.ResourceRegionType = value;
+            }
+        }
+
+        /// <summary> Provisioning state of the topic type. </summary>
+        [WirePath("properties.provisioningState")]
+        public TopicTypeProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TopicTypeProperties();
+                }
+                Properties.ProvisioningState = value;
+            }
+        }
+
+        /// <summary> List of locations supported by this topic type. </summary>
+        [WirePath("properties.supportedLocations")]
+        public IList<string> SupportedLocations
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new TopicTypeProperties();
+                }
+                return Properties.SupportedLocations;
+            }
+        }
+
+        /// <summary> Source resource format. </summary>
+        [WirePath("properties.sourceResourceFormat")]
+        public string SourceResourceFormat
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SourceResourceFormat;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TopicTypeProperties();
+                }
+                Properties.SourceResourceFormat = value;
+            }
+        }
+
+        /// <summary> Supported source scopes. </summary>
+        [WirePath("properties.supportedScopesForSource")]
+        public IList<TopicTypeSourceScope> SupportedScopesForSource
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new TopicTypeProperties();
+                }
+                return Properties.SupportedScopesForSource;
+            }
+        }
+
+        /// <summary> Flag to indicate that a topic type can support both regional or global system topics. </summary>
+        [WirePath("properties.areRegionalAndGlobalSourcesSupported")]
+        public bool? AreRegionalAndGlobalSourcesSupported
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AreRegionalAndGlobalSourcesSupported;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TopicTypeProperties();
+                }
+                Properties.AreRegionalAndGlobalSourcesSupported = value;
+            }
+        }
+
+        /// <summary> Permissions which are enforced for creating and updating system topics of this this topic type. </summary>
+        [WirePath("properties.additionalEnforcedPermissions")]
+        public IList<TopicTypeAdditionalEnforcedPermission> AdditionalEnforcedPermissions
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new TopicTypeProperties();
+                }
+                return Properties.AdditionalEnforcedPermissions;
+            }
+        }
     }
 }

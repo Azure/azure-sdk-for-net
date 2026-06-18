@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VerifiedPartnerProperties"/>. </summary>
-        internal VerifiedPartnerProperties()
+        public VerifiedPartnerProperties()
         {
         }
 
@@ -43,26 +43,26 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> ImmutableId of the corresponding partner registration. </summary>
         [WirePath("partnerRegistrationImmutableId")]
-        public Guid? PartnerRegistrationImmutableId { get; }
+        public Guid? PartnerRegistrationImmutableId { get; set; }
 
         /// <summary> Official name of the Partner. </summary>
         [WirePath("organizationName")]
-        public string OrganizationName { get; }
+        public string OrganizationName { get; set; }
 
         /// <summary> Display name of the verified partner. </summary>
         [WirePath("partnerDisplayName")]
-        public string PartnerDisplayName { get; }
+        public string PartnerDisplayName { get; set; }
 
         /// <summary> Details of the partner topic scenario. </summary>
         [WirePath("partnerTopicDetails")]
-        public PartnerDetails PartnerTopicDetails { get; }
+        public PartnerDetails PartnerTopicDetails { get; set; }
 
         /// <summary> Details of the partner destination scenario. </summary>
         [WirePath("partnerDestinationDetails")]
-        public PartnerDetails PartnerDestinationDetails { get; }
+        public PartnerDetails PartnerDestinationDetails { get; set; }
 
         /// <summary> Provisioning state of the verified partner. </summary>
         [WirePath("provisioningState")]
-        public VerifiedPartnerProvisioningState? ProvisioningState { get; }
+        public VerifiedPartnerProvisioningState? ProvisioningState { get; set; }
     }
 }

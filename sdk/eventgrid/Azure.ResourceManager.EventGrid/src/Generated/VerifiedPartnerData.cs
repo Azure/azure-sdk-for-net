@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.EventGrid.Models;
 using Azure.ResourceManager.Models;
 
@@ -13,8 +16,137 @@ namespace Azure.ResourceManager.EventGrid
     /// <summary> Verified partner information. </summary>
     public partial class VerifiedPartnerData : ResourceData
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
+        /// <summary> Initializes a new instance of <see cref="VerifiedPartnerData"/>. </summary>
+        public VerifiedPartnerData()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VerifiedPartnerData"/>. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Properties of the verified partner. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal VerifiedPartnerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, VerifiedPartnerProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        {
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
         /// <summary> Properties of the verified partner. </summary>
         [WirePath("properties")]
-        internal VerifiedPartnerProperties Properties { get; }
+        internal VerifiedPartnerProperties Properties { get; set; }
+
+        /// <summary> ImmutableId of the corresponding partner registration. </summary>
+        [WirePath("properties.partnerRegistrationImmutableId")]
+        public Guid? PartnerRegistrationImmutableId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PartnerRegistrationImmutableId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VerifiedPartnerProperties();
+                }
+                Properties.PartnerRegistrationImmutableId = value;
+            }
+        }
+
+        /// <summary> Official name of the Partner. </summary>
+        [WirePath("properties.organizationName")]
+        public string OrganizationName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OrganizationName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VerifiedPartnerProperties();
+                }
+                Properties.OrganizationName = value;
+            }
+        }
+
+        /// <summary> Display name of the verified partner. </summary>
+        [WirePath("properties.partnerDisplayName")]
+        public string PartnerDisplayName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PartnerDisplayName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VerifiedPartnerProperties();
+                }
+                Properties.PartnerDisplayName = value;
+            }
+        }
+
+        /// <summary> Details of the partner topic scenario. </summary>
+        [WirePath("properties.partnerTopicDetails")]
+        public PartnerDetails PartnerTopicDetails
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PartnerTopicDetails;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VerifiedPartnerProperties();
+                }
+                Properties.PartnerTopicDetails = value;
+            }
+        }
+
+        /// <summary> Details of the partner destination scenario. </summary>
+        [WirePath("properties.partnerDestinationDetails")]
+        public PartnerDetails PartnerDestinationDetails
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PartnerDestinationDetails;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VerifiedPartnerProperties();
+                }
+                Properties.PartnerDestinationDetails = value;
+            }
+        }
+
+        /// <summary> Provisioning state of the verified partner. </summary>
+        [WirePath("properties.provisioningState")]
+        public VerifiedPartnerProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VerifiedPartnerProperties();
+                }
+                Properties.ProvisioningState = value;
+            }
+        }
     }
 }

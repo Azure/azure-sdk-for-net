@@ -1,6 +1,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+// Internal helper: converts generated EventGridPrivateLinkResource model instances to the typed
+// domain/topic/partner-namespace resource wrappers needed by the custom private-link collections.
+// Used by EventGridDomainPrivateLinkResourceCollection, EventGridTopicPrivateLinkResourceCollection,
+// and PartnerNamespacePrivateLinkResourceCollection.
+
 #nullable disable
 
 using Azure.Core;

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ExtensionTopicProperties"/>. </summary>
-        internal ExtensionTopicProperties()
+        public ExtensionTopicProperties()
         {
         }
 
@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> Description of the extension topic. </summary>
         [WirePath("description")]
-        public string Description { get; }
+        public string Description { get; set; }
 
         /// <summary> System topic resource id which is mapped to the source. </summary>
         [WirePath("systemTopic")]
-        public string SystemTopic { get; }
+        public string SystemTopic { get; set; }
     }
 }

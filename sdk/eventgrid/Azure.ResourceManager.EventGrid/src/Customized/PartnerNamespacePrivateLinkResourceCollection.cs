@@ -1,6 +1,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+// GA API compatibility: The generated PrivateLinkResources operation group uses a shared
+// (parentType, parentName) pattern and returns the generic EventGridPrivateLinkResource model.
+// The old SDK exposed typed per-resource collections (Domain/Topic/PartnerNamespace) returning
+// specific resource wrapper types. This full custom class bridges that gap.
+
 #nullable disable
 #pragma warning disable CS1591
 
