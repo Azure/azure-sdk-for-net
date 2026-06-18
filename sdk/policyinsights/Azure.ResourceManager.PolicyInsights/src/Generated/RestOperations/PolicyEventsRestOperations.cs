@@ -6,657 +6,356 @@
 #nullable disable
 
 using System;
-using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.PolicyInsights.Models;
 
 namespace Azure.ResourceManager.PolicyInsights
 {
-    internal partial class PolicyEventsRestOperations
+    internal partial class PolicyEvents
     {
-        private readonly TelemetryDetails _userAgent;
-        private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of PolicyEventsRestOperations. </summary>
+        /// <summary> Initializes a new instance of PolicyEvents for mocking. </summary>
+        protected PolicyEvents()
+        {
+        }
+
+        /// <summary> Initializes a new instance of PolicyEvents. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="applicationId"> The application id to use for user agent. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public PolicyEventsRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="apiVersion"></param>
+        internal PolicyEvents(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
-            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
-            _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-10-01";
-            _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+            ClientDiagnostics = clientDiagnostics;
+            _endpoint = endpoint;
+            Pipeline = pipeline;
+            _apiVersion = apiVersion;
         }
 
-        internal RequestUriBuilder CreateListQueryResultsForManagementGroupRequestUri(string managementGroupName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings)
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
+        internal HttpMessage CreateGetQueryResultsForManagementGroupRequest(string policyEventsResource, string managementGroupName, int? maxCount, string orderBy, string @select, DateTimeOffset? @from, DateTimeOffset? to, string filter, string apply, string skipToken, RequestContext context)
         {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/", false);
             uri.AppendPath("Microsoft.Management", true);
             uri.AppendPath("/managementGroups/", false);
             uri.AppendPath(managementGroupName, true);
             uri.AppendPath("/providers/Microsoft.PolicyInsights/policyEvents/", false);
-            uri.AppendPath(policyEventType.ToString(), true);
+            uri.AppendPath(policyEventsResource, true);
             uri.AppendPath("/queryResults", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (policyQuerySettings?.Top != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("$top", policyQuerySettings.Top.Value, true);
+                uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (policyQuerySettings?.OrderBy != null)
+            if (maxCount != null)
             {
-                uri.AppendQuery("$orderby", policyQuerySettings.OrderBy, true);
+                uri.AppendQuery("$top", TypeFormatters.ConvertToString(maxCount), true);
             }
-            if (policyQuerySettings?.Select != null)
+            if (orderBy != null)
             {
-                uri.AppendQuery("$select", policyQuerySettings.Select, true);
+                uri.AppendQuery("$orderby", orderBy, true);
             }
-            if (policyQuerySettings?.From != null)
+            if (@select != null)
             {
-                uri.AppendQuery("$from", policyQuerySettings.From.Value, "O", true);
+                uri.AppendQuery("$select", @select, true);
             }
-            if (policyQuerySettings?.To != null)
+            if (@from != null)
             {
-                uri.AppendQuery("$to", policyQuerySettings.To.Value, "O", true);
+                uri.AppendQuery("$from", TypeFormatters.ConvertToString(@from, SerializationFormat.DateTime_RFC3339), true);
             }
-            if (policyQuerySettings?.Filter != null)
+            if (to != null)
             {
-                uri.AppendQuery("$filter", policyQuerySettings.Filter, true);
+                uri.AppendQuery("$to", TypeFormatters.ConvertToString(to, SerializationFormat.DateTime_RFC3339), true);
             }
-            if (policyQuerySettings?.Apply != null)
+            if (filter != null)
             {
-                uri.AppendQuery("$apply", policyQuerySettings.Apply, true);
+                uri.AppendQuery("$filter", filter, true);
             }
-            if (policyQuerySettings?.SkipToken != null)
+            if (apply != null)
             {
-                uri.AppendQuery("$skiptoken", policyQuerySettings.SkipToken, true);
+                uri.AppendQuery("$apply", apply, true);
             }
-            return uri;
-        }
-
-        internal HttpMessage CreateListQueryResultsForManagementGroupRequest(string managementGroupName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/", false);
-            uri.AppendPath("Microsoft.Management", true);
-            uri.AppendPath("/managementGroups/", false);
-            uri.AppendPath(managementGroupName, true);
-            uri.AppendPath("/providers/Microsoft.PolicyInsights/policyEvents/", false);
-            uri.AppendPath(policyEventType.ToString(), true);
-            uri.AppendPath("/queryResults", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (policyQuerySettings?.Top != null)
+            if (skipToken != null)
             {
-                uri.AppendQuery("$top", policyQuerySettings.Top.Value, true);
+                uri.AppendQuery("$skiptoken", skipToken, true);
             }
-            if (policyQuerySettings?.OrderBy != null)
-            {
-                uri.AppendQuery("$orderby", policyQuerySettings.OrderBy, true);
-            }
-            if (policyQuerySettings?.Select != null)
-            {
-                uri.AppendQuery("$select", policyQuerySettings.Select, true);
-            }
-            if (policyQuerySettings?.From != null)
-            {
-                uri.AppendQuery("$from", policyQuerySettings.From.Value, "O", true);
-            }
-            if (policyQuerySettings?.To != null)
-            {
-                uri.AppendQuery("$to", policyQuerySettings.To.Value, "O", true);
-            }
-            if (policyQuerySettings?.Filter != null)
-            {
-                uri.AppendQuery("$filter", policyQuerySettings.Filter, true);
-            }
-            if (policyQuerySettings?.Apply != null)
-            {
-                uri.AppendQuery("$apply", policyQuerySettings.Apply, true);
-            }
-            if (policyQuerySettings?.SkipToken != null)
-            {
-                uri.AppendQuery("$skiptoken", policyQuerySettings.SkipToken, true);
-            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Queries policy events for the resources under the management group. </summary>
-        /// <param name="managementGroupName"> Management group name. </param>
-        /// <param name="policyEventType"> The name of the virtual resource under PolicyEvents resource type; only "default" is allowed. </param>
-        /// <param name="policyQuerySettings"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="managementGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PolicyEventsQueryResults>> ListQueryResultsForManagementGroupAsync(string managementGroupName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateNextGetQueryResultsForManagementGroupRequest(Uri nextPage, string policyEventsResource, string managementGroupName, int? maxCount, string orderBy, string @select, DateTimeOffset? @from, DateTimeOffset? to, string filter, string apply, string skipToken, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(managementGroupName, nameof(managementGroupName));
-
-            using var message = CreateListQueryResultsForManagementGroupRequest(managementGroupName, policyEventType, policyQuerySettings);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            if (nextPage.IsAbsoluteUri)
             {
-                case 200:
-                    {
-                        PolicyEventsQueryResults value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = PolicyEventsQueryResults.DeserializePolicyEventsQueryResults(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
+                uri.Reset(nextPage);
             }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
         }
 
-        /// <summary> Queries policy events for the resources under the management group. </summary>
-        /// <param name="managementGroupName"> Management group name. </param>
-        /// <param name="policyEventType"> The name of the virtual resource under PolicyEvents resource type; only "default" is allowed. </param>
-        /// <param name="policyQuerySettings"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managementGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="managementGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PolicyEventsQueryResults> ListQueryResultsForManagementGroup(string managementGroupName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateGetQueryResultsForSubscriptionRequest(string subscriptionId, string policyEventsResource, int? maxCount, string orderBy, string @select, DateTimeOffset? @from, DateTimeOffset? to, string filter, string apply, string skipToken, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(managementGroupName, nameof(managementGroupName));
-
-            using var message = CreateListQueryResultsForManagementGroupRequest(managementGroupName, policyEventType, policyQuerySettings);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        PolicyEventsQueryResults value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = PolicyEventsQueryResults.DeserializePolicyEventsQueryResults(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListQueryResultsForSubscriptionRequestUri(string subscriptionId, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.PolicyInsights/policyEvents/", false);
-            uri.AppendPath(policyEventType.ToString(), true);
+            uri.AppendPath(policyEventsResource, true);
             uri.AppendPath("/queryResults", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (policyQuerySettings?.Top != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("$top", policyQuerySettings.Top.Value, true);
+                uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (policyQuerySettings?.OrderBy != null)
+            if (maxCount != null)
             {
-                uri.AppendQuery("$orderby", policyQuerySettings.OrderBy, true);
+                uri.AppendQuery("$top", TypeFormatters.ConvertToString(maxCount), true);
             }
-            if (policyQuerySettings?.Select != null)
+            if (orderBy != null)
             {
-                uri.AppendQuery("$select", policyQuerySettings.Select, true);
+                uri.AppendQuery("$orderby", orderBy, true);
             }
-            if (policyQuerySettings?.From != null)
+            if (@select != null)
             {
-                uri.AppendQuery("$from", policyQuerySettings.From.Value, "O", true);
+                uri.AppendQuery("$select", @select, true);
             }
-            if (policyQuerySettings?.To != null)
+            if (@from != null)
             {
-                uri.AppendQuery("$to", policyQuerySettings.To.Value, "O", true);
+                uri.AppendQuery("$from", TypeFormatters.ConvertToString(@from, SerializationFormat.DateTime_RFC3339), true);
             }
-            if (policyQuerySettings?.Filter != null)
+            if (to != null)
             {
-                uri.AppendQuery("$filter", policyQuerySettings.Filter, true);
+                uri.AppendQuery("$to", TypeFormatters.ConvertToString(to, SerializationFormat.DateTime_RFC3339), true);
             }
-            if (policyQuerySettings?.Apply != null)
+            if (filter != null)
             {
-                uri.AppendQuery("$apply", policyQuerySettings.Apply, true);
+                uri.AppendQuery("$filter", filter, true);
             }
-            if (policyQuerySettings?.SkipToken != null)
+            if (apply != null)
             {
-                uri.AppendQuery("$skiptoken", policyQuerySettings.SkipToken, true);
+                uri.AppendQuery("$apply", apply, true);
             }
-            return uri;
-        }
-
-        internal HttpMessage CreateListQueryResultsForSubscriptionRequest(string subscriptionId, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.PolicyInsights/policyEvents/", false);
-            uri.AppendPath(policyEventType.ToString(), true);
-            uri.AppendPath("/queryResults", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (policyQuerySettings?.Top != null)
+            if (skipToken != null)
             {
-                uri.AppendQuery("$top", policyQuerySettings.Top.Value, true);
+                uri.AppendQuery("$skiptoken", skipToken, true);
             }
-            if (policyQuerySettings?.OrderBy != null)
-            {
-                uri.AppendQuery("$orderby", policyQuerySettings.OrderBy, true);
-            }
-            if (policyQuerySettings?.Select != null)
-            {
-                uri.AppendQuery("$select", policyQuerySettings.Select, true);
-            }
-            if (policyQuerySettings?.From != null)
-            {
-                uri.AppendQuery("$from", policyQuerySettings.From.Value, "O", true);
-            }
-            if (policyQuerySettings?.To != null)
-            {
-                uri.AppendQuery("$to", policyQuerySettings.To.Value, "O", true);
-            }
-            if (policyQuerySettings?.Filter != null)
-            {
-                uri.AppendQuery("$filter", policyQuerySettings.Filter, true);
-            }
-            if (policyQuerySettings?.Apply != null)
-            {
-                uri.AppendQuery("$apply", policyQuerySettings.Apply, true);
-            }
-            if (policyQuerySettings?.SkipToken != null)
-            {
-                uri.AppendQuery("$skiptoken", policyQuerySettings.SkipToken, true);
-            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Queries policy events for the resources under the subscription. </summary>
-        /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
-        /// <param name="policyEventType"> The name of the virtual resource under PolicyEvents resource type; only "default" is allowed. </param>
-        /// <param name="policyQuerySettings"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PolicyEventsQueryResults>> ListQueryResultsForSubscriptionAsync(string subscriptionId, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateNextGetQueryResultsForSubscriptionRequest(Uri nextPage, string subscriptionId, string policyEventsResource, int? maxCount, string orderBy, string @select, DateTimeOffset? @from, DateTimeOffset? to, string filter, string apply, string skipToken, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-
-            using var message = CreateListQueryResultsForSubscriptionRequest(subscriptionId, policyEventType, policyQuerySettings);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            if (nextPage.IsAbsoluteUri)
             {
-                case 200:
-                    {
-                        PolicyEventsQueryResults value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = PolicyEventsQueryResults.DeserializePolicyEventsQueryResults(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
+                uri.Reset(nextPage);
             }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
         }
 
-        /// <summary> Queries policy events for the resources under the subscription. </summary>
-        /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
-        /// <param name="policyEventType"> The name of the virtual resource under PolicyEvents resource type; only "default" is allowed. </param>
-        /// <param name="policyQuerySettings"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PolicyEventsQueryResults> ListQueryResultsForSubscription(string subscriptionId, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateGetQueryResultsForResourceGroupRequest(string subscriptionId, string resourceGroupName, string policyEventsResource, int? maxCount, string orderBy, string @select, DateTimeOffset? @from, DateTimeOffset? to, string filter, string apply, string skipToken, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-
-            using var message = CreateListQueryResultsForSubscriptionRequest(subscriptionId, policyEventType, policyQuerySettings);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        PolicyEventsQueryResults value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = PolicyEventsQueryResults.DeserializePolicyEventsQueryResults(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListQueryResultsForResourceGroupRequestUri(string subscriptionId, string resourceGroupName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.PolicyInsights/policyEvents/", false);
-            uri.AppendPath(policyEventType.ToString(), true);
+            uri.AppendPath(policyEventsResource, true);
             uri.AppendPath("/queryResults", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (policyQuerySettings?.Top != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("$top", policyQuerySettings.Top.Value, true);
+                uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (policyQuerySettings?.OrderBy != null)
+            if (maxCount != null)
             {
-                uri.AppendQuery("$orderby", policyQuerySettings.OrderBy, true);
+                uri.AppendQuery("$top", TypeFormatters.ConvertToString(maxCount), true);
             }
-            if (policyQuerySettings?.Select != null)
+            if (orderBy != null)
             {
-                uri.AppendQuery("$select", policyQuerySettings.Select, true);
+                uri.AppendQuery("$orderby", orderBy, true);
             }
-            if (policyQuerySettings?.From != null)
+            if (@select != null)
             {
-                uri.AppendQuery("$from", policyQuerySettings.From.Value, "O", true);
+                uri.AppendQuery("$select", @select, true);
             }
-            if (policyQuerySettings?.To != null)
+            if (@from != null)
             {
-                uri.AppendQuery("$to", policyQuerySettings.To.Value, "O", true);
+                uri.AppendQuery("$from", TypeFormatters.ConvertToString(@from, SerializationFormat.DateTime_RFC3339), true);
             }
-            if (policyQuerySettings?.Filter != null)
+            if (to != null)
             {
-                uri.AppendQuery("$filter", policyQuerySettings.Filter, true);
+                uri.AppendQuery("$to", TypeFormatters.ConvertToString(to, SerializationFormat.DateTime_RFC3339), true);
             }
-            if (policyQuerySettings?.Apply != null)
+            if (filter != null)
             {
-                uri.AppendQuery("$apply", policyQuerySettings.Apply, true);
+                uri.AppendQuery("$filter", filter, true);
             }
-            if (policyQuerySettings?.SkipToken != null)
+            if (apply != null)
             {
-                uri.AppendQuery("$skiptoken", policyQuerySettings.SkipToken, true);
+                uri.AppendQuery("$apply", apply, true);
             }
-            return uri;
-        }
-
-        internal HttpMessage CreateListQueryResultsForResourceGroupRequest(string subscriptionId, string resourceGroupName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.PolicyInsights/policyEvents/", false);
-            uri.AppendPath(policyEventType.ToString(), true);
-            uri.AppendPath("/queryResults", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (policyQuerySettings?.Top != null)
+            if (skipToken != null)
             {
-                uri.AppendQuery("$top", policyQuerySettings.Top.Value, true);
+                uri.AppendQuery("$skiptoken", skipToken, true);
             }
-            if (policyQuerySettings?.OrderBy != null)
-            {
-                uri.AppendQuery("$orderby", policyQuerySettings.OrderBy, true);
-            }
-            if (policyQuerySettings?.Select != null)
-            {
-                uri.AppendQuery("$select", policyQuerySettings.Select, true);
-            }
-            if (policyQuerySettings?.From != null)
-            {
-                uri.AppendQuery("$from", policyQuerySettings.From.Value, "O", true);
-            }
-            if (policyQuerySettings?.To != null)
-            {
-                uri.AppendQuery("$to", policyQuerySettings.To.Value, "O", true);
-            }
-            if (policyQuerySettings?.Filter != null)
-            {
-                uri.AppendQuery("$filter", policyQuerySettings.Filter, true);
-            }
-            if (policyQuerySettings?.Apply != null)
-            {
-                uri.AppendQuery("$apply", policyQuerySettings.Apply, true);
-            }
-            if (policyQuerySettings?.SkipToken != null)
-            {
-                uri.AppendQuery("$skiptoken", policyQuerySettings.SkipToken, true);
-            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Queries policy events for the resources under the resource group. </summary>
-        /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> Resource group name. </param>
-        /// <param name="policyEventType"> The name of the virtual resource under PolicyEvents resource type; only "default" is allowed. </param>
-        /// <param name="policyQuerySettings"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PolicyEventsQueryResults>> ListQueryResultsForResourceGroupAsync(string subscriptionId, string resourceGroupName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateNextGetQueryResultsForResourceGroupRequest(Uri nextPage, string subscriptionId, string resourceGroupName, string policyEventsResource, int? maxCount, string orderBy, string @select, DateTimeOffset? @from, DateTimeOffset? to, string filter, string apply, string skipToken, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-
-            using var message = CreateListQueryResultsForResourceGroupRequest(subscriptionId, resourceGroupName, policyEventType, policyQuerySettings);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            if (nextPage.IsAbsoluteUri)
             {
-                case 200:
-                    {
-                        PolicyEventsQueryResults value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = PolicyEventsQueryResults.DeserializePolicyEventsQueryResults(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
+                uri.Reset(nextPage);
             }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
         }
 
-        /// <summary> Queries policy events for the resources under the resource group. </summary>
-        /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> Resource group name. </param>
-        /// <param name="policyEventType"> The name of the virtual resource under PolicyEvents resource type; only "default" is allowed. </param>
-        /// <param name="policyQuerySettings"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PolicyEventsQueryResults> ListQueryResultsForResourceGroup(string subscriptionId, string resourceGroupName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateGetQueryResultsForResourceRequest(string policyEventsResource, string resourceId, int? maxCount, string orderBy, string @select, DateTimeOffset? @from, DateTimeOffset? to, string filter, string apply, string expand, string skipToken, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-
-            using var message = CreateListQueryResultsForResourceGroupRequest(subscriptionId, resourceGroupName, policyEventType, policyQuerySettings);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        PolicyEventsQueryResults value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = PolicyEventsQueryResults.DeserializePolicyEventsQueryResults(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListQueryResultsForResourceRequestUri(string resourceId, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/", false);
             uri.AppendPath(resourceId, false);
             uri.AppendPath("/providers/Microsoft.PolicyInsights/policyEvents/", false);
-            uri.AppendPath(policyEventType.ToString(), true);
+            uri.AppendPath(policyEventsResource, true);
             uri.AppendPath("/queryResults", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (policyQuerySettings?.Top != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("$top", policyQuerySettings.Top.Value, true);
+                uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (policyQuerySettings?.OrderBy != null)
+            if (maxCount != null)
             {
-                uri.AppendQuery("$orderby", policyQuerySettings.OrderBy, true);
+                uri.AppendQuery("$top", TypeFormatters.ConvertToString(maxCount), true);
             }
-            if (policyQuerySettings?.Select != null)
+            if (orderBy != null)
             {
-                uri.AppendQuery("$select", policyQuerySettings.Select, true);
+                uri.AppendQuery("$orderby", orderBy, true);
             }
-            if (policyQuerySettings?.From != null)
+            if (@select != null)
             {
-                uri.AppendQuery("$from", policyQuerySettings.From.Value, "O", true);
+                uri.AppendQuery("$select", @select, true);
             }
-            if (policyQuerySettings?.To != null)
+            if (@from != null)
             {
-                uri.AppendQuery("$to", policyQuerySettings.To.Value, "O", true);
+                uri.AppendQuery("$from", TypeFormatters.ConvertToString(@from, SerializationFormat.DateTime_RFC3339), true);
             }
-            if (policyQuerySettings?.Filter != null)
+            if (to != null)
             {
-                uri.AppendQuery("$filter", policyQuerySettings.Filter, true);
+                uri.AppendQuery("$to", TypeFormatters.ConvertToString(to, SerializationFormat.DateTime_RFC3339), true);
             }
-            if (policyQuerySettings?.Apply != null)
+            if (filter != null)
             {
-                uri.AppendQuery("$apply", policyQuerySettings.Apply, true);
+                uri.AppendQuery("$filter", filter, true);
             }
-            if (policyQuerySettings?.Expand != null)
+            if (apply != null)
             {
-                uri.AppendQuery("$expand", policyQuerySettings.Expand, true);
+                uri.AppendQuery("$apply", apply, true);
             }
-            if (policyQuerySettings?.SkipToken != null)
+            if (expand != null)
             {
-                uri.AppendQuery("$skiptoken", policyQuerySettings.SkipToken, true);
+                uri.AppendQuery("$expand", expand, true);
             }
-            return uri;
-        }
-
-        internal HttpMessage CreateListQueryResultsForResourceRequest(string resourceId, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/", false);
-            uri.AppendPath(resourceId, false);
-            uri.AppendPath("/providers/Microsoft.PolicyInsights/policyEvents/", false);
-            uri.AppendPath(policyEventType.ToString(), true);
-            uri.AppendPath("/queryResults", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (policyQuerySettings?.Top != null)
+            if (skipToken != null)
             {
-                uri.AppendQuery("$top", policyQuerySettings.Top.Value, true);
+                uri.AppendQuery("$skiptoken", skipToken, true);
             }
-            if (policyQuerySettings?.OrderBy != null)
-            {
-                uri.AppendQuery("$orderby", policyQuerySettings.OrderBy, true);
-            }
-            if (policyQuerySettings?.Select != null)
-            {
-                uri.AppendQuery("$select", policyQuerySettings.Select, true);
-            }
-            if (policyQuerySettings?.From != null)
-            {
-                uri.AppendQuery("$from", policyQuerySettings.From.Value, "O", true);
-            }
-            if (policyQuerySettings?.To != null)
-            {
-                uri.AppendQuery("$to", policyQuerySettings.To.Value, "O", true);
-            }
-            if (policyQuerySettings?.Filter != null)
-            {
-                uri.AppendQuery("$filter", policyQuerySettings.Filter, true);
-            }
-            if (policyQuerySettings?.Apply != null)
-            {
-                uri.AppendQuery("$apply", policyQuerySettings.Apply, true);
-            }
-            if (policyQuerySettings?.Expand != null)
-            {
-                uri.AppendQuery("$expand", policyQuerySettings.Expand, true);
-            }
-            if (policyQuerySettings?.SkipToken != null)
-            {
-                uri.AppendQuery("$skiptoken", policyQuerySettings.SkipToken, true);
-            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Queries policy events for the resource. </summary>
-        /// <param name="resourceId"> Resource ID. </param>
-        /// <param name="policyEventType"> The name of the virtual resource under PolicyEvents resource type; only "default" is allowed. </param>
-        /// <param name="policyQuerySettings"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
-        public async Task<Response<PolicyEventsQueryResults>> ListQueryResultsForResourceAsync(string resourceId, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateNextGetQueryResultsForResourceRequest(Uri nextPage, string policyEventsResource, string resourceId, int? maxCount, string orderBy, string @select, DateTimeOffset? @from, DateTimeOffset? to, string filter, string apply, string expand, string skipToken, RequestContext context)
         {
-            Argument.AssertNotNull(resourceId, nameof(resourceId));
-
-            using var message = CreateListQueryResultsForResourceRequest(resourceId, policyEventType, policyQuerySettings);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            if (nextPage.IsAbsoluteUri)
             {
-                case 200:
-                    {
-                        PolicyEventsQueryResults value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = PolicyEventsQueryResults.DeserializePolicyEventsQueryResults(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
+                uri.Reset(nextPage);
             }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
         }
 
-        /// <summary> Queries policy events for the resource. </summary>
-        /// <param name="resourceId"> Resource ID. </param>
-        /// <param name="policyEventType"> The name of the virtual resource under PolicyEvents resource type; only "default" is allowed. </param>
-        /// <param name="policyQuerySettings"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
-        public Response<PolicyEventsQueryResults> ListQueryResultsForResource(string resourceId, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateGetQueryResultsForPolicySetDefinitionPolicyEventsRequest(string subscriptionId, string policyEventsResource, string policySetDefinitionName, int? maxCount, string orderBy, string @select, DateTimeOffset? @from, DateTimeOffset? to, string filter, string apply, string skipToken, RequestContext context)
         {
-            Argument.AssertNotNull(resourceId, nameof(resourceId));
-
-            using var message = CreateListQueryResultsForResourceRequest(resourceId, policyEventType, policyQuerySettings);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        PolicyEventsQueryResults value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = PolicyEventsQueryResults.DeserializePolicyEventsQueryResults(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListQueryResultsForPolicySetDefinitionRequestUri(string subscriptionId, string policySetDefinitionName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
@@ -665,160 +364,78 @@ namespace Azure.ResourceManager.PolicyInsights
             uri.AppendPath("/policySetDefinitions/", false);
             uri.AppendPath(policySetDefinitionName, true);
             uri.AppendPath("/providers/Microsoft.PolicyInsights/policyEvents/", false);
-            uri.AppendPath(policyEventType.ToString(), true);
+            uri.AppendPath(policyEventsResource, true);
             uri.AppendPath("/queryResults", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (policyQuerySettings?.Top != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("$top", policyQuerySettings.Top.Value, true);
+                uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (policyQuerySettings?.OrderBy != null)
+            if (maxCount != null)
             {
-                uri.AppendQuery("$orderby", policyQuerySettings.OrderBy, true);
+                uri.AppendQuery("$top", TypeFormatters.ConvertToString(maxCount), true);
             }
-            if (policyQuerySettings?.Select != null)
+            if (orderBy != null)
             {
-                uri.AppendQuery("$select", policyQuerySettings.Select, true);
+                uri.AppendQuery("$orderby", orderBy, true);
             }
-            if (policyQuerySettings?.From != null)
+            if (@select != null)
             {
-                uri.AppendQuery("$from", policyQuerySettings.From.Value, "O", true);
+                uri.AppendQuery("$select", @select, true);
             }
-            if (policyQuerySettings?.To != null)
+            if (@from != null)
             {
-                uri.AppendQuery("$to", policyQuerySettings.To.Value, "O", true);
+                uri.AppendQuery("$from", TypeFormatters.ConvertToString(@from, SerializationFormat.DateTime_RFC3339), true);
             }
-            if (policyQuerySettings?.Filter != null)
+            if (to != null)
             {
-                uri.AppendQuery("$filter", policyQuerySettings.Filter, true);
+                uri.AppendQuery("$to", TypeFormatters.ConvertToString(to, SerializationFormat.DateTime_RFC3339), true);
             }
-            if (policyQuerySettings?.Apply != null)
+            if (filter != null)
             {
-                uri.AppendQuery("$apply", policyQuerySettings.Apply, true);
+                uri.AppendQuery("$filter", filter, true);
             }
-            if (policyQuerySettings?.SkipToken != null)
+            if (apply != null)
             {
-                uri.AppendQuery("$skiptoken", policyQuerySettings.SkipToken, true);
+                uri.AppendQuery("$apply", apply, true);
             }
-            return uri;
-        }
-
-        internal HttpMessage CreateListQueryResultsForPolicySetDefinitionRequest(string subscriptionId, string policySetDefinitionName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/", false);
-            uri.AppendPath("Microsoft.Authorization", true);
-            uri.AppendPath("/policySetDefinitions/", false);
-            uri.AppendPath(policySetDefinitionName, true);
-            uri.AppendPath("/providers/Microsoft.PolicyInsights/policyEvents/", false);
-            uri.AppendPath(policyEventType.ToString(), true);
-            uri.AppendPath("/queryResults", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (policyQuerySettings?.Top != null)
+            if (skipToken != null)
             {
-                uri.AppendQuery("$top", policyQuerySettings.Top.Value, true);
+                uri.AppendQuery("$skiptoken", skipToken, true);
             }
-            if (policyQuerySettings?.OrderBy != null)
-            {
-                uri.AppendQuery("$orderby", policyQuerySettings.OrderBy, true);
-            }
-            if (policyQuerySettings?.Select != null)
-            {
-                uri.AppendQuery("$select", policyQuerySettings.Select, true);
-            }
-            if (policyQuerySettings?.From != null)
-            {
-                uri.AppendQuery("$from", policyQuerySettings.From.Value, "O", true);
-            }
-            if (policyQuerySettings?.To != null)
-            {
-                uri.AppendQuery("$to", policyQuerySettings.To.Value, "O", true);
-            }
-            if (policyQuerySettings?.Filter != null)
-            {
-                uri.AppendQuery("$filter", policyQuerySettings.Filter, true);
-            }
-            if (policyQuerySettings?.Apply != null)
-            {
-                uri.AppendQuery("$apply", policyQuerySettings.Apply, true);
-            }
-            if (policyQuerySettings?.SkipToken != null)
-            {
-                uri.AppendQuery("$skiptoken", policyQuerySettings.SkipToken, true);
-            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Queries policy events for the subscription level policy set definition. </summary>
-        /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
-        /// <param name="policySetDefinitionName"> Policy set definition name. </param>
-        /// <param name="policyEventType"> The name of the virtual resource under PolicyEvents resource type; only "default" is allowed. </param>
-        /// <param name="policyQuerySettings"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="policySetDefinitionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PolicyEventsQueryResults>> ListQueryResultsForPolicySetDefinitionAsync(string subscriptionId, string policySetDefinitionName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateNextGetQueryResultsForPolicySetDefinitionPolicyEventsRequest(Uri nextPage, string subscriptionId, string policyEventsResource, string policySetDefinitionName, int? maxCount, string orderBy, string @select, DateTimeOffset? @from, DateTimeOffset? to, string filter, string apply, string skipToken, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));
-
-            using var message = CreateListQueryResultsForPolicySetDefinitionRequest(subscriptionId, policySetDefinitionName, policyEventType, policyQuerySettings);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            if (nextPage.IsAbsoluteUri)
             {
-                case 200:
-                    {
-                        PolicyEventsQueryResults value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = PolicyEventsQueryResults.DeserializePolicyEventsQueryResults(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
+                uri.Reset(nextPage);
             }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
         }
 
-        /// <summary> Queries policy events for the subscription level policy set definition. </summary>
-        /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
-        /// <param name="policySetDefinitionName"> Policy set definition name. </param>
-        /// <param name="policyEventType"> The name of the virtual resource under PolicyEvents resource type; only "default" is allowed. </param>
-        /// <param name="policyQuerySettings"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="policySetDefinitionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PolicyEventsQueryResults> ListQueryResultsForPolicySetDefinition(string subscriptionId, string policySetDefinitionName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateGetQueryResultsForPolicyDefinitionPolicyEventsRequest(string subscriptionId, string policyEventsResource, string policyDefinitionName, int? maxCount, string orderBy, string @select, DateTimeOffset? @from, DateTimeOffset? to, string filter, string apply, string skipToken, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));
-
-            using var message = CreateListQueryResultsForPolicySetDefinitionRequest(subscriptionId, policySetDefinitionName, policyEventType, policyQuerySettings);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        PolicyEventsQueryResults value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = PolicyEventsQueryResults.DeserializePolicyEventsQueryResults(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListQueryResultsForPolicyDefinitionRequestUri(string subscriptionId, string policyDefinitionName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
@@ -827,160 +444,78 @@ namespace Azure.ResourceManager.PolicyInsights
             uri.AppendPath("/policyDefinitions/", false);
             uri.AppendPath(policyDefinitionName, true);
             uri.AppendPath("/providers/Microsoft.PolicyInsights/policyEvents/", false);
-            uri.AppendPath(policyEventType.ToString(), true);
+            uri.AppendPath(policyEventsResource, true);
             uri.AppendPath("/queryResults", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (policyQuerySettings?.Top != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("$top", policyQuerySettings.Top.Value, true);
+                uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (policyQuerySettings?.OrderBy != null)
+            if (maxCount != null)
             {
-                uri.AppendQuery("$orderby", policyQuerySettings.OrderBy, true);
+                uri.AppendQuery("$top", TypeFormatters.ConvertToString(maxCount), true);
             }
-            if (policyQuerySettings?.Select != null)
+            if (orderBy != null)
             {
-                uri.AppendQuery("$select", policyQuerySettings.Select, true);
+                uri.AppendQuery("$orderby", orderBy, true);
             }
-            if (policyQuerySettings?.From != null)
+            if (@select != null)
             {
-                uri.AppendQuery("$from", policyQuerySettings.From.Value, "O", true);
+                uri.AppendQuery("$select", @select, true);
             }
-            if (policyQuerySettings?.To != null)
+            if (@from != null)
             {
-                uri.AppendQuery("$to", policyQuerySettings.To.Value, "O", true);
+                uri.AppendQuery("$from", TypeFormatters.ConvertToString(@from, SerializationFormat.DateTime_RFC3339), true);
             }
-            if (policyQuerySettings?.Filter != null)
+            if (to != null)
             {
-                uri.AppendQuery("$filter", policyQuerySettings.Filter, true);
+                uri.AppendQuery("$to", TypeFormatters.ConvertToString(to, SerializationFormat.DateTime_RFC3339), true);
             }
-            if (policyQuerySettings?.Apply != null)
+            if (filter != null)
             {
-                uri.AppendQuery("$apply", policyQuerySettings.Apply, true);
+                uri.AppendQuery("$filter", filter, true);
             }
-            if (policyQuerySettings?.SkipToken != null)
+            if (apply != null)
             {
-                uri.AppendQuery("$skiptoken", policyQuerySettings.SkipToken, true);
+                uri.AppendQuery("$apply", apply, true);
             }
-            return uri;
-        }
-
-        internal HttpMessage CreateListQueryResultsForPolicyDefinitionRequest(string subscriptionId, string policyDefinitionName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/", false);
-            uri.AppendPath("Microsoft.Authorization", true);
-            uri.AppendPath("/policyDefinitions/", false);
-            uri.AppendPath(policyDefinitionName, true);
-            uri.AppendPath("/providers/Microsoft.PolicyInsights/policyEvents/", false);
-            uri.AppendPath(policyEventType.ToString(), true);
-            uri.AppendPath("/queryResults", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (policyQuerySettings?.Top != null)
+            if (skipToken != null)
             {
-                uri.AppendQuery("$top", policyQuerySettings.Top.Value, true);
+                uri.AppendQuery("$skiptoken", skipToken, true);
             }
-            if (policyQuerySettings?.OrderBy != null)
-            {
-                uri.AppendQuery("$orderby", policyQuerySettings.OrderBy, true);
-            }
-            if (policyQuerySettings?.Select != null)
-            {
-                uri.AppendQuery("$select", policyQuerySettings.Select, true);
-            }
-            if (policyQuerySettings?.From != null)
-            {
-                uri.AppendQuery("$from", policyQuerySettings.From.Value, "O", true);
-            }
-            if (policyQuerySettings?.To != null)
-            {
-                uri.AppendQuery("$to", policyQuerySettings.To.Value, "O", true);
-            }
-            if (policyQuerySettings?.Filter != null)
-            {
-                uri.AppendQuery("$filter", policyQuerySettings.Filter, true);
-            }
-            if (policyQuerySettings?.Apply != null)
-            {
-                uri.AppendQuery("$apply", policyQuerySettings.Apply, true);
-            }
-            if (policyQuerySettings?.SkipToken != null)
-            {
-                uri.AppendQuery("$skiptoken", policyQuerySettings.SkipToken, true);
-            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Queries policy events for the subscription level policy definition. </summary>
-        /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
-        /// <param name="policyDefinitionName"> Policy definition name. </param>
-        /// <param name="policyEventType"> The name of the virtual resource under PolicyEvents resource type; only "default" is allowed. </param>
-        /// <param name="policyQuerySettings"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="policyDefinitionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PolicyEventsQueryResults>> ListQueryResultsForPolicyDefinitionAsync(string subscriptionId, string policyDefinitionName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateNextGetQueryResultsForPolicyDefinitionPolicyEventsRequest(Uri nextPage, string subscriptionId, string policyEventsResource, string policyDefinitionName, int? maxCount, string orderBy, string @select, DateTimeOffset? @from, DateTimeOffset? to, string filter, string apply, string skipToken, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
-
-            using var message = CreateListQueryResultsForPolicyDefinitionRequest(subscriptionId, policyDefinitionName, policyEventType, policyQuerySettings);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            if (nextPage.IsAbsoluteUri)
             {
-                case 200:
-                    {
-                        PolicyEventsQueryResults value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = PolicyEventsQueryResults.DeserializePolicyEventsQueryResults(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
+                uri.Reset(nextPage);
             }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
         }
 
-        /// <summary> Queries policy events for the subscription level policy definition. </summary>
-        /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
-        /// <param name="policyDefinitionName"> Policy definition name. </param>
-        /// <param name="policyEventType"> The name of the virtual resource under PolicyEvents resource type; only "default" is allowed. </param>
-        /// <param name="policyQuerySettings"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="policyDefinitionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PolicyEventsQueryResults> ListQueryResultsForPolicyDefinition(string subscriptionId, string policyDefinitionName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateGetQueryResultsForSubscriptionLevelPolicyAssignmentPolicyEventsRequest(string subscriptionId, string policyEventsResource, string policyAssignmentName, int? maxCount, string orderBy, string @select, DateTimeOffset? @from, DateTimeOffset? to, string filter, string apply, string skipToken, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
-
-            using var message = CreateListQueryResultsForPolicyDefinitionRequest(subscriptionId, policyDefinitionName, policyEventType, policyQuerySettings);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        PolicyEventsQueryResults value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = PolicyEventsQueryResults.DeserializePolicyEventsQueryResults(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListQueryResultsForSubscriptionLevelPolicyAssignmentRequestUri(string subscriptionId, string policyAssignmentName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
@@ -989,160 +524,78 @@ namespace Azure.ResourceManager.PolicyInsights
             uri.AppendPath("/policyAssignments/", false);
             uri.AppendPath(policyAssignmentName, true);
             uri.AppendPath("/providers/Microsoft.PolicyInsights/policyEvents/", false);
-            uri.AppendPath(policyEventType.ToString(), true);
+            uri.AppendPath(policyEventsResource, true);
             uri.AppendPath("/queryResults", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (policyQuerySettings?.Top != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("$top", policyQuerySettings.Top.Value, true);
+                uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (policyQuerySettings?.OrderBy != null)
+            if (maxCount != null)
             {
-                uri.AppendQuery("$orderby", policyQuerySettings.OrderBy, true);
+                uri.AppendQuery("$top", TypeFormatters.ConvertToString(maxCount), true);
             }
-            if (policyQuerySettings?.Select != null)
+            if (orderBy != null)
             {
-                uri.AppendQuery("$select", policyQuerySettings.Select, true);
+                uri.AppendQuery("$orderby", orderBy, true);
             }
-            if (policyQuerySettings?.From != null)
+            if (@select != null)
             {
-                uri.AppendQuery("$from", policyQuerySettings.From.Value, "O", true);
+                uri.AppendQuery("$select", @select, true);
             }
-            if (policyQuerySettings?.To != null)
+            if (@from != null)
             {
-                uri.AppendQuery("$to", policyQuerySettings.To.Value, "O", true);
+                uri.AppendQuery("$from", TypeFormatters.ConvertToString(@from, SerializationFormat.DateTime_RFC3339), true);
             }
-            if (policyQuerySettings?.Filter != null)
+            if (to != null)
             {
-                uri.AppendQuery("$filter", policyQuerySettings.Filter, true);
+                uri.AppendQuery("$to", TypeFormatters.ConvertToString(to, SerializationFormat.DateTime_RFC3339), true);
             }
-            if (policyQuerySettings?.Apply != null)
+            if (filter != null)
             {
-                uri.AppendQuery("$apply", policyQuerySettings.Apply, true);
+                uri.AppendQuery("$filter", filter, true);
             }
-            if (policyQuerySettings?.SkipToken != null)
+            if (apply != null)
             {
-                uri.AppendQuery("$skiptoken", policyQuerySettings.SkipToken, true);
+                uri.AppendQuery("$apply", apply, true);
             }
-            return uri;
-        }
-
-        internal HttpMessage CreateListQueryResultsForSubscriptionLevelPolicyAssignmentRequest(string subscriptionId, string policyAssignmentName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/", false);
-            uri.AppendPath("Microsoft.Authorization", true);
-            uri.AppendPath("/policyAssignments/", false);
-            uri.AppendPath(policyAssignmentName, true);
-            uri.AppendPath("/providers/Microsoft.PolicyInsights/policyEvents/", false);
-            uri.AppendPath(policyEventType.ToString(), true);
-            uri.AppendPath("/queryResults", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (policyQuerySettings?.Top != null)
+            if (skipToken != null)
             {
-                uri.AppendQuery("$top", policyQuerySettings.Top.Value, true);
+                uri.AppendQuery("$skiptoken", skipToken, true);
             }
-            if (policyQuerySettings?.OrderBy != null)
-            {
-                uri.AppendQuery("$orderby", policyQuerySettings.OrderBy, true);
-            }
-            if (policyQuerySettings?.Select != null)
-            {
-                uri.AppendQuery("$select", policyQuerySettings.Select, true);
-            }
-            if (policyQuerySettings?.From != null)
-            {
-                uri.AppendQuery("$from", policyQuerySettings.From.Value, "O", true);
-            }
-            if (policyQuerySettings?.To != null)
-            {
-                uri.AppendQuery("$to", policyQuerySettings.To.Value, "O", true);
-            }
-            if (policyQuerySettings?.Filter != null)
-            {
-                uri.AppendQuery("$filter", policyQuerySettings.Filter, true);
-            }
-            if (policyQuerySettings?.Apply != null)
-            {
-                uri.AppendQuery("$apply", policyQuerySettings.Apply, true);
-            }
-            if (policyQuerySettings?.SkipToken != null)
-            {
-                uri.AppendQuery("$skiptoken", policyQuerySettings.SkipToken, true);
-            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Queries policy events for the subscription level policy assignment. </summary>
-        /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
-        /// <param name="policyAssignmentName"> Policy assignment name. </param>
-        /// <param name="policyEventType"> The name of the virtual resource under PolicyEvents resource type; only "default" is allowed. </param>
-        /// <param name="policyQuerySettings"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="policyAssignmentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PolicyEventsQueryResults>> ListQueryResultsForSubscriptionLevelPolicyAssignmentAsync(string subscriptionId, string policyAssignmentName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateNextGetQueryResultsForSubscriptionLevelPolicyAssignmentPolicyEventsRequest(Uri nextPage, string subscriptionId, string policyEventsResource, string policyAssignmentName, int? maxCount, string orderBy, string @select, DateTimeOffset? @from, DateTimeOffset? to, string filter, string apply, string skipToken, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
-
-            using var message = CreateListQueryResultsForSubscriptionLevelPolicyAssignmentRequest(subscriptionId, policyAssignmentName, policyEventType, policyQuerySettings);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            if (nextPage.IsAbsoluteUri)
             {
-                case 200:
-                    {
-                        PolicyEventsQueryResults value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = PolicyEventsQueryResults.DeserializePolicyEventsQueryResults(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
+                uri.Reset(nextPage);
             }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
         }
 
-        /// <summary> Queries policy events for the subscription level policy assignment. </summary>
-        /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
-        /// <param name="policyAssignmentName"> Policy assignment name. </param>
-        /// <param name="policyEventType"> The name of the virtual resource under PolicyEvents resource type; only "default" is allowed. </param>
-        /// <param name="policyQuerySettings"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="policyAssignmentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PolicyEventsQueryResults> ListQueryResultsForSubscriptionLevelPolicyAssignment(string subscriptionId, string policyAssignmentName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateGetQueryResultsForResourceGroupLevelPolicyAssignmentPolicyEventsRequest(string subscriptionId, string resourceGroupName, string policyEventsResource, string policyAssignmentName, int? maxCount, string orderBy, string @select, DateTimeOffset? @from, DateTimeOffset? to, string filter, string apply, string skipToken, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
-
-            using var message = CreateListQueryResultsForSubscriptionLevelPolicyAssignmentRequest(subscriptionId, policyAssignmentName, policyEventType, policyQuerySettings);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        PolicyEventsQueryResults value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = PolicyEventsQueryResults.DeserializePolicyEventsQueryResults(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListQueryResultsForResourceGroupLevelPolicyAssignmentRequestUri(string subscriptionId, string resourceGroupName, string policyAssignmentName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
@@ -1153,823 +606,73 @@ namespace Azure.ResourceManager.PolicyInsights
             uri.AppendPath("/policyAssignments/", false);
             uri.AppendPath(policyAssignmentName, true);
             uri.AppendPath("/providers/Microsoft.PolicyInsights/policyEvents/", false);
-            uri.AppendPath(policyEventType.ToString(), true);
+            uri.AppendPath(policyEventsResource, true);
             uri.AppendPath("/queryResults", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (policyQuerySettings?.Top != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("$top", policyQuerySettings.Top.Value, true);
+                uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (policyQuerySettings?.OrderBy != null)
+            if (maxCount != null)
             {
-                uri.AppendQuery("$orderby", policyQuerySettings.OrderBy, true);
+                uri.AppendQuery("$top", TypeFormatters.ConvertToString(maxCount), true);
             }
-            if (policyQuerySettings?.Select != null)
+            if (orderBy != null)
             {
-                uri.AppendQuery("$select", policyQuerySettings.Select, true);
+                uri.AppendQuery("$orderby", orderBy, true);
             }
-            if (policyQuerySettings?.From != null)
+            if (@select != null)
             {
-                uri.AppendQuery("$from", policyQuerySettings.From.Value, "O", true);
+                uri.AppendQuery("$select", @select, true);
             }
-            if (policyQuerySettings?.To != null)
+            if (@from != null)
             {
-                uri.AppendQuery("$to", policyQuerySettings.To.Value, "O", true);
+                uri.AppendQuery("$from", TypeFormatters.ConvertToString(@from, SerializationFormat.DateTime_RFC3339), true);
             }
-            if (policyQuerySettings?.Filter != null)
+            if (to != null)
             {
-                uri.AppendQuery("$filter", policyQuerySettings.Filter, true);
+                uri.AppendQuery("$to", TypeFormatters.ConvertToString(to, SerializationFormat.DateTime_RFC3339), true);
             }
-            if (policyQuerySettings?.Apply != null)
+            if (filter != null)
             {
-                uri.AppendQuery("$apply", policyQuerySettings.Apply, true);
+                uri.AppendQuery("$filter", filter, true);
             }
-            if (policyQuerySettings?.SkipToken != null)
+            if (apply != null)
             {
-                uri.AppendQuery("$skiptoken", policyQuerySettings.SkipToken, true);
+                uri.AppendQuery("$apply", apply, true);
             }
-            return uri;
-        }
-
-        internal HttpMessage CreateListQueryResultsForResourceGroupLevelPolicyAssignmentRequest(string subscriptionId, string resourceGroupName, string policyAssignmentName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skiptoken", skipToken, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
             request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourcegroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/", false);
-            uri.AppendPath("Microsoft.Authorization", true);
-            uri.AppendPath("/policyAssignments/", false);
-            uri.AppendPath(policyAssignmentName, true);
-            uri.AppendPath("/providers/Microsoft.PolicyInsights/policyEvents/", false);
-            uri.AppendPath(policyEventType.ToString(), true);
-            uri.AppendPath("/queryResults", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (policyQuerySettings?.Top != null)
-            {
-                uri.AppendQuery("$top", policyQuerySettings.Top.Value, true);
-            }
-            if (policyQuerySettings?.OrderBy != null)
-            {
-                uri.AppendQuery("$orderby", policyQuerySettings.OrderBy, true);
-            }
-            if (policyQuerySettings?.Select != null)
-            {
-                uri.AppendQuery("$select", policyQuerySettings.Select, true);
-            }
-            if (policyQuerySettings?.From != null)
-            {
-                uri.AppendQuery("$from", policyQuerySettings.From.Value, "O", true);
-            }
-            if (policyQuerySettings?.To != null)
-            {
-                uri.AppendQuery("$to", policyQuerySettings.To.Value, "O", true);
-            }
-            if (policyQuerySettings?.Filter != null)
-            {
-                uri.AppendQuery("$filter", policyQuerySettings.Filter, true);
-            }
-            if (policyQuerySettings?.Apply != null)
-            {
-                uri.AppendQuery("$apply", policyQuerySettings.Apply, true);
-            }
-            if (policyQuerySettings?.SkipToken != null)
-            {
-                uri.AppendQuery("$skiptoken", policyQuerySettings.SkipToken, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Queries policy events for the resource group level policy assignment. </summary>
-        /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> Resource group name. </param>
-        /// <param name="policyAssignmentName"> Policy assignment name. </param>
-        /// <param name="policyEventType"> The name of the virtual resource under PolicyEvents resource type; only "default" is allowed. </param>
-        /// <param name="policyQuerySettings"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="policyAssignmentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PolicyEventsQueryResults>> ListQueryResultsForResourceGroupLevelPolicyAssignmentAsync(string subscriptionId, string resourceGroupName, string policyAssignmentName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateNextGetQueryResultsForResourceGroupLevelPolicyAssignmentPolicyEventsRequest(Uri nextPage, string subscriptionId, string resourceGroupName, string policyEventsResource, string policyAssignmentName, int? maxCount, string orderBy, string @select, DateTimeOffset? @from, DateTimeOffset? to, string filter, string apply, string skipToken, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
-
-            using var message = CreateListQueryResultsForResourceGroupLevelPolicyAssignmentRequest(subscriptionId, resourceGroupName, policyAssignmentName, policyEventType, policyQuerySettings);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            if (nextPage.IsAbsoluteUri)
             {
-                case 200:
-                    {
-                        PolicyEventsQueryResults value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = PolicyEventsQueryResults.DeserializePolicyEventsQueryResults(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
+                uri.Reset(nextPage);
             }
-        }
-
-        /// <summary> Queries policy events for the resource group level policy assignment. </summary>
-        /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> Resource group name. </param>
-        /// <param name="policyAssignmentName"> Policy assignment name. </param>
-        /// <param name="policyEventType"> The name of the virtual resource under PolicyEvents resource type; only "default" is allowed. </param>
-        /// <param name="policyQuerySettings"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="policyAssignmentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PolicyEventsQueryResults> ListQueryResultsForResourceGroupLevelPolicyAssignment(string subscriptionId, string resourceGroupName, string policyAssignmentName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
-
-            using var message = CreateListQueryResultsForResourceGroupLevelPolicyAssignmentRequest(subscriptionId, resourceGroupName, policyAssignmentName, policyEventType, policyQuerySettings);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
+            else
             {
-                case 200:
-                    {
-                        PolicyEventsQueryResults value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = PolicyEventsQueryResults.DeserializePolicyEventsQueryResults(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
+                uri.Reset(new Uri(_endpoint, nextPage));
             }
-        }
-
-        internal RequestUriBuilder CreateListQueryResultsForManagementGroupNextPageRequestUri(string nextLink, string managementGroupName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            return uri;
-        }
-
-        internal HttpMessage CreateListQueryResultsForManagementGroupNextPageRequest(string nextLink, string managementGroupName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
-        }
-
-        /// <summary> Queries policy events for the resources under the management group. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="managementGroupName"> Management group name. </param>
-        /// <param name="policyEventType"> The name of the virtual resource under PolicyEvents resource type; only "default" is allowed. </param>
-        /// <param name="policyQuerySettings"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="managementGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="managementGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PolicyEventsQueryResults>> ListQueryResultsForManagementGroupNextPageAsync(string nextLink, string managementGroupName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(managementGroupName, nameof(managementGroupName));
-
-            using var message = CreateListQueryResultsForManagementGroupNextPageRequest(nextLink, managementGroupName, policyEventType, policyQuerySettings);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        PolicyEventsQueryResults value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = PolicyEventsQueryResults.DeserializePolicyEventsQueryResults(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Queries policy events for the resources under the management group. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="managementGroupName"> Management group name. </param>
-        /// <param name="policyEventType"> The name of the virtual resource under PolicyEvents resource type; only "default" is allowed. </param>
-        /// <param name="policyQuerySettings"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="managementGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="managementGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PolicyEventsQueryResults> ListQueryResultsForManagementGroupNextPage(string nextLink, string managementGroupName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(managementGroupName, nameof(managementGroupName));
-
-            using var message = CreateListQueryResultsForManagementGroupNextPageRequest(nextLink, managementGroupName, policyEventType, policyQuerySettings);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        PolicyEventsQueryResults value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = PolicyEventsQueryResults.DeserializePolicyEventsQueryResults(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListQueryResultsForSubscriptionNextPageRequestUri(string nextLink, string subscriptionId, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            return uri;
-        }
-
-        internal HttpMessage CreateListQueryResultsForSubscriptionNextPageRequest(string nextLink, string subscriptionId, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Queries policy events for the resources under the subscription. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
-        /// <param name="policyEventType"> The name of the virtual resource under PolicyEvents resource type; only "default" is allowed. </param>
-        /// <param name="policyQuerySettings"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PolicyEventsQueryResults>> ListQueryResultsForSubscriptionNextPageAsync(string nextLink, string subscriptionId, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-
-            using var message = CreateListQueryResultsForSubscriptionNextPageRequest(nextLink, subscriptionId, policyEventType, policyQuerySettings);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        PolicyEventsQueryResults value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = PolicyEventsQueryResults.DeserializePolicyEventsQueryResults(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Queries policy events for the resources under the subscription. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
-        /// <param name="policyEventType"> The name of the virtual resource under PolicyEvents resource type; only "default" is allowed. </param>
-        /// <param name="policyQuerySettings"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PolicyEventsQueryResults> ListQueryResultsForSubscriptionNextPage(string nextLink, string subscriptionId, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-
-            using var message = CreateListQueryResultsForSubscriptionNextPageRequest(nextLink, subscriptionId, policyEventType, policyQuerySettings);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        PolicyEventsQueryResults value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = PolicyEventsQueryResults.DeserializePolicyEventsQueryResults(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListQueryResultsForResourceGroupNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            return uri;
-        }
-
-        internal HttpMessage CreateListQueryResultsForResourceGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Queries policy events for the resources under the resource group. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> Resource group name. </param>
-        /// <param name="policyEventType"> The name of the virtual resource under PolicyEvents resource type; only "default" is allowed. </param>
-        /// <param name="policyQuerySettings"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PolicyEventsQueryResults>> ListQueryResultsForResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-
-            using var message = CreateListQueryResultsForResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName, policyEventType, policyQuerySettings);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        PolicyEventsQueryResults value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = PolicyEventsQueryResults.DeserializePolicyEventsQueryResults(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Queries policy events for the resources under the resource group. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> Resource group name. </param>
-        /// <param name="policyEventType"> The name of the virtual resource under PolicyEvents resource type; only "default" is allowed. </param>
-        /// <param name="policyQuerySettings"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PolicyEventsQueryResults> ListQueryResultsForResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-
-            using var message = CreateListQueryResultsForResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName, policyEventType, policyQuerySettings);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        PolicyEventsQueryResults value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = PolicyEventsQueryResults.DeserializePolicyEventsQueryResults(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListQueryResultsForResourceNextPageRequestUri(string nextLink, string resourceId, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            return uri;
-        }
-
-        internal HttpMessage CreateListQueryResultsForResourceNextPageRequest(string nextLink, string resourceId, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Queries policy events for the resource. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="resourceId"> Resource ID. </param>
-        /// <param name="policyEventType"> The name of the virtual resource under PolicyEvents resource type; only "default" is allowed. </param>
-        /// <param name="policyQuerySettings"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceId"/> is null. </exception>
-        public async Task<Response<PolicyEventsQueryResults>> ListQueryResultsForResourceNextPageAsync(string nextLink, string resourceId, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNull(resourceId, nameof(resourceId));
-
-            using var message = CreateListQueryResultsForResourceNextPageRequest(nextLink, resourceId, policyEventType, policyQuerySettings);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        PolicyEventsQueryResults value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = PolicyEventsQueryResults.DeserializePolicyEventsQueryResults(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Queries policy events for the resource. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="resourceId"> Resource ID. </param>
-        /// <param name="policyEventType"> The name of the virtual resource under PolicyEvents resource type; only "default" is allowed. </param>
-        /// <param name="policyQuerySettings"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceId"/> is null. </exception>
-        public Response<PolicyEventsQueryResults> ListQueryResultsForResourceNextPage(string nextLink, string resourceId, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNull(resourceId, nameof(resourceId));
-
-            using var message = CreateListQueryResultsForResourceNextPageRequest(nextLink, resourceId, policyEventType, policyQuerySettings);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        PolicyEventsQueryResults value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = PolicyEventsQueryResults.DeserializePolicyEventsQueryResults(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListQueryResultsForPolicySetDefinitionNextPageRequestUri(string nextLink, string subscriptionId, string policySetDefinitionName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            return uri;
-        }
-
-        internal HttpMessage CreateListQueryResultsForPolicySetDefinitionNextPageRequest(string nextLink, string subscriptionId, string policySetDefinitionName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Queries policy events for the subscription level policy set definition. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
-        /// <param name="policySetDefinitionName"> Policy set definition name. </param>
-        /// <param name="policyEventType"> The name of the virtual resource under PolicyEvents resource type; only "default" is allowed. </param>
-        /// <param name="policyQuerySettings"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="policySetDefinitionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PolicyEventsQueryResults>> ListQueryResultsForPolicySetDefinitionNextPageAsync(string nextLink, string subscriptionId, string policySetDefinitionName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));
-
-            using var message = CreateListQueryResultsForPolicySetDefinitionNextPageRequest(nextLink, subscriptionId, policySetDefinitionName, policyEventType, policyQuerySettings);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        PolicyEventsQueryResults value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = PolicyEventsQueryResults.DeserializePolicyEventsQueryResults(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Queries policy events for the subscription level policy set definition. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
-        /// <param name="policySetDefinitionName"> Policy set definition name. </param>
-        /// <param name="policyEventType"> The name of the virtual resource under PolicyEvents resource type; only "default" is allowed. </param>
-        /// <param name="policyQuerySettings"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="policySetDefinitionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PolicyEventsQueryResults> ListQueryResultsForPolicySetDefinitionNextPage(string nextLink, string subscriptionId, string policySetDefinitionName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));
-
-            using var message = CreateListQueryResultsForPolicySetDefinitionNextPageRequest(nextLink, subscriptionId, policySetDefinitionName, policyEventType, policyQuerySettings);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        PolicyEventsQueryResults value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = PolicyEventsQueryResults.DeserializePolicyEventsQueryResults(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListQueryResultsForPolicyDefinitionNextPageRequestUri(string nextLink, string subscriptionId, string policyDefinitionName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            return uri;
-        }
-
-        internal HttpMessage CreateListQueryResultsForPolicyDefinitionNextPageRequest(string nextLink, string subscriptionId, string policyDefinitionName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Queries policy events for the subscription level policy definition. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
-        /// <param name="policyDefinitionName"> Policy definition name. </param>
-        /// <param name="policyEventType"> The name of the virtual resource under PolicyEvents resource type; only "default" is allowed. </param>
-        /// <param name="policyQuerySettings"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="policyDefinitionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PolicyEventsQueryResults>> ListQueryResultsForPolicyDefinitionNextPageAsync(string nextLink, string subscriptionId, string policyDefinitionName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
-
-            using var message = CreateListQueryResultsForPolicyDefinitionNextPageRequest(nextLink, subscriptionId, policyDefinitionName, policyEventType, policyQuerySettings);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        PolicyEventsQueryResults value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = PolicyEventsQueryResults.DeserializePolicyEventsQueryResults(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Queries policy events for the subscription level policy definition. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
-        /// <param name="policyDefinitionName"> Policy definition name. </param>
-        /// <param name="policyEventType"> The name of the virtual resource under PolicyEvents resource type; only "default" is allowed. </param>
-        /// <param name="policyQuerySettings"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="policyDefinitionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PolicyEventsQueryResults> ListQueryResultsForPolicyDefinitionNextPage(string nextLink, string subscriptionId, string policyDefinitionName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
-
-            using var message = CreateListQueryResultsForPolicyDefinitionNextPageRequest(nextLink, subscriptionId, policyDefinitionName, policyEventType, policyQuerySettings);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        PolicyEventsQueryResults value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = PolicyEventsQueryResults.DeserializePolicyEventsQueryResults(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListQueryResultsForSubscriptionLevelPolicyAssignmentNextPageRequestUri(string nextLink, string subscriptionId, string policyAssignmentName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            return uri;
-        }
-
-        internal HttpMessage CreateListQueryResultsForSubscriptionLevelPolicyAssignmentNextPageRequest(string nextLink, string subscriptionId, string policyAssignmentName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Queries policy events for the subscription level policy assignment. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
-        /// <param name="policyAssignmentName"> Policy assignment name. </param>
-        /// <param name="policyEventType"> The name of the virtual resource under PolicyEvents resource type; only "default" is allowed. </param>
-        /// <param name="policyQuerySettings"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="policyAssignmentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PolicyEventsQueryResults>> ListQueryResultsForSubscriptionLevelPolicyAssignmentNextPageAsync(string nextLink, string subscriptionId, string policyAssignmentName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
-
-            using var message = CreateListQueryResultsForSubscriptionLevelPolicyAssignmentNextPageRequest(nextLink, subscriptionId, policyAssignmentName, policyEventType, policyQuerySettings);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        PolicyEventsQueryResults value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = PolicyEventsQueryResults.DeserializePolicyEventsQueryResults(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Queries policy events for the subscription level policy assignment. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
-        /// <param name="policyAssignmentName"> Policy assignment name. </param>
-        /// <param name="policyEventType"> The name of the virtual resource under PolicyEvents resource type; only "default" is allowed. </param>
-        /// <param name="policyQuerySettings"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="policyAssignmentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PolicyEventsQueryResults> ListQueryResultsForSubscriptionLevelPolicyAssignmentNextPage(string nextLink, string subscriptionId, string policyAssignmentName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
-
-            using var message = CreateListQueryResultsForSubscriptionLevelPolicyAssignmentNextPageRequest(nextLink, subscriptionId, policyAssignmentName, policyEventType, policyQuerySettings);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        PolicyEventsQueryResults value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = PolicyEventsQueryResults.DeserializePolicyEventsQueryResults(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListQueryResultsForResourceGroupLevelPolicyAssignmentNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string policyAssignmentName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            return uri;
-        }
-
-        internal HttpMessage CreateListQueryResultsForResourceGroupLevelPolicyAssignmentNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string policyAssignmentName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Queries policy events for the resource group level policy assignment. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> Resource group name. </param>
-        /// <param name="policyAssignmentName"> Policy assignment name. </param>
-        /// <param name="policyEventType"> The name of the virtual resource under PolicyEvents resource type; only "default" is allowed. </param>
-        /// <param name="policyQuerySettings"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="policyAssignmentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PolicyEventsQueryResults>> ListQueryResultsForResourceGroupLevelPolicyAssignmentNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string policyAssignmentName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
-
-            using var message = CreateListQueryResultsForResourceGroupLevelPolicyAssignmentNextPageRequest(nextLink, subscriptionId, resourceGroupName, policyAssignmentName, policyEventType, policyQuerySettings);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        PolicyEventsQueryResults value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = PolicyEventsQueryResults.DeserializePolicyEventsQueryResults(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Queries policy events for the resource group level policy assignment. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Microsoft Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> Resource group name. </param>
-        /// <param name="policyAssignmentName"> Policy assignment name. </param>
-        /// <param name="policyEventType"> The name of the virtual resource under PolicyEvents resource type; only "default" is allowed. </param>
-        /// <param name="policyQuerySettings"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="policyAssignmentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PolicyEventsQueryResults> ListQueryResultsForResourceGroupLevelPolicyAssignmentNextPage(string nextLink, string subscriptionId, string resourceGroupName, string policyAssignmentName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
-
-            using var message = CreateListQueryResultsForResourceGroupLevelPolicyAssignmentNextPageRequest(nextLink, subscriptionId, resourceGroupName, policyAssignmentName, policyEventType, policyQuerySettings);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        PolicyEventsQueryResults value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = PolicyEventsQueryResults.DeserializePolicyEventsQueryResults(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
         }
     }
 }
