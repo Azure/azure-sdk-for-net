@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             ProvisioningState? provisioningState = default;
             VersionState? versionState = default;
             string description = default;
-            IDictionary<string, ReferencedResource> referencedConfigurationGroupSchemas = default;
+            IDictionary<string, ReferencedResourceById> referencedConfigurationGroupSchemas = default;
             IDictionary<string, NfviDetails> nfvisFromSite = default;
             IList<ResourceElementTemplate> resourceElementTemplates = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -201,10 +201,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    Dictionary<string, ReferencedResource> dictionary = new Dictionary<string, ReferencedResource>();
+                    Dictionary<string, ReferencedResourceById> dictionary = new Dictionary<string, ReferencedResourceById>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(prop0.Name, ReferencedResource.DeserializeReferencedResource(prop0.Value, options));
+                        dictionary.Add(prop0.Name, ReferencedResourceById.DeserializeReferencedResourceById(prop0.Value, options));
                     }
                     referencedConfigurationGroupSchemas = dictionary;
                     continue;
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 provisioningState,
                 versionState,
                 description,
-                referencedConfigurationGroupSchemas ?? new ChangeTrackingDictionary<string, ReferencedResource>(),
+                referencedConfigurationGroupSchemas ?? new ChangeTrackingDictionary<string, ReferencedResourceById>(),
                 nfvisFromSite ?? new ChangeTrackingDictionary<string, NfviDetails>(),
                 resourceElementTemplates ?? new ChangeTrackingList<ResourceElementTemplate>(),
                 additionalBinaryDataProperties);

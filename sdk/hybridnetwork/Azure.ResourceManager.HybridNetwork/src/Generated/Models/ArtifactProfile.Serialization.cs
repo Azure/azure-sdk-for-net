@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            ReferencedResource artifactStore = default;
+            ReferencedResourceById artifactStore = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    artifactStore = ReferencedResource.DeserializeReferencedResource(prop.Value, options);
+                    artifactStore = ReferencedResourceById.DeserializeReferencedResourceById(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

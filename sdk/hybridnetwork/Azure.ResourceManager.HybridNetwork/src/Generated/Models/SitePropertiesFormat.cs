@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         public SitePropertiesFormat()
         {
             Nfvis = new ChangeTrackingList<NfvIs>();
-            ReferencedSiteNetworkServices = new ChangeTrackingList<ReferencedResource>();
+            ReferencedSiteNetworkServices = new ChangeTrackingList<ReferencedResourceById>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SitePropertiesFormat"/>. </summary>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="nfvis"> List of NFVIs. </param>
         /// <param name="referencedSiteNetworkServices"> The list of site network services on the site. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SitePropertiesFormat(ProvisioningState? provisioningState, IList<NfvIs> nfvis, IReadOnlyList<ReferencedResource> referencedSiteNetworkServices, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SitePropertiesFormat(ProvisioningState? provisioningState, IList<NfvIs> nfvis, IReadOnlyList<ReferencedResourceById> referencedSiteNetworkServices, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             Nfvis = nfvis;
@@ -44,6 +44,6 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         public IList<NfvIs> Nfvis { get; }
 
         /// <summary> The list of site network services on the site. </summary>
-        public IReadOnlyList<ReferencedResource> ReferencedSiteNetworkServices { get; }
+        public IReadOnlyList<ReferencedResourceById> ReferencedSiteNetworkServices { get; }
     }
 }

@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.HybridNetwork
     [ModelReaderWriterBuildable(typeof(PublisherListResult))]
     [ModelReaderWriterBuildable(typeof(PublisherPropertiesFormat))]
     [ModelReaderWriterBuildable(typeof(PublisherResource))]
-    [ModelReaderWriterBuildable(typeof(ReferencedResource))]
+    [ModelReaderWriterBuildable(typeof(ReferencedResourceById))]
     [ModelReaderWriterBuildable(typeof(RequestMetadata))]
     [ModelReaderWriterBuildable(typeof(ResourceElementTemplate))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]

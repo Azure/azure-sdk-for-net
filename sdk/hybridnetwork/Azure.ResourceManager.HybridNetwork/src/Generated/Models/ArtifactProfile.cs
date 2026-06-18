@@ -25,14 +25,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <summary> Initializes a new instance of <see cref="ArtifactProfile"/>. </summary>
         /// <param name="artifactStore"> The reference to artifact store. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ArtifactProfile(ReferencedResource artifactStore, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ArtifactProfile(ReferencedResourceById artifactStore, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ArtifactStore = artifactStore;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The reference to artifact store. </summary>
-        internal ReferencedResource ArtifactStore { get; set; }
+        internal ReferencedResourceById ArtifactStore { get; set; }
 
         /// <summary> Resource ID. </summary>
         public ResourceIdentifier ArtifactStoreId
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 if (ArtifactStore is null)
                 {
-                    ArtifactStore = new ReferencedResource();
+                    ArtifactStore = new ReferencedResourceById();
                 }
                 ArtifactStore.Id = value;
             }

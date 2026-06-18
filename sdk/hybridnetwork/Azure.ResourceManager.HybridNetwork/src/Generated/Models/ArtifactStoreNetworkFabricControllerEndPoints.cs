@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <summary> Initializes a new instance of <see cref="ArtifactStoreNetworkFabricControllerEndPoints"/>. </summary>
         public ArtifactStoreNetworkFabricControllerEndPoints()
         {
-            NetworkFabricControllerIds = new ChangeTrackingList<ReferencedResource>();
+            NetworkFabricControllerIds = new ChangeTrackingList<ReferencedResourceById>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ArtifactStoreNetworkFabricControllerEndPoints"/>. </summary>
         /// <param name="networkFabricControllerIds"> list of network fabric controllers. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ArtifactStoreNetworkFabricControllerEndPoints(IList<ReferencedResource> networkFabricControllerIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ArtifactStoreNetworkFabricControllerEndPoints(IList<ReferencedResourceById> networkFabricControllerIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NetworkFabricControllerIds = networkFabricControllerIds;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> list of network fabric controllers. </summary>
-        public IList<ReferencedResource> NetworkFabricControllerIds { get; }
+        public IList<ReferencedResourceById> NetworkFabricControllerIds { get; }
     }
 }

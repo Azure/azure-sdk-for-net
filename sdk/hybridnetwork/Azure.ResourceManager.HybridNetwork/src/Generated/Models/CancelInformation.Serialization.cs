@@ -134,14 +134,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            ReferencedResource siteNetworkServiceReference = default;
+            ReferencedResourceById siteNetworkServiceReference = default;
             LongRunningOperation? longRunningOperation = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("siteNetworkServiceReference"u8))
                 {
-                    siteNetworkServiceReference = ReferencedResource.DeserializeReferencedResource(prop.Value, options);
+                    siteNetworkServiceReference = ReferencedResourceById.DeserializeReferencedResourceById(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("longRunningOperation"u8))

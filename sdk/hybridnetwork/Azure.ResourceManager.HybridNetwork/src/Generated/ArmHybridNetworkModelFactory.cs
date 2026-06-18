@@ -769,9 +769,9 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="nfvisFromSite"> The nfvis from the site. </param>
         /// <param name="resourceElementTemplates"> List of resource element template. </param>
         /// <returns> A new <see cref="Models.NetworkServiceDesignVersionPropertiesFormat"/> instance for mocking. </returns>
-        public static NetworkServiceDesignVersionPropertiesFormat NetworkServiceDesignVersionPropertiesFormat(ProvisioningState? provisioningState = default, VersionState? versionState = default, string description = default, IDictionary<string, ReferencedResource> referencedConfigurationGroupSchemas = default, IDictionary<string, NfviDetails> nfvisFromSite = default, IEnumerable<ResourceElementTemplate> resourceElementTemplates = default)
+        public static NetworkServiceDesignVersionPropertiesFormat NetworkServiceDesignVersionPropertiesFormat(ProvisioningState? provisioningState = default, VersionState? versionState = default, string description = default, IDictionary<string, ReferencedResourceById> referencedConfigurationGroupSchemas = default, IDictionary<string, NfviDetails> nfvisFromSite = default, IEnumerable<ResourceElementTemplate> resourceElementTemplates = default)
         {
-            referencedConfigurationGroupSchemas ??= new ChangeTrackingDictionary<string, ReferencedResource>();
+            referencedConfigurationGroupSchemas ??= new ChangeTrackingDictionary<string, ReferencedResourceById>();
             nfvisFromSite ??= new ChangeTrackingDictionary<string, NfviDetails>();
             resourceElementTemplates ??= new ChangeTrackingList<ResourceElementTemplate>();
 
@@ -832,9 +832,9 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <summary> List of network fabric controller ids. </summary>
         /// <param name="networkFabricControllerIds"> list of network fabric controllers. </param>
         /// <returns> A new <see cref="Models.ArtifactStoreNetworkFabricControllerEndPoints"/> instance for mocking. </returns>
-        public static ArtifactStoreNetworkFabricControllerEndPoints ArtifactStoreNetworkFabricControllerEndPoints(IEnumerable<ReferencedResource> networkFabricControllerIds = default)
+        public static ArtifactStoreNetworkFabricControllerEndPoints ArtifactStoreNetworkFabricControllerEndPoints(IEnumerable<ReferencedResourceById> networkFabricControllerIds = default)
         {
-            networkFabricControllerIds ??= new ChangeTrackingList<ReferencedResource>();
+            networkFabricControllerIds ??= new ChangeTrackingList<ReferencedResourceById>();
 
             return new ArtifactStoreNetworkFabricControllerEndPoints(networkFabricControllerIds.ToList(), additionalBinaryDataProperties: null);
         }
@@ -842,9 +842,9 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <summary> List of manual private endpoints. </summary>
         /// <param name="manualPrivateEndPointConnections"> list of private endpoints. </param>
         /// <returns> A new <see cref="Models.ArtifactStorePrivateEndPointsFormat"/> instance for mocking. </returns>
-        public static ArtifactStorePrivateEndPointsFormat ArtifactStorePrivateEndPointsFormat(IEnumerable<ReferencedResource> manualPrivateEndPointConnections = default)
+        public static ArtifactStorePrivateEndPointsFormat ArtifactStorePrivateEndPointsFormat(IEnumerable<ReferencedResourceById> manualPrivateEndPointConnections = default)
         {
-            manualPrivateEndPointConnections ??= new ChangeTrackingList<ReferencedResource>();
+            manualPrivateEndPointConnections ??= new ChangeTrackingList<ReferencedResourceById>();
 
             return new ArtifactStorePrivateEndPointsFormat(manualPrivateEndPointConnections.ToList(), additionalBinaryDataProperties: null);
         }
@@ -995,10 +995,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="nfvis"> List of NFVIs. </param>
         /// <param name="referencedSiteNetworkServices"> The list of site network services on the site. </param>
         /// <returns> A new <see cref="Models.SitePropertiesFormat"/> instance for mocking. </returns>
-        public static SitePropertiesFormat SitePropertiesFormat(ProvisioningState? provisioningState = default, IEnumerable<NfvIs> nfvis = default, IEnumerable<ReferencedResource> referencedSiteNetworkServices = default)
+        public static SitePropertiesFormat SitePropertiesFormat(ProvisioningState? provisioningState = default, IEnumerable<NfvIs> nfvis = default, IEnumerable<ReferencedResourceById> referencedSiteNetworkServices = default)
         {
             nfvis ??= new ChangeTrackingList<NfvIs>();
-            referencedSiteNetworkServices ??= new ChangeTrackingList<ReferencedResource>();
+            referencedSiteNetworkServices ??= new ChangeTrackingList<ReferencedResourceById>();
 
             return new SitePropertiesFormat(provisioningState, nfvis.ToList(), referencedSiteNetworkServices.ToList(), additionalBinaryDataProperties: null);
         }
@@ -1044,15 +1044,15 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="lastStateNetworkServiceDesignVersionName"> The network service design version for the site network service. </param>
         /// <param name="lastStateConfigurationGroupValueReferencedResources"> The last state of the site network service resource. </param>
         /// <returns> A new <see cref="Models.SiteNetworkServicePropertiesFormat"/> instance for mocking. </returns>
-        public static SiteNetworkServicePropertiesFormat SiteNetworkServicePropertiesFormat(ProvisioningState? provisioningState = default, ManagedResourceGroupConfiguration managedResourceGroupConfiguration = default, ResourceIdentifier siteReferenceId = default, string publisherName = default, PublisherScope? publisherScope = default, string networkServiceDesignGroupName = default, string networkServiceDesignVersionName = default, AzureLocation? networkServiceDesignVersionOfferingLocation = default, DeploymentResourceIdReference networkServiceDesignVersionResourceReference = default, IDictionary<string, ReferencedResource> desiredStateConfigurationGroupValueReferencedResources = default, string lastStateNetworkServiceDesignVersionName = default, IReadOnlyDictionary<string, ReferencedResource> lastStateConfigurationGroupValueReferencedResources = default)
+        public static SiteNetworkServicePropertiesFormat SiteNetworkServicePropertiesFormat(ProvisioningState? provisioningState = default, ManagedResourceGroupConfiguration managedResourceGroupConfiguration = default, ResourceIdentifier siteReferenceId = default, string publisherName = default, PublisherScope? publisherScope = default, string networkServiceDesignGroupName = default, string networkServiceDesignVersionName = default, AzureLocation? networkServiceDesignVersionOfferingLocation = default, DeploymentResourceIdReference networkServiceDesignVersionResourceReference = default, IDictionary<string, ReferencedResourceById> desiredStateConfigurationGroupValueReferencedResources = default, string lastStateNetworkServiceDesignVersionName = default, IReadOnlyDictionary<string, ReferencedResourceById> lastStateConfigurationGroupValueReferencedResources = default)
         {
-            desiredStateConfigurationGroupValueReferencedResources ??= new ChangeTrackingDictionary<string, ReferencedResource>();
-            lastStateConfigurationGroupValueReferencedResources ??= new ChangeTrackingDictionary<string, ReferencedResource>();
+            desiredStateConfigurationGroupValueReferencedResources ??= new ChangeTrackingDictionary<string, ReferencedResourceById>();
+            lastStateConfigurationGroupValueReferencedResources ??= new ChangeTrackingDictionary<string, ReferencedResourceById>();
 
             return new SiteNetworkServicePropertiesFormat(
                 provisioningState,
                 managedResourceGroupConfiguration,
-                siteReferenceId is null ? default : new ReferencedResource(siteReferenceId, null),
+                siteReferenceId is null ? default : new ReferencedResourceById(siteReferenceId, null),
                 publisherName,
                 publisherScope,
                 networkServiceDesignGroupName,
@@ -1079,7 +1079,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <returns> A new <see cref="Models.CancelInformation"/> instance for mocking. </returns>
         public static CancelInformation CancelInformation(ResourceIdentifier siteNetworkServiceReferenceId = default, LongRunningOperation? longRunningOperation = default)
         {
-            return new CancelInformation(new ReferencedResource(siteNetworkServiceReferenceId, null), longRunningOperation, additionalBinaryDataProperties: null);
+            return new CancelInformation(new ReferencedResourceById(siteNetworkServiceReferenceId, null), longRunningOperation, additionalBinaryDataProperties: null);
         }
     }
 }

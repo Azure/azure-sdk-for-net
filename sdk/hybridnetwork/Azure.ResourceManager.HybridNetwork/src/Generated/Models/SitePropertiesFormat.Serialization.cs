@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 writer.WritePropertyName("siteNetworkServiceReferences"u8);
                 writer.WriteStartArray();
-                foreach (ReferencedResource item in ReferencedSiteNetworkServices)
+                foreach (ReferencedResourceById item in ReferencedSiteNetworkServices)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
             ProvisioningState? provisioningState = default;
             IList<NfvIs> nfvis = default;
-            IReadOnlyList<ReferencedResource> referencedSiteNetworkServices = default;
+            IReadOnlyList<ReferencedResourceById> referencedSiteNetworkServices = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -176,10 +176,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    List<ReferencedResource> array = new List<ReferencedResource>();
+                    List<ReferencedResourceById> array = new List<ReferencedResourceById>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ReferencedResource.DeserializeReferencedResource(item, options));
+                        array.Add(ReferencedResourceById.DeserializeReferencedResourceById(item, options));
                     }
                     referencedSiteNetworkServices = array;
                     continue;
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SitePropertiesFormat(provisioningState, nfvis ?? new ChangeTrackingList<NfvIs>(), referencedSiteNetworkServices ?? new ChangeTrackingList<ReferencedResource>(), additionalBinaryDataProperties);
+            return new SitePropertiesFormat(provisioningState, nfvis ?? new ChangeTrackingList<NfvIs>(), referencedSiteNetworkServices ?? new ChangeTrackingList<ReferencedResourceById>(), additionalBinaryDataProperties);
         }
     }
 }

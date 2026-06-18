@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="artifactStore"> The reference to artifact store. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="templateArtifactProfile"> Template artifact profile. </param>
-        internal AzureCoreArmTemplateArtifactProfile(ReferencedResource artifactStore, IDictionary<string, BinaryData> additionalBinaryDataProperties, ArmTemplateArtifactProfile templateArtifactProfile) : base(artifactStore, additionalBinaryDataProperties)
+        internal AzureCoreArmTemplateArtifactProfile(ReferencedResourceById artifactStore, IDictionary<string, BinaryData> additionalBinaryDataProperties, ArmTemplateArtifactProfile templateArtifactProfile) : base(artifactStore, additionalBinaryDataProperties)
         {
             TemplateArtifactProfile = templateArtifactProfile;
         }

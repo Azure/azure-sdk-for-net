@@ -191,16 +191,16 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
             ProvisioningState? provisioningState = default;
             ManagedResourceGroupConfiguration managedResourceGroupConfiguration = default;
-            ReferencedResource siteReference = default;
+            ReferencedResourceById siteReference = default;
             string publisherName = default;
             PublisherScope? publisherScope = default;
             string networkServiceDesignGroupName = default;
             string networkServiceDesignVersionName = default;
             AzureLocation? networkServiceDesignVersionOfferingLocation = default;
             DeploymentResourceIdReference networkServiceDesignVersionResourceReference = default;
-            IDictionary<string, ReferencedResource> desiredStateConfigurationGroupValueReferencedResources = default;
+            IDictionary<string, ReferencedResourceById> desiredStateConfigurationGroupValueReferencedResources = default;
             string lastStateNetworkServiceDesignVersionName = default;
-            IReadOnlyDictionary<string, ReferencedResource> lastStateConfigurationGroupValueReferencedResources = default;
+            IReadOnlyDictionary<string, ReferencedResourceById> lastStateConfigurationGroupValueReferencedResources = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    siteReference = ReferencedResource.DeserializeReferencedResource(prop.Value, options);
+                    siteReference = ReferencedResourceById.DeserializeReferencedResourceById(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("publisherName"u8))
@@ -279,10 +279,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    Dictionary<string, ReferencedResource> dictionary = new Dictionary<string, ReferencedResource>();
+                    Dictionary<string, ReferencedResourceById> dictionary = new Dictionary<string, ReferencedResourceById>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(prop0.Name, ReferencedResource.DeserializeReferencedResource(prop0.Value, options));
+                        dictionary.Add(prop0.Name, ReferencedResourceById.DeserializeReferencedResourceById(prop0.Value, options));
                     }
                     desiredStateConfigurationGroupValueReferencedResources = dictionary;
                     continue;
@@ -298,10 +298,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    Dictionary<string, ReferencedResource> dictionary = new Dictionary<string, ReferencedResource>();
+                    Dictionary<string, ReferencedResourceById> dictionary = new Dictionary<string, ReferencedResourceById>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(prop0.Name, ReferencedResource.DeserializeReferencedResource(prop0.Value, options));
+                        dictionary.Add(prop0.Name, ReferencedResourceById.DeserializeReferencedResourceById(prop0.Value, options));
                     }
                     lastStateConfigurationGroupValueReferencedResources = dictionary;
                     continue;
@@ -321,9 +321,9 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 networkServiceDesignVersionName,
                 networkServiceDesignVersionOfferingLocation,
                 networkServiceDesignVersionResourceReference,
-                desiredStateConfigurationGroupValueReferencedResources ?? new ChangeTrackingDictionary<string, ReferencedResource>(),
+                desiredStateConfigurationGroupValueReferencedResources ?? new ChangeTrackingDictionary<string, ReferencedResourceById>(),
                 lastStateNetworkServiceDesignVersionName,
-                lastStateConfigurationGroupValueReferencedResources ?? new ChangeTrackingDictionary<string, ReferencedResource>(),
+                lastStateConfigurationGroupValueReferencedResources ?? new ChangeTrackingDictionary<string, ReferencedResourceById>(),
                 additionalBinaryDataProperties);
         }
     }

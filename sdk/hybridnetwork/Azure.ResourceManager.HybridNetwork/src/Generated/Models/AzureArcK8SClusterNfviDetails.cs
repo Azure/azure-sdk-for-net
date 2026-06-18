@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="nfviType"> The NFVI type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="customLocationReference"> The reference to the custom location. </param>
-        internal AzureArcK8SClusterNfviDetails(string name, NfviType nfviType, IDictionary<string, BinaryData> additionalBinaryDataProperties, ReferencedResource customLocationReference) : base(name, nfviType, additionalBinaryDataProperties)
+        internal AzureArcK8SClusterNfviDetails(string name, NfviType nfviType, IDictionary<string, BinaryData> additionalBinaryDataProperties, ReferencedResourceById customLocationReference) : base(name, nfviType, additionalBinaryDataProperties)
         {
             CustomLocationReference = customLocationReference;
         }
 
         /// <summary> The reference to the custom location. </summary>
-        internal ReferencedResource CustomLocationReference { get; set; }
+        internal ReferencedResourceById CustomLocationReference { get; set; }
 
         /// <summary> Resource ID. </summary>
         public ResourceIdentifier CustomLocationReferenceId
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 if (CustomLocationReference is null)
                 {
-                    CustomLocationReference = new ReferencedResource();
+                    CustomLocationReference = new ReferencedResourceById();
                 }
                 CustomLocationReference.Id = value;
             }

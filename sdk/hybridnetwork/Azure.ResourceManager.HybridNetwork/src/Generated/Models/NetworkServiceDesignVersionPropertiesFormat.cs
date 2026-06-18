@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <summary> Initializes a new instance of <see cref="NetworkServiceDesignVersionPropertiesFormat"/>. </summary>
         public NetworkServiceDesignVersionPropertiesFormat()
         {
-            ReferencedConfigurationGroupSchemas = new ChangeTrackingDictionary<string, ReferencedResource>();
+            ReferencedConfigurationGroupSchemas = new ChangeTrackingDictionary<string, ReferencedResourceById>();
             NfvisFromSite = new ChangeTrackingDictionary<string, NfviDetails>();
             ResourceElementTemplates = new ChangeTrackingList<ResourceElementTemplate>();
         }
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="nfvisFromSite"> The nfvis from the site. </param>
         /// <param name="resourceElementTemplates"> List of resource element template. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkServiceDesignVersionPropertiesFormat(ProvisioningState? provisioningState, VersionState? versionState, string description, IDictionary<string, ReferencedResource> referencedConfigurationGroupSchemas, IDictionary<string, NfviDetails> nfvisFromSite, IList<ResourceElementTemplate> resourceElementTemplates, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkServiceDesignVersionPropertiesFormat(ProvisioningState? provisioningState, VersionState? versionState, string description, IDictionary<string, ReferencedResourceById> referencedConfigurationGroupSchemas, IDictionary<string, NfviDetails> nfvisFromSite, IList<ResourceElementTemplate> resourceElementTemplates, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             VersionState = versionState;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         public string Description { get; set; }
 
         /// <summary> The configuration schemas to used to define the values. </summary>
-        public IDictionary<string, ReferencedResource> ReferencedConfigurationGroupSchemas { get; }
+        public IDictionary<string, ReferencedResourceById> ReferencedConfigurationGroupSchemas { get; }
 
         /// <summary> The nfvis from the site. </summary>
         public IDictionary<string, NfviDetails> NfvisFromSite { get; }

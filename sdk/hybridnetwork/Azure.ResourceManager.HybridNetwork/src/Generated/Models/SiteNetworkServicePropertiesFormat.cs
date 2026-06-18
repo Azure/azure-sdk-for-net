@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <summary> Initializes a new instance of <see cref="SiteNetworkServicePropertiesFormat"/>. </summary>
         public SiteNetworkServicePropertiesFormat()
         {
-            DesiredStateConfigurationGroupValueReferencedResources = new ChangeTrackingDictionary<string, ReferencedResource>();
-            LastStateConfigurationGroupValueReferencedResources = new ChangeTrackingDictionary<string, ReferencedResource>();
+            DesiredStateConfigurationGroupValueReferencedResources = new ChangeTrackingDictionary<string, ReferencedResourceById>();
+            LastStateConfigurationGroupValueReferencedResources = new ChangeTrackingDictionary<string, ReferencedResourceById>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SiteNetworkServicePropertiesFormat"/>. </summary>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="lastStateNetworkServiceDesignVersionName"> The network service design version for the site network service. </param>
         /// <param name="lastStateConfigurationGroupValueReferencedResources"> The last state of the site network service resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SiteNetworkServicePropertiesFormat(ProvisioningState? provisioningState, ManagedResourceGroupConfiguration managedResourceGroupConfiguration, ReferencedResource siteReference, string publisherName, PublisherScope? publisherScope, string networkServiceDesignGroupName, string networkServiceDesignVersionName, AzureLocation? networkServiceDesignVersionOfferingLocation, DeploymentResourceIdReference networkServiceDesignVersionResourceReference, IDictionary<string, ReferencedResource> desiredStateConfigurationGroupValueReferencedResources, string lastStateNetworkServiceDesignVersionName, IReadOnlyDictionary<string, ReferencedResource> lastStateConfigurationGroupValueReferencedResources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SiteNetworkServicePropertiesFormat(ProvisioningState? provisioningState, ManagedResourceGroupConfiguration managedResourceGroupConfiguration, ReferencedResourceById siteReference, string publisherName, PublisherScope? publisherScope, string networkServiceDesignGroupName, string networkServiceDesignVersionName, AzureLocation? networkServiceDesignVersionOfferingLocation, DeploymentResourceIdReference networkServiceDesignVersionResourceReference, IDictionary<string, ReferencedResourceById> desiredStateConfigurationGroupValueReferencedResources, string lastStateNetworkServiceDesignVersionName, IReadOnlyDictionary<string, ReferencedResourceById> lastStateConfigurationGroupValueReferencedResources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             ManagedResourceGroupConfiguration = managedResourceGroupConfiguration;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         public ManagedResourceGroupConfiguration ManagedResourceGroupConfiguration { get; set; }
 
         /// <summary> The site details. </summary>
-        internal ReferencedResource SiteReference { get; set; }
+        internal ReferencedResourceById SiteReference { get; set; }
 
         /// <summary> The publisher name for the site network service. </summary>
         public string PublisherName { get; }
@@ -84,13 +84,13 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         public DeploymentResourceIdReference NetworkServiceDesignVersionResourceReference { get; set; }
 
         /// <summary> The goal state of the site network service resource. This has references to the configuration group value objects that describe the desired state of the site network service. </summary>
-        public IDictionary<string, ReferencedResource> DesiredStateConfigurationGroupValueReferencedResources { get; }
+        public IDictionary<string, ReferencedResourceById> DesiredStateConfigurationGroupValueReferencedResources { get; }
 
         /// <summary> The network service design version for the site network service. </summary>
         public string LastStateNetworkServiceDesignVersionName { get; }
 
         /// <summary> The last state of the site network service resource. </summary>
-        public IReadOnlyDictionary<string, ReferencedResource> LastStateConfigurationGroupValueReferencedResources { get; }
+        public IReadOnlyDictionary<string, ReferencedResourceById> LastStateConfigurationGroupValueReferencedResources { get; }
 
         /// <summary> Resource ID. </summary>
         public ResourceIdentifier SiteReferenceId
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 if (SiteReference is null)
                 {
-                    SiteReference = new ReferencedResource();
+                    SiteReference = new ReferencedResourceById();
                 }
                 SiteReference.Id = value;
             }

@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            ReferencedResource artifactStoreReference = default;
+            ReferencedResourceById artifactStoreReference = default;
             string artifactName = default;
             string artifactVersion = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    artifactStoreReference = ReferencedResource.DeserializeReferencedResource(prop.Value, options);
+                    artifactStoreReference = ReferencedResourceById.DeserializeReferencedResourceById(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("artifactName"u8))

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="siteNetworkServiceReference"> The ARM id of the siteNetworkService resource. </param>
         /// <param name="longRunningOperation"> The type of long-running operation the user wants to cancel, such as 'Put'. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CancelInformation(ReferencedResource siteNetworkServiceReference, LongRunningOperation? longRunningOperation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CancelInformation(ReferencedResourceById siteNetworkServiceReference, LongRunningOperation? longRunningOperation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SiteNetworkServiceReference = siteNetworkServiceReference;
             LongRunningOperation = longRunningOperation;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> The ARM id of the siteNetworkService resource. </summary>
-        internal ReferencedResource SiteNetworkServiceReference { get; }
+        internal ReferencedResourceById SiteNetworkServiceReference { get; }
 
         /// <summary> The type of long-running operation the user wants to cancel, such as 'Put'. </summary>
         public LongRunningOperation? LongRunningOperation { get; set; }

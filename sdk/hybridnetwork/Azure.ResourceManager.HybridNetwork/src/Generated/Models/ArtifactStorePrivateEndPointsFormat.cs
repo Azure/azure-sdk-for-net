@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <summary> Initializes a new instance of <see cref="ArtifactStorePrivateEndPointsFormat"/>. </summary>
         public ArtifactStorePrivateEndPointsFormat()
         {
-            ManualPrivateEndPointConnections = new ChangeTrackingList<ReferencedResource>();
+            ManualPrivateEndPointConnections = new ChangeTrackingList<ReferencedResourceById>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ArtifactStorePrivateEndPointsFormat"/>. </summary>
         /// <param name="manualPrivateEndPointConnections"> list of private endpoints. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ArtifactStorePrivateEndPointsFormat(IList<ReferencedResource> manualPrivateEndPointConnections, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ArtifactStorePrivateEndPointsFormat(IList<ReferencedResourceById> manualPrivateEndPointConnections, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ManualPrivateEndPointConnections = manualPrivateEndPointConnections;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> list of private endpoints. </summary>
-        public IList<ReferencedResource> ManualPrivateEndPointConnections { get; }
+        public IList<ReferencedResourceById> ManualPrivateEndPointConnections { get; }
     }
 }

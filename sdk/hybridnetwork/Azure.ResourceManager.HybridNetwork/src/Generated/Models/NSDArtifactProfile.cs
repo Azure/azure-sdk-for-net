@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="artifactName"> Artifact name. </param>
         /// <param name="artifactVersion"> Artifact version. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NsdArtifactProfile(ReferencedResource artifactStoreReference, string artifactName, string artifactVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NsdArtifactProfile(ReferencedResourceById artifactStoreReference, string artifactName, string artifactVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ArtifactStoreReference = artifactStoreReference;
             ArtifactName = artifactName;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> The artifact store resource id. </summary>
-        internal ReferencedResource ArtifactStoreReference { get; set; }
+        internal ReferencedResourceById ArtifactStoreReference { get; set; }
 
         /// <summary> Artifact name. </summary>
         public string ArtifactName { get; set; }
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 if (ArtifactStoreReference is null)
                 {
-                    ArtifactStoreReference = new ReferencedResource();
+                    ArtifactStoreReference = new ReferencedResourceById();
                 }
                 ArtifactStoreReference.Id = value;
             }

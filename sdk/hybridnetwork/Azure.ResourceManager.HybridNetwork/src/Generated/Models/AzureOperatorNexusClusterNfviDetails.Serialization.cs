@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             string name = default;
             NfviType nfviType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            ReferencedResource customLocationReference = default;
+            ReferencedResourceById customLocationReference = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("name"u8))
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    customLocationReference = ReferencedResource.DeserializeReferencedResource(prop.Value, options);
+                    customLocationReference = ReferencedResourceById.DeserializeReferencedResourceById(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

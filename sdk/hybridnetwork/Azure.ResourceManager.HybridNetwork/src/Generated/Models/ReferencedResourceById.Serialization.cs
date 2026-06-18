@@ -15,51 +15,51 @@ using Azure.ResourceManager.HybridNetwork;
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary> Reference to another resource. </summary>
-    public partial class ReferencedResource : IJsonModel<ReferencedResource>
+    public partial class ReferencedResourceById : IJsonModel<ReferencedResourceById>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ReferencedResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ReferencedResourceById PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ReferencedResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ReferencedResourceById>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeReferencedResource(document.RootElement, options);
+                        return DeserializeReferencedResourceById(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ReferencedResource)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReferencedResourceById)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ReferencedResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ReferencedResourceById>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerHybridNetworkContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ReferencedResource)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReferencedResourceById)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ReferencedResource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ReferencedResourceById>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ReferencedResource IPersistableModel<ReferencedResource>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ReferencedResourceById IPersistableModel<ReferencedResourceById>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ReferencedResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ReferencedResourceById>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ReferencedResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ReferencedResourceById>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ReferencedResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ReferencedResourceById>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReferencedResource)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ReferencedResourceById)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Id))
             {
@@ -99,24 +99,24 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ReferencedResource IJsonModel<ReferencedResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ReferencedResourceById IJsonModel<ReferencedResourceById>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ReferencedResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ReferencedResourceById JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ReferencedResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ReferencedResourceById>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReferencedResource)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ReferencedResourceById)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeReferencedResource(document.RootElement, options);
+            return DeserializeReferencedResourceById(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ReferencedResource DeserializeReferencedResource(JsonElement element, ModelReaderWriterOptions options)
+        internal static ReferencedResourceById DeserializeReferencedResourceById(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ReferencedResource(id, additionalBinaryDataProperties);
+            return new ReferencedResourceById(id, additionalBinaryDataProperties);
         }
     }
 }

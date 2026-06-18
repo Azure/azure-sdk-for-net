@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 writer.WritePropertyName("manualPrivateEndPointConnections"u8);
                 writer.WriteStartArray();
-                foreach (ReferencedResource item in ManualPrivateEndPointConnections)
+                foreach (ReferencedResourceById item in ManualPrivateEndPointConnections)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            IList<ReferencedResource> manualPrivateEndPointConnections = default;
+            IList<ReferencedResourceById> manualPrivateEndPointConnections = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -147,10 +147,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    List<ReferencedResource> array = new List<ReferencedResource>();
+                    List<ReferencedResourceById> array = new List<ReferencedResourceById>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ReferencedResource.DeserializeReferencedResource(item, options));
+                        array.Add(ReferencedResourceById.DeserializeReferencedResourceById(item, options));
                     }
                     manualPrivateEndPointConnections = array;
                     continue;
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ArtifactStorePrivateEndPointsFormat(manualPrivateEndPointConnections ?? new ChangeTrackingList<ReferencedResource>(), additionalBinaryDataProperties);
+            return new ArtifactStorePrivateEndPointsFormat(manualPrivateEndPointConnections ?? new ChangeTrackingList<ReferencedResourceById>(), additionalBinaryDataProperties);
         }
     }
 }

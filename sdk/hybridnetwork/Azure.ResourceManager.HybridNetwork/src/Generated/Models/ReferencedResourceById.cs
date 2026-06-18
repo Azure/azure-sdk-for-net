@@ -12,20 +12,20 @@ using Azure.Core;
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary> Reference to another resource. </summary>
-    public partial class ReferencedResource
+    public partial class ReferencedResourceById
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ReferencedResource"/>. </summary>
-        public ReferencedResource()
+        /// <summary> Initializes a new instance of <see cref="ReferencedResourceById"/>. </summary>
+        public ReferencedResourceById()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ReferencedResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReferencedResourceById"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ReferencedResource(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ReferencedResourceById(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
