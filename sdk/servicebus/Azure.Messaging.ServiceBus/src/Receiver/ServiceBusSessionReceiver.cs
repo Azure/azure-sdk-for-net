@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -50,6 +51,18 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         public virtual DateTimeOffset SessionLockedUntil => InnerReceiver.SessionLockedUntil;
 
+        /// <summary>
+        /// Gets the session lock token assigned by the service when the session is locked non-exclusively, or <c>null</c>
+        /// when the session is locked exclusively (the default). Another receiver can present this token through
+        /// <see cref="ServiceBusSessionReceiverOptions.SessionLockToken"/> to cooperatively take over the session.
+        /// </summary>
+        /// <remarks>
+        /// The token is assigned by the service when the session is acquired (or when this receiver takes over a
+        /// session by presenting an existing token) and remains stable for the lifetime of this receiver.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
+        public virtual Guid? SessionLockToken => InnerReceiver.SessionLockToken;
+
         ///  <summary>
         ///  Creates a session receiver which can be used to interact with all messages with the same sessionId.
         ///  </summary>
@@ -68,6 +81,28 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken cancellationToken,
             bool isProcessor = false)
         {
+            if (options != null)
+            {
+                if (options.SessionLockToken != null)
+                {
+                    if (options.IsSessionExclusive)
+                    {
+                        throw new ArgumentException(Resources.SessionLockTokenRequiresNonExclusiveMode, nameof(options));
+                    }
+
+                    if (sessionId == null)
+                    {
+                        throw new ArgumentException(Resources.SessionLockTokenRequiresSessionId, nameof(options));
+                    }
+                }
+                else if (!options.IsSessionExclusive && sessionId == null)
+                {
+                    // Non-exclusive locking is only supported when accepting a specific session, not when
+                    // accepting the next available session.
+                    throw new ArgumentException(Resources.NonExclusiveSessionRequiresSessionId, nameof(options));
+                }
+            }
+
             var receiver = new ServiceBusSessionReceiver(
                 connection: connection,
                 entityPath: entityPath,

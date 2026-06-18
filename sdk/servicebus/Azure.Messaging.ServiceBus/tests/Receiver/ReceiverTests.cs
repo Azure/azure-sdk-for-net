@@ -165,8 +165,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                         It.IsAny<bool>(),
                         It.IsAny<bool>(),
                         It.IsAny<CancellationToken>()))
-                .Callback<string, ServiceBusRetryPolicy, ServiceBusReceiveMode, uint, string, string, bool, bool, CancellationToken>(
-                    (_, _, _, count, _, _, _, _, _) =>
+                .Callback<string, ServiceBusRetryPolicy, ServiceBusReceiveMode, uint, string, string, bool, bool, CancellationToken, bool, Guid?>(
+                    (_, _, _, count, _, _, _, _, _, _, _) =>
                     {
                         prefetchCount = (int)count;
                     })

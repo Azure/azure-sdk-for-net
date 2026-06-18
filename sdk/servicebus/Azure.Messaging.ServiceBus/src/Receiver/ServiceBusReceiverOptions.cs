@@ -52,6 +52,20 @@ namespace Azure.Messaging.ServiceBus
         public SubQueue SubQueue { get; set; } = SubQueue.None;
 
         /// <summary>
+        /// Internal carrier for the session exclusivity flag, threaded from
+        /// <see cref="ServiceBusSessionReceiverOptions.IsSessionExclusive"/> down to the transport layer.
+        /// Defaults to <c>true</c> (exclusive lock) to preserve existing behavior.
+        /// </summary>
+        internal bool IsSessionExclusive { get; set; } = true;
+
+        /// <summary>
+        /// Internal carrier for the session lock token to present when cooperatively taking over a
+        /// non-exclusive session, threaded from <see cref="ServiceBusSessionReceiverOptions.SessionLockToken"/>
+        /// down to the transport layer.
+        /// </summary>
+        internal Guid? SessionLockToken { get; set; }
+
+        /// <summary>
         /// Determines whether the specified <see cref="System.Object" /> is equal to this instance.
         /// </summary>
         ///

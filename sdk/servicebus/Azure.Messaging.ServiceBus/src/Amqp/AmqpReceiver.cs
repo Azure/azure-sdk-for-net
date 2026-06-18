@@ -77,6 +77,16 @@ namespace Azure.Messaging.ServiceBus.Amqp
         private readonly bool _isSessionReceiver;
 
         /// <summary>
+        /// Indicates whether the session is locked exclusively. Only meaningful when <see cref="_isSessionReceiver"/> is <c>true</c>.
+        /// </summary>
+        private readonly bool _isSessionExclusive;
+
+        /// <summary>
+        /// The session lock token to present when cooperatively taking over a non-exclusive session, or <c>null</c>.
+        /// </summary>
+        private readonly Guid? _sessionLockTokenToPresent;
+
+        /// <summary>
         /// The AMQP connection scope responsible for managing transport constructs for this instance.
         /// </summary>
         ///
@@ -101,6 +111,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// </summary>
         public override string SessionId { get; protected set; }
         public override DateTimeOffset SessionLockedUntil { get; protected set; }
+        public override Guid? SessionLockToken { get; protected set; }
 
         public override int PrefetchCount
         {
@@ -152,6 +163,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="messageConverter">The converter to use for translating <see cref="ServiceBusMessage" /> into an AMQP-specific message.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the
         /// open link operation. Only applicable for session receivers.</param>
+        /// <param name="isSessionExclusive">Whether or not the session is locked exclusively. Only applicable for session receivers.</param>
+        /// <param name="sessionLockToken">The session lock token to present when cooperatively taking over a non-exclusive session. Only applicable for session receivers.</param>
         ///
         /// <remarks>
         /// As an internal type, this class performs only basic sanity checks against its arguments.  It
@@ -171,7 +184,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
             bool isSessionReceiver,
             bool isProcessor,
             AmqpMessageConverter messageConverter,
-            CancellationToken cancellationToken)
+            CancellationToken cancellationToken,
+            bool isSessionExclusive = true,
+            Guid? sessionLockToken = null)
         {
             Argument.AssertNotNullOrEmpty(entityPath, nameof(entityPath));
             Argument.AssertNotNull(connectionScope, nameof(connectionScope));
@@ -181,6 +196,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
             _connectionScope = connectionScope;
             _retryPolicy = retryPolicy;
             _isSessionReceiver = isSessionReceiver;
+            _isSessionExclusive = isSessionExclusive;
+            _sessionLockTokenToPresent = sessionLockToken;
             _isProcessor = isProcessor;
             _receiveMode = receiveMode;
             _prefetchCount = (int)prefetchCount;
@@ -238,6 +255,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     receiveMode: receiveMode,
                     sessionId: SessionId,
                     isSessionReceiver: _isSessionReceiver,
+                    isSessionExclusive: _isSessionExclusive,
+                    sessionLockToken: _sessionLockTokenToPresent,
                     cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (_isSessionReceiver)
                 {
@@ -245,6 +264,27 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         AmqpClientConstants.LockedUntilUtc, out var lockedUntilUtcTicks)
                         ? new DateTime(lockedUntilUtcTicks, DateTimeKind.Utc)
                         : DateTime.MinValue;
+
+                    // A non-exclusive session is assigned a lock token by the service, returned as a link property
+                    // on attach. An exclusive session (the default) is never assigned one, so SessionLockToken
+                    // stays null and we skip both the read and the back-compat check below.
+                    if (!_isSessionExclusive)
+                    {
+                        SessionLockToken = link.Settings.Properties.TryGetValue<Guid>(
+                            AmqpClientConstants.SessionLockTokenName, out var assignedSessionLockToken)
+                            ? assignedSessionLockToken
+                            : null;
+
+                        // Fail loudly if non-exclusive mode was requested but the service did not honor it (for
+                        // example, an older gateway that ignores the filter). This is a defensive backstop: the
+                        // service-side change is required to be globally available before this feature is released,
+                        // so this should never occur.
+                        if (SessionLockToken == null)
+                        {
+                            link.Session.SafeClose();
+                            throw new NotSupportedException(Resources.NonExclusiveSessionModeNotSupported);
+                        }
+                    }
 
                     var source = (Source)link.Settings.Source;
                     if (!source.FilterSet.TryGetValue<string>(AmqpClientConstants.SessionFilterName, out var tempSessionId))
@@ -552,17 +592,26 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 {
                     if (error.Condition.Equals(AmqpErrorCode.NotFound))
                     {
-                        if (_isSessionReceiver)
+                        // For a non-exclusive session, a NotFound on the receive link is the expected path for the new
+                        // holder settling the previous holder's message; fall through to the management link below.
+                        // The displaced original holder never reaches this guard: the takeover force-detaches its
+                        // receive link (session-lock-lost), so its next settle throws SessionLockLost from the
+                        // ThrowIfSessionLockLost check that runs at the start of the settle operation.
+                        if (_isSessionReceiver && _isSessionExclusive)
                         {
                             ThrowLockLostException();
                         }
 
-                        // The message was not found on the link which can occur as a result of a reconnect.
-                        // Attempt to settle the message over the management link.
+                        // The message was not found on the link, which can happen after a reconnect or - for a
+                        // non-exclusive session - because a different receiver took over the session and is settling
+                        // a message the original holder received. Settle over the management link, scoped by both the
+                        // associated receive-link name and the session id, the same way the other session-scoped
+                        // dispositions are.
                         await DisposeMessageRequestResponseAsync(
                             lockToken,
                             timeout,
                             disposition,
+                            SessionId,
                             propertiesToModify: propertiesToModify,
                             deadLetterReason: deadLetterReason,
                             deadLetterDescription: deadLetterDescription).ConfigureAwait(false);

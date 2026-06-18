@@ -33,6 +33,12 @@ namespace Azure.Messaging.ServiceBus.Core
         public abstract DateTimeOffset SessionLockedUntil { get; protected set; }
 
         /// <summary>
+        /// The session lock token assigned by the service for a non-exclusive session, or <c>null</c> for an
+        /// exclusive session. This token can be presented by another receiver to cooperatively take over the session.
+        /// </summary>
+        public abstract Guid? SessionLockToken { get; protected set; }
+
+        /// <summary>
         /// The prefetch count associated with the receiver.
         /// </summary>
         public abstract int PrefetchCount { get; set; }

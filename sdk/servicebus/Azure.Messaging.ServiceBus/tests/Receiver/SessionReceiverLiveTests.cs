@@ -15,6 +15,147 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 {
     public class SessionReceiverLiveTests : ServiceBusLiveTestBase
     {
+        private const string NonExclusiveFeatureSkipReason =
+            "Re-enable once non-exclusive session locking is available in the production Service Bus service. These tests exercise the new opt-in behavior and require the service-side support to be globally deployed before they can run against a live namespace.";
+
+        [Test]
+        [Ignore(NonExclusiveFeatureSkipReason)]
+        public async Task AcceptSessionNonExclusiveReturnsLockToken()
+        {
+            await using var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true);
+            await using var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential);
+            ServiceBusSender sender = client.CreateSender(scope.QueueName);
+
+            var sessionId = Guid.NewGuid().ToString();
+            await sender.SendMessageAsync(new ServiceBusMessage("message") { SessionId = sessionId });
+
+            var receiver = await client.AcceptSessionAsync(
+                scope.QueueName,
+                sessionId,
+                new ServiceBusSessionReceiverOptions { IsSessionExclusive = false });
+
+            Assert.That(receiver.SessionLockToken, Is.Not.Null, "A non-exclusive session should be assigned a lock token.");
+        }
+
+        [Test]
+        [Ignore(NonExclusiveFeatureSkipReason)]
+        public async Task AcceptSessionExclusiveReturnsNullLockToken()
+        {
+            await using var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true);
+            await using var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential);
+            ServiceBusSender sender = client.CreateSender(scope.QueueName);
+
+            var sessionId = Guid.NewGuid().ToString();
+            await sender.SendMessageAsync(new ServiceBusMessage("message") { SessionId = sessionId });
+
+            // An exclusive (default) session receiver should not be assigned a lock token.
+            var receiver = await client.AcceptSessionAsync(scope.QueueName, sessionId);
+
+            Assert.That(receiver.SessionLockToken, Is.Null, "An exclusive session should not be assigned a lock token.");
+        }
+
+        [Test]
+        [Ignore(NonExclusiveFeatureSkipReason)]
+        public async Task NonExclusiveSessionCanBeTakenOverAndSettledAcrossReceivers()
+        {
+            await using var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true);
+            await using var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential);
+            ServiceBusSender sender = client.CreateSender(scope.QueueName);
+
+            var sessionId = Guid.NewGuid().ToString();
+            await sender.SendMessageAsync(new ServiceBusMessage("m1") { SessionId = sessionId });
+
+            // The first receiver acquires the session non-exclusively and receives the message.
+            var receiverA = await client.AcceptSessionAsync(
+                scope.QueueName,
+                sessionId,
+                new ServiceBusSessionReceiverOptions { IsSessionExclusive = false });
+            Assert.That(receiverA.SessionLockToken, Is.Not.Null);
+
+            ServiceBusReceivedMessage received = await receiverA.ReceiveMessageAsync(TimeSpan.FromSeconds(10));
+            Assert.That(received, Is.Not.Null, "The first receiver should receive the message.");
+
+            // A second receiver cooperatively takes over the session by presenting the assigned token.
+            var receiverB = await client.AcceptSessionAsync(
+                scope.QueueName,
+                sessionId,
+                new ServiceBusSessionReceiverOptions { IsSessionExclusive = false, SessionLockToken = receiverA.SessionLockToken });
+            Assert.That(receiverB.SessionLockToken, Is.EqualTo(receiverA.SessionLockToken), "The service should echo back the same session lock token on takeover.");
+
+            // The second receiver settles the message that the first receiver received, exercising the
+            // cross-receiver settlement path over the management link.
+            Assert.That(async () => await receiverB.CompleteMessageAsync(received), Throws.Nothing);
+
+            // The session should be drained once the message is completed by the new holder.
+            var receiverC = await client.AcceptSessionAsync(
+                scope.QueueName,
+                sessionId,
+                new ServiceBusSessionReceiverOptions { IsSessionExclusive = false });
+            ServiceBusReceivedMessage leftover = await receiverC.ReceiveMessageAsync(TimeSpan.FromSeconds(5));
+            Assert.That(leftover, Is.Null, "The message should have been settled by the receiver that took over the session.");
+        }
+
+        [Test]
+        [Ignore(NonExclusiveFeatureSkipReason)]
+        public async Task TakeOverWithInvalidTokenThrowsSessionCannotBeLocked()
+        {
+            await using var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true);
+            await using var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential);
+            ServiceBusSender sender = client.CreateSender(scope.QueueName);
+
+            var sessionId = Guid.NewGuid().ToString();
+            await sender.SendMessageAsync(new ServiceBusMessage("message") { SessionId = sessionId });
+
+            // Hold the session non-exclusively so it has a current lock token.
+            var holder = await client.AcceptSessionAsync(
+                scope.QueueName,
+                sessionId,
+                new ServiceBusSessionReceiverOptions { IsSessionExclusive = false });
+
+            // Presenting a token that does not match the session's current token should be rejected.
+            Assert.That(
+                async () => await client.AcceptSessionAsync(
+                    scope.QueueName,
+                    sessionId,
+                    new ServiceBusSessionReceiverOptions { IsSessionExclusive = false, SessionLockToken = Guid.NewGuid() }),
+                Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.SessionCannotBeLocked));
+        }
+
+        [Test]
+        [Ignore(NonExclusiveFeatureSkipReason)]
+        public async Task OriginalHolderLosesSessionLockAfterTakeover()
+        {
+            await using var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true);
+            await using var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, TestEnvironment.Credential);
+            ServiceBusSender sender = client.CreateSender(scope.QueueName);
+
+            var sessionId = Guid.NewGuid().ToString();
+            await sender.SendMessageAsync(new ServiceBusMessage("m1") { SessionId = sessionId });
+
+            // The original receiver acquires the session non-exclusively and receives the message.
+            var receiverA = await client.AcceptSessionAsync(
+                scope.QueueName,
+                sessionId,
+                new ServiceBusSessionReceiverOptions { IsSessionExclusive = false });
+            ServiceBusReceivedMessage received = await receiverA.ReceiveMessageAsync(TimeSpan.FromSeconds(10));
+            Assert.That(received, Is.Not.Null);
+
+            // A second receiver cooperatively takes over the session, displacing the first receiver.
+            var receiverB = await client.AcceptSessionAsync(
+                scope.QueueName,
+                sessionId,
+                new ServiceBusSessionReceiverOptions { IsSessionExclusive = false, SessionLockToken = receiverA.SessionLockToken });
+
+            // The original holder has lost the session - settling its message now reports SessionLockLost,
+            // even though the session was handed over non-exclusively rather than expiring.
+            Assert.That(
+                async () => await receiverA.CompleteMessageAsync(received),
+                Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.SessionLockLost));
+
+            // The new holder can still settle the message that the original holder received.
+            Assert.That(async () => await receiverB.CompleteMessageAsync(received), Throws.Nothing);
+        }
+
         [Test]
         [TestCase(1)]
         [TestCase(10000)]
