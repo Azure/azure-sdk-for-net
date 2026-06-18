@@ -1,4 +1,0 @@
-<Solution>
-  <Project Path="src/Azure.ResourceManager.OperationalInsights.csproj" />
-  <Project Path="tests/Azure.ResourceManager.OperationalInsights.Tests.csproj" />
-</Solution>
