@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Tests
 
             while (true)
             {
-                var content = new GetBulkOperationStatusContent(ids);
+                var content = new GetOperationStatusContent(ids);
                 var response = await DefaultResourceGroup
                     .BulkGetOperationsStatusAsync(Location, content)
                     .ConfigureAwait(false);

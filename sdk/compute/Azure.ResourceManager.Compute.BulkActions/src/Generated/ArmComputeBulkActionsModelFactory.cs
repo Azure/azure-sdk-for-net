@@ -18,13 +18,12 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
     public static partial class ArmComputeBulkActionsModelFactory
     {
 
-        /// <param name="executionParametersRetryPolicy"> Retry policy the user can pass. </param>
-        /// <param name="resourcesIds"> The resource ids used for the request. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourcesIds"/> is null. </exception>
+        /// <param name="executionParameters"> The execution parameters for the request. </param>
+        /// <param name="resources"> The resources for the request. </param>
         /// <returns> A new <see cref="Models.ExecuteDeallocateContent"/> instance for mocking. </returns>
-        public static ExecuteDeallocateContent ExecuteDeallocateContent(BulkOperationRetryPolicy executionParametersRetryPolicy = default, IEnumerable<ResourceIdentifier> resourcesIds = default)
+        public static ExecuteDeallocateContent ExecuteDeallocateContent(ScheduledActionExecutionParameterDetail executionParameters = default, UserRequestResources resources = default)
         {
-            return new ExecuteDeallocateContent(executionParametersRetryPolicy is null ? default : new ScheduledActionExecutionParameterDetail(executionParametersRetryPolicy, default), resourcesIds is null ? default : new UserRequestResources((resourcesIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default), default);
+            return new ExecuteDeallocateContent(executionParameters, resources, default);
         }
 
         /// <param name="retryPolicy"> Retry policy the user can pass. </param>
@@ -122,13 +121,12 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             return new ComputeBulkFallbackOperationInfo(lastOperationType, status, error, default);
         }
 
-        /// <param name="executionParametersRetryPolicy"> Retry policy the user can pass. </param>
-        /// <param name="resourcesIds"> The resource ids used for the request. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourcesIds"/> is null. </exception>
+        /// <param name="executionParameters"> The execution parameters for the request. </param>
+        /// <param name="resources"> The resources for the request. </param>
         /// <returns> A new <see cref="Models.ExecuteHibernateContent"/> instance for mocking. </returns>
-        public static ExecuteHibernateContent ExecuteHibernateContent(BulkOperationRetryPolicy executionParametersRetryPolicy = default, IEnumerable<ResourceIdentifier> resourcesIds = default)
+        public static ExecuteHibernateContent ExecuteHibernateContent(ScheduledActionExecutionParameterDetail executionParameters = default, UserRequestResources resources = default)
         {
-            return new ExecuteHibernateContent(executionParametersRetryPolicy is null ? default : new ScheduledActionExecutionParameterDetail(executionParametersRetryPolicy, default), resourcesIds is null ? default : new UserRequestResources((resourcesIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default), default);
+            return new ExecuteHibernateContent(executionParameters, resources, default);
         }
 
         /// <param name="description"> The description of the operation response. </param>
@@ -143,13 +141,12 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             return new HibernateResourceOperationResult(description, resourceType, location, (results ?? new ChangeTrackingList<ComputeBulkOperationResult>()).ToList(), default);
         }
 
-        /// <param name="executionParametersRetryPolicy"> Retry policy the user can pass. </param>
-        /// <param name="resourcesIds"> The resource ids used for the request. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourcesIds"/> is null. </exception>
+        /// <param name="executionParameters"> The execution parameters for the request. </param>
+        /// <param name="resources"> The resources for the request. </param>
         /// <returns> A new <see cref="Models.ExecuteStartContent"/> instance for mocking. </returns>
-        public static ExecuteStartContent ExecuteStartContent(BulkOperationRetryPolicy executionParametersRetryPolicy = default, IEnumerable<ResourceIdentifier> resourcesIds = default)
+        public static ExecuteStartContent ExecuteStartContent(ScheduledActionExecutionParameterDetail executionParameters = default, UserRequestResources resources = default)
         {
-            return new ExecuteStartContent(executionParametersRetryPolicy is null ? default : new ScheduledActionExecutionParameterDetail(executionParametersRetryPolicy, default), resourcesIds is null ? default : new UserRequestResources((resourcesIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default), default);
+            return new ExecuteStartContent(executionParameters, resources, default);
         }
 
         /// <param name="description"> The description of the operation response. </param>
@@ -164,14 +161,13 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             return new StartResourceOperationResult(description, resourceType, location, (results ?? new ChangeTrackingList<ComputeBulkOperationResult>()).ToList(), default);
         }
 
-        /// <param name="executionParametersRetryPolicy"> Retry policy the user can pass. </param>
-        /// <param name="resourcesIds"> The resource ids used for the request. </param>
+        /// <param name="executionParameters"> The execution parameters for the request. </param>
+        /// <param name="resources"> The resources for the request. </param>
         /// <param name="isForceDeletion"> Forced delete resource item. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourcesIds"/> is null. </exception>
         /// <returns> A new <see cref="Models.ExecuteDeleteContent"/> instance for mocking. </returns>
-        public static ExecuteDeleteContent ExecuteDeleteContent(BulkOperationRetryPolicy executionParametersRetryPolicy = default, IEnumerable<ResourceIdentifier> resourcesIds = default, bool? isForceDeletion = default)
+        public static ExecuteDeleteContent ExecuteDeleteContent(ScheduledActionExecutionParameterDetail executionParameters = default, UserRequestResources resources = default, bool? isForceDeletion = default)
         {
-            return new ExecuteDeleteContent(executionParametersRetryPolicy is null ? default : new ScheduledActionExecutionParameterDetail(executionParametersRetryPolicy, default), resourcesIds is null ? default : new UserRequestResources((resourcesIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default), isForceDeletion, default);
+            return new ExecuteDeleteContent(executionParameters, resources, isForceDeletion, default);
         }
 
         /// <param name="description"> The description of the operation response. </param>
@@ -187,12 +183,12 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <param name="operationIds"> The list of operation ids to get the status of. </param>
-        /// <returns> A new <see cref="Models.GetBulkOperationStatusContent"/> instance for mocking. </returns>
-        public static GetBulkOperationStatusContent GetBulkOperationStatusContent(IEnumerable<string> operationIds = default)
+        /// <returns> A new <see cref="Models.GetOperationStatusContent"/> instance for mocking. </returns>
+        public static GetOperationStatusContent GetOperationStatusContent(IEnumerable<string> operationIds = default)
         {
             operationIds ??= new ChangeTrackingList<string>();
 
-            return new GetBulkOperationStatusContent((operationIds ?? new ChangeTrackingList<string>()).ToList(), default);
+            return new GetOperationStatusContent((operationIds ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
         /// <param name="results"> An array of resource operations based on their operation ids. </param>
@@ -205,12 +201,12 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <param name="operationIds"> The list of operation ids to cancel operations on. </param>
-        /// <returns> A new <see cref="Models.CancelBulkOperationsContent"/> instance for mocking. </returns>
-        public static CancelBulkOperationsContent CancelBulkOperationsContent(IEnumerable<string> operationIds = default)
+        /// <returns> A new <see cref="Models.CancelOperationsContent"/> instance for mocking. </returns>
+        public static CancelOperationsContent CancelOperationsContent(IEnumerable<string> operationIds = default)
         {
             operationIds ??= new ChangeTrackingList<string>();
 
-            return new CancelBulkOperationsContent((operationIds ?? new ChangeTrackingList<string>()).ToList(), default);
+            return new CancelOperationsContent((operationIds ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
         /// <param name="results"> An array of resource operations that were successfully cancelled. </param>

@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
@@ -16,6 +16,19 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
+        /// <summary> Initializes a new instance of <see cref="ExecuteDeallocateContent"/>. </summary>
+        /// <param name="executionParameters"> The execution parameters for the request. </param>
+        /// <param name="resources"> The resources for the request. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="executionParameters"/> or <paramref name="resources"/> is null. </exception>
+        public ExecuteDeallocateContent(ScheduledActionExecutionParameterDetail executionParameters, UserRequestResources resources)
+        {
+            Argument.AssertNotNull(executionParameters, nameof(executionParameters));
+            Argument.AssertNotNull(resources, nameof(resources));
+
+            ExecutionParameters = executionParameters;
+            Resources = resources;
+        }
 
         /// <summary> Initializes a new instance of <see cref="ExecuteDeallocateContent"/>. </summary>
         /// <param name="executionParameters"> The execution parameters for the request. </param>
@@ -29,27 +42,9 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <summary> The execution parameters for the request. </summary>
-        internal ScheduledActionExecutionParameterDetail ExecutionParameters { get; }
+        public ScheduledActionExecutionParameterDetail ExecutionParameters { get; }
 
         /// <summary> The resources for the request. </summary>
-        internal UserRequestResources Resources { get; }
-
-        /// <summary> Retry policy the user can pass. </summary>
-        public BulkOperationRetryPolicy ExecutionParametersRetryPolicy
-        {
-            get
-            {
-                return ExecutionParameters.RetryPolicy;
-            }
-        }
-
-        /// <summary> The resource ids used for the request. </summary>
-        public IList<ResourceIdentifier> ResourcesIds
-        {
-            get
-            {
-                return Resources is null ? default : Resources.Ids;
-            }
-        }
+        public UserRequestResources Resources { get; }
     }
 }
