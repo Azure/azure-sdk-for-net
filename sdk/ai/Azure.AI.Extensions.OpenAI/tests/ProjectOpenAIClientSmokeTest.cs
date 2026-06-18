@@ -3,6 +3,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Azure.AI.Projects;
@@ -127,13 +128,57 @@ public class ProjectOpenAIClientSmokeTest : ProjectsOpenAITestBase
         Assert.That(deletion.Deleted, Is.True);
     }
 
+    [RecordedTest]
+    [TestCase(true)]
+    [TestCase(false)]
+    public async Task TestEncryptedPayload(bool useProjects)
+    {
+        ProjectResponsesClient oaiClient;
+        if (useProjects)
+        {
+            AIProjectClient projectClient = GetTestProjectClient();
+            oaiClient = projectClient.GetProjectOpenAIClient().GetProjectResponsesClientForModel(TestEnvironment.FOUNDRY_MODEL_NAME);
+        }
+        else
+        {
+            oaiClient = GetTestProjectOpenAIClient().GetProjectResponsesClientForModel(TestEnvironment.FOUNDRY_MODEL_NAME);
+        }
+        CreateResponseOptions options = new()
+        {
+            ReasoningOptions = new()
+            {
+                ReasoningEffortLevel = ResponseReasoningEffortLevel.High,
+                ReasoningSummaryVerbosity = ResponseReasoningSummaryVerbosity.Detailed
+            },
+            InputItems = {
+                ResponseItem.CreateSystemMessageItem("You are helpful assistant who knows that Plagiarus praepotens likes cookies with raisins."),
+                ResponseItem.CreateUserMessageItem("Hello, tell me about Plagiarus praepotens.")},
+            StoredOutputEnabled = false,
+            IncludedProperties = { IncludedResponseProperty.ReasoningEncryptedContent }
+        };
+        ResponseResult result = await oaiClient.CreateResponseAsync(options);
+        Assert.That(result.Error, Is.Null, $"Error code: {result.Error?.Code}, {result.Error?.Message}");
+        Assert.That(result.OutputItems, Has.Count.GreaterThan(0));
+        Assert.That(result.OutputItems.Any(x => x is ReasoningResponseItem), Is.True);
+        options.InputItems.Clear();
+        foreach (ResponseItem item in result.OutputItems)
+        {
+            options.InputItems.Add(item);
+        }
+        options.InputItems.Add(ResponseItem.CreateUserMessageItem("Could you please explain more?"));
+        result = await oaiClient.CreateResponseAsync(options);
+        Assert.That(result.Error, Is.Null, $"Error code: {result.Error?.Code}, {result.Error?.Message}");
+        Assert.That(result.OutputItems.Any(x => x is ReasoningResponseItem), Is.True);
+        Assert.That(result.OutputItems, Has.Count.GreaterThan(0));
+    }
+
     [TearDown]
     public override void Cleanup()
     {
         if (Mode == RecordedTestMode.Playback)
             return;
         Uri connectionString = new(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT);
-        AIProjectClient projectClient = new(connectionString, TestEnvironment.Credential);
+        AIProjectClient projectClient = new(connectionString, GetTestAuthenticationProvider());
         // Remove Agents.
         foreach (ProjectsAgentVersion ag in projectClient.AgentAdministrationClient.GetAgentVersions(agentName: FOUNDRY_AGENT_NAME))
         {
