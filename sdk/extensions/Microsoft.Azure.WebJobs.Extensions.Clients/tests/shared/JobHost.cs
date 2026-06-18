@@ -35,7 +35,7 @@ namespace Microsoft.Azure.WebJobs.Host.TestCommon
         }
 
         // Start listeners and run until the Task source is set.
-        public async Task<TResult> RunTriggerAsync<TResult>(TaskCompletionSource<TResult> taskSource = null)
+        public async Task<TResult> RunTriggerAsync<TResult>(TaskCompletionSource<TResult> taskSource= null)
         {
             // Program was registered with the job activator, so we can get it
             TProgram prog = _jobActivator.CreateInstance<TProgram>();

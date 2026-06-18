@@ -951,9 +951,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
         }
     }
 
-#pragma warning disable SA1402
+    #pragma warning disable SA1402
     public class TestEvent
-#pragma warning restore SA1402
+    #pragma warning restore SA1402
     {
     }
 }

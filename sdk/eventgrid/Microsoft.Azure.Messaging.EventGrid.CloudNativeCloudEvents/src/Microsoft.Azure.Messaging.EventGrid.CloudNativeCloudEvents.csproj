@@ -20,7 +20,6 @@
     <PackageReference Include="Azure.Messaging.EventGrid" />
     <PackageReference Include="CloudNative.CloudEvents" />
     <PackageReference Include="CloudNative.CloudEvents.SystemTextJson" />
-    <PackageReference Include="System.Diagnostics.DiagnosticSource" />
 
     <!-- 
       A direct reference is needed to hoist the transitive dependency in CloudNative.CloudEvents.SystemTextJson 

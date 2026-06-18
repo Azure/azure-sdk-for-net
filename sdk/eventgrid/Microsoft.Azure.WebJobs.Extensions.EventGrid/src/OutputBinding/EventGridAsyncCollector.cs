@@ -58,7 +58,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
                             .ConfigureAwait(false);
                         break;
                     case BinaryData:
-                        await SendAsync(events, evt => (BinaryData)evt, cancellationToken)
+                        await SendAsync(events, evt => (BinaryData) evt, cancellationToken)
                             .ConfigureAwait(false);
                         break;
                     case byte[]:
@@ -70,25 +70,25 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
                             .ConfigureAwait(false);
                         break;
                     case EventGridEvent:
+                    {
+                        List<EventGridEvent> egEvents = new(events.Count);
+                        foreach (object evt in events)
                         {
-                            List<EventGridEvent> egEvents = new(events.Count);
-                            foreach (object evt in events)
-                            {
-                                egEvents.Add((EventGridEvent)evt);
-                            }
-                            await _client.SendEventsAsync(egEvents, cancellationToken).ConfigureAwait(false);
-                            break;
+                            egEvents.Add((EventGridEvent) evt);
                         }
+                        await _client.SendEventsAsync(egEvents, cancellationToken).ConfigureAwait(false);
+                        break;
+                    }
                     case CloudEvent:
+                    {
+                        List<CloudEvent> cloudEvents = new(events.Count);
+                        foreach (object evt in events)
                         {
-                            List<CloudEvent> cloudEvents = new(events.Count);
-                            foreach (object evt in events)
-                            {
-                                cloudEvents.Add((CloudEvent)evt);
-                            }
-                            await _client.SendEventsAsync(cloudEvents, cancellationToken).ConfigureAwait(false);
-                            break;
+                            cloudEvents.Add((CloudEvent) evt);
                         }
+                        await _client.SendEventsAsync(cloudEvents, cancellationToken).ConfigureAwait(false);
+                        break;
+                    }
                     default:
                         throw new InvalidOperationException(
                             $"{firstEvent?.GetType().ToString()} is not a valid event type.");
