@@ -1,6 +1,6 @@
 # Get a document analysis job state
 
-This sample demonstrates how to retrieve the state of a previously submitted document analysis job. To get started, you'll need to create an Azure AI Language resource endpoint and an API key. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.Documents/README.md) for links and instructions.
+This sample demonstrates how to retrieve the state of a previously submitted document analysis job using Microsoft Entra ID authentication. To get started, you'll need to create an Azure AI Language resource endpoint. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.Documents/README.md) for links and instructions.
 
 Start by importing the namespace for the `DocumentsServiceClient` and related classes:
 
@@ -9,6 +9,10 @@ using Azure.AI.Language.Documents;
 ```
 
 Create a client:
+
+```C# Snippet:DocumentsService_Identity_Namespace
+using Azure.Identity;
+```
 
 ```C# Snippet:CreateDocumentsServiceClientForSpecificApiVersion
 Uri endpoint = new Uri("{endpoint}");
@@ -70,7 +74,7 @@ Response<AnalyzeDocumentsJobState> response = client.GetAnalyzeDocumentsJobState
 
 ## Asynchronous
 
-Using the same `request` definition above, you can make an asynchronous request by calling `GetAnalyzeDocumentsJobStateAsync`:
+Using the same `jobId` definition above, you can make an asynchronous request by calling `GetAnalyzeDocumentsJobStateAsync`:
 
 ```C# Snippet:DocumentsService_GetJobStateAsync
 Response<AnalyzeDocumentsJobState> response = await client.GetAnalyzeDocumentsJobStateAsync(jobId);

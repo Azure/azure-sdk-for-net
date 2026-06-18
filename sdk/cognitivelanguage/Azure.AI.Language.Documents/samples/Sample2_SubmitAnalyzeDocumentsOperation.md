@@ -1,6 +1,6 @@
 # Submit a document analysis job
 
-This sample demonstrates how to submit a document analysis job for documents stored in Azure Blob Storage. To get started, you'll need to create an Azure AI Language resource endpoint and an API key. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.Documents/README.md) for links and instructions.
+This sample demonstrates how to submit a document analysis job for documents stored in Azure Blob Storage using Microsoft Entra ID authentication. To get started, you'll need to create an Azure AI Language resource endpoint. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.Documents/README.md) for links and instructions.
 
 Start by importing the namespace for the `DocumentsServiceClient` and related classes:
 
@@ -9,6 +9,10 @@ using Azure.AI.Language.Documents;
 ```
 
 To submit a job, first create a `DocumentsServiceClient`:
+
+```C# Snippet:DocumentsService_Identity_Namespace
+using Azure.Identity;
+```
 
 ```C# Snippet:CreateDocumentsServiceClientForSpecificApiVersion
 Uri endpoint = new Uri("{endpoint}");
