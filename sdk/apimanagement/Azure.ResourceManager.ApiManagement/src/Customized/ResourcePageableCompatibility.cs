@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.ApiManagement
 {
     public partial class ApiResource
     {
-        /// <inheritdoc />
+        /// <summary> Gets the API Products. </summary>
         public virtual AsyncPageable<ApiManagementProductResource> GetApiProductsAsync(string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
             => new AsyncPageableWrapper<ApiManagementProductData, ApiManagementProductResource>(
                 GetApiProductsRawAsync(filter, top, skip, cancellationToken),
                 data => data is null ? null : new ApiManagementProductResource(Client, data));
 
-        /// <inheritdoc />
+        /// <summary> Gets the API Products. </summary>
         public virtual Pageable<ApiManagementProductResource> GetApiProducts(string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
             => new PageableWrapper<ApiManagementProductData, ApiManagementProductResource>(
                 GetApiProductsRaw(filter, top, skip, cancellationToken),
@@ -28,13 +28,13 @@ namespace Azure.ResourceManager.ApiManagement
 
     public partial class ApiManagementUserResource
     {
-        /// <inheritdoc />
+        /// <summary> Gets the User Groups. </summary>
         public virtual AsyncPageable<ApiManagementGroupResource> GetUserGroupsAsync(string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
             => new AsyncPageableWrapper<ApiManagementGroupData, ApiManagementGroupResource>(
                 GetAllAsync(filter, top, skip, cancellationToken),
                 data => data is null ? null : new ApiManagementGroupResource(Client, data));
 
-        /// <inheritdoc />
+        /// <summary> Gets the User Groups. </summary>
         public virtual Pageable<ApiManagementGroupResource> GetUserGroups(string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
             => new PageableWrapper<ApiManagementGroupData, ApiManagementGroupResource>(
                 GetAll(filter, top, skip, cancellationToken),

@@ -17,33 +17,33 @@ namespace Azure.ResourceManager.ApiManagement
 {
     public partial class ApiManagementServiceResource
     {
-        /// <inheritdoc />
+        /// <summary> Gets the Content Types. </summary>
         public virtual AsyncPageable<ApiManagementContentType> GetContentTypesAsync(CancellationToken cancellationToken = default)
             => new AsyncPageableWrapper<ApiManagementContentTypeResource, ApiManagementContentType>(
                 GetApiManagementContentTypes().GetAllAsync(cancellationToken),
                 resource => ToContentType(resource.Data));
 
-        /// <inheritdoc />
+        /// <summary> Gets the Content Types. </summary>
         public virtual Pageable<ApiManagementContentType> GetContentTypes(CancellationToken cancellationToken = default)
             => new PageableWrapper<ApiManagementContentTypeResource, ApiManagementContentType>(
                 GetApiManagementContentTypes().GetAll(cancellationToken),
                 resource => ToContentType(resource.Data));
 
-        /// <inheritdoc />
+        /// <summary> Gets the Content Type. </summary>
         public virtual async Task<Response<ApiManagementContentType>> GetContentTypeAsync(string contentTypeId, CancellationToken cancellationToken = default)
         {
             Response<ApiManagementContentTypeResource> response = await GetApiManagementContentTypes().GetAsync(contentTypeId, cancellationToken).ConfigureAwait(false);
             return Response.FromValue(ToContentType(response.Value.Data), response.GetRawResponse());
         }
 
-        /// <inheritdoc />
+        /// <summary> Gets the Content Type. </summary>
         public virtual Response<ApiManagementContentType> GetContentType(string contentTypeId, CancellationToken cancellationToken = default)
         {
             Response<ApiManagementContentTypeResource> response = GetApiManagementContentTypes().Get(contentTypeId, cancellationToken);
             return Response.FromValue(ToContentType(response.Value.Data), response.GetRawResponse());
         }
 
-        /// <inheritdoc />
+        /// <summary> Creates or updates the Content Type. </summary>
         public virtual async Task<Response<ApiManagementContentType>> CreateOrUpdateContentTypeAsync(string contentTypeId, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ApiManagement
                 cancellationToken).ConfigureAwait(false);
         }
 
-        /// <inheritdoc />
+        /// <summary> Creates or updates the Content Type. </summary>
         public virtual Response<ApiManagementContentType> CreateOrUpdateContentType(string contentTypeId, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ApiManagement
                 cancellationToken);
         }
 
-        /// <inheritdoc />
+        /// <summary> Deletes the Content Type. </summary>
         public virtual async Task<Response> DeleteContentTypeAsync(string contentTypeId, ETag ifMatch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ApiManagement
                 cancellationToken).ConfigureAwait(false);
         }
 
-        /// <inheritdoc />
+        /// <summary> Deletes the Content Type. </summary>
         public virtual Response DeleteContentType(string contentTypeId, ETag ifMatch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
@@ -95,33 +95,33 @@ namespace Azure.ResourceManager.ApiManagement
                 cancellationToken);
         }
 
-        /// <inheritdoc />
+        /// <summary> Gets the Content Items. </summary>
         public virtual AsyncPageable<ApiManagementContentItem> GetContentItemsAsync(string contentTypeId, CancellationToken cancellationToken = default)
             => new AsyncPageableWrapper<ApiManagementContentItemResource, ApiManagementContentItem>(
                 GetContentItemCollection(contentTypeId).GetAllAsync(cancellationToken),
                 resource => ToContentItem(resource.Data));
 
-        /// <inheritdoc />
+        /// <summary> Gets the Content Items. </summary>
         public virtual Pageable<ApiManagementContentItem> GetContentItems(string contentTypeId, CancellationToken cancellationToken = default)
             => new PageableWrapper<ApiManagementContentItemResource, ApiManagementContentItem>(
                 GetContentItemCollection(contentTypeId).GetAll(cancellationToken),
                 resource => ToContentItem(resource.Data));
 
-        /// <inheritdoc />
+        /// <summary> Gets the Content Item. </summary>
         public virtual async Task<Response<ApiManagementContentItem>> GetContentItemAsync(string contentTypeId, string contentItemId, CancellationToken cancellationToken = default)
         {
             Response<ApiManagementContentItemResource> response = await GetContentItemCollection(contentTypeId).GetAsync(contentItemId, cancellationToken).ConfigureAwait(false);
             return Response.FromValue(ToContentItem(response.Value.Data), response.GetRawResponse());
         }
 
-        /// <inheritdoc />
+        /// <summary> Gets the Content Item. </summary>
         public virtual Response<ApiManagementContentItem> GetContentItem(string contentTypeId, string contentItemId, CancellationToken cancellationToken = default)
         {
             Response<ApiManagementContentItemResource> response = GetContentItemCollection(contentTypeId).Get(contentItemId, cancellationToken);
             return Response.FromValue(ToContentItem(response.Value.Data), response.GetRawResponse());
         }
 
-        /// <inheritdoc />
+        /// <summary> Creates or updates the Content Item. </summary>
         public virtual async Task<Response<ApiManagementContentItem>> CreateOrUpdateContentItemAsync(string contentTypeId, string contentItemId, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.ApiManagement
                 cancellationToken).ConfigureAwait(false);
         }
 
-        /// <inheritdoc />
+        /// <summary> Creates or updates the Content Item. </summary>
         public virtual Response<ApiManagementContentItem> CreateOrUpdateContentItem(string contentTypeId, string contentItemId, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ApiManagement
                 cancellationToken);
         }
 
-        /// <inheritdoc />
+        /// <summary> Deletes the Content Item. </summary>
         public virtual async Task<Response> DeleteContentItemAsync(string contentTypeId, string contentItemId, ETag ifMatch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.ApiManagement
                 cancellationToken).ConfigureAwait(false);
         }
 
-        /// <inheritdoc />
+        /// <summary> Deletes the Content Item. </summary>
         public virtual Response DeleteContentItem(string contentTypeId, string contentItemId, ETag ifMatch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));

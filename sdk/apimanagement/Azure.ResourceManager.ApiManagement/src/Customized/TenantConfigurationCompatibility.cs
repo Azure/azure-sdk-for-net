@@ -62,35 +62,35 @@ namespace Azure.ResourceManager.ApiManagement
 {
     public partial class ApiManagementServiceResource
     {
-        /// <inheritdoc />
+        /// <summary> Deploys the Tenant Configuration. </summary>
         public virtual async Task<ArmOperation<GitOperationResultContractData>> DeployTenantConfigurationAsync(WaitUntil waitUntil, ConfigurationName configurationName, ConfigurationDeployContent content, CancellationToken cancellationToken = default)
             => await GetTenantConfigurationResource(configurationName).DeployTenantConfigurationAsync(waitUntil, content, cancellationToken).ConfigureAwait(false);
 
-        /// <inheritdoc />
+        /// <summary> Deploys the Tenant Configuration. </summary>
         public virtual ArmOperation<GitOperationResultContractData> DeployTenantConfiguration(WaitUntil waitUntil, ConfigurationName configurationName, ConfigurationDeployContent content, CancellationToken cancellationToken = default)
             => GetTenantConfigurationResource(configurationName).DeployTenantConfiguration(waitUntil, content, cancellationToken);
 
-        /// <inheritdoc />
+        /// <summary> Saves the Tenant Configuration. </summary>
         public virtual async Task<ArmOperation<GitOperationResultContractData>> SaveTenantConfigurationAsync(WaitUntil waitUntil, ConfigurationName configurationName, ConfigurationSaveContent content, CancellationToken cancellationToken = default)
             => await GetTenantConfigurationResource(configurationName).SaveTenantConfigurationAsync(waitUntil, content, cancellationToken).ConfigureAwait(false);
 
-        /// <inheritdoc />
+        /// <summary> Saves the Tenant Configuration. </summary>
         public virtual ArmOperation<GitOperationResultContractData> SaveTenantConfiguration(WaitUntil waitUntil, ConfigurationName configurationName, ConfigurationSaveContent content, CancellationToken cancellationToken = default)
             => GetTenantConfigurationResource(configurationName).SaveTenantConfiguration(waitUntil, content, cancellationToken);
 
-        /// <inheritdoc />
+        /// <summary> Validates the Tenant Configuration. </summary>
         public virtual async Task<ArmOperation<GitOperationResultContractData>> ValidateTenantConfigurationAsync(WaitUntil waitUntil, ConfigurationName configurationName, ConfigurationDeployContent content, CancellationToken cancellationToken = default)
             => await GetTenantConfigurationResource(configurationName).ValidateTenantConfigurationAsync(waitUntil, content, cancellationToken).ConfigureAwait(false);
 
-        /// <inheritdoc />
+        /// <summary> Validates the Tenant Configuration. </summary>
         public virtual ArmOperation<GitOperationResultContractData> ValidateTenantConfiguration(WaitUntil waitUntil, ConfigurationName configurationName, ConfigurationDeployContent content, CancellationToken cancellationToken = default)
             => GetTenantConfigurationResource(configurationName).ValidateTenantConfiguration(waitUntil, content, cancellationToken);
 
-        /// <inheritdoc />
+        /// <summary> Gets the Tenant Configuration Sync State. </summary>
         public virtual async Task<Response<TenantConfigurationSyncStateContract>> GetTenantConfigurationSyncStateAsync(ConfigurationName configurationName, CancellationToken cancellationToken = default)
             => await GetTenantConfigurationResource(configurationName).GetTenantConfigurationSyncStateAsync(cancellationToken).ConfigureAwait(false);
 
-        /// <inheritdoc />
+        /// <summary> Gets the Tenant Configuration Sync State. </summary>
         public virtual Response<TenantConfigurationSyncStateContract> GetTenantConfigurationSyncState(ConfigurationName configurationName, CancellationToken cancellationToken = default)
             => GetTenantConfigurationResource(configurationName).GetTenantConfigurationSyncState(cancellationToken);
 

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ApiManagement
 {
     public partial class ApiGatewayResource
     {
-        /// <inheritdoc />
+        /// <summary> Deletes the resource. </summary>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _apiGatewayClientDiagnostics.CreateScope("ApiGatewayResource.Delete");
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        /// <inheritdoc />
+        /// <summary> Deletes the resource. </summary>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _apiGatewayClientDiagnostics.CreateScope("ApiGatewayResource.Delete");
@@ -79,11 +79,11 @@ namespace Azure.ResourceManager.ApiManagement
 
     public partial class ApiManagementGatewayResource
     {
-        /// <inheritdoc />
+        /// <summary> Deletes the Gateway API. </summary>
         public virtual async Task<Response> DeleteGatewayApiAsync(string apiId, CancellationToken cancellationToken = default)
             => await DeleteAsync(apiId, cancellationToken).ConfigureAwait(false);
 
-        /// <inheritdoc />
+        /// <summary> Deletes the Gateway API. </summary>
         public virtual Response DeleteGatewayApi(string apiId, CancellationToken cancellationToken = default)
             => Delete(apiId, cancellationToken);
     }

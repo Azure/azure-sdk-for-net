@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ApiManagement
     [CodeGenSuppress("GetIfExists", typeof(string), typeof(CancellationToken))]
     public partial class ApiManagementOpenIdConnectProviderCollection
     {
-        /// <inheritdoc />
+        /// <summary> Creates or updates the specified OpenID Connect Provider. </summary>
         public virtual async Task<ArmOperation<ApiManagementOpenIdConnectProviderResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string openId, ApiManagementOpenIdConnectProviderData data, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(openId, nameof(openId));
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        /// <inheritdoc />
+        /// <summary> Creates or updates the specified OpenID Connect Provider. </summary>
         public virtual ArmOperation<ApiManagementOpenIdConnectProviderResource> CreateOrUpdate(WaitUntil waitUntil, string openId, ApiManagementOpenIdConnectProviderData data, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(openId, nameof(openId));
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        /// <inheritdoc />
+        /// <summary> Gets the specified OpenID Connect Provider. </summary>
         public virtual async Task<Response<ApiManagementOpenIdConnectProviderResource>> GetAsync(string openId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(openId, nameof(openId));
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        /// <inheritdoc />
+        /// <summary> Gets the specified OpenID Connect Provider. </summary>
         public virtual Response<ApiManagementOpenIdConnectProviderResource> Get(string openId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(openId, nameof(openId));
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        /// <inheritdoc />
+        /// <summary> Checks to see if the specified OpenID Connect Provider exists in Azure. </summary>
         public virtual async Task<Response<bool>> ExistsAsync(string openId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(openId, nameof(openId));
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        /// <inheritdoc />
+        /// <summary> Checks to see if the specified OpenID Connect Provider exists in Azure. </summary>
         public virtual Response<bool> Exists(string openId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(openId, nameof(openId));
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        /// <inheritdoc />
+        /// <summary> Tries to get the specified OpenID Connect Provider, returning null if it does not exist. </summary>
         public virtual async Task<NullableResponse<ApiManagementOpenIdConnectProviderResource>> GetIfExistsAsync(string openId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(openId, nameof(openId));
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        /// <inheritdoc />
+        /// <summary> Tries to get the specified OpenID Connect Provider, returning null if it does not exist. </summary>
         public virtual NullableResponse<ApiManagementOpenIdConnectProviderResource> GetIfExists(string openId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(openId, nameof(openId));
@@ -327,12 +327,12 @@ namespace Azure.ResourceManager.ApiManagement
     [CodeGenSuppress("GetApiManagementOpenIdConnectProvider", typeof(string), typeof(CancellationToken))]
     public partial class ApiManagementServiceResource
     {
-        /// <inheritdoc />
+        /// <summary> Gets the API Management OpenID Connect Provider. </summary>
         [ForwardsClientCalls]
         public virtual async Task<Response<ApiManagementOpenIdConnectProviderResource>> GetApiManagementOpenIdConnectProviderAsync(string openId, CancellationToken cancellationToken = default)
             => await GetApiManagementOpenIdConnectProviders().GetAsync(openId, cancellationToken).ConfigureAwait(false);
 
-        /// <inheritdoc />
+        /// <summary> Gets the API Management OpenID Connect Provider. </summary>
         [ForwardsClientCalls]
         public virtual Response<ApiManagementOpenIdConnectProviderResource> GetApiManagementOpenIdConnectProvider(string openId, CancellationToken cancellationToken = default)
             => GetApiManagementOpenIdConnectProviders().Get(openId, cancellationToken);

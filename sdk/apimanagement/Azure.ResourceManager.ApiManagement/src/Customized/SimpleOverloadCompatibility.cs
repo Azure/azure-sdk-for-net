@@ -31,26 +31,26 @@ namespace Azure.ResourceManager.ApiManagement
 
     public partial class ApiManagementServiceResource
     {
-        /// <inheritdoc />
+        /// <summary> Gets the Network Status By Location. </summary>
         public virtual async Task<Response<NetworkStatusContract>> GetNetworkStatusByLocationAsync(AzureLocation locationName, CancellationToken cancellationToken = default)
             => await GetNetworkStatusByLocationAsync(locationName.ToString(), cancellationToken).ConfigureAwait(false);
 
-        /// <inheritdoc />
+        /// <summary> Gets the Network Status By Location. </summary>
         public virtual Response<NetworkStatusContract> GetNetworkStatusByLocation(AzureLocation locationName, CancellationToken cancellationToken = default)
             => GetNetworkStatusByLocation(locationName.ToString(), cancellationToken);
 
-        /// <inheritdoc />
+        /// <summary> Migrates to stv2. </summary>
         public virtual async Task<ArmOperation<ApiManagementServiceResource>> MigrateToStv2Async(WaitUntil waitUntil, CancellationToken cancellationToken)
             => await MigrateToStv2Async(waitUntil, default(MigrateToStv2Contract), cancellationToken).ConfigureAwait(false);
 
-        /// <inheritdoc />
+        /// <summary> Migrates to stv2. </summary>
         public virtual ArmOperation<ApiManagementServiceResource> MigrateToStv2(WaitUntil waitUntil, CancellationToken cancellationToken)
             => MigrateToStv2(waitUntil, default(MigrateToStv2Contract), cancellationToken);
     }
 
     public static partial class ApiManagementExtensions
     {
-        /// <inheritdoc />
+        /// <summary> Gets all the deleted API Management services in the subscription. </summary>
         [ForwardsClientCalls]
         public static AsyncPageable<ApiManagementDeletedServiceResource> GetApiManagementDeletedServicesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ApiManagement
             return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementDeletedServicesAsync(cancellationToken);
         }
 
-        /// <inheritdoc />
+        /// <summary> Gets all the deleted API Management services in the subscription. </summary>
         [ForwardsClientCalls]
         public static Pageable<ApiManagementDeletedServiceResource> GetApiManagementDeletedServices(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ApiManagement
             return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementDeletedServices(cancellationToken);
         }
 
-        /// <inheritdoc />
+        /// <summary> Gets all the API Management SKUs in the subscription. </summary>
         [ForwardsClientCalls]
         public static AsyncPageable<ApiManagementSku> GetApiManagementSkusAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ApiManagement
             return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementSkusAsync(cancellationToken);
         }
 
-        /// <inheritdoc />
+        /// <summary> Gets all the API Management SKUs in the subscription. </summary>
         [ForwardsClientCalls]
         public static Pageable<ApiManagementSku> GetApiManagementSkus(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
@@ -88,19 +88,19 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
 {
     public partial class MockableApiManagementSubscriptionResource
     {
-        /// <inheritdoc />
+        /// <summary> Gets all the deleted API Management services in the subscription. </summary>
         public virtual AsyncPageable<ApiManagementDeletedServiceResource> GetApiManagementDeletedServicesAsync(CancellationToken cancellationToken = default)
             => GetBySubscriptionAsync(cancellationToken);
 
-        /// <inheritdoc />
+        /// <summary> Gets all the deleted API Management services in the subscription. </summary>
         public virtual Pageable<ApiManagementDeletedServiceResource> GetApiManagementDeletedServices(CancellationToken cancellationToken = default)
             => GetBySubscription(cancellationToken);
 
-        /// <inheritdoc />
+        /// <summary> Gets all the API Management SKUs in the subscription. </summary>
         public virtual AsyncPageable<ApiManagementSku> GetApiManagementSkusAsync(CancellationToken cancellationToken = default)
             => GetAllAsync(cancellationToken);
 
-        /// <inheritdoc />
+        /// <summary> Gets all the API Management SKUs in the subscription. </summary>
         public virtual Pageable<ApiManagementSku> GetApiManagementSkus(CancellationToken cancellationToken = default)
             => GetAll(cancellationToken);
     }

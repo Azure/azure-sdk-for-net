@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="requests"> Diagnostic settings for Large Language Models requests. </param>
         /// <param name="responses"> Diagnostic settings for Large Language Models responses. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LLMDiagnosticSettings(LlmDiagnosticSettings? logs, LLMMessageDiagnosticSettings requests, LLMMessageDiagnosticSettings responses, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LLMDiagnosticSettings(LlmDiagnosticLogState? logs, LLMMessageDiagnosticSettings requests, LLMMessageDiagnosticSettings responses, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Logs = logs;
             Requests = requests;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Specifies whether default diagnostic should be enabled for Large Language Models or not. </summary>
         [WirePath("logs")]
-        public LlmDiagnosticSettings? Logs { get; set; }
+        public LlmDiagnosticLogState? Logs { get; set; }
 
         /// <summary> Diagnostic settings for Large Language Models requests. </summary>
         [WirePath("requests")]

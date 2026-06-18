@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.ApiManagement
 {
     public partial class ApiManagementGatewayResource
     {
-        /// <inheritdoc />
+        /// <summary> Gets the Trace. </summary>
         public virtual async Task<Response<IReadOnlyDictionary<string, BinaryData>>> GetTraceAsync(GatewayListTraceContract gatewayListTraceContract, CancellationToken cancellationToken = default)
         {
             Response<IDictionary<string, BinaryData>> response = await GetTraceRawAsync(gatewayListTraceContract, cancellationToken).ConfigureAwait(false);
             return Response.FromValue(ToReadOnlyDictionary(response.Value), response.GetRawResponse());
         }
 
-        /// <inheritdoc />
+        /// <summary> Gets the Trace. </summary>
         public virtual Response<IReadOnlyDictionary<string, BinaryData>> GetTrace(GatewayListTraceContract gatewayListTraceContract, CancellationToken cancellationToken = default)
         {
             Response<IDictionary<string, BinaryData>> response = GetTraceRaw(gatewayListTraceContract, cancellationToken);

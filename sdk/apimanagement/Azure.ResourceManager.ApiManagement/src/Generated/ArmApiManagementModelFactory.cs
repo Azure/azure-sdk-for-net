@@ -935,7 +935,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="requests"> Diagnostic settings for Large Language Models requests. </param>
         /// <param name="responses"> Diagnostic settings for Large Language Models responses. </param>
         /// <returns> A new <see cref="Models.LLMDiagnosticSettings"/> instance for mocking. </returns>
-        public static LLMDiagnosticSettings LLMDiagnosticSettings(LlmDiagnosticSettings? logs = default, LLMMessageDiagnosticSettings requests = default, LLMMessageDiagnosticSettings responses = default)
+        public static LLMDiagnosticSettings LLMDiagnosticSettings(LlmDiagnosticLogState? logs = default, LLMMessageDiagnosticSettings requests = default, LLMMessageDiagnosticSettings responses = default)
         {
             return new LLMDiagnosticSettings(logs, requests, responses, default);
         }

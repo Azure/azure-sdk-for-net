@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.ApiManagement
     // method with the same signature exists in the current source.
     public partial class ApiManagementGatewayResource
     {
-        /// <inheritdoc />
+        /// <summary> Gets whether the gateway API exists by retrieving its entity tag (ETag). </summary>
         public virtual async Task<Response<bool>> GetGatewayApiEntityTagAsync(string apiId, CancellationToken cancellationToken = default)
         {
             Response response = await GetGatewayApiEntityTagRawAsync(apiId, cancellationToken).ConfigureAwait(false);
             return GetEntityTagCompatibility.ToExistsResponse(response);
         }
 
-        /// <inheritdoc />
+        /// <summary> Gets whether the gateway API exists by retrieving its entity tag (ETag). </summary>
         public virtual Response<bool> GetGatewayApiEntityTag(string apiId, CancellationToken cancellationToken = default)
         {
             Response response = GetGatewayApiEntityTagRaw(apiId, cancellationToken);
@@ -37,14 +37,14 @@ namespace Azure.ResourceManager.ApiManagement
 
     public partial class ApiManagementGroupResource
     {
-        /// <inheritdoc />
+        /// <summary> Checks whether the Group User exists. </summary>
         public virtual async Task<Response<bool>> CheckGroupUserEntityExistsAsync(string userId, CancellationToken cancellationToken = default)
         {
             Response response = await CheckGroupUserEntityExistsRawAsync(userId, cancellationToken).ConfigureAwait(false);
             return GetEntityTagCompatibility.ToExistsResponse(response);
         }
 
-        /// <inheritdoc />
+        /// <summary> Checks whether the Group User exists. </summary>
         public virtual Response<bool> CheckGroupUserEntityExists(string userId, CancellationToken cancellationToken = default)
         {
             Response response = CheckGroupUserEntityExistsRaw(userId, cancellationToken);
@@ -54,28 +54,28 @@ namespace Azure.ResourceManager.ApiManagement
 
     public partial class ApiManagementNotificationResource
     {
-        /// <inheritdoc />
+        /// <summary> Checks whether the Notification Recipient User exists. </summary>
         public virtual async Task<Response<bool>> CheckNotificationRecipientUserEntityExistsAsync(string userId, CancellationToken cancellationToken = default)
         {
             Response response = await CheckNotificationRecipientUserEntityExistsRawAsync(userId, cancellationToken).ConfigureAwait(false);
             return GetEntityTagCompatibility.ToExistsResponse(response);
         }
 
-        /// <inheritdoc />
+        /// <summary> Checks whether the Notification Recipient User exists. </summary>
         public virtual Response<bool> CheckNotificationRecipientUserEntityExists(string userId, CancellationToken cancellationToken = default)
         {
             Response response = CheckNotificationRecipientUserEntityExistsRaw(userId, cancellationToken);
             return GetEntityTagCompatibility.ToExistsResponse(response);
         }
 
-        /// <inheritdoc />
+        /// <summary> Checks whether the Notification Recipient Email exists. </summary>
         public virtual async Task<Response<bool>> CheckNotificationRecipientEmailEntityExistsAsync(string email, CancellationToken cancellationToken = default)
         {
             Response response = await CheckNotificationRecipientEmailEntityExistsRawAsync(email, cancellationToken).ConfigureAwait(false);
             return GetEntityTagCompatibility.ToExistsResponse(response);
         }
 
-        /// <inheritdoc />
+        /// <summary> Checks whether the Notification Recipient Email exists. </summary>
         public virtual Response<bool> CheckNotificationRecipientEmailEntityExists(string email, CancellationToken cancellationToken = default)
         {
             Response response = CheckNotificationRecipientEmailEntityExistsRaw(email, cancellationToken);
@@ -85,28 +85,28 @@ namespace Azure.ResourceManager.ApiManagement
 
     public partial class ApiManagementProductResource
     {
-        /// <inheritdoc />
+        /// <summary> Checks whether the Product API exists. </summary>
         public virtual async Task<Response<bool>> CheckProductApiEntityExistsAsync(string apiId, CancellationToken cancellationToken = default)
         {
             Response response = await CheckProductApiEntityExistsRawAsync(apiId, cancellationToken).ConfigureAwait(false);
             return GetEntityTagCompatibility.ToExistsResponse(response);
         }
 
-        /// <inheritdoc />
+        /// <summary> Checks whether the Product API exists. </summary>
         public virtual Response<bool> CheckProductApiEntityExists(string apiId, CancellationToken cancellationToken = default)
         {
             Response response = CheckProductApiEntityExistsRaw(apiId, cancellationToken);
             return GetEntityTagCompatibility.ToExistsResponse(response);
         }
 
-        /// <inheritdoc />
+        /// <summary> Checks whether the Product Group exists. </summary>
         public virtual async Task<Response<bool>> CheckProductGroupEntityExistsAsync(string groupId, CancellationToken cancellationToken = default)
         {
             Response response = await CheckProductGroupEntityExistsRawAsync(groupId, cancellationToken).ConfigureAwait(false);
             return GetEntityTagCompatibility.ToExistsResponse(response);
         }
 
-        /// <inheritdoc />
+        /// <summary> Checks whether the Product Group exists. </summary>
         public virtual Response<bool> CheckProductGroupEntityExists(string groupId, CancellationToken cancellationToken = default)
         {
             Response response = CheckProductGroupEntityExistsRaw(groupId, cancellationToken);
@@ -116,14 +116,14 @@ namespace Azure.ResourceManager.ApiManagement
 
     public partial class ServiceWorkspaceGroupResource
     {
-        /// <inheritdoc />
+        /// <summary> Checks whether the Workspace Group User exists. </summary>
         public virtual async Task<Response<bool>> CheckEntityExistsWorkspaceGroupUserAsync(string userId, CancellationToken cancellationToken = default)
         {
             Response response = await CheckEntityExistsAsync(userId, cancellationToken).ConfigureAwait(false);
             return GetEntityTagCompatibility.ToExistsResponse(response);
         }
 
-        /// <inheritdoc />
+        /// <summary> Checks whether the Workspace Group User exists. </summary>
         public virtual Response<bool> CheckEntityExistsWorkspaceGroupUser(string userId, CancellationToken cancellationToken = default)
         {
             Response response = CheckEntityExists(userId, cancellationToken);
@@ -133,28 +133,28 @@ namespace Azure.ResourceManager.ApiManagement
 
     public partial class ServiceWorkspaceNotificationResource
     {
-        /// <inheritdoc />
+        /// <summary> Checks whether the Workspace Notification Recipient User exists. </summary>
         public virtual async Task<Response<bool>> CheckEntityExistsWorkspaceNotificationRecipientUserAsync(string userId, CancellationToken cancellationToken = default)
         {
             Response response = await CheckEntityExistsWorkspaceNotificationRecipientUserRawAsync(userId, cancellationToken).ConfigureAwait(false);
             return GetEntityTagCompatibility.ToExistsResponse(response);
         }
 
-        /// <inheritdoc />
+        /// <summary> Checks whether the Workspace Notification Recipient User exists. </summary>
         public virtual Response<bool> CheckEntityExistsWorkspaceNotificationRecipientUser(string userId, CancellationToken cancellationToken = default)
         {
             Response response = CheckEntityExistsWorkspaceNotificationRecipientUserRaw(userId, cancellationToken);
             return GetEntityTagCompatibility.ToExistsResponse(response);
         }
 
-        /// <inheritdoc />
+        /// <summary> Checks whether the Workspace Notification Recipient Email exists. </summary>
         public virtual async Task<Response<bool>> CheckEntityExistsWorkspaceNotificationRecipientEmailAsync(string email, CancellationToken cancellationToken = default)
         {
             Response response = await CheckEntityExistsWorkspaceNotificationRecipientEmailRawAsync(email, cancellationToken).ConfigureAwait(false);
             return GetEntityTagCompatibility.ToExistsResponse(response);
         }
 
-        /// <inheritdoc />
+        /// <summary> Checks whether the Workspace Notification Recipient Email exists. </summary>
         public virtual Response<bool> CheckEntityExistsWorkspaceNotificationRecipientEmail(string email, CancellationToken cancellationToken = default)
         {
             Response response = CheckEntityExistsWorkspaceNotificationRecipientEmailRaw(email, cancellationToken);
@@ -164,62 +164,62 @@ namespace Azure.ResourceManager.ApiManagement
 
     public partial class ApiTagResource
     {
-        /// <inheritdoc />
+        /// <summary> Gets the entity state (ETag) version of the resource. </summary>
         public virtual async Task<Response<bool>> GetEntityStateByApiAsync(CancellationToken cancellationToken = default)
             => await new ApiTagCollection(Client, Id.Parent).ExistsAsync(Id.Name, cancellationToken).ConfigureAwait(false);
 
-        /// <inheritdoc />
+        /// <summary> Gets the entity state (ETag) version of the resource. </summary>
         public virtual Response<bool> GetEntityStateByApi(CancellationToken cancellationToken = default)
             => new ApiTagCollection(Client, Id.Parent).Exists(Id.Name, cancellationToken);
     }
 
     public partial class ApiOperationTagResource
     {
-        /// <inheritdoc />
+        /// <summary> Gets the entity state (ETag) version of the resource. </summary>
         public virtual async Task<Response<bool>> GetEntityStateByOperationAsync(CancellationToken cancellationToken = default)
             => await new ApiOperationTagCollection(Client, Id.Parent).ExistsAsync(Id.Name, cancellationToken).ConfigureAwait(false);
 
-        /// <inheritdoc />
+        /// <summary> Gets the entity state (ETag) version of the resource. </summary>
         public virtual Response<bool> GetEntityStateByOperation(CancellationToken cancellationToken = default)
             => new ApiOperationTagCollection(Client, Id.Parent).Exists(Id.Name, cancellationToken);
     }
 
     public partial class ApiManagementProductTagResource
     {
-        /// <inheritdoc />
+        /// <summary> Gets the entity state (ETag) version of the resource. </summary>
         public virtual async Task<Response<bool>> GetEntityStateByProductAsync(CancellationToken cancellationToken = default)
             => await new ApiManagementProductTagCollection(Client, Id.Parent).ExistsAsync(Id.Name, cancellationToken).ConfigureAwait(false);
 
-        /// <inheritdoc />
+        /// <summary> Gets the entity state (ETag) version of the resource. </summary>
         public virtual Response<bool> GetEntityStateByProduct(CancellationToken cancellationToken = default)
             => new ApiManagementProductTagCollection(Client, Id.Parent).Exists(Id.Name, cancellationToken);
     }
 
     public partial class ApiManagementTagResource
     {
-        /// <inheritdoc />
+        /// <summary> Gets the entity state (ETag) of the resource. </summary>
         public virtual async Task<Response<bool>> GetEntityStateAsync(CancellationToken cancellationToken = default)
             => await new ApiManagementTagCollection(Client, Id.Parent).ExistsAsync(Id.Name, cancellationToken).ConfigureAwait(false);
 
-        /// <inheritdoc />
+        /// <summary> Gets the entity state (ETag) of the resource. </summary>
         public virtual Response<bool> GetEntityState(CancellationToken cancellationToken = default)
             => new ApiManagementTagCollection(Client, Id.Parent).Exists(Id.Name, cancellationToken);
     }
 
     public partial class ServiceWorkspaceTagResource
     {
-        /// <inheritdoc />
+        /// <summary> Gets the entity state (ETag) of the resource. </summary>
         public virtual async Task<Response<bool>> GetEntityStateAsync(CancellationToken cancellationToken = default)
             => await new ServiceWorkspaceTagCollection(Client, Id.Parent).ExistsAsync(Id.Name, cancellationToken).ConfigureAwait(false);
 
-        /// <inheritdoc />
+        /// <summary> Gets the entity state (ETag) of the resource. </summary>
         public virtual Response<bool> GetEntityState(CancellationToken cancellationToken = default)
             => new ServiceWorkspaceTagCollection(Client, Id.Parent).Exists(Id.Name, cancellationToken);
     }
 
     public partial class ApiManagementServiceResource
     {
-        /// <inheritdoc />
+        /// <summary> Gets whether the content item exists by retrieving its entity tag (ETag). </summary>
         public virtual async Task<Response<bool>> GetContentItemEntityTagAsync(string contentTypeId, string contentItemId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.ApiManagement
                 cancellationToken).ConfigureAwait(false);
         }
 
-        /// <inheritdoc />
+        /// <summary> Gets whether the content item exists by retrieving its entity tag (ETag). </summary>
         public virtual Response<bool> GetContentItemEntityTag(string contentTypeId, string contentItemId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(contentTypeId, nameof(contentTypeId));

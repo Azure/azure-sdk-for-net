@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            LlmDiagnosticSettings? logs = default;
+            LlmDiagnosticLogState? logs = default;
             LLMMessageDiagnosticSettings requests = default;
             LLMMessageDiagnosticSettings responses = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    logs = new LlmDiagnosticSettings(prop.Value.GetString());
+                    logs = new LlmDiagnosticLogState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("requests"u8))

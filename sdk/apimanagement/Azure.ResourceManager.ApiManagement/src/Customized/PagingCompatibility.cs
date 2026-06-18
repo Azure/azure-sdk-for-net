@@ -16,51 +16,51 @@ namespace Azure.ResourceManager.ApiManagement
 {
     public partial class ApiGatewayCollection
     {
-        /// <inheritdoc />
+        /// <summary> Gets all the API gateways in the collection. </summary>
         public virtual AsyncPageable<ApiGatewayResource> GetAllAsync(CancellationToken cancellationToken)
             => GetAllAsync(default, default, cancellationToken);
 
-        /// <inheritdoc />
+        /// <summary> Gets all the API gateways in the collection. </summary>
         public virtual Pageable<ApiGatewayResource> GetAll(CancellationToken cancellationToken)
             => GetAll(default, default, cancellationToken);
     }
 
     public partial class ApiManagementServiceCollection
     {
-        /// <inheritdoc />
+        /// <summary> Gets all the API Management services in the collection. </summary>
         public virtual AsyncPageable<ApiManagementServiceResource> GetAllAsync(CancellationToken cancellationToken)
             => GetAllAsync(default, default, cancellationToken);
 
-        /// <inheritdoc />
+        /// <summary> Gets all the API Management services in the collection. </summary>
         public virtual Pageable<ApiManagementServiceResource> GetAll(CancellationToken cancellationToken)
             => GetAll(default, default, cancellationToken);
     }
 
     public partial class ApiGatewayConfigConnectionCollection
     {
-        /// <inheritdoc />
+        /// <summary> Gets all the API gateway config connections in the collection. </summary>
         public virtual AsyncPageable<ApiGatewayConfigConnectionResource> GetAllAsync(CancellationToken cancellationToken)
             => GetAllAsync(default, default, cancellationToken);
 
-        /// <inheritdoc />
+        /// <summary> Gets all the API gateway config connections in the collection. </summary>
         public virtual Pageable<ApiGatewayConfigConnectionResource> GetAll(CancellationToken cancellationToken)
             => GetAll(default, default, cancellationToken);
     }
 
     public partial class ApiManagementWorkspaceLinksCollection
     {
-        /// <inheritdoc />
+        /// <summary> Gets all the API Management workspace links in the collection. </summary>
         public virtual AsyncPageable<ApiManagementWorkspaceLinksResource> GetAllAsync(CancellationToken cancellationToken)
             => GetAllAsync(default, default, cancellationToken);
 
-        /// <inheritdoc />
+        /// <summary> Gets all the API Management workspace links in the collection. </summary>
         public virtual Pageable<ApiManagementWorkspaceLinksResource> GetAll(CancellationToken cancellationToken)
             => GetAll(default, default, cancellationToken);
     }
 
     public static partial class ApiManagementExtensions
     {
-        /// <inheritdoc />
+        /// <summary> Gets all the API gateways in the subscription. </summary>
         [ForwardsClientCalls]
         public static AsyncPageable<ApiGatewayResource> GetApiGatewaysAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ApiManagement
             return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiGatewaysAsync(cancellationToken);
         }
 
-        /// <inheritdoc />
+        /// <summary> Gets all the API gateways in the subscription. </summary>
         [ForwardsClientCalls]
         public static Pageable<ApiGatewayResource> GetApiGateways(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken)
         {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ApiManagement
             return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiGateways(cancellationToken);
         }
 
-        /// <inheritdoc />
+        /// <summary> Gets all the API Management services in the subscription. </summary>
         [ForwardsClientCalls]
         public static AsyncPageable<ApiManagementServiceResource> GetApiManagementServicesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken)
         {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ApiManagement
             return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementServicesAsync(cancellationToken);
         }
 
-        /// <inheritdoc />
+        /// <summary> Gets all the API Management services in the subscription. </summary>
         [ForwardsClientCalls]
         public static Pageable<ApiManagementServiceResource> GetApiManagementServices(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken)
         {
@@ -98,19 +98,19 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
 {
     public partial class MockableApiManagementSubscriptionResource
     {
-        /// <inheritdoc />
+        /// <summary> Gets all the API gateways in the subscription. </summary>
         public virtual AsyncPageable<ApiGatewayResource> GetApiGatewaysAsync(CancellationToken cancellationToken)
             => GetApiGatewaysAsync(default, default, cancellationToken);
 
-        /// <inheritdoc />
+        /// <summary> Gets all the API gateways in the subscription. </summary>
         public virtual Pageable<ApiGatewayResource> GetApiGateways(CancellationToken cancellationToken)
             => GetApiGateways(default, default, cancellationToken);
 
-        /// <inheritdoc />
+        /// <summary> Gets all the API Management services in the subscription. </summary>
         public virtual AsyncPageable<ApiManagementServiceResource> GetApiManagementServicesAsync(CancellationToken cancellationToken)
             => GetApiManagementServicesAsync(default, default, cancellationToken);
 
-        /// <inheritdoc />
+        /// <summary> Gets all the API Management services in the subscription. </summary>
         public virtual Pageable<ApiManagementServiceResource> GetApiManagementServices(CancellationToken cancellationToken)
             => GetApiManagementServices(default, default, cancellationToken);
     }

@@ -9,7 +9,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.IO;
 using System.Text.Json;
 using Azure.Core;
@@ -162,53 +161,5 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Secondary. </summary>
         Secondary = 1
-    }
-
-    /// <summary> Specifies whether default diagnostic should be enabled for Large Language Models or not. </summary>
-    public readonly partial struct LlmDiagnosticSettings : IEquatable<LlmDiagnosticSettings>
-    {
-        private readonly string _value;
-        private const string EnabledValue = "enabled";
-        private const string DisabledValue = "disabled";
-
-        /// <summary> Initializes a new instance of <see cref="LlmDiagnosticSettings"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public LlmDiagnosticSettings(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-            _value = value;
-        }
-
-        /// <summary> Default LLM logs are enabled. </summary>
-        public static LlmDiagnosticSettings Enabled { get; } = new LlmDiagnosticSettings(EnabledValue);
-
-        /// <summary> Default LLM logs are disabled. </summary>
-        public static LlmDiagnosticSettings Disabled { get; } = new LlmDiagnosticSettings(DisabledValue);
-
-        /// <summary> Converts a string to a <see cref="LlmDiagnosticSettings"/>. </summary>
-        public static implicit operator LlmDiagnosticSettings(string value) => new LlmDiagnosticSettings(value);
-
-        /// <summary> Converts a string to a <see cref="LlmDiagnosticSettings"/>. </summary>
-        public static implicit operator LlmDiagnosticSettings?(string value) => value == null ? null : new LlmDiagnosticSettings(value);
-
-        /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is LlmDiagnosticSettings other && Equals(other);
-
-        /// <inheritdoc/>
-        public bool Equals(LlmDiagnosticSettings other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
-
-        /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
-        /// <summary> Determines if two <see cref="LlmDiagnosticSettings"/> values are the same. </summary>
-        public static bool operator ==(LlmDiagnosticSettings left, LlmDiagnosticSettings right) => left.Equals(right);
-
-        /// <summary> Determines if two <see cref="LlmDiagnosticSettings"/> values are not the same. </summary>
-        public static bool operator !=(LlmDiagnosticSettings left, LlmDiagnosticSettings right) => !left.Equals(right);
-
-        /// <inheritdoc/>
-        public override string ToString() => _value;
     }
 }
