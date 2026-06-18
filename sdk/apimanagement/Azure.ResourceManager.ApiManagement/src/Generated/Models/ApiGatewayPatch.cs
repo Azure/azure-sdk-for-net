@@ -7,45 +7,18 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Parameter supplied to Update API Management gateway. </summary>
+    /// <summary> The ApiGatewayPatch. </summary>
     public partial class ApiGatewayPatch : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ApiGatewayPatch"/>. </summary>
         public ApiGatewayPatch()
@@ -54,89 +27,124 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiGatewayPatch"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Properties of the API Management gateway. </param>
         /// <param name="sku"> SKU properties of the API Management gateway. </param>
-        /// <param name="etag"> ETag of the resource. </param>
-        /// <param name="provisioningState"> The current provisioning state of the API Management gateway which can be one of the following: Created/Activating/Succeeded/Updating/Failed/Stopped/Terminating/TerminationFailed/Deleted. </param>
-        /// <param name="targetProvisioningState"> The provisioning state of the API Management gateway, which is targeted by the long running operation started on the gateway. </param>
-        /// <param name="createdAtUtc"> Creation UTC date of the API Management gateway.The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
-        /// <param name="frontend"> Information regarding how the gateway should be exposed. </param>
-        /// <param name="backend"> Information regarding how the gateway should integrate with backend systems. </param>
-        /// <param name="configurationApi"> Information regarding the Configuration API of the API Management gateway. This is only applicable for API gateway with Standard SKU. </param>
-        /// <param name="virtualNetworkType"> The type of VPN in which API Management gateway needs to be configured in. </param>
+        /// <param name="eTag"> ETag of the resource. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiGatewayPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ApiManagementGatewaySkuPropertiesForPatch sku, ETag? etag, string provisioningState, string targetProvisioningState, DateTimeOffset? createdAtUtc, FrontendConfiguration frontend, BackendConfiguration backend, GatewayConfigurationApi configurationApi, VirtualNetworkType? virtualNetworkType, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ApiGatewayPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ApiManagementGatewayUpdateProperties properties, ApiManagementGatewaySkuPropertiesForPatch sku, ETag? eTag, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
+            Properties = properties;
             Sku = sku;
-            ETag = etag;
-            ProvisioningState = provisioningState;
-            TargetProvisioningState = targetProvisioningState;
-            CreatedAtUtc = createdAtUtc;
-            Frontend = frontend;
-            Backend = backend;
-            ConfigurationApi = configurationApi;
-            VirtualNetworkType = virtualNetworkType;
+            ETag = eTag;
             Tags = tags;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Properties of the API Management gateway. </summary>
+        [WirePath("properties")]
+        internal ApiManagementGatewayUpdateProperties Properties { get; set; }
 
         /// <summary> SKU properties of the API Management gateway. </summary>
         [WirePath("sku")]
         public ApiManagementGatewaySkuPropertiesForPatch Sku { get; set; }
+
         /// <summary> ETag of the resource. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }
+
+        /// <summary> Resource tags. </summary>
+        [WirePath("tags")]
+        public IDictionary<string, string> Tags { get; }
+
         /// <summary> The current provisioning state of the API Management gateway which can be one of the following: Created/Activating/Succeeded/Updating/Failed/Stopped/Terminating/TerminationFailed/Deleted. </summary>
         [WirePath("properties.provisioningState")]
-        public string ProvisioningState { get; }
-        /// <summary> The provisioning state of the API Management gateway, which is targeted by the long running operation started on the gateway. </summary>
-        [WirePath("properties.targetProvisioningState")]
-        public string TargetProvisioningState { get; }
-        /// <summary> Creation UTC date of the API Management gateway.The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
-        [WirePath("properties.createdAtUtc")]
-        public DateTimeOffset? CreatedAtUtc { get; }
-        /// <summary> Information regarding how the gateway should be exposed. </summary>
-        internal FrontendConfiguration Frontend { get; set; }
-        /// <summary> The default hostname of the data-plane gateway to which requests can be sent. This is only applicable for API gateway with Standard SKU. </summary>
-        [WirePath("properties.frontend.defaultHostname")]
-        public string FrontendDefaultHostname
+        public string ProvisioningState
         {
-            get => Frontend is null ? default : Frontend.DefaultHostname;
-        }
-
-        /// <summary> Information regarding how the gateway should integrate with backend systems. </summary>
-        internal BackendConfiguration Backend { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.backend.subnet.id")]
-        public ResourceIdentifier SubnetId
-        {
-            get => Backend is null ? default : Backend.SubnetId;
-            set
+            get
             {
-                if (Backend is null)
-                    Backend = new BackendConfiguration();
-                Backend.SubnetId = value;
+                return Properties is null ? default : Properties.ProvisioningState;
             }
         }
 
-        /// <summary> Information regarding the Configuration API of the API Management gateway. This is only applicable for API gateway with Standard SKU. </summary>
-        internal GatewayConfigurationApi ConfigurationApi { get; set; }
-        /// <summary> Hostname to which the agent connects to propagate configuration to the cloud. </summary>
-        [WirePath("properties.configurationApi.hostname")]
-        public string ConfigurationApiHostname
+        /// <summary> The provisioning state of the API Management gateway, which is targeted by the long running operation started on the gateway. </summary>
+        [WirePath("properties.targetProvisioningState")]
+        public string TargetProvisioningState
         {
-            get => ConfigurationApi is null ? default : ConfigurationApi.Hostname;
+            get
+            {
+                return Properties is null ? default : Properties.TargetProvisioningState;
+            }
+        }
+
+        /// <summary> Creation UTC date of the API Management gateway.The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
+        [WirePath("properties.createdAtUtc")]
+        public DateTimeOffset? CreatedAtUtc
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreatedAtUtc;
+            }
         }
 
         /// <summary> The type of VPN in which API Management gateway needs to be configured in. </summary>
         [WirePath("properties.virtualNetworkType")]
-        public VirtualNetworkType? VirtualNetworkType { get; set; }
-        /// <summary> Resource tags. </summary>
-        [WirePath("tags")]
-        public IDictionary<string, string> Tags { get; }
+        public VirtualNetworkType? VirtualNetworkType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VirtualNetworkType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApiManagementGatewayUpdateProperties();
+                }
+                Properties.VirtualNetworkType = value;
+            }
+        }
+
+        /// <summary> The default hostname of the data-plane gateway to which requests can be sent. This is only applicable for API gateway with Standard SKU. </summary>
+        [WirePath("properties.frontend.defaultHostname")]
+        public string FrontendDefaultHostname
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FrontendDefaultHostname;
+            }
+        }
+
+        /// <summary> The ARM ID of the subnet in which the backend systems are hosted. </summary>
+        [WirePath("properties.backend.subnet.id")]
+        public string BackendSubnetId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BackendSubnetId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApiManagementGatewayUpdateProperties();
+                }
+                Properties.BackendSubnetId = value;
+            }
+        }
+
+        /// <summary> Hostname to which the agent connects to propagate configuration to the cloud. </summary>
+        [WirePath("properties.configurationApi.hostname")]
+        public string ConfigurationApiHostname
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConfigurationApiHostname;
+            }
+        }
     }
 }

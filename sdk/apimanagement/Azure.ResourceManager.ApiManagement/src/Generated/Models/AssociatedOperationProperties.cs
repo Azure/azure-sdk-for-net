@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Operation Entity contract Properties. </summary>
     public partial class AssociatedOperationProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AssociatedOperationProperties"/>. </summary>
         internal AssociatedOperationProperties()
@@ -58,9 +30,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="apiVersion"> API Version. </param>
         /// <param name="description"> Operation Description. </param>
         /// <param name="method"> A Valid HTTP Operation Method. Typical Http Methods like GET, PUT, POST but not limited by only them. </param>
-        /// <param name="uriTemplate"> Relative URL template identifying the target resource for this operation. May include parameters. Example: /customers/{cid}/orders/{oid}/?date={date}. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AssociatedOperationProperties(string id, string name, string apiName, string apiRevision, string apiVersion, string description, string method, string uriTemplate, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="urlTemplate"> Relative URL template identifying the target resource for this operation. May include parameters. Example: /customers/{cid}/orders/{oid}/?date={date}. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AssociatedOperationProperties(string id, string name, string apiName, string apiRevision, string apiVersion, string description, string @method, string urlTemplate, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
@@ -68,34 +40,41 @@ namespace Azure.ResourceManager.ApiManagement.Models
             ApiRevision = apiRevision;
             ApiVersion = apiVersion;
             Description = description;
-            Method = method;
-            UriTemplate = uriTemplate;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Method = @method;
+            UrlTemplate = urlTemplate;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Identifier of the operation in form /operations/{operationId}. </summary>
         [WirePath("id")]
         public string Id { get; }
+
         /// <summary> Operation name. </summary>
         [WirePath("name")]
         public string Name { get; }
+
         /// <summary> API Name. </summary>
         [WirePath("apiName")]
         public string ApiName { get; }
+
         /// <summary> API Revision. </summary>
         [WirePath("apiRevision")]
         public string ApiRevision { get; }
+
         /// <summary> API Version. </summary>
         [WirePath("apiVersion")]
         public string ApiVersion { get; }
+
         /// <summary> Operation Description. </summary>
         [WirePath("description")]
         public string Description { get; }
+
         /// <summary> A Valid HTTP Operation Method. Typical Http Methods like GET, PUT, POST but not limited by only them. </summary>
         [WirePath("method")]
         public string Method { get; }
+
         /// <summary> Relative URL template identifying the target resource for this operation. May include parameters. Example: /customers/{cid}/orders/{oid}/?date={date}. </summary>
         [WirePath("urlTemplate")]
-        public string UriTemplate { get; }
+        public string UrlTemplate { get; }
     }
 }

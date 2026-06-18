@@ -3,15 +3,13 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
-using Azure.Core;
+using System.ClientModel.Primitives;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    [CodeGenSerialization(nameof(BackendResponseCode), SerializationValueHook = nameof(SerializeBackendResponseCodeValue), DeserializationValueHook = nameof(DeserializeBackendResponseCodeValue))]
-    public partial class RequestReportRecordContract : IUtf8JsonSerializable, IJsonModel<RequestReportRecordContract>
+    public partial class RequestReportRecordContract
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void SerializeBackendResponseCodeValue(Utf8JsonWriter writer, ModelReaderWriterOptions options)

@@ -21,7 +21,6 @@ namespace Azure.ResourceManager.ApiManagement
             }
             set
             {
-                TermsOfServiceLink = value.AbsoluteUri;
             }
         }
 
@@ -35,7 +34,6 @@ namespace Azure.ResourceManager.ApiManagement
             }
             set
             {
-                ServiceLink = value.AbsoluteUri;
             }
         }
     }
