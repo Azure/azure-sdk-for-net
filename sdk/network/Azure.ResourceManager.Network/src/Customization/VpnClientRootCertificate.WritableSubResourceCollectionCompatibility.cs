@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 #nullable disable
-#pragma warning disable CS0612, CS0618, CS1591
 
 using System;
 using System.Collections;
@@ -14,13 +13,16 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network.Models
 {
+    /// <summary> Compatibility declaration for the VpnClientRootCertificate type. </summary>
     [CodeGenSuppress("PublicCertData")]
     public partial class VpnClientRootCertificate
     {
+        /// <summary> Initializes a new instance of the VpnClientRootCertificate class. </summary>
         public VpnClientRootCertificate(BinaryData publicCertData)
         {
             PublicCertData = publicCertData;
         }
+        /// <summary> Gets or sets the PublicCertData compatibility property. </summary>
 
         [Azure.ResourceManager.Network.WirePath("properties.publicCertData")]
         public BinaryData PublicCertData
@@ -37,5 +39,3 @@ namespace Azure.ResourceManager.Network.Models
         }
     }
 }
-
-#pragma warning restore CS0612, CS0618, CS1591

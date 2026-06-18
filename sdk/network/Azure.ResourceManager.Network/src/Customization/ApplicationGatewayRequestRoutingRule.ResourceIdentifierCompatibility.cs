@@ -7,6 +7,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
+    /// <summary> Compatibility declaration for the ApplicationGatewayRequestRoutingRule type. </summary>
     public partial class ApplicationGatewayRequestRoutingRule
     {
         /// <summary> Entra JWT validation configuration resource of the application gateway. </summary>

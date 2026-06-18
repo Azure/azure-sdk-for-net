@@ -13,7 +13,7 @@ using Azure.ResourceManager.Network.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> Contains all specific policy signatures overrides for the IDPS. </summary>
-    public partial class PolicySignaturesOverridesForIdpsData : WritableResource
+    public partial class PolicySignaturesOverridesForIdpsData : NetworkWritableResource
     {
         /// <summary> Initializes a new instance of <see cref="PolicySignaturesOverridesForIdpsData"/>. </summary>
         public PolicySignaturesOverridesForIdpsData()

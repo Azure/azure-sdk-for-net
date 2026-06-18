@@ -20,40 +20,24 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="NetworkIPConfigurationBgpPeeringAddress"/>. </summary>
         public NetworkIPConfigurationBgpPeeringAddress()
         {
-            DefaultBgpIpAddresses = new ChangeTrackingList<string>();
-            CustomBgpIpAddresses = new ChangeTrackingList<string>();
-            TunnelIpAddresses = new ChangeTrackingList<string>();
+            DefaultBgpIPAddresses = new ChangeTrackingList<string>();
+            CustomBgpIPAddresses = new ChangeTrackingList<string>();
+            TunnelIPAddresses = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkIPConfigurationBgpPeeringAddress"/>. </summary>
-        /// <param name="ipconfigurationId"> The ID of IP configuration which belongs to gateway. </param>
-        /// <param name="defaultBgpIpAddresses"> The list of default BGP peering addresses which belong to IP configuration. </param>
-        /// <param name="customBgpIpAddresses"> The list of custom BGP peering addresses which belong to IP configuration. </param>
-        /// <param name="tunnelIpAddresses"> The list of tunnel public IP addresses which belong to IP configuration. </param>
+        /// <param name="ipConfigurationId"> The ID of IP configuration which belongs to gateway. </param>
+        /// <param name="defaultBgpIPAddresses"> The list of default BGP peering addresses which belong to IP configuration. </param>
+        /// <param name="customBgpIPAddresses"> The list of custom BGP peering addresses which belong to IP configuration. </param>
+        /// <param name="tunnelIPAddresses"> The list of tunnel public IP addresses which belong to IP configuration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkIPConfigurationBgpPeeringAddress(string ipconfigurationId, IReadOnlyList<string> defaultBgpIpAddresses, IList<string> customBgpIpAddresses, IReadOnlyList<string> tunnelIpAddresses, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkIPConfigurationBgpPeeringAddress(string ipConfigurationId, IReadOnlyList<string> defaultBgpIPAddresses, IList<string> customBgpIPAddresses, IReadOnlyList<string> tunnelIPAddresses, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            IpconfigurationId = ipconfigurationId;
-            DefaultBgpIpAddresses = defaultBgpIpAddresses;
-            CustomBgpIpAddresses = customBgpIpAddresses;
-            TunnelIpAddresses = tunnelIpAddresses;
+            IPConfigurationId = ipConfigurationId;
+            DefaultBgpIPAddresses = defaultBgpIPAddresses;
+            CustomBgpIPAddresses = customBgpIPAddresses;
+            TunnelIPAddresses = tunnelIPAddresses;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> The ID of IP configuration which belongs to gateway. </summary>
-        [WirePath("ipconfigurationId")]
-        public string IpconfigurationId { get; set; }
-
-        /// <summary> The list of default BGP peering addresses which belong to IP configuration. </summary>
-        [WirePath("defaultBgpIpAddresses")]
-        public IReadOnlyList<string> DefaultBgpIpAddresses { get; }
-
-        /// <summary> The list of custom BGP peering addresses which belong to IP configuration. </summary>
-        [WirePath("customBgpIpAddresses")]
-        public IList<string> CustomBgpIpAddresses { get; }
-
-        /// <summary> The list of tunnel public IP addresses which belong to IP configuration. </summary>
-        [WirePath("tunnelIpAddresses")]
-        public IReadOnlyList<string> TunnelIpAddresses { get; }
     }
 }

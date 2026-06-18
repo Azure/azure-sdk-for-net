@@ -3,13 +3,14 @@
 
 #nullable disable
 
-#pragma warning disable CS0612, CS0618, CS1591
-
 namespace Azure.ResourceManager.Network.Models
 {
+    /// <summary> Compatibility declaration for the NetworkVerifierIPTraffic type. </summary>
     public partial class NetworkVerifierIPTraffic
     {
+        /// <summary> Compatibility member. </summary>
         public global::System.Collections.Generic.IList<global::System.String> DestinationIPs => default;
+        /// <summary> Compatibility member. </summary>
         public global::System.Collections.Generic.IList<global::System.String> SourceIPs => default;
     }
 }

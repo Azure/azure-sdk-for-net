@@ -3,8 +3,6 @@
 
 #nullable disable
 
-#pragma warning disable CS0612, CS0618, CS1591
-
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
@@ -18,11 +16,16 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
+    /// <summary> Compatibility declaration for the ConnectionMonitorResource type. </summary>
     public partial class ConnectionMonitorResource
     {
+        /// <summary> Invokes the QueryAsync compatibility operation. </summary>
         public virtual Task<ArmOperation<ConnectionMonitorQueryResult>> QueryAsync(WaitUntil waitUntil, CancellationToken cancellationToken) => default;
+        /// <summary> Invokes the Query compatibility operation. </summary>
         public virtual ArmOperation<ConnectionMonitorQueryResult> Query(WaitUntil waitUntil, CancellationToken cancellationToken) => default;
+        /// <summary> Invokes the StartAsync compatibility operation. </summary>
         public virtual Task<ArmOperation> StartAsync(WaitUntil waitUntil, CancellationToken cancellationToken) => default;
+        /// <summary> Invokes the Start compatibility operation. </summary>
         public virtual ArmOperation Start(WaitUntil waitUntil, CancellationToken cancellationToken) => default;
     }
 }

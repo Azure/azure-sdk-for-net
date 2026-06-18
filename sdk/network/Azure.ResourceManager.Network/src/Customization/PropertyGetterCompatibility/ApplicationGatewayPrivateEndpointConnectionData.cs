@@ -3,12 +3,12 @@
 
 #nullable disable
 
-#pragma warning disable CS0612, CS0618, CS1591
-
 namespace Azure.ResourceManager.Network
 {
+    /// <summary> Compatibility declaration for the ApplicationGatewayPrivateEndpointConnectionData type. </summary>
     public partial class ApplicationGatewayPrivateEndpointConnectionData
     {
+        /// <summary> Compatibility member. </summary>
         public global::Azure.ResourceManager.Network.Models.NetworkPrivateLinkServiceConnectionState ConnectionState
         {
             get => default;

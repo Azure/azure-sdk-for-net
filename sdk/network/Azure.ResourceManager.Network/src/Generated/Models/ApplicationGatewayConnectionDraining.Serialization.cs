@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WritePropertyName("enabled"u8);
             writer.WriteBooleanValue(Enabled);
             writer.WritePropertyName("drainTimeoutInSec"u8);
-            writer.WriteNumberValue(DrainTimeoutInSec);
+            writer.WriteNumberValue(DrainTimeoutInSeconds);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             bool enabled = default;
-            int drainTimeoutInSec = default;
+            int drainTimeoutInSeconds = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (prop.NameEquals("drainTimeoutInSec"u8))
                 {
-                    drainTimeoutInSec = prop.Value.GetInt32();
+                    drainTimeoutInSeconds = prop.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ApplicationGatewayConnectionDraining(enabled, drainTimeoutInSec, additionalBinaryDataProperties);
+            return new ApplicationGatewayConnectionDraining(enabled, drainTimeoutInSeconds, additionalBinaryDataProperties);
         }
     }
 }

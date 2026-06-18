@@ -12,6 +12,7 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
+    /// <summary> Compatibility declaration for the NetworkExtensions type. </summary>
     [CodeGenSuppress("GetNetworkInterfaceResource", typeof(ArmClient), typeof(ResourceIdentifier))]
     [CodeGenSuppress("GetPublicIPAddressResource", typeof(ArmClient), typeof(ResourceIdentifier))]
     public static partial class NetworkExtensions
@@ -207,12 +208,12 @@ namespace Azure.ResourceManager.Network
             => GetMockableNetworkSubscriptionResource(subscriptionResource).GetApplicationGatewayWafDynamicManifests(location);
 
         /// <summary> Gets the regional application gateway WAF manifest. </summary>
-        [global::Azure.Core.ForwardsClientCalls]
+        [ForwardsClientCalls]
         public static Task<Response<ApplicationGatewayWafDynamicManifestResource>> GetApplicationGatewayWafDynamicManifestAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken)
             => GetMockableNetworkSubscriptionResource(subscriptionResource).GetApplicationGatewayWafDynamicManifestAsync(location, cancellationToken);
 
         /// <summary> Gets the regional application gateway WAF manifest. </summary>
-        [global::Azure.Core.ForwardsClientCalls]
+        [ForwardsClientCalls]
         public static Response<ApplicationGatewayWafDynamicManifestResource> GetApplicationGatewayWafDynamicManifest(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken)
             => GetMockableNetworkSubscriptionResource(subscriptionResource).GetApplicationGatewayWafDynamicManifest(location, cancellationToken);
 

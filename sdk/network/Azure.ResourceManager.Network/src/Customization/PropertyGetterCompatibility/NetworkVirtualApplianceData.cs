@@ -3,13 +3,14 @@
 
 #nullable disable
 
-#pragma warning disable CS0612, CS0618, CS1591
-
 namespace Azure.ResourceManager.Network
 {
+    /// <summary> Compatibility declaration for the NetworkVirtualApplianceData type. </summary>
     public partial class NetworkVirtualApplianceData
     {
+        /// <summary> Compatibility member. </summary>
         public global::System.Collections.Generic.IList<global::Azure.ResourceManager.Resources.Models.WritableSubResource> InternetIngressPublicIPs => default;
+        /// <summary> Compatibility member. </summary>
         public global::System.Net.IPAddress PrivateIPAddress => default;
     }
 }

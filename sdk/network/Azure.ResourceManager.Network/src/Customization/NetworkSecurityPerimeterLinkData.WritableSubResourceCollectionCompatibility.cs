@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 #nullable disable
-#pragma warning disable CS0612, CS0618, CS1591
 
 using System;
 using System.Collections;
@@ -14,11 +13,12 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
+    /// <summary> Compatibility declaration for the NetworkSecurityPerimeterLinkData type. </summary>
     [CodeGenSuppress("RemotePerimeterGuid")]
     public partial class NetworkSecurityPerimeterLinkData
     {
-        [WirePath("properties.remotePerimeterGuid")] public Guid? RemotePerimeterGuid => WritableSubResourceCollectionCompatibility.ParseGuid(Properties?.RemotePerimeterGuid);
+        /// <summary> Gets or sets the RemotePerimeterGuid compatibility property. </summary>
+        [WirePath("properties.remotePerimeterGuid")]
+        public Guid? RemotePerimeterGuid => WritableSubResourceCollectionCompatibility.ParseGuid(Properties?.RemotePerimeterGuid);
     }
 }
-
-#pragma warning restore CS0612, CS0618, CS1591

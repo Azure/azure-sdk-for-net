@@ -3,8 +3,6 @@
 
 #nullable disable
 
-#pragma warning disable CS0612, CS0618, CS1591
-
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
@@ -18,9 +16,12 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
+    /// <summary> Compatibility declaration for the VpnGatewayResource type. </summary>
     public partial class VpnGatewayResource
     {
+        /// <summary> Invokes the ResetAsync compatibility operation. </summary>
         public virtual Task<ArmOperation<VpnGatewayResource>> ResetAsync(WaitUntil waitUntil, CancellationToken cancellationToken) => default;
+        /// <summary> Invokes the Reset compatibility operation. </summary>
         public virtual ArmOperation<VpnGatewayResource> Reset(WaitUntil waitUntil, CancellationToken cancellationToken) => default;
     }
 }

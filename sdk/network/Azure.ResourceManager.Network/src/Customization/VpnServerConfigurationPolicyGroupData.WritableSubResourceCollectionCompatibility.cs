@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 #nullable disable
-#pragma warning disable CS0612, CS0618, CS1591
 
 using System;
 using System.Collections;
@@ -14,11 +13,12 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
+    /// <summary> Compatibility declaration for the VpnServerConfigurationPolicyGroupData type. </summary>
     [CodeGenSuppress("P2SConnectionConfigurations")]
     public partial class VpnServerConfigurationPolicyGroupData
     {
-        [WirePath("properties.p2SConnectionConfigurations")] public IReadOnlyList<WritableSubResource> P2SConnectionConfigurations => WritableSubResourceCollectionCompatibility.AsReadOnlyList(Properties?.P2SConnectionConfigurations);
+        /// <summary> Gets or sets the P2SConnectionConfigurations compatibility property. </summary>
+        [WirePath("properties.p2SConnectionConfigurations")]
+        public IReadOnlyList<WritableSubResource> P2SConnectionConfigurations => WritableSubResourceCollectionCompatibility.AsReadOnlyList(Properties?.P2SConnectionConfigurations);
     }
 }
-
-#pragma warning restore CS0612, CS0618, CS1591

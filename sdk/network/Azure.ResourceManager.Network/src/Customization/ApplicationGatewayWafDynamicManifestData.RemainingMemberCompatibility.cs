@@ -10,13 +10,13 @@ using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 using Microsoft.TypeSpec.Generator.Customizations;
 
-#pragma warning disable CS0612, CS0618, CS1591
-
 namespace Azure.ResourceManager.Network
 {
+    /// <summary> Compatibility declaration for the ApplicationGatewayWafDynamicManifestData type. </summary>
     [CodeGenSuppress("AvailableRuleSets")]
     public partial class ApplicationGatewayWafDynamicManifestData
     {
+        /// <summary> Gets or sets the AvailableRuleSets compatibility property. </summary>
         public IReadOnlyList<Models.ApplicationGatewayFirewallManifestRuleSet> AvailableRuleSets => Properties?.AvailableRuleSets as IReadOnlyList<Models.ApplicationGatewayFirewallManifestRuleSet>;
     }
 }

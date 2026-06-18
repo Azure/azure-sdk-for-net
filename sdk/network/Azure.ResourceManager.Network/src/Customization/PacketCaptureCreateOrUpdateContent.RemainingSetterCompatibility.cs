@@ -8,12 +8,12 @@ using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Microsoft.TypeSpec.Generator.Customizations;
 
-#pragma warning disable CS0612, CS0618, CS1591
-
 namespace Azure.ResourceManager.Network.Models
 {
+    /// <summary> Compatibility declaration for the PacketCaptureCreateOrUpdateContent type. </summary>
     public partial class PacketCaptureCreateOrUpdateContent
     {
+        /// <summary> Gets or sets the IsContinuousCapture compatibility property. </summary>
         public bool? IsContinuousCapture
         {
             get => ContinuousCapture;

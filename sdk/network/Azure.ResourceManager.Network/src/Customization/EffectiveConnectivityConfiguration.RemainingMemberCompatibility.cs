@@ -10,15 +10,16 @@ using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 using Microsoft.TypeSpec.Generator.Customizations;
 
-#pragma warning disable CS0612, CS0618, CS1591
-
 namespace Azure.ResourceManager.Network.Models
 {
+    /// <summary> Compatibility declaration for the EffectiveConnectivityConfiguration type. </summary>
     [CodeGenSuppress("AppliesToGroups")]
     [CodeGenSuppress("Hubs")]
     public partial class EffectiveConnectivityConfiguration
     {
+        /// <summary> Gets or sets the AppliesToGroups compatibility property. </summary>
         public IReadOnlyList<ConnectivityGroupItem> AppliesToGroups => Properties?.AppliesToGroups as IReadOnlyList<ConnectivityGroupItem>;
+        /// <summary> Gets or sets the Hubs compatibility property. </summary>
         public IReadOnlyList<ConnectivityHub> Hubs => Properties?.Hubs as IReadOnlyList<ConnectivityHub>;
     }
 }

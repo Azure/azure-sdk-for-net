@@ -1137,16 +1137,16 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="workspaceId"> The resource guid of the attached workspace. </param>
         /// <param name="workspaceRegion"> The location of the attached workspace. </param>
         /// <param name="workspaceResourceId"> Resource Id of the attached workspace. </param>
-        /// <param name="trafficAnalyticsInterval"> The interval in minutes which would decide how frequently TA service should do flow analytics. </param>
+        /// <param name="trafficAnalyticsIntervalInMinutes"> The interval in minutes which would decide how frequently TA service should do flow analytics. </param>
         /// <returns> A new <see cref="Models.TrafficAnalyticsConfigurationProperties"/> instance for mocking. </returns>
-        public static TrafficAnalyticsConfigurationProperties TrafficAnalyticsConfigurationProperties(bool? enabled = default, string workspaceId = default, string workspaceRegion = default, ResourceIdentifier workspaceResourceId = default, int? trafficAnalyticsInterval = default)
+        public static TrafficAnalyticsConfigurationProperties TrafficAnalyticsConfigurationProperties(bool? enabled = default, string workspaceId = default, string workspaceRegion = default, ResourceIdentifier workspaceResourceId = default, int? trafficAnalyticsIntervalInMinutes = default)
         {
             return new TrafficAnalyticsConfigurationProperties(
                 enabled,
                 workspaceId,
                 workspaceRegion,
                 workspaceResourceId,
-                trafficAnalyticsInterval,
+                trafficAnalyticsIntervalInMinutes,
                 default);
         }
 
@@ -1740,11 +1740,11 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <param name="enabled"> Whether connection draining is enabled or not. </param>
-        /// <param name="drainTimeoutInSec"> The number of seconds connection draining is active. Acceptable values are from 1 second to 3600 seconds. </param>
+        /// <param name="drainTimeoutInSeconds"> The number of seconds connection draining is active. Acceptable values are from 1 second to 3600 seconds. </param>
         /// <returns> A new <see cref="Models.ApplicationGatewayConnectionDraining"/> instance for mocking. </returns>
-        public static ApplicationGatewayConnectionDraining ApplicationGatewayConnectionDraining(bool enabled = default, int drainTimeoutInSec = default)
+        public static ApplicationGatewayConnectionDraining ApplicationGatewayConnectionDraining(bool enabled = default, int drainTimeoutInSeconds = default)
         {
-            return new ApplicationGatewayConnectionDraining(enabled, drainTimeoutInSec, default);
+            return new ApplicationGatewayConnectionDraining(enabled, drainTimeoutInSeconds, default);
         }
 
         /// <param name="id"> Resource ID. </param>
@@ -2950,12 +2950,12 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <param name="vms"> List of VM references. </param>
-        /// <returns> A new <see cref="Models.BastionShareableLinkListRequest"/> instance for mocking. </returns>
-        public static BastionShareableLinkListRequest BastionShareableLinkListRequest(IEnumerable<BastionShareableLink> vms = default)
+        /// <returns> A new <see cref="Models.BastionShareableLinkListContent"/> instance for mocking. </returns>
+        public static BastionShareableLinkListContent BastionShareableLinkListContent(IEnumerable<BastionShareableLink> vms = default)
         {
             vms ??= new ChangeTrackingList<BastionShareableLink>();
 
-            return new BastionShareableLinkListRequest((vms ?? new ChangeTrackingList<BastionShareableLink>()).ToList(), default);
+            return new BastionShareableLinkListContent((vms ?? new ChangeTrackingList<BastionShareableLink>()).ToList(), default);
         }
 
         /// <param name="vm"> Reference of the virtual machine resource. </param>
@@ -3612,15 +3612,15 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="linkType"> The type of the link. </param>
         /// <param name="wasSimulationSuccessful"> Whether the simulation was successful. </param>
         /// <param name="isVerified"> Whether the link is verified. </param>
-        /// <returns> A new <see cref="Models.ExpressRouteLinkFailoverStopApiParameters"/> instance for mocking. </returns>
-        public static ExpressRouteLinkFailoverStopApiParameters ExpressRouteLinkFailoverStopApiParameters(string circuitTestCategory = default, string linkType = default, bool? wasSimulationSuccessful = default, bool? isVerified = default)
+        /// <returns> A new <see cref="Models.ExpressRouteLinkFailoverStopContent"/> instance for mocking. </returns>
+        public static ExpressRouteLinkFailoverStopContent ExpressRouteLinkFailoverStopContent(string circuitTestCategory = default, string linkType = default, bool? wasSimulationSuccessful = default, bool? isVerified = default)
         {
-            return new ExpressRouteLinkFailoverStopApiParameters(circuitTestCategory, linkType, wasSimulationSuccessful, isVerified, default);
+            return new ExpressRouteLinkFailoverStopContent(circuitTestCategory, linkType, wasSimulationSuccessful, isVerified, default);
         }
 
         /// <param name="stopParameters"> Parameters supplied to stop the link failover simulation on the express route circuit. </param>
         /// <returns> A new <see cref="Models.StopCircuitLinkFailoverTestParameterBody"/> instance for mocking. </returns>
-        public static StopCircuitLinkFailoverTestParameterBody StopCircuitLinkFailoverTestParameterBody(ExpressRouteLinkFailoverStopApiParameters stopParameters = default)
+        public static StopCircuitLinkFailoverTestParameterBody StopCircuitLinkFailoverTestParameterBody(ExpressRouteLinkFailoverStopContent stopParameters = default)
         {
             return new StopCircuitLinkFailoverTestParameterBody(stopParameters, default);
         }
@@ -4370,10 +4370,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="type"> Resource type. </param>
-        /// <returns> A new <see cref="Models.WritableResource"/> instance for mocking. </returns>
-        public static WritableResource WritableResource(ResourceIdentifier id = default, string name = default, string @type = default)
+        /// <returns> A new <see cref="Models.NetworkWritableResource"/> instance for mocking. </returns>
+        public static NetworkWritableResource NetworkWritableResource(ResourceIdentifier id = default, string name = default, string @type = default)
         {
-            return new WritableResource(id, name, @type, default);
+            return new NetworkWritableResource(id, name, @type, default);
         }
 
         /// <param name="value"> Describes a list consisting exactly one item describing the policy's signature override status. </param>
@@ -5304,7 +5304,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="description"> A description of the network manager connection. </param>
         /// <param name="systemData"> The system metadata related to this resource. </param>
         /// <returns> A new <see cref="Network.SubscriptionNetworkManagerConnectionData"/> instance for mocking. </returns>
-        public static SubscriptionNetworkManagerConnectionData SubscriptionNetworkManagerConnectionData(ResourceIdentifier id = default, string name = default, string @type = default, string eTag = default, string networkManagerId = default, ScopeConnectionState? connectionState = default, string description = default, SystemData systemData = default)
+        public static SubscriptionNetworkManagerConnectionData SubscriptionNetworkManagerConnectionData(ResourceIdentifier id = default, string name = default, string @type = default, string eTag = default, ResourceIdentifier networkManagerId = default, ScopeConnectionState? connectionState = default, string description = default, SystemData systemData = default)
         {
             return new SubscriptionNetworkManagerConnectionData(
                 id,
@@ -5320,10 +5320,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="name"> Resource name. </param>
         /// <param name="type"> Resource type. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <returns> A new <see cref="Models.ChildResource"/> instance for mocking. </returns>
-        public static ChildResource ChildResource(ResourceIdentifier id = default, string name = default, string @type = default, string eTag = default)
+        /// <returns> A new <see cref="Models.NetworkChildResource"/> instance for mocking. </returns>
+        public static NetworkChildResource NetworkChildResource(ResourceIdentifier id = default, string name = default, string @type = default, string eTag = default)
         {
-            return new ChildResource(id, name, @type, eTag, default);
+            return new NetworkChildResource(id, name, @type, eTag, default);
         }
 
         /// <param name="description"> A description of the connectivity configuration. </param>
@@ -7679,11 +7679,11 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <param name="ipConfigurationId"> The IpconfigurationId of ipconfiguration which belongs to gateway. </param>
-        /// <param name="customBgpIpAddress"> The custom BgpPeeringAddress which belongs to IpconfigurationId. </param>
+        /// <param name="customBgpIPAddress"> The custom BgpPeeringAddress which belongs to IpconfigurationId. </param>
         /// <returns> A new <see cref="Models.GatewayCustomBgpIPAddressIPConfiguration"/> instance for mocking. </returns>
-        public static GatewayCustomBgpIPAddressIPConfiguration GatewayCustomBgpIPAddressIPConfiguration(string ipConfigurationId = default, string customBgpIpAddress = default)
+        public static GatewayCustomBgpIPAddressIPConfiguration GatewayCustomBgpIPAddressIPConfiguration(string ipConfigurationId = default, string customBgpIPAddress = default)
         {
-            return new GatewayCustomBgpIPAddressIPConfiguration(ipConfigurationId, customBgpIpAddress, default);
+            return new GatewayCustomBgpIPAddressIPConfiguration(ipConfigurationId, customBgpIPAddress, default);
         }
 
         /// <param name="localAddressRanges"> A collection of local address spaces in CIDR format. </param>
@@ -8036,10 +8036,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <param name="vpnConnectionId"> The vpn client Id. </param>
-        /// <param name="vpnConnectionDuration"> The duration time of a connected vpn client. </param>
-        /// <param name="vpnConnectionTime"> The start time of a connected vpn client. </param>
-        /// <param name="publicIpAddress"> The public Ip of a connected vpn client. </param>
-        /// <param name="privateIpAddress"> The assigned private Ip of a connected vpn client. </param>
+        /// <param name="vpnConnectionDurationInSeconds"> The duration time of a connected vpn client. </param>
+        /// <param name="vpnConnectionOn"> The start time of a connected vpn client. </param>
+        /// <param name="publicIPAddress"> The public Ip of a connected vpn client. </param>
+        /// <param name="privateIPAddress"> The assigned private Ip of a connected vpn client. </param>
         /// <param name="vpnUserName"> The user name of a connected vpn client. </param>
         /// <param name="maxBandwidth"> The max band width. </param>
         /// <param name="egressPacketsTransferred"> The egress packets per second. </param>
@@ -8048,14 +8048,14 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="ingressBytesTransferred"> The ingress bytes per second. </param>
         /// <param name="maxPacketsPerSecond"> The max packets transferred per second. </param>
         /// <returns> A new <see cref="Models.VpnClientConnectionHealthDetail"/> instance for mocking. </returns>
-        public static VpnClientConnectionHealthDetail VpnClientConnectionHealthDetail(string vpnConnectionId = default, long? vpnConnectionDuration = default, string vpnConnectionTime = default, string publicIpAddress = default, string privateIpAddress = default, string vpnUserName = default, long? maxBandwidth = default, long? egressPacketsTransferred = default, long? egressBytesTransferred = default, long? ingressPacketsTransferred = default, long? ingressBytesTransferred = default, long? maxPacketsPerSecond = default)
+        public static VpnClientConnectionHealthDetail VpnClientConnectionHealthDetail(string vpnConnectionId = default, long? vpnConnectionDurationInSeconds = default, DateTimeOffset? vpnConnectionOn = default, string publicIPAddress = default, string privateIPAddress = default, string vpnUserName = default, long? maxBandwidth = default, long? egressPacketsTransferred = default, long? egressBytesTransferred = default, long? ingressPacketsTransferred = default, long? ingressBytesTransferred = default, long? maxPacketsPerSecond = default)
         {
             return new VpnClientConnectionHealthDetail(
                 vpnConnectionId,
-                vpnConnectionDuration,
-                vpnConnectionTime,
-                publicIpAddress,
-                privateIpAddress,
+                vpnConnectionDurationInSeconds,
+                vpnConnectionOn,
+                publicIPAddress,
+                privateIPAddress,
                 vpnUserName,
                 maxBandwidth,
                 egressPacketsTransferred,
@@ -9288,10 +9288,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="name"> Resource name. </param>
         /// <param name="type"> Resource type. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <returns> A new <see cref="Models.ProxyResource"/> instance for mocking. </returns>
-        public static ProxyResource ProxyResource(ResourceIdentifier id = default, string name = default, string @type = default, string eTag = default)
+        /// <returns> A new <see cref="Models.NetworkProxyResource"/> instance for mocking. </returns>
+        public static NetworkProxyResource NetworkProxyResource(ResourceIdentifier id = default, string name = default, string @type = default, string eTag = default)
         {
-            return new ProxyResource(id, name, @type, eTag, default);
+            return new NetworkProxyResource(id, name, @type, eTag, default);
         }
 
         /// <param name="state"> The state of the policy. </param>
@@ -10900,9 +10900,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="path"> The path component of the URI. For instance, "/dir1/dir2". </param>
         /// <param name="requestHeaders"> The HTTP headers to transmit with the request. </param>
         /// <param name="validStatusCodeRanges"> HTTP status codes to consider successful. For instance, "2xx,301-304,418". </param>
-        /// <param name="preferHTTPS"> Value indicating whether HTTPS is preferred over HTTP in cases where the choice is not explicit. </param>
+        /// <param name="preferHttps"> Value indicating whether HTTPS is preferred over HTTP in cases where the choice is not explicit. </param>
         /// <returns> A new <see cref="Models.ConnectionMonitorHttpConfiguration"/> instance for mocking. </returns>
-        public static ConnectionMonitorHttpConfiguration ConnectionMonitorHttpConfiguration(int? port = default, NetworkHttpConfigurationMethod? @method = default, string path = default, IEnumerable<NetworkWatcherHttpHeader> requestHeaders = default, IEnumerable<string> validStatusCodeRanges = default, bool? preferHTTPS = default)
+        public static ConnectionMonitorHttpConfiguration ConnectionMonitorHttpConfiguration(int? port = default, NetworkHttpConfigurationMethod? @method = default, string path = default, IEnumerable<NetworkWatcherHttpHeader> requestHeaders = default, IEnumerable<string> validStatusCodeRanges = default, bool? preferHttps = default)
         {
             requestHeaders ??= new ChangeTrackingList<NetworkWatcherHttpHeader>();
             validStatusCodeRanges ??= new ChangeTrackingList<string>();
@@ -10913,7 +10913,7 @@ namespace Azure.ResourceManager.Network.Models
                 path,
                 (requestHeaders ?? new ChangeTrackingList<NetworkWatcherHttpHeader>()).ToList(),
                 (validStatusCodeRanges ?? new ChangeTrackingList<string>()).ToList(),
-                preferHTTPS,
+                preferHttps,
                 default);
         }
 
@@ -17597,39 +17597,6 @@ namespace Azure.ResourceManager.Network.Models
                     provisioningState,
                     default),
                 etag);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.VpnClientConnectionHealthDetail"/>. </summary>
-        /// <param name="vpnConnectionId"> The vpn client Id. </param>
-        /// <param name="vpnConnectionDurationInSeconds"> The duration time of a connected vpn client. </param>
-        /// <param name="vpnConnectionOn"> The start time of a connected vpn client. </param>
-        /// <param name="publicIPAddress"> The public Ip of a connected vpn client. </param>
-        /// <param name="privateIPAddress"> The assigned private Ip of a connected vpn client. </param>
-        /// <param name="vpnUserName"> The user name of a connected vpn client. </param>
-        /// <param name="maxBandwidth"> The max band width. </param>
-        /// <param name="egressPacketsTransferred"> The egress packets per second. </param>
-        /// <param name="egressBytesTransferred"> The egress bytes per second. </param>
-        /// <param name="ingressPacketsTransferred"> The ingress packets per second. </param>
-        /// <param name="ingressBytesTransferred"> The ingress bytes per second. </param>
-        /// <param name="maxPacketsPerSecond"> The max packets transferred per second. </param>
-        /// <returns> A new <see cref="Models.VpnClientConnectionHealthDetail"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static VpnClientConnectionHealthDetail VpnClientConnectionHealthDetail(string vpnConnectionId = default, long? vpnConnectionDurationInSeconds = default, DateTimeOffset? vpnConnectionOn = default, string publicIPAddress = default, string privateIPAddress = default, string vpnUserName = default, long? maxBandwidth = default, long? egressPacketsTransferred = default, long? egressBytesTransferred = default, long? ingressPacketsTransferred = default, long? ingressBytesTransferred = default, long? maxPacketsPerSecond = default)
-        {
-            return new VpnClientConnectionHealthDetail(
-                vpnConnectionId,
-                default,
-                default,
-                publicIPAddress,
-                privateIPAddress,
-                vpnUserName,
-                maxBandwidth,
-                egressPacketsTransferred,
-                egressBytesTransferred,
-                ingressPacketsTransferred,
-                ingressBytesTransferred,
-                maxPacketsPerSecond,
-                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Network.VirtualRouterData"/>. </summary>

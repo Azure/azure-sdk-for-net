@@ -3,12 +3,12 @@
 
 #nullable disable
 
-#pragma warning disable CS0612, CS0618, CS1591
-
 namespace Azure.ResourceManager.Network.Models
 {
+    /// <summary> Compatibility declaration for the RoutingRuleRouteDestination type. </summary>
     public partial class RoutingRuleRouteDestination
     {
+        /// <summary> Compatibility member. </summary>
         public global::Azure.ResourceManager.Network.Models.RoutingRuleDestinationType DestinationType
         {
             get => default;

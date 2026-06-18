@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 #nullable disable
-#pragma warning disable CS0612, CS0618, CS1591
 
 using System;
 using System.Collections;
@@ -14,11 +13,12 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network.Models
 {
+    /// <summary> Compatibility declaration for the ApplicationGatewayBackendSettings type. </summary>
     [CodeGenSuppress("TrustedRootCertificates")]
     public partial class ApplicationGatewayBackendSettings
     {
-        [Azure.ResourceManager.Network.WirePath("properties.trustedRootCertificates")] public IList<WritableSubResource> TrustedRootCertificates => Azure.ResourceManager.Network.WritableSubResourceCollectionCompatibility.AsList(Properties?.TrustedRootCertificates);
+        /// <summary> Gets or sets the TrustedRootCertificates compatibility property. </summary>
+        [Azure.ResourceManager.Network.WirePath("properties.trustedRootCertificates")]
+        public IList<WritableSubResource> TrustedRootCertificates => Azure.ResourceManager.Network.WritableSubResourceCollectionCompatibility.AsList(Properties?.TrustedRootCertificates);
     }
 }
-
-#pragma warning restore CS0612, CS0618, CS1591

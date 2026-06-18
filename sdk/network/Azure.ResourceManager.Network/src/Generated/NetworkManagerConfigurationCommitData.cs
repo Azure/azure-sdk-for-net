@@ -14,7 +14,7 @@ using Azure.ResourceManager.Network.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> The commit resource. </summary>
-    public partial class NetworkManagerConfigurationCommitData : ChildResource
+    public partial class NetworkManagerConfigurationCommitData : NetworkChildResource
     {
         /// <summary> Initializes a new instance of <see cref="NetworkManagerConfigurationCommitData"/>. </summary>
         public NetworkManagerConfigurationCommitData()

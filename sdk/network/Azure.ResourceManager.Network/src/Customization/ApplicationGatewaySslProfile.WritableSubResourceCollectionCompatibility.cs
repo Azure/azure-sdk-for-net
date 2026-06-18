@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 #nullable disable
-#pragma warning disable CS0612, CS0618, CS1591
 
 using System;
 using System.Collections;
@@ -14,11 +13,12 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network.Models
 {
+    /// <summary> Compatibility declaration for the ApplicationGatewaySslProfile type. </summary>
     [CodeGenSuppress("TrustedClientCertificates")]
     public partial class ApplicationGatewaySslProfile
     {
-        [Azure.ResourceManager.Network.WirePath("properties.trustedClientCertificates")] public IList<WritableSubResource> TrustedClientCertificates => Azure.ResourceManager.Network.WritableSubResourceCollectionCompatibility.AsList(Properties?.TrustedClientCertificates);
+        /// <summary> Gets or sets the TrustedClientCertificates compatibility property. </summary>
+        [Azure.ResourceManager.Network.WirePath("properties.trustedClientCertificates")]
+        public IList<WritableSubResource> TrustedClientCertificates => Azure.ResourceManager.Network.WritableSubResourceCollectionCompatibility.AsList(Properties?.TrustedClientCertificates);
     }
 }
-
-#pragma warning restore CS0612, CS0618, CS1591

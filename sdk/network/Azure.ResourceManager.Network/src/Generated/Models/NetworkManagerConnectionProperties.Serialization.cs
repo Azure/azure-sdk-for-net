@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
@@ -131,7 +132,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            string networkManagerId = default;
+            ResourceIdentifier networkManagerId = default;
             ScopeConnectionState? connectionState = default;
             string description = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -139,7 +140,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (prop.NameEquals("networkManagerId"u8))
                 {
-                    networkManagerId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    networkManagerId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("connectionState"u8))

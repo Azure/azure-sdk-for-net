@@ -7,6 +7,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
+    /// <summary> Compatibility declaration for the LoadBalancerBackendAddress type. </summary>
     public partial class LoadBalancerBackendAddress
     {
         /// <summary> Reference to the frontend ip address configuration defined in regional loadbalancer. </summary>

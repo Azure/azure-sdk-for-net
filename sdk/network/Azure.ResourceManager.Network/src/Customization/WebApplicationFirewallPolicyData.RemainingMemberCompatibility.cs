@@ -10,13 +10,13 @@ using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 using Microsoft.TypeSpec.Generator.Customizations;
 
-#pragma warning disable CS0612, CS0618, CS1591
-
 namespace Azure.ResourceManager.Network
 {
+    /// <summary> Compatibility declaration for the WebApplicationFirewallPolicyData type. </summary>
     [CodeGenSuppress("ApplicationGatewayForContainers")]
     public partial class WebApplicationFirewallPolicyData
     {
+        /// <summary> Gets or sets the ApplicationGatewayForContainers compatibility property. </summary>
         public IReadOnlyList<SubResource> ApplicationGatewayForContainers => default;
     }
 }

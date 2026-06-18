@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 #nullable disable
-#pragma warning disable CS0612, CS0618, CS1591
 
 using System;
 using System.Collections;
@@ -14,11 +13,12 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network.Models
 {
+    /// <summary> Compatibility declaration for the VngClientConnectionConfiguration type. </summary>
     [CodeGenSuppress("VirtualNetworkGatewayPolicyGroups")]
     public partial class VngClientConnectionConfiguration
     {
-        [Azure.ResourceManager.Network.WirePath("properties.virtualNetworkGatewayPolicyGroups")] public IList<WritableSubResource> VirtualNetworkGatewayPolicyGroups => Azure.ResourceManager.Network.WritableSubResourceCollectionCompatibility.AsList(Properties?.VirtualNetworkGatewayPolicyGroups);
+        /// <summary> Gets or sets the VirtualNetworkGatewayPolicyGroups compatibility property. </summary>
+        [Azure.ResourceManager.Network.WirePath("properties.virtualNetworkGatewayPolicyGroups")]
+        public IList<WritableSubResource> VirtualNetworkGatewayPolicyGroups => Azure.ResourceManager.Network.WritableSubResourceCollectionCompatibility.AsList(Properties?.VirtualNetworkGatewayPolicyGroups);
     }
 }
-
-#pragma warning restore CS0612, CS0618, CS1591

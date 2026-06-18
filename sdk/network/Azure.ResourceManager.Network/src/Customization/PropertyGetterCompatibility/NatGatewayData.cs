@@ -3,15 +3,18 @@
 
 #nullable disable
 
-#pragma warning disable CS0612, CS0618, CS1591
-
 namespace Azure.ResourceManager.Network
 {
+    /// <summary> Compatibility declaration for the NatGatewayData type. </summary>
     public partial class NatGatewayData
     {
+        /// <summary> Compatibility member. </summary>
         public global::System.Collections.Generic.IList<global::Azure.ResourceManager.Resources.Models.WritableSubResource> PublicIPAddresses => default;
+        /// <summary> Compatibility member. </summary>
         public global::System.Collections.Generic.IList<global::Azure.ResourceManager.Resources.Models.WritableSubResource> PublicIPAddressesV6 => default;
+        /// <summary> Compatibility member. </summary>
         public global::System.Collections.Generic.IList<global::Azure.ResourceManager.Resources.Models.WritableSubResource> PublicIPPrefixes => default;
+        /// <summary> Compatibility member. </summary>
         public global::System.Collections.Generic.IList<global::Azure.ResourceManager.Resources.Models.WritableSubResource> PublicIPPrefixesV6 => default;
     }
 }

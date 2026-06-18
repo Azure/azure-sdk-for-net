@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 #nullable disable
-#pragma warning disable CS1591
 
 using System;
 using System.Globalization;
@@ -12,11 +11,10 @@ namespace Azure.ResourceManager.Network
 {
     internal static class ResourceGuidCompatibility
     {
+        /// <summary> Invokes the Parse compatibility operation. </summary>
         public static Guid? Parse(object value)
         {
             return Guid.TryParse(Convert.ToString(value, CultureInfo.InvariantCulture), out Guid guid) ? guid : default;
         }
     }
 }
-
-#pragma warning restore CS1591

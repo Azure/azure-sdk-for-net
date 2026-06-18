@@ -3,8 +3,6 @@
 
 #nullable disable
 
-#pragma warning disable CS0612, CS0618, CS1591
-
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
@@ -18,9 +16,12 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
+    /// <summary> Compatibility declaration for the SubscriptionNetworkManagerConnectionResource type. </summary>
     public partial class SubscriptionNetworkManagerConnectionResource
     {
+        /// <summary> Invokes the UpdateAsync compatibility operation. </summary>
         public virtual Task<ArmOperation<SubscriptionNetworkManagerConnectionResource>> UpdateAsync(WaitUntil waitUntil, NetworkManagerConnectionData data, CancellationToken cancellationToken) => default;
+        /// <summary> Invokes the Update compatibility operation. </summary>
         public virtual ArmOperation<SubscriptionNetworkManagerConnectionResource> Update(WaitUntil waitUntil, NetworkManagerConnectionData data, CancellationToken cancellationToken) => default;
     }
 }

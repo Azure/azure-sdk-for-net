@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"> Post request for Create/Delete/Get Bastion Shareable Link endpoints. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation> DeleteBastionShareableLinkAsync(WaitUntil waitUntil, BastionShareableLinkListRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteBastionShareableLinkAsync(WaitUntil waitUntil, BastionShareableLinkListContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bastionHostsRestClient.CreateDeleteBastionShareableLinkRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BastionShareableLinkListRequest.ToRequestContent(content), context);
+                HttpMessage message = _bastionHostsRestClient.CreateDeleteBastionShareableLinkRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BastionShareableLinkListContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation operation = new NetworkArmOperation(_bastionHostsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"> Post request for Create/Delete/Get Bastion Shareable Link endpoints. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation DeleteBastionShareableLink(WaitUntil waitUntil, BastionShareableLinkListRequest content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation DeleteBastionShareableLink(WaitUntil waitUntil, BastionShareableLinkListContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -495,7 +495,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bastionHostsRestClient.CreateDeleteBastionShareableLinkRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BastionShareableLinkListRequest.ToRequestContent(content), context);
+                HttpMessage message = _bastionHostsRestClient.CreateDeleteBastionShareableLinkRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BastionShareableLinkListContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation operation = new NetworkArmOperation(_bastionHostsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -838,7 +838,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <returns> A collection of <see cref="BastionShareableLink"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BastionShareableLink> GetBastionShareableLinkAsync(BastionShareableLinkListRequest content, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<BastionShareableLink> GetBastionShareableLinkAsync(BastionShareableLinkListContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -851,7 +851,7 @@ namespace Azure.ResourceManager.Network
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
-                BastionShareableLinkListRequest.ToRequestContent(content),
+                BastionShareableLinkListContent.ToRequestContent(content),
                 context,
                 "BastionHostResource.GetBastionShareableLink");
         }
@@ -881,7 +881,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <returns> A collection of <see cref="BastionShareableLink"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BastionShareableLink> GetBastionShareableLink(BastionShareableLinkListRequest content, CancellationToken cancellationToken = default)
+        public virtual Pageable<BastionShareableLink> GetBastionShareableLink(BastionShareableLinkListContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -894,7 +894,7 @@ namespace Azure.ResourceManager.Network
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
-                BastionShareableLinkListRequest.ToRequestContent(content),
+                BastionShareableLinkListContent.ToRequestContent(content),
                 context,
                 "BastionHostResource.GetBastionShareableLink");
         }
@@ -923,7 +923,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> Post request for Create/Delete/Get Bastion Shareable Link endpoints. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        internal async Task<ArmOperation<BastionShareableLinkListResult>> PutBastionShareableLinkAsync(WaitUntil waitUntil, BastionShareableLinkListRequest content, CancellationToken cancellationToken = default)
+        internal async Task<ArmOperation<BastionShareableLinkListResult>> PutBastionShareableLinkAsync(WaitUntil waitUntil, BastionShareableLinkListContent content, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _bastionHostsClientDiagnostics.CreateScope("BastionHostResource.PutBastionShareableLink");
             scope.Start();
@@ -933,7 +933,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bastionHostsRestClient.CreatePutBastionShareableLinkRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BastionShareableLinkListRequest.ToRequestContent(content), context);
+                HttpMessage message = _bastionHostsRestClient.CreatePutBastionShareableLinkRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BastionShareableLinkListContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<BastionShareableLinkListResult> operation = new NetworkArmOperation<BastionShareableLinkListResult>(
                     new BastionShareableLinkListResultOperationSource(),
@@ -979,7 +979,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> Post request for Create/Delete/Get Bastion Shareable Link endpoints. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        internal ArmOperation<BastionShareableLinkListResult> PutBastionShareableLink(WaitUntil waitUntil, BastionShareableLinkListRequest content, CancellationToken cancellationToken = default)
+        internal ArmOperation<BastionShareableLinkListResult> PutBastionShareableLink(WaitUntil waitUntil, BastionShareableLinkListContent content, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _bastionHostsClientDiagnostics.CreateScope("BastionHostResource.PutBastionShareableLink");
             scope.Start();
@@ -989,7 +989,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bastionHostsRestClient.CreatePutBastionShareableLinkRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BastionShareableLinkListRequest.ToRequestContent(content), context);
+                HttpMessage message = _bastionHostsRestClient.CreatePutBastionShareableLinkRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BastionShareableLinkListContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<BastionShareableLinkListResult> operation = new NetworkArmOperation<BastionShareableLinkListResult>(
                     new BastionShareableLinkListResultOperationSource(),

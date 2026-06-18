@@ -9,6 +9,7 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Network
 {
+    /// <summary> Compatibility declaration for the ManagementGroupNetworkManagerConnectionResource type. </summary>
     public partial class ManagementGroupNetworkManagerConnectionResource : IJsonModel<NetworkManagerConnectionData>, IPersistableModel<NetworkManagerConnectionData>
     {
         NetworkManagerConnectionData IJsonModel<NetworkManagerConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => new NetworkManagerConnectionData();

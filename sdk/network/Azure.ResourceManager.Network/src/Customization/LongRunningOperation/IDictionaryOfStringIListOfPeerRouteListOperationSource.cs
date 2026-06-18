@@ -3,8 +3,6 @@
 
 #nullable disable
 
-#pragma warning disable CS0612, CS0618
-
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
@@ -16,6 +14,7 @@ using Azure.ResourceManager.Network.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> Compatibility operation source for BGP route operations that preserve the obsolete PeerRouteList return shape. </summary>
+    [System.ObsoleteAttribute("This type preserves obsolete PeerRouteList operation results for compatibility.", false)]
     internal partial class IDictionaryOfStringIListOfPeerRouteListOperationSource : IOperationSource<IDictionary<string, IList<PeerRouteList>>>
     {
         /// <summary> Initializes a new instance of <see cref="IDictionaryOfStringIListOfPeerRouteListOperationSource"/>. </summary>

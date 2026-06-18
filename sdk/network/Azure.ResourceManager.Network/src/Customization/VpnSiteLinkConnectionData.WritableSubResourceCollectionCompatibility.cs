@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 #nullable disable
-#pragma warning disable CS0612, CS0618, CS1591
 
 using System;
 using System.Collections;
@@ -14,13 +13,16 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
+    /// <summary> Compatibility declaration for the VpnSiteLinkConnectionData type. </summary>
     [CodeGenSuppress("EgressNatRules")]
     [CodeGenSuppress("IngressNatRules")]
     public partial class VpnSiteLinkConnectionData
     {
-        [WirePath("properties.egressNatRules")] public IList<WritableSubResource> EgressNatRules => WritableSubResourceCollectionCompatibility.AsList(Properties?.EgressNatRules);
-        [WirePath("properties.ingressNatRules")] public IList<WritableSubResource> IngressNatRules => WritableSubResourceCollectionCompatibility.AsList(Properties?.IngressNatRules);
+        /// <summary> Gets or sets the EgressNatRules compatibility property. </summary>
+        [WirePath("properties.egressNatRules")]
+        public IList<WritableSubResource> EgressNatRules => WritableSubResourceCollectionCompatibility.AsList(Properties?.EgressNatRules);
+        /// <summary> Gets or sets the IngressNatRules compatibility property. </summary>
+        [WirePath("properties.ingressNatRules")]
+        public IList<WritableSubResource> IngressNatRules => WritableSubResourceCollectionCompatibility.AsList(Properties?.IngressNatRules);
     }
 }
-
-#pragma warning restore CS0612, CS0618, CS1591

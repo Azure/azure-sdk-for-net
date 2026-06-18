@@ -3,12 +3,12 @@
 
 #nullable disable
 
-#pragma warning disable CS0612, CS0618, CS1591
-
 namespace Azure.ResourceManager.Network
 {
+    /// <summary> Compatibility declaration for the RouteFilterData type. </summary>
     public partial class RouteFilterData
     {
+        /// <summary> Compatibility member. </summary>
         public global::System.Collections.Generic.IReadOnlyList<global::Azure.ResourceManager.Network.ExpressRouteCircuitPeeringData> IPv6Peerings => default;
     }
 }

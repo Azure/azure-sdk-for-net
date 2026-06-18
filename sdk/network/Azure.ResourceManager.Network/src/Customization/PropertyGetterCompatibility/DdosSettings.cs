@@ -3,13 +3,13 @@
 
 #nullable disable
 
-#pragma warning disable CS0612, CS0618, CS1591
-
 namespace Azure.ResourceManager.Network.Models
 {
+    /// <summary> Compatibility declaration for the DdosSettings type. </summary>
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("DdosCustomPolicyId")]
     public partial class DdosSettings
     {
+        /// <summary> Compatibility member. </summary>
         [Azure.ResourceManager.Network.WirePath("ddosCustomPolicy.id")]
         [System.ObsoleteAttribute("This property is obsolete and might be removed in a future version, please use `TagToIPAddresses` instead", false)]
         public global::Azure.Core.ResourceIdentifier DdosCustomPolicyId
@@ -24,6 +24,7 @@ namespace Azure.ResourceManager.Network.Models
                 DdosCustomPolicy.Id = value;
             }
         }
+        /// <summary> Compatibility member. </summary>
 
         [System.ObsoleteAttribute("This property is obsolete and might be removed in a future version, please use `TagToIPAddresses` instead", false)]
         public global::System.Nullable<global::System.Boolean> ProtectedIP
@@ -31,6 +32,7 @@ namespace Azure.ResourceManager.Network.Models
             get => default;
             set { } // Compatibility setter: previous GA surface was settable; generated model treats this service-populated property as read-only.
         }
+        /// <summary> Compatibility member. </summary>
         [System.ObsoleteAttribute("This property is obsolete and might be removed in a future version, please use `TagToIPAddresses` instead", false)]
         public global::System.Nullable<global::Azure.ResourceManager.Network.Models.DdosSettingsProtectionCoverage> ProtectionCoverage
         {

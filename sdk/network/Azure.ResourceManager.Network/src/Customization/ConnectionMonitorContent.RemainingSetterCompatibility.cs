@@ -8,10 +8,13 @@ using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Microsoft.TypeSpec.Generator.Customizations;
 
-#pragma warning disable CS0612, CS0618, CS1591
-
 namespace Azure.ResourceManager.Network.Models
 {
+    // The generated create/update content model flattens these envelope properties from the
+    // REST shape, but the shipped SDK exposed location/tags only on the nested
+    // ConnectionMonitorCreateOrUpdateContent compatibility model. Suppress them here to avoid
+    // adding duplicate public properties with different ownership.
+    /// <summary> Compatibility declaration for the ConnectionMonitorContent type. </summary>
     [CodeGenSuppress("Location")]
     [CodeGenSuppress("Tags")]
     public partial class ConnectionMonitorContent

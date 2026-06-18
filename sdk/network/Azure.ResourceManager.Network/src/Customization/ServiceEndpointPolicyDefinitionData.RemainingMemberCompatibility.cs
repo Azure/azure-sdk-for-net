@@ -10,13 +10,13 @@ using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 using Microsoft.TypeSpec.Generator.Customizations;
 
-#pragma warning disable CS0612, CS0618, CS1591
-
 namespace Azure.ResourceManager.Network
 {
+    /// <summary> Compatibility declaration for the ServiceEndpointPolicyDefinitionData type. </summary>
     [CodeGenSuppress("ServiceResources")]
     public partial class ServiceEndpointPolicyDefinitionData
     {
+        /// <summary> Gets or sets the ServiceResources compatibility property. </summary>
         public IList<ResourceIdentifier> ServiceResources { get; } = new ChangeTrackingList<ResourceIdentifier>();
     }
 }

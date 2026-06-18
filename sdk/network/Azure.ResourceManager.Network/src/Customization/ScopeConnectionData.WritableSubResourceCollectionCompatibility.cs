@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 #nullable disable
-#pragma warning disable CS0612, CS0618, CS1591
 
 using System;
 using System.Collections;
@@ -14,9 +13,11 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
+    /// <summary> Compatibility declaration for the ScopeConnectionData type. </summary>
     [CodeGenSuppress("TenantId")]
     public partial class ScopeConnectionData
     {
+        /// <summary> Gets or sets the TenantId compatibility property. </summary>
         [WirePath("properties.tenantId")]
         public Guid? TenantId
         {
@@ -32,5 +33,3 @@ namespace Azure.ResourceManager.Network
         }
     }
 }
-
-#pragma warning restore CS0612, CS0618, CS1591

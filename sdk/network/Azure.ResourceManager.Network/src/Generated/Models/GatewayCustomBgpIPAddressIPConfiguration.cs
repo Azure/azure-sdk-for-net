@@ -19,34 +19,26 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of <see cref="GatewayCustomBgpIPAddressIPConfiguration"/>. </summary>
         /// <param name="ipConfigurationId"> The IpconfigurationId of ipconfiguration which belongs to gateway. </param>
-        /// <param name="customBgpIpAddress"> The custom BgpPeeringAddress which belongs to IpconfigurationId. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ipConfigurationId"/> or <paramref name="customBgpIpAddress"/> is null. </exception>
-        public GatewayCustomBgpIPAddressIPConfiguration(string ipConfigurationId, string customBgpIpAddress)
+        /// <param name="customBgpIPAddress"> The custom BgpPeeringAddress which belongs to IpconfigurationId. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ipConfigurationId"/> or <paramref name="customBgpIPAddress"/> is null. </exception>
+        public GatewayCustomBgpIPAddressIPConfiguration(string ipConfigurationId, string customBgpIPAddress)
         {
             Argument.AssertNotNull(ipConfigurationId, nameof(ipConfigurationId));
-            Argument.AssertNotNull(customBgpIpAddress, nameof(customBgpIpAddress));
+            Argument.AssertNotNull(customBgpIPAddress, nameof(customBgpIPAddress));
 
-            IpConfigurationId = ipConfigurationId;
-            CustomBgpIpAddress = customBgpIpAddress;
+            IPConfigurationId = ipConfigurationId;
+            CustomBgpIPAddress = customBgpIPAddress;
         }
 
         /// <summary> Initializes a new instance of <see cref="GatewayCustomBgpIPAddressIPConfiguration"/>. </summary>
         /// <param name="ipConfigurationId"> The IpconfigurationId of ipconfiguration which belongs to gateway. </param>
-        /// <param name="customBgpIpAddress"> The custom BgpPeeringAddress which belongs to IpconfigurationId. </param>
+        /// <param name="customBgpIPAddress"> The custom BgpPeeringAddress which belongs to IpconfigurationId. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GatewayCustomBgpIPAddressIPConfiguration(string ipConfigurationId, string customBgpIpAddress, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GatewayCustomBgpIPAddressIPConfiguration(string ipConfigurationId, string customBgpIPAddress, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            IpConfigurationId = ipConfigurationId;
-            CustomBgpIpAddress = customBgpIpAddress;
+            IPConfigurationId = ipConfigurationId;
+            CustomBgpIPAddress = customBgpIPAddress;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> The IpconfigurationId of ipconfiguration which belongs to gateway. </summary>
-        [WirePath("ipConfigurationId")]
-        public string IpConfigurationId { get; set; }
-
-        /// <summary> The custom BgpPeeringAddress which belongs to IpconfigurationId. </summary>
-        [WirePath("customBgpIpAddress")]
-        public string CustomBgpIpAddress { get; set; }
     }
 }

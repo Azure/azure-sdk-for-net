@@ -3,8 +3,6 @@
 
 #nullable disable
 
-#pragma warning disable CS0612, CS0618, CS1591
-
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
@@ -18,9 +16,12 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
+    /// <summary> Compatibility declaration for the NetworkManagerResource type. </summary>
     public partial class NetworkManagerResource
     {
+        /// <summary> Invokes the PostNetworkManagerCommitAsync compatibility operation. </summary>
         public virtual Task<ArmOperation<NetworkManagerCommit>> PostNetworkManagerCommitAsync(WaitUntil waitUntil, NetworkManagerCommit content, CancellationToken cancellationToken) => default;
+        /// <summary> Invokes the PostNetworkManagerCommit compatibility operation. </summary>
         public virtual ArmOperation<NetworkManagerCommit> PostNetworkManagerCommit(WaitUntil waitUntil, NetworkManagerCommit content, CancellationToken cancellationToken) => default;
     }
 }

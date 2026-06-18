@@ -3,14 +3,15 @@
 
 #nullable disable
 
-#pragma warning disable CS0612, CS0618, CS1591
-
 namespace Azure.ResourceManager.Network.Mocking
 {
+    /// <summary> Compatibility declaration for the MockableNetworkArmClient type. </summary>
     public partial class MockableNetworkArmClient
     {
+        /// <summary> Invokes the GetVirtualMachineScaleSetNetworkResource compatibility operation. </summary>
         public virtual global::Azure.ResourceManager.Network.VirtualMachineScaleSetNetworkResource GetVirtualMachineScaleSetNetworkResource(global::Azure.Core.ResourceIdentifier p0)
             => new global::Azure.ResourceManager.Network.VirtualMachineScaleSetNetworkResource(Client, p0);
+        /// <summary> Invokes the GetVirtualMachineScaleSetVmNetworkResource compatibility operation. </summary>
         public virtual global::Azure.ResourceManager.Network.VirtualMachineScaleSetVmNetworkResource GetVirtualMachineScaleSetVmNetworkResource(global::Azure.Core.ResourceIdentifier p0)
             => new global::Azure.ResourceManager.Network.VirtualMachineScaleSetVmNetworkResource(Client, p0);
     }

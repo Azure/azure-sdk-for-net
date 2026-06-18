@@ -3,8 +3,6 @@
 
 #nullable disable
 
-#pragma warning disable CS0612, CS0618, CS1591
-
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
@@ -18,11 +16,16 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
+    /// <summary> Compatibility declaration for the VpnSiteLinkConnectionResource type. </summary>
     public partial class VpnSiteLinkConnectionResource
     {
+        /// <summary> Invokes the GetIkeSasVpnLinkConnectionAsync compatibility operation. </summary>
         public virtual Task<ArmOperation<string>> GetIkeSasVpnLinkConnectionAsync(WaitUntil waitUntil, CancellationToken cancellationToken) => default;
+        /// <summary> Invokes the GetIkeSasVpnLinkConnection compatibility operation. </summary>
         public virtual ArmOperation<string> GetIkeSasVpnLinkConnection(WaitUntil waitUntil, CancellationToken cancellationToken) => default;
+        /// <summary> Invokes the ResetConnectionVpnLinkConnectionAsync compatibility operation. </summary>
         public virtual Task<ArmOperation> ResetConnectionVpnLinkConnectionAsync(WaitUntil waitUntil, CancellationToken cancellationToken) => default;
+        /// <summary> Invokes the ResetConnectionVpnLinkConnection compatibility operation. </summary>
         public virtual ArmOperation ResetConnectionVpnLinkConnection(WaitUntil waitUntil, CancellationToken cancellationToken) => default;
     }
 }

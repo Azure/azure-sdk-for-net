@@ -3,13 +3,14 @@
 
 #nullable disable
 
-#pragma warning disable CS0612, CS0618, CS1591
-
 namespace Azure.ResourceManager.Network
 {
+    /// <summary> Compatibility declaration for the PrivateLinkServiceData type. </summary>
     public partial class PrivateLinkServiceData
     {
+        /// <summary> Compatibility member. </summary>
         public global::System.Collections.Generic.IList<global::Azure.ResourceManager.Network.Models.PrivateLinkServiceIPConfiguration> IPConfigurations => default;
+        /// <summary> Compatibility member. </summary>
         public global::System.Collections.Generic.IList<global::Azure.ResourceManager.Network.FrontendIPConfigurationData> LoadBalancerFrontendIPConfigurations => default;
     }
 }

@@ -3,13 +3,14 @@
 
 #nullable disable
 
-#pragma warning disable CS0612, CS0618, CS1591
-
 namespace Azure.ResourceManager.Network
 {
+    /// <summary> Compatibility declaration for the DdosCustomPolicyData type. </summary>
     public partial class DdosCustomPolicyData
     {
+        /// <summary> Compatibility member. </summary>
         public global::System.Collections.Generic.IList<global::Azure.ResourceManager.Resources.Models.WritableSubResource> FrontEndIPConfiguration => default;
+        /// <summary> Compatibility member. </summary>
         [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release", false)]
         public global::System.Collections.Generic.IList<global::Azure.ResourceManager.Network.Models.ProtocolCustomSettings> ProtocolCustomSettings => default;
     }

@@ -10,13 +10,13 @@ using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 using Microsoft.TypeSpec.Generator.Customizations;
 
-#pragma warning disable CS0612, CS0618, CS1591
-
 namespace Azure.ResourceManager.Network
 {
+    /// <summary> Compatibility declaration for the ManagementGroupNetworkManagerConnectionResource type. </summary>
     [CodeGenSuppress("Data")]
     public partial class ManagementGroupNetworkManagerConnectionResource
     {
+        /// <summary> Gets or sets the Data compatibility property. </summary>
         public virtual NetworkManagerConnectionData Data
         {
             get

@@ -74,16 +74,16 @@ namespace Azure.ResourceManager.Network.Models
             {
                 throw new FormatException($"The model {nameof(NetworkIPConfigurationBgpPeeringAddress)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(IpconfigurationId))
+            if (Optional.IsDefined(IPConfigurationId))
             {
                 writer.WritePropertyName("ipconfigurationId"u8);
-                writer.WriteStringValue(IpconfigurationId);
+                writer.WriteStringValue(IPConfigurationId);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(DefaultBgpIpAddresses))
+            if (options.Format != "W" && Optional.IsCollectionDefined(DefaultBgpIPAddresses))
             {
                 writer.WritePropertyName("defaultBgpIpAddresses"u8);
                 writer.WriteStartArray();
-                foreach (string item in DefaultBgpIpAddresses)
+                foreach (string item in DefaultBgpIPAddresses)
                 {
                     if (item == null)
                     {
@@ -94,11 +94,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(CustomBgpIpAddresses))
+            if (Optional.IsCollectionDefined(CustomBgpIPAddresses))
             {
                 writer.WritePropertyName("customBgpIpAddresses"u8);
                 writer.WriteStartArray();
-                foreach (string item in CustomBgpIpAddresses)
+                foreach (string item in CustomBgpIPAddresses)
                 {
                     if (item == null)
                     {
@@ -109,11 +109,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(TunnelIpAddresses))
+            if (options.Format != "W" && Optional.IsCollectionDefined(TunnelIPAddresses))
             {
                 writer.WritePropertyName("tunnelIpAddresses"u8);
                 writer.WriteStartArray();
-                foreach (string item in TunnelIpAddresses)
+                foreach (string item in TunnelIPAddresses)
                 {
                     if (item == null)
                     {
@@ -166,16 +166,16 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            string ipconfigurationId = default;
-            IReadOnlyList<string> defaultBgpIpAddresses = default;
-            IList<string> customBgpIpAddresses = default;
-            IReadOnlyList<string> tunnelIpAddresses = default;
+            string ipConfigurationId = default;
+            IReadOnlyList<string> defaultBgpIPAddresses = default;
+            IList<string> customBgpIPAddresses = default;
+            IReadOnlyList<string> tunnelIPAddresses = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("ipconfigurationId"u8))
                 {
-                    ipconfigurationId = prop.Value.GetString();
+                    ipConfigurationId = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("defaultBgpIpAddresses"u8))
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Network.Models
                             array.Add(item.GetString());
                         }
                     }
-                    defaultBgpIpAddresses = array;
+                    defaultBgpIPAddresses = array;
                     continue;
                 }
                 if (prop.NameEquals("customBgpIpAddresses"u8))
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Network.Models
                             array.Add(item.GetString());
                         }
                     }
-                    customBgpIpAddresses = array;
+                    customBgpIPAddresses = array;
                     continue;
                 }
                 if (prop.NameEquals("tunnelIpAddresses"u8))
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Network.Models
                             array.Add(item.GetString());
                         }
                     }
-                    tunnelIpAddresses = array;
+                    tunnelIPAddresses = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new NetworkIPConfigurationBgpPeeringAddress(ipconfigurationId, defaultBgpIpAddresses ?? new ChangeTrackingList<string>(), customBgpIpAddresses ?? new ChangeTrackingList<string>(), tunnelIpAddresses ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
+            return new NetworkIPConfigurationBgpPeeringAddress(ipConfigurationId, defaultBgpIPAddresses ?? new ChangeTrackingList<string>(), customBgpIPAddresses ?? new ChangeTrackingList<string>(), tunnelIPAddresses ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

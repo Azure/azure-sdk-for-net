@@ -7,6 +7,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network
 {
+    /// <summary> Compatibility declaration for the ExpressRouteGatewayData type. </summary>
     public partial class ExpressRouteGatewayData
     {
         /// <summary> The Virtual Hub where the ExpressRoute gateway is or will be deployed. </summary>

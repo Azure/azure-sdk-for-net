@@ -3,8 +3,6 @@
 
 #nullable disable
 
-#pragma warning disable CS0612, CS0618, CS1591
-
 using System;
 using System.Threading;
 using Azure;
@@ -16,9 +14,12 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
+    /// <summary> Compatibility declaration for the CloudServiceSwapCollection type. </summary>
     public partial class CloudServiceSwapCollection
     {
+        /// <summary> Invokes the GetAllAsync compatibility operation. </summary>
         public virtual AsyncPageable<CloudServiceSwapResource> GetAllAsync(CancellationToken cancellationToken) => default;
+        /// <summary> Invokes the GetAll compatibility operation. </summary>
         public virtual Pageable<CloudServiceSwapResource> GetAll(CancellationToken cancellationToken) => default;
     }
 }

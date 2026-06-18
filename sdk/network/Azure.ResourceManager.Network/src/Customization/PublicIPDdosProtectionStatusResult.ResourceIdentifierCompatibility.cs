@@ -7,6 +7,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
+    /// <summary> Compatibility declaration for the PublicIPDdosProtectionStatusResult type. </summary>
     public partial class PublicIPDdosProtectionStatusResult
     {
         /// <summary> Public IP ARM resource ID. </summary>

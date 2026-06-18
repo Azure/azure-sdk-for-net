@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 #nullable disable
-#pragma warning disable CS1591
 
 using System;
 using System.Globalization;
@@ -10,8 +9,12 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network.Models
 {
+    /// <summary> Compatibility declaration for the ActiveSecurityAdminRule type. </summary>
     [CodeGenSuppress("ResourceGuid")]
-    public partial class ActiveSecurityAdminRule { [Azure.ResourceManager.Network.WirePath("properties.resourceGuid")] public Guid? ResourceGuid => Azure.ResourceManager.Network.ResourceGuidCompatibility.Parse(Properties?.ResourceGuid); }
+    public partial class ActiveSecurityAdminRule
+    {
+        /// <summary> Gets the ResourceGuid compatibility property. </summary>
+        [Azure.ResourceManager.Network.WirePath("properties.resourceGuid")]
+        public Guid? ResourceGuid => Azure.ResourceManager.Network.ResourceGuidCompatibility.Parse(Properties?.ResourceGuid);
+    }
 }
-
-#pragma warning restore CS1591

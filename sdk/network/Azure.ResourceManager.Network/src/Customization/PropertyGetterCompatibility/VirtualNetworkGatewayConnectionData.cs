@@ -3,14 +3,16 @@
 
 #nullable disable
 
-#pragma warning disable CS0612, CS0618, CS1591
-
 namespace Azure.ResourceManager.Network
 {
+    /// <summary> Compatibility declaration for the VirtualNetworkGatewayConnectionData type. </summary>
     public partial class VirtualNetworkGatewayConnectionData
     {
+        /// <summary> Compatibility member. </summary>
         public global::System.Collections.Generic.IList<global::Azure.ResourceManager.Network.Models.GatewayCustomBgpIPAddressIPConfiguration> GatewayCustomBgpIPAddresses => default;
+        /// <summary> Compatibility member. </summary>
         public global::System.Collections.Generic.IList<global::Azure.ResourceManager.Network.Models.IPsecPolicy> IPsecPolicies => default;
+        /// <summary> Compatibility member. </summary>
         public global::System.Nullable<global::System.Boolean> UseLocalAzureIPAddress
         {
             get => default;

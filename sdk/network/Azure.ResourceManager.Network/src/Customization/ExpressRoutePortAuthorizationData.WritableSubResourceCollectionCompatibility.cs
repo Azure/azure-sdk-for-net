@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 #nullable disable
-#pragma warning disable CS0612, CS0618, CS1591
 
 using System;
 using System.Collections;
@@ -14,11 +13,12 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
+    /// <summary> Compatibility declaration for the ExpressRoutePortAuthorizationData type. </summary>
     [CodeGenSuppress("CircuitResourceUri")]
     public partial class ExpressRoutePortAuthorizationData
     {
-        [WirePath("properties.circuitResourceUri")] public Uri CircuitResourceUri => WritableSubResourceCollectionCompatibility.ParseUri(Properties?.CircuitResourceUri);
+        /// <summary> Gets or sets the CircuitResourceUri compatibility property. </summary>
+        [WirePath("properties.circuitResourceUri")]
+        public Uri CircuitResourceUri => WritableSubResourceCollectionCompatibility.ParseUri(Properties?.CircuitResourceUri);
     }
 }
-
-#pragma warning restore CS0612, CS0618, CS1591

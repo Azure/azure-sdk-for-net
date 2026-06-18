@@ -3,13 +3,14 @@
 
 #nullable disable
 
-#pragma warning disable CS0612, CS0618, CS1591
-
 namespace Azure.ResourceManager.Network
 {
+    /// <summary> Compatibility declaration for the NetworkInterfaceData type. </summary>
     public partial class NetworkInterfaceData
     {
+        /// <summary> Compatibility member. </summary>
         public global::System.Collections.Generic.IList<global::Azure.ResourceManager.Network.NetworkInterfaceIPConfigurationData> IPConfigurations => IpConfigurations;
+        /// <summary> Compatibility member. </summary>
         public global::Azure.ResourceManager.Resources.Models.WritableSubResource VirtualMachine
         {
             get => VirtualMachineId is null ? default : new global::Azure.ResourceManager.Resources.Models.WritableSubResource { Id = VirtualMachineId };

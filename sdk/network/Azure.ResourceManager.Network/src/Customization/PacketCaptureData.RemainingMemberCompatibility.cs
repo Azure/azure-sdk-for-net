@@ -10,13 +10,13 @@ using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 using Microsoft.TypeSpec.Generator.Customizations;
 
-#pragma warning disable CS0612, CS0618, CS1591
-
 namespace Azure.ResourceManager.Network
 {
+    /// <summary> Compatibility declaration for the PacketCaptureData type. </summary>
     [CodeGenSuppress("Filters")]
     public partial class PacketCaptureData
     {
+        /// <summary> Gets or sets the Filters compatibility property. </summary>
         public IReadOnlyList<Models.PacketCaptureFilter> Filters => Properties?.Filters as IReadOnlyList<Models.PacketCaptureFilter>;
     }
 }

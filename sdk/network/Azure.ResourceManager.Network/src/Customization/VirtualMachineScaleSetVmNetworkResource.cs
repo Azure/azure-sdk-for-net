@@ -3,8 +3,6 @@
 
 #nullable disable
 
-#pragma warning disable CS1591
-
 using System;
 using System.Diagnostics;
 using System.Threading;
@@ -61,6 +59,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// <summary> Invokes the GetAllIPConfigurationDataAsync compatibility operation. </summary>
         public virtual AsyncPageable<NetworkInterfaceIPConfigurationData> GetAllIPConfigurationDataAsync(string virtualMachineScaleSetName, string virtualmachineIndex, CancellationToken cancellationToken)
         {
             return new AsyncPageableWrapper<VirtualMachineScaleSetNetworkInterfaceIPConfigurationResource, NetworkInterfaceIPConfigurationData>(
@@ -68,6 +67,7 @@ namespace Azure.ResourceManager.Network
                 resource => resource.Data);
         }
 
+        /// <summary> Invokes the GetAllIPConfigurationData compatibility operation. </summary>
         public virtual Pageable<NetworkInterfaceIPConfigurationData> GetAllIPConfigurationData(string virtualMachineScaleSetName, string virtualmachineIndex, CancellationToken cancellationToken)
         {
             return new PageableWrapper<VirtualMachineScaleSetNetworkInterfaceIPConfigurationResource, NetworkInterfaceIPConfigurationData>(
@@ -75,6 +75,7 @@ namespace Azure.ResourceManager.Network
                 resource => resource.Data);
         }
 
+        /// <summary> Invokes the GetAllNetworkInterfaceDataAsync compatibility operation. </summary>
         public virtual AsyncPageable<NetworkInterfaceData> GetAllNetworkInterfaceDataAsync(CancellationToken cancellationToken)
         {
             RequestContext context = new RequestContext { CancellationToken = cancellationToken };
@@ -88,6 +89,7 @@ namespace Azure.ResourceManager.Network
                 "VirtualMachineScaleSetVmNetworkResource.GetAllNetworkInterfaceData");
         }
 
+        /// <summary> Invokes the GetAllNetworkInterfaceData compatibility operation. </summary>
         public virtual Pageable<NetworkInterfaceData> GetAllNetworkInterfaceData(CancellationToken cancellationToken)
         {
             RequestContext context = new RequestContext { CancellationToken = cancellationToken };
@@ -101,6 +103,7 @@ namespace Azure.ResourceManager.Network
                 "VirtualMachineScaleSetVmNetworkResource.GetAllNetworkInterfaceData");
         }
 
+        /// <summary> Invokes the GetAllPublicIPAddressDataAsync compatibility operation. </summary>
         public virtual AsyncPageable<PublicIPAddressData> GetAllPublicIPAddressDataAsync(string virtualMachineScaleSetName, string virtualmachineIndex, CancellationToken cancellationToken)
         {
             RequestContext context = new RequestContext { CancellationToken = cancellationToken };
@@ -116,6 +119,7 @@ namespace Azure.ResourceManager.Network
                 "VirtualMachineScaleSetVmNetworkResource.GetAllPublicIPAddressData");
         }
 
+        /// <summary> Invokes the GetAllPublicIPAddressData compatibility operation. </summary>
         public virtual Pageable<PublicIPAddressData> GetAllPublicIPAddressData(string virtualMachineScaleSetName, string virtualmachineIndex, CancellationToken cancellationToken)
         {
             RequestContext context = new RequestContext { CancellationToken = cancellationToken };
@@ -131,6 +135,7 @@ namespace Azure.ResourceManager.Network
                 "VirtualMachineScaleSetVmNetworkResource.GetAllPublicIPAddressData");
         }
 
+        /// <summary> Invokes the GetNetworkInterfaceDataAsync compatibility operation. </summary>
         public virtual async Task<Response<NetworkInterfaceData>> GetNetworkInterfaceDataAsync(string virtualMachineScaleSetName, string networkInterfaceName, CancellationToken cancellationToken)
         {
             using DiagnosticScope scope = CreateClientDiagnostics().CreateScope("VirtualMachineScaleSetVmNetworkResource.GetNetworkInterfaceData");
@@ -149,6 +154,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// <summary> Invokes the GetNetworkInterfaceData compatibility operation. </summary>
         public virtual Response<NetworkInterfaceData> GetNetworkInterfaceData(string virtualMachineScaleSetName, string networkInterfaceName, CancellationToken cancellationToken)
         {
             using DiagnosticScope scope = CreateClientDiagnostics().CreateScope("VirtualMachineScaleSetVmNetworkResource.GetNetworkInterfaceData");
@@ -167,6 +173,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// <summary> Invokes the GetIPConfigurationDataAsync compatibility operation. </summary>
         public virtual async Task<Response<NetworkInterfaceIPConfigurationData>> GetIPConfigurationDataAsync(string virtualMachineScaleSetName, string networkInterfaceName, string ipConfigurationName, CancellationToken cancellationToken)
         {
             var resource = Client.GetVirtualMachineScaleSetNetworkInterfaceIPConfigurationResource(VirtualMachineScaleSetNetworkInterfaceIPConfigurationResource.CreateResourceIdentifier(Id.SubscriptionId, Id.ResourceGroupName, virtualMachineScaleSetName, Id.Name, networkInterfaceName, ipConfigurationName));
@@ -174,6 +181,7 @@ namespace Azure.ResourceManager.Network
             return Response.FromValue(response.Value.Data, response.GetRawResponse());
         }
 
+        /// <summary> Invokes the GetIPConfigurationData compatibility operation. </summary>
         public virtual Response<NetworkInterfaceIPConfigurationData> GetIPConfigurationData(string virtualMachineScaleSetName, string networkInterfaceName, string ipConfigurationName, CancellationToken cancellationToken)
         {
             var resource = Client.GetVirtualMachineScaleSetNetworkInterfaceIPConfigurationResource(VirtualMachineScaleSetNetworkInterfaceIPConfigurationResource.CreateResourceIdentifier(Id.SubscriptionId, Id.ResourceGroupName, virtualMachineScaleSetName, Id.Name, networkInterfaceName, ipConfigurationName));
@@ -181,6 +189,7 @@ namespace Azure.ResourceManager.Network
             return Response.FromValue(response.Value.Data, response.GetRawResponse());
         }
 
+        /// <summary> Invokes the GetPublicIPAddressDataAsync compatibility operation. </summary>
         public virtual async Task<Response<PublicIPAddressData>> GetPublicIPAddressDataAsync(string virtualMachineScaleSetName, string virtualmachineIndex, string networkInterfaceName, string publicIpAddressName, CancellationToken cancellationToken)
         {
             using DiagnosticScope scope = CreateClientDiagnostics().CreateScope("VirtualMachineScaleSetVmNetworkResource.GetPublicIPAddressData");
@@ -199,6 +208,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// <summary> Invokes the GetPublicIPAddressData compatibility operation. </summary>
         public virtual Response<PublicIPAddressData> GetPublicIPAddressData(string virtualMachineScaleSetName, string virtualmachineIndex, string networkInterfaceName, string publicIpAddressName, CancellationToken cancellationToken)
         {
             using DiagnosticScope scope = CreateClientDiagnostics().CreateScope("VirtualMachineScaleSetVmNetworkResource.GetPublicIPAddressData");

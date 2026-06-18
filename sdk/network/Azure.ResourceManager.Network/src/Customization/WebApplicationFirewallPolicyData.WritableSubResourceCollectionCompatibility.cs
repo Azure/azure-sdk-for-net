@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 #nullable disable
-#pragma warning disable CS0612, CS0618, CS1591
 
 using System;
 using System.Collections;
@@ -14,13 +13,16 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
+    /// <summary> Compatibility declaration for the WebApplicationFirewallPolicyData type. </summary>
     [CodeGenSuppress("HttpListeners")]
     [CodeGenSuppress("PathBasedRules")]
     public partial class WebApplicationFirewallPolicyData
     {
-        [WirePath("properties.httpListeners")] public IReadOnlyList<WritableSubResource> HttpListeners => WritableSubResourceCollectionCompatibility.AsReadOnlyList(Properties?.HttpListeners);
-        [WirePath("properties.pathBasedRules")] public IReadOnlyList<WritableSubResource> PathBasedRules => WritableSubResourceCollectionCompatibility.AsReadOnlyList(Properties?.PathBasedRules);
+        /// <summary> Gets or sets the HttpListeners compatibility property. </summary>
+        [WirePath("properties.httpListeners")]
+        public IReadOnlyList<WritableSubResource> HttpListeners => WritableSubResourceCollectionCompatibility.AsReadOnlyList(Properties?.HttpListeners);
+        /// <summary> Gets or sets the PathBasedRules compatibility property. </summary>
+        [WirePath("properties.pathBasedRules")]
+        public IReadOnlyList<WritableSubResource> PathBasedRules => WritableSubResourceCollectionCompatibility.AsReadOnlyList(Properties?.PathBasedRules);
     }
 }
-
-#pragma warning restore CS0612, CS0618, CS1591

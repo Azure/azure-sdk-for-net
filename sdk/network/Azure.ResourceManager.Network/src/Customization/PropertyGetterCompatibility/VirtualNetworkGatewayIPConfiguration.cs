@@ -3,18 +3,19 @@
 
 #nullable disable
 
-#pragma warning disable CS0612, CS0618, CS1591
-
 namespace Azure.ResourceManager.Network.Models
 {
+    /// <summary> Compatibility declaration for the VirtualNetworkGatewayIPConfiguration type. </summary>
     public partial class VirtualNetworkGatewayIPConfiguration
     {
+        /// <summary> Compatibility member. </summary>
         public global::Azure.ResourceManager.Resources.Models.WritableSubResource PublicIPAddress
         {
             get => PublicIPAddressId is null ? default : new global::Azure.ResourceManager.Resources.Models.WritableSubResource { Id = PublicIPAddressId };
             set => PublicIPAddressId = value?.Id;
         }
 
+        /// <summary> Compatibility member. </summary>
         public global::Azure.ResourceManager.Resources.Models.WritableSubResource Subnet
         {
             get => SubnetId is null ? default : new global::Azure.ResourceManager.Resources.Models.WritableSubResource { Id = SubnetId };

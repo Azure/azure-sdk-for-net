@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="connectionState"> Connection state. </param>
         /// <param name="description"> A description of the network manager connection. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkManagerConnectionProperties(string networkManagerId, ScopeConnectionState? connectionState, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkManagerConnectionProperties(ResourceIdentifier networkManagerId, ScopeConnectionState? connectionState, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NetworkManagerId = networkManagerId;
             ConnectionState = connectionState;
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Network Manager Id. </summary>
         [WirePath("networkManagerId")]
-        public string NetworkManagerId { get; set; }
+        public ResourceIdentifier NetworkManagerId { get; set; }
 
         /// <summary> Connection state. </summary>
         [WirePath("connectionState")]

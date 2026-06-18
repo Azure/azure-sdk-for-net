@@ -3,12 +3,12 @@
 
 #nullable disable
 
-#pragma warning disable CS0612, CS0618, CS1591
-
 namespace Azure.ResourceManager.Network.Models
 {
+    /// <summary> Compatibility declaration for the FlowLogInformation type. </summary>
     public partial class FlowLogInformation
     {
+        /// <summary> Compatibility member. </summary>
         public global::Azure.ResourceManager.Network.Models.TrafficAnalyticsConfigurationProperties TrafficAnalyticsConfiguration
         {
             get => default;

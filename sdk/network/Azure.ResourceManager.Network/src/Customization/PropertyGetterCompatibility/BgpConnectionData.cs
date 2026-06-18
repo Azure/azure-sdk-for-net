@@ -3,12 +3,12 @@
 
 #nullable disable
 
-#pragma warning disable CS0612, CS0618, CS1591
-
 namespace Azure.ResourceManager.Network
 {
+    /// <summary> Compatibility declaration for the BgpConnectionData type. </summary>
     public partial class BgpConnectionData
     {
+        /// <summary> Compatibility member. </summary>
         public global::System.String PeerIP
         {
             get => default;

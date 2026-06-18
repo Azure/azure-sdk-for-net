@@ -3,8 +3,6 @@
 
 #nullable disable
 
-#pragma warning disable CS0612, CS0618, CS1591
-
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
@@ -14,15 +12,20 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
+    /// <summary> Compatibility declaration for the EffectiveNetworkSecurityGroup type. </summary>
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("EffectiveNetworkSecurityGroup", typeof(NetworkSubResource), typeof(EffectiveNetworkSecurityGroupAssociation), typeof(IReadOnlyList<EffectiveNetworkSecurityRule>), typeof(string), typeof(IDictionary<string, BinaryData>))]
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("JsonModelWriteCore", typeof(Utf8JsonWriter), typeof(ModelReaderWriterOptions))]
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("TagMap")]
     public partial class EffectiveNetworkSecurityGroup
     {
+        private readonly string _tagMap;
+        /// <summary> Gets or sets the TagMap compatibility property. </summary>
+
         [Azure.ResourceManager.Network.WirePath("tagMap")]
         [System.ObsoleteAttribute("This property is obsolete and might be removed in a future version, please use `TagToIPAddresses` instead", false)]
-        public string TagMap { get; }
+        public string TagMap => _tagMap;
 
+        /// <summary> Compatibility member. </summary>
         public global::System.Collections.Generic.IReadOnlyDictionary<global::System.String, global::System.Collections.Generic.IList<global::System.String>> TagToIPAddresses => default;
 
         // The generated constructor and writer must reference the obsolete TagMap compatibility property.
@@ -32,7 +35,7 @@ namespace Azure.ResourceManager.Network.Models
             NetworkSecurityGroup = networkSecurityGroup;
             Association = association;
             EffectiveSecurityRules = effectiveSecurityRules;
-            TagMap = tagMap;
+            _tagMap = tagMap;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -65,10 +68,10 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(TagMap))
+            if (Optional.IsDefined(_tagMap))
             {
                 writer.WritePropertyName("tagMap"u8);
-                writer.WriteStringValue(TagMap);
+                writer.WriteStringValue(_tagMap);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

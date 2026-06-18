@@ -14,7 +14,7 @@ using Azure.ResourceManager.Network.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> The Network Manager Connection resource. </summary>
-    public partial class SubscriptionNetworkManagerConnectionData : ChildResource
+    public partial class SubscriptionNetworkManagerConnectionData : NetworkChildResource
     {
         /// <summary> Initializes a new instance of <see cref="SubscriptionNetworkManagerConnectionData"/>. </summary>
         public SubscriptionNetworkManagerConnectionData()
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Network Manager Id. </summary>
         [WirePath("properties.networkManagerId")]
-        public string NetworkManagerId
+        public ResourceIdentifier NetworkManagerId
         {
             get
             {

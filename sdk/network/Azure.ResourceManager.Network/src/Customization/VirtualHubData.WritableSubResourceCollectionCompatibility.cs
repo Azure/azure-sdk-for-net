@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 #nullable disable
-#pragma warning disable CS0612, CS0618, CS1591
 
 using System;
 using System.Collections;
@@ -14,13 +13,16 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
+    /// <summary> Compatibility declaration for the VirtualHubData type. </summary>
     [CodeGenSuppress("BgpConnections")]
     [CodeGenSuppress("RouteMaps")]
     public partial class VirtualHubData
     {
-        [WirePath("properties.bgpConnections")] public IReadOnlyList<WritableSubResource> BgpConnections => WritableSubResourceCollectionCompatibility.AsReadOnlyList(Properties?.BgpConnections);
-        [WirePath("properties.routeMaps")] public IReadOnlyList<WritableSubResource> RouteMaps => WritableSubResourceCollectionCompatibility.AsReadOnlyList(Properties?.RouteMaps);
+        /// <summary> Gets or sets the BgpConnections compatibility property. </summary>
+        [WirePath("properties.bgpConnections")]
+        public IReadOnlyList<WritableSubResource> BgpConnections => WritableSubResourceCollectionCompatibility.AsReadOnlyList(Properties?.BgpConnections);
+        /// <summary> Gets or sets the RouteMaps compatibility property. </summary>
+        [WirePath("properties.routeMaps")]
+        public IReadOnlyList<WritableSubResource> RouteMaps => WritableSubResourceCollectionCompatibility.AsReadOnlyList(Properties?.RouteMaps);
     }
 }
-
-#pragma warning restore CS0612, CS0618, CS1591

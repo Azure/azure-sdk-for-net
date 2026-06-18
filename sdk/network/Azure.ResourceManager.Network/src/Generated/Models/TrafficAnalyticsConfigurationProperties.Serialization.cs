@@ -95,10 +95,10 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("workspaceResourceId"u8);
                 writer.WriteStringValue(WorkspaceResourceId);
             }
-            if (Optional.IsDefined(TrafficAnalyticsInterval))
+            if (Optional.IsDefined(TrafficAnalyticsIntervalInMinutes))
             {
                 writer.WritePropertyName("trafficAnalyticsInterval"u8);
-                writer.WriteNumberValue(TrafficAnalyticsInterval.Value);
+                writer.WriteNumberValue(TrafficAnalyticsIntervalInMinutes.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Network.Models
             string workspaceId = default;
             string workspaceRegion = default;
             ResourceIdentifier workspaceResourceId = default;
-            int? trafficAnalyticsInterval = default;
+            int? trafficAnalyticsIntervalInMinutes = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    trafficAnalyticsInterval = prop.Value.GetInt32();
+                    trafficAnalyticsIntervalInMinutes = prop.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Network.Models
                 workspaceId,
                 workspaceRegion,
                 workspaceResourceId,
-                trafficAnalyticsInterval,
+                trafficAnalyticsIntervalInMinutes,
                 additionalBinaryDataProperties);
         }
     }

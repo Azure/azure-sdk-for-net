@@ -7,6 +7,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network
 {
+    /// <summary> Compatibility declaration for the ApplicationGatewayWafDynamicManifestResource type. </summary>
     public partial class ApplicationGatewayWafDynamicManifestResource
     {
         /// <summary> Generate the resource identifier for this resource. </summary>

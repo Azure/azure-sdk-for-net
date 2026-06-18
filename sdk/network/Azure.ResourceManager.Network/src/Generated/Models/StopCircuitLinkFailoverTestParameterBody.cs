@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="StopCircuitLinkFailoverTestParameterBody"/>. </summary>
         /// <param name="stopParameters"> Parameters supplied to stop the link failover simulation on the express route circuit. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="stopParameters"/> is null. </exception>
-        public StopCircuitLinkFailoverTestParameterBody(ExpressRouteLinkFailoverStopApiParameters stopParameters)
+        public StopCircuitLinkFailoverTestParameterBody(ExpressRouteLinkFailoverStopContent stopParameters)
         {
             Argument.AssertNotNull(stopParameters, nameof(stopParameters));
 
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="StopCircuitLinkFailoverTestParameterBody"/>. </summary>
         /// <param name="stopParameters"> Parameters supplied to stop the link failover simulation on the express route circuit. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StopCircuitLinkFailoverTestParameterBody(ExpressRouteLinkFailoverStopApiParameters stopParameters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StopCircuitLinkFailoverTestParameterBody(ExpressRouteLinkFailoverStopContent stopParameters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StopParameters = stopParameters;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Parameters supplied to stop the link failover simulation on the express route circuit. </summary>
         [WirePath("stopParameters")]
-        public ExpressRouteLinkFailoverStopApiParameters StopParameters { get; }
+        public ExpressRouteLinkFailoverStopContent StopParameters { get; }
     }
 }

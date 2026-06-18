@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 #nullable disable
-#pragma warning disable CS0612, CS0618, CS1591
 
 using System;
 using System.Collections;
@@ -14,11 +13,12 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network.Models
 {
+    /// <summary> Compatibility declaration for the ContainerNetworkInterfaceConfiguration type. </summary>
     [CodeGenSuppress("ContainerNetworkInterfaces")]
     public partial class ContainerNetworkInterfaceConfiguration
     {
-        [Azure.ResourceManager.Network.WirePath("properties.containerNetworkInterfaces")] public IList<WritableSubResource> ContainerNetworkInterfaces => Azure.ResourceManager.Network.WritableSubResourceCollectionCompatibility.AsList(Properties?.ContainerNetworkInterfaces);
+        /// <summary> Gets or sets the ContainerNetworkInterfaces compatibility property. </summary>
+        [Azure.ResourceManager.Network.WirePath("properties.containerNetworkInterfaces")]
+        public IList<WritableSubResource> ContainerNetworkInterfaces => Azure.ResourceManager.Network.WritableSubResourceCollectionCompatibility.AsList(Properties?.ContainerNetworkInterfaces);
     }
 }
-
-#pragma warning restore CS0612, CS0618, CS1591

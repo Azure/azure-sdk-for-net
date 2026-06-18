@@ -3,8 +3,6 @@
 
 #nullable disable
 
-#pragma warning disable CS1591
-
 using System;
 using System.Diagnostics;
 using System.Threading;
@@ -58,6 +56,7 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
+        /// <summary> Invokes the GetAllNetworkInterfaceDataAsync compatibility operation. </summary>
 
         [ForwardsClientCalls]
         public virtual AsyncPageable<NetworkInterfaceData> GetAllNetworkInterfaceDataAsync(CancellationToken cancellationToken)
@@ -65,6 +64,7 @@ namespace Azure.ResourceManager.Network
             var resourceGroup = Client.GetResourceGroupResource(ResourceGroupResource.CreateResourceIdentifier(Id.SubscriptionId, Id.ResourceGroupName));
             return resourceGroup.GetVirtualMachineScaleSetNetworkInterfacesAsync(Id.Name, cancellationToken);
         }
+        /// <summary> Invokes the GetAllNetworkInterfaceData compatibility operation. </summary>
 
         [ForwardsClientCalls]
         public virtual Pageable<NetworkInterfaceData> GetAllNetworkInterfaceData(CancellationToken cancellationToken)
@@ -72,6 +72,7 @@ namespace Azure.ResourceManager.Network
             var resourceGroup = Client.GetResourceGroupResource(ResourceGroupResource.CreateResourceIdentifier(Id.SubscriptionId, Id.ResourceGroupName));
             return resourceGroup.GetVirtualMachineScaleSetNetworkInterfaces(Id.Name, cancellationToken);
         }
+        /// <summary> Invokes the GetAllPublicIPAddressDataAsync compatibility operation. </summary>
 
         [ForwardsClientCalls]
         public virtual AsyncPageable<PublicIPAddressData> GetAllPublicIPAddressDataAsync(CancellationToken cancellationToken)
@@ -79,6 +80,7 @@ namespace Azure.ResourceManager.Network
             var resourceGroup = Client.GetResourceGroupResource(ResourceGroupResource.CreateResourceIdentifier(Id.SubscriptionId, Id.ResourceGroupName));
             return resourceGroup.GetVirtualMachineScaleSetPublicIPAddressesAsync(Id.Name, cancellationToken);
         }
+        /// <summary> Invokes the GetAllPublicIPAddressData compatibility operation. </summary>
 
         [ForwardsClientCalls]
         public virtual Pageable<PublicIPAddressData> GetAllPublicIPAddressData(CancellationToken cancellationToken)

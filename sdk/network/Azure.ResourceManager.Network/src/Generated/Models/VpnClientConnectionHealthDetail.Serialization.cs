@@ -79,25 +79,25 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("vpnConnectionId"u8);
                 writer.WriteStringValue(VpnConnectionId);
             }
-            if (options.Format != "W" && Optional.IsDefined(VpnConnectionDuration))
+            if (options.Format != "W" && Optional.IsDefined(VpnConnectionDurationInSeconds))
             {
                 writer.WritePropertyName("vpnConnectionDuration"u8);
-                writer.WriteNumberValue(VpnConnectionDuration.Value);
+                writer.WriteNumberValue(VpnConnectionDurationInSeconds.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(VpnConnectionTime))
+            if (options.Format != "W" && Optional.IsDefined(VpnConnectionOn))
             {
                 writer.WritePropertyName("vpnConnectionTime"u8);
-                writer.WriteStringValue(VpnConnectionTime);
+                writer.WriteStringValue(VpnConnectionOn.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(PublicIpAddress))
+            if (options.Format != "W" && Optional.IsDefined(PublicIPAddress))
             {
                 writer.WritePropertyName("publicIpAddress"u8);
-                writer.WriteStringValue(PublicIpAddress);
+                writer.WriteStringValue(PublicIPAddress);
             }
-            if (options.Format != "W" && Optional.IsDefined(PrivateIpAddress))
+            if (options.Format != "W" && Optional.IsDefined(PrivateIPAddress))
             {
                 writer.WritePropertyName("privateIpAddress"u8);
-                writer.WriteStringValue(PrivateIpAddress);
+                writer.WriteStringValue(PrivateIPAddress);
             }
             if (options.Format != "W" && Optional.IsDefined(VpnUserName))
             {
@@ -177,10 +177,10 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             string vpnConnectionId = default;
-            long? vpnConnectionDuration = default;
-            string vpnConnectionTime = default;
-            string publicIpAddress = default;
-            string privateIpAddress = default;
+            long? vpnConnectionDurationInSeconds = default;
+            DateTimeOffset? vpnConnectionOn = default;
+            string publicIPAddress = default;
+            string privateIPAddress = default;
             string vpnUserName = default;
             long? maxBandwidth = default;
             long? egressPacketsTransferred = default;
@@ -202,22 +202,26 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    vpnConnectionDuration = prop.Value.GetInt64();
+                    vpnConnectionDurationInSeconds = prop.Value.GetInt64();
                     continue;
                 }
                 if (prop.NameEquals("vpnConnectionTime"u8))
                 {
-                    vpnConnectionTime = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    vpnConnectionOn = prop.Value.GetDateTimeOffset();
                     continue;
                 }
                 if (prop.NameEquals("publicIpAddress"u8))
                 {
-                    publicIpAddress = prop.Value.GetString();
+                    publicIPAddress = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("privateIpAddress"u8))
                 {
-                    privateIpAddress = prop.Value.GetString();
+                    privateIPAddress = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("vpnUserName"u8))
@@ -286,10 +290,10 @@ namespace Azure.ResourceManager.Network.Models
             }
             return new VpnClientConnectionHealthDetail(
                 vpnConnectionId,
-                vpnConnectionDuration,
-                vpnConnectionTime,
-                publicIpAddress,
-                privateIpAddress,
+                vpnConnectionDurationInSeconds,
+                vpnConnectionOn,
+                publicIPAddress,
+                privateIPAddress,
                 vpnUserName,
                 maxBandwidth,
                 egressPacketsTransferred,

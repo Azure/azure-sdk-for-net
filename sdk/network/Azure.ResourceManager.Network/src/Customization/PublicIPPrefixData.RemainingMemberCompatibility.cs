@@ -10,13 +10,13 @@ using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 using Microsoft.TypeSpec.Generator.Customizations;
 
-#pragma warning disable CS0612, CS0618, CS1591
-
 namespace Azure.ResourceManager.Network
 {
+    /// <summary> Compatibility declaration for the PublicIPPrefixData type. </summary>
     [CodeGenSuppress("PublicIPAddresses")]
     public partial class PublicIPPrefixData
     {
+        /// <summary> Gets or sets the PublicIPAddresses compatibility property. </summary>
         public IReadOnlyList<SubResource> PublicIPAddresses => default;
     }
 }

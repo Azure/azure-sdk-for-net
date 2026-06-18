@@ -3,8 +3,6 @@
 
 #nullable disable
 
-#pragma warning disable CS0612, CS0618, CS1591
-
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
@@ -18,11 +16,16 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
+    /// <summary> Compatibility declaration for the PublicIPAddressResource type. </summary>
     public partial class PublicIPAddressResource
     {
+        /// <summary> Invokes the DisassociateCloudServiceReservedPublicIPAsync compatibility operation. </summary>
         public virtual Task<ArmOperation<PublicIPAddressResource>> DisassociateCloudServiceReservedPublicIPAsync(WaitUntil waitUntil, DisassociateCloudServicePublicIPContent content, CancellationToken cancellationToken) => default;
+        /// <summary> Invokes the DisassociateCloudServiceReservedPublicIP compatibility operation. </summary>
         public virtual ArmOperation<PublicIPAddressResource> DisassociateCloudServiceReservedPublicIP(WaitUntil waitUntil, DisassociateCloudServicePublicIPContent content, CancellationToken cancellationToken) => default;
+        /// <summary> Invokes the ReserveCloudServicePublicIPAddressAsync compatibility operation. </summary>
         public virtual Task<ArmOperation<PublicIPAddressResource>> ReserveCloudServicePublicIPAddressAsync(WaitUntil waitUntil, ReserveCloudServicePublicIPAddressContent content, CancellationToken cancellationToken) => default;
+        /// <summary> Invokes the ReserveCloudServicePublicIPAddress compatibility operation. </summary>
         public virtual ArmOperation<PublicIPAddressResource> ReserveCloudServicePublicIPAddress(WaitUntil waitUntil, ReserveCloudServicePublicIPAddressContent content, CancellationToken cancellationToken) => default;
     }
 }

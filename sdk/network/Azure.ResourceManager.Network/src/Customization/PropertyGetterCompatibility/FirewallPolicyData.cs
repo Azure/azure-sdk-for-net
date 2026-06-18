@@ -3,12 +3,12 @@
 
 #nullable disable
 
-#pragma warning disable CS0612, CS0618, CS1591
-
 namespace Azure.ResourceManager.Network
 {
+    /// <summary> Compatibility declaration for the FirewallPolicyData type. </summary>
     public partial class FirewallPolicyData
     {
+        /// <summary> Compatibility member. </summary>
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public global::System.Collections.Generic.IList<global::System.String> SnatPrivateRanges => default;
     }

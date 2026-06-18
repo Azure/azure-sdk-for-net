@@ -28,15 +28,15 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="workspaceId"> The resource guid of the attached workspace. </param>
         /// <param name="workspaceRegion"> The location of the attached workspace. </param>
         /// <param name="workspaceResourceId"> Resource Id of the attached workspace. </param>
-        /// <param name="trafficAnalyticsInterval"> The interval in minutes which would decide how frequently TA service should do flow analytics. </param>
+        /// <param name="trafficAnalyticsIntervalInMinutes"> The interval in minutes which would decide how frequently TA service should do flow analytics. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TrafficAnalyticsConfigurationProperties(bool? enabled, string workspaceId, string workspaceRegion, ResourceIdentifier workspaceResourceId, int? trafficAnalyticsInterval, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TrafficAnalyticsConfigurationProperties(bool? enabled, string workspaceId, string workspaceRegion, ResourceIdentifier workspaceResourceId, int? trafficAnalyticsIntervalInMinutes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Enabled = enabled;
             WorkspaceId = workspaceId;
             WorkspaceRegion = workspaceRegion;
             WorkspaceResourceId = workspaceResourceId;
-            TrafficAnalyticsInterval = trafficAnalyticsInterval;
+            TrafficAnalyticsIntervalInMinutes = trafficAnalyticsIntervalInMinutes;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -55,9 +55,5 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Resource Id of the attached workspace. </summary>
         [WirePath("workspaceResourceId")]
         public ResourceIdentifier WorkspaceResourceId { get; set; }
-
-        /// <summary> The interval in minutes which would decide how frequently TA service should do flow analytics. </summary>
-        [WirePath("trafficAnalyticsInterval")]
-        public int? TrafficAnalyticsInterval { get; set; }
     }
 }

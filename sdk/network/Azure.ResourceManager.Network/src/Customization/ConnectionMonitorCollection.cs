@@ -10,6 +10,7 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
+    /// <summary> Compatibility declaration for the ConnectionMonitorCollection type. </summary>
     public partial class ConnectionMonitorCollection
     {
         /// <summary>

@@ -3,8 +3,6 @@
 
 #nullable disable
 
-#pragma warning disable CS0612, CS0618, CS1591
-
 using System;
 using System.Threading;
 using Azure;
@@ -16,11 +14,14 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
+    /// <summary> Compatibility declaration for the VirtualNetworkGatewayResource type. </summary>
     [CodeGenSuppress("GetRadiusSecretsAsync", typeof(CancellationToken))]
     [CodeGenSuppress("GetRadiusSecrets", typeof(CancellationToken))]
     public partial class VirtualNetworkGatewayResource
     {
+        /// <summary> Invokes the GetRadiusSecretsAsync compatibility operation. </summary>
         public virtual AsyncPageable<RadiusAuthServer> GetRadiusSecretsAsync(CancellationToken cancellationToken = default) => default;
+        /// <summary> Invokes the GetRadiusSecrets compatibility operation. </summary>
         public virtual Pageable<RadiusAuthServer> GetRadiusSecrets(CancellationToken cancellationToken = default) => default;
     }
 }

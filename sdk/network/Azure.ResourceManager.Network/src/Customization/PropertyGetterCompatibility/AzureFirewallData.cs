@@ -3,14 +3,16 @@
 
 #nullable disable
 
-#pragma warning disable CS0612, CS0618, CS1591
-
 namespace Azure.ResourceManager.Network
 {
+    /// <summary> Compatibility declaration for the AzureFirewallData type. </summary>
     public partial class AzureFirewallData
     {
+        /// <summary> Compatibility member. </summary>
         public global::System.Collections.Generic.IList<global::Azure.ResourceManager.Network.Models.AzureFirewallIPConfiguration> IPConfigurations => IpConfigurations;
+        /// <summary> Compatibility member. </summary>
         public global::System.Collections.Generic.IReadOnlyList<global::Azure.ResourceManager.Network.Models.AzureFirewallIPGroups> IPGroups => default;
+        /// <summary> Compatibility member. </summary>
         public global::Azure.ResourceManager.Network.Models.AzureFirewallIPConfiguration ManagementIPConfiguration
         {
             get => default;

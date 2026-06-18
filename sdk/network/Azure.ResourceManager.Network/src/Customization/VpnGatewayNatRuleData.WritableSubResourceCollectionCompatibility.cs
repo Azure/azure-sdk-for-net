@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 #nullable disable
-#pragma warning disable CS0612, CS0618, CS1591
 
 using System;
 using System.Collections;
@@ -14,13 +13,16 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
+    /// <summary> Compatibility declaration for the VpnGatewayNatRuleData type. </summary>
     [CodeGenSuppress("EgressVpnSiteLinkConnections")]
     [CodeGenSuppress("IngressVpnSiteLinkConnections")]
     public partial class VpnGatewayNatRuleData
     {
-        [WirePath("properties.egressVpnSiteLinkConnections")] public IReadOnlyList<WritableSubResource> EgressVpnSiteLinkConnections => WritableSubResourceCollectionCompatibility.AsReadOnlyList(Properties?.EgressVpnSiteLinkConnections);
-        [WirePath("properties.ingressVpnSiteLinkConnections")] public IReadOnlyList<WritableSubResource> IngressVpnSiteLinkConnections => WritableSubResourceCollectionCompatibility.AsReadOnlyList(Properties?.IngressVpnSiteLinkConnections);
+        /// <summary> Gets or sets the EgressVpnSiteLinkConnections compatibility property. </summary>
+        [WirePath("properties.egressVpnSiteLinkConnections")]
+        public IReadOnlyList<WritableSubResource> EgressVpnSiteLinkConnections => WritableSubResourceCollectionCompatibility.AsReadOnlyList(Properties?.EgressVpnSiteLinkConnections);
+        /// <summary> Gets or sets the IngressVpnSiteLinkConnections compatibility property. </summary>
+        [WirePath("properties.ingressVpnSiteLinkConnections")]
+        public IReadOnlyList<WritableSubResource> IngressVpnSiteLinkConnections => WritableSubResourceCollectionCompatibility.AsReadOnlyList(Properties?.IngressVpnSiteLinkConnections);
     }
 }
-
-#pragma warning restore CS0612, CS0618, CS1591

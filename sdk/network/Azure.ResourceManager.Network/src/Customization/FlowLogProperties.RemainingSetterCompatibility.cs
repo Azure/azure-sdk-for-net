@@ -8,12 +8,12 @@ using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Microsoft.TypeSpec.Generator.Customizations;
 
-#pragma warning disable CS0612, CS0618, CS1591
-
 namespace Azure.ResourceManager.Network.Models
 {
+    /// <summary> Compatibility declaration for the FlowLogProperties type. </summary>
     public partial class FlowLogProperties
     {
+        /// <summary> Gets or sets the FormatType compatibility property. </summary>
         public FlowLogFormatType? FormatType
         {
             get => Format?.Type;
@@ -28,6 +28,7 @@ namespace Azure.ResourceManager.Network.Models
             }
         }
 
+        /// <summary> Gets or sets the Version compatibility property. </summary>
         public int? Version
         {
             get => Format?.Version;

@@ -7,6 +7,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
+    /// <summary> Compatibility declaration for the DisassociateCloudServicePublicIPContent type. </summary>
     public partial class DisassociateCloudServicePublicIPContent
     {
         /// <summary> ARM ID of the Standalone Public IP to associate. </summary>

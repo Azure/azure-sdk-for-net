@@ -114,10 +114,10 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(PreferHTTPS))
+            if (Optional.IsDefined(PreferHttps))
             {
                 writer.WritePropertyName("preferHTTPS"u8);
-                writer.WriteBooleanValue(PreferHTTPS.Value);
+                writer.WriteBooleanValue(PreferHttps.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Network.Models
             string path = default;
             IList<NetworkWatcherHttpHeader> requestHeaders = default;
             IList<string> validStatusCodeRanges = default;
-            bool? preferHTTPS = default;
+            bool? preferHttps = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    preferHTTPS = prop.Value.GetBoolean();
+                    preferHttps = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Network.Models
                 path,
                 requestHeaders ?? new ChangeTrackingList<NetworkWatcherHttpHeader>(),
                 validStatusCodeRanges ?? new ChangeTrackingList<string>(),
-                preferHTTPS,
+                preferHttps,
                 additionalBinaryDataProperties);
         }
     }

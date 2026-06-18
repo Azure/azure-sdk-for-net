@@ -11,7 +11,6 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
-#pragma warning disable SA1402 // Compatibility shims for multiple removed GA types are grouped intentionally.
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Evaluation state. </summary>

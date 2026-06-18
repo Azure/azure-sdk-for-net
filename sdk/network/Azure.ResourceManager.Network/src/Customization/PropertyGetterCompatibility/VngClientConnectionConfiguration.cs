@@ -3,12 +3,12 @@
 
 #nullable disable
 
-#pragma warning disable CS0612, CS0618, CS1591
-
 namespace Azure.ResourceManager.Network.Models
 {
+    /// <summary> Compatibility declaration for the VngClientConnectionConfiguration type. </summary>
     public partial class VngClientConnectionConfiguration
     {
+        /// <summary> Compatibility member. </summary>
         public global::System.Collections.Generic.IList<global::System.String> VpnClientAddressPrefixes => default;
     }
 }

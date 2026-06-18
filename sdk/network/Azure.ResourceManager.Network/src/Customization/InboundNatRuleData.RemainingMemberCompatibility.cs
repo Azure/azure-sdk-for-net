@@ -10,13 +10,14 @@ using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 using Microsoft.TypeSpec.Generator.Customizations;
 
-#pragma warning disable CS0612, CS0618, CS1591
-
 namespace Azure.ResourceManager.Network
 {
+    /// <summary> Compatibility declaration for the InboundNatRuleData type. </summary>
     public partial class InboundNatRuleData
     {
+        /// <summary> Gets or sets the ETag compatibility property. </summary>
         public ETag? ETag => default;
+        /// <summary> Compatibility member. </summary>
         public global::Azure.ResourceManager.Resources.Models.WritableSubResource FrontendIPConfiguration
         {
             get => FrontendIPConfigurationId is null ? default : new global::Azure.ResourceManager.Resources.Models.WritableSubResource { Id = FrontendIPConfigurationId };

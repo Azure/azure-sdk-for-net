@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 #nullable disable
-#pragma warning disable CS0612, CS0618, CS1591
 
 using System;
 using System.Collections;
@@ -14,12 +13,13 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
+    /// <summary> Compatibility declaration for the DdosCustomPolicyData type. </summary>
     [CodeGenSuppress("PublicIPAddresses")]
     public partial class DdosCustomPolicyData
     {
+        /// <summary> Gets or sets the PublicIPAddresses compatibility property. </summary>
         [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release", false)]
-        [WirePath("properties.publicIPAddresses")] public IReadOnlyList<WritableSubResource> PublicIPAddresses => WritableSubResourceCollectionCompatibility.AsReadOnlyList(Properties?.PublicIPAddresses);
+        [WirePath("properties.publicIPAddresses")]
+        public IReadOnlyList<WritableSubResource> PublicIPAddresses => WritableSubResourceCollectionCompatibility.AsReadOnlyList(Properties?.PublicIPAddresses);
     }
 }
-
-#pragma warning restore CS0612, CS0618, CS1591

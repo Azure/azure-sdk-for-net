@@ -3,12 +3,12 @@
 
 #nullable disable
 
-#pragma warning disable CS0612, CS0618, CS1591
-
 namespace Azure.ResourceManager.Network
 {
+    /// <summary> Compatibility declaration for the ExpressRouteCircuitConnectionData type. </summary>
     public partial class ExpressRouteCircuitConnectionData
     {
+        /// <summary> Compatibility member. </summary>
         public global::Azure.ResourceManager.Network.Models.IPv6CircuitConnectionConfig IPv6CircuitConnectionConfig
         {
             get => default;

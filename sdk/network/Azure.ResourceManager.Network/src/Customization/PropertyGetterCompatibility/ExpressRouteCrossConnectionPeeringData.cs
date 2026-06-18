@@ -3,17 +3,18 @@
 
 #nullable disable
 
-#pragma warning disable CS0612, CS0618, CS1591
-
 namespace Azure.ResourceManager.Network
 {
+    /// <summary> Compatibility declaration for the ExpressRouteCrossConnectionPeeringData type. </summary>
     public partial class ExpressRouteCrossConnectionPeeringData
     {
+        /// <summary> Compatibility member. </summary>
         public global::System.String GatewayManagerETag
         {
             get => default;
             set { } // Compatibility setter: previous GA surface was settable; generated model treats this service-populated property as read-only.
         }
+        /// <summary> Compatibility member. </summary>
         public global::Azure.ResourceManager.Network.Models.IPv6ExpressRouteCircuitPeeringConfig IPv6PeeringConfig
         {
             get => default;

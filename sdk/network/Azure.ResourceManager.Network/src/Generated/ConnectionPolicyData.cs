@@ -13,7 +13,7 @@ using Azure.ResourceManager.Network.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> ConnectionPolicy resource defined for VirtualHub. </summary>
-    public partial class ConnectionPolicyData : ProxyResource
+    public partial class ConnectionPolicyData : NetworkProxyResource
     {
         /// <summary> Initializes a new instance of <see cref="ConnectionPolicyData"/>. </summary>
         public ConnectionPolicyData()

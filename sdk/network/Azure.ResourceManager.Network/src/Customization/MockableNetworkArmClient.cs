@@ -6,6 +6,7 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network.Mocking
 {
+    /// <summary> Compatibility declaration for the MockableNetworkArmClient type. </summary>
     [CodeGenSuppress("GetNetworkInterfaceResource", typeof(ResourceIdentifier))]
     [CodeGenSuppress("GetPublicIPAddressResource", typeof(ResourceIdentifier))]
     public partial class MockableNetworkArmClient

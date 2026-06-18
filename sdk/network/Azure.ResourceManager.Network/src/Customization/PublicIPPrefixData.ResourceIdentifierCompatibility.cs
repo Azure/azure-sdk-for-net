@@ -7,6 +7,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network
 {
+    /// <summary> Compatibility declaration for the PublicIPPrefixData type. </summary>
     public partial class PublicIPPrefixData
     {
         /// <summary> Reference to the frontend ip address configuration defined in regional loadbalancer. </summary>

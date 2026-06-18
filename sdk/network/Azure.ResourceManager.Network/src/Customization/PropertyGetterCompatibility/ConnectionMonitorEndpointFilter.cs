@@ -3,12 +3,12 @@
 
 #nullable disable
 
-#pragma warning disable CS0612, CS0618, CS1591
-
 namespace Azure.ResourceManager.Network.Models
 {
+    /// <summary> Compatibility declaration for the ConnectionMonitorEndpointFilter type. </summary>
     public partial class ConnectionMonitorEndpointFilter
     {
+        /// <summary> Compatibility member. </summary>
         public global::System.Nullable<global::Azure.ResourceManager.Network.Models.ConnectionMonitorEndpointFilterType> FilterType
         {
             get => default;

@@ -3,8 +3,6 @@
 
 #nullable disable
 
-#pragma warning disable CS0612, CS0618, CS1591
-
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
@@ -18,20 +16,26 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
+    /// <summary> Compatibility declaration for the ExpressRoutePortResource type. </summary>
     public partial class ExpressRoutePortResource
     {
+        /// <summary> Invokes the GetExpressRoutePortAuthorizations compatibility operation. </summary>
         public virtual ExpressRoutePortAuthorizationCollection GetExpressRoutePortAuthorizations()
             => GetCachedClient(client => new ExpressRoutePortAuthorizationCollection(client, Id));
+        /// <summary> Invokes the GetExpressRoutePortAuthorizationAsync compatibility operation. </summary>
 
         [ForwardsClientCalls]
         public virtual Task<Response<ExpressRoutePortAuthorizationResource>> GetExpressRoutePortAuthorizationAsync(string authorizationName, CancellationToken cancellationToken = default)
             => GetExpressRoutePortAuthorizations().GetAsync(Id.Name, authorizationName, cancellationToken);
+        /// <summary> Invokes the GetExpressRoutePortAuthorization compatibility operation. </summary>
 
         [ForwardsClientCalls]
         public virtual Response<ExpressRoutePortAuthorizationResource> GetExpressRoutePortAuthorization(string authorizationName, CancellationToken cancellationToken = default)
             => GetExpressRoutePortAuthorizations().Get(Id.Name, authorizationName, cancellationToken);
 
+        /// <summary> Invokes the GenerateLoaAsync compatibility operation. </summary>
         public virtual Task<Response<GenerateExpressRoutePortsLoaResult>> GenerateLoaAsync(GenerateExpressRoutePortsLoaContent content, CancellationToken cancellationToken) => default;
+        /// <summary> Invokes the GenerateLoa compatibility operation. </summary>
         public virtual Response<GenerateExpressRoutePortsLoaResult> GenerateLoa(GenerateExpressRoutePortsLoaContent content, CancellationToken cancellationToken) => default;
     }
 }

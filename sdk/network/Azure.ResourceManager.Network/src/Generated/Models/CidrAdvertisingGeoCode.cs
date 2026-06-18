@@ -13,44 +13,23 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct CidrAdvertisingGeoCode : IEquatable<CidrAdvertisingGeoCode>
     {
         /// <summary> GLOBAL. </summary>
-        private const string GLOBALValue = "GLOBAL";
+        private const string GlobalValue = "GLOBAL";
         /// <summary> AFRI. </summary>
-        private const string AFRIValue = "AFRI";
+        private const string AfriValue = "AFRI";
         /// <summary> APAC. </summary>
-        private const string APACValue = "APAC";
+        private const string ApacValue = "APAC";
         /// <summary> EURO. </summary>
-        private const string EUROValue = "EURO";
+        private const string EuroValue = "EURO";
         /// <summary> LATAM. </summary>
-        private const string LATAMValue = "LATAM";
+        private const string LatamValue = "LATAM";
         /// <summary> NAM. </summary>
-        private const string NAMValue = "NAM";
+        private const string NamValue = "NAM";
         /// <summary> ME. </summary>
         private const string MEValue = "ME";
         /// <summary> OCEANIA. </summary>
-        private const string OCEANIAValue = "OCEANIA";
+        private const string OceaniaValue = "OCEANIA";
         /// <summary> AQ. </summary>
         private const string AQValue = "AQ";
-
-        /// <summary> GLOBAL. </summary>
-        public static CidrAdvertisingGeoCode GLOBAL { get; } = new CidrAdvertisingGeoCode(GLOBALValue);
-
-        /// <summary> AFRI. </summary>
-        public static CidrAdvertisingGeoCode AFRI { get; } = new CidrAdvertisingGeoCode(AFRIValue);
-
-        /// <summary> APAC. </summary>
-        public static CidrAdvertisingGeoCode APAC { get; } = new CidrAdvertisingGeoCode(APACValue);
-
-        /// <summary> EURO. </summary>
-        public static CidrAdvertisingGeoCode EURO { get; } = new CidrAdvertisingGeoCode(EUROValue);
-
-        /// <summary> LATAM. </summary>
-        public static CidrAdvertisingGeoCode LATAM { get; } = new CidrAdvertisingGeoCode(LATAMValue);
-
-        /// <summary> NAM. </summary>
-        public static CidrAdvertisingGeoCode NAM { get; } = new CidrAdvertisingGeoCode(NAMValue);
-
-        /// <summary> OCEANIA. </summary>
-        public static CidrAdvertisingGeoCode OCEANIA { get; } = new CidrAdvertisingGeoCode(OCEANIAValue);
 
         /// <summary> Converts a string to a <see cref="CidrAdvertisingGeoCode"/>. </summary>
         /// <param name="value"> The value. </param>

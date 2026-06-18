@@ -10,13 +10,13 @@ using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 using Microsoft.TypeSpec.Generator.Customizations;
 
-#pragma warning disable CS0612, CS0618, CS1591
-
 namespace Azure.ResourceManager.Network.Models
 {
+    /// <summary> Compatibility declaration for the ServiceAssociationLink type. </summary>
     [CodeGenSuppress("Locations")]
     public partial class ServiceAssociationLink
     {
+        /// <summary> Gets or sets the Locations compatibility property. </summary>
         public IList<AzureLocation> Locations { get; } = new ChangeTrackingList<AzureLocation>();
     }
 }

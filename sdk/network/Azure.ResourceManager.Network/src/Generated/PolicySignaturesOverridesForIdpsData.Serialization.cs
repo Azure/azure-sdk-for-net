@@ -16,11 +16,11 @@ using Azure.ResourceManager.Network.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> Contains all specific policy signatures overrides for the IDPS. </summary>
-    public partial class PolicySignaturesOverridesForIdpsData : WritableResource, IJsonModel<PolicySignaturesOverridesForIdpsData>
+    public partial class PolicySignaturesOverridesForIdpsData : NetworkWritableResource, IJsonModel<PolicySignaturesOverridesForIdpsData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override WritableResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override NetworkWritableResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<PolicySignaturesOverridesForIdpsData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Network
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override WritableResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override NetworkWritableResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<PolicySignaturesOverridesForIdpsData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

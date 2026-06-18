@@ -80,9 +80,9 @@ namespace Azure.ResourceManager.Network.Models
                 throw new FormatException($"The model {nameof(GatewayCustomBgpIPAddressIPConfiguration)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("ipConfigurationId"u8);
-            writer.WriteStringValue(IpConfigurationId);
+            writer.WriteStringValue(IPConfigurationId);
             writer.WritePropertyName("customBgpIpAddress"u8);
-            writer.WriteStringValue(CustomBgpIpAddress);
+            writer.WriteStringValue(CustomBgpIPAddress);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             string ipConfigurationId = default;
-            string customBgpIpAddress = default;
+            string customBgpIPAddress = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (prop.NameEquals("customBgpIpAddress"u8))
                 {
-                    customBgpIpAddress = prop.Value.GetString();
+                    customBgpIPAddress = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new GatewayCustomBgpIPAddressIPConfiguration(ipConfigurationId, customBgpIpAddress, additionalBinaryDataProperties);
+            return new GatewayCustomBgpIPAddressIPConfiguration(ipConfigurationId, customBgpIPAddress, additionalBinaryDataProperties);
         }
     }
 }

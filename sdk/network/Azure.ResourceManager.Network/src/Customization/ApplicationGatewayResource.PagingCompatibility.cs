@@ -3,8 +3,6 @@
 
 #nullable disable
 
-#pragma warning disable CS0612, CS0618, CS1591
-
 using System;
 using System.Threading;
 using Azure;
@@ -16,9 +14,12 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
+    /// <summary> Compatibility declaration for the ApplicationGatewayResource type. </summary>
     public partial class ApplicationGatewayResource
     {
+        /// <summary> Invokes the GetApplicationGatewayPrivateLinkResourcesAsync compatibility operation. </summary>
         public virtual AsyncPageable<ApplicationGatewayPrivateLinkResource> GetApplicationGatewayPrivateLinkResourcesAsync(CancellationToken cancellationToken) => default;
+        /// <summary> Invokes the GetApplicationGatewayPrivateLinkResources compatibility operation. </summary>
         public virtual Pageable<ApplicationGatewayPrivateLinkResource> GetApplicationGatewayPrivateLinkResources(CancellationToken cancellationToken) => default;
     }
 }

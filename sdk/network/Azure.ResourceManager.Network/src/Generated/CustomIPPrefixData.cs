@@ -198,6 +198,24 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// <summary> The Geo for CIDR advertising. Should be an Geo code. </summary>
+        [WirePath("properties.geo")]
+        public CidrAdvertisingGeoCode? Geo
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Geo;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CustomIpPrefixPropertiesFormat();
+                }
+                Properties.Geo = value;
+            }
+        }
+
         /// <summary> Whether to Advertise the range to Internet. </summary>
         [WirePath("properties.noInternetAdvertise")]
         public bool? NoInternetAdvertise

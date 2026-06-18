@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 #nullable disable
-#pragma warning disable CS0612, CS0618, CS1591
 
 using System;
 using System.Collections;
@@ -14,11 +13,12 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
+    /// <summary> Compatibility declaration for the NetworkSecurityPerimeterAccessRuleData type. </summary>
     [CodeGenSuppress("Subscriptions")]
     public partial class NetworkSecurityPerimeterAccessRuleData
     {
-        [WirePath("properties.subscriptions")] public IList<WritableSubResource> Subscriptions => WritableSubResourceCollectionCompatibility.AsList(Properties?.Subscriptions);
+        /// <summary> Gets or sets the Subscriptions compatibility property. </summary>
+        [WirePath("properties.subscriptions")]
+        public IList<WritableSubResource> Subscriptions => WritableSubResourceCollectionCompatibility.AsList(Properties?.Subscriptions);
     }
 }
-
-#pragma warning restore CS0612, CS0618, CS1591

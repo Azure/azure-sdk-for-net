@@ -3,20 +3,24 @@
 
 #nullable disable
 
-#pragma warning disable CS1591
-
 namespace Azure.ResourceManager.Network.Models
 {
+    /// <summary> Compatibility declaration for the BgpCommunity type. </summary>
     public partial class BgpCommunity
     {
+        /// <summary> Gets or sets the CommunityName compatibility property. </summary>
         public string CommunityName { get; set; }
 
+        /// <summary> Gets or sets the CommunityValue compatibility property. </summary>
         public string CommunityValue { get; set; }
 
+        /// <summary> Gets or sets the IsAuthorizedToUse compatibility property. </summary>
         public bool? IsAuthorizedToUse { get; set; }
 
+        /// <summary> Gets or sets the ServiceGroup compatibility property. </summary>
         public string ServiceGroup { get; set; }
 
+        /// <summary> Gets or sets the ServiceSupportedRegion compatibility property. </summary>
         public string ServiceSupportedRegion { get; set; }
     }
 }

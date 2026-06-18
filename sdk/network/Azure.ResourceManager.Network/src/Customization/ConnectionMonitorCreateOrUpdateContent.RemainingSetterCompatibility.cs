@@ -8,14 +8,15 @@ using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Microsoft.TypeSpec.Generator.Customizations;
 
-#pragma warning disable CS0612, CS0618, CS1591
-
 namespace Azure.ResourceManager.Network.Models
 {
+    /// <summary> Compatibility declaration for the ConnectionMonitorCreateOrUpdateContent type. </summary>
     public partial class ConnectionMonitorCreateOrUpdateContent
     {
+        /// <summary> Gets or sets the Location compatibility property. </summary>
         public AzureLocation? Location { get; set; }
 
+        /// <summary> Gets or sets the string compatibility property. </summary>
         public IDictionary<string, string> Tags { get; } = new ChangeTrackingDictionary<string, string>();
     }
 }

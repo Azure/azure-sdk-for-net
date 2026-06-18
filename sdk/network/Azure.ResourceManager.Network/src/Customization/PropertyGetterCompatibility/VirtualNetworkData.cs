@@ -3,12 +3,12 @@
 
 #nullable disable
 
-#pragma warning disable CS0612, CS0618, CS1591
-
 namespace Azure.ResourceManager.Network
 {
+    /// <summary> Compatibility declaration for the VirtualNetworkData type. </summary>
     public partial class VirtualNetworkData
     {
+        /// <summary> Compatibility member. </summary>
         public global::System.Collections.Generic.IList<global::System.String> AddressPrefixes
         {
             get
@@ -33,7 +33,9 @@ namespace Azure.ResourceManager.Network
                 }
             }
         }
+        /// <summary> Compatibility member. </summary>
         public global::System.Collections.Generic.IList<global::Azure.ResourceManager.Resources.Models.WritableSubResource> IPAllocations => default;
+        /// <summary> Compatibility member. </summary>
         public global::System.Nullable<global::Azure.ResourceManager.Network.Models.PrivateEndpointVnetPolicy> PrivateEndpointVnetPolicy
         {
             get => default;

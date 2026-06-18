@@ -10,12 +10,12 @@ using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 using Microsoft.TypeSpec.Generator.Customizations;
 
-#pragma warning disable CS0612, CS0618, CS1591
-
 namespace Azure.ResourceManager.Network
 {
+    /// <summary> Compatibility declaration for the FirewallPolicyRuleCollectionGroupData type. </summary>
     public partial class FirewallPolicyRuleCollectionGroupData
     {
+        /// <summary> Gets or sets the ETag compatibility property. </summary>
         public ETag? ETag => default;
     }
 }

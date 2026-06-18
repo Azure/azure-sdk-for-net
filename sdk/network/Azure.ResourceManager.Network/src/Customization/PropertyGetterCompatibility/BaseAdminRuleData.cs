@@ -3,12 +3,12 @@
 
 #nullable disable
 
-#pragma warning disable CS0612, CS0618, CS1591
-
 namespace Azure.ResourceManager.Network
 {
+    /// <summary> Compatibility declaration for the BaseAdminRuleData type. </summary>
     public partial class BaseAdminRuleData
     {
+        /// <summary> Compatibility member. </summary>
         public global::System.Nullable<global::Azure.ETag> ETag => default;
     }
 }

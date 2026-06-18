@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 #nullable disable
-#pragma warning disable CS1591
 
 using System;
 using System.Globalization;
@@ -10,8 +9,12 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
+    /// <summary> Compatibility declaration for the FlowLogData type. </summary>
     [CodeGenSuppress("TargetResourceGuid")]
-    public partial class FlowLogData { [WirePath("properties.targetResourceGuid")] public Guid? TargetResourceGuid => ResourceGuidCompatibility.Parse(Properties?.TargetResourceGuid); }
+    public partial class FlowLogData
+    {
+        /// <summary> Gets the TargetResourceGuid compatibility property. </summary>
+        [WirePath("properties.targetResourceGuid")]
+        public Guid? TargetResourceGuid => ResourceGuidCompatibility.Parse(Properties?.TargetResourceGuid);
+    }
 }
-
-#pragma warning restore CS1591

@@ -3,13 +3,14 @@
 
 #nullable disable
 
-#pragma warning disable CS0612, CS0618, CS1591
-
 namespace Azure.ResourceManager.Network
 {
+    /// <summary> Compatibility declaration for the PublicIPPrefixData type. </summary>
     public partial class PublicIPPrefixData
     {
+        /// <summary> Compatibility member. </summary>
         public global::System.String IPPrefix => default;
+        /// <summary> Compatibility member. </summary>
         public global::System.Collections.Generic.IList<global::Azure.ResourceManager.Network.Models.IPTag> IPTags => default;
     }
 }

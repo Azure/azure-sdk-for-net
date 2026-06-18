@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 #nullable disable
-#pragma warning disable CS0612, CS0618, CS1591
 
 using System;
 using System.Collections;
@@ -14,15 +13,23 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network.Models
 {
+    /// <summary> Compatibility declaration for the ApplicationGatewayRedirectConfiguration type. </summary>
     [CodeGenSuppress("PathRules")]
     [CodeGenSuppress("RequestRoutingRules")]
     [CodeGenSuppress("TargetUri")]
     [CodeGenSuppress("UrlPathMaps")]
     public partial class ApplicationGatewayRedirectConfiguration
     {
-        [Azure.ResourceManager.Network.WirePath("properties.pathRules")] public IList<WritableSubResource> PathRules => Azure.ResourceManager.Network.WritableSubResourceCollectionCompatibility.AsList(Properties?.PathRules);
-        [Azure.ResourceManager.Network.WirePath("properties.requestRoutingRules")] public IList<WritableSubResource> RequestRoutingRules => Azure.ResourceManager.Network.WritableSubResourceCollectionCompatibility.AsList(Properties?.RequestRoutingRules);
-        [Azure.ResourceManager.Network.WirePath("properties.urlPathMaps")] public IList<WritableSubResource> UrlPathMaps => Azure.ResourceManager.Network.WritableSubResourceCollectionCompatibility.AsList(Properties?.UrlPathMaps);
+        /// <summary> Gets or sets the TargetUri compatibility property. </summary>
+        [Azure.ResourceManager.Network.WirePath("properties.pathRules")]
+        public IList<WritableSubResource> PathRules => Azure.ResourceManager.Network.WritableSubResourceCollectionCompatibility.AsList(Properties?.PathRules);
+        /// <summary> Gets or sets the RequestRoutingRules compatibility property. </summary>
+        [Azure.ResourceManager.Network.WirePath("properties.requestRoutingRules")]
+        public IList<WritableSubResource> RequestRoutingRules => Azure.ResourceManager.Network.WritableSubResourceCollectionCompatibility.AsList(Properties?.RequestRoutingRules);
+        /// <summary> Gets or sets the UrlPathMaps compatibility property. </summary>
+        [Azure.ResourceManager.Network.WirePath("properties.urlPathMaps")]
+        public IList<WritableSubResource> UrlPathMaps => Azure.ResourceManager.Network.WritableSubResourceCollectionCompatibility.AsList(Properties?.UrlPathMaps);
+        /// <summary> Gets or sets the TargetUri compatibility property. </summary>
         [Azure.ResourceManager.Network.WirePath("properties.targetUrl")]
         public Uri TargetUri
         {
@@ -38,5 +45,3 @@ namespace Azure.ResourceManager.Network.Models
         }
     }
 }
-
-#pragma warning restore CS0612, CS0618, CS1591

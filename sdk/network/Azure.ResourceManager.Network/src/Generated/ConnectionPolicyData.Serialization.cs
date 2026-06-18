@@ -16,11 +16,11 @@ using Azure.ResourceManager.Network.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> ConnectionPolicy resource defined for VirtualHub. </summary>
-    public partial class ConnectionPolicyData : ProxyResource, IJsonModel<ConnectionPolicyData>
+    public partial class ConnectionPolicyData : NetworkProxyResource, IJsonModel<ConnectionPolicyData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ProxyResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override NetworkProxyResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ConnectionPolicyData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Network
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ProxyResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override NetworkProxyResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ConnectionPolicyData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

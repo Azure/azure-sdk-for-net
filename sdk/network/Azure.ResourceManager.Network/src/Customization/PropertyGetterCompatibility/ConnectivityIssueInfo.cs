@@ -3,13 +3,14 @@
 
 #nullable disable
 
-#pragma warning disable CS0612, CS0618, CS1591
-
 namespace Azure.ResourceManager.Network.Models
 {
+    /// <summary> Compatibility declaration for the ConnectivityIssueInfo type. </summary>
     public partial class ConnectivityIssueInfo
     {
+        /// <summary> Compatibility member. </summary>
         public global::System.Nullable<global::Azure.ResourceManager.Network.Models.ConnectivityIssueType> ConnectivityIssueType => default;
+        /// <summary> Compatibility member. </summary>
         public global::System.Collections.Generic.IReadOnlyList<global::System.Collections.Generic.IDictionary<global::System.String, global::System.String>> Contexts => default;
     }
 }

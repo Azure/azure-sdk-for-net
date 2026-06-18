@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 #nullable disable
-#pragma warning disable CS0612, CS0618, CS1591
 
 using System;
 using System.Collections;
@@ -14,10 +13,12 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network.Models
 {
+    /// <summary> Compatibility declaration for the ApplicationGatewaySslCertificate type. </summary>
     [CodeGenSuppress("Data")]
     [CodeGenSuppress("PublicCertData")]
     public partial class ApplicationGatewaySslCertificate
     {
+        /// <summary> Gets or sets the Data compatibility property. </summary>
         [Azure.ResourceManager.Network.WirePath("properties.data")]
         public BinaryData Data
         {
@@ -32,8 +33,8 @@ namespace Azure.ResourceManager.Network.Models
             }
         }
 
-        [Azure.ResourceManager.Network.WirePath("properties.publicCertData")] public BinaryData PublicCertData => Azure.ResourceManager.Network.WritableSubResourceCollectionCompatibility.ParseBinaryData(Properties?.PublicCertData);
+        /// <summary> Gets or sets the PublicCertData compatibility property. </summary>
+        [Azure.ResourceManager.Network.WirePath("properties.publicCertData")]
+        public BinaryData PublicCertData => Azure.ResourceManager.Network.WritableSubResourceCollectionCompatibility.ParseBinaryData(Properties?.PublicCertData);
     }
 }
-
-#pragma warning restore CS0612, CS0618, CS1591

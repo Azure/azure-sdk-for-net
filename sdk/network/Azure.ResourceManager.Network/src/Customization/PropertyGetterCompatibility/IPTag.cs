@@ -3,12 +3,12 @@
 
 #nullable disable
 
-#pragma warning disable CS0612, CS0618, CS1591
-
 namespace Azure.ResourceManager.Network.Models
 {
+    /// <summary> Compatibility declaration for the IPTag type. </summary>
     public partial class IPTag
     {
+        /// <summary> Compatibility member. </summary>
         public global::System.String IPTagType
         {
             get => default;

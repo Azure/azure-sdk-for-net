@@ -7,6 +7,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network
 {
+    /// <summary> Compatibility declaration for the ExpressRouteCrossConnectionData type. </summary>
     public partial class ExpressRouteCrossConnectionData
     {
         /// <summary> The ExpressRouteCircuit. </summary>

@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 #nullable disable
-#pragma warning disable CS0612, CS0618, CS1591
 
 using System;
 using System.Collections;
@@ -14,11 +13,12 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
+    /// <summary> Compatibility declaration for the NatGatewayData type. </summary>
     [CodeGenSuppress("Subnets")]
     public partial class NatGatewayData
     {
-        [WirePath("properties.subnets")] public IReadOnlyList<WritableSubResource> Subnets => WritableSubResourceCollectionCompatibility.AsReadOnlyList(Properties?.Subnets);
+        /// <summary> Gets or sets the Subnets compatibility property. </summary>
+        [WirePath("properties.subnets")]
+        public IReadOnlyList<WritableSubResource> Subnets => WritableSubResourceCollectionCompatibility.AsReadOnlyList(Properties?.Subnets);
     }
 }
-
-#pragma warning restore CS0612, CS0618, CS1591

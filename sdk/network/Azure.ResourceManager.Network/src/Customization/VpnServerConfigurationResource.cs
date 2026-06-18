@@ -3,10 +3,9 @@
 
 #nullable disable
 
-#pragma warning disable CS0612, CS0618, CS1591
-
 namespace Azure.ResourceManager.Network
 {
+    /// <summary> Compatibility declaration for the VpnServerConfigurationResource type. </summary>
     public partial class VpnServerConfigurationResource
     {
     }

@@ -3,18 +3,17 @@
 
 #nullable disable
 
-using Microsoft.TypeSpec.Generator.Customizations;
-
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Target type of the resource provided. </summary>
-    [CodeGenType("PacketCaptureTargetType")]
     public enum PacketCaptureTargetType
     {
         /// <summary> AzureVM. </summary>
         AzureVm,
         /// <summary> AzureVMSS. </summary>
         AzureVmss,
+        // The generated enum member names normalize all-uppercase wire values to AzureVm/AzureVmss,
+        // but the shipped SDK also exposed AzureVM/AzureVMSS. Keep aliases for source compatibility.
         /// <summary> AzureVM. </summary>
         AzureVM = AzureVm,
         /// <summary> AzureVMSS. </summary>

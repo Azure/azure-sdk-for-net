@@ -3,13 +3,14 @@
 
 #nullable disable
 
-#pragma warning disable CS0612, CS0618, CS1591
-
 namespace Azure.ResourceManager.Network.Models
 {
+    /// <summary> Compatibility declaration for the P2SConnectionConfiguration type. </summary>
     public partial class P2SConnectionConfiguration
     {
+        /// <summary> Compatibility member. </summary>
         public global::System.Collections.Generic.IList<global::Azure.ResourceManager.Resources.Models.WritableSubResource> ConfigurationPolicyGroups => default;
+        /// <summary> Compatibility member. </summary>
         public global::System.Collections.Generic.IList<global::System.String> VpnClientAddressPrefixes => default;
     }
 }

@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 #nullable disable
-#pragma warning disable CS0612, CS0618, CS1591
 
 using System;
 using System.Collections;
@@ -14,15 +13,20 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
+    /// <summary> Compatibility declaration for the FirewallPolicyData type. </summary>
     [CodeGenSuppress("ChildPolicies")]
     [CodeGenSuppress("Firewalls")]
     [CodeGenSuppress("RuleCollectionGroups")]
     public partial class FirewallPolicyData
     {
-        [WirePath("properties.childPolicies")] public IReadOnlyList<WritableSubResource> ChildPolicies => WritableSubResourceCollectionCompatibility.AsReadOnlyList(Properties?.ChildPolicies);
-        [WirePath("properties.firewalls")] public IReadOnlyList<WritableSubResource> Firewalls => WritableSubResourceCollectionCompatibility.AsReadOnlyList(Properties?.Firewalls);
-        [WirePath("properties.ruleCollectionGroups")] public IReadOnlyList<WritableSubResource> RuleCollectionGroups => WritableSubResourceCollectionCompatibility.AsReadOnlyList(Properties?.RuleCollectionGroups);
+        /// <summary> Gets or sets the ChildPolicies compatibility property. </summary>
+        [WirePath("properties.childPolicies")]
+        public IReadOnlyList<WritableSubResource> ChildPolicies => WritableSubResourceCollectionCompatibility.AsReadOnlyList(Properties?.ChildPolicies);
+        /// <summary> Gets or sets the Firewalls compatibility property. </summary>
+        [WirePath("properties.firewalls")]
+        public IReadOnlyList<WritableSubResource> Firewalls => WritableSubResourceCollectionCompatibility.AsReadOnlyList(Properties?.Firewalls);
+        /// <summary> Gets or sets the RuleCollectionGroups compatibility property. </summary>
+        [WirePath("properties.ruleCollectionGroups")]
+        public IReadOnlyList<WritableSubResource> RuleCollectionGroups => WritableSubResourceCollectionCompatibility.AsReadOnlyList(Properties?.RuleCollectionGroups);
     }
 }
-
-#pragma warning restore CS0612, CS0618, CS1591

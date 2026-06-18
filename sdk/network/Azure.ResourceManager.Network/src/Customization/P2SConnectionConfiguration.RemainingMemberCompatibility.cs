@@ -10,13 +10,13 @@ using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 using Microsoft.TypeSpec.Generator.Customizations;
 
-#pragma warning disable CS0612, CS0618, CS1591
-
 namespace Azure.ResourceManager.Network.Models
 {
+    /// <summary> Compatibility declaration for the P2SConnectionConfiguration type. </summary>
     [CodeGenSuppress("ConfigurationPolicyGroupAssociations")]
     public partial class P2SConnectionConfiguration
     {
+        /// <summary> Gets or sets the ConfigurationPolicyGroupAssociations compatibility property. </summary>
         public IReadOnlyList<WritableSubResource> ConfigurationPolicyGroupAssociations => Properties?.ConfigurationPolicyGroupAssociations as IReadOnlyList<WritableSubResource>;
     }
 }

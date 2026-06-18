@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network
 
             return new SubscriptionNetworkManagerConnectionData
             {
-                NetworkManagerId = data.NetworkManagerId?.ToString(),
+                NetworkManagerId = data.NetworkManagerId,
                 Description = data.Description
             };
         }

@@ -3,12 +3,12 @@
 
 #nullable disable
 
-#pragma warning disable CS0612, CS0618, CS1591
-
 namespace Azure.ResourceManager.Network
 {
+    /// <summary> Compatibility declaration for the RouteData type. </summary>
     public partial class RouteData
     {
+        /// <summary> Compatibility member. </summary>
         public global::System.String NextHopIPAddress
         {
             get => NextHopIpAddress;

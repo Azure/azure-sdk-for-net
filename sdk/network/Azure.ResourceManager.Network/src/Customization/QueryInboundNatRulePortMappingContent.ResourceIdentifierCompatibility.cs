@@ -7,6 +7,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
+    /// <summary> Compatibility declaration for the QueryInboundNatRulePortMappingContent type. </summary>
     public partial class QueryInboundNatRulePortMappingContent
     {
         /// <summary> NetworkInterfaceIPConfiguration set in load balancer backend address. </summary>

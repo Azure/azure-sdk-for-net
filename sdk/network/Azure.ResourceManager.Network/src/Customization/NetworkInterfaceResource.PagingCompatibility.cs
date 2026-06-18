@@ -13,6 +13,7 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
+    /// <summary> Compatibility declaration for the NetworkInterfaceResource type. </summary>
     public partial class NetworkInterfaceResource
     {
         // MPG treats this resource-level list action as the canonical generated GetAll/GetAllAsync pair.

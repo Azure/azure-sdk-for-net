@@ -13,12 +13,13 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network.Models
 {
+    /// <summary> Compatibility declaration for the ArmNetworkModelFactory type. </summary>
     [CodeGenSuppress("EffectiveBaseSecurityAdminRule", typeof(ResourceIdentifier), typeof(string), typeof(string), typeof(IEnumerable<NetworkManagerSecurityGroupItem>), typeof(IEnumerable<NetworkConfigurationGroup>), typeof(string))]
-    [CodeGenSuppress("CustomIPPrefixData", typeof(ResourceIdentifier), typeof(string), typeof(string), typeof(AzureLocation?), typeof(IDictionary<string, string>), typeof(string), typeof(string), typeof(string), typeof(string), typeof(ResourceIdentifier), typeof(IEnumerable<NetworkSubResource>), typeof(CommissionedState?), typeof(bool?), typeof(CidrAdvertisingGeoCode?), typeof(bool?), typeof(CustomIPPrefixType?), typeof(IEnumerable<NetworkSubResource>), typeof(string), typeof(string), typeof(NetworkProvisioningState?), typeof(ExtendedLocation), typeof(ETag?), typeof(IEnumerable<string>))]
-    [CodeGenSuppress("PublicIPPrefixData", typeof(ResourceIdentifier), typeof(string), typeof(string), typeof(AzureLocation?), typeof(IDictionary<string, string>), typeof(NetworkIPVersion?), typeof(IEnumerable<IPTag>), typeof(int?), typeof(string), typeof(IEnumerable<ReferencedPublicIpAddress>), typeof(string), typeof(NetworkProvisioningState?), typeof(NatGatewayData), typeof(ResourceIdentifier), typeof(ResourceIdentifier), typeof(ExtendedLocation), typeof(PublicIPPrefixSku), typeof(ETag?), typeof(IEnumerable<string>))]
-    [CodeGenSuppress("WebApplicationFirewallPolicyData", typeof(ResourceIdentifier), typeof(string), typeof(string), typeof(AzureLocation?), typeof(IDictionary<string, string>), typeof(PolicySettings), typeof(IEnumerable<WebApplicationFirewallCustomRule>), typeof(IEnumerable<ApplicationGatewayData>), typeof(NetworkProvisioningState?), typeof(WebApplicationFirewallPolicyResourceState?), typeof(ManagedRulesDefinition), typeof(IEnumerable<WritableSubResource>), typeof(IEnumerable<WritableSubResource>), typeof(IEnumerable<ApplicationGatewayForContainersReferenceDefinition>), typeof(ETag?))]
     [CodeGenSuppress("PeerRouteList", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(int?))]
     [CodeGenSuppress("EffectiveNetworkSecurityGroup", typeof(ResourceIdentifier), typeof(EffectiveNetworkSecurityGroupAssociation), typeof(IEnumerable<EffectiveNetworkSecurityRule>), typeof(string))]
+    // The generated factory signature includes the internal ApplicationGatewayForContainersReferenceDefinition helper type,
+    // which would make a public method less accessible than one of its parameters.
+    [CodeGenSuppress("WebApplicationFirewallPolicyData", typeof(ResourceIdentifier), typeof(string), typeof(string), typeof(AzureLocation?), typeof(IDictionary<string, string>), typeof(PolicySettings), typeof(IEnumerable<WebApplicationFirewallCustomRule>), typeof(IEnumerable<ApplicationGatewayData>), typeof(NetworkProvisioningState?), typeof(WebApplicationFirewallPolicyResourceState?), typeof(ManagedRulesDefinition), typeof(IEnumerable<WritableSubResource>), typeof(IEnumerable<WritableSubResource>), typeof(IEnumerable<ApplicationGatewayForContainersReferenceDefinition>), typeof(ETag?))]
     public static partial class ArmNetworkModelFactory
     {
         /// <summary> Initializes a new instance of <see cref="Models.EffectiveBaseSecurityAdminRule"/>. </summary>
@@ -106,7 +107,6 @@ namespace Azure.ResourceManager.Network.Models
             };
         }
 
-#pragma warning disable CS0618 // Preserve obsolete PeerRouteList factory for GA compatibility.
         /// <summary> Initializes a new instance of <see cref="Models.PeerRouteList"/>. </summary>
         /// <param name="localAddress"> The peer's local address. </param>
         /// <param name="network"> The route's network prefix. </param>
@@ -116,11 +116,11 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="asPath"> The route's AS path sequence. </param>
         /// <param name="weight"> The route's weight. </param>
         /// <returns> A new <see cref="Models.PeerRouteList"/> instance for mocking. </returns>
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public static PeerRouteList PeerRouteList(string localAddress = default, string network = default, string nextHop = default, string sourcePeer = default, string origin = default, string asPath = default, int? weight = default)
         {
             return new PeerRouteList(localAddress, network, nextHop, sourcePeer, origin, asPath, weight, default);
         }
-#pragma warning restore CS0618
 
         /// <summary> Initializes a new instance of <see cref="Models.EffectiveNetworkSecurityGroup"/>. </summary>
         /// <param name="networkSecurityGroupId"> Resource ID. </param>

@@ -3,8 +3,6 @@
 
 #nullable disable
 
-#pragma warning disable CS0612, CS0618, CS1591
-
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
@@ -18,11 +16,16 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
+    /// <summary> Compatibility declaration for the NetworkVerifierWorkspaceCollection type. </summary>
     public partial class NetworkVerifierWorkspaceCollection
     {
+        /// <summary> Invokes the CreateOrUpdateAsync compatibility operation. </summary>
         public virtual Task<ArmOperation<NetworkVerifierWorkspaceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string networkVerifierWorkspaceName, NetworkVerifierWorkspaceData data, CancellationToken cancellationToken) => default;
+        /// <summary> Invokes the CreateOrUpdate compatibility operation. </summary>
         public virtual ArmOperation<NetworkVerifierWorkspaceResource> CreateOrUpdate(WaitUntil waitUntil, string networkVerifierWorkspaceName, NetworkVerifierWorkspaceData data, CancellationToken cancellationToken) => default;
+        /// <summary> Invokes the CreateOrUpdateAsync compatibility operation. </summary>
         public virtual Task<ArmOperation<NetworkVerifierWorkspaceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string networkVerifierWorkspaceName, NetworkVerifierWorkspaceData data, string ifMatch, CancellationToken cancellationToken) => default;
+        /// <summary> Invokes the CreateOrUpdate compatibility operation. </summary>
         public virtual ArmOperation<NetworkVerifierWorkspaceResource> CreateOrUpdate(WaitUntil waitUntil, string networkVerifierWorkspaceName, NetworkVerifierWorkspaceData data, string ifMatch, CancellationToken cancellationToken) => default;
     }
 }

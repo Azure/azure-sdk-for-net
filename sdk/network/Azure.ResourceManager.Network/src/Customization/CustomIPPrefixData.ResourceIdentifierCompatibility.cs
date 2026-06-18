@@ -7,6 +7,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network
 {
+    /// <summary> Compatibility declaration for the CustomIPPrefixData type. </summary>
     public partial class CustomIPPrefixData
     {
         /// <summary> The Parent CustomIpPrefix for IPv6 /64 CustomIpPrefix. </summary>

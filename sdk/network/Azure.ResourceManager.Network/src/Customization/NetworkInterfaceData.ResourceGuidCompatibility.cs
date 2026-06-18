@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 #nullable disable
-#pragma warning disable CS1591
 
 using System;
 using System.Globalization;
@@ -10,8 +9,12 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
+    /// <summary> Compatibility declaration for the NetworkInterfaceData type. </summary>
     [CodeGenSuppress("ResourceGuid")]
-    public partial class NetworkInterfaceData { [WirePath("properties.resourceGuid")] public Guid? ResourceGuid => ResourceGuidCompatibility.Parse(Properties?.ResourceGuid); }
+    public partial class NetworkInterfaceData
+    {
+        /// <summary> Gets the ResourceGuid compatibility property. </summary>
+        [WirePath("properties.resourceGuid")]
+        public Guid? ResourceGuid => ResourceGuidCompatibility.Parse(Properties?.ResourceGuid);
+    }
 }
-
-#pragma warning restore CS1591

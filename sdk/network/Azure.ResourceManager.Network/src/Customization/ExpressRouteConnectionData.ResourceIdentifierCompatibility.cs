@@ -7,6 +7,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network
 {
+    /// <summary> Compatibility declaration for the ExpressRouteConnectionData type. </summary>
     public partial class ExpressRouteConnectionData
     {
         /// <summary> The ExpressRoute circuit peering. </summary>

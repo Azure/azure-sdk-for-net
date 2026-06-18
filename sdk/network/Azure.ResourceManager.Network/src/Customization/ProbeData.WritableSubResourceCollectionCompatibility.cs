@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 #nullable disable
-#pragma warning disable CS0612, CS0618, CS1591
 
 using System;
 using System.Collections;
@@ -14,11 +13,12 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network
 {
+    /// <summary> Compatibility declaration for the ProbeData type. </summary>
     [CodeGenSuppress("LoadBalancingRules")]
     public partial class ProbeData
     {
-        [WirePath("properties.loadBalancingRules")] public IReadOnlyList<WritableSubResource> LoadBalancingRules => WritableSubResourceCollectionCompatibility.AsReadOnlyList(Properties?.LoadBalancingRules);
+        /// <summary> Gets or sets the LoadBalancingRules compatibility property. </summary>
+        [WirePath("properties.loadBalancingRules")]
+        public IReadOnlyList<WritableSubResource> LoadBalancingRules => WritableSubResourceCollectionCompatibility.AsReadOnlyList(Properties?.LoadBalancingRules);
     }
 }
-
-#pragma warning restore CS0612, CS0618, CS1591

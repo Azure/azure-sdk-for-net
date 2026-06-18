@@ -3,12 +3,12 @@
 
 #nullable disable
 
-#pragma warning disable CS0612, CS0618, CS1591
-
 namespace Azure.ResourceManager.Network.Models
 {
+    /// <summary> Compatibility declaration for the ApplicationGatewayRedirectConfiguration type. </summary>
     public partial class ApplicationGatewayRedirectConfiguration
     {
+        /// <summary> Compatibility member. </summary>
         public global::Azure.ResourceManager.Resources.Models.WritableSubResource TargetListener
         {
             get => TargetListenerId is null ? default : new global::Azure.ResourceManager.Resources.Models.WritableSubResource { Id = TargetListenerId };
