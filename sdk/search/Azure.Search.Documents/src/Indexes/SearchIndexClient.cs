@@ -284,6 +284,7 @@ namespace Azure.Search.Documents.Indexes
             return await CreateOrUpdateIndexAsync(index?.Name, index, matchConditions, allowIndexDowntime, cancellationToken).ConfigureAwait(false);
         }
 
+#pragma warning disable AZC0002 // CancellationToken must be required to disambiguate from generated overloads
         /// <summary>
         /// Deletes a search index and all the documents it contains.
         /// </summary>
@@ -295,7 +296,7 @@ namespace Azure.Search.Documents.Indexes
         [ForwardsClientCalls]
         public virtual Response DeleteIndex(
             string indexName,
-            CancellationToken cancellationToken = default) =>
+            CancellationToken cancellationToken) =>
             DeleteIndex(indexName, matchConditions: null, cancellationToken);
 
         /// <summary>
@@ -309,8 +310,9 @@ namespace Azure.Search.Documents.Indexes
         [ForwardsClientCalls]
         public virtual async Task<Response> DeleteIndexAsync(
             string indexName,
-            CancellationToken cancellationToken = default) =>
+            CancellationToken cancellationToken) =>
             await DeleteIndexAsync(indexName, matchConditions: null, cancellationToken).ConfigureAwait(false);
+#pragma warning restore AZC0002
 
         /// <summary>
         /// Deletes a search index and all the documents it contains.
@@ -506,6 +508,7 @@ namespace Azure.Search.Documents.Indexes
             return await CreateOrUpdateSynonymMapAsync(synonymMap?.Name, synonymMap, matchConditions, cancellationToken).ConfigureAwait(false);
         }
 
+#pragma warning disable AZC0002 // CancellationToken must be required to disambiguate from generated overloads
         /// <summary>
         /// Deletes a synonym map.
         /// </summary>
@@ -517,7 +520,7 @@ namespace Azure.Search.Documents.Indexes
         [ForwardsClientCalls]
         public virtual Response DeleteSynonymMap(
             string synonymMapName,
-            CancellationToken cancellationToken = default) =>
+            CancellationToken cancellationToken) =>
             DeleteSynonymMap(synonymMapName, matchConditions: null, cancellationToken);
 
         /// <summary>
@@ -531,8 +534,9 @@ namespace Azure.Search.Documents.Indexes
         [ForwardsClientCalls]
         public virtual async Task<Response> DeleteSynonymMapAsync(
             string synonymMapName,
-            CancellationToken cancellationToken = default) =>
+            CancellationToken cancellationToken) =>
             await DeleteSynonymMapAsync(synonymMapName, matchConditions: null, cancellationToken).ConfigureAwait(false);
+#pragma warning restore AZC0002
 
         /// <summary>
         /// Deletes a synonym map.

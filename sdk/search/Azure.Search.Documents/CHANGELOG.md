@@ -1,5 +1,17 @@
 # Release History
 
+## 12.1.0 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+- Fixed ambiguous overloads in `SearchIndexClient.DeleteIndex` and `SearchIndexClient.DeleteSynonymMap` by making `CancellationToken` required in name-only convenience overloads.
+
+### Other Changes
+
 ## 12.0.0 (2026-05-01)
 
 ### Features Added
