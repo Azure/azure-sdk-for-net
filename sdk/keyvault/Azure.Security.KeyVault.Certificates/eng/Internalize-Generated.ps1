@@ -44,16 +44,16 @@ try {
 # their normal visibility, which is required for the hand-written wrapper code
 # in the same assembly to consume them.
 $patterns = @(
-    # classes
-    @{ Find = '^\s*public\s+partial\s+class\s+';        Replace = 'internal partial class ' },
-    @{ Find = '^\s*public\s+static\s+partial\s+class\s+'; Replace = 'internal static partial class ' },
-    @{ Find = '^\s*public\s+abstract\s+partial\s+class\s+'; Replace = 'internal abstract partial class ' },
-    @{ Find = '^\s*public\s+sealed\s+partial\s+class\s+'; Replace = 'internal sealed partial class ' },
+    # classes - capture the leading indent so we don't strip it
+    @{ Find = '(?m)^(\s*)public(\s+partial\s+class\s+)';        Replace = '${1}internal${2}' },
+    @{ Find = '(?m)^(\s*)public(\s+static\s+partial\s+class\s+)'; Replace = '${1}internal${2}' },
+    @{ Find = '(?m)^(\s*)public(\s+abstract\s+partial\s+class\s+)'; Replace = '${1}internal${2}' },
+    @{ Find = '(?m)^(\s*)public(\s+sealed\s+partial\s+class\s+)'; Replace = '${1}internal${2}' },
     # enums (top-level)
-    @{ Find = '^\s*public\s+enum\s+';                    Replace = 'internal enum ' },
+    @{ Find = '(?m)^(\s*)public(\s+enum\s+)';                    Replace = '${1}internal${2}' },
     # structs
-    @{ Find = '^\s*public\s+partial\s+struct\s+';        Replace = 'internal partial struct ' },
-    @{ Find = '^\s*public\s+readonly\s+partial\s+struct\s+'; Replace = 'internal readonly partial struct ' }
+    @{ Find = '(?m)^(\s*)public(\s+partial\s+struct\s+)';        Replace = '${1}internal${2}' },
+    @{ Find = '(?m)^(\s*)public(\s+readonly\s+partial\s+struct\s+)'; Replace = '${1}internal${2}' }
 )
 
 # Files we intentionally keep `public partial` so they can merge with the
@@ -78,7 +78,7 @@ foreach ($file in $files) {
     $text     = $original
 
     foreach ($p in $patterns) {
-        $text = [regex]::Replace($text, $p.Find, $p.Replace, 'Multiline')
+        $text = [regex]::Replace($text, $p.Find, $p.Replace)
     }
 
     if ($text -ne $original) {
