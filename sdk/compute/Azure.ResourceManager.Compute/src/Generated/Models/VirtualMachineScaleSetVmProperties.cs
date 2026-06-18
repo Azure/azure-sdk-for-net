@@ -45,8 +45,9 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="userData"> UserData for the VM, which must be base-64 encoded. Customer should not pass any secrets in here. Minimum api-version: 2021-03-01. </param>
         /// <param name="timeCreated"> Specifies the time at which the Virtual Machine resource was created. Minimum api-version: 2021-11-01. </param>
         /// <param name="virtualMachineResourceId"> Specifies the ARM resource ID of the standalone virtual machine associated with this VMSS VM. This property is only applicable to Virtual Machine Scale Sets with Flexible orchestration mode. Minimum api-version: 2025-11-01. </param>
+        /// <param name="interconnectBlockProfile"> Specifies the Interconnect Block related details of a Scale Set VM instance. Minimum api-version: 2026-03-01. </param>
         /// <param name="additionalProperties"></param>
-        internal VirtualMachineScaleSetVmProperties(bool? latestModelApplied, string vmId, VirtualMachineScaleSetVmInstanceView instanceView, VirtualMachineHardwareProfile hardwareProfile, ResilientVmDeletionStatus? resilientVmDeletionStatus, VirtualMachineStorageProfile storageProfile, AdditionalCapabilities additionalCapabilities, VirtualMachineOSProfile osProfile, SecurityProfile securityProfile, VirtualMachineNetworkProfile networkProfile, VirtualMachineScaleSetVmNetworkProfileConfiguration networkProfileConfiguration, DiagnosticsProfile diagnosticsProfile, ComputeWriteableSubResourceData availabilitySet, string provisioningState, string licenseType, string modelDefinitionApplied, VirtualMachineScaleSetVmProtectionPolicy protectionPolicy, string userData, DateTimeOffset? timeCreated, ResourceIdentifier virtualMachineResourceId, IDictionary<string, BinaryData> additionalProperties)
+        internal VirtualMachineScaleSetVmProperties(bool? latestModelApplied, string vmId, VirtualMachineScaleSetVmInstanceView instanceView, VirtualMachineHardwareProfile hardwareProfile, ResilientVmDeletionStatus? resilientVmDeletionStatus, VirtualMachineStorageProfile storageProfile, AdditionalCapabilities additionalCapabilities, VirtualMachineOSProfile osProfile, SecurityProfile securityProfile, VirtualMachineNetworkProfile networkProfile, VirtualMachineScaleSetVmNetworkProfileConfiguration networkProfileConfiguration, DiagnosticsProfile diagnosticsProfile, ComputeWriteableSubResourceData availabilitySet, string provisioningState, string licenseType, string modelDefinitionApplied, VirtualMachineScaleSetVmProtectionPolicy protectionPolicy, string userData, DateTimeOffset? timeCreated, ResourceIdentifier virtualMachineResourceId, InterconnectBlockProfile interconnectBlockProfile, IDictionary<string, BinaryData> additionalProperties)
         {
             LatestModelApplied = latestModelApplied;
             VmId = vmId;
@@ -68,6 +69,7 @@ namespace Azure.ResourceManager.Compute.Models
             UserData = userData;
             TimeCreated = timeCreated;
             VirtualMachineResourceId = virtualMachineResourceId;
+            InterconnectBlockProfile = interconnectBlockProfile;
             _additionalBinaryDataProperties = additionalProperties;
         }
 
@@ -102,7 +104,7 @@ namespace Azure.ResourceManager.Compute.Models
         public VirtualMachineNetworkProfile NetworkProfile { get; set; }
 
         /// <summary> Specifies the network profile configuration of the virtual machine. </summary>
-        internal VirtualMachineScaleSetVmNetworkProfileConfiguration NetworkProfileConfiguration { get; set; }
+        public VirtualMachineScaleSetVmNetworkProfileConfiguration NetworkProfileConfiguration { get; set; }
 
         /// <summary> Specifies the boot diagnostic settings state. Minimum api-version: 2015-06-15. </summary>
         internal DiagnosticsProfile DiagnosticsProfile { get; set; }
@@ -131,21 +133,11 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Specifies the ARM resource ID of the standalone virtual machine associated with this VMSS VM. This property is only applicable to Virtual Machine Scale Sets with Flexible orchestration mode. Minimum api-version: 2025-11-01. </summary>
         public ResourceIdentifier VirtualMachineResourceId { get; }
 
+        /// <summary> Specifies the Interconnect Block related details of a Scale Set VM instance. Minimum api-version: 2026-03-01. </summary>
+        internal InterconnectBlockProfile InterconnectBlockProfile { get; set; }
+
         /// <summary> Gets the AdditionalProperties. </summary>
         public IDictionary<string, BinaryData> AdditionalProperties => _additionalBinaryDataProperties;
-
-        /// <summary> The list of network configurations. </summary>
-        public IList<VirtualMachineScaleSetNetworkConfiguration> NetworkInterfaceConfigurations
-        {
-            get
-            {
-                if (NetworkProfileConfiguration is null)
-                {
-                    NetworkProfileConfiguration = new VirtualMachineScaleSetVmNetworkProfileConfiguration();
-                }
-                return NetworkProfileConfiguration.NetworkInterfaceConfigurations;
-            }
-        }
 
         /// <summary> Boot Diagnostics is a debugging feature which allows you to view Console Output and Screenshot to diagnose VM status. <b>NOTE</b>: If storageUri is being specified then ensure that the storage account is in the same region and subscription as the VM. You can easily view the output of your console log. Azure also enables you to see a screenshot of the VM from the hypervisor. </summary>
         public BootDiagnostics BootDiagnostics
@@ -174,6 +166,23 @@ namespace Azure.ResourceManager.Compute.Models
             set
             {
                 AvailabilitySet = new ComputeWriteableSubResourceData(value);
+            }
+        }
+
+        /// <summary> The ARM resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/... </summary>
+        public ResourceIdentifier InterconnectBlockId
+        {
+            get
+            {
+                return InterconnectBlockProfile is null ? default : InterconnectBlockProfile.InterconnectBlockId;
+            }
+            set
+            {
+                if (InterconnectBlockProfile is null)
+                {
+                    InterconnectBlockProfile = new InterconnectBlockProfile();
+                }
+                InterconnectBlockProfile.InterconnectBlockId = value;
             }
         }
     }

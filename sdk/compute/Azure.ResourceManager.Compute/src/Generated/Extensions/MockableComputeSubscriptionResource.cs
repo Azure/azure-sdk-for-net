@@ -39,6 +39,8 @@ namespace Azure.ResourceManager.Compute.Mocking
         private RestorePointCollectionsSubscription _restorePointCollectionsSubscriptionRestClient;
         private ClientDiagnostics _capacityReservationGroupsClientDiagnostics;
         private CapacityReservationGroups _capacityReservationGroupsRestClient;
+        private ClientDiagnostics _interconnectBlocksClientDiagnostics;
+        private InterconnectBlocks _interconnectBlocksRestClient;
         private ClientDiagnostics _disksClientDiagnostics;
         private Disks _disksRestClient;
         private ClientDiagnostics _diskAccessesClientDiagnostics;
@@ -94,39 +96,43 @@ namespace Azure.ResourceManager.Compute.Mocking
 
         private ClientDiagnostics VirtualMachineScaleSetsSubscriptionClientDiagnostics => _virtualMachineScaleSetsSubscriptionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private VirtualMachineScaleSetsSubscription VirtualMachineScaleSetsSubscriptionRestClient => _virtualMachineScaleSetsSubscriptionRestClient ??= new VirtualMachineScaleSetsSubscription(VirtualMachineScaleSetsSubscriptionClientDiagnostics, Pipeline, Endpoint, "2025-11-01");
+        private VirtualMachineScaleSetsSubscription VirtualMachineScaleSetsSubscriptionRestClient => _virtualMachineScaleSetsSubscriptionRestClient ??= new VirtualMachineScaleSetsSubscription(VirtualMachineScaleSetsSubscriptionClientDiagnostics, Pipeline, Endpoint, "2026-03-01");
 
         private ClientDiagnostics VirtualMachinesSubscriptionClientDiagnostics => _virtualMachinesSubscriptionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private VirtualMachinesSubscription VirtualMachinesSubscriptionRestClient => _virtualMachinesSubscriptionRestClient ??= new VirtualMachinesSubscription(VirtualMachinesSubscriptionClientDiagnostics, Pipeline, Endpoint, "2025-11-01");
+        private VirtualMachinesSubscription VirtualMachinesSubscriptionRestClient => _virtualMachinesSubscriptionRestClient ??= new VirtualMachinesSubscription(VirtualMachinesSubscriptionClientDiagnostics, Pipeline, Endpoint, "2026-03-01");
 
         private ClientDiagnostics AvailabilitySetsClientDiagnostics => _availabilitySetsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AvailabilitySets AvailabilitySetsRestClient => _availabilitySetsRestClient ??= new AvailabilitySets(AvailabilitySetsClientDiagnostics, Pipeline, Endpoint, "2025-11-01");
+        private AvailabilitySets AvailabilitySetsRestClient => _availabilitySetsRestClient ??= new AvailabilitySets(AvailabilitySetsClientDiagnostics, Pipeline, Endpoint, "2026-03-01");
 
         private ClientDiagnostics ProximityPlacementGroupsClientDiagnostics => _proximityPlacementGroupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ProximityPlacementGroups ProximityPlacementGroupsRestClient => _proximityPlacementGroupsRestClient ??= new ProximityPlacementGroups(ProximityPlacementGroupsClientDiagnostics, Pipeline, Endpoint, "2025-11-01");
+        private ProximityPlacementGroups ProximityPlacementGroupsRestClient => _proximityPlacementGroupsRestClient ??= new ProximityPlacementGroups(ProximityPlacementGroupsClientDiagnostics, Pipeline, Endpoint, "2026-03-01");
 
         private ClientDiagnostics DedicatedHostGroupsClientDiagnostics => _dedicatedHostGroupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DedicatedHostGroups DedicatedHostGroupsRestClient => _dedicatedHostGroupsRestClient ??= new DedicatedHostGroups(DedicatedHostGroupsClientDiagnostics, Pipeline, Endpoint, "2025-11-01");
+        private DedicatedHostGroups DedicatedHostGroupsRestClient => _dedicatedHostGroupsRestClient ??= new DedicatedHostGroups(DedicatedHostGroupsClientDiagnostics, Pipeline, Endpoint, "2026-03-01");
 
         private ClientDiagnostics SshPublicKeyResourcesClientDiagnostics => _sshPublicKeyResourcesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SshPublicKeyResources SshPublicKeyResourcesRestClient => _sshPublicKeyResourcesRestClient ??= new SshPublicKeyResources(SshPublicKeyResourcesClientDiagnostics, Pipeline, Endpoint, "2025-11-01");
+        private SshPublicKeyResources SshPublicKeyResourcesRestClient => _sshPublicKeyResourcesRestClient ??= new SshPublicKeyResources(SshPublicKeyResourcesClientDiagnostics, Pipeline, Endpoint, "2026-03-01");
 
         private ClientDiagnostics ImagesClientDiagnostics => _imagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Images ImagesRestClient => _imagesRestClient ??= new Images(ImagesClientDiagnostics, Pipeline, Endpoint, "2025-11-01");
+        private Images ImagesRestClient => _imagesRestClient ??= new Images(ImagesClientDiagnostics, Pipeline, Endpoint, "2026-03-01");
 
         private ClientDiagnostics RestorePointCollectionsSubscriptionClientDiagnostics => _restorePointCollectionsSubscriptionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private RestorePointCollectionsSubscription RestorePointCollectionsSubscriptionRestClient => _restorePointCollectionsSubscriptionRestClient ??= new RestorePointCollectionsSubscription(RestorePointCollectionsSubscriptionClientDiagnostics, Pipeline, Endpoint, "2025-11-01");
+        private RestorePointCollectionsSubscription RestorePointCollectionsSubscriptionRestClient => _restorePointCollectionsSubscriptionRestClient ??= new RestorePointCollectionsSubscription(RestorePointCollectionsSubscriptionClientDiagnostics, Pipeline, Endpoint, "2026-03-01");
 
         private ClientDiagnostics CapacityReservationGroupsClientDiagnostics => _capacityReservationGroupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private CapacityReservationGroups CapacityReservationGroupsRestClient => _capacityReservationGroupsRestClient ??= new CapacityReservationGroups(CapacityReservationGroupsClientDiagnostics, Pipeline, Endpoint, "2025-11-01");
+        private CapacityReservationGroups CapacityReservationGroupsRestClient => _capacityReservationGroupsRestClient ??= new CapacityReservationGroups(CapacityReservationGroupsClientDiagnostics, Pipeline, Endpoint, "2026-03-01");
+
+        private ClientDiagnostics InterconnectBlocksClientDiagnostics => _interconnectBlocksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private InterconnectBlocks InterconnectBlocksRestClient => _interconnectBlocksRestClient ??= new InterconnectBlocks(InterconnectBlocksClientDiagnostics, Pipeline, Endpoint, "2026-03-01");
 
         private ClientDiagnostics DisksClientDiagnostics => _disksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -150,35 +156,35 @@ namespace Azure.ResourceManager.Compute.Mocking
 
         private ClientDiagnostics UsageOperationGroupClientDiagnostics => _usageOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private UsageOperationGroup UsageOperationGroupRestClient => _usageOperationGroupRestClient ??= new UsageOperationGroup(UsageOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-11-01");
+        private UsageOperationGroup UsageOperationGroupRestClient => _usageOperationGroupRestClient ??= new UsageOperationGroup(UsageOperationGroupClientDiagnostics, Pipeline, Endpoint, "2026-03-01");
 
         private ClientDiagnostics VirtualMachineSizesOperationGroupClientDiagnostics => _virtualMachineSizesOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private VirtualMachineSizesOperationGroup VirtualMachineSizesOperationGroupRestClient => _virtualMachineSizesOperationGroupRestClient ??= new VirtualMachineSizesOperationGroup(VirtualMachineSizesOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-11-01");
+        private VirtualMachineSizesOperationGroup VirtualMachineSizesOperationGroupRestClient => _virtualMachineSizesOperationGroupRestClient ??= new VirtualMachineSizesOperationGroup(VirtualMachineSizesOperationGroupClientDiagnostics, Pipeline, Endpoint, "2026-03-01");
 
         private ClientDiagnostics VirtualMachineScaleSetsOperationGroupClientDiagnostics => _virtualMachineScaleSetsOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private VirtualMachineScaleSetsOperationGroup VirtualMachineScaleSetsOperationGroupRestClient => _virtualMachineScaleSetsOperationGroupRestClient ??= new VirtualMachineScaleSetsOperationGroup(VirtualMachineScaleSetsOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-11-01");
+        private VirtualMachineScaleSetsOperationGroup VirtualMachineScaleSetsOperationGroupRestClient => _virtualMachineScaleSetsOperationGroupRestClient ??= new VirtualMachineScaleSetsOperationGroup(VirtualMachineScaleSetsOperationGroupClientDiagnostics, Pipeline, Endpoint, "2026-03-01");
 
         private ClientDiagnostics VirtualMachinesOperationGroupClientDiagnostics => _virtualMachinesOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private VirtualMachinesOperationGroup VirtualMachinesOperationGroupRestClient => _virtualMachinesOperationGroupRestClient ??= new VirtualMachinesOperationGroup(VirtualMachinesOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-11-01");
+        private VirtualMachinesOperationGroup VirtualMachinesOperationGroupRestClient => _virtualMachinesOperationGroupRestClient ??= new VirtualMachinesOperationGroup(VirtualMachinesOperationGroupClientDiagnostics, Pipeline, Endpoint, "2026-03-01");
 
         private ClientDiagnostics VirtualMachineImagesEdgeZoneOperationGroupClientDiagnostics => _virtualMachineImagesEdgeZoneOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private VirtualMachineImagesEdgeZoneOperationGroup VirtualMachineImagesEdgeZoneOperationGroupRestClient => _virtualMachineImagesEdgeZoneOperationGroupRestClient ??= new VirtualMachineImagesEdgeZoneOperationGroup(VirtualMachineImagesEdgeZoneOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-11-01");
+        private VirtualMachineImagesEdgeZoneOperationGroup VirtualMachineImagesEdgeZoneOperationGroupRestClient => _virtualMachineImagesEdgeZoneOperationGroupRestClient ??= new VirtualMachineImagesEdgeZoneOperationGroup(VirtualMachineImagesEdgeZoneOperationGroupClientDiagnostics, Pipeline, Endpoint, "2026-03-01");
 
         private ClientDiagnostics VirtualMachineImagesOperationGroupClientDiagnostics => _virtualMachineImagesOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private VirtualMachineImagesOperationGroup VirtualMachineImagesOperationGroupRestClient => _virtualMachineImagesOperationGroupRestClient ??= new VirtualMachineImagesOperationGroup(VirtualMachineImagesOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-11-01");
+        private VirtualMachineImagesOperationGroup VirtualMachineImagesOperationGroupRestClient => _virtualMachineImagesOperationGroupRestClient ??= new VirtualMachineImagesOperationGroup(VirtualMachineImagesOperationGroupClientDiagnostics, Pipeline, Endpoint, "2026-03-01");
 
         private ClientDiagnostics LogAnalyticsOperationGroupClientDiagnostics => _logAnalyticsOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private LogAnalyticsOperationGroup LogAnalyticsOperationGroupRestClient => _logAnalyticsOperationGroupRestClient ??= new LogAnalyticsOperationGroup(LogAnalyticsOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-11-01");
+        private LogAnalyticsOperationGroup LogAnalyticsOperationGroupRestClient => _logAnalyticsOperationGroupRestClient ??= new LogAnalyticsOperationGroup(LogAnalyticsOperationGroupClientDiagnostics, Pipeline, Endpoint, "2026-03-01");
 
         private ClientDiagnostics VirtualMachineRunCommandsOperationGroupClientDiagnostics => _virtualMachineRunCommandsOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private VirtualMachineRunCommandsOperationGroup VirtualMachineRunCommandsOperationGroupRestClient => _virtualMachineRunCommandsOperationGroupRestClient ??= new VirtualMachineRunCommandsOperationGroup(VirtualMachineRunCommandsOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-11-01");
+        private VirtualMachineRunCommandsOperationGroup VirtualMachineRunCommandsOperationGroupRestClient => _virtualMachineRunCommandsOperationGroupRestClient ??= new VirtualMachineRunCommandsOperationGroup(VirtualMachineRunCommandsOperationGroupClientDiagnostics, Pipeline, Endpoint, "2026-03-01");
 
         private ClientDiagnostics SharedGalleriesClientDiagnostics => _sharedGalleriesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -230,7 +236,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -263,7 +269,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -296,7 +302,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -324,7 +330,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -352,7 +358,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -390,7 +396,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -428,7 +434,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -457,7 +463,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -486,7 +492,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -514,7 +520,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -542,7 +548,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -570,7 +576,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -598,7 +604,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -626,7 +632,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -654,7 +660,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -682,7 +688,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -710,7 +716,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -738,7 +744,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -766,7 +772,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -802,7 +808,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -823,6 +829,62 @@ namespace Azure.ResourceManager.Compute.Mocking
                 resourceIdsOnly?.ToString(),
                 context,
                 "MockableComputeSubscriptionResource.GetCapacityReservationGroups"), data => new CapacityReservationGroupResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists all of the Interconnect Blocks in the subscription. Use the nextLink property in the response to get the next page of Interconnect Blocks.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Compute/interconnectBlocks. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> InterconnectBlocks_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="InterconnectBlockResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<InterconnectBlockResource> GetInterconnectBlocksAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<InterconnectBlockData, InterconnectBlockResource>(new InterconnectBlocksGetBySubscriptionAsyncCollectionResultOfT(InterconnectBlocksRestClient, Id.SubscriptionId, context, "MockableComputeSubscriptionResource.GetInterconnectBlocks"), data => new InterconnectBlockResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists all of the Interconnect Blocks in the subscription. Use the nextLink property in the response to get the next page of Interconnect Blocks.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Compute/interconnectBlocks. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> InterconnectBlocks_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="InterconnectBlockResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<InterconnectBlockResource> GetInterconnectBlocks(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<InterconnectBlockData, InterconnectBlockResource>(new InterconnectBlocksGetBySubscriptionCollectionResultOfT(InterconnectBlocksRestClient, Id.SubscriptionId, context, "MockableComputeSubscriptionResource.GetInterconnectBlocks"), data => new InterconnectBlockResource(Client, data));
         }
 
         /// <summary>
@@ -1118,7 +1180,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1147,7 +1209,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1176,7 +1238,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1205,7 +1267,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1234,7 +1296,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1263,7 +1325,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1292,7 +1354,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1321,7 +1383,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1350,7 +1412,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1390,7 +1452,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1430,7 +1492,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1473,7 +1535,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1516,7 +1578,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1562,7 +1624,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1608,7 +1670,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1666,7 +1728,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1724,7 +1786,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1764,7 +1826,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1804,7 +1866,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1833,7 +1895,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1862,7 +1924,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1902,7 +1964,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1942,7 +2004,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1985,7 +2047,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2028,7 +2090,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2081,7 +2143,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2134,7 +2196,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2190,7 +2252,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2246,7 +2308,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2302,7 +2364,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2358,7 +2420,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2414,7 +2476,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2470,7 +2532,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2499,7 +2561,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2528,7 +2590,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2578,7 +2640,7 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
