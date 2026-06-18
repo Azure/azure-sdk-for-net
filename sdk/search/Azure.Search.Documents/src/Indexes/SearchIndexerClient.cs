@@ -197,37 +197,41 @@ namespace Azure.Search.Documents.Indexes
         /// Deletes an indexer.
         /// </summary>
         /// <param name="indexerName">The name of the <see cref="SearchIndexer"/> to delete.</param>
-        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
+        /// <param name="cancellationToken"><see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response"/> from the server.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="indexerName"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+#pragma warning disable AZC0002 // CancellationToken is intentionally required to avoid ambiguity with generated convenience method
         [ForwardsClientCalls]
         public virtual Response DeleteIndexer(
             string indexerName,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken)
         {
             Argument.AssertNotNull(indexerName, nameof(indexerName));
 
             return DeleteIndexer(indexerName, matchConditions: null, cancellationToken);
         }
+#pragma warning restore AZC0002
 
         /// <summary>
         /// Deletes an indexer.
         /// </summary>
         /// <param name="indexerName">The name of the <see cref="SearchIndexer"/> to delete.</param>
-        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
+        /// <param name="cancellationToken"><see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>The <see cref="Response"/> from the server.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="indexerName"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+#pragma warning disable AZC0002 // CancellationToken is intentionally required to avoid ambiguity with generated convenience method
         [ForwardsClientCalls]
         public virtual async Task<Response> DeleteIndexerAsync(
             string indexerName,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken)
         {
             Argument.AssertNotNull(indexerName, nameof(indexerName));
 
             return await DeleteIndexerAsync(indexerName, matchConditions: null, cancellationToken).ConfigureAwait(false);
         }
+#pragma warning restore AZC0002
 
         /// <summary>
         /// Deletes an indexer.
