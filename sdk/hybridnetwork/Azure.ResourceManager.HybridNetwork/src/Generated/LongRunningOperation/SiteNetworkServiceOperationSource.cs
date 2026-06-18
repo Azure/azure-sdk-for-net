@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.HybridNetwork
 {
-    internal class SiteNetworkServiceOperationSource : IOperationSource<SiteNetworkServiceResource>
+    /// <summary></summary>
+    internal partial class SiteNetworkServiceOperationSource : IOperationSource<SiteNetworkServiceResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal SiteNetworkServiceOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         SiteNetworkServiceResource IOperationSource<SiteNetworkServiceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SiteNetworkServiceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHybridNetworkContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            SiteNetworkServiceData data = SiteNetworkServiceData.DeserializeSiteNetworkServiceData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new SiteNetworkServiceResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<SiteNetworkServiceResource> IOperationSource<SiteNetworkServiceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SiteNetworkServiceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHybridNetworkContext.Default);
-            return await Task.FromResult(new SiteNetworkServiceResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            SiteNetworkServiceData data = SiteNetworkServiceData.DeserializeSiteNetworkServiceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new SiteNetworkServiceResource(_client, data);
         }
     }
 }

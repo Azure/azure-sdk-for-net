@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.HybridNetwork;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     internal readonly partial struct AzureCoreArtifactType : IEquatable<AzureCoreArtifactType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="AzureCoreArtifactType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public AzureCoreArtifactType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string UnknownValue = "Unknown";
         private const string VhdImageFileValue = "VhdImageFile";
         private const string ArmTemplateValue = "ArmTemplate";
 
-        /// <summary> Unknown. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureCoreArtifactType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public AzureCoreArtifactType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Unknown. </summary>
         public static AzureCoreArtifactType Unknown { get; } = new AzureCoreArtifactType(UnknownValue);
-        /// <summary> VhdImageFile. </summary>
+
+        /// <summary> Gets the VhdImageFile. </summary>
         public static AzureCoreArtifactType VhdImageFile { get; } = new AzureCoreArtifactType(VhdImageFileValue);
-        /// <summary> ArmTemplate. </summary>
+
+        /// <summary> Gets the ArmTemplate. </summary>
         public static AzureCoreArtifactType ArmTemplate { get; } = new AzureCoreArtifactType(ArmTemplateValue);
+
         /// <summary> Determines if two <see cref="AzureCoreArtifactType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AzureCoreArtifactType left, AzureCoreArtifactType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AzureCoreArtifactType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AzureCoreArtifactType left, AzureCoreArtifactType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AzureCoreArtifactType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AzureCoreArtifactType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AzureCoreArtifactType(string value) => new AzureCoreArtifactType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AzureCoreArtifactType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AzureCoreArtifactType?(string value) => value == null ? null : new AzureCoreArtifactType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AzureCoreArtifactType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AzureCoreArtifactType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
