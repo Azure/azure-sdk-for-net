@@ -207,10 +207,12 @@ namespace Azure.ResourceManager.Network
             => GetMockableNetworkSubscriptionResource(subscriptionResource).GetApplicationGatewayWafDynamicManifests(location);
 
         /// <summary> Gets the regional application gateway WAF manifest. </summary>
+        [global::Azure.Core.ForwardsClientCalls]
         public static Task<Response<ApplicationGatewayWafDynamicManifestResource>> GetApplicationGatewayWafDynamicManifestAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken)
             => GetMockableNetworkSubscriptionResource(subscriptionResource).GetApplicationGatewayWafDynamicManifestAsync(location, cancellationToken);
 
         /// <summary> Gets the regional application gateway WAF manifest. </summary>
+        [global::Azure.Core.ForwardsClientCalls]
         public static Response<ApplicationGatewayWafDynamicManifestResource> GetApplicationGatewayWafDynamicManifest(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken)
             => GetMockableNetworkSubscriptionResource(subscriptionResource).GetApplicationGatewayWafDynamicManifest(location, cancellationToken);
 
