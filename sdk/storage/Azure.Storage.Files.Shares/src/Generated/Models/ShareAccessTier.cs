@@ -7,51 +7,75 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Storage.Files.Shares;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    /// <summary> The ShareAccessTier. </summary>
+    /// <summary> The access tier of the share. </summary>
     public readonly partial struct ShareAccessTier : IEquatable<ShareAccessTier>
     {
         private readonly string _value;
+        /// <summary> TransactionOptimized. </summary>
+        private const string TransactionOptimizedValue = "TransactionOptimized";
+        /// <summary> Hot. </summary>
+        private const string HotValue = "Hot";
+        /// <summary> Cool. </summary>
+        private const string CoolValue = "Cool";
+        /// <summary> Premium. </summary>
+        private const string PremiumValue = "Premium";
 
         /// <summary> Initializes a new instance of <see cref="ShareAccessTier"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ShareAccessTier(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string TransactionOptimizedValue = "TransactionOptimized";
-        private const string HotValue = "Hot";
-        private const string CoolValue = "Cool";
-        private const string PremiumValue = "Premium";
+            _value = value;
+        }
 
         /// <summary> TransactionOptimized. </summary>
         public static ShareAccessTier TransactionOptimized { get; } = new ShareAccessTier(TransactionOptimizedValue);
+
         /// <summary> Hot. </summary>
         public static ShareAccessTier Hot { get; } = new ShareAccessTier(HotValue);
+
         /// <summary> Cool. </summary>
         public static ShareAccessTier Cool { get; } = new ShareAccessTier(CoolValue);
+
         /// <summary> Premium. </summary>
         public static ShareAccessTier Premium { get; } = new ShareAccessTier(PremiumValue);
+
         /// <summary> Determines if two <see cref="ShareAccessTier"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ShareAccessTier left, ShareAccessTier right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ShareAccessTier"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ShareAccessTier left, ShareAccessTier right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ShareAccessTier"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ShareAccessTier"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ShareAccessTier(string value) => new ShareAccessTier(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ShareAccessTier"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ShareAccessTier?(string value) => value == null ? null : new ShareAccessTier(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ShareAccessTier other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ShareAccessTier other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

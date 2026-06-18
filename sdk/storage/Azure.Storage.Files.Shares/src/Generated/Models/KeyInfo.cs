@@ -5,21 +5,14 @@
 
 #nullable disable
 
-using System;
-using Azure.Storage.Common;
-
 namespace Azure.Storage.Files.Shares.Models
 {
-    /// <summary> Key information. </summary>
     internal partial class KeyInfo
     {
         /// <summary> Initializes a new instance of <see cref="KeyInfo"/>. </summary>
         /// <param name="expiry"> The date-time the key expires in ISO 8601 UTC time. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="expiry"/> is null. </exception>
         public KeyInfo(string expiry)
         {
-            Argument.AssertNotNull(expiry, nameof(expiry));
-
             Expiry = expiry;
         }
 
@@ -36,8 +29,10 @@ namespace Azure.Storage.Files.Shares.Models
 
         /// <summary> The date-time the key is active in ISO 8601 UTC time. </summary>
         public string Start { get; set; }
+
         /// <summary> The date-time the key expires in ISO 8601 UTC time. </summary>
         public string Expiry { get; }
+
         /// <summary> The delegated user tenant id in Azure AD. </summary>
         public string DelegatedUserTid { get; set; }
     }

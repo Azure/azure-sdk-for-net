@@ -34,8 +34,9 @@ Rules:
 - **4.6 ModelFactory anti-patterns**: do not suppress generated ModelFactory methods without strong justification. Backward-compat overloads should delegate to generated public ModelFactory overloads and translate renamed parameters/types as needed; do not call internal constructors or private `Core` helpers. Add only overloads that existed in the previous stable API.
 - **4.7 Constructor suppression**: if a generated constructor has the wrong signature, first fix root cause in `client.tsp`: missing flattened properties -> `@@flattenProperty`; wrong property type -> `@@alternateType`; missing `Properties` envelope members -> flatten the envelope. Review every constructor `[CodeGenSuppress]` for a possible decorator fix.
 - **4.8 Using cleanup**: flag customization-file diffs that only add/remove unnecessary `using` statements.
-- **4.9 Obsolete compatibility members**: determine why `[Obsolete]` exists. A backward-compat shim preserving shipped API should remain functional when it can safely delegate to the replacement; do not require `NotSupportedException` for safe shims. Require `NotSupportedException` only when old behavior cannot be implemented safely/accurately or is intentionally unsupported, and ensure obsolete/exception messages point to the replacement or explain why none exists.
-- **4.10 No manual edits to generated files - blocking**: `src/Generated/` must be generator output only. A large regenerated diff is expected and not evidence of hand editing. Flag clear hand edits such as isolated generated-style mismatches, custom logic, ad hoc `#pragma` suppressions, type changes, or CI `Verify Generated Code`/code-check drift. Fix through custom partials (`[CodeGenSuppress]`), TypeSpec decorators (`@@clientName`, `@@alternateType`, `@@access`), or generator bug fixes. After adding custom files with generator attributes, regenerate so suppressions are honored.
+- **4.9 Obsolete compatibility members**: determine why `[Obsolete]` exists. A backward-compat shim preserving shipped API should remain functional when it can safely delegate to the replacement; do not require `NotSupportedException` for safe shims. Obsolete properties must not throw from getters just because the old value is no longer populated: blind property traversal and reflection-based tooling can hit them unexpectedly. Prefer a non-throwing auto-property that preserves the previous accessor shape, for example do not add a setter when the shipped property was get-only, with an obsolete message that points to the replacement or explains that the property no longer works. Require `NotSupportedException` only when old behavior cannot be implemented safely/accurately or is intentionally unsupported.
+- **4.10 Method input collection types**: flag externally visible public API/method input parameters typed as `IList<T>` or `IList`; do not flag private/internal helper methods. MPG migration compatibility shims and generated-surface fixes should avoid requiring a mutable list implementation from callers; prefer the previous GA signature when preserving compatibility, otherwise use a more appropriate input shape such as `IEnumerable<T>` or another established SDK pattern for that operation.
+- **4.11 No manual edits to generated files - blocking**: `src/Generated/` must be generator output only. A large regenerated diff is expected and not evidence of hand editing. Flag clear hand edits such as isolated generated-style mismatches, custom logic, ad hoc `#pragma` suppressions, type changes, or CI `Verify Generated Code`/code-check drift. Fix through custom partials (`[CodeGenSuppress]`), TypeSpec decorators (`@@clientName`, `@@alternateType`, `@@access`), or generator bug fixes. After adding custom files with generator attributes, regenerate so suppressions are honored.
 
 Compact examples:
 - Bad rename: `[CodeGenSuppress("Tls1_0")]` plus custom `Tls10` member.
@@ -83,11 +84,11 @@ Duplicate API detection:
 
 Follow base skill output rules: one PR review, safe-output tools in GitHub Agentic Workflow mode, no direct GitHub writes from agentic workflows, no execution of untrusted PR code, and no inline comments on `api/*.cs`.
 
-Each migration inline comment should start with a rule ID such as `**[4.1]**`, `**[4.10]**`, or `**[5.2]**`, explain the violation, and suggest the fix. Put unattachable findings in `Non-inline findings`.
+Each migration inline comment should start with a rule ID such as `**[4.1]**`, `**[4.11]**`, or `**[5.2]**`, explain the violation, and suggest the fix. Put unattachable findings in `Non-inline findings`.
 
 Review body must include:
 - Phase 1-3 results from the base skill.
-- Phase 4 customization result, grouped by 4.1-4.10.
+- Phase 4 customization result, grouped by 4.1-4.11.
 - Phase 5 decorator-preference result.
 - Phase 6 new API triage result, including accepted real additions, flagged rename/drift counts, and duplicate model/enum/operation counts.
 - Final counts for critical issues, should-fix issues, and suggestions.
