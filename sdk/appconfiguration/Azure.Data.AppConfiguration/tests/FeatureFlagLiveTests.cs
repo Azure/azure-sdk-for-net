@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -25,6 +26,30 @@ namespace Azure.Data.AppConfiguration.Tests
             return InstrumentClient(new ConfigurationClient(new System.Uri(TestEnvironment.Endpoint), TestEnvironment.Credential, options));
         }
 
+        private async Task<ConfigurationClient> GetClientOrSkipIfApiVersionUnsupportedAsync()
+        {
+            ConfigurationClient service = GetClient();
+
+            try
+            {
+                // A missing key should return 404 when the API version is supported.
+                await service.GetFeatureFlagAsync(GenerateName("ff-probe-"));
+            }
+            catch (RequestFailedException ex) when (IsUnsupportedApiVersion(ex))
+            {
+                Assert.Ignore($"Feature flag tests require API version {ConfigurationClientOptions.ServiceVersion.V2026_05_01_Preview}.");
+            }
+            catch (RequestFailedException ex) when (ex.Status == 404)
+            {
+                // Expected probe response when the API version is supported.
+            }
+
+            return service;
+        }
+
+        private static bool IsUnsupportedApiVersion(RequestFailedException ex)
+            => ex.Status == 400 && ex.Message.IndexOf("Unsupported API version", StringComparison.OrdinalIgnoreCase) >= 0;
+
         private static async Task SafeDeleteAsync(ConfigurationClient service, string name, string label = null)
         {
             try
@@ -40,7 +65,7 @@ namespace Azure.Data.AppConfiguration.Tests
         [RecordedTest]
         public async Task CanAddFeatureFlag()
         {
-            ConfigurationClient service = GetClient();
+            ConfigurationClient service = await GetClientOrSkipIfApiVersionUnsupportedAsync();
             string name = GenerateName();
 
             try
@@ -61,7 +86,7 @@ namespace Azure.Data.AppConfiguration.Tests
         [RecordedTest]
         public async Task CanAddFeatureFlagWithFullBody()
         {
-            ConfigurationClient service = GetClient();
+            ConfigurationClient service = await GetClientOrSkipIfApiVersionUnsupportedAsync();
             string name = GenerateName();
 
             try
@@ -87,7 +112,7 @@ namespace Azure.Data.AppConfiguration.Tests
         [RecordedTest]
         public async Task AddFeatureFlagThrowsWhenAlreadyExists()
         {
-            ConfigurationClient service = GetClient();
+            ConfigurationClient service = await GetClientOrSkipIfApiVersionUnsupportedAsync();
             string name = GenerateName();
 
             try
@@ -108,7 +133,7 @@ namespace Azure.Data.AppConfiguration.Tests
         [RecordedTest]
         public async Task AddFeatureFlagWithNullNameThrows()
         {
-            ConfigurationClient service = GetClient();
+            ConfigurationClient service = await GetClientOrSkipIfApiVersionUnsupportedAsync();
 
             Assert.ThrowsAsync<System.ArgumentNullException>(
                 async () => await service.AddFeatureFlagAsync(null, enabled: true));
@@ -119,7 +144,7 @@ namespace Azure.Data.AppConfiguration.Tests
         [RecordedTest]
         public async Task CanGetFeatureFlag()
         {
-            ConfigurationClient service = GetClient();
+            ConfigurationClient service = await GetClientOrSkipIfApiVersionUnsupportedAsync();
             string name = GenerateName();
 
             try
@@ -140,7 +165,7 @@ namespace Azure.Data.AppConfiguration.Tests
         [RecordedTest]
         public async Task GetFeatureFlagThrowsWhenNotFound()
         {
-            ConfigurationClient service = GetClient();
+            ConfigurationClient service = await GetClientOrSkipIfApiVersionUnsupportedAsync();
             string name = GenerateName("ff-missing-");
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(
@@ -152,7 +177,7 @@ namespace Azure.Data.AppConfiguration.Tests
         [RecordedTest]
         public async Task SetFeatureFlagCreatesWhenMissing()
         {
-            ConfigurationClient service = GetClient();
+            ConfigurationClient service = await GetClientOrSkipIfApiVersionUnsupportedAsync();
             string name = GenerateName();
 
             try
@@ -171,7 +196,7 @@ namespace Azure.Data.AppConfiguration.Tests
         [RecordedTest]
         public async Task SetFeatureFlagOverwritesExisting()
         {
-            ConfigurationClient service = GetClient();
+            ConfigurationClient service = await GetClientOrSkipIfApiVersionUnsupportedAsync();
             string name = GenerateName();
 
             try
@@ -192,7 +217,7 @@ namespace Azure.Data.AppConfiguration.Tests
         [RecordedTest]
         public async Task SetFeatureFlagWithOnlyIfUnchangedSucceedsWhenEtagMatches()
         {
-            ConfigurationClient service = GetClient();
+            ConfigurationClient service = await GetClientOrSkipIfApiVersionUnsupportedAsync();
             string name = GenerateName();
 
             try
@@ -221,7 +246,7 @@ namespace Azure.Data.AppConfiguration.Tests
         [RecordedTest]
         public async Task SetFeatureFlagWithOnlyIfUnchangedThrowsWhenEtagStale()
         {
-            ConfigurationClient service = GetClient();
+            ConfigurationClient service = await GetClientOrSkipIfApiVersionUnsupportedAsync();
             string name = GenerateName();
 
             try
@@ -246,7 +271,7 @@ namespace Azure.Data.AppConfiguration.Tests
         [RecordedTest]
         public async Task CanDeleteFeatureFlag()
         {
-            ConfigurationClient service = GetClient();
+            ConfigurationClient service = await GetClientOrSkipIfApiVersionUnsupportedAsync();
             string name = GenerateName();
 
             await service.AddFeatureFlagAsync(name, enabled: true);
@@ -262,7 +287,7 @@ namespace Azure.Data.AppConfiguration.Tests
         [RecordedTest]
         public async Task DeleteFeatureFlagWhenMissingReturns204()
         {
-            ConfigurationClient service = GetClient();
+            ConfigurationClient service = await GetClientOrSkipIfApiVersionUnsupportedAsync();
             string name = GenerateName("ff-del-missing-");
 
             Response response = await service.DeleteFeatureFlagAsync(name);
@@ -273,7 +298,7 @@ namespace Azure.Data.AppConfiguration.Tests
         [RecordedTest]
         public async Task LabelDistinguishesFeatureFlags()
         {
-            ConfigurationClient service = GetClient();
+            ConfigurationClient service = await GetClientOrSkipIfApiVersionUnsupportedAsync();
             string name = GenerateName();
             const string label = "prod";
 

@@ -14,7 +14,7 @@ namespace Azure.Data.AppConfiguration
         /// Initializes a new instance of the <see cref="FeatureFlagFilter"/>.
         /// </summary>
         /// <param name="name">The name of the feature filter. For example: PercentageFilter, TimeWindowFilter, TargetingFilter.</param>
-        public FeatureFlagFilter(string name) : this(name, new Dictionary<string, object>())
+        public FeatureFlagFilter(string name) : this(name, new Dictionary<string, string>())
         {
         }
 
@@ -23,7 +23,7 @@ namespace Azure.Data.AppConfiguration
         /// </summary>
         /// <param name="name">The name of the feature filter. For example: PercentageFilter, TimeWindowFilter, TargetingFilter.</param>
         /// <param name="parameters">Parameters of the feature filter.</param>
-        public FeatureFlagFilter(string name, IDictionary<string, object> parameters)
+        public FeatureFlagFilter(string name, IDictionary<string, string> parameters)
         {
             Name = name;
             Parameters = parameters;
@@ -37,6 +37,6 @@ namespace Azure.Data.AppConfiguration
         /// <summary>
         /// Gets the parameters of the feature filter.
         /// </summary>
-        public IDictionary<string, object> Parameters { get; }
+        public IDictionary<string, string> Parameters { get; }
     }
 }

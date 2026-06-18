@@ -92,7 +92,7 @@ namespace Azure.Data.AppConfiguration
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteObjectValue<object>(item.Value, options);
+                    writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
             }
@@ -139,7 +139,7 @@ namespace Azure.Data.AppConfiguration
                 return null;
             }
             string name = default;
-            IDictionary<string, object> parameters = default;
+            IDictionary<string, string> parameters = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -154,7 +154,7 @@ namespace Azure.Data.AppConfiguration
                     {
                         continue;
                     }
-                    Dictionary<string, object> dictionary = new Dictionary<string, object>();
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
                         if (prop0.Value.ValueKind == JsonValueKind.Null)
@@ -163,7 +163,7 @@ namespace Azure.Data.AppConfiguration
                         }
                         else
                         {
-                            dictionary.Add(prop0.Name, prop0.Value.GetObject());
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
                         }
                     }
                     parameters = dictionary;
@@ -174,7 +174,7 @@ namespace Azure.Data.AppConfiguration
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new FeatureFlagFilter(name, parameters ?? new ChangeTrackingDictionary<string, object>(), additionalBinaryDataProperties);
+            return new FeatureFlagFilter(name, parameters ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
         }
     }
 }

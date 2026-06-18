@@ -65,9 +65,9 @@ namespace Azure.Data.AppConfiguration
         /// <param name="name"> The name of the filter. </param>
         /// <param name="parameters"> The parameters used by the filter. </param>
         /// <returns> A new <see cref="AppConfiguration.FeatureFlagFilter"/> instance for mocking. </returns>
-        public static FeatureFlagFilter FeatureFlagFilter(string name = default, IDictionary<string, object> parameters = default)
+        public static FeatureFlagFilter FeatureFlagFilter(string name = default, IDictionary<string, string> parameters = default)
         {
-            parameters ??= new ChangeTrackingDictionary<string, object>();
+            parameters ??= new ChangeTrackingDictionary<string, string>();
 
             return new FeatureFlagFilter(name, parameters, additionalBinaryDataProperties: null);
         }

@@ -20,7 +20,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="name"> The name of the filter. </param>
         /// <param name="parameters"> The parameters used by the filter. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FeatureFlagFilter(string name, IDictionary<string, object> parameters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FeatureFlagFilter(string name, IDictionary<string, string> parameters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Parameters = parameters;

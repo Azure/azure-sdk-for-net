@@ -2310,7 +2310,7 @@ namespace Azure.Data.AppConfiguration.Tests
                 ClientFilters =
                 {
                     new FeatureFlagFilter("FilterA"),
-                    new FeatureFlagFilter("Microsoft.TimeWindow", new Dictionary<string, object>()
+                    new FeatureFlagFilter("Microsoft.TimeWindow", new Dictionary<string, string>()
                     {
                         { "Start", "Wed, 01 May 2019 13:59:59 GMT" },
                         { "End", "Mon, 01 July 2019 00:00:00 GMT" }
@@ -2339,7 +2339,7 @@ namespace Azure.Data.AppConfiguration.Tests
                 Assert.That(filter1.Name, Is.EqualTo("FilterA"));
                 var filter2 = setting.ClientFilters[1];
                 Assert.That(filter2.Name, Is.EqualTo("Microsoft.TimeWindow"));
-                Assert.That(filter2.Parameters, Is.EqualTo(new Dictionary<string, object>()
+                Assert.That(filter2.Parameters, Is.EqualTo(new Dictionary<string, string>()
                 {
                     { "Start", "Wed, 01 May 2019 13:59:59 GMT" },
                     { "End", "Mon, 01 July 2019 00:00:00 GMT" }
@@ -2480,21 +2480,9 @@ namespace Azure.Data.AppConfiguration.Tests
                 FeatureId = "my_feature",
                 ClientFilters =
                 {
-                    new FeatureFlagFilter("Microsoft.Targeting", new Dictionary<string, object>()
+                    new FeatureFlagFilter("Microsoft.Targeting", new Dictionary<string, string>()
                     {
-                        {"Audience", new Dictionary<string, object>()
-                            {
-                                {
-                                    "Groups", new List<object>()
-                                    {
-                                        new Dictionary<string, object>()
-                                        {
-                                            {"Name", "Group1"},
-                                            {"RolloutPercentage", 100},
-                                        }
-                                    }
-                                }
-                            }}
+                        {"Audience", "{\"Groups\":[{\"Name\":\"Group1\",\"RolloutPercentage\":\"100\"}]}"}
                     })
                 }
             };
@@ -2504,17 +2492,10 @@ namespace Azure.Data.AppConfiguration.Tests
                 await service.AddConfigurationSettingAsync(testSetting1);
 
                 var selectedSetting = (FeatureFlagConfigurationSetting)await service.GetConfigurationSettingAsync(testSetting1.Key);
-                var audience = (IDictionary)selectedSetting.ClientFilters[0].Parameters["Audience"];
-                var groups = (IList)audience["Groups"];
-
-                groups.Add(new Dictionary<string, object>()
-                {
-                    {"Name", "Group2"},
-                    {"RolloutPercentage", 50},
-                });
+                selectedSetting.ClientFilters[0].Parameters["Audience"] = "{\"Groups\":[{\"Name\":\"Group1\",\"RolloutPercentage\":\"100\"},{\"Name\":\"Group2\",\"RolloutPercentage\":\"50\"}]}";
 
                 var resultingSetting = await service.SetConfigurationSettingAsync(selectedSetting);
-                Assert.That(resultingSetting.Value.Value, Is.EqualTo("{\"id\":\"my_feature\",\"enabled\":true,\"conditions\":{\"client_filters\":[{\"name\":\"Microsoft.Targeting\",\"parameters\":{\"Audience\":{\"Groups\":[{\"Name\":\"Group1\",\"RolloutPercentage\":100},{\"Name\":\"Group2\",\"RolloutPercentage\":50}]}}}]}}"));
+                Assert.That(resultingSetting.Value.Value, Is.EqualTo("{\"id\":\"my_feature\",\"enabled\":true,\"conditions\":{\"client_filters\":[{\"name\":\"Microsoft.Targeting\",\"parameters\":{\"Audience\":\"{\\\"Groups\\\":[{\\\"Name\\\":\\\"Group1\\\",\\\"RolloutPercentage\\\":\\\"100\\\"},{\\\"Name\\\":\\\"Group2\\\",\\\"RolloutPercentage\\\":\\\"50\\\"}]}\"}}]}}"));
             }
             finally
             {

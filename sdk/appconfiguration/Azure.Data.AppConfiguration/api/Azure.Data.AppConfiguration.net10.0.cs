@@ -158,7 +158,7 @@ namespace Azure.Data.AppConfiguration
         public static Azure.Data.AppConfiguration.FeatureFlagAllocation FeatureFlagAllocation(string defaultWhenDisabled = null, string defaultWhenEnabled = null, System.Collections.Generic.IEnumerable<Azure.Data.AppConfiguration.PercentileAllocation> percentile = null, System.Collections.Generic.IEnumerable<Azure.Data.AppConfiguration.UserAllocation> user = null, System.Collections.Generic.IEnumerable<Azure.Data.AppConfiguration.GroupAllocation> group = null, string seed = null) { throw null; }
         public static Azure.Data.AppConfiguration.FeatureFlagConditions FeatureFlagConditions(Azure.Data.AppConfiguration.RequirementType? requirementType = default(Azure.Data.AppConfiguration.RequirementType?), System.Collections.Generic.IEnumerable<Azure.Data.AppConfiguration.FeatureFlagFilter> filters = null) { throw null; }
         public static Azure.Data.AppConfiguration.FeatureFlagConfigurationSetting FeatureFlagConfigurationSetting(string featureId, bool isEnabled, string label = null, Azure.ETag eTag = default(Azure.ETag), System.DateTimeOffset? lastModified = default(System.DateTimeOffset?), bool? isReadOnly = default(bool?)) { throw null; }
-        public static Azure.Data.AppConfiguration.FeatureFlagFilter FeatureFlagFilter(string name = null, System.Collections.Generic.IDictionary<string, object> parameters = null) { throw null; }
+        public static Azure.Data.AppConfiguration.FeatureFlagFilter FeatureFlagFilter(string name = null, System.Collections.Generic.IDictionary<string, string> parameters = null) { throw null; }
         public static Azure.Data.AppConfiguration.FeatureFlagTelemetryConfiguration FeatureFlagTelemetryConfiguration(bool enabled = false, System.Collections.Generic.IDictionary<string, string> metadata = null) { throw null; }
         public static Azure.Data.AppConfiguration.FeatureFlagVariantDefinition FeatureFlagVariantDefinition(string name = null, string value = null, string contentType = null, Azure.Data.AppConfiguration.StatusOverride? statusOverride = default(Azure.Data.AppConfiguration.StatusOverride?)) { throw null; }
         public static Azure.Data.AppConfiguration.GroupAllocation GroupAllocation(string variant = null, System.Collections.Generic.IEnumerable<string> groups = null) { throw null; }
@@ -370,9 +370,9 @@ namespace Azure.Data.AppConfiguration
     public partial class FeatureFlagFilter : System.ClientModel.Primitives.IJsonModel<Azure.Data.AppConfiguration.FeatureFlagFilter>, System.ClientModel.Primitives.IPersistableModel<Azure.Data.AppConfiguration.FeatureFlagFilter>
     {
         public FeatureFlagFilter(string name) { }
-        public FeatureFlagFilter(string name, System.Collections.Generic.IDictionary<string, object> parameters) { }
+        public FeatureFlagFilter(string name, System.Collections.Generic.IDictionary<string, string> parameters) { }
         public string Name { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, object> Parameters { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> Parameters { get { throw null; } }
         protected virtual Azure.Data.AppConfiguration.FeatureFlagFilter JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.Data.AppConfiguration.FeatureFlagFilter PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
