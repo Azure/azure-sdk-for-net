@@ -350,7 +350,6 @@ namespace Azure.AI.Projects
     [ModelReaderWriterBuildable(typeof(SkillReferenceParam))]
     [ModelReaderWriterBuildable(typeof(StructuredOutputDefinition))]
     [ModelReaderWriterBuildable(typeof(SummaryTextContent))]
-    [ModelReaderWriterBuildable(typeof(SystemDataV3))]
     [ModelReaderWriterBuildable(typeof(TargetConfig))]
     [ModelReaderWriterBuildable(typeof(TaxonomyCategory))]
     [ModelReaderWriterBuildable(typeof(TaxonomySubCategory))]
