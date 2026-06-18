@@ -3,6 +3,7 @@
 
 #nullable disable
 
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -22,10 +23,12 @@ namespace Azure.ResourceManager.SecurityCenter
             => Get(expand.HasValue ? new ExpandEnum(expand.Value.ToString()) : null, cancellationToken);
 
         /// <summary> Update a SecurityAssessment. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Task<ArmOperation<SecurityAssessmentResource>> UpdateAsync(WaitUntil waitUntil, SecurityAssessmentCreateOrUpdateContent assessment, CancellationToken cancellationToken = default)
             => throw new System.NotSupportedException("This API is no longer supported by the service.");
 
         /// <summary> Update a SecurityAssessment. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<SecurityAssessmentResource> Update(WaitUntil waitUntil, SecurityAssessmentCreateOrUpdateContent assessment, CancellationToken cancellationToken = default)
             => throw new System.NotSupportedException("This API is no longer supported by the service.");
     }

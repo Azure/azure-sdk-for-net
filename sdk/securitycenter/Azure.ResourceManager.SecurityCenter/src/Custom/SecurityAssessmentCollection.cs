@@ -3,6 +3,7 @@
 
 #nullable disable
 
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -14,10 +15,12 @@ namespace Azure.ResourceManager.SecurityCenter
     public partial class SecurityAssessmentCollection
     {
         /// <summary> Create a security assessment on your resource. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Task<ArmOperation<SecurityAssessmentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string assessmentName, SecurityAssessmentCreateOrUpdateContent assessment, CancellationToken cancellationToken = default)
             => throw new System.NotSupportedException("This API is no longer supported by the service.");
 
         /// <summary> Create a security assessment on your resource. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<SecurityAssessmentResource> CreateOrUpdate(WaitUntil waitUntil, string assessmentName, SecurityAssessmentCreateOrUpdateContent assessment, CancellationToken cancellationToken = default)
             => throw new System.NotSupportedException("This API is no longer supported by the service.");
 

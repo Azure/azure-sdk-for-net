@@ -404,7 +404,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="expand">The value preserved for API compatibility.</param>
         /// <param name="cancellationToken">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
-        public static Azure.Pageable<Azure.ResourceManager.SecurityCenter.Models.SecureScoreControlDetails> GetSecureScoreControls(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.SecurityCenter.Models.SecurityScoreODataExpand? expand = default(Azure.ResourceManager.SecurityCenter.Models.SecurityScoreODataExpand?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
+        public static Azure.Pageable<Azure.ResourceManager.SecurityCenter.Models.SecureScoreControlDetails> GetSecureScoreControls(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.SecurityCenter.Models.SecurityScoreODataExpand? expand = default(Azure.ResourceManager.SecurityCenter.Models.SecurityScoreODataExpand?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            => GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetAll(expand.HasValue ? new ExpandControlsEnum(expand.Value.ToString()) : null, cancellationToken);
         /// <summary>
         /// Provides a compatibility shim for the GetSecurityCenterPricings operation preserved from the previous public API surface.
         /// </summary>
@@ -437,7 +438,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
-        public static Azure.Response<Azure.ResourceManager.SecurityCenter.SecurityAssessmentResource> GetSecurityAssessment(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string assessmentName, Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentODataExpand? expand = default(Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentODataExpand?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
+        public static Azure.Response<Azure.ResourceManager.SecurityCenter.SecurityAssessmentResource> GetSecurityAssessment(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string assessmentName, Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentODataExpand? expand = default(Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentODataExpand?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            => GetSecurityAssessment(client, scope, assessmentName, expand.HasValue ? new ExpandEnum(expand.Value.ToString()) : null, cancellationToken);
         /// <summary>
         /// Provides a compatibility shim for the GetSecurityAssessmentAsync operation preserved from the previous public API surface.
         /// </summary>
@@ -448,7 +450,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken">The value preserved for API compatibility.</param>
         /// <returns>The compatibility result.</returns>
         [Azure.Core.ForwardsClientCalls]
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.SecurityAssessmentResource>> GetSecurityAssessmentAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string assessmentName, Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentODataExpand? expand = default(Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentODataExpand?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityCenter.SecurityAssessmentResource>> GetSecurityAssessmentAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string assessmentName, Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentODataExpand? expand = default(Azure.ResourceManager.SecurityCenter.Models.SecurityAssessmentODataExpand?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            => GetSecurityAssessmentAsync(client, scope, assessmentName, expand.HasValue ? new ExpandEnum(expand.Value.ToString()) : null, cancellationToken);
         /// <summary>
         /// Provides a compatibility shim for the GetMdeOnboarding operation preserved from the previous public API surface.
         /// </summary>
