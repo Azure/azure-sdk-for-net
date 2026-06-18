@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> List of intervals with appropriate metric data. </summary>
         [WirePath("properties.intervals")]
-        public IReadOnlyList<QueryMetricInterval> Intervals
+        public IList<QueryMetricInterval> Intervals
         {
             get
             {

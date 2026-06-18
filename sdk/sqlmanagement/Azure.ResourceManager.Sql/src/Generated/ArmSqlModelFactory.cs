@@ -610,31 +610,31 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="startIPAddress"> The start IP address of the firewall rule. Must be IPv4 format. Use value '0.0.0.0' for all Azure-internal IP addresses. </param>
         /// <param name="endIPAddress"> The end IP address of the firewall rule. Must be IPv4 format. Must be greater than or equal to startIpAddress. Use value '0.0.0.0' for all Azure-internal IP addresses. </param>
         /// <returns> A new <see cref="Sql.SqlFirewallRuleData"/> instance for mocking. </returns>
-        public static SqlFirewallRuleData SqlFirewallRuleData(ResourceIdentifier id = default, string name = default, string @type = default, string startIPAddress = default, string endIPAddress = default)
+        public static SqlFirewallRuleData SqlFirewallRuleData(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, string startIPAddress = default, string endIPAddress = default)
         {
-            return new SqlFirewallRuleData(id, name, @type, default, startIPAddress is null && endIPAddress is null ? default : new ServerFirewallRuleProperties(startIPAddress, endIPAddress, default));
+            return new SqlFirewallRuleData(id, name, resourceType, default, startIPAddress is null && endIPAddress is null ? default : new ServerFirewallRuleProperties(startIPAddress, endIPAddress, default));
         }
 
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <returns> A new <see cref="Models.ProxyResourceWithWritableName"/> instance for mocking. </returns>
-        public static ProxyResourceWithWritableName ProxyResourceWithWritableName(ResourceIdentifier id = default, string name = default, string @type = default)
+        public static ProxyResourceWithWritableName ProxyResourceWithWritableName(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default)
         {
-            return new ProxyResourceWithWritableName(id, name, @type, default);
+            return new ProxyResourceWithWritableName(id, name, resourceType, default);
         }
 
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <returns> A new <see cref="Models.ResourceWithWritableName"/> instance for mocking. </returns>
-        public static ResourceWithWritableName ResourceWithWritableName(ResourceIdentifier id = default, string name = default, string @type = default)
+        public static ResourceWithWritableName ResourceWithWritableName(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default)
         {
-            return new ResourceWithWritableName(id, name, @type, default);
+            return new ResourceWithWritableName(id, name, resourceType, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -2426,7 +2426,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <returns> A new <see cref="Models.ManagedInstancePrivateEndpointConnectionProperties"/> instance for mocking. </returns>
         public static ManagedInstancePrivateEndpointConnectionProperties ManagedInstancePrivateEndpointConnectionProperties(ResourceIdentifier privateEndpointId = default, ManagedInstancePrivateLinkServiceConnectionStateProperty privateLinkServiceConnectionState = default, string provisioningState = default)
         {
-            return new ManagedInstancePrivateEndpointConnectionProperties(privateEndpointId is null ? default : new ManagedInstancePrivateEndpointProperty(privateEndpointId, default), default, provisioningState, default);
+            return new ManagedInstancePrivateEndpointConnectionProperties(privateEndpointId is null ? default : new ManagedInstancePrivateEndpointProperty(privateEndpointId, default), privateLinkServiceConnectionState, provisioningState, default);
         }
 
         /// <param name="status"> The private link service connection status. </param>
@@ -3125,13 +3125,13 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="startIPv6Address"> The start IP address of the firewall rule. Must be IPv6 format. </param>
         /// <param name="endIPv6Address"> The end IP address of the firewall rule. Must be IPv6 format. Must be greater than or equal to startIpv6Address. </param>
         /// <returns> A new <see cref="Sql.IPv6FirewallRuleData"/> instance for mocking. </returns>
-        public static IPv6FirewallRuleData IPv6FirewallRuleData(ResourceIdentifier id = default, string name = default, string @type = default, string startIPv6Address = default, string endIPv6Address = default)
+        public static IPv6FirewallRuleData IPv6FirewallRuleData(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, string startIPv6Address = default, string endIPv6Address = default)
         {
-            return new IPv6FirewallRuleData(id, name, @type, default, startIPv6Address is null && endIPv6Address is null ? default : new IPv6ServerFirewallRuleProperties(startIPv6Address, endIPv6Address, default));
+            return new IPv6FirewallRuleData(id, name, resourceType, default, startIPv6Address is null && endIPv6Address is null ? default : new IPv6ServerFirewallRuleProperties(startIPv6Address, endIPv6Address, default));
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -3910,18 +3910,18 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="connectionState"> Connection State of the Private Endpoint Connection. </param>
+        /// <param name="privateLinkServiceConnectionState"> Connection State of the Private Endpoint Connection. </param>
         /// <param name="provisioningState"> State of the Private Endpoint Connection. </param>
         /// <param name="privateEndpointId"> Resource id of the private endpoint. </param>
         /// <returns> A new <see cref="Sql.ManagedInstancePrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static ManagedInstancePrivateEndpointConnectionData ManagedInstancePrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ManagedInstancePrivateLinkServiceConnectionStateProperty connectionState = default, string provisioningState = default, ResourceIdentifier privateEndpointId = default)
+        public static ManagedInstancePrivateEndpointConnectionData ManagedInstancePrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ManagedInstancePrivateLinkServiceConnectionStateProperty privateLinkServiceConnectionState = default, string provisioningState = default, ResourceIdentifier privateEndpointId = default)
         {
             return new ManagedInstancePrivateEndpointConnectionData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                privateEndpointId is null && connectionState is null && provisioningState is null ? default : new ManagedInstancePrivateEndpointConnectionProperties(new ManagedInstancePrivateEndpointProperty(privateEndpointId, default), connectionState, provisioningState, default),
+                privateEndpointId is null && privateLinkServiceConnectionState is null && provisioningState is null ? default : new ManagedInstancePrivateEndpointConnectionProperties(new ManagedInstancePrivateEndpointProperty(privateEndpointId, default), privateLinkServiceConnectionState, provisioningState, default),
                 default);
         }
 
@@ -5204,15 +5204,24 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="currentValue"> Current value of the metric. </param>
         /// <param name="limit"> Boundary value of the metric. </param>
         /// <param name="unit"> Unit of the metric. </param>
+        /// <param name="resourceName"> The name of the resource. </param>
+        /// <param name="nextResetOn"> The next reset time for the metric (ISO8601 format). </param>
         /// <returns> A new <see cref="Models.SqlServerUsage"/> instance for mocking. </returns>
-        public static SqlServerUsage SqlServerUsage(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, double? currentValue = default, double? limit = default, string unit = default)
+        public static SqlServerUsage SqlServerUsage(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, double? currentValue = default, double? limit = default, string unit = default, string resourceName = default, DateTimeOffset? nextResetOn = default)
         {
             return new SqlServerUsage(
                 id,
                 name,
                 resourceType,
                 systemData,
-                displayName is null && currentValue is null && limit is null && unit is null ? default : new ServerUsageProperties(displayName, currentValue, limit, unit, default),
+                displayName is null && currentValue is null && limit is null && unit is null && resourceName is null && nextResetOn is null ? default : new ServerUsageProperties(
+                    displayName,
+                    currentValue,
+                    limit,
+                    unit,
+                    resourceName,
+                    nextResetOn,
+                    default),
                 default);
         }
 
@@ -7309,41 +7318,6 @@ namespace Azure.ResourceManager.Sql.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Sql.SqlFirewallRuleData"/>. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="startIPAddress"> The start IP address of the firewall rule. Must be IPv4 format. Use value '0.0.0.0' for all Azure-internal IP addresses. </param>
-        /// <param name="endIPAddress"> The end IP address of the firewall rule. Must be IPv4 format. Must be greater than or equal to startIpAddress. Use value '0.0.0.0' for all Azure-internal IP addresses. </param>
-        /// <returns> A new <see cref="Sql.SqlFirewallRuleData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SqlFirewallRuleData SqlFirewallRuleData(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, string startIPAddress = default, string endIPAddress = default)
-        {
-            return new SqlFirewallRuleData(id, name, default, default, startIPAddress is null && endIPAddress is null ? default : new ServerFirewallRuleProperties(startIPAddress, endIPAddress, default));
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ProxyResourceWithWritableName"/>. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <returns> A new <see cref="Models.ProxyResourceWithWritableName"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ProxyResourceWithWritableName ProxyResourceWithWritableName(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default)
-        {
-            return new ProxyResourceWithWritableName(id, name, default, default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ResourceWithWritableName"/>. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <returns> A new <see cref="Models.ResourceWithWritableName"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ResourceWithWritableName ResourceWithWritableName(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default)
-        {
-            return new ResourceWithWritableName(id, name, default, default);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Sql.GeoBackupPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -7455,19 +7429,6 @@ namespace Azure.ResourceManager.Sql.Models
                 dnsZone,
                 maintenanceConfigurationId,
                 default), tags ?? new ChangeTrackingDictionary<string, string>(), default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Sql.IPv6FirewallRuleData"/>. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="startIPv6Address"> The start IP address of the firewall rule. Must be IPv6 format. </param>
-        /// <param name="endIPv6Address"> The end IP address of the firewall rule. Must be IPv6 format. Must be greater than or equal to startIpv6Address. </param>
-        /// <returns> A new <see cref="Sql.IPv6FirewallRuleData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static IPv6FirewallRuleData IPv6FirewallRuleData(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, string startIPv6Address = default, string endIPv6Address = default)
-        {
-            return new IPv6FirewallRuleData(id, name, default, default, startIPv6Address is null && endIPv6Address is null ? default : new IPv6ServerFirewallRuleProperties(startIPv6Address, endIPv6Address, default));
         }
 
         /// <summary> Initializes a new instance of <see cref="Sql.SqlServerJobAgentData"/>. </summary>
@@ -7674,7 +7635,7 @@ namespace Azure.ResourceManager.Sql.Models
                 name,
                 resourceType,
                 systemData,
-                privateEndpointId is null && connectionState is null && provisioningState is null ? default : new ManagedInstancePrivateEndpointConnectionProperties(new ManagedInstancePrivateEndpointProperty(privateEndpointId, default), connectionState, provisioningState, default),
+                privateEndpointId is null && provisioningState is null ? default : new ManagedInstancePrivateEndpointConnectionProperties(new ManagedInstancePrivateEndpointProperty(privateEndpointId, default), default, provisioningState, default),
                 default);
         }
 
@@ -8164,30 +8125,6 @@ namespace Azure.ResourceManager.Sql.Models
                 retentionDays,
                 createMode,
                 default), tags ?? new ChangeTrackingDictionary<string, string>(), default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.SqlServerUsage"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="displayName"> User-readable name of the metric. </param>
-        /// <param name="currentValue"> Current value of the metric. </param>
-        /// <param name="limit"> Boundary value of the metric. </param>
-        /// <param name="unit"> Unit of the metric. </param>
-        /// <param name="resourceName"> The name of the resource. </param>
-        /// <param name="nextResetOn"> The next reset time for the metric (ISO8601 format). </param>
-        /// <returns> A new <see cref="Models.SqlServerUsage"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SqlServerUsage SqlServerUsage(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, double? currentValue = default, double? limit = default, string unit = default, string resourceName = default, DateTimeOffset? nextResetOn = default)
-        {
-            return new SqlServerUsage(
-                id,
-                name,
-                resourceType,
-                systemData,
-                displayName is null && currentValue is null && limit is null && unit is null ? default : new ServerUsageProperties(displayName, currentValue, limit, unit, default),
-                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Sql.SyncAgentData"/>. </summary>

@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary></summary>
+    /// <summary> The name of the blob auditing policy. </summary>
     public readonly partial struct BlobAuditingPolicyName : IEquatable<BlobAuditingPolicyName>
     {
         /// <summary> Converts a string to a <see cref="BlobAuditingPolicyName"/>. </summary>

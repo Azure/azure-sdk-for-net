@@ -1409,18 +1409,54 @@ namespace Azure.ResourceManager.Sql
             return GetSqlFirewallRules().Get(firewallRuleName, cancellationToken);
         }
 
-        /// <summary> Gets an object representing a <see cref="SqlServerBlobAuditingPolicyResource"/> along with the instance operations that can be performed on it in the <see cref="SqlServerResource"/>. </summary>
-        /// <returns> Returns a <see cref="SqlServerBlobAuditingPolicyResource"/> object. </returns>
-        public virtual SqlServerBlobAuditingPolicyResource GetSqlServerBlobAuditingPolicy()
+        /// <summary> Gets a collection of SqlServerBlobAuditingPolicies in the <see cref="SqlServerResource"/>. </summary>
+        /// <returns> An object representing collection of SqlServerBlobAuditingPolicies and their operations over a SqlServerBlobAuditingPolicyResource. </returns>
+        public virtual SqlServerBlobAuditingPolicyCollection GetSqlServerBlobAuditingPolicies()
         {
-            return new SqlServerBlobAuditingPolicyResource(Client, Id.AppendChildResource("auditingSettings", "default"));
+            return GetCachedClient(client => new SqlServerBlobAuditingPolicyCollection(client, Id));
         }
 
-        /// <summary> Gets an object representing a <see cref="ExtendedServerBlobAuditingPolicyResource"/> along with the instance operations that can be performed on it in the <see cref="SqlServerResource"/>. </summary>
-        /// <returns> Returns a <see cref="ExtendedServerBlobAuditingPolicyResource"/> object. </returns>
-        public virtual ExtendedServerBlobAuditingPolicyResource GetExtendedServerBlobAuditingPolicy()
+        /// <summary> Gets a server's blob auditing policy. </summary>
+        /// <param name="blobAuditingPolicyName"> The name of the blob auditing policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SqlServerBlobAuditingPolicyResource>> GetSqlServerBlobAuditingPolicyAsync(BlobAuditingPolicyName blobAuditingPolicyName, CancellationToken cancellationToken = default)
         {
-            return new ExtendedServerBlobAuditingPolicyResource(Client, Id.AppendChildResource("extendedAuditingSettings", "default"));
+            return await GetSqlServerBlobAuditingPolicies().GetAsync(blobAuditingPolicyName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets a server's blob auditing policy. </summary>
+        /// <param name="blobAuditingPolicyName"> The name of the blob auditing policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual Response<SqlServerBlobAuditingPolicyResource> GetSqlServerBlobAuditingPolicy(BlobAuditingPolicyName blobAuditingPolicyName, CancellationToken cancellationToken = default)
+        {
+            return GetSqlServerBlobAuditingPolicies().Get(blobAuditingPolicyName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ExtendedServerBlobAuditingPolicies in the <see cref="SqlServerResource"/>. </summary>
+        /// <returns> An object representing collection of ExtendedServerBlobAuditingPolicies and their operations over a ExtendedServerBlobAuditingPolicyResource. </returns>
+        public virtual ExtendedServerBlobAuditingPolicyCollection GetExtendedServerBlobAuditingPolicies()
+        {
+            return GetCachedClient(client => new ExtendedServerBlobAuditingPolicyCollection(client, Id));
+        }
+
+        /// <summary> Gets an extended server's blob auditing policy. </summary>
+        /// <param name="blobAuditingPolicyName"> The name of the blob auditing policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ExtendedServerBlobAuditingPolicyResource>> GetExtendedServerBlobAuditingPolicyAsync(BlobAuditingPolicyName blobAuditingPolicyName, CancellationToken cancellationToken = default)
+        {
+            return await GetExtendedServerBlobAuditingPolicies().GetAsync(blobAuditingPolicyName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an extended server's blob auditing policy. </summary>
+        /// <param name="blobAuditingPolicyName"> The name of the blob auditing policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual Response<ExtendedServerBlobAuditingPolicyResource> GetExtendedServerBlobAuditingPolicy(BlobAuditingPolicyName blobAuditingPolicyName, CancellationToken cancellationToken = default)
+        {
+            return GetExtendedServerBlobAuditingPolicies().Get(blobAuditingPolicyName, cancellationToken);
         }
 
         /// <summary> Gets a collection of SqlServerAdvisors in the <see cref="SqlServerResource"/>. </summary>

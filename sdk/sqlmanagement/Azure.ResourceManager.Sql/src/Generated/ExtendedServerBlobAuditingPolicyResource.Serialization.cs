@@ -8,12 +8,11 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
     /// <summary></summary>
-    public partial class ExtendedServerBlobAuditingPolicyResource : ArmResource, IJsonModel<ExtendedServerBlobAuditingPolicyData>
+    public partial class ExtendedServerBlobAuditingPolicyResource : IJsonModel<ExtendedServerBlobAuditingPolicyData>
     {
         private static IJsonModel<ExtendedServerBlobAuditingPolicyData> s_dataDeserializationInstance;
 

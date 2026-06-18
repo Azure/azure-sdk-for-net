@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="endTime"> The end time for the metric (ISO-8601 format). </param>
         /// <param name="intervals"> List of intervals with appropriate metric data. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal QueryStatisticsProperties(string databaseName, string queryId, string startTime, string endTime, IReadOnlyList<QueryMetricInterval> intervals, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal QueryStatisticsProperties(string databaseName, string queryId, string startTime, string endTime, IList<QueryMetricInterval> intervals, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DatabaseName = databaseName;
             QueryId = queryId;
@@ -55,9 +55,5 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> The end time for the metric (ISO-8601 format). </summary>
         [WirePath("endTime")]
         public string EndTime { get; }
-
-        /// <summary> List of intervals with appropriate metric data. </summary>
-        [WirePath("intervals")]
-        public IReadOnlyList<QueryMetricInterval> Intervals { get; } = new ChangeTrackingList<QueryMetricInterval>();
     }
 }

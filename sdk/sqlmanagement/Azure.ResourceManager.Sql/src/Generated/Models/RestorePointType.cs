@@ -11,8 +11,8 @@ namespace Azure.ResourceManager.Sql.Models
     public enum RestorePointType
     {
         /// <summary> CONTINUOUS. </summary>
-        CONTINUOUS,
+        Continuous,
         /// <summary> DISCRETE. </summary>
-        DISCRETE
+        Discrete
     }
 }

@@ -94,6 +94,16 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit);
             }
+            if (options.Format != "W" && Optional.IsDefined(ResourceName))
+            {
+                writer.WritePropertyName("resourceName"u8);
+                writer.WriteStringValue(ResourceName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(NextResetOn))
+            {
+                writer.WritePropertyName("nextResetTime"u8);
+                writer.WriteStringValue(NextResetOn.Value, "O");
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -140,6 +150,8 @@ namespace Azure.ResourceManager.Sql.Models
             double? currentValue = default;
             double? limit = default;
             string unit = default;
+            string resourceName = default;
+            DateTimeOffset? nextResetOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -171,12 +183,33 @@ namespace Azure.ResourceManager.Sql.Models
                     unit = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("resourceName"u8))
+                {
+                    resourceName = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("nextResetTime"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    nextResetOn = prop.Value.GetDateTimeOffset("O");
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ServerUsageProperties(displayName, currentValue, limit, unit, additionalBinaryDataProperties);
+            return new ServerUsageProperties(
+                displayName,
+                currentValue,
+                limit,
+                unit,
+                resourceName,
+                nextResetOn,
+                additionalBinaryDataProperties);
         }
     }
 }

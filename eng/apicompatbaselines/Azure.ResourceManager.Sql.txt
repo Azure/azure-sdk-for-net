@@ -1,0 +1,33 @@
+# Baseline for Azure.ResourceManager.Sql v1.4.0 -> TypeSpec-based 2.0.0 migration.
+#
+# WirePathAttribute decorations on ManagedInstanceResourceGetTopQueriesOptions properties:
+# the new TypeSpec generator does not emit WirePathAttribute on plain "options" POCOs
+# (they are bundled query parameters, not wire-serialized models). These attributes
+# carry no functional impact for consumers and are safe to remove from the contract.
+CannotRemoveAttribute : Attribute 'Azure.ResourceManager.Sql.WirePathAttribute' exists on 'Azure.ResourceManager.Sql.Models.ManagedInstanceResourceGetTopQueriesOptions.AggregationFunction' in the contract but not the implementation.
+CannotRemoveAttribute : Attribute 'Azure.ResourceManager.Sql.WirePathAttribute' exists on 'Azure.ResourceManager.Sql.Models.ManagedInstanceResourceGetTopQueriesOptions.Databases' in the contract but not the implementation.
+CannotRemoveAttribute : Attribute 'Azure.ResourceManager.Sql.WirePathAttribute' exists on 'Azure.ResourceManager.Sql.Models.ManagedInstanceResourceGetTopQueriesOptions.EndTime' in the contract but not the implementation.
+CannotRemoveAttribute : Attribute 'Azure.ResourceManager.Sql.WirePathAttribute' exists on 'Azure.ResourceManager.Sql.Models.ManagedInstanceResourceGetTopQueriesOptions.Interval' in the contract but not the implementation.
+CannotRemoveAttribute : Attribute 'Azure.ResourceManager.Sql.WirePathAttribute' exists on 'Azure.ResourceManager.Sql.Models.ManagedInstanceResourceGetTopQueriesOptions.NumberOfQueries' in the contract but not the implementation.
+CannotRemoveAttribute : Attribute 'Azure.ResourceManager.Sql.WirePathAttribute' exists on 'Azure.ResourceManager.Sql.Models.ManagedInstanceResourceGetTopQueriesOptions.ObservationMetric' in the contract but not the implementation.
+CannotRemoveAttribute : Attribute 'Azure.ResourceManager.Sql.WirePathAttribute' exists on 'Azure.ResourceManager.Sql.Models.ManagedInstanceResourceGetTopQueriesOptions.StartTime' in the contract but not the implementation.
+
+#
+# Get-only properties on generated models whose underlying TypeSpec model has @visibility(Read).
+# Setters cannot be added via partial class because the generated property body already exists.
+# These represent intentional read-only-ification on the service contract in api-version 2025-01-01.
+MembersMustExist : Member 'public void Azure.ResourceManager.Sql.Models.RecommendedSensitivityLabelUpdate.Column.set(System.String)' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'public void Azure.ResourceManager.Sql.Models.RecommendedSensitivityLabelUpdate.Op.set(System.Nullable<Azure.ResourceManager.Sql.Models.RecommendedSensitivityLabelUpdateKind>)' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'public void Azure.ResourceManager.Sql.Models.RecommendedSensitivityLabelUpdate.Schema.set(System.String)' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'public void Azure.ResourceManager.Sql.Models.RecommendedSensitivityLabelUpdate.Table.set(System.String)' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'public void Azure.ResourceManager.Sql.Models.SensitivityLabelUpdate.Column.set(System.String)' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'public void Azure.ResourceManager.Sql.Models.SensitivityLabelUpdate.Op.set(System.Nullable<Azure.ResourceManager.Sql.Models.SensitivityLabelUpdateKind>)' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'public void Azure.ResourceManager.Sql.Models.SensitivityLabelUpdate.Schema.set(System.String)' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'public void Azure.ResourceManager.Sql.Models.SensitivityLabelUpdate.Table.set(System.String)' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'public void Azure.ResourceManager.Sql.Models.SqlDatabaseExtension.OperationMode.set(System.Nullable<Azure.ResourceManager.Sql.Models.DatabaseExtensionOperationMode>)' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'public void Azure.ResourceManager.Sql.Models.SqlDatabaseExtension.StorageKey.set(System.String)' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'public void Azure.ResourceManager.Sql.Models.SqlDatabaseExtension.StorageKeyType.set(System.Nullable<Azure.ResourceManager.Sql.Models.StorageKeyType>)' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'public void Azure.ResourceManager.Sql.Models.SqlDatabaseExtension.StorageUri.set(System.Uri)' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'public void Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentBaselineCreateOrUpdateContent.IsLatestScan.set(System.Nullable<System.Boolean>)' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'public void Azure.ResourceManager.Sql.Models.SqlVulnerabilityAssessmentBaselineRuleCreateOrUpdateContent.IsLatestScan.set(System.Nullable<System.Boolean>)' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'public void Azure.ResourceManager.Sql.Models.TdeCertificate.PrivateBlob.set(System.String)' does not exist in the implementation but it does exist in the contract.

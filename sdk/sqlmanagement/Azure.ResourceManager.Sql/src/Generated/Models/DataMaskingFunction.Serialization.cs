@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.Sql.Models
         public static string ToSerialString(this DataMaskingFunction value) => value switch
         {
             DataMaskingFunction.Default => "Default",
-            DataMaskingFunction.CCN => "CCN",
+            DataMaskingFunction.Ccn => "CCN",
             DataMaskingFunction.Email => "Email",
             DataMaskingFunction.Number => "Number",
-            DataMaskingFunction.SSN => "SSN",
+            DataMaskingFunction.Ssn => "SSN",
             DataMaskingFunction.Text => "Text",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DataMaskingFunction value.")
         };
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Sql.Models
             }
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "CCN"))
             {
-                return DataMaskingFunction.CCN;
+                return DataMaskingFunction.Ccn;
             }
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "Email"))
             {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Sql.Models
             }
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "SSN"))
             {
-                return DataMaskingFunction.SSN;
+                return DataMaskingFunction.Ssn;
             }
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "Text"))
             {

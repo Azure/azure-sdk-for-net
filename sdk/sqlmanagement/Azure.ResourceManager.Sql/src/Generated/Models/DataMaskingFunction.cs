@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Default. </summary>
         Default,
         /// <summary> CCN. </summary>
-        CCN,
+        Ccn,
         /// <summary> Email. </summary>
         Email,
         /// <summary> Number. </summary>
         Number,
         /// <summary> SSN. </summary>
-        SSN,
+        Ssn,
         /// <summary> Text. </summary>
         Text
     }

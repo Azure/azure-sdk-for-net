@@ -27,13 +27,17 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="currentValue"> Current value of the metric. </param>
         /// <param name="limit"> Boundary value of the metric. </param>
         /// <param name="unit"> Unit of the metric. </param>
+        /// <param name="resourceName"> The name of the resource. </param>
+        /// <param name="nextResetOn"> The next reset time for the metric (ISO8601 format). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ServerUsageProperties(string displayName, double? currentValue, double? limit, string unit, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ServerUsageProperties(string displayName, double? currentValue, double? limit, string unit, string resourceName, DateTimeOffset? nextResetOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisplayName = displayName;
             CurrentValue = currentValue;
             Limit = limit;
             Unit = unit;
+            ResourceName = resourceName;
+            NextResetOn = nextResetOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -52,5 +56,13 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Unit of the metric. </summary>
         [WirePath("unit")]
         public string Unit { get; }
+
+        /// <summary> The name of the resource. </summary>
+        [WirePath("resourceName")]
+        public string ResourceName { get; }
+
+        /// <summary> The next reset time for the metric (ISO8601 format). </summary>
+        [WirePath("nextResetTime")]
+        public DateTimeOffset? NextResetOn { get; }
     }
 }

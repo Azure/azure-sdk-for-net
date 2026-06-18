@@ -80,5 +80,25 @@ namespace Azure.ResourceManager.Sql.Models
                 return Properties is null ? default : Properties.Unit;
             }
         }
+
+        /// <summary> The name of the resource. </summary>
+        [WirePath("properties.resourceName")]
+        public string ResourceName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResourceName;
+            }
+        }
+
+        /// <summary> The next reset time for the metric (ISO8601 format). </summary>
+        [WirePath("properties.nextResetTime")]
+        public DateTimeOffset? NextResetOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NextResetOn;
+            }
+        }
     }
 }

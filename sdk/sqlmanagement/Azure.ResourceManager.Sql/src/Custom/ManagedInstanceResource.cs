@@ -7,6 +7,7 @@ using System;
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
@@ -45,6 +46,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="distributedAvailabilityGroupName"> The distributed availability group name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [Obsolete("Use GetSqlDistributedAvailabilityGroup instead.", false)]
+        [ForwardsClientCalls]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<DistributedAvailabilityGroupResource> GetDistributedAvailabilityGroup(string distributedAvailabilityGroupName, CancellationToken cancellationToken = default)
         {
@@ -55,6 +57,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="distributedAvailabilityGroupName"> The distributed availability group name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [Obsolete("Use GetSqlDistributedAvailabilityGroupAsync instead.", false)]
+        [ForwardsClientCalls]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<DistributedAvailabilityGroupResource>> GetDistributedAvailabilityGroupAsync(string distributedAvailabilityGroupName, CancellationToken cancellationToken = default)
         {
