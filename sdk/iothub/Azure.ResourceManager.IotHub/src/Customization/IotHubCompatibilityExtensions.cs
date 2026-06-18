@@ -45,10 +45,10 @@ namespace Azure.ResourceManager.IotHub
     // Back-compat overloads use string ETags because the previous GA surface exposed If-Match as string.
     public partial class IotHubDescriptionCollection
     {
-        public virtual async Task<ArmOperation<IotHubDescriptionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string resourceName, IotHubDescriptionData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<IotHubDescriptionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string resourceName, IotHubDescriptionData data, string ifMatch, CancellationToken cancellationToken = default)
             => await CreateOrUpdateAsync(waitUntil, resourceName, data, ToETag(ifMatch), cancellationToken).ConfigureAwait(false);
 
-        public virtual ArmOperation<IotHubDescriptionResource> CreateOrUpdate(WaitUntil waitUntil, string resourceName, IotHubDescriptionData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<IotHubDescriptionResource> CreateOrUpdate(WaitUntil waitUntil, string resourceName, IotHubDescriptionData data, string ifMatch, CancellationToken cancellationToken = default)
             => CreateOrUpdate(waitUntil, resourceName, data, ToETag(ifMatch), cancellationToken);
 
         private static ETag? ToETag(string value) => value is null ? default(ETag?) : new ETag(value);
@@ -57,10 +57,10 @@ namespace Azure.ResourceManager.IotHub
     // Back-compat overloads use string ETags because the previous GA surface exposed If-Match as string.
     public partial class IotHubCertificateDescriptionCollection
     {
-        public virtual async Task<ArmOperation<IotHubCertificateDescriptionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string certificateName, IotHubCertificateDescriptionData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<IotHubCertificateDescriptionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string certificateName, IotHubCertificateDescriptionData data, string ifMatch, CancellationToken cancellationToken = default)
             => await CreateOrUpdateAsync(waitUntil, certificateName, data, ToETag(ifMatch), cancellationToken).ConfigureAwait(false);
 
-        public virtual ArmOperation<IotHubCertificateDescriptionResource> CreateOrUpdate(WaitUntil waitUntil, string certificateName, IotHubCertificateDescriptionData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<IotHubCertificateDescriptionResource> CreateOrUpdate(WaitUntil waitUntil, string certificateName, IotHubCertificateDescriptionData data, string ifMatch, CancellationToken cancellationToken = default)
             => CreateOrUpdate(waitUntil, certificateName, data, ToETag(ifMatch), cancellationToken);
 
         private static ETag? ToETag(string value) => value is null ? default(ETag?) : new ETag(value);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.IotHub
     // Back-compat overloads use string ETags because the previous GA surface exposed If-Match as string.
     public partial class IotHubCertificateDescriptionResource
     {
-        public virtual async Task<ArmOperation<IotHubCertificateDescriptionResource>> UpdateAsync(WaitUntil waitUntil, IotHubCertificateDescriptionData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<IotHubCertificateDescriptionResource>> UpdateAsync(WaitUntil waitUntil, IotHubCertificateDescriptionData data, string ifMatch, CancellationToken cancellationToken = default)
             => await UpdateAsync(waitUntil, data, ToETag(ifMatch), cancellationToken).ConfigureAwait(false);
 
-        public virtual ArmOperation<IotHubCertificateDescriptionResource> Update(WaitUntil waitUntil, IotHubCertificateDescriptionData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<IotHubCertificateDescriptionResource> Update(WaitUntil waitUntil, IotHubCertificateDescriptionData data, string ifMatch, CancellationToken cancellationToken = default)
             => Update(waitUntil, data, ToETag(ifMatch), cancellationToken);
 
         private static ETag? ToETag(string value) => value is null ? default(ETag?) : new ETag(value);
