@@ -1793,9 +1793,7 @@ namespace Azure.ResourceManager.ApiManagement
         public bool? IsSubscriptionDelegationEnabled { get { throw null; } set { } }
         public bool? IsUserRegistrationDelegationEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.PortalDelegationSettingsProperties Properties { get { throw null; } set { } }
-        public bool? SubscriptionsEnabled { get { throw null; } set { } }
         public System.Uri Uri { get { throw null; } set { } }
-        public bool? UserRegistrationEnabled { get { throw null; } set { } }
         public string ValidationKey { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -7784,8 +7782,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static Azure.ResourceManager.ApiManagement.Models.PortalConfigCspProperties PortalConfigCspProperties(Azure.ResourceManager.ApiManagement.Models.PortalSettingsCspMode? mode = default(Azure.ResourceManager.ApiManagement.Models.PortalSettingsCspMode?), System.Collections.Generic.IEnumerable<System.Uri> reportUri = null, System.Collections.Generic.IEnumerable<string> allowedSources = null) { throw null; }
         public static Azure.ResourceManager.ApiManagement.Models.PortalConfigDelegationProperties PortalConfigDelegationProperties(bool? delegateRegistration = default(bool?), bool? delegateSubscription = default(bool?), System.Uri delegationUri = null, string validationKey = null) { throw null; }
         public static Azure.ResourceManager.ApiManagement.Models.PortalConfigTermsOfServiceProperties PortalConfigTermsOfServiceProperties(string text = null, bool? requireConsent = default(bool?)) { throw null; }
-        public static Azure.ResourceManager.ApiManagement.Models.PortalDelegationSettingsProperties PortalDelegationSettingsProperties(System.Uri uri = null, string validationKey = null, bool? subscriptionsEnabled = default(bool?), bool? userRegistrationEnabled = default(bool?)) { throw null; }
-        public static Azure.ResourceManager.ApiManagement.Models.PortalSettingsContractData PortalSettingsContractData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Uri uri = null, string validationKey = null, bool? isRedirectEnabled = default(bool?), Azure.ResourceManager.ApiManagement.Models.TermsOfServiceProperties termsOfService = null, bool? isSubscriptionsEnabled = default(bool?), bool? isUserRegistrationEnabled = default(bool?)) { throw null; }
+        public static Azure.ResourceManager.ApiManagement.Models.PortalDelegationSettingsProperties PortalDelegationSettingsProperties(System.Uri uri = null, string validationKey = null, bool? isSubscriptionDelegationEnabled = default(bool?), bool? isUserRegistrationDelegationEnabled = default(bool?)) { throw null; }
+        public static Azure.ResourceManager.ApiManagement.Models.PortalSettingsContractData PortalSettingsContractData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Uri uri = null, string validationKey = null, bool? isRedirectEnabled = default(bool?), Azure.ResourceManager.ApiManagement.Models.TermsOfServiceProperties termsOfService = null, bool? isSubscriptionDelegationEnabled = default(bool?), bool? isUserRegistrationDelegationEnabled = default(bool?)) { throw null; }
         public static Azure.ResourceManager.ApiManagement.Models.PortalSettingsContractData PortalSettingsContractData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Uri uri = null, string validationKey = null, bool? isSubscriptionDelegationEnabled = default(bool?), bool? isUserRegistrationDelegationEnabled = default(bool?), bool? isRedirectEnabled = default(bool?), Azure.ResourceManager.ApiManagement.Models.TermsOfServiceProperties termsOfService = null) { throw null; }
         public static Azure.ResourceManager.ApiManagement.Models.PortalSettingValidationKeyContract PortalSettingValidationKeyContract(string validationKey = null) { throw null; }
         public static Azure.ResourceManager.ApiManagement.Models.ProductApiData ProductApiData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, string description, Azure.ResourceManager.ApiManagement.Models.AuthenticationSettingsContract authenticationSettings, Azure.ResourceManager.ApiManagement.Models.SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames, Azure.ResourceManager.ApiManagement.Models.ApiType? apiType, string apiRevision, string apiVersion, bool? isCurrent, bool? isOnline, string apiRevisionDescription, string apiVersionDescription, Azure.Core.ResourceIdentifier apiVersionSetId, bool? isSubscriptionRequired, string termsOfServiceLink, Azure.ResourceManager.ApiManagement.Models.ApiContactInformation contact, Azure.ResourceManager.ApiManagement.Models.ApiLicenseInformation license, Azure.Core.ResourceIdentifier sourceApiId, string displayName, string serviceLink, string path, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.ApiOperationInvokableProtocol> protocols, Azure.ResourceManager.ApiManagement.Models.ApiVersionSetContractDetails apiVersionSet) { throw null; }
@@ -10339,9 +10337,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
     public partial class PortalDelegationSettingsProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApiManagement.Models.PortalDelegationSettingsProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiManagement.Models.PortalDelegationSettingsProperties>
     {
         public PortalDelegationSettingsProperties() { }
-        public bool? SubscriptionsEnabled { get { throw null; } set { } }
+        public bool? IsSubscriptionDelegationEnabled { get { throw null; } set { } }
+        public bool? IsUserRegistrationDelegationEnabled { get { throw null; } set { } }
         public System.Uri Uri { get { throw null; } set { } }
-        public bool? UserRegistrationEnabled { get { throw null; } set { } }
         public string ValidationKey { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.ApiManagement.Models.PortalDelegationSettingsProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -10377,9 +10375,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public PortalSettingsContractData() { }
         public bool? IsRedirectEnabled { get { throw null; } set { } }
         public bool? IsSubscriptionDelegationEnabled { get { throw null; } set { } }
-        public bool? IsSubscriptionsEnabled { get { throw null; } set { } }
         public bool? IsUserRegistrationDelegationEnabled { get { throw null; } set { } }
-        public bool? IsUserRegistrationEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.TermsOfServiceProperties TermsOfService { get { throw null; } set { } }
         public System.Uri Uri { get { throw null; } set { } }
         public string ValidationKey { get { throw null; } set { } }

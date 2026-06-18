@@ -40,39 +40,5 @@ namespace Azure.ResourceManager.ApiManagement
         /// <summary> Delegation settings contract properties. </summary>
         [WirePath("properties")]
         public PortalDelegationSettingsProperties Properties { get; set; }
-
-        /// <summary> Enable or disable delegation for subscriptions. </summary>
-        public bool? SubscriptionsEnabled
-        {
-            get
-            {
-                return Subscriptions is null ? default : Subscriptions.Enabled;
-            }
-            set
-            {
-                if (Subscriptions is null)
-                {
-                    Subscriptions = new SubscriptionDelegationSettingProperties();
-                }
-                Subscriptions.Enabled = value;
-            }
-        }
-
-        /// <summary> Enable or disable delegation for user registration. </summary>
-        public bool? UserRegistrationEnabled
-        {
-            get
-            {
-                return UserRegistration is null ? default : UserRegistration.Enabled;
-            }
-            set
-            {
-                if (UserRegistration is null)
-                {
-                    UserRegistration = new RegistrationDelegationSettingProperties();
-                }
-                UserRegistration.Enabled = value;
-            }
-        }
     }
 }

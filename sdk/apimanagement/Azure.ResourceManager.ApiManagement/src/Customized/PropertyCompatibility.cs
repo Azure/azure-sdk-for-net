@@ -81,16 +81,16 @@ namespace Azure.ResourceManager.ApiManagement
         [WirePath("properties.subscriptions.enabled")]
         public bool? IsSubscriptionDelegationEnabled
         {
-            get => Properties?.Subscriptions?.Enabled;
-            set => Subscriptions.Enabled = value;
+            get => Properties?.Subscriptions?.IsSubscriptionDelegationEnabled;
+            set => Subscriptions.IsSubscriptionDelegationEnabled = value;
         }
 
         /// <summary> Enable or disable delegation for user registration. </summary>
         [WirePath("properties.userRegistration.enabled")]
         public bool? IsUserRegistrationDelegationEnabled
         {
-            get => Properties?.UserRegistration?.Enabled;
-            set => UserRegistration.Enabled = value;
+            get => Properties?.UserRegistration?.IsUserRegistrationDelegationEnabled;
+            set => UserRegistration.IsUserRegistrationDelegationEnabled = value;
         }
 
         /// <summary> Subscriptions delegation settings. </summary>
@@ -157,45 +157,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Relative URL template identifying the target resource for this operation. </summary>
         [WirePath("urlTemplate")]
         public string UriTemplate => UrlTemplate;
-    }
-
-    public partial class PortalSettingsContractData
-    {
-        /// <summary> Enable or disable delegation for subscriptions. </summary>
-        [WirePath("properties.subscriptions.enabled")]
-        public bool? IsSubscriptionDelegationEnabled
-        {
-            get => IsSubscriptionsEnabled;
-            set => IsSubscriptionsEnabled = value;
-        }
-
-        /// <summary> Enable or disable delegation for user registration. </summary>
-        [WirePath("properties.userRegistration.enabled")]
-        public bool? IsUserRegistrationDelegationEnabled
-        {
-            get => IsUserRegistrationEnabled;
-            set => IsUserRegistrationEnabled = value;
-        }
-    }
-
-    internal partial class SubscriptionDelegationSettingProperties
-    {
-        /// <summary> Enable or disable delegation for subscriptions. </summary>
-        public bool? IsSubscriptionDelegationEnabled
-        {
-            get => Enabled;
-            set => Enabled = value;
-        }
-    }
-
-    internal partial class RegistrationDelegationSettingProperties
-    {
-        /// <summary> Enable or disable delegation for user registration. </summary>
-        public bool? IsUserRegistrationDelegationEnabled
-        {
-            get => Enabled;
-            set => Enabled = value;
-        }
     }
 
     public partial class ConnectivityHop
