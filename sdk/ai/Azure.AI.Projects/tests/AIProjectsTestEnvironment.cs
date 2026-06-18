@@ -66,6 +66,7 @@ namespace Azure.AI.Projects.Tests
         public string TRACE_LOOKBACK_HOURS => GetRecordedVariable(nameof(TRACE_LOOKBACK_HOURS));
         public string STORAGE_QUEUE_URI => GetRecordedVariable(nameof(STORAGE_QUEUE_URI));
         public string WORKIQ_CONNECTION_ID => GetRecordedVariable(nameof(WORKIQ_CONNECTION_ID));
+        public string HOSTED_AGENT_NAME => GetRecordedVariable(nameof(HOSTED_AGENT_NAME));
         public override Dictionary<string, string> ParseEnvironmentFile() => new()
         {
             { "OPEN-API-KEY", Environment.GetEnvironmentVariable("OPENAI_API_KEY") ?? "api-key" }

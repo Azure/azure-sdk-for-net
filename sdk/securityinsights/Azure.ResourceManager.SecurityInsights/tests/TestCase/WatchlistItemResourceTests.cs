@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
         {
             var collection = operationalInsights.GetSecurityInsightsWatchlists();
             var input = ResourceDataHelpers.GetWatchlistData();
-            var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, Recording.GenerateAssetName("testWatchlists-"), input);
+            var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, GenerateAssetNameFromRecording("testWatchlists-", "watchlists"), input);
             var watchlistResource = lro.Value;
             var itemCollection = watchlistResource.GetSecurityInsightsWatchlistItems();
             var itemInput = ResourceDataHelpers.GetWatchlistItemData();

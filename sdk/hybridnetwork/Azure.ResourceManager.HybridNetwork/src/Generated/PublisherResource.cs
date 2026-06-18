@@ -7,47 +7,37 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.HybridNetwork.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.HybridNetwork
 {
     /// <summary>
-    /// A Class representing a Publisher along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PublisherResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetPublisherResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetPublisher method.
+    /// A class representing a Publisher along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PublisherResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetPublishers method.
     /// </summary>
     public partial class PublisherResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="PublisherResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="publisherName"> The publisherName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string publisherName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _publisherClientDiagnostics;
-        private readonly PublishersRestOperations _publisherRestClient;
+        private readonly ClientDiagnostics _publishersClientDiagnostics;
+        private readonly Publishers _publishersRestClient;
         private readonly PublisherData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.HybridNetwork/publishers";
 
-        /// <summary> Initializes a new instance of the <see cref="PublisherResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of PublisherResource for mocking. </summary>
         protected PublisherResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="PublisherResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="PublisherResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal PublisherResource(ArmClient client, PublisherData data) : this(client, data.Id)
@@ -56,347 +46,92 @@ namespace Azure.ResourceManager.HybridNetwork
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="PublisherResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="PublisherResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal PublisherResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _publisherClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridNetwork", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string publisherApiVersion);
-            _publisherRestClient = new PublishersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, publisherApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _publishersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridNetwork", ResourceType.Namespace, Diagnostics);
+            _publishersRestClient = new Publishers(_publishersClientDiagnostics, Pipeline, Endpoint, publisherApiVersion ?? "2025-03-30");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual PublisherData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="publisherName"> The publisherName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string publisherName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-        }
-
-        /// <summary> Gets a collection of ConfigurationGroupSchemaResources in the Publisher. </summary>
-        /// <returns> An object representing collection of ConfigurationGroupSchemaResources and their operations over a ConfigurationGroupSchemaResource. </returns>
-        public virtual ConfigurationGroupSchemaCollection GetConfigurationGroupSchemas()
-        {
-            return GetCachedClient(client => new ConfigurationGroupSchemaCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets information about the specified configuration group schema.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/configurationGroupSchemas/{configurationGroupSchemaName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConfigurationGroupSchemas_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ConfigurationGroupSchemaResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="configurationGroupSchemaName"> The name of the configuration group schema. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="configurationGroupSchemaName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="configurationGroupSchemaName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ConfigurationGroupSchemaResource>> GetConfigurationGroupSchemaAsync(string configurationGroupSchemaName, CancellationToken cancellationToken = default)
-        {
-            return await GetConfigurationGroupSchemas().GetAsync(configurationGroupSchemaName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets information about the specified configuration group schema.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/configurationGroupSchemas/{configurationGroupSchemaName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConfigurationGroupSchemas_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ConfigurationGroupSchemaResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="configurationGroupSchemaName"> The name of the configuration group schema. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="configurationGroupSchemaName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="configurationGroupSchemaName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ConfigurationGroupSchemaResource> GetConfigurationGroupSchema(string configurationGroupSchemaName, CancellationToken cancellationToken = default)
-        {
-            return GetConfigurationGroupSchemas().Get(configurationGroupSchemaName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of NetworkFunctionDefinitionGroupResources in the Publisher. </summary>
-        /// <returns> An object representing collection of NetworkFunctionDefinitionGroupResources and their operations over a NetworkFunctionDefinitionGroupResource. </returns>
-        public virtual NetworkFunctionDefinitionGroupCollection GetNetworkFunctionDefinitionGroups()
-        {
-            return GetCachedClient(client => new NetworkFunctionDefinitionGroupCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets information about the specified networkFunctionDefinition group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/networkFunctionDefinitionGroups/{networkFunctionDefinitionGroupName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkFunctionDefinitionGroups_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkFunctionDefinitionGroupResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="networkFunctionDefinitionGroupName"> The name of the network function definition group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkFunctionDefinitionGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="networkFunctionDefinitionGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<NetworkFunctionDefinitionGroupResource>> GetNetworkFunctionDefinitionGroupAsync(string networkFunctionDefinitionGroupName, CancellationToken cancellationToken = default)
-        {
-            return await GetNetworkFunctionDefinitionGroups().GetAsync(networkFunctionDefinitionGroupName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets information about the specified networkFunctionDefinition group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/networkFunctionDefinitionGroups/{networkFunctionDefinitionGroupName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkFunctionDefinitionGroups_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkFunctionDefinitionGroupResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="networkFunctionDefinitionGroupName"> The name of the network function definition group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkFunctionDefinitionGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="networkFunctionDefinitionGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<NetworkFunctionDefinitionGroupResource> GetNetworkFunctionDefinitionGroup(string networkFunctionDefinitionGroupName, CancellationToken cancellationToken = default)
-        {
-            return GetNetworkFunctionDefinitionGroups().Get(networkFunctionDefinitionGroupName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of NetworkServiceDesignGroupResources in the Publisher. </summary>
-        /// <returns> An object representing collection of NetworkServiceDesignGroupResources and their operations over a NetworkServiceDesignGroupResource. </returns>
-        public virtual NetworkServiceDesignGroupCollection GetNetworkServiceDesignGroups()
-        {
-            return GetCachedClient(client => new NetworkServiceDesignGroupCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets information about the specified networkServiceDesign group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/networkServiceDesignGroups/{networkServiceDesignGroupName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkServiceDesignGroups_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkServiceDesignGroupResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="networkServiceDesignGroupName"> The name of the network service design group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkServiceDesignGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="networkServiceDesignGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<NetworkServiceDesignGroupResource>> GetNetworkServiceDesignGroupAsync(string networkServiceDesignGroupName, CancellationToken cancellationToken = default)
-        {
-            return await GetNetworkServiceDesignGroups().GetAsync(networkServiceDesignGroupName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets information about the specified networkServiceDesign group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/networkServiceDesignGroups/{networkServiceDesignGroupName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkServiceDesignGroups_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkServiceDesignGroupResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="networkServiceDesignGroupName"> The name of the network service design group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkServiceDesignGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="networkServiceDesignGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<NetworkServiceDesignGroupResource> GetNetworkServiceDesignGroup(string networkServiceDesignGroupName, CancellationToken cancellationToken = default)
-        {
-            return GetNetworkServiceDesignGroups().Get(networkServiceDesignGroupName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ArtifactStoreResources in the Publisher. </summary>
-        /// <returns> An object representing collection of ArtifactStoreResources and their operations over a ArtifactStoreResource. </returns>
-        public virtual ArtifactStoreCollection GetArtifactStores()
-        {
-            return GetCachedClient(client => new ArtifactStoreCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets information about the specified artifact store.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ArtifactStores_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ArtifactStoreResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="artifactStoreName"> The name of the artifact store. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="artifactStoreName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="artifactStoreName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ArtifactStoreResource>> GetArtifactStoreAsync(string artifactStoreName, CancellationToken cancellationToken = default)
-        {
-            return await GetArtifactStores().GetAsync(artifactStoreName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets information about the specified artifact store.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ArtifactStores_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ArtifactStoreResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="artifactStoreName"> The name of the artifact store. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="artifactStoreName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="artifactStoreName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ArtifactStoreResource> GetArtifactStore(string artifactStoreName, CancellationToken cancellationToken = default)
-        {
-            return GetArtifactStores().Get(artifactStoreName, cancellationToken);
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets information about the specified publisher.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Publishers_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Publishers_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PublisherResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PublisherResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<PublisherResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _publisherClientDiagnostics.CreateScope("PublisherResource.Get");
+            using DiagnosticScope scope = _publishersClientDiagnostics.CreateScope("PublisherResource.Get");
             scope.Start();
             try
             {
-                var response = await _publisherRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _publishersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<PublisherData> response = Response.FromValue(PublisherData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new PublisherResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -410,33 +145,139 @@ namespace Azure.ResourceManager.HybridNetwork
         /// Gets information about the specified publisher.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Publishers_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Publishers_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PublisherResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PublisherResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<PublisherResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _publisherClientDiagnostics.CreateScope("PublisherResource.Get");
+            using DiagnosticScope scope = _publishersClientDiagnostics.CreateScope("PublisherResource.Get");
             scope.Start();
             try
             {
-                var response = _publisherRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _publishersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<PublisherData> response = Response.FromValue(PublisherData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new PublisherResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update a publisher resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Publishers_Update. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PublisherResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tagsObject"> Parameters supplied to the create publisher operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<PublisherResource>> UpdateAsync(TagsObject tagsObject, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _publishersClientDiagnostics.CreateScope("PublisherResource.Update");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _publishersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, TagsObject.ToRequestContent(tagsObject), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<PublisherData> response = Response.FromValue(PublisherData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new PublisherResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update a publisher resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Publishers_Update. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PublisherResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tagsObject"> Parameters supplied to the create publisher operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<PublisherResource> Update(TagsObject tagsObject, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _publishersClientDiagnostics.CreateScope("PublisherResource.Update");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _publishersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, TagsObject.ToRequestContent(tagsObject), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<PublisherData> response = Response.FromValue(PublisherData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new PublisherResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -450,20 +291,20 @@ namespace Azure.ResourceManager.HybridNetwork
         /// Deletes the specified publisher.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Publishers_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> Publishers_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PublisherResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PublisherResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -471,14 +312,21 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _publisherClientDiagnostics.CreateScope("PublisherResource.Delete");
+            using DiagnosticScope scope = _publishersClientDiagnostics.CreateScope("PublisherResource.Delete");
             scope.Start();
             try
             {
-                var response = await _publisherRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new HybridNetworkArmOperation(_publisherClientDiagnostics, Pipeline, _publisherRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _publishersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                HybridNetworkArmOperation operation = new HybridNetworkArmOperation(_publishersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -492,20 +340,20 @@ namespace Azure.ResourceManager.HybridNetwork
         /// Deletes the specified publisher.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Publishers_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> Publishers_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PublisherResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PublisherResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -513,14 +361,21 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _publisherClientDiagnostics.CreateScope("PublisherResource.Delete");
+            using DiagnosticScope scope = _publishersClientDiagnostics.CreateScope("PublisherResource.Delete");
             scope.Start();
             try
             {
-                var response = _publisherRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new HybridNetworkArmOperation(_publisherClientDiagnostics, Pipeline, _publisherRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _publishersRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                HybridNetworkArmOperation operation = new HybridNetworkArmOperation(_publishersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -530,111 +385,7 @@ namespace Azure.ResourceManager.HybridNetwork
             }
         }
 
-        /// <summary>
-        /// Update a publisher resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Publishers_Update</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PublisherResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tagsObject"> Parameters supplied to the create publisher operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tagsObject"/> is null. </exception>
-        public virtual async Task<Response<PublisherResource>> UpdateAsync(TagsObject tagsObject, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
-
-            using var scope = _publisherClientDiagnostics.CreateScope("PublisherResource.Update");
-            scope.Start();
-            try
-            {
-                var response = await _publisherRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tagsObject, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new PublisherResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Update a publisher resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Publishers_Update</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PublisherResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tagsObject"> Parameters supplied to the create publisher operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tagsObject"/> is null. </exception>
-        public virtual Response<PublisherResource> Update(TagsObject tagsObject, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
-
-            using var scope = _publisherClientDiagnostics.CreateScope("PublisherResource.Update");
-            scope.Start();
-            try
-            {
-                var response = _publisherRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tagsObject, cancellationToken);
-                return Response.FromValue(new PublisherResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Publishers_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PublisherResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -644,29 +395,35 @@ namespace Azure.ResourceManager.HybridNetwork
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _publisherClientDiagnostics.CreateScope("PublisherResource.AddTag");
+            using DiagnosticScope scope = _publishersClientDiagnostics.CreateScope("PublisherResource.AddTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _publisherRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new PublisherResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _publishersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<PublisherData> response = Response.FromValue(PublisherData.FromResponse(result), result);
+                    return Response.FromValue(new PublisherResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new TagsObject();
-                    foreach (var tag in current.Tags)
+                    PublisherData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    TagsObject patch = new TagsObject();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    Response<PublisherResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -676,27 +433,7 @@ namespace Azure.ResourceManager.HybridNetwork
             }
         }
 
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Publishers_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PublisherResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -706,29 +443,35 @@ namespace Azure.ResourceManager.HybridNetwork
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _publisherClientDiagnostics.CreateScope("PublisherResource.AddTag");
+            using DiagnosticScope scope = _publishersClientDiagnostics.CreateScope("PublisherResource.AddTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _publisherRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new PublisherResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _publishersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<PublisherData> response = Response.FromValue(PublisherData.FromResponse(result), result);
+                    return Response.FromValue(new PublisherResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new TagsObject();
-                    foreach (var tag in current.Tags)
+                    PublisherData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    TagsObject patch = new TagsObject();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    Response<PublisherResource> result = Update(patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -738,54 +481,40 @@ namespace Azure.ResourceManager.HybridNetwork
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Publishers_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PublisherResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<PublisherResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _publisherClientDiagnostics.CreateScope("PublisherResource.SetTags");
+            using DiagnosticScope scope = _publishersClientDiagnostics.CreateScope("PublisherResource.SetTags");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _publisherRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new PublisherResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _publishersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<PublisherData> response = Response.FromValue(PublisherData.FromResponse(result), result);
+                    return Response.FromValue(new PublisherResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new TagsObject();
+                    PublisherData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    TagsObject patch = new TagsObject();
                     patch.Tags.ReplaceWith(tags);
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    Response<PublisherResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -795,54 +524,40 @@ namespace Azure.ResourceManager.HybridNetwork
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Publishers_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PublisherResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<PublisherResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _publisherClientDiagnostics.CreateScope("PublisherResource.SetTags");
+            using DiagnosticScope scope = _publishersClientDiagnostics.CreateScope("PublisherResource.SetTags");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _publisherRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new PublisherResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _publishersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<PublisherData> response = Response.FromValue(PublisherData.FromResponse(result), result);
+                    return Response.FromValue(new PublisherResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new TagsObject();
+                    PublisherData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    TagsObject patch = new TagsObject();
                     patch.Tags.ReplaceWith(tags);
-                    var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    Response<PublisherResource> result = Update(patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -852,27 +567,7 @@ namespace Azure.ResourceManager.HybridNetwork
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Publishers_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PublisherResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -880,29 +575,35 @@ namespace Azure.ResourceManager.HybridNetwork
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _publisherClientDiagnostics.CreateScope("PublisherResource.RemoveTag");
+            using DiagnosticScope scope = _publishersClientDiagnostics.CreateScope("PublisherResource.RemoveTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _publisherRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new PublisherResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _publishersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<PublisherData> response = Response.FromValue(PublisherData.FromResponse(result), result);
+                    return Response.FromValue(new PublisherResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new TagsObject();
-                    foreach (var tag in current.Tags)
+                    PublisherData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    TagsObject patch = new TagsObject();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    Response<PublisherResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -912,27 +613,7 @@ namespace Azure.ResourceManager.HybridNetwork
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Publishers_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PublisherResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -940,29 +621,35 @@ namespace Azure.ResourceManager.HybridNetwork
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _publisherClientDiagnostics.CreateScope("PublisherResource.RemoveTag");
+            using DiagnosticScope scope = _publishersClientDiagnostics.CreateScope("PublisherResource.RemoveTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _publisherRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new PublisherResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _publishersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<PublisherData> response = Response.FromValue(PublisherData.FromResponse(result), result);
+                    return Response.FromValue(new PublisherResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new TagsObject();
-                    foreach (var tag in current.Tags)
+                    PublisherData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    TagsObject patch = new TagsObject();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    Response<PublisherResource> result = Update(patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -970,6 +657,138 @@ namespace Azure.ResourceManager.HybridNetwork
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Gets a collection of ConfigurationGroupSchemas in the <see cref="PublisherResource"/>. </summary>
+        /// <returns> An object representing collection of ConfigurationGroupSchemas and their operations over a ConfigurationGroupSchemaResource. </returns>
+        public virtual ConfigurationGroupSchemaCollection GetConfigurationGroupSchemas()
+        {
+            return GetCachedClient(client => new ConfigurationGroupSchemaCollection(client, Id));
+        }
+
+        /// <summary> Gets information about the specified configuration group schema. </summary>
+        /// <param name="configurationGroupSchemaName"> The name of the configuration group schema. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="configurationGroupSchemaName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationGroupSchemaName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ConfigurationGroupSchemaResource>> GetConfigurationGroupSchemaAsync(string configurationGroupSchemaName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(configurationGroupSchemaName, nameof(configurationGroupSchemaName));
+
+            return await GetConfigurationGroupSchemas().GetAsync(configurationGroupSchemaName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets information about the specified configuration group schema. </summary>
+        /// <param name="configurationGroupSchemaName"> The name of the configuration group schema. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="configurationGroupSchemaName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationGroupSchemaName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ConfigurationGroupSchemaResource> GetConfigurationGroupSchema(string configurationGroupSchemaName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(configurationGroupSchemaName, nameof(configurationGroupSchemaName));
+
+            return GetConfigurationGroupSchemas().Get(configurationGroupSchemaName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of NetworkFunctionDefinitionGroups in the <see cref="PublisherResource"/>. </summary>
+        /// <returns> An object representing collection of NetworkFunctionDefinitionGroups and their operations over a NetworkFunctionDefinitionGroupResource. </returns>
+        public virtual NetworkFunctionDefinitionGroupCollection GetNetworkFunctionDefinitionGroups()
+        {
+            return GetCachedClient(client => new NetworkFunctionDefinitionGroupCollection(client, Id));
+        }
+
+        /// <summary> Gets information about the specified networkFunctionDefinition group. </summary>
+        /// <param name="networkFunctionDefinitionGroupName"> The name of the network function definition group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkFunctionDefinitionGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkFunctionDefinitionGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<NetworkFunctionDefinitionGroupResource>> GetNetworkFunctionDefinitionGroupAsync(string networkFunctionDefinitionGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(networkFunctionDefinitionGroupName, nameof(networkFunctionDefinitionGroupName));
+
+            return await GetNetworkFunctionDefinitionGroups().GetAsync(networkFunctionDefinitionGroupName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets information about the specified networkFunctionDefinition group. </summary>
+        /// <param name="networkFunctionDefinitionGroupName"> The name of the network function definition group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkFunctionDefinitionGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkFunctionDefinitionGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<NetworkFunctionDefinitionGroupResource> GetNetworkFunctionDefinitionGroup(string networkFunctionDefinitionGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(networkFunctionDefinitionGroupName, nameof(networkFunctionDefinitionGroupName));
+
+            return GetNetworkFunctionDefinitionGroups().Get(networkFunctionDefinitionGroupName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of NetworkServiceDesignGroups in the <see cref="PublisherResource"/>. </summary>
+        /// <returns> An object representing collection of NetworkServiceDesignGroups and their operations over a NetworkServiceDesignGroupResource. </returns>
+        public virtual NetworkServiceDesignGroupCollection GetNetworkServiceDesignGroups()
+        {
+            return GetCachedClient(client => new NetworkServiceDesignGroupCollection(client, Id));
+        }
+
+        /// <summary> Gets information about the specified networkServiceDesign group. </summary>
+        /// <param name="networkServiceDesignGroupName"> The name of the network service design group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkServiceDesignGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkServiceDesignGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<NetworkServiceDesignGroupResource>> GetNetworkServiceDesignGroupAsync(string networkServiceDesignGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(networkServiceDesignGroupName, nameof(networkServiceDesignGroupName));
+
+            return await GetNetworkServiceDesignGroups().GetAsync(networkServiceDesignGroupName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets information about the specified networkServiceDesign group. </summary>
+        /// <param name="networkServiceDesignGroupName"> The name of the network service design group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkServiceDesignGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkServiceDesignGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<NetworkServiceDesignGroupResource> GetNetworkServiceDesignGroup(string networkServiceDesignGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(networkServiceDesignGroupName, nameof(networkServiceDesignGroupName));
+
+            return GetNetworkServiceDesignGroups().Get(networkServiceDesignGroupName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ArtifactStores in the <see cref="PublisherResource"/>. </summary>
+        /// <returns> An object representing collection of ArtifactStores and their operations over a ArtifactStoreResource. </returns>
+        public virtual ArtifactStoreCollection GetArtifactStores()
+        {
+            return GetCachedClient(client => new ArtifactStoreCollection(client, Id));
+        }
+
+        /// <summary> Gets information about the specified artifact store. </summary>
+        /// <param name="artifactStoreName"> The name of the artifact store. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="artifactStoreName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="artifactStoreName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ArtifactStoreResource>> GetArtifactStoreAsync(string artifactStoreName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(artifactStoreName, nameof(artifactStoreName));
+
+            return await GetArtifactStores().GetAsync(artifactStoreName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets information about the specified artifact store. </summary>
+        /// <param name="artifactStoreName"> The name of the artifact store. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="artifactStoreName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="artifactStoreName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ArtifactStoreResource> GetArtifactStore(string artifactStoreName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(artifactStoreName, nameof(artifactStoreName));
+
+            return GetArtifactStores().Get(artifactStoreName, cancellationToken);
         }
     }
 }
