@@ -1043,6 +1043,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <param name="includePending">Specifies whether to include certificates in a pending state as well.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An enumerable collection of certificate metadata.</returns>
+        [ForwardsClientCalls]
         public virtual Pageable<CertificateProperties> GetPropertiesOfCertificates(bool includePending = default, CancellationToken cancellationToken = default)
         {
             // Use the protocol pageable (Pageable<BinaryData>) so we deserialize each
@@ -1060,6 +1061,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <param name="includePending">Specifies whether to include certificates in a pending state as well.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An enumerable collection of certificate metadata.</returns>
+        [ForwardsClientCalls]
         public virtual AsyncPageable<CertificateProperties> GetPropertiesOfCertificatesAsync(bool includePending = default, CancellationToken cancellationToken = default)
         {
             var ctx = new RequestContext { CancellationToken = cancellationToken };
@@ -1076,6 +1078,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <returns>An enumerable collection of the certificate's versions.</returns>
         /// <exception cref="ArgumentException"><paramref name="certificateName"/> is empty.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="certificateName"/> is null.</exception>
+        [ForwardsClientCalls]
         public virtual Pageable<CertificateProperties> GetPropertiesOfCertificateVersions(string certificateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
@@ -1094,6 +1097,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <returns>An enumerable collection of the certificate's versions.</returns>
         /// <exception cref="ArgumentException"><paramref name="certificateName"/> is empty.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="certificateName"/> is null.</exception>
+        [ForwardsClientCalls]
         public virtual AsyncPageable<CertificateProperties> GetPropertiesOfCertificateVersionsAsync(string certificateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
@@ -1109,6 +1113,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <param name="includePending">Specifies whether to include certificates in a delete pending state as well.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An enumerable collection of deleted certificates.</returns>
+        [ForwardsClientCalls]
         public virtual Pageable<DeletedCertificate> GetDeletedCertificates(bool includePending = default, CancellationToken cancellationToken = default)
         {
             var ctx = new RequestContext { CancellationToken = cancellationToken };
@@ -1122,6 +1127,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <param name="includePending">Specifies whether to include certificates in a delete pending state as well.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An enumerable collection of deleted certificates.</returns>
+        [ForwardsClientCalls]
         public virtual AsyncPageable<DeletedCertificate> GetDeletedCertificatesAsync(bool includePending = default, CancellationToken cancellationToken = default)
         {
             var ctx = new RequestContext { CancellationToken = cancellationToken };
@@ -1469,6 +1475,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An enumerable collection of certificate issuers' metadata.</returns>
+        [ForwardsClientCalls]
         public virtual Pageable<IssuerProperties> GetPropertiesOfIssuers(CancellationToken cancellationToken = default)
         {
             var ctx = new RequestContext { CancellationToken = cancellationToken };
@@ -1482,6 +1489,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An enumerable collection of certificate issuers' metadata.</returns>
+        [ForwardsClientCalls]
         public virtual AsyncPageable<IssuerProperties> GetPropertiesOfIssuersAsync(CancellationToken cancellationToken = default)
         {
             var ctx = new RequestContext { CancellationToken = cancellationToken };
