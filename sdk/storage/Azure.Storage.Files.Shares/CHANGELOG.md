@@ -7,6 +7,7 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- Fixed an issue where the `GenerateUserDelegationSasUri` convenience methods on Share clients did not honor the `DelegatedUserObjectId` property set on the supplied `ShareSasBuilder`.
 
 ### Other Changes
 
