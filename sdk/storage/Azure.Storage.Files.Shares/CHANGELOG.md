@@ -1,5 +1,16 @@
 # Release History
 
+## 12.28.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+- Fixed an issue where the `GenerateUserDelegationSasUri` convenience methods on Share clients did not honor the `DelegatedUserObjectId` property set on the supplied `ShareSasBuilder`.
+
+### Other Changes
+
 ## 12.27.0 (2026-06-04)
 
 ### Features Added
