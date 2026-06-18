@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> CustomInputSchema. </summary>
         private const string CustomInputSchemaValue = "CustomInputSchema";
         /// <summary> CloudEventSchemaV1_0. </summary>
-        private const string CloudEventSchemaV10Value = "CloudEventSchemaV1_0";
+        private const string CloudEventSchemaV1_0Value = "CloudEventSchemaV1_0";
 
         /// <summary> Initializes a new instance of <see cref="EventDeliverySchema"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -37,6 +37,9 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> CustomInputSchema. </summary>
         public static EventDeliverySchema CustomInputSchema { get; } = new EventDeliverySchema(CustomInputSchemaValue);
+
+        /// <summary> CloudEventSchemaV1_0. </summary>
+        public static EventDeliverySchema CloudEventSchemaV1_0 { get; } = new EventDeliverySchema(CloudEventSchemaV1_0Value);
 
         /// <summary> Determines if two <see cref="EventDeliverySchema"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
