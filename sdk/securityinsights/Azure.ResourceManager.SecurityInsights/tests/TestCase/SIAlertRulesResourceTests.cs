@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
             var workspace = await GetWorkspaceResourceAsync(resourceGroup);
             var sOS = await GetSentinelOnboardingStateResourceAsync(operationalInsights);
             //1.Get
-            var alertRulesName = Recording.GenerateAssetName("testAlertRules-");
+            var alertRulesName = GenerateAssetNameFromRecording("testAlertRules-", "alertRules");
             var alertRules1 = await CreateSecurityInsightsAlertRuleAsync(operationalInsights, alertRulesName);
             SecurityInsightsAlertRuleResource alertRules2 = await alertRules1.GetAsync();
 

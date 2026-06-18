@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
             var workspace = await GetWorkspaceResourceAsync(resourceGroup);
             var sOS = await GetSentinelOnboardingStateResourceAsync(operationalInsights);
             //1.Get
-            var dataName = Recording.GenerateAssetName("testDataConnectors-");
+            var dataName = GenerateAssetNameFromRecording("testDataConnectors-", "dataConnectors");
             var data1 = await CreateDataConnectorAsync(operationalInsights, dataName);
             SecurityInsightsDataConnectorResource data2 = await data1.GetAsync();
 

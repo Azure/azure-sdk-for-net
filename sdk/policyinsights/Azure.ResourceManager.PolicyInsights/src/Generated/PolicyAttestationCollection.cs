@@ -10,10 +10,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.PolicyInsights.Models;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.PolicyInsights
 {
@@ -24,42 +24,38 @@ namespace Azure.ResourceManager.PolicyInsights
     /// </summary>
     public partial class PolicyAttestationCollection : ArmCollection, IEnumerable<PolicyAttestationResource>, IAsyncEnumerable<PolicyAttestationResource>
     {
-        private readonly ClientDiagnostics _policyAttestationAttestationsClientDiagnostics;
-        private readonly AttestationsRestOperations _policyAttestationAttestationsRestClient;
+        private readonly ClientDiagnostics _attestationsClientDiagnostics;
+        private readonly Attestations _attestationsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="PolicyAttestationCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of PolicyAttestationCollection for mocking. </summary>
         protected PolicyAttestationCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="PolicyAttestationCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyAttestationCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal PolicyAttestationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _policyAttestationAttestationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PolicyInsights", PolicyAttestationResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(PolicyAttestationResource.ResourceType, out string policyAttestationAttestationsApiVersion);
-            _policyAttestationAttestationsRestClient = new AttestationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, policyAttestationAttestationsApiVersion);
+            TryGetApiVersion(PolicyAttestationResource.ResourceType, out string policyAttestationApiVersion);
+            _attestationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PolicyInsights", PolicyAttestationResource.ResourceType.Namespace, Diagnostics);
+            _attestationsRestClient = new Attestations(_attestationsClientDiagnostics, Pipeline, Endpoint, policyAttestationApiVersion ?? "2024-10-01");
         }
 
         /// <summary>
         /// Creates or updates an attestation at resource scope.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceId}/providers/Microsoft.PolicyInsights/attestations/{attestationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceId}/providers/Microsoft.PolicyInsights/attestations/{attestationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Attestations_CreateOrUpdateAtResource</description>
+        /// <term> Operation Id. </term>
+        /// <description> Attestations_CreateOrUpdateAtResource. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PolicyAttestationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -67,21 +63,34 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="attestationName"> The name of the attestation. </param>
         /// <param name="data"> The attestation parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="attestationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="attestationName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="attestationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<PolicyAttestationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string attestationName, PolicyAttestationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(attestationName, nameof(attestationName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _policyAttestationAttestationsClientDiagnostics.CreateScope("PolicyAttestationCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _attestationsClientDiagnostics.CreateScope("PolicyAttestationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _policyAttestationAttestationsRestClient.CreateOrUpdateAtResourceAsync(Id, attestationName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new PolicyInsightsArmOperation<PolicyAttestationResource>(new PolicyAttestationOperationSource(Client), _policyAttestationAttestationsClientDiagnostics, Pipeline, _policyAttestationAttestationsRestClient.CreateCreateOrUpdateAtResourceRequest(Id, attestationName, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _attestationsRestClient.CreateCreateOrUpdateAtResourceRequest(Id.ToString(), attestationName, PolicyAttestationData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                PolicyInsightsArmOperation<PolicyAttestationResource> operation = new PolicyInsightsArmOperation<PolicyAttestationResource>(
+                    new PolicyAttestationResourceOperationSource(Client),
+                    _attestationsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -95,20 +104,16 @@ namespace Azure.ResourceManager.PolicyInsights
         /// Creates or updates an attestation at resource scope.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceId}/providers/Microsoft.PolicyInsights/attestations/{attestationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceId}/providers/Microsoft.PolicyInsights/attestations/{attestationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Attestations_CreateOrUpdateAtResource</description>
+        /// <term> Operation Id. </term>
+        /// <description> Attestations_CreateOrUpdateAtResource. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PolicyAttestationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -116,21 +121,34 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="attestationName"> The name of the attestation. </param>
         /// <param name="data"> The attestation parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="attestationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="attestationName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="attestationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<PolicyAttestationResource> CreateOrUpdate(WaitUntil waitUntil, string attestationName, PolicyAttestationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(attestationName, nameof(attestationName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _policyAttestationAttestationsClientDiagnostics.CreateScope("PolicyAttestationCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _attestationsClientDiagnostics.CreateScope("PolicyAttestationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _policyAttestationAttestationsRestClient.CreateOrUpdateAtResource(Id, attestationName, data, cancellationToken);
-                var operation = new PolicyInsightsArmOperation<PolicyAttestationResource>(new PolicyAttestationOperationSource(Client), _policyAttestationAttestationsClientDiagnostics, Pipeline, _policyAttestationAttestationsRestClient.CreateCreateOrUpdateAtResourceRequest(Id, attestationName, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _attestationsRestClient.CreateCreateOrUpdateAtResourceRequest(Id.ToString(), attestationName, PolicyAttestationData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                PolicyInsightsArmOperation<PolicyAttestationResource> operation = new PolicyInsightsArmOperation<PolicyAttestationResource>(
+                    new PolicyAttestationResourceOperationSource(Client),
+                    _attestationsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -144,38 +162,42 @@ namespace Azure.ResourceManager.PolicyInsights
         /// Gets an existing attestation at resource scope.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceId}/providers/Microsoft.PolicyInsights/attestations/{attestationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceId}/providers/Microsoft.PolicyInsights/attestations/{attestationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Attestations_GetAtResource</description>
+        /// <term> Operation Id. </term>
+        /// <description> Attestations_GetAtResource. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PolicyAttestationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="attestationName"> The name of the attestation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="attestationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="attestationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="attestationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<PolicyAttestationResource>> GetAsync(string attestationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(attestationName, nameof(attestationName));
 
-            using var scope = _policyAttestationAttestationsClientDiagnostics.CreateScope("PolicyAttestationCollection.Get");
+            using DiagnosticScope scope = _attestationsClientDiagnostics.CreateScope("PolicyAttestationCollection.Get");
             scope.Start();
             try
             {
-                var response = await _policyAttestationAttestationsRestClient.GetAtResourceAsync(Id, attestationName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _attestationsRestClient.CreateGetAtResourceRequest(Id.ToString(), attestationName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<PolicyAttestationData> response = Response.FromValue(PolicyAttestationData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new PolicyAttestationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -189,38 +211,42 @@ namespace Azure.ResourceManager.PolicyInsights
         /// Gets an existing attestation at resource scope.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceId}/providers/Microsoft.PolicyInsights/attestations/{attestationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceId}/providers/Microsoft.PolicyInsights/attestations/{attestationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Attestations_GetAtResource</description>
+        /// <term> Operation Id. </term>
+        /// <description> Attestations_GetAtResource. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PolicyAttestationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="attestationName"> The name of the attestation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="attestationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="attestationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="attestationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<PolicyAttestationResource> Get(string attestationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(attestationName, nameof(attestationName));
 
-            using var scope = _policyAttestationAttestationsClientDiagnostics.CreateScope("PolicyAttestationCollection.Get");
+            using DiagnosticScope scope = _attestationsClientDiagnostics.CreateScope("PolicyAttestationCollection.Get");
             scope.Start();
             try
             {
-                var response = _policyAttestationAttestationsRestClient.GetAtResource(Id, attestationName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _attestationsRestClient.CreateGetAtResourceRequest(Id.ToString(), attestationName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<PolicyAttestationData> response = Response.FromValue(PolicyAttestationData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new PolicyAttestationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -231,101 +257,53 @@ namespace Azure.ResourceManager.PolicyInsights
         }
 
         /// <summary>
-        /// Gets all attestations for a resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceId}/providers/Microsoft.PolicyInsights/attestations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Attestations_ListForResource</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PolicyAttestationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="policyQuerySettings"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PolicyAttestationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PolicyAttestationResource> GetAllAsync(PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _policyAttestationAttestationsRestClient.CreateListForResourceRequest(Id, policyQuerySettings);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _policyAttestationAttestationsRestClient.CreateListForResourceNextPageRequest(nextLink, Id, policyQuerySettings);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PolicyAttestationResource(Client, PolicyAttestationData.DeserializePolicyAttestationData(e)), _policyAttestationAttestationsClientDiagnostics, Pipeline, "PolicyAttestationCollection.GetAll", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all attestations for a resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceId}/providers/Microsoft.PolicyInsights/attestations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Attestations_ListForResource</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PolicyAttestationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="policyQuerySettings"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PolicyAttestationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PolicyAttestationResource> GetAll(PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _policyAttestationAttestationsRestClient.CreateListForResourceRequest(Id, policyQuerySettings);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _policyAttestationAttestationsRestClient.CreateListForResourceNextPageRequest(nextLink, Id, policyQuerySettings);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PolicyAttestationResource(Client, PolicyAttestationData.DeserializePolicyAttestationData(e)), _policyAttestationAttestationsClientDiagnostics, Pipeline, "PolicyAttestationCollection.GetAll", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceId}/providers/Microsoft.PolicyInsights/attestations/{attestationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceId}/providers/Microsoft.PolicyInsights/attestations/{attestationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Attestations_GetAtResource</description>
+        /// <term> Operation Id. </term>
+        /// <description> Attestations_GetAtResource. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PolicyAttestationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="attestationName"> The name of the attestation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="attestationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="attestationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="attestationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string attestationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(attestationName, nameof(attestationName));
 
-            using var scope = _policyAttestationAttestationsClientDiagnostics.CreateScope("PolicyAttestationCollection.Exists");
+            using DiagnosticScope scope = _attestationsClientDiagnostics.CreateScope("PolicyAttestationCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _policyAttestationAttestationsRestClient.GetAtResourceAsync(Id, attestationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _attestationsRestClient.CreateGetAtResourceRequest(Id.ToString(), attestationName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<PolicyAttestationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(PolicyAttestationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((PolicyAttestationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -339,36 +317,50 @@ namespace Azure.ResourceManager.PolicyInsights
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceId}/providers/Microsoft.PolicyInsights/attestations/{attestationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceId}/providers/Microsoft.PolicyInsights/attestations/{attestationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Attestations_GetAtResource</description>
+        /// <term> Operation Id. </term>
+        /// <description> Attestations_GetAtResource. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PolicyAttestationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="attestationName"> The name of the attestation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="attestationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="attestationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="attestationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string attestationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(attestationName, nameof(attestationName));
 
-            using var scope = _policyAttestationAttestationsClientDiagnostics.CreateScope("PolicyAttestationCollection.Exists");
+            using DiagnosticScope scope = _attestationsClientDiagnostics.CreateScope("PolicyAttestationCollection.Exists");
             scope.Start();
             try
             {
-                var response = _policyAttestationAttestationsRestClient.GetAtResource(Id, attestationName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _attestationsRestClient.CreateGetAtResourceRequest(Id.ToString(), attestationName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<PolicyAttestationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(PolicyAttestationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((PolicyAttestationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -382,38 +374,54 @@ namespace Azure.ResourceManager.PolicyInsights
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceId}/providers/Microsoft.PolicyInsights/attestations/{attestationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceId}/providers/Microsoft.PolicyInsights/attestations/{attestationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Attestations_GetAtResource</description>
+        /// <term> Operation Id. </term>
+        /// <description> Attestations_GetAtResource. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PolicyAttestationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="attestationName"> The name of the attestation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="attestationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="attestationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="attestationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<PolicyAttestationResource>> GetIfExistsAsync(string attestationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(attestationName, nameof(attestationName));
 
-            using var scope = _policyAttestationAttestationsClientDiagnostics.CreateScope("PolicyAttestationCollection.GetIfExists");
+            using DiagnosticScope scope = _attestationsClientDiagnostics.CreateScope("PolicyAttestationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _policyAttestationAttestationsRestClient.GetAtResourceAsync(Id, attestationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _attestationsRestClient.CreateGetAtResourceRequest(Id.ToString(), attestationName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<PolicyAttestationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(PolicyAttestationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((PolicyAttestationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<PolicyAttestationResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new PolicyAttestationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -427,38 +435,54 @@ namespace Azure.ResourceManager.PolicyInsights
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceId}/providers/Microsoft.PolicyInsights/attestations/{attestationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceId}/providers/Microsoft.PolicyInsights/attestations/{attestationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Attestations_GetAtResource</description>
+        /// <term> Operation Id. </term>
+        /// <description> Attestations_GetAtResource. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PolicyAttestationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="attestationName"> The name of the attestation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="attestationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="attestationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="attestationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<PolicyAttestationResource> GetIfExists(string attestationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(attestationName, nameof(attestationName));
 
-            using var scope = _policyAttestationAttestationsClientDiagnostics.CreateScope("PolicyAttestationCollection.GetIfExists");
+            using DiagnosticScope scope = _attestationsClientDiagnostics.CreateScope("PolicyAttestationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _policyAttestationAttestationsRestClient.GetAtResource(Id, attestationName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _attestationsRestClient.CreateGetAtResourceRequest(Id.ToString(), attestationName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<PolicyAttestationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(PolicyAttestationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((PolicyAttestationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<PolicyAttestationResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new PolicyAttestationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -478,6 +502,7 @@ namespace Azure.ResourceManager.PolicyInsights
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<PolicyAttestationResource> IAsyncEnumerable<PolicyAttestationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

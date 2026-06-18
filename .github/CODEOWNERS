@@ -36,6 +36,16 @@
 # Catch all
 /sdk/                                                              @jsquire
 
+####################
+# End-to-End Samples
+####################
+
+# Samples catch-all
+/samples/                                                          @jsquire
+
+#PRLabel: Voice Live
+/samples/voicelive/                                                @emilyjiji @xitzhang @pankopon @amber-yujueWang
+
 # ######## Core Libraries ########
 
 # PRLabel: %Azure.Core
@@ -206,7 +216,10 @@
 # ServiceOwners: @Azure/azure-sdk-write-communication
 
 # PRLabel: %Communication - Call Automation
-/sdk/communication/Azure.Communication.CallAutomation/    @fhaghbin-msft @juntuchen-msft @minwoolee-msft @v-dharmarajv
+/sdk/communication/Azure.Communication.CallAutomation/    @juntuchen-msft @minwoolee-msft
+
+# ServiceLabel: %Communication - Call Automation
+# ServiceOwners: @juntuchen-msft @minwoolee-msft
 
 # PRLabel: %Communication - Chat
 /sdk/communication/Azure.Communication.Chat/    @LuChen-Microsoft
@@ -1230,6 +1243,7 @@
 /.github/workflows/                                                @jsquire @m-redding @Azure/azure-sdk-eng
 /.github/CODEOWNERS                                                @jsquire @m-redding @Azure/azure-sdk-eng
 /.github/copilot-instructions.md                                   @jsquire @m-redding @praveenkuttappan @maririos
+/.github/skills/                                                   @azure/azsdk-cli @m-nash @jsquire
 
 # PRLabel: %EngSys
 /sdk/template/                                                     @hallipr @weshaggard @benbp @jsquire
@@ -1244,7 +1258,6 @@
 /.vscode/                                                          @jsquire @m-redding
 /.devcontainer/                                                    @jsquire @m-redding
 /doc/                                                              @jsquire
-/samples/                                                          @jsquire @m-redding
 
 # Repository configuration that should not be overridden
 /sdk/**/NuGet.*                                                    @Azure/azure-sdk-write-net-core @jsquire
