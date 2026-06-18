@@ -24,9 +24,11 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
 
         private static readonly int s_submitOperationsDelayedSeconds = 1;
         private static readonly List<ScheduledActionOperationState> s_terminalList = [ScheduledActionOperationState.Succeeded, ScheduledActionOperationState.Failed, ScheduledActionOperationState.Cancelled];
+        private const string ComputeScheduleReRecordIssue = "Re-record after Azure.ResourceManager.Compute dependency release: https://github.com/Azure/azure-sdk-for-net/issues/60035";
 
         [TestCase, Order(1)]
         [RecordedTest]
+        [Ignore(ComputeScheduleReRecordIssue)]
         public async Task TestSubmitStartOperations()
         {
             int vmCount = 1;
@@ -79,6 +81,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
 
         [TestCase, Order(2)]
         [RecordedTest]
+        [Ignore(ComputeScheduleReRecordIssue)]
         public async Task TestSubmitDeallocateOperations()
         {
             int vmCount = 1;
@@ -134,6 +137,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
 
         [TestCase, Order(3)]
         [RecordedTest]
+        [Ignore(ComputeScheduleReRecordIssue)]
         public async Task TestSubmitHibernateOperations()
         {
             int vmCount = 1;
@@ -188,6 +192,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
 
         [TestCase, Order(4)]
         [RecordedTest]
+        [Ignore(ComputeScheduleReRecordIssue)]
         public async Task TestExecuteHibernateOperations()
         {
             int vmCount = 1;
@@ -236,6 +241,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
 
         [TestCase, Order(5)]
         [RecordedTest]
+        [Ignore(ComputeScheduleReRecordIssue)]
         public async Task TestExecuteDeallocateOperations()
         {
             int vmCount = 1;
@@ -284,6 +290,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
 
         [TestCase, Order(6)]
         [RecordedTest]
+        [Ignore(ComputeScheduleReRecordIssue)]
         public async Task TestExecuteStartOperations()
         {
             int vmCount = 1;
@@ -332,6 +339,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
 
         [TestCase, Order(7)]
         [RecordedTest]
+        [Ignore(ComputeScheduleReRecordIssue)]
         public async Task TestCancelScheduledOperations()
         {
             int vmCount = 1;
@@ -392,6 +400,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
 
         [TestCase, Order(8)]
         [RecordedTest]
+        [Ignore(ComputeScheduleReRecordIssue)]
         public async Task TestGetOperationsErrors()
         {
             int vmCount = 1;
