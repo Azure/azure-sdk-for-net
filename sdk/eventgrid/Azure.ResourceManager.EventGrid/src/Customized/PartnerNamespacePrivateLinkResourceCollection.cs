@@ -7,7 +7,6 @@
 // specific resource wrapper types. This full custom class bridges that gap.
 
 #nullable disable
-#pragma warning disable CS1591
 
 using System;
 using System.Collections;
@@ -23,11 +22,13 @@ using Azure.ResourceManager.EventGrid.Mocking;
 
 namespace Azure.ResourceManager.EventGrid
 {
+    /// <summary> A class representing a collection of <see cref="PartnerNamespacePrivateLinkResource"/> and their operations. </summary>
     public partial class PartnerNamespacePrivateLinkResourceCollection : ArmCollection, IAsyncEnumerable<PartnerNamespacePrivateLinkResource>, IEnumerable<PartnerNamespacePrivateLinkResource>
     {
         private readonly ClientDiagnostics _privateLinkResourcesClientDiagnostics;
         private readonly PrivateLinkResources _privateLinkResourcesRestClient;
 
+        /// <summary> Initializes a new instance of <see cref="PartnerNamespacePrivateLinkResourceCollection"/> for mocking. </summary>
         protected PartnerNamespacePrivateLinkResourceCollection()
         {
         }
@@ -49,6 +50,9 @@ namespace Azure.ResourceManager.EventGrid
             }
         }
 
+        /// <summary> Gets a specific private link resource. </summary>
+        /// <param name="privateLinkResourceName"> The name of the private link resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<PartnerNamespacePrivateLinkResource>> GetAsync(string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
@@ -57,6 +61,9 @@ namespace Azure.ResourceManager.EventGrid
             return PrivateLinkResourceCompat.Convert(response, PrivateLinkResourceCompat.ToPartnerNamespaceResource(Client, response.Value));
         }
 
+        /// <summary> Gets a specific private link resource. </summary>
+        /// <param name="privateLinkResourceName"> The name of the private link resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<PartnerNamespacePrivateLinkResource> Get(string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
@@ -65,6 +72,10 @@ namespace Azure.ResourceManager.EventGrid
             return PrivateLinkResourceCompat.Convert(response, PrivateLinkResourceCompat.ToPartnerNamespaceResource(Client, response.Value));
         }
 
+        /// <summary> Returns the list of private link resources. </summary>
+        /// <param name="filter"> The query used to filter the search results using OData syntax. </param>
+        /// <param name="top"> The number of results to return per page. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual AsyncPageable<PartnerNamespacePrivateLinkResource> GetAllAsync(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext { CancellationToken = cancellationToken };
@@ -82,6 +93,10 @@ namespace Azure.ResourceManager.EventGrid
                 item => PrivateLinkResourceCompat.ToPartnerNamespaceResource(Client, item));
         }
 
+        /// <summary> Returns the list of private link resources. </summary>
+        /// <param name="filter"> The query used to filter the search results using OData syntax. </param>
+        /// <param name="top"> The number of results to return per page. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Pageable<PartnerNamespacePrivateLinkResource> GetAll(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext { CancellationToken = cancellationToken };
@@ -99,6 +114,9 @@ namespace Azure.ResourceManager.EventGrid
                 item => PrivateLinkResourceCompat.ToPartnerNamespaceResource(Client, item));
         }
 
+        /// <summary> Checks to see if the resource exists. </summary>
+        /// <param name="privateLinkResourceName"> The name of the private link resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<bool>> ExistsAsync(string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
@@ -124,6 +142,9 @@ namespace Azure.ResourceManager.EventGrid
             }
         }
 
+        /// <summary> Checks to see if the resource exists. </summary>
+        /// <param name="privateLinkResourceName"> The name of the private link resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<bool> Exists(string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
@@ -149,6 +170,9 @@ namespace Azure.ResourceManager.EventGrid
             }
         }
 
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="privateLinkResourceName"> The name of the private link resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<NullableResponse<PartnerNamespacePrivateLinkResource>> GetIfExistsAsync(string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
@@ -174,6 +198,9 @@ namespace Azure.ResourceManager.EventGrid
             }
         }
 
+        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <param name="privateLinkResourceName"> The name of the private link resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual NullableResponse<PartnerNamespacePrivateLinkResource> GetIfExists(string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
