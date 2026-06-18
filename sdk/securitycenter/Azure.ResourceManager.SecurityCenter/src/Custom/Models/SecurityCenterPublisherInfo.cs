@@ -4,7 +4,6 @@
 #nullable disable
 
 #pragma warning disable CS0618
-#pragma warning disable CS1591
 #pragma warning disable CS0169
 #pragma warning disable SA1508
 #pragma warning disable SA1516
@@ -12,14 +11,38 @@
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
+    // Compatibility customization: preserves Azure.ResourceManager.SecurityCenter 1.1.0 public API shape during the MPG migration.
+    /// <summary>
+    /// Provides a compatibility shim for the SecurityCenterPublisherInfo class.
+    /// </summary>
 [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class SecurityCenterPublisherInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.Models.SecurityCenterPublisherInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.Models.SecurityCenterPublisherInfo>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SecurityCenterPublisherInfo"/> type for compatibility with the previous public API surface.
+        /// </summary>
         public SecurityCenterPublisherInfo() { }
+        /// <summary>
+        /// Gets or sets the BinaryName value preserved from the previous public API surface.
+        /// </summary>
         public string BinaryName { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        /// <summary>
+        /// Gets or sets the ProductName value preserved from the previous public API surface.
+        /// </summary>
         public string ProductName { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        /// <summary>
+        /// Gets or sets the PublisherName value preserved from the previous public API surface.
+        /// </summary>
         public string PublisherName { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        /// <summary>
+        /// Gets or sets the Version value preserved from the previous public API surface.
+        /// </summary>
         public string Version { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } set { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        /// <summary>
+        /// Provides a compatibility shim for the JsonModelWriteCore operation preserved from the previous public API surface.
+        /// </summary>
+        /// <param name="writer">The value preserved for API compatibility.</param>
+        /// <param name="options">The value preserved for API compatibility.</param>
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SecurityCenter.Models.SecurityCenterPublisherInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.Models.SecurityCenterPublisherInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.Models.SecurityCenterPublisherInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }

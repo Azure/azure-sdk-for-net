@@ -8,6 +8,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
+    // Compatibility customization: preserves Azure.ResourceManager.SecurityCenter 1.1.0 public API shape during the MPG migration.
     // Backward compatibility: preserve the previous strongly typed OData expand value.
     /// <summary> OData expand. </summary>
     public readonly partial struct SecurityScoreODataExpand : IEquatable<SecurityScoreODataExpand>

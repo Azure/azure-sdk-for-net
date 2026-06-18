@@ -8,6 +8,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
+    // Compatibility customization: preserves Azure.ResourceManager.SecurityCenter 1.1.0 public API shape during the MPG migration.
     public partial class SecureScoreControlDefinitionItem
     {
         /// <summary> Initializes a new instance of <see cref="SecureScoreControlDefinitionItem"/>. </summary>

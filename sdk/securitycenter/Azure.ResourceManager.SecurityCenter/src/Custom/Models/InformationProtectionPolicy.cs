@@ -4,7 +4,6 @@
 #nullable disable
 
 #pragma warning disable CS0618
-#pragma warning disable CS1591
 #pragma warning disable CS0169
 #pragma warning disable SA1508
 #pragma warning disable SA1516
@@ -12,14 +11,38 @@
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
+    // Compatibility customization: preserves Azure.ResourceManager.SecurityCenter 1.1.0 public API shape during the MPG migration.
+    /// <summary>
+    /// Provides a compatibility shim for the InformationProtectionPolicy class.
+    /// </summary>
     [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class InformationProtectionPolicy : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.Models.InformationProtectionPolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SecurityCenter.Models.InformationProtectionPolicy>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="InformationProtectionPolicy"/> type for compatibility with the previous public API surface.
+        /// </summary>
         public InformationProtectionPolicy() { }
+        /// <summary>
+        /// Gets the InformationTypes value preserved from the previous public API surface.
+        /// </summary>
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.SecurityCenter.Models.SecurityInformationTypeInfo> InformationTypes { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        /// <summary>
+        /// Gets the Labels value preserved from the previous public API surface.
+        /// </summary>
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.SecurityCenter.Models.SensitivityLabel> Labels { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        /// <summary>
+        /// Gets the LastModifiedUtc value preserved from the previous public API surface.
+        /// </summary>
         public System.DateTimeOffset? LastModifiedUtc { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        /// <summary>
+        /// Gets the Version value preserved from the previous public API surface.
+        /// </summary>
         public string Version { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        /// <summary>
+        /// Provides a compatibility shim for the JsonModelWriteCore operation preserved from the previous public API surface.
+        /// </summary>
+        /// <param name="writer">The value preserved for API compatibility.</param>
+        /// <param name="options">The value preserved for API compatibility.</param>
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.SecurityCenter.Models.InformationProtectionPolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.Models.InformationProtectionPolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SecurityCenter.Models.InformationProtectionPolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }

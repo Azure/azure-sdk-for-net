@@ -14,6 +14,7 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
+    // Compatibility customization: preserves Azure.ResourceManager.SecurityCenter 1.1.0 public API shape during the MPG migration.
     /// <summary> Resource identifier for a security alert entity. </summary>
     public abstract partial class SecurityAlertResourceIdentifier
     {

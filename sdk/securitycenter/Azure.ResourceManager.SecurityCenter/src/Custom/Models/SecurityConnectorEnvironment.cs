@@ -3,12 +3,17 @@
 
 #nullable disable
 
-#pragma warning disable CS1591 // Hidden compatibility shim does not need public docs.
-
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
+    // Compatibility customization: preserves Azure.ResourceManager.SecurityCenter 1.1.0 public API shape during the MPG migration.
+    /// <summary>
+    /// Provides a compatibility shim for the SecurityConnectorEnvironment class.
+    /// </summary>
     public abstract partial class SecurityConnectorEnvironment
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SecurityConnectorEnvironment"/> type for compatibility with the previous public API surface.
+        /// </summary>
         protected SecurityConnectorEnvironment() { }
     }
 }

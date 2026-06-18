@@ -4,7 +4,6 @@
 #nullable disable
 
 #pragma warning disable CS0618
-#pragma warning disable CS1591
 #pragma warning disable CS0169
 #pragma warning disable SA1508
 #pragma warning disable SA1516
@@ -12,20 +11,69 @@
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
+    // Compatibility customization: preserves Azure.ResourceManager.SecurityCenter 1.1.0 public API shape during the MPG migration.
+    /// <summary>
+    /// Provides a compatibility shim for the SecurityTransportProtocol structure.
+    /// </summary>
     [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
     public readonly partial struct SecurityTransportProtocol : System.IEquatable<Azure.ResourceManager.SecurityCenter.Models.SecurityTransportProtocol>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SecurityTransportProtocol"/> type for compatibility with the previous public API surface.
+        /// </summary>
+        /// <param name="value">The value preserved for API compatibility.</param>
         public SecurityTransportProtocol(string value) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
+        /// <summary>
+        /// Gets the Tcp value preserved from the previous public API surface.
+        /// </summary>
         public static Azure.ResourceManager.SecurityCenter.Models.SecurityTransportProtocol Tcp { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        /// <summary>
+        /// Gets the Udp value preserved from the previous public API surface.
+        /// </summary>
         public static Azure.ResourceManager.SecurityCenter.Models.SecurityTransportProtocol Udp { get { throw new System.NotSupportedException("This API is no longer supported by the service."); } }
+        /// <summary>
+        /// Provides a compatibility shim for the Equals operation preserved from the previous public API surface.
+        /// </summary>
+        /// <param name="other">The value preserved for API compatibility.</param>
+        /// <returns>The compatibility result.</returns>
         public bool Equals(Azure.ResourceManager.SecurityCenter.Models.SecurityTransportProtocol other) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
+        /// <summary>
+        /// Provides a compatibility shim for the Equals operation preserved from the previous public API surface.
+        /// </summary>
+        /// <param name="obj">The value preserved for API compatibility.</param>
+        /// <returns>The compatibility result.</returns>
         public override bool Equals(object obj) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
+        /// <summary>
+        /// Provides a compatibility shim for the GetHashCode operation preserved from the previous public API surface.
+        /// </summary>
+        /// <returns>The compatibility result.</returns>
         public override int GetHashCode() { throw new System.NotSupportedException("This API is no longer supported by the service."); }
+        /// <summary>
+        /// Provides a compatibility operator preserved from the previous public API surface.
+        /// </summary>
+        /// <param name="left">The value used by the compatibility operator.</param>
+        /// <param name="right">The value used by the compatibility operator.</param>
+        /// <returns>The compatibility operator result.</returns>
         public static bool operator ==(Azure.ResourceManager.SecurityCenter.Models.SecurityTransportProtocol left, Azure.ResourceManager.SecurityCenter.Models.SecurityTransportProtocol right) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
+        /// <summary>
+        /// Provides a compatibility conversion operator preserved from the previous public API surface.
+        /// </summary>
+        /// <param name="value">The value preserved for API compatibility.</param>
+        /// <returns>The converted compatibility value.</returns>
         public static implicit operator Azure.ResourceManager.SecurityCenter.Models.SecurityTransportProtocol(string value) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
+        /// <summary>
+        /// Provides a compatibility operator preserved from the previous public API surface.
+        /// </summary>
+        /// <param name="left">The value used by the compatibility operator.</param>
+        /// <param name="right">The value used by the compatibility operator.</param>
+        /// <returns>The compatibility operator result.</returns>
         public static bool operator !=(Azure.ResourceManager.SecurityCenter.Models.SecurityTransportProtocol left, Azure.ResourceManager.SecurityCenter.Models.SecurityTransportProtocol right) { throw new System.NotSupportedException("This API is no longer supported by the service."); }
+        /// <summary>
+        /// Provides a compatibility shim for the ToString operation preserved from the previous public API surface.
+        /// </summary>
+        /// <returns>The compatibility result.</returns>
         public override string ToString() { throw new System.NotSupportedException("This API is no longer supported by the service."); }
     }
 }

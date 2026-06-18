@@ -3,13 +3,21 @@
 
 #nullable disable
 
-#pragma warning disable CS1591 // Hidden compatibility shim does not need public docs.
-
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
+    // Compatibility customization: preserves Azure.ResourceManager.SecurityCenter 1.1.0 public API shape during the MPG migration.
+    /// <summary>
+    /// Provides a compatibility shim for the SecureScoreControlDetails class.
+    /// </summary>
     public partial class SecureScoreControlDetails
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SecureScoreControlDetails"/> type for compatibility with the previous public API surface.
+        /// </summary>
         public SecureScoreControlDetails() { }
+        /// <summary>
+        /// Gets or sets the Definition value preserved from the previous public API surface.
+        /// </summary>
         public SecureScoreControlDefinitionItem Definition { get; set; }
     }
 }

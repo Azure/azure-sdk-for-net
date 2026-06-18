@@ -7,6 +7,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
+    // Compatibility customization: preserves Azure.ResourceManager.SecurityCenter 1.1.0 public API shape during the MPG migration.
     // Backward compatibility: preserve the previous AzureLocation overload for resource identifier creation.
     public partial class JitNetworkAccessPolicyResource
     {

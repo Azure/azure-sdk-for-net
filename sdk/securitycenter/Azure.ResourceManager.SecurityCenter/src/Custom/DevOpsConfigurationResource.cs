@@ -14,6 +14,7 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
+    // Compatibility customization: preserves Azure.ResourceManager.SecurityCenter 1.1.0 public API shape during the MPG migration.
     // AOT compatibility customization: generated operation-result methods use the
     // reflection-based ModelReaderWriter.Read overload, which fails net10 trim/AOT analysis.
     [CodeGenSuppress("GetAsync", typeof(string), typeof(CancellationToken))]

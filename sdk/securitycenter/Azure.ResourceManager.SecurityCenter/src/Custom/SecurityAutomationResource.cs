@@ -11,6 +11,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
+    // Compatibility customization: preserves Azure.ResourceManager.SecurityCenter 1.1.0 public API shape during the MPG migration.
     // Backward compatibility: preserve the resource-level update methods that were available in the previous SDK.
     public partial class SecurityAutomationResource
     {

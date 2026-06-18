@@ -9,6 +9,7 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
+    // Compatibility customization: preserves Azure.ResourceManager.SecurityCenter 1.1.0 public API shape during the MPG migration.
     public partial class SecurityTaskData
     {
         // Preserve the GA parameterless constructor. The TypeSpec-generated constructor is internal

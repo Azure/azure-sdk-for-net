@@ -5,6 +5,7 @@
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
+    // Compatibility customization: preserves Azure.ResourceManager.SecurityCenter 1.1.0 public API shape during the MPG migration.
     public partial class DefenderForDatabasesGcpOffering
     {
         /// <summary> Is arc auto provisioning enabled. </summary>

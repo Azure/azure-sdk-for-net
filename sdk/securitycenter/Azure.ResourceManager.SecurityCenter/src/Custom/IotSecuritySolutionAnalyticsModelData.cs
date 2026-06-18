@@ -7,6 +7,7 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
+    // Compatibility customization: preserves Azure.ResourceManager.SecurityCenter 1.1.0 public API shape during the MPG migration.
     /// <summary> Security analytics of your IoT Security solution. </summary>
     [CodeGenSuppress("IotSecuritySolutionAnalyticsModelData")]
     public partial class IotSecuritySolutionAnalyticsModelData
