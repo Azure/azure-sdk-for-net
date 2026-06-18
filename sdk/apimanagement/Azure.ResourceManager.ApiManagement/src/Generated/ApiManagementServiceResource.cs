@@ -4554,32 +4554,6 @@ namespace Azure.ResourceManager.ApiManagement
             return GetCachedClient(client => new ApiManagementOpenIdConnectProviderCollection(client, Id));
         }
 
-        /// <summary> Gets specific OpenID Connect Provider without secrets. </summary>
-        /// <param name="openId"> Identifier of the OpenID Connect Provider. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="openId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="openId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ApiManagementOpenIdConnectProviderResource>> GetApiManagementOpenIdConnectProviderAsync(string openId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(openId, nameof(openId));
-
-            return await GetApiManagementOpenIdConnectProviders().GetAsync(openId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Gets specific OpenID Connect Provider without secrets. </summary>
-        /// <param name="openId"> Identifier of the OpenID Connect Provider. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="openId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="openId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ApiManagementOpenIdConnectProviderResource> GetApiManagementOpenIdConnectProvider(string openId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(openId, nameof(openId));
-
-            return GetApiManagementOpenIdConnectProviders().Get(openId, cancellationToken);
-        }
-
         /// <summary> Gets a collection of PolicyFragmentContracts in the <see cref="ApiManagementServiceResource"/>. </summary>
         /// <returns> An object representing collection of PolicyFragmentContracts and their operations over a PolicyFragmentContractResource. </returns>
         public virtual PolicyFragmentContractCollection GetPolicyFragmentContracts()
