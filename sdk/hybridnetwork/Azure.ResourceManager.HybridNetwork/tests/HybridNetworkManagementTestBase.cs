@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.HybridNetwork.Tests
                 NfviDetailsType = "AzureCore"
             });
 
-            nsdvData.Properties.ReferencedConfigurationGroupSchemas.Add("vnet_ConfigGroupSchema", new ReferencedResource() { Id = cgs.Id });
+            nsdvData.Properties.ReferencedConfigurationGroupSchemas.Add("vnet_ConfigGroupSchema", new ReferencedResourceById() { Id = cgs.Id });
 
             var vnetResourceElementTemplate = new NetworkFunctionDefinitionResourceElementTemplateDetails()
             {
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.HybridNetwork.Tests
                 DependsOnProfile = new DependsOnProfile(),
                 Configuration = new ArmResourceDefinitionResourceElementTemplate()
                 {
-                    ArtifactProfile = new NSDArtifactProfile()
+                    ArtifactProfile = new NsdArtifactProfile()
                     {
                         ArtifactName = NfArmTemplateArtifactName,
                         ArtifactVersion = "1.0.0",
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.HybridNetwork.Tests
                 Sku = new HybridNetworkSku(HybridNetworkSkuName.Standard)
             };
 
-            snsData.Properties.DesiredStateConfigurationGroupValueReferencedResources.Add("vnet_ConfigGroupSchema", new ReferencedResource() { Id = cgv.Id });
+            snsData.Properties.DesiredStateConfigurationGroupValueReferencedResources.Add("vnet_ConfigGroupSchema", new ReferencedResourceById() { Id = cgv.Id });
 
             var lro = await resourceGroup
                 .GetSiteNetworkServices()
