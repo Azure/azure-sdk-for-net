@@ -8,17 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ApplicationGatewaySslPolicy : IUtf8JsonSerializable, IJsonModel<ApplicationGatewaySslPolicy>
+    /// <summary> Application Gateway Ssl policy. </summary>
+    public partial class ApplicationGatewaySslPolicy : IJsonModel<ApplicationGatewaySslPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationGatewaySslPolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ApplicationGatewaySslPolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewaySslPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeApplicationGatewaySslPolicy(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ApplicationGatewaySslPolicy)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewaySslPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ApplicationGatewaySslPolicy)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ApplicationGatewaySslPolicy>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ApplicationGatewaySslPolicy IPersistableModel<ApplicationGatewaySslPolicy>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ApplicationGatewaySslPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ApplicationGatewaySslPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,17 +69,16 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewaySslPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewaySslPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ApplicationGatewaySslPolicy)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsCollectionDefined(DisabledSslProtocols))
             {
                 writer.WritePropertyName("disabledSslProtocols"u8);
                 writer.WriteStartArray();
-                foreach (var item in DisabledSslProtocols)
+                foreach (ApplicationGatewaySslProtocol item in DisabledSslProtocols)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
@@ -60,7 +98,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("cipherSuites"u8);
                 writer.WriteStartArray();
-                foreach (var item in CipherSuites)
+                foreach (ApplicationGatewaySslCipherSuite item in CipherSuites)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
@@ -71,15 +109,15 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("minProtocolVersion"u8);
                 writer.WriteStringValue(MinProtocolVersion.Value.ToString());
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -88,22 +126,27 @@ namespace Azure.ResourceManager.Network.Models
             }
         }
 
-        ApplicationGatewaySslPolicy IJsonModel<ApplicationGatewaySslPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ApplicationGatewaySslPolicy IJsonModel<ApplicationGatewaySslPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ApplicationGatewaySslPolicy JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewaySslPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewaySslPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ApplicationGatewaySslPolicy)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeApplicationGatewaySslPolicy(document.RootElement, options);
         }
 
-        internal static ApplicationGatewaySslPolicy DeserializeApplicationGatewaySslPolicy(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ApplicationGatewaySslPolicy DeserializeApplicationGatewaySslPolicy(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -113,217 +156,76 @@ namespace Azure.ResourceManager.Network.Models
             ApplicationGatewaySslPolicyName? policyName = default;
             IList<ApplicationGatewaySslCipherSuite> cipherSuites = default;
             ApplicationGatewaySslProtocol? minProtocolVersion = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("disabledSslProtocols"u8))
+                if (prop.NameEquals("disabledSslProtocols"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ApplicationGatewaySslProtocol> array = new List<ApplicationGatewaySslProtocol>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(new ApplicationGatewaySslProtocol(item.GetString()));
                     }
                     disabledSslProtocols = array;
                     continue;
                 }
-                if (property.NameEquals("policyType"u8))
+                if (prop.NameEquals("policyType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    policyType = new ApplicationGatewaySslPolicyType(property.Value.GetString());
+                    policyType = new ApplicationGatewaySslPolicyType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("policyName"u8))
+                if (prop.NameEquals("policyName"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    policyName = new ApplicationGatewaySslPolicyName(property.Value.GetString());
+                    policyName = new ApplicationGatewaySslPolicyName(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("cipherSuites"u8))
+                if (prop.NameEquals("cipherSuites"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ApplicationGatewaySslCipherSuite> array = new List<ApplicationGatewaySslCipherSuite>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(new ApplicationGatewaySslCipherSuite(item.GetString()));
                     }
                     cipherSuites = array;
                     continue;
                 }
-                if (property.NameEquals("minProtocolVersion"u8))
+                if (prop.NameEquals("minProtocolVersion"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    minProtocolVersion = new ApplicationGatewaySslProtocol(property.Value.GetString());
+                    minProtocolVersion = new ApplicationGatewaySslProtocol(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ApplicationGatewaySslPolicy(
                 disabledSslProtocols ?? new ChangeTrackingList<ApplicationGatewaySslProtocol>(),
                 policyType,
                 policyName,
                 cipherSuites ?? new ChangeTrackingList<ApplicationGatewaySslCipherSuite>(),
                 minProtocolVersion,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DisabledSslProtocols), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  disabledSslProtocols: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(DisabledSslProtocols))
-                {
-                    if (DisabledSslProtocols.Any())
-                    {
-                        builder.Append("  disabledSslProtocols: ");
-                        builder.AppendLine("[");
-                        foreach (var item in DisabledSslProtocols)
-                        {
-                            builder.AppendLine($"    '{item.ToString()}'");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PolicyType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  policyType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PolicyType))
-                {
-                    builder.Append("  policyType: ");
-                    builder.AppendLine($"'{PolicyType.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PolicyName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  policyName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PolicyName))
-                {
-                    builder.Append("  policyName: ");
-                    builder.AppendLine($"'{PolicyName.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CipherSuites), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  cipherSuites: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(CipherSuites))
-                {
-                    if (CipherSuites.Any())
-                    {
-                        builder.Append("  cipherSuites: ");
-                        builder.AppendLine("[");
-                        foreach (var item in CipherSuites)
-                        {
-                            builder.AppendLine($"    '{item.ToString()}'");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MinProtocolVersion), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  minProtocolVersion: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(MinProtocolVersion))
-                {
-                    builder.Append("  minProtocolVersion: ");
-                    builder.AppendLine($"'{MinProtocolVersion.Value.ToString()}'");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<ApplicationGatewaySslPolicy>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewaySslPolicy>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(ApplicationGatewaySslPolicy)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ApplicationGatewaySslPolicy IPersistableModel<ApplicationGatewaySslPolicy>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewaySslPolicy>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeApplicationGatewaySslPolicy(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ApplicationGatewaySslPolicy)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ApplicationGatewaySslPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network.Samples
                 EnableFloatingIP = false,
                 EnableTcpReset = false,
             };
-            ArmOperation<InboundNatRuleResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, inboundNatRuleName, data);
+            ArmOperation<InboundNatRuleResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, inboundNatRuleName, data, cancellationToken: System.Threading.CancellationToken.None);
             InboundNatRuleResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

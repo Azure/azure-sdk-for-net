@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct ApplicationGatewayBackendHealthServerHealth : IEquatable<ApplicationGatewayBackendHealthServerHealth>
     {
         private readonly string _value;
+        /// <summary> Unknown. </summary>
+        private const string UnknownValue = "Unknown";
+        /// <summary> Up. </summary>
+        private const string UpValue = "Up";
+        /// <summary> Down. </summary>
+        private const string DownValue = "Down";
+        /// <summary> Partial. </summary>
+        private const string PartialValue = "Partial";
+        /// <summary> Draining. </summary>
+        private const string DrainingValue = "Draining";
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayBackendHealthServerHealth"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ApplicationGatewayBackendHealthServerHealth(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string UnknownValue = "Unknown";
-        private const string UpValue = "Up";
-        private const string DownValue = "Down";
-        private const string PartialValue = "Partial";
-        private const string DrainingValue = "Draining";
+            _value = value;
+        }
 
         /// <summary> Unknown. </summary>
         public static ApplicationGatewayBackendHealthServerHealth Unknown { get; } = new ApplicationGatewayBackendHealthServerHealth(UnknownValue);
+
         /// <summary> Up. </summary>
         public static ApplicationGatewayBackendHealthServerHealth Up { get; } = new ApplicationGatewayBackendHealthServerHealth(UpValue);
+
         /// <summary> Down. </summary>
         public static ApplicationGatewayBackendHealthServerHealth Down { get; } = new ApplicationGatewayBackendHealthServerHealth(DownValue);
+
         /// <summary> Partial. </summary>
         public static ApplicationGatewayBackendHealthServerHealth Partial { get; } = new ApplicationGatewayBackendHealthServerHealth(PartialValue);
+
         /// <summary> Draining. </summary>
         public static ApplicationGatewayBackendHealthServerHealth Draining { get; } = new ApplicationGatewayBackendHealthServerHealth(DrainingValue);
+
         /// <summary> Determines if two <see cref="ApplicationGatewayBackendHealthServerHealth"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ApplicationGatewayBackendHealthServerHealth left, ApplicationGatewayBackendHealthServerHealth right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ApplicationGatewayBackendHealthServerHealth"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ApplicationGatewayBackendHealthServerHealth left, ApplicationGatewayBackendHealthServerHealth right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ApplicationGatewayBackendHealthServerHealth"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ApplicationGatewayBackendHealthServerHealth"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ApplicationGatewayBackendHealthServerHealth(string value) => new ApplicationGatewayBackendHealthServerHealth(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ApplicationGatewayBackendHealthServerHealth"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ApplicationGatewayBackendHealthServerHealth?(string value) => value == null ? null : new ApplicationGatewayBackendHealthServerHealth(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ApplicationGatewayBackendHealthServerHealth other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ApplicationGatewayBackendHealthServerHealth other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

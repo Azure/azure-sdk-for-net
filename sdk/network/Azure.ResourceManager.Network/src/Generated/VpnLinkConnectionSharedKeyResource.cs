@@ -6,47 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary>
-    /// A Class representing a VpnLinkConnectionSharedKey along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="VpnLinkConnectionSharedKeyResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetVpnLinkConnectionSharedKeyResource method.
+    /// A class representing a VpnLinkConnectionSharedKey along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="VpnLinkConnectionSharedKeyResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
     /// Otherwise you can get one from its parent resource <see cref="VpnSiteLinkConnectionResource"/> using the GetVpnLinkConnectionSharedKey method.
     /// </summary>
     public partial class VpnLinkConnectionSharedKeyResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="VpnLinkConnectionSharedKeyResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="gatewayName"> The gatewayName. </param>
-        /// <param name="connectionName"> The connectionName. </param>
-        /// <param name="linkConnectionName"> The linkConnectionName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string gatewayName, string connectionName, string linkConnectionName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}/vpnConnections/{connectionName}/vpnLinkConnections/{linkConnectionName}/sharedKeys/default";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _vpnLinkConnectionSharedKeyVpnLinkConnectionsClientDiagnostics;
-        private readonly VpnLinkConnectionsRestOperations _vpnLinkConnectionSharedKeyVpnLinkConnectionsRestClient;
+        private readonly ClientDiagnostics _vpnLinkConnectionsClientDiagnostics;
+        private readonly VpnLinkConnections _vpnLinkConnectionsRestClient;
         private readonly VpnLinkConnectionSharedKeyData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Network/vpnGateways/vpnConnections/vpnLinkConnections/sharedKeys";
 
-        /// <summary> Initializes a new instance of the <see cref="VpnLinkConnectionSharedKeyResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of VpnLinkConnectionSharedKeyResource for mocking. </summary>
         protected VpnLinkConnectionSharedKeyResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="VpnLinkConnectionSharedKeyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="VpnLinkConnectionSharedKeyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal VpnLinkConnectionSharedKeyResource(ArmClient client, VpnLinkConnectionSharedKeyData data) : this(client, data.Id)
@@ -55,117 +43,52 @@ namespace Azure.ResourceManager.Network
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="VpnLinkConnectionSharedKeyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="VpnLinkConnectionSharedKeyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal VpnLinkConnectionSharedKeyResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _vpnLinkConnectionSharedKeyVpnLinkConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string vpnLinkConnectionSharedKeyVpnLinkConnectionsApiVersion);
-            _vpnLinkConnectionSharedKeyVpnLinkConnectionsRestClient = new VpnLinkConnectionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, vpnLinkConnectionSharedKeyVpnLinkConnectionsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string vpnLinkConnectionSharedKeyApiVersion);
+            _vpnLinkConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
+            _vpnLinkConnectionsRestClient = new VpnLinkConnections(_vpnLinkConnectionsClientDiagnostics, Pipeline, Endpoint, vpnLinkConnectionSharedKeyApiVersion ?? "2025-07-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual VpnLinkConnectionSharedKeyData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="gatewayName"> The gatewayName. </param>
+        /// <param name="connectionName"> The connectionName. </param>
+        /// <param name="linkConnectionName"> The linkConnectionName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string gatewayName, string connectionName, string linkConnectionName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}/vpnConnections/{connectionName}/vpnLinkConnections/{linkConnectionName}/sharedKeys/default";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-        }
-
-        /// <summary>
-        /// Gets the shared key of VpnLink connection specified.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}/vpnConnections/{connectionName}/vpnLinkConnections/{linkConnectionName}/sharedKeys/default</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VpnLinkConnections_GetDefaultSharedKey</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VpnLinkConnectionSharedKeyResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<VpnLinkConnectionSharedKeyResource>> GetAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _vpnLinkConnectionSharedKeyVpnLinkConnectionsClientDiagnostics.CreateScope("VpnLinkConnectionSharedKeyResource.Get");
-            scope.Start();
-            try
             {
-                var response = await _vpnLinkConnectionSharedKeyVpnLinkConnectionsRestClient.GetDefaultSharedKeyAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new VpnLinkConnectionSharedKeyResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets the shared key of VpnLink connection specified.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}/vpnConnections/{connectionName}/vpnLinkConnections/{linkConnectionName}/sharedKeys/default</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VpnLinkConnections_GetDefaultSharedKey</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VpnLinkConnectionSharedKeyResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<VpnLinkConnectionSharedKeyResource> Get(CancellationToken cancellationToken = default)
-        {
-            using var scope = _vpnLinkConnectionSharedKeyVpnLinkConnectionsClientDiagnostics.CreateScope("VpnLinkConnectionSharedKeyResource.Get");
-            scope.Start();
-            try
-            {
-                var response = _vpnLinkConnectionSharedKeyVpnLinkConnectionsRestClient.GetDefaultSharedKey(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
-                if (response.Value == null)
-                    throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new VpnLinkConnectionSharedKeyResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -173,20 +96,20 @@ namespace Azure.ResourceManager.Network
         /// Sets or auto generates the shared key based on the user input. If users give a shared key value, it does the set operation. If key length is given, the operation creates a random key of the pre-defined length.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}/vpnConnections/{connectionName}/vpnLinkConnections/{linkConnectionName}/sharedKeys/default</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}/vpnConnections/{connectionName}/vpnLinkConnections/{linkConnectionName}/sharedKeys/default. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VpnLinkConnections_SetOrInitDefaultSharedKey</description>
+        /// <term> Operation Id. </term>
+        /// <description> ConnectionSharedKeyResults_SetOrInitDefaultSharedKey. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VpnLinkConnectionSharedKeyResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="VpnLinkConnectionSharedKeyResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -198,14 +121,27 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _vpnLinkConnectionSharedKeyVpnLinkConnectionsClientDiagnostics.CreateScope("VpnLinkConnectionSharedKeyResource.CreateOrUpdate");
+            using DiagnosticScope scope = _vpnLinkConnectionsClientDiagnostics.CreateScope("VpnLinkConnectionSharedKeyResource.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _vpnLinkConnectionSharedKeyVpnLinkConnectionsRestClient.SetOrInitDefaultSharedKeyAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<VpnLinkConnectionSharedKeyResource>(new VpnLinkConnectionSharedKeyOperationSource(Client), _vpnLinkConnectionSharedKeyVpnLinkConnectionsClientDiagnostics, Pipeline, _vpnLinkConnectionSharedKeyVpnLinkConnectionsRestClient.CreateSetOrInitDefaultSharedKeyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _vpnLinkConnectionsRestClient.CreateSetOrInitDefaultSharedKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, VpnLinkConnectionSharedKeyData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                NetworkArmOperation<VpnLinkConnectionSharedKeyResource> operation = new NetworkArmOperation<VpnLinkConnectionSharedKeyResource>(
+                    new VpnLinkConnectionSharedKeyResourceOperationSource(Client),
+                    _vpnLinkConnectionsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -219,20 +155,20 @@ namespace Azure.ResourceManager.Network
         /// Sets or auto generates the shared key based on the user input. If users give a shared key value, it does the set operation. If key length is given, the operation creates a random key of the pre-defined length.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}/vpnConnections/{connectionName}/vpnLinkConnections/{linkConnectionName}/sharedKeys/default</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}/vpnConnections/{connectionName}/vpnLinkConnections/{linkConnectionName}/sharedKeys/default. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VpnLinkConnections_SetOrInitDefaultSharedKey</description>
+        /// <term> Operation Id. </term>
+        /// <description> ConnectionSharedKeyResults_SetOrInitDefaultSharedKey. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VpnLinkConnectionSharedKeyResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="VpnLinkConnectionSharedKeyResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -244,14 +180,27 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _vpnLinkConnectionSharedKeyVpnLinkConnectionsClientDiagnostics.CreateScope("VpnLinkConnectionSharedKeyResource.CreateOrUpdate");
+            using DiagnosticScope scope = _vpnLinkConnectionsClientDiagnostics.CreateScope("VpnLinkConnectionSharedKeyResource.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _vpnLinkConnectionSharedKeyVpnLinkConnectionsRestClient.SetOrInitDefaultSharedKey(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, data, cancellationToken);
-                var operation = new NetworkArmOperation<VpnLinkConnectionSharedKeyResource>(new VpnLinkConnectionSharedKeyOperationSource(Client), _vpnLinkConnectionSharedKeyVpnLinkConnectionsClientDiagnostics, Pipeline, _vpnLinkConnectionSharedKeyVpnLinkConnectionsRestClient.CreateSetOrInitDefaultSharedKeyRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _vpnLinkConnectionsRestClient.CreateSetOrInitDefaultSharedKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, VpnLinkConnectionSharedKeyData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                NetworkArmOperation<VpnLinkConnectionSharedKeyResource> operation = new NetworkArmOperation<VpnLinkConnectionSharedKeyResource>(
+                    new VpnLinkConnectionSharedKeyResourceOperationSource(Client),
+                    _vpnLinkConnectionsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -262,34 +211,92 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Gets the value of the shared key of VpnLink connection specified.
+        /// Gets the shared key of VpnLink connection specified.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}/vpnConnections/{connectionName}/vpnLinkConnections/{linkConnectionName}/sharedKeys/default/listSharedKey</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}/vpnConnections/{connectionName}/vpnLinkConnections/{linkConnectionName}/sharedKeys/default. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VpnLinkConnections_ListDefaultSharedKey</description>
+        /// <term> Operation Id. </term>
+        /// <description> ConnectionSharedKeyResults_GetDefaultSharedKey. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VpnLinkConnectionSharedKeyResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="VpnLinkConnectionSharedKeyResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<VpnLinkConnectionSharedKeyResource>> GetDefaultSharedKeyAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VpnLinkConnectionSharedKeyResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _vpnLinkConnectionSharedKeyVpnLinkConnectionsClientDiagnostics.CreateScope("VpnLinkConnectionSharedKeyResource.GetDefaultSharedKey");
+            using DiagnosticScope scope = _vpnLinkConnectionsClientDiagnostics.CreateScope("VpnLinkConnectionSharedKeyResource.Get");
             scope.Start();
             try
             {
-                var response = await _vpnLinkConnectionSharedKeyVpnLinkConnectionsRestClient.ListDefaultSharedKeyAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _vpnLinkConnectionsRestClient.CreateGetSharedKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<VpnLinkConnectionSharedKeyData> response = Response.FromValue(VpnLinkConnectionSharedKeyData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new VpnLinkConnectionSharedKeyResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the shared key of VpnLink connection specified.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}/vpnConnections/{connectionName}/vpnLinkConnections/{linkConnectionName}/sharedKeys/default. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ConnectionSharedKeyResults_GetDefaultSharedKey. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="VpnLinkConnectionSharedKeyResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<VpnLinkConnectionSharedKeyResource> Get(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _vpnLinkConnectionsClientDiagnostics.CreateScope("VpnLinkConnectionSharedKeyResource.Get");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _vpnLinkConnectionsRestClient.CreateGetSharedKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<VpnLinkConnectionSharedKeyData> response = Response.FromValue(VpnLinkConnectionSharedKeyData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new VpnLinkConnectionSharedKeyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -303,31 +310,89 @@ namespace Azure.ResourceManager.Network
         /// Gets the value of the shared key of VpnLink connection specified.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}/vpnConnections/{connectionName}/vpnLinkConnections/{linkConnectionName}/sharedKeys/default/listSharedKey</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}/vpnConnections/{connectionName}/vpnLinkConnections/{linkConnectionName}/sharedKeys/default/listSharedKey. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VpnLinkConnections_ListDefaultSharedKey</description>
+        /// <term> Operation Id. </term>
+        /// <description> ConnectionSharedKeyResults_ListDefaultSharedKey. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VpnLinkConnectionSharedKeyResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="VpnLinkConnectionSharedKeyResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<VpnLinkConnectionSharedKeyResource>> GetDefaultSharedKeyAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _vpnLinkConnectionsClientDiagnostics.CreateScope("VpnLinkConnectionSharedKeyResource.GetDefaultSharedKey");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _vpnLinkConnectionsRestClient.CreateGetDefaultSharedKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<VpnLinkConnectionSharedKeyData> response = Response.FromValue(VpnLinkConnectionSharedKeyData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new VpnLinkConnectionSharedKeyResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the value of the shared key of VpnLink connection specified.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}/vpnConnections/{connectionName}/vpnLinkConnections/{linkConnectionName}/sharedKeys/default/listSharedKey. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ConnectionSharedKeyResults_ListDefaultSharedKey. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="VpnLinkConnectionSharedKeyResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<VpnLinkConnectionSharedKeyResource> GetDefaultSharedKey(CancellationToken cancellationToken = default)
         {
-            using var scope = _vpnLinkConnectionSharedKeyVpnLinkConnectionsClientDiagnostics.CreateScope("VpnLinkConnectionSharedKeyResource.GetDefaultSharedKey");
+            using DiagnosticScope scope = _vpnLinkConnectionsClientDiagnostics.CreateScope("VpnLinkConnectionSharedKeyResource.GetDefaultSharedKey");
             scope.Start();
             try
             {
-                var response = _vpnLinkConnectionSharedKeyVpnLinkConnectionsRestClient.ListDefaultSharedKey(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _vpnLinkConnectionsRestClient.CreateGetDefaultSharedKeyRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<VpnLinkConnectionSharedKeyData> response = Response.FromValue(VpnLinkConnectionSharedKeyData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new VpnLinkConnectionSharedKeyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

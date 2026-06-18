@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
@@ -25,51 +26,49 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class ServiceEndpointPolicyCollection : ArmCollection, IEnumerable<ServiceEndpointPolicyResource>, IAsyncEnumerable<ServiceEndpointPolicyResource>
     {
-        private readonly ClientDiagnostics _serviceEndpointPolicyClientDiagnostics;
-        private readonly ServiceEndpointPoliciesRestOperations _serviceEndpointPolicyRestClient;
+        private readonly ClientDiagnostics _serviceEndpointPoliciesClientDiagnostics;
+        private readonly ServiceEndpointPolicies _serviceEndpointPoliciesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ServiceEndpointPolicyCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ServiceEndpointPolicyCollection for mocking. </summary>
         protected ServiceEndpointPolicyCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ServiceEndpointPolicyCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceEndpointPolicyCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ServiceEndpointPolicyCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _serviceEndpointPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ServiceEndpointPolicyResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ServiceEndpointPolicyResource.ResourceType, out string serviceEndpointPolicyApiVersion);
-            _serviceEndpointPolicyRestClient = new ServiceEndpointPoliciesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serviceEndpointPolicyApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _serviceEndpointPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ServiceEndpointPolicyResource.ResourceType.Namespace, Diagnostics);
+            _serviceEndpointPoliciesRestClient = new ServiceEndpointPolicies(_serviceEndpointPoliciesClientDiagnostics, Pipeline, Endpoint, serviceEndpointPolicyApiVersion ?? "2025-07-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Creates or updates a service Endpoint Policies.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/serviceEndpointPolicies/{serviceEndpointPolicyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/serviceEndpointPolicies/{serviceEndpointPolicyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServiceEndpointPolicies_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServiceEndpointPolicies_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceEndpointPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,21 +76,34 @@ namespace Azure.ResourceManager.Network
         /// <param name="serviceEndpointPolicyName"> The name of the service endpoint policy. </param>
         /// <param name="data"> Parameters supplied to the create or update service endpoint policy operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serviceEndpointPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpointPolicyName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceEndpointPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<ServiceEndpointPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string serviceEndpointPolicyName, ServiceEndpointPolicyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serviceEndpointPolicyName, nameof(serviceEndpointPolicyName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _serviceEndpointPolicyClientDiagnostics.CreateScope("ServiceEndpointPolicyCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _serviceEndpointPoliciesClientDiagnostics.CreateScope("ServiceEndpointPolicyCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _serviceEndpointPolicyRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, serviceEndpointPolicyName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<ServiceEndpointPolicyResource>(new ServiceEndpointPolicyOperationSource(Client), _serviceEndpointPolicyClientDiagnostics, Pipeline, _serviceEndpointPolicyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, serviceEndpointPolicyName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _serviceEndpointPoliciesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, serviceEndpointPolicyName, ServiceEndpointPolicyData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                NetworkArmOperation<ServiceEndpointPolicyResource> operation = new NetworkArmOperation<ServiceEndpointPolicyResource>(
+                    new ServiceEndpointPolicyResourceOperationSource(Client),
+                    _serviceEndpointPoliciesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -105,20 +117,16 @@ namespace Azure.ResourceManager.Network
         /// Creates or updates a service Endpoint Policies.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/serviceEndpointPolicies/{serviceEndpointPolicyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/serviceEndpointPolicies/{serviceEndpointPolicyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServiceEndpointPolicies_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServiceEndpointPolicies_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceEndpointPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,21 +134,34 @@ namespace Azure.ResourceManager.Network
         /// <param name="serviceEndpointPolicyName"> The name of the service endpoint policy. </param>
         /// <param name="data"> Parameters supplied to the create or update service endpoint policy operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serviceEndpointPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpointPolicyName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceEndpointPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<ServiceEndpointPolicyResource> CreateOrUpdate(WaitUntil waitUntil, string serviceEndpointPolicyName, ServiceEndpointPolicyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serviceEndpointPolicyName, nameof(serviceEndpointPolicyName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _serviceEndpointPolicyClientDiagnostics.CreateScope("ServiceEndpointPolicyCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _serviceEndpointPoliciesClientDiagnostics.CreateScope("ServiceEndpointPolicyCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _serviceEndpointPolicyRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, serviceEndpointPolicyName, data, cancellationToken);
-                var operation = new NetworkArmOperation<ServiceEndpointPolicyResource>(new ServiceEndpointPolicyOperationSource(Client), _serviceEndpointPolicyClientDiagnostics, Pipeline, _serviceEndpointPolicyRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, serviceEndpointPolicyName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _serviceEndpointPoliciesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, serviceEndpointPolicyName, ServiceEndpointPolicyData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                NetworkArmOperation<ServiceEndpointPolicyResource> operation = new NetworkArmOperation<ServiceEndpointPolicyResource>(
+                    new ServiceEndpointPolicyResourceOperationSource(Client),
+                    _serviceEndpointPoliciesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -154,39 +175,43 @@ namespace Azure.ResourceManager.Network
         /// Gets the specified service Endpoint Policies in a specified resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/serviceEndpointPolicies/{serviceEndpointPolicyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/serviceEndpointPolicies/{serviceEndpointPolicyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServiceEndpointPolicies_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServiceEndpointPolicies_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceEndpointPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="serviceEndpointPolicyName"> The name of the service endpoint policy. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serviceEndpointPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpointPolicyName"/> is null. </exception>
-        public virtual async Task<Response<ServiceEndpointPolicyResource>> GetAsync(string serviceEndpointPolicyName, string expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="serviceEndpointPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<ServiceEndpointPolicyResource>> GetAsync(string serviceEndpointPolicyName, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serviceEndpointPolicyName, nameof(serviceEndpointPolicyName));
 
-            using var scope = _serviceEndpointPolicyClientDiagnostics.CreateScope("ServiceEndpointPolicyCollection.Get");
+            using DiagnosticScope scope = _serviceEndpointPoliciesClientDiagnostics.CreateScope("ServiceEndpointPolicyCollection.Get");
             scope.Start();
             try
             {
-                var response = await _serviceEndpointPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, serviceEndpointPolicyName, expand, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _serviceEndpointPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, serviceEndpointPolicyName, expand, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ServiceEndpointPolicyData> response = Response.FromValue(ServiceEndpointPolicyData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ServiceEndpointPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -200,39 +225,43 @@ namespace Azure.ResourceManager.Network
         /// Gets the specified service Endpoint Policies in a specified resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/serviceEndpointPolicies/{serviceEndpointPolicyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/serviceEndpointPolicies/{serviceEndpointPolicyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServiceEndpointPolicies_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServiceEndpointPolicies_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceEndpointPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="serviceEndpointPolicyName"> The name of the service endpoint policy. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serviceEndpointPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpointPolicyName"/> is null. </exception>
-        public virtual Response<ServiceEndpointPolicyResource> Get(string serviceEndpointPolicyName, string expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="serviceEndpointPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<ServiceEndpointPolicyResource> Get(string serviceEndpointPolicyName, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serviceEndpointPolicyName, nameof(serviceEndpointPolicyName));
 
-            using var scope = _serviceEndpointPolicyClientDiagnostics.CreateScope("ServiceEndpointPolicyCollection.Get");
+            using DiagnosticScope scope = _serviceEndpointPoliciesClientDiagnostics.CreateScope("ServiceEndpointPolicyCollection.Get");
             scope.Start();
             try
             {
-                var response = _serviceEndpointPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, serviceEndpointPolicyName, expand, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _serviceEndpointPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, serviceEndpointPolicyName, expand, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ServiceEndpointPolicyData> response = Response.FromValue(ServiceEndpointPolicyData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ServiceEndpointPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -246,50 +275,44 @@ namespace Azure.ResourceManager.Network
         /// Gets all service endpoint Policies in a resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/serviceEndpointPolicies</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/serviceEndpointPolicies. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServiceEndpointPolicies_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServiceEndpointPolicies_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceEndpointPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServiceEndpointPolicyResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ServiceEndpointPolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ServiceEndpointPolicyResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceEndpointPolicyRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceEndpointPolicyRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ServiceEndpointPolicyResource(Client, ServiceEndpointPolicyData.DeserializeServiceEndpointPolicyData(e)), _serviceEndpointPolicyClientDiagnostics, Pipeline, "ServiceEndpointPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ServiceEndpointPolicyData, ServiceEndpointPolicyResource>(new ServiceEndpointPoliciesGetByResourceGroupAsyncCollectionResultOfT(_serviceEndpointPoliciesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ServiceEndpointPolicyCollection.GetAll"), data => new ServiceEndpointPolicyResource(Client, data));
         }
 
         /// <summary>
         /// Gets all service endpoint Policies in a resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/serviceEndpointPolicies</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/serviceEndpointPolicies. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServiceEndpointPolicies_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServiceEndpointPolicies_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceEndpointPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -297,46 +320,62 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="ServiceEndpointPolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ServiceEndpointPolicyResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceEndpointPolicyRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceEndpointPolicyRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ServiceEndpointPolicyResource(Client, ServiceEndpointPolicyData.DeserializeServiceEndpointPolicyData(e)), _serviceEndpointPolicyClientDiagnostics, Pipeline, "ServiceEndpointPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ServiceEndpointPolicyData, ServiceEndpointPolicyResource>(new ServiceEndpointPoliciesGetByResourceGroupCollectionResultOfT(_serviceEndpointPoliciesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ServiceEndpointPolicyCollection.GetAll"), data => new ServiceEndpointPolicyResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/serviceEndpointPolicies/{serviceEndpointPolicyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/serviceEndpointPolicies/{serviceEndpointPolicyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServiceEndpointPolicies_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServiceEndpointPolicies_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceEndpointPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="serviceEndpointPolicyName"> The name of the service endpoint policy. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serviceEndpointPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpointPolicyName"/> is null. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string serviceEndpointPolicyName, string expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="serviceEndpointPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string serviceEndpointPolicyName, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serviceEndpointPolicyName, nameof(serviceEndpointPolicyName));
 
-            using var scope = _serviceEndpointPolicyClientDiagnostics.CreateScope("ServiceEndpointPolicyCollection.Exists");
+            using DiagnosticScope scope = _serviceEndpointPoliciesClientDiagnostics.CreateScope("ServiceEndpointPolicyCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _serviceEndpointPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, serviceEndpointPolicyName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _serviceEndpointPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, serviceEndpointPolicyName, expand, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ServiceEndpointPolicyData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ServiceEndpointPolicyData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ServiceEndpointPolicyData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -350,37 +389,51 @@ namespace Azure.ResourceManager.Network
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/serviceEndpointPolicies/{serviceEndpointPolicyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/serviceEndpointPolicies/{serviceEndpointPolicyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServiceEndpointPolicies_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServiceEndpointPolicies_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceEndpointPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="serviceEndpointPolicyName"> The name of the service endpoint policy. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serviceEndpointPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpointPolicyName"/> is null. </exception>
-        public virtual Response<bool> Exists(string serviceEndpointPolicyName, string expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="serviceEndpointPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<bool> Exists(string serviceEndpointPolicyName, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serviceEndpointPolicyName, nameof(serviceEndpointPolicyName));
 
-            using var scope = _serviceEndpointPolicyClientDiagnostics.CreateScope("ServiceEndpointPolicyCollection.Exists");
+            using DiagnosticScope scope = _serviceEndpointPoliciesClientDiagnostics.CreateScope("ServiceEndpointPolicyCollection.Exists");
             scope.Start();
             try
             {
-                var response = _serviceEndpointPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, serviceEndpointPolicyName, expand, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _serviceEndpointPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, serviceEndpointPolicyName, expand, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ServiceEndpointPolicyData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ServiceEndpointPolicyData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ServiceEndpointPolicyData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -394,39 +447,55 @@ namespace Azure.ResourceManager.Network
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/serviceEndpointPolicies/{serviceEndpointPolicyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/serviceEndpointPolicies/{serviceEndpointPolicyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServiceEndpointPolicies_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServiceEndpointPolicies_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceEndpointPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="serviceEndpointPolicyName"> The name of the service endpoint policy. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serviceEndpointPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpointPolicyName"/> is null. </exception>
-        public virtual async Task<NullableResponse<ServiceEndpointPolicyResource>> GetIfExistsAsync(string serviceEndpointPolicyName, string expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="serviceEndpointPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<NullableResponse<ServiceEndpointPolicyResource>> GetIfExistsAsync(string serviceEndpointPolicyName, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serviceEndpointPolicyName, nameof(serviceEndpointPolicyName));
 
-            using var scope = _serviceEndpointPolicyClientDiagnostics.CreateScope("ServiceEndpointPolicyCollection.GetIfExists");
+            using DiagnosticScope scope = _serviceEndpointPoliciesClientDiagnostics.CreateScope("ServiceEndpointPolicyCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _serviceEndpointPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, serviceEndpointPolicyName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _serviceEndpointPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, serviceEndpointPolicyName, expand, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ServiceEndpointPolicyData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ServiceEndpointPolicyData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ServiceEndpointPolicyData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ServiceEndpointPolicyResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ServiceEndpointPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -440,39 +509,55 @@ namespace Azure.ResourceManager.Network
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/serviceEndpointPolicies/{serviceEndpointPolicyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/serviceEndpointPolicies/{serviceEndpointPolicyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServiceEndpointPolicies_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServiceEndpointPolicies_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceEndpointPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="serviceEndpointPolicyName"> The name of the service endpoint policy. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serviceEndpointPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpointPolicyName"/> is null. </exception>
-        public virtual NullableResponse<ServiceEndpointPolicyResource> GetIfExists(string serviceEndpointPolicyName, string expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="serviceEndpointPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual NullableResponse<ServiceEndpointPolicyResource> GetIfExists(string serviceEndpointPolicyName, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serviceEndpointPolicyName, nameof(serviceEndpointPolicyName));
 
-            using var scope = _serviceEndpointPolicyClientDiagnostics.CreateScope("ServiceEndpointPolicyCollection.GetIfExists");
+            using DiagnosticScope scope = _serviceEndpointPoliciesClientDiagnostics.CreateScope("ServiceEndpointPolicyCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _serviceEndpointPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, serviceEndpointPolicyName, expand, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _serviceEndpointPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, serviceEndpointPolicyName, expand, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ServiceEndpointPolicyData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ServiceEndpointPolicyData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ServiceEndpointPolicyData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ServiceEndpointPolicyResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ServiceEndpointPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -492,6 +577,7 @@ namespace Azure.ResourceManager.Network
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<ServiceEndpointPolicyResource> IAsyncEnumerable<ServiceEndpointPolicyResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
