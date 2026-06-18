@@ -15,7 +15,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> The ApiManagementServicePatch. </summary>
+    /// <summary>
+    /// C# compatibility replacement that preserves the previous `ResourceData` base type for the API
+    /// Management service patch model. It extends the ARM common `Resource` envelope and copies the
+    /// original non-envelope properties.
+    /// </summary>
     public partial class ApiManagementServicePatch : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

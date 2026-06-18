@@ -14,7 +14,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> The ApiGatewayPatch. </summary>
+    /// <summary>
+    /// C# compatibility replacement that preserves the previous `ResourceData` base type for the API
+    /// gateway patch model. The original TypeSpec model extends `ApimResource`; this replacement
+    /// extends the ARM common `Resource` envelope and copies the original non-envelope properties.
+    /// </summary>
     public partial class ApiGatewayPatch : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

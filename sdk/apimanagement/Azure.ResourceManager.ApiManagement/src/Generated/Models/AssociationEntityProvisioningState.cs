@@ -11,7 +11,10 @@ using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary></summary>
+    /// <summary>
+    /// C# compatibility enum surfaced by the previous AutoRest SDK for association provisioning state.
+    /// Kept in client.tsp and applied with `@@alternateType` so the OpenAPI output remains unchanged.
+    /// </summary>
     public readonly partial struct AssociationEntityProvisioningState : IEquatable<AssociationEntityProvisioningState>
     {
         private readonly string _value;

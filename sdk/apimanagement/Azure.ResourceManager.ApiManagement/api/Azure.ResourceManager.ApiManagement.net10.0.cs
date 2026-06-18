@@ -7756,7 +7756,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public static Azure.ResourceManager.ApiManagement.Models.KeyVaultContractCreateProperties KeyVaultContractCreateProperties(string secretIdentifier = null, string identityClientId = null) { throw null; }
         public static Azure.ResourceManager.ApiManagement.Models.KeyVaultContractProperties KeyVaultContractProperties(string secretIdentifier = null, string identityClientId = null, Azure.ResourceManager.ApiManagement.Models.KeyVaultLastAccessStatusContractProperties lastStatus = null) { throw null; }
         public static Azure.ResourceManager.ApiManagement.Models.KeyVaultLastAccessStatusContractProperties KeyVaultLastAccessStatusContractProperties(string code = null, string message = null, System.DateTimeOffset? timeStampUtc = default(System.DateTimeOffset?)) { throw null; }
-        public static Azure.ResourceManager.ApiManagement.Models.LLMDiagnosticSettings LLMDiagnosticSettings(Azure.ResourceManager.ApiManagement.Models.LlmDiagnosticSettings? logs = default(Azure.ResourceManager.ApiManagement.Models.LlmDiagnosticSettings?), Azure.ResourceManager.ApiManagement.Models.LLMMessageDiagnosticSettings requests = null, Azure.ResourceManager.ApiManagement.Models.LLMMessageDiagnosticSettings responses = null) { throw null; }
+        public static Azure.ResourceManager.ApiManagement.Models.LLMDiagnosticSettings LLMDiagnosticSettings(Azure.ResourceManager.ApiManagement.Models.LlmDiagnosticLogState? logs = default(Azure.ResourceManager.ApiManagement.Models.LlmDiagnosticLogState?), Azure.ResourceManager.ApiManagement.Models.LLMMessageDiagnosticSettings requests = null, Azure.ResourceManager.ApiManagement.Models.LLMMessageDiagnosticSettings responses = null) { throw null; }
         public static Azure.ResourceManager.ApiManagement.Models.LLMMessageDiagnosticSettings LLMMessageDiagnosticSettings(Azure.ResourceManager.ApiManagement.Models.LlmMessageLogTypes? messages = default(Azure.ResourceManager.ApiManagement.Models.LlmMessageLogTypes?), int? maxSizeInBytes = default(int?)) { throw null; }
         public static Azure.ResourceManager.ApiManagement.Models.McpEndpoint McpEndpoint(string name = null, string uriTemplate = null) { throw null; }
         public static Azure.ResourceManager.ApiManagement.Models.McpProperties McpProperties(Azure.ResourceManager.ApiManagement.Models.McpTransportType? transportType = default(Azure.ResourceManager.ApiManagement.Models.McpTransportType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiManagement.Models.McpEndpoint> endpoints = null) { throw null; }
@@ -9749,26 +9749,26 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct LlmDiagnosticSettings : System.IEquatable<Azure.ResourceManager.ApiManagement.Models.LlmDiagnosticSettings>
+    public readonly partial struct LlmDiagnosticLogState : System.IEquatable<Azure.ResourceManager.ApiManagement.Models.LlmDiagnosticLogState>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public LlmDiagnosticSettings(string value) { throw null; }
-        public static Azure.ResourceManager.ApiManagement.Models.LlmDiagnosticSettings Disabled { get { throw null; } }
-        public static Azure.ResourceManager.ApiManagement.Models.LlmDiagnosticSettings Enabled { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ApiManagement.Models.LlmDiagnosticSettings other) { throw null; }
+        public LlmDiagnosticLogState(string value) { throw null; }
+        public static Azure.ResourceManager.ApiManagement.Models.LlmDiagnosticLogState Disabled { get { throw null; } }
+        public static Azure.ResourceManager.ApiManagement.Models.LlmDiagnosticLogState Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ApiManagement.Models.LlmDiagnosticLogState other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ApiManagement.Models.LlmDiagnosticSettings left, Azure.ResourceManager.ApiManagement.Models.LlmDiagnosticSettings right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ApiManagement.Models.LlmDiagnosticSettings (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ApiManagement.Models.LlmDiagnosticSettings? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ApiManagement.Models.LlmDiagnosticSettings left, Azure.ResourceManager.ApiManagement.Models.LlmDiagnosticSettings right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ApiManagement.Models.LlmDiagnosticLogState left, Azure.ResourceManager.ApiManagement.Models.LlmDiagnosticLogState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ApiManagement.Models.LlmDiagnosticLogState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ApiManagement.Models.LlmDiagnosticLogState? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ApiManagement.Models.LlmDiagnosticLogState left, Azure.ResourceManager.ApiManagement.Models.LlmDiagnosticLogState right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class LLMDiagnosticSettings : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApiManagement.Models.LLMDiagnosticSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiManagement.Models.LLMDiagnosticSettings>
     {
         public LLMDiagnosticSettings() { }
-        public Azure.ResourceManager.ApiManagement.Models.LlmDiagnosticSettings? Logs { get { throw null; } set { } }
+        public Azure.ResourceManager.ApiManagement.Models.LlmDiagnosticLogState? Logs { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.LLMMessageDiagnosticSettings Requests { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.LLMMessageDiagnosticSettings Responses { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.ApiManagement.Models.LLMDiagnosticSettings JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
