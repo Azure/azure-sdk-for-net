@@ -534,6 +534,79 @@ interface ContainerApps {
     );
   });
 
+  it("single-value enum key with list op is not classified as singleton", async () => {
+    const program = await typeSpecCompile(
+      `
+/** Container app resource */
+model ContainerApp is TrackedResource<ContainerAppProperties> {
+  ...ResourceNameParameter<ContainerApp>;
+}
+
+/** Container app properties */
+model ContainerAppProperties {
+  description?: string;
+}
+
+/** Fixed detector resource name */
+enum DetectorName {
+  rootApi: "rootApi",
+}
+
+interface Operations extends Azure.ResourceManager.Operations {}
+
+@armResourceOperations(#{ allowStaticRoutes: true })
+interface ContainerApps {
+  get is ArmResourceRead<ContainerApp>;
+
+  @get
+  @route("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/detectorProperties/{detectorName}")
+  getRootDetector(
+    ...ApiVersionParameter,
+    ...SubscriptionIdParameter,
+    ...ResourceGroupParameter,
+    @path containerAppName: string,
+    @path detectorName: DetectorName
+  ): ContainerApp;
+
+  @get
+  @route("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/detectorProperties")
+  listRootDetectors(
+    ...ApiVersionParameter,
+    ...SubscriptionIdParameter,
+    ...ResourceGroupParameter,
+    @path containerAppName: string
+  ): ContainerApp[];
+}
+`,
+      runner,
+      { providerNamespace: "Microsoft.App" }
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const [root] = createModel(sdkContext);
+
+    const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
+    ok(armProviderSchemaResult);
+
+    const detectorResource = armProviderSchemaResult.resources.find(
+      (r) =>
+        r.metadata.resourceIdPattern.path ===
+        "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/detectorProperties/rootApi"
+    );
+    ok(
+      detectorResource,
+      `Single-value enum key resource should still be detected. Got: ${armProviderSchemaResult.resources.map((r) => r.metadata.resourceIdPattern.path).join(", ")}`
+    );
+    // Even though the resolved path ends in the literal `rootApi` segment,
+    // the resource exposes a list operation, so it must not be treated as a
+    // singleton (otherwise its ResourceCollection would be dropped).
+    strictEqual(detectorResource.metadata.singletonResourceName, undefined);
+    ok(
+      detectorResource.metadata.methods.some((m) => m.kind === "List"),
+      "Detector resource should have a list method"
+    );
+  });
+
   it("legacy single-page raw array list is assigned to the listed resource", async () => {
     const program = await typeSpecCompile(
       `

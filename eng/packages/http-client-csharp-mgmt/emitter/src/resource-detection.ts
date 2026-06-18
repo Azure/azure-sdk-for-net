@@ -47,7 +47,8 @@ import {
   extensionResourceOperationName,
   isResourceCollectionAction,
   legacyExtensionResourceOperationName,
-  legacyResourceOperationName
+  legacyResourceOperationName,
+  singleton
 } from "./sdk-context-options.js";
 import {
   DecoratorApplication,
@@ -390,6 +391,31 @@ export function buildArmProviderSchema(
     identifiedResourceModelIds
   );
 
+  // Demote singleton classification when the resource exposes a list
+  // operation but is not explicitly decorated with `@singleton`. A genuine
+  // ARM singleton has no list op by definition; the path-shape heuristic in
+  // `RequestPath.singletonName` can otherwise be tripped by single-value
+  // enum keys that the TypeSpec ARM resolver materializes as literal path
+  // segments (e.g. `.../auditingSettings/default`). Without this fix, the
+  // generator skips `ResourceCollection` for such resources and any
+  // `listBy*` paging operation disappears from the public surface.
+  for (const resource of detectedResources) {
+    if (resource.metadata.singletonResourceName === undefined) continue;
+    if (
+      !resource.metadata.methods.some(
+        (m) => m.kind === ResourceOperationKind.List
+      )
+    ) {
+      continue;
+    }
+    const model = resourceModelMap.get(resource.resourceModelId);
+    const isExplicitSingleton =
+      model?.decorators?.some((d) => d.name === singleton) === true;
+    if (!isExplicitSingleton) {
+      resource.metadata.singletonResourceName = undefined;
+    }
+  }
+
   // Fill metadata that depends on the resource model or final method set.
   for (const resource of detectedResources) {
     const sdkModel = models.get(resource.resourceModelId);
@@ -558,19 +584,6 @@ function assignRemainingOperations(
 
   for (const resource of resources) {
     sortResourceMethods(resource.metadata.methods);
-    // Demote singleton classification when the resource exposes a list
-    // operation. A genuine ARM singleton has no list op by definition; the
-    // path-shape heuristic can otherwise be tripped by single-value enum keys
-    // that the TypeSpec ARM resolver materializes as literal path segments
-    // (e.g. `.../auditingSettings/default`).
-    if (
-      resource.metadata.singletonResourceName !== undefined &&
-      resource.metadata.methods.some(
-        (m) => m.kind === ResourceOperationKind.List
-      )
-    ) {
-      resource.metadata.singletonResourceName = undefined;
-    }
   }
 }
 
