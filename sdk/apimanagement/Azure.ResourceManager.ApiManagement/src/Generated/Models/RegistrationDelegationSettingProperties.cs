@@ -23,16 +23,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RegistrationDelegationSettingProperties"/>. </summary>
-        /// <param name="isUserRegistrationDelegationEnabled"> Enable or disable delegation for user registration. </param>
+        /// <param name="enabled"> Enable or disable delegation for user registration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RegistrationDelegationSettingProperties(bool? isUserRegistrationDelegationEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RegistrationDelegationSettingProperties(bool? enabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            IsUserRegistrationDelegationEnabled = isUserRegistrationDelegationEnabled;
+            Enabled = enabled;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Enable or disable delegation for user registration. </summary>
         [WirePath("enabled")]
-        public bool? IsUserRegistrationDelegationEnabled { get; set; }
+        public bool? Enabled { get; set; }
     }
 }

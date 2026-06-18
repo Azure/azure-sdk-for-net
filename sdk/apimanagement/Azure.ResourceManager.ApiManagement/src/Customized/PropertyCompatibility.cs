@@ -47,6 +47,52 @@ namespace Azure.ResourceManager.ApiManagement
 
     public partial class ApiManagementPortalDelegationSettingData
     {
+        /// <summary> A delegation Url. </summary>
+        [WirePath("properties.url")]
+        public Uri Uri
+        {
+            get => Properties is null ? default : Properties.Uri;
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PortalDelegationSettingsProperties();
+                }
+                Properties.Uri = value;
+            }
+        }
+
+        /// <summary> A base64-encoded validation key to validate, that a request is coming from Azure API Management. </summary>
+        [WirePath("properties.validationKey")]
+        public string ValidationKey
+        {
+            get => Properties is null ? default : Properties.ValidationKey;
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PortalDelegationSettingsProperties();
+                }
+                Properties.ValidationKey = value;
+            }
+        }
+
+        /// <summary> Enable or disable delegation for subscriptions. </summary>
+        [WirePath("properties.subscriptions.enabled")]
+        public bool? IsSubscriptionDelegationEnabled
+        {
+            get => Properties?.Subscriptions?.Enabled;
+            set => Subscriptions.Enabled = value;
+        }
+
+        /// <summary> Enable or disable delegation for user registration. </summary>
+        [WirePath("properties.userRegistration.enabled")]
+        public bool? IsUserRegistrationDelegationEnabled
+        {
+            get => Properties?.UserRegistration?.Enabled;
+            set => UserRegistration.Enabled = value;
+        }
+
         /// <summary> Subscriptions delegation settings. </summary>
         [WirePath("properties.subscriptions")]
         internal SubscriptionDelegationSettingProperties Subscriptions
@@ -111,6 +157,45 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Relative URL template identifying the target resource for this operation. </summary>
         [WirePath("urlTemplate")]
         public string UriTemplate => UrlTemplate;
+    }
+
+    public partial class PortalSettingsContractData
+    {
+        /// <summary> Enable or disable delegation for subscriptions. </summary>
+        [WirePath("properties.subscriptions.enabled")]
+        public bool? IsSubscriptionDelegationEnabled
+        {
+            get => IsSubscriptionsEnabled;
+            set => IsSubscriptionsEnabled = value;
+        }
+
+        /// <summary> Enable or disable delegation for user registration. </summary>
+        [WirePath("properties.userRegistration.enabled")]
+        public bool? IsUserRegistrationDelegationEnabled
+        {
+            get => IsUserRegistrationEnabled;
+            set => IsUserRegistrationEnabled = value;
+        }
+    }
+
+    internal partial class SubscriptionDelegationSettingProperties
+    {
+        /// <summary> Enable or disable delegation for subscriptions. </summary>
+        public bool? IsSubscriptionDelegationEnabled
+        {
+            get => Enabled;
+            set => Enabled = value;
+        }
+    }
+
+    internal partial class RegistrationDelegationSettingProperties
+    {
+        /// <summary> Enable or disable delegation for user registration. </summary>
+        public bool? IsUserRegistrationDelegationEnabled
+        {
+            get => Enabled;
+            set => Enabled = value;
+        }
     }
 
     public partial class ConnectivityHop

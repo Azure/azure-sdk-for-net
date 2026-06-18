@@ -1680,20 +1680,27 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="uri"> A delegation Url. </param>
-        /// <param name="validationKey"> A base64-encoded validation key to validate, that a request is coming from Azure API Management. </param>
-        /// <param name="isSubscriptionDelegationEnabled"> Enable or disable delegation for subscriptions. </param>
-        /// <param name="isUserRegistrationDelegationEnabled"> Enable or disable delegation for user registration. </param>
+        /// <param name="properties"> Delegation settings contract properties. </param>
         /// <returns> A new <see cref="ApiManagement.ApiManagementPortalDelegationSettingData"/> instance for mocking. </returns>
-        public static ApiManagementPortalDelegationSettingData ApiManagementPortalDelegationSettingData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, Uri uri = default, string validationKey = default, bool? isSubscriptionDelegationEnabled = default, bool? isUserRegistrationDelegationEnabled = default)
+        public static ApiManagementPortalDelegationSettingData ApiManagementPortalDelegationSettingData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PortalDelegationSettingsProperties properties = default)
         {
             return new ApiManagementPortalDelegationSettingData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                uri is null && validationKey is null && isSubscriptionDelegationEnabled is null && isUserRegistrationDelegationEnabled is null ? default : new PortalDelegationSettingsProperties(uri, validationKey, new SubscriptionDelegationSettingProperties(isSubscriptionDelegationEnabled, default), new RegistrationDelegationSettingProperties(isUserRegistrationDelegationEnabled, default), default),
+                properties,
                 default);
+        }
+
+        /// <param name="uri"> A delegation Url. </param>
+        /// <param name="validationKey"> A base64-encoded validation key to validate, that a request is coming from Azure API Management. </param>
+        /// <param name="subscriptionsEnabled"> Enable or disable delegation for subscriptions. </param>
+        /// <param name="userRegistrationEnabled"> Enable or disable delegation for user registration. </param>
+        /// <returns> A new <see cref="Models.PortalDelegationSettingsProperties"/> instance for mocking. </returns>
+        public static PortalDelegationSettingsProperties PortalDelegationSettingsProperties(Uri uri = default, string validationKey = default, bool? subscriptionsEnabled = default, bool? userRegistrationEnabled = default)
+        {
+            return new PortalDelegationSettingsProperties(uri, validationKey, subscriptionsEnabled is null ? default : new SubscriptionDelegationSettingProperties(subscriptionsEnabled, default), userRegistrationEnabled is null ? default : new RegistrationDelegationSettingProperties(userRegistrationEnabled, default), default);
         }
 
         /// <param name="validationKey"> This is secret value of the validation key in portal settings. </param>
@@ -2898,21 +2905,21 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="validationKey"> A base64-encoded validation key to validate, that a request is coming from Azure API Management. </param>
         /// <param name="isRedirectEnabled"> Redirect Anonymous users to the Sign-In page. </param>
         /// <param name="termsOfService"> Terms of service contract properties. </param>
-        /// <param name="isSubscriptionDelegationEnabled"> Enable or disable delegation for subscriptions. </param>
-        /// <param name="isUserRegistrationDelegationEnabled"> Enable or disable delegation for user registration. </param>
+        /// <param name="isSubscriptionsEnabled"> Enable or disable delegation for subscriptions. </param>
+        /// <param name="isUserRegistrationEnabled"> Enable or disable delegation for user registration. </param>
         /// <returns> A new <see cref="Models.PortalSettingsContractData"/> instance for mocking. </returns>
-        public static PortalSettingsContractData PortalSettingsContractData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, Uri uri = default, string validationKey = default, bool? isRedirectEnabled = default, TermsOfServiceProperties termsOfService = default, bool? isSubscriptionDelegationEnabled = default, bool? isUserRegistrationDelegationEnabled = default)
+        public static PortalSettingsContractData PortalSettingsContractData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, Uri uri = default, string validationKey = default, bool? isRedirectEnabled = default, TermsOfServiceProperties termsOfService = default, bool? isSubscriptionsEnabled = default, bool? isUserRegistrationEnabled = default)
         {
             return new PortalSettingsContractData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                uri is null && validationKey is null && isSubscriptionDelegationEnabled is null && isUserRegistrationDelegationEnabled is null && isRedirectEnabled is null && termsOfService is null ? default : new PortalSettingsContractProperties(
+                uri is null && validationKey is null && isSubscriptionsEnabled is null && isUserRegistrationEnabled is null && isRedirectEnabled is null && termsOfService is null ? default : new PortalSettingsContractProperties(
                     uri,
                     validationKey,
-                    new SubscriptionDelegationSettingProperties(isSubscriptionDelegationEnabled, default),
-                    new RegistrationDelegationSettingProperties(isUserRegistrationDelegationEnabled, default),
+                    new SubscriptionDelegationSettingProperties(isSubscriptionsEnabled, default),
+                    new RegistrationDelegationSettingProperties(isUserRegistrationEnabled, default),
                     isRedirectEnabled,
                     termsOfService,
                     default),
@@ -5913,14 +5920,36 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 name,
                 resourceType,
                 systemData,
-                uri is null && validationKey is null && isSubscriptionDelegationEnabled is null && isUserRegistrationDelegationEnabled is null && isRedirectEnabled is null && termsOfService is null ? default : new PortalSettingsContractProperties(
+                uri is null && validationKey is null && isUserRegistrationDelegationEnabled is null && isRedirectEnabled is null && termsOfService is null ? default : new PortalSettingsContractProperties(
                     uri,
                     validationKey,
-                    new SubscriptionDelegationSettingProperties(isSubscriptionDelegationEnabled, default),
+                    default,
                     new RegistrationDelegationSettingProperties(isUserRegistrationDelegationEnabled, default),
                     isRedirectEnabled,
                     termsOfService,
                     default),
+                default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ApiManagement.ApiManagementPortalDelegationSettingData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="uri"> A delegation Url. </param>
+        /// <param name="validationKey"> A base64-encoded validation key to validate, that a request is coming from Azure API Management. </param>
+        /// <param name="isSubscriptionDelegationEnabled"> Subscriptions delegation settings. </param>
+        /// <param name="isUserRegistrationDelegationEnabled"> User registration delegation settings. </param>
+        /// <returns> A new <see cref="ApiManagement.ApiManagementPortalDelegationSettingData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ApiManagementPortalDelegationSettingData ApiManagementPortalDelegationSettingData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, Uri uri = default, string validationKey = default, bool? isSubscriptionDelegationEnabled = default, bool? isUserRegistrationDelegationEnabled = default)
+        {
+            return new ApiManagementPortalDelegationSettingData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                uri is null && validationKey is null && isUserRegistrationDelegationEnabled is null ? default : new PortalDelegationSettingsProperties(uri, validationKey, default, new RegistrationDelegationSettingProperties(isUserRegistrationDelegationEnabled, default), default),
                 default);
         }
 

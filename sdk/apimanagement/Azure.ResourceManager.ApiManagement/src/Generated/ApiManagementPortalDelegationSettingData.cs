@@ -39,77 +39,39 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> Delegation settings contract properties. </summary>
         [WirePath("properties")]
-        internal PortalDelegationSettingsProperties Properties { get; set; }
-
-        /// <summary> A delegation Url. </summary>
-        [WirePath("properties.url")]
-        public Uri Uri
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Uri;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new PortalDelegationSettingsProperties();
-                }
-                Properties.Uri = value;
-            }
-        }
-
-        /// <summary> A base64-encoded validation key to validate, that a request is coming from Azure API Management. </summary>
-        [WirePath("properties.validationKey")]
-        public string ValidationKey
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ValidationKey;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new PortalDelegationSettingsProperties();
-                }
-                Properties.ValidationKey = value;
-            }
-        }
+        public PortalDelegationSettingsProperties Properties { get; set; }
 
         /// <summary> Enable or disable delegation for subscriptions. </summary>
-        [WirePath("properties.subscriptions.enabled")]
-        public bool? IsSubscriptionDelegationEnabled
+        public bool? SubscriptionsEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.IsSubscriptionDelegationEnabled;
+                return Subscriptions is null ? default : Subscriptions.Enabled;
             }
             set
             {
-                if (Properties is null)
+                if (Subscriptions is null)
                 {
-                    Properties = new PortalDelegationSettingsProperties();
+                    Subscriptions = new SubscriptionDelegationSettingProperties();
                 }
-                Properties.IsSubscriptionDelegationEnabled = value;
+                Subscriptions.Enabled = value;
             }
         }
 
         /// <summary> Enable or disable delegation for user registration. </summary>
-        [WirePath("properties.userRegistration.enabled")]
-        public bool? IsUserRegistrationDelegationEnabled
+        public bool? UserRegistrationEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.IsUserRegistrationDelegationEnabled;
+                return UserRegistration is null ? default : UserRegistration.Enabled;
             }
             set
             {
-                if (Properties is null)
+                if (UserRegistration is null)
                 {
-                    Properties = new PortalDelegationSettingsProperties();
+                    UserRegistration = new RegistrationDelegationSettingProperties();
                 }
-                Properties.IsUserRegistrationDelegationEnabled = value;
+                UserRegistration.Enabled = value;
             }
         }
     }

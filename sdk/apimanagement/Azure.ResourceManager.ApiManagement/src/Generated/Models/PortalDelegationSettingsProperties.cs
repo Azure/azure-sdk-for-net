@@ -12,7 +12,7 @@ using Azure.ResourceManager.ApiManagement;
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Delegation settings contract properties. </summary>
-    internal partial class PortalDelegationSettingsProperties
+    public partial class PortalDelegationSettingsProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -55,11 +55,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Enable or disable delegation for subscriptions. </summary>
         [WirePath("subscriptions.enabled")]
-        public bool? IsSubscriptionDelegationEnabled
+        public bool? SubscriptionsEnabled
         {
             get
             {
-                return Subscriptions is null ? default : Subscriptions.IsSubscriptionDelegationEnabled;
+                return Subscriptions is null ? default : Subscriptions.Enabled;
             }
             set
             {
@@ -67,17 +67,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     Subscriptions = new SubscriptionDelegationSettingProperties();
                 }
-                Subscriptions.IsSubscriptionDelegationEnabled = value;
+                Subscriptions.Enabled = value;
             }
         }
 
         /// <summary> Enable or disable delegation for user registration. </summary>
         [WirePath("userRegistration.enabled")]
-        public bool? IsUserRegistrationDelegationEnabled
+        public bool? UserRegistrationEnabled
         {
             get
             {
-                return UserRegistration is null ? default : UserRegistration.IsUserRegistrationDelegationEnabled;
+                return UserRegistration is null ? default : UserRegistration.Enabled;
             }
             set
             {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     UserRegistration = new RegistrationDelegationSettingProperties();
                 }
-                UserRegistration.IsUserRegistrationDelegationEnabled = value;
+                UserRegistration.Enabled = value;
             }
         }
     }

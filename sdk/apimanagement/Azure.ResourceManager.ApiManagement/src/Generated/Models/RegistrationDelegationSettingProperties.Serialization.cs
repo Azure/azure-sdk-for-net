@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 throw new FormatException($"The model {nameof(RegistrationDelegationSettingProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(IsUserRegistrationDelegationEnabled))
+            if (Optional.IsDefined(Enabled))
             {
                 writer.WritePropertyName("enabled"u8);
-                writer.WriteBooleanValue(IsUserRegistrationDelegationEnabled.Value);
+                writer.WriteBooleanValue(Enabled.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            bool? isUserRegistrationDelegationEnabled = default;
+            bool? enabled = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    isUserRegistrationDelegationEnabled = prop.Value.GetBoolean();
+                    enabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RegistrationDelegationSettingProperties(isUserRegistrationDelegationEnabled, additionalBinaryDataProperties);
+            return new RegistrationDelegationSettingProperties(enabled, additionalBinaryDataProperties);
         }
     }
 }

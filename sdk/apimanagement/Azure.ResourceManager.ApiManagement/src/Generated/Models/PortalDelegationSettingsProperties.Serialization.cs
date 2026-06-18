@@ -14,7 +14,7 @@ using Azure.ResourceManager.ApiManagement;
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Delegation settings contract properties. </summary>
-    internal partial class PortalDelegationSettingsProperties : IJsonModel<PortalDelegationSettingsProperties>
+    public partial class PortalDelegationSettingsProperties : IJsonModel<PortalDelegationSettingsProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

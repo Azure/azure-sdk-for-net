@@ -11,7 +11,7 @@ using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Provisioning state. </summary>
+    /// <summary></summary>
     public readonly partial struct AssociationEntityProvisioningState : IEquatable<AssociationEntityProvisioningState>
     {
         private readonly string _value;

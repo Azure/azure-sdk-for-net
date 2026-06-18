@@ -67,11 +67,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Enable or disable delegation for subscriptions. </summary>
         [WirePath("subscriptions.enabled")]
-        public bool? IsSubscriptionDelegationEnabled
+        public bool? IsSubscriptionsEnabled
         {
             get
             {
-                return IsSubscriptions is null ? default : IsSubscriptions.IsSubscriptionDelegationEnabled;
+                return IsSubscriptions is null ? default : IsSubscriptions.Enabled;
             }
             set
             {
@@ -79,17 +79,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     IsSubscriptions = new SubscriptionDelegationSettingProperties();
                 }
-                IsSubscriptions.IsSubscriptionDelegationEnabled = value;
+                IsSubscriptions.Enabled = value;
             }
         }
 
         /// <summary> Enable or disable delegation for user registration. </summary>
         [WirePath("userRegistration.enabled")]
-        public bool? IsUserRegistrationDelegationEnabled
+        public bool? IsUserRegistrationEnabled
         {
             get
             {
-                return IsUserRegistration is null ? default : IsUserRegistration.IsUserRegistrationDelegationEnabled;
+                return IsUserRegistration is null ? default : IsUserRegistration.Enabled;
             }
             set
             {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     IsUserRegistration = new RegistrationDelegationSettingProperties();
                 }
-                IsUserRegistration.IsUserRegistrationDelegationEnabled = value;
+                IsUserRegistration.Enabled = value;
             }
         }
     }

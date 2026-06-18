@@ -23,16 +23,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SubscriptionDelegationSettingProperties"/>. </summary>
-        /// <param name="isSubscriptionDelegationEnabled"> Enable or disable delegation for subscriptions. </param>
+        /// <param name="enabled"> Enable or disable delegation for subscriptions. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SubscriptionDelegationSettingProperties(bool? isSubscriptionDelegationEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SubscriptionDelegationSettingProperties(bool? enabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            IsSubscriptionDelegationEnabled = isSubscriptionDelegationEnabled;
+            Enabled = enabled;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Enable or disable delegation for subscriptions. </summary>
         [WirePath("enabled")]
-        public bool? IsSubscriptionDelegationEnabled { get; set; }
+        public bool? Enabled { get; set; }
     }
 }
