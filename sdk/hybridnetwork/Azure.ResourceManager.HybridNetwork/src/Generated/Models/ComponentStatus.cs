@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.HybridNetwork;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     public readonly partial struct ComponentStatus : IEquatable<ComponentStatus>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ComponentStatus"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ComponentStatus(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string UnknownValue = "Unknown";
         private const string DeployedValue = "Deployed";
         private const string UninstalledValue = "Uninstalled";
@@ -37,51 +30,88 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         private const string RollingbackValue = "Rollingback";
         private const string UpgradingValue = "Upgrading";
 
-        /// <summary> Unknown. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComponentStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ComponentStatus(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Unknown. </summary>
         public static ComponentStatus Unknown { get; } = new ComponentStatus(UnknownValue);
-        /// <summary> Deployed. </summary>
+
+        /// <summary> Gets the Deployed. </summary>
         public static ComponentStatus Deployed { get; } = new ComponentStatus(DeployedValue);
-        /// <summary> Uninstalled. </summary>
+
+        /// <summary> Gets the Uninstalled. </summary>
         public static ComponentStatus Uninstalled { get; } = new ComponentStatus(UninstalledValue);
-        /// <summary> Superseded. </summary>
+
+        /// <summary> Gets the Superseded. </summary>
         public static ComponentStatus Superseded { get; } = new ComponentStatus(SupersededValue);
-        /// <summary> Failed. </summary>
+
+        /// <summary> Gets the Failed. </summary>
         public static ComponentStatus Failed { get; } = new ComponentStatus(FailedValue);
-        /// <summary> Uninstalling. </summary>
+
+        /// <summary> Gets the Uninstalling. </summary>
         public static ComponentStatus Uninstalling { get; } = new ComponentStatus(UninstallingValue);
-        /// <summary> Pending-Install. </summary>
+
+        /// <summary> Gets the PendingInstall. </summary>
         public static ComponentStatus PendingInstall { get; } = new ComponentStatus(PendingInstallValue);
-        /// <summary> Pending-Upgrade. </summary>
+
+        /// <summary> Gets the PendingUpgrade. </summary>
         public static ComponentStatus PendingUpgrade { get; } = new ComponentStatus(PendingUpgradeValue);
-        /// <summary> Pending-Rollback. </summary>
+
+        /// <summary> Gets the PendingRollback. </summary>
         public static ComponentStatus PendingRollback { get; } = new ComponentStatus(PendingRollbackValue);
-        /// <summary> Downloading. </summary>
+
+        /// <summary> Gets the Downloading. </summary>
         public static ComponentStatus Downloading { get; } = new ComponentStatus(DownloadingValue);
-        /// <summary> Installing. </summary>
+
+        /// <summary> Gets the Installing. </summary>
         public static ComponentStatus Installing { get; } = new ComponentStatus(InstallingValue);
-        /// <summary> Reinstalling. </summary>
+
+        /// <summary> Gets the Reinstalling. </summary>
         public static ComponentStatus Reinstalling { get; } = new ComponentStatus(ReinstallingValue);
-        /// <summary> Rollingback. </summary>
+
+        /// <summary> Gets the Rollingback. </summary>
         public static ComponentStatus Rollingback { get; } = new ComponentStatus(RollingbackValue);
-        /// <summary> Upgrading. </summary>
+
+        /// <summary> Gets the Upgrading. </summary>
         public static ComponentStatus Upgrading { get; } = new ComponentStatus(UpgradingValue);
+
         /// <summary> Determines if two <see cref="ComponentStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ComponentStatus left, ComponentStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ComponentStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ComponentStatus left, ComponentStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ComponentStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ComponentStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ComponentStatus(string value) => new ComponentStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ComponentStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ComponentStatus?(string value) => value == null ? null : new ComponentStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ComponentStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ComponentStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
