@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Search.Documents.Models
 {
     /// <summary> "Contains debugging information specific to vector and hybrid search."). </summary>
-    public partial class VectorsDebugInfo
+    internal partial class VectorsDebugInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

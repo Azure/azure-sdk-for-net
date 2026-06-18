@@ -6,6 +6,8 @@
 
 ### Breaking Changes
 
+- Made `DocumentDebugInfo` and `VectorsDebugInfo` types internal. These types were empty models in the 2026-04-01 API and should not have been part of the public API surface.
+
 ### Bugs Fixed
 
 - Fixed ambiguous overloads in `SearchIndexClient.DeleteIndex` and `SearchIndexClient.DeleteSynonymMap` by making `CancellationToken` required in name-only convenience overloads.

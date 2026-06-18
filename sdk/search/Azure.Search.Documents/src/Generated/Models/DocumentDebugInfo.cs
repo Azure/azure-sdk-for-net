@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Search.Documents.Models
 {
     /// <summary> Contains debugging information that can be used to further explore your search results. </summary>
-    public partial class DocumentDebugInfo
+    internal partial class DocumentDebugInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
