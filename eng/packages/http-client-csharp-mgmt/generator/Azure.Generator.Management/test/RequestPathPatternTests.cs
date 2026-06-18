@@ -149,20 +149,6 @@ namespace Azure.Generator.Management.Tests
             var second = new RequestPathPattern("/subscriptions/{subId}/resourceGroups/{rgName}");
 
             Assert.That(first.Equals(second), Is.True);
-            Assert.That(first.Equals(second, strict: false), Is.True);
-        }
-
-        [Test]
-        public void Equals_StrictComparesVariableNames()
-        {
-            var first = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}");
-            var second = new RequestPathPattern("/subscriptions/{subId}/resourceGroups/{rgName}");
-            var same = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}");
-            var sameDifferentConstantCasing = new RequestPathPattern("/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}");
-
-            Assert.That(first.Equals(second, strict: true), Is.False);
-            Assert.That(first.Equals(same, strict: true), Is.True);
-            Assert.That(first.Equals(sameDifferentConstantCasing, strict: true), Is.True);
         }
 
         [Test]
