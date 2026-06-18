@@ -25,42 +25,23 @@ dotnet add package Azure.AI.Language.Documents
 
 ### Authenticate the client
 
-To interact with the service, create an instance of [`DocumentsServiceClient`][languagedocuments_client_class]. You need a resource **endpoint** and credential to instantiate the client. The client supports both API key authentication and Microsoft Entra ID authentication.
+To interact with the service, create an instance of [`DocumentsServiceClient`][languagedocuments_client_class]. You need a resource **endpoint** and credential to instantiate the client. This client library uses Microsoft Entra ID authentication.
 
 For more information about authenticating Cognitive Services resources, see [Authenticate requests to Azure Cognitive Services][cognitive_auth].
 
-#### Get an API key
+#### Create a `DocumentsServiceClient` using Microsoft Entra ID
 
-You can get the **endpoint** and an **API key** from the Azure AI Language resource in the [Azure portal][azure_portal].
-
-Alternatively, use the [Azure CLI][azure_cli]:
-
-```powershell
-az cognitiveservices account keys list --resource-group <resource-group-name> --name <resource-name>
-```
-
-#### Create a `DocumentsServiceClient` with an API key
+Before you can use `DefaultAzureCredential`, install the [Azure.Identity package][azure_identity_install].
 
 ```C# Snippet:DocumentsServiceClient_Namespaces
 using Azure.AI.Language.Documents;
 ```
 
-```C# Snippet:DocumentsServiceClient_Create
-Uri endpoint = new Uri("{endpoint}");
-DefaultAzureCredential credential = new DefaultAzureCredential();
-
-DocumentsServiceClient client = new DocumentsServiceClient(endpoint, credential);
-```
-
-#### Create a client using Microsoft Entra ID authentication
-
-You can also create `DocumentsServiceClient` with Microsoft Entra ID. Before you can use `DefaultAzureCredential`, install the [Azure.Identity package][azure_identity_install].
-
 ```C# Snippet:DocumentsService_Identity_Namespace
 using Azure.Identity;
 ```
 
-```C# Snippet:DocumentsServiceClient_CreateWithDefaultAzureCredential
+```C# Snippet:DocumentsServiceClient_Create
 Uri endpoint = new Uri("{endpoint}");
 DefaultAzureCredential credential = new DefaultAzureCredential();
 
@@ -74,6 +55,15 @@ Uri endpoint = new Uri("{endpoint}");
 DefaultAzureCredential credential = new DefaultAzureCredential();
 DocumentsServiceClientOptions options = new DocumentsServiceClientOptions(DocumentsServiceClientOptions.ServiceVersion.V2026_05_15_Preview);
 DocumentsServiceClient client = new DocumentsServiceClient(endpoint, credential, options);
+```
+
+#### Create a client using the default API version
+
+```C# Snippet:DocumentsServiceClient_CreateWithDefaultAzureCredential
+Uri endpoint = new Uri("{endpoint}");
+DefaultAzureCredential credential = new DefaultAzureCredential();
+
+DocumentsServiceClient client = new DocumentsServiceClient(endpoint, credential);
 ```
 
 Regional endpoints do not support Microsoft Entra ID authentication. To use Microsoft Entra ID, create a [custom domain][custom_domain] for your resource.
@@ -130,7 +120,7 @@ The following examples show common scenarios using the `client` created above.
 
 ### Submit a document analysis job
 
-## Synchronous
+#### Synchronous
 
 ```C# Snippet:DocumentsService_SubmitJob
 string sourceLocation = "https://<storage-account>.blob.core.windows.net/input/document.txt?<sas-token>";
@@ -171,7 +161,7 @@ Operation operation = client.AnalyzeDocumentsSubmitOperation(
     request);
 ```
 
-## Asynchronous
+#### Asynchronous
 
 ```C# Snippet:DocumentsService_SubmitJobAsync
 Operation operation = await client.AnalyzeDocumentsSubmitOperationAsync(
@@ -184,7 +174,7 @@ Operation operation = await client.AnalyzeDocumentsSubmitOperationAsync(
 
 ### Get a document analysis job state
 
-## Synchronous
+#### Synchronous
 
 ```C# Snippet:DocumentsService_GetJobState
 string sourceLocation = "https://<storage-account>.blob.core.windows.net/input/document.txt?<sas-token>";
@@ -233,7 +223,7 @@ Guid jobId = Guid.Parse(new Uri(operationLocation).AbsolutePath.TrimEnd('/').Spl
 Response<AnalyzeDocumentsJobState> response = client.GetAnalyzeDocumentsJobState(jobId);
 ```
 
-## Asynchronous
+#### Asynchronous
 
 ```C# Snippet:DocumentsService_GetJobStateAsync
 Response<AnalyzeDocumentsJobState> response = await client.GetAnalyzeDocumentsJobStateAsync(jobId);
@@ -241,7 +231,7 @@ Response<AnalyzeDocumentsJobState> response = await client.GetAnalyzeDocumentsJo
 
 ### Cancel a running job
 
-## Synchronous
+#### Synchronous
 
 ```C# Snippet:DocumentsService_CancelJob
 string sourceLocation = "https://<storage-account>.blob.core.windows.net/input/document.txt?<sas-token>";
@@ -292,7 +282,7 @@ Operation cancelOperation = client.AnalyzeDocumentsCancelOperation(
     jobId);
 ```
 
-## Asynchronous
+#### Asynchronous
 
 ```C# Snippet:DocumentsService_CancelJobAsync
 Operation cancelOperation = await client.AnalyzeDocumentsCancelOperationAsync(
