@@ -12,22 +12,23 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary>
     /// Azure virtual network function application definition.
-    /// Please note <see cref="AzureCoreNetworkFunctionApplication"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="AzureCoreNetworkFunctionArmTemplateApplication"/> and <see cref="AzureCoreNetworkFunctionVhdApplication"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureCoreNetworkFunctionVhdApplication"/> and <see cref="AzureCoreNetworkFunctionArmTemplateApplication"/>.
     /// </summary>
     public abstract partial class AzureCoreNetworkFunctionApplication : NetworkFunctionApplication
     {
         /// <summary> Initializes a new instance of <see cref="AzureCoreNetworkFunctionApplication"/>. </summary>
-        protected AzureCoreNetworkFunctionApplication()
+        /// <param name="artifactType"> The artifact type. </param>
+        private protected AzureCoreNetworkFunctionApplication(AzureCoreArtifactType artifactType)
         {
+            ArtifactType = artifactType;
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureCoreNetworkFunctionApplication"/>. </summary>
         /// <param name="name"> The name of the network function application. </param>
         /// <param name="dependsOnProfile"> Depends on profile definition. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="artifactType"> The artifact type. </param>
-        internal AzureCoreNetworkFunctionApplication(string name, DependsOnProfile dependsOnProfile, IDictionary<string, BinaryData> serializedAdditionalRawData, AzureCoreArtifactType artifactType) : base(name, dependsOnProfile, serializedAdditionalRawData)
+        internal AzureCoreNetworkFunctionApplication(string name, DependsOnProfile dependsOnProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureCoreArtifactType artifactType) : base(name, dependsOnProfile, additionalBinaryDataProperties)
         {
             ArtifactType = artifactType;
         }
