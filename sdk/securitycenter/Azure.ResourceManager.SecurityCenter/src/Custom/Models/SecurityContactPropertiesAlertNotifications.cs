@@ -3,13 +3,15 @@
 
 #nullable disable
 
+using System.ComponentModel;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     // The current TypeSpec renamed, nested, or removed these legacy model members, so generation omits the GA constructor/property shape; reintroduce the source-compatible member in this partial.
     /// <summary>
     /// Provides a compatibility shim for the SecurityContactPropertiesAlertNotifications class.
     /// </summary>
-    [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class SecurityContactPropertiesAlertNotifications
     {
         /// <summary>

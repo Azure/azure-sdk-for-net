@@ -3,13 +3,15 @@
 
 #nullable disable
 
+using System.ComponentModel;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     // The latest TypeSpec renamed or removed this extensible-enum type from the generated surface; keep the previous GA enum wrapper so existing signatures and constants remain source-compatible.
     /// <summary>
     /// Provides a compatibility shim for the SecurityFamilyProvisioningState structure.
     /// </summary>
-[System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+[EditorBrowsable(EditorBrowsableState.Never)]
     public readonly partial struct SecurityFamilyProvisioningState : System.IEquatable<Azure.ResourceManager.SecurityCenter.Models.SecurityFamilyProvisioningState>
     {
         /// <summary>
