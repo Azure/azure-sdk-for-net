@@ -80,19 +80,5 @@ namespace Azure.ResourceManager.Sql.Models
                 return Properties is null ? default : Properties.EndTime;
             }
         }
-
-        /// <summary> List of intervals with appropriate metric data. </summary>
-        [WirePath("properties.intervals")]
-        public IReadOnlyList<QueryMetricInterval> Intervals
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new QueryStatisticsProperties();
-                }
-                return Properties.Intervals;
-            }
-        }
     }
 }

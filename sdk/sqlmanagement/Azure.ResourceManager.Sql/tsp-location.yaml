@@ -1,4 +1,4 @@
 directory: specification/sql/resource-manager/Microsoft.Sql/SQL
-commit: a47315fbee2bd1d4df12623b49409cc2976da71a
+commit: c1eb0d7da00b91538027b832c26b711f93318d5f
 repo: Azure/azure-rest-api-specs
 emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"

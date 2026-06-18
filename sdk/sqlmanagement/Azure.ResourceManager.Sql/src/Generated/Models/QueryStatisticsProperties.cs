@@ -55,5 +55,9 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> The end time for the metric (ISO-8601 format). </summary>
         [WirePath("endTime")]
         public string EndTime { get; }
+
+        /// <summary> List of intervals with appropriate metric data. </summary>
+        [WirePath("intervals")]
+        public IReadOnlyList<QueryMetricInterval> Intervals { get; } = new ChangeTrackingList<QueryMetricInterval>();
     }
 }
