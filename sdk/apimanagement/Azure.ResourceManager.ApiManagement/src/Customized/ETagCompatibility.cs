@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.ApiManagement
     // the emitter rejects all usable references (`If-Match`, ifMatch, IfMatch).
     // These overloads preserve only signatures currently reported by ApiCompat and
     // forward to the generated string-based overloads.
+    //
+    // Tracking issue: https://github.com/Azure/azure-sdk-for-net/issues/60066
+    // This entire file can be removed once the issue is resolved and @@alternateType
+    // can target inline @header("If-Match") parameters.
     public partial class ApiDiagnosticResource
     {
         /// <summary> Deletes the resource. </summary>
