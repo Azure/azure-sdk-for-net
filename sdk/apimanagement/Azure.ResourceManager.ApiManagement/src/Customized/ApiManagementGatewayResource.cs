@@ -39,5 +39,35 @@ namespace Azure.ResourceManager.ApiManagement
 
         private static IReadOnlyDictionary<string, BinaryData> ToReadOnlyDictionary(IDictionary<string, BinaryData> value)
             => value as IReadOnlyDictionary<string, BinaryData> ?? new Dictionary<string, BinaryData>(value);
+
+        // Old SDK returned contextual wrapper types (GatewayApiData) for association operations
+        // where the wire shape is identical to ApiData. Not spec-fixable: TypeSpec has no concept
+        // of "same model, different name per operation context."
+
+        /// <summary> Gets the Gateway APIs By Service. </summary>
+        public virtual AsyncPageable<GatewayApiData> GetGatewayApisByServiceAsync(string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+            => new AsyncPageableWrapper<ApiData, GatewayApiData>(
+                GetByServiceAsync(filter, top, skip, cancellationToken),
+                data => data is null ? null : new GatewayApiData(data));
+
+        /// <summary> Gets the Gateway APIs By Service. </summary>
+        public virtual Pageable<GatewayApiData> GetGatewayApisByService(string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+            => new PageableWrapper<ApiData, GatewayApiData>(
+                GetByService(filter, top, skip, cancellationToken),
+                data => data is null ? null : new GatewayApiData(data));
+
+        /// <summary> Creates or updates the Gateway API. </summary>
+        public virtual async Task<Response<GatewayApiData>> CreateOrUpdateGatewayApiAsync(string apiId, AssociationContract associationContract, CancellationToken cancellationToken = default)
+        {
+            Response<ApiData> response = await CreateOrUpdateAsync(apiId, associationContract, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(response.Value is null ? null : new GatewayApiData(response.Value), response.GetRawResponse());
+        }
+
+        /// <summary> Creates or updates the Gateway API. </summary>
+        public virtual Response<GatewayApiData> CreateOrUpdateGatewayApi(string apiId, AssociationContract associationContract, CancellationToken cancellationToken = default)
+        {
+            Response<ApiData> response = CreateOrUpdate(apiId, associationContract, cancellationToken);
+            return Response.FromValue(response.Value is null ? null : new GatewayApiData(response.Value), response.GetRawResponse());
+        }
     }
 }
