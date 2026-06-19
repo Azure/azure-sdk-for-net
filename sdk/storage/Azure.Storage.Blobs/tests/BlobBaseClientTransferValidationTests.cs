@@ -28,7 +28,7 @@ namespace Azure.Storage.Blobs.Tests
             bool async,
             BlobClientOptions.ServiceVersion serviceVersion,
             RecordedTestMode? mode = null)
-            : base(async, _blobResourcePrefix, RecordedTestMode.Playback)
+            : base(async, _blobResourcePrefix, mode)
         {
             ClientBuilder = ClientBuilderExtensions.GetNewBlobsClientBuilder(Tenants, serviceVersion);
         }
