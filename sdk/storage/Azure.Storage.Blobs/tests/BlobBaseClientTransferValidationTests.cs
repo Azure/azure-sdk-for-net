@@ -28,7 +28,7 @@ namespace Azure.Storage.Blobs.Tests
             bool async,
             BlobClientOptions.ServiceVersion serviceVersion,
             RecordedTestMode? mode = null)
-            : base(async, _blobResourcePrefix, mode)
+            : base(async, _blobResourcePrefix, RecordedTestMode.Playback)
         {
             ClientBuilder = ClientBuilderExtensions.GetNewBlobsClientBuilder(Tenants, serviceVersion);
         }
@@ -200,6 +200,8 @@ namespace Azure.Storage.Blobs.Tests
             var client = await GetResourceClientAsync(disposingContainer.Container, resourceLength: 0, createResource: false, options: ClientBuilder.GetOptions());
 
             await ParallelUploadAsync(client, new MemoryStream(), validationOptions, default);
+
+            Assert.That((await client.ExistsAsync()).Value);
         }
         #endregion
     }

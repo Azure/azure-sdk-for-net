@@ -888,7 +888,7 @@ namespace Azure.Storage.Blobs.Specialized
 
                     ContentHasher.GetHashResult hashResult = null;
                     // length of the raw stream
-                    long contentLength = content.Length - content.Position;
+                    long contentLength = (content?.Length - content?.Position) ?? 0;
                     // length of content within a structured message wrapper
                     long? structuredContentLength = default;
                     string structuredBodyType = null;
