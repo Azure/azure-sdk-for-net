@@ -10,13 +10,17 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    // #1 ApiGatewayResource.Delete: The generated delete is renamed to DeleteRaw
-    // (@@clientName in client.tsp) because it returns a different LRO shape. This custom
-    // Delete provides the old SDK signature (no If-Match param) with manual LRO construction.
-    // Not spec-fixable: the generated DeleteRaw has no public method on the resource class.
+    // The generated Delete returns ArmOperation<ApiGatewayResource> (resource body in 202 response),
+    // but the old SDK returned ArmOperation (non-generic). This is a binary-breaking return type change.
+    // We suppress the generated methods and provide the old non-generic signature.
+    // Not spec-fixable: the spec correctly models the 202 response body; the mismatch is a
+    // C# SDK design choice from the previous release.
+    [CodeGenSuppress("DeleteAsync", typeof(WaitUntil), typeof(CancellationToken))]
+    [CodeGenSuppress("Delete", typeof(WaitUntil), typeof(CancellationToken))]
     public partial class ApiGatewayResource
     {
         /// <summary> Deletes the resource. </summary>
@@ -30,7 +34,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiGatewayRestClient.CreateDeleteRawRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _apiGatewayRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -59,7 +63,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiGatewayRestClient.CreateDeleteRawRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _apiGatewayRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
