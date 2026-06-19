@@ -3,38 +3,19 @@
 
 #nullable disable
 
-#pragma warning disable SA1402 // File may only contain a single type
-#pragma warning disable SA1649 // File name should match first type name
-
 using System.Collections.Generic;
+using System.ComponentModel;
 using Azure.ResourceManager.ApiManagement.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
     public partial class ApiManagementBackendData
     {
-        /// <summary> Backend pool services. </summary>
-        [WirePath("properties.pool.services")]
-        public IList<BackendPoolItem> PoolServices
-        {
-            get
-            {
-                if (Pool is null)
-                {
-                    Pool = new BackendBaseParametersPool();
-                }
+        // Deep path shortcut (properties.pool.services) with lazy init.
+        // Not spec-fixable: @@flattenProperty only handles one level.
 
-                return Pool.Services;
-            }
-        }
-    }
-}
-
-namespace Azure.ResourceManager.ApiManagement.Models
-{
-    public partial class ApiManagementBackendPatch
-    {
         /// <summary> Backend pool services. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("properties.pool.services")]
         public IList<BackendPoolItem> PoolServices
         {
