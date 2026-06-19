@@ -15,11 +15,13 @@ public class LoadOptionsTests
         "OPTIMIZATION_CONFIG",
         "OPTIMIZATION_CANDIDATE_ID",
         "OPTIMIZATION_RESOLVE_ENDPOINT",
+        "OPTIMIZATION_JOB_ID",
         "OPTIMIZATION_LOCAL_DIR",
         // Suffixed per-agent variants used by these tests
         "OPTIMIZATION_CONFIG__TRIAGE_AGENT",
         "OPTIMIZATION_CANDIDATE_ID__TRIAGE_AGENT",
         "OPTIMIZATION_RESOLVE_ENDPOINT__TRIAGE_AGENT",
+        "OPTIMIZATION_JOB_ID__TRIAGE_AGENT",
         "OPTIMIZATION_LOCAL_DIR__TRIAGE_AGENT",
         "OPTIMIZATION_CONFIG__BOOKING_AGENT",
         "OPTIMIZATION_CANDIDATE_ID__BOOKING_AGENT",
@@ -235,11 +237,12 @@ public class LoadOptionsTests
     [Test]
     public async Task ResolverFailure_NonStrict_FallsThroughToNull()
     {
-        // Set both env vars so Priority 1 (resolver) is selected, then point
+        // Set all env vars so Priority 1 (resolver) is selected, then point
         // to a definitely-unreachable endpoint. With non-strict mode the loader
         // should fall through; with no other source we land on null.
         Environment.SetEnvironmentVariable("OPTIMIZATION_CANDIDATE_ID", "cand_001");
         Environment.SetEnvironmentVariable("OPTIMIZATION_RESOLVE_ENDPOINT", "http://127.0.0.1:1/never-listens");
+        Environment.SetEnvironmentVariable("OPTIMIZATION_JOB_ID", "opt_test_job_123");
 
         var options = await OptimizationOptionsLoader.LoadAsync(new LoadOptions
         {
@@ -254,6 +257,7 @@ public class LoadOptionsTests
     {
         Environment.SetEnvironmentVariable("OPTIMIZATION_CANDIDATE_ID", "cand_001");
         Environment.SetEnvironmentVariable("OPTIMIZATION_RESOLVE_ENDPOINT", "http://127.0.0.1:1/never-listens");
+        Environment.SetEnvironmentVariable("OPTIMIZATION_JOB_ID", "opt_test_job_123");
 
         Assert.ThrowsAsync<InvalidOperationException>(
             async () => await OptimizationOptionsLoader.LoadAsync(new LoadOptions

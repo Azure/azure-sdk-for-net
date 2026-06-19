@@ -64,15 +64,16 @@ public static class OptimizationOptionsLoader
 
         string candidateId = ResolveEnvVar(OptimizationOptions.EnvironmentVariableCandidateId, canonicalKey, allowUnsuffixedFallback);
         string endpoint = ResolveEnvVar(OptimizationOptions.EnvironmentVariableResolveEndpoint, canonicalKey, allowUnsuffixedFallback)?.TrimEnd('/');
+        string jobId = ResolveEnvVar(OptimizationOptions.EnvironmentVariableJobId, canonicalKey, allowUnsuffixedFallback);
 
         // ── Priority 1: Resolver API ────────────────────────────────
-        if (!string.IsNullOrEmpty(candidateId) && !string.IsNullOrEmpty(endpoint))
+        if (!string.IsNullOrEmpty(candidateId) && !string.IsNullOrEmpty(endpoint) && !string.IsNullOrEmpty(jobId))
         {
             using var linked = CreateResolverCancellation(cancellationToken, options.ResolverTimeout ?? s_defaultResolverTimeout);
             try
             {
                 var resolved = await CandidateResolver.ResolveAsync(
-                    candidateId, endpoint, options.TokenProvider, linked.Token).ConfigureAwait(false);
+                    jobId, candidateId, endpoint, options.TokenProvider, linked.Token).ConfigureAwait(false);
 
                 if (resolved.HasValue)
                 {

@@ -19,24 +19,30 @@ internal static class CandidateResolver
     /// Resolves a candidate's full config from the optimization service.
     /// </summary>
     public static async Task<JsonElement?> ResolveAsync(
+        string jobId,
         string candidateId,
         string endpoint,
         AuthenticationTokenProvider tokenProvider,
         CancellationToken cancellationToken = default)
     {
+        if (string.IsNullOrEmpty(jobId))
+        {
+            throw new ArgumentException("Job ID is required for the resolver API. Set the OPTIMIZATION_JOB_ID environment variable.", nameof(jobId));
+        }
         CandidateIdValidator.ThrowIfInvalid(candidateId, nameof(candidateId));
 
         var pipeline = BuildPipeline(tokenProvider);
-        return await FetchCandidateConfigAsync(pipeline, endpoint, candidateId, cancellationToken).ConfigureAwait(false);
+        return await FetchCandidateConfigAsync(pipeline, endpoint, jobId, candidateId, cancellationToken).ConfigureAwait(false);
     }
 
     private static async Task<JsonElement> FetchCandidateConfigAsync(
         ClientPipeline pipeline,
         string endpoint,
+        string jobId,
         string candidateId,
         CancellationToken cancellationToken)
     {
-        using var message = pipeline.CreateMessage(BuildCandidateConfigUri(endpoint, candidateId), "GET");
+        using var message = pipeline.CreateMessage(BuildCandidateConfigUri(endpoint, jobId, candidateId), "GET");
         message.Apply(CreateRequestOptions(cancellationToken));
 
         await pipeline.SendAsync(message).ConfigureAwait(false);
@@ -57,7 +63,7 @@ internal static class CandidateResolver
             CancellationToken = cancellationToken,
         };
 
-    private static Uri BuildCandidateConfigUri(string endpoint, string candidateId)
+    private static Uri BuildCandidateConfigUri(string endpoint, string jobId, string candidateId)
     {
         var builder = new UriBuilder(endpoint);
         string path = builder.Path ?? string.Empty;
@@ -67,7 +73,7 @@ internal static class CandidateResolver
             path += "/";
         }
 
-        builder.Path = $"{path}candidates/{Uri.EscapeDataString(candidateId)}/config";
+        builder.Path = $"{path}agent_optimization_jobs/{Uri.EscapeDataString(jobId)}/candidates/{Uri.EscapeDataString(candidateId)}/config";
         builder.Query = $"api-version={Uri.EscapeDataString(ApiVersion)}";
         return builder.Uri;
     }
