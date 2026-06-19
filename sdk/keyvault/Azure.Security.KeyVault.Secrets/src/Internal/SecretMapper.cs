@@ -88,8 +88,12 @@ namespace Azure.Security.KeyVault.Secrets
         public static SecretSetParameters ToSetParameters(KeyVaultSecret secret)
         {
             if (secret is null) throw new ArgumentNullException(nameof(secret));
-            if (secret.Value is null) throw new ArgumentException("Secret.Value must not be null.", nameof(secret));
 
+            // Intentionally do NOT validate secret.Value client-side. The legacy
+            // SecretClient passed the value straight through; if it was null the
+            // server responded with RequestFailedException ("BadParameter"). Adding
+            // a client-side ArgumentException here would change the observable
+            // exception type for callers who relied on the server-side error path.
             var p = secret.Properties;
             var setParams = new SecretSetParameters(secret.Value)
             {

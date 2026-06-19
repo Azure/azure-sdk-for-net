@@ -343,6 +343,13 @@ namespace Azure.Security.KeyVault.Secrets.Tests
                 System.Diagnostics.Tracing.EventLevel.Verbose);
 
             var transport = new MockTransport(new MockResponse(200).WithJson(@"{""value"":""v"",""id"":""https://example.vault.azure.net/secrets/x/1""}"));
+            // A probe policy stamps the headers + query that our allow-lists permit,
+            // so the logger has something to actually log under those names.
+            var stamp = new HttpPipelineSynchronousPolicyForTest(message =>
+            {
+                message.Request.Headers.Add("x-custom-diag", "diag-marker-1234");
+                message.Request.Uri.AppendQuery("audit", "audit-marker-5678");
+            });
             var options = new SecretClientOptions
             {
                 Transport = transport,
@@ -354,30 +361,8 @@ namespace Azure.Security.KeyVault.Secrets.Tests
                     ApplicationId         = "kv-pt-test",
                 },
             };
-
-            SecretClient client = InstrumentClient(new SecretClient(new Uri("https://example.vault.azure.net"), new MockCredential(), options));
-
-            // Inject a probe policy that stamps the headers + query our allow-lists
-            // permit, so the logger has something to actually log under those names.
-            var stamp = new HttpPipelineSynchronousPolicyForTest(message =>
-            {
-                message.Request.Headers.Add("x-custom-diag", "diag-marker-1234");
-                message.Request.Uri.AppendQuery("audit", "audit-marker-5678");
-            });
-            // can't add a policy after construction; rebuild client with the stamp on the pipeline.
-            options = new SecretClientOptions
-            {
-                Transport = transport,
-                Diagnostics =
-                {
-                    IsLoggingEnabled      = true,
-                    LoggedHeaderNames     = { "x-custom-diag" },
-                    LoggedQueryParameters = { "audit" },
-                    ApplicationId         = "kv-pt-test",
-                },
-            };
             options.AddPolicy(stamp, HttpPipelinePosition.PerCall);
-            client = InstrumentClient(new SecretClient(new Uri("https://example.vault.azure.net"), new MockCredential(), options));
+            SecretClient client = InstrumentClient(new SecretClient(new Uri("https://example.vault.azure.net"), new MockCredential(), options));
 
             await client.GetSecretAsync("x");
             // Allow EventListener to flush.

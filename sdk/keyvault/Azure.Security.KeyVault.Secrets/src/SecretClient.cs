@@ -166,8 +166,9 @@ namespace Azure.Security.KeyVault.Secrets
             // Match the legacy behavior: a SecretProperties without a Version (e.g. one
             // constructed via the (string name) ctor instead of received from the server)
             // surfaces the same ArgumentNullException the hand-written pipeline used to
-            // produce when AppendPath(null) ran.
-            Argument.AssertNotNull(properties.Version, $"{nameof(properties)}.{nameof(properties.Version)}");
+            // produce when AppendPath(null) ran. Legacy ParamName was "Version", not
+            // "properties.Version" — preserve the exact contract.
+            Argument.AssertNotNull(properties.Version, nameof(properties.Version));
 
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(SecretClient)}.{nameof(UpdateSecretProperties)}");
             scope.AddAttribute(OTelSecretNameKey, properties.Name);
@@ -187,7 +188,7 @@ namespace Azure.Security.KeyVault.Secrets
         public virtual Response<SecretProperties> UpdateSecretProperties(SecretProperties properties, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(properties, nameof(properties));
-            Argument.AssertNotNull(properties.Version, $"{nameof(properties)}.{nameof(properties.Version)}");
+            Argument.AssertNotNull(properties.Version, nameof(properties.Version));
 
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(SecretClient)}.{nameof(UpdateSecretProperties)}");
             scope.AddAttribute(OTelSecretNameKey, properties.Name);
@@ -467,6 +468,13 @@ namespace Azure.Security.KeyVault.Secrets
             return SecretMapper.ToKeyVaultSecret(bundle).Properties;
         }
 
+        // Forwarders to the generated client; ForwardsClientCalls signals to the
+        // diagnostic-scope validator that the inner client emits the canonical
+        // span name (KeyVaultSecretsClient.<op>). We intentionally do NOT wrap
+        // these in an outer SecretClient.<op> scope: that would either nest
+        // span names (confusing) or leak scopes when callers partially enumerate
+        // an AsyncPageable. Matches the convention used by other re-wired
+        // Azure SDK clients.
         private static Pageable<TOut> MapPageable<TIn, TOut>(Pageable<TIn> source, Func<TIn, TOut> map)
             => new MappedPageable<TIn, TOut>(source, map);
 

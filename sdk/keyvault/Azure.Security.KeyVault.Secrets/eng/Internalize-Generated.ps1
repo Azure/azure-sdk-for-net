@@ -87,6 +87,13 @@ if ($kvClient) {
     # Emitter swaps the positional argument order at the UpdateSecret call sites
     # vs. its own CreateUpdateSecretRequest(string, string, RequestContent, ...)
     # declaration. Reorder back to match the request builder.
+    #
+    # SAFETY NET: the regex is intentionally narrow (matches the exact emitted
+    # call shape). If the emitter renames a positional parameter or reflows the
+    # call, this regex will silently no-op and the arg-order bug could resurface.
+    # The UpdateSecret recorded playback test (SecretClientLiveTests.UpdateSecret
+    # / UpdateEnabled / UpdateTags) is the actual safety net: a regression would
+    # fail those tests because the wrong arg order produces a malformed PATCH URL.
     $text = $text -replace 'CreateUpdateSecretRequest\(secretName,\s*content,\s*secretVersion,\s*context\)',
                             'CreateUpdateSecretRequest(secretName, secretVersion, content, context)'
 
