@@ -86,8 +86,18 @@ azd ai agent optimize apply --candidate cand_<id>
 ./scripts/deploy-foundry-agent.ps1   # rebuild + push the image with the new candidate baked in
 ```
 
-Then set `OPTIMIZATION_CANDIDATE_ID=cand_<id>` on the deployed agent's
-environment to start serving the optimized instructions.
+Then set these env vars on the deployed agent to start serving the optimized
+config via the resolver API (Priority 1):
+
+```
+OPTIMIZATION_JOB_ID=<optimization-job-id>
+OPTIMIZATION_CANDIDATE_ID=cand_<id>
+OPTIMIZATION_RESOLVE_ENDPOINT=<foundry-project-endpoint>
+```
+
+Alternatively, if you used `azd ai agent optimize apply --candidate`, the config
+is baked into `.agent_configs/cand_<id>/` and only `OPTIMIZATION_CANDIDATE_ID`
+needs to be set (the loader uses the local directory, Priority 3).
 
 > ⚠️ The `azd ai agent optimize` CLI uses the `azure.yaml services.<name>` key
 > to find the baseline config dir on disk. **The service key MUST equal

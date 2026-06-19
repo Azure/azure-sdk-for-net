@@ -10,11 +10,17 @@ environment_variables:
       value: ${AZURE_AI_OPENAI_ENDPOINT}
     - name: OPTIMIZATION_LOCAL_DIR
       value: .agent_configs
-    # OPTIMIZATION_CANDIDATE_ID is intentionally not set here. After running
-    # `azd ai agent optimize` and `azd ai agent optimize apply --candidate <id>`,
-    # set it on the deployed agent's environment to flip the agent to the
-    # applied candidate, e.g.:
+    # After running `azd ai agent optimize`, set these on the deployed agent's
+    # environment to enable the runtime resolver (Priority 1 in the loader):
     #
+    #   - name: OPTIMIZATION_JOB_ID
+    #     value: <your-optimization-job-id>
     #   - name: OPTIMIZATION_CANDIDATE_ID
     #     value: cand_<your-candidate-id>
+    #   - name: OPTIMIZATION_RESOLVE_ENDPOINT
+    #     value: <foundry-project-endpoint>
+    #
+    # Alternatively, `azd ai agent optimize apply --candidate <id>` writes the
+    # config locally and sets OPTIMIZATION_CANDIDATE_ID — the loader then uses
+    # the local directory path (Priority 3) instead of the remote API.
 
