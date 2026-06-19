@@ -632,7 +632,7 @@ public class AgentsTestBase : ProjectsClientTestBase
         if (Mode == RecordedTestMode.Playback)
             return;
         Uri connectionString = new(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT);
-        AIProjectClient projectClient = new(connectionString, TestEnvironment.Credential);
+        AIProjectClient projectClient = new(connectionString, GetTestTokenProvider());
 
         // Remove conversations.
         if (_conversations is not null)
