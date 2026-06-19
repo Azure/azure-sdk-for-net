@@ -13,14 +13,9 @@ namespace Azure.AI.Extensions.OpenAI
     /// <summary> The AgentWorkflowPreviewActionResponseItem. </summary>
     public partial class AgentWorkflowPreviewActionResponseItem : ResponseItem, IJsonModel<AgentWorkflowPreviewActionResponseItem>
     {
-        /// <summary> Initializes a new instance of <see cref="AgentWorkflowPreviewActionResponseItem"/> for deserialization. </summary>
-        internal AgentWorkflowPreviewActionResponseItem()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResponseItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override ResponseItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AgentWorkflowPreviewActionResponseItem>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -36,7 +31,7 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AgentWorkflowPreviewActionResponseItem>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -78,7 +73,7 @@ namespace Azure.AI.Extensions.OpenAI
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind);
+            writer.WriteStringValue(CSDLActionKind);
             writer.WritePropertyName("action_id"u8);
             writer.WriteStringValue(ActionId);
             if (Optional.IsDefined(ParentActionId))
@@ -116,7 +111,7 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResponseItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override ResponseItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AgentWorkflowPreviewActionResponseItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -138,7 +133,7 @@ namespace Azure.AI.Extensions.OpenAI
             string id = default;
             AgentReference agentReference = default;
             string responseId = default;
-            string kind = default;
+            string csdlActionKind = default;
             string actionId = default;
             string parentActionId = default;
             string previousActionId = default;
@@ -167,7 +162,7 @@ namespace Azure.AI.Extensions.OpenAI
                 }
                 if (prop.NameEquals("kind"u8))
                 {
-                    kind = prop.Value.GetString();
+                    csdlActionKind = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("action_id"u8))
@@ -199,7 +194,7 @@ namespace Azure.AI.Extensions.OpenAI
                 id,
                 agentReference,
                 responseId,
-                kind,
+                csdlActionKind,
                 actionId,
                 parentActionId,
                 previousActionId,

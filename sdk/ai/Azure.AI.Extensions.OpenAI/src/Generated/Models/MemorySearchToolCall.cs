@@ -14,28 +14,6 @@ namespace Azure.AI.Extensions.OpenAI
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MemorySearchToolCall"/>. </summary>
-        /// <param name="status"> The status of the tool call. </param>
-        internal MemorySearchToolCall(ToolCallStatus status)
-        {
-            Status = status;
-            Memories = new ChangeTrackingList<MemoryOutputItem>();
-        }
-
-        /// <summary> Initializes a new instance of <see cref="MemorySearchToolCall"/>. </summary>
-        /// <param name="id"></param>
-        /// <param name="agentReference"> The agent that created the item. </param>
-        /// <param name="responseId"> The response on which the item is created. </param>
-        /// <param name="status"> The status of the tool call. </param>
-        /// <param name="memories"> The results returned from the memory search. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MemorySearchToolCall(string id, AgentReference agentReference, string responseId, ToolCallStatus status, IList<MemoryOutputItem> memories, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, agentReference, responseId)
-        {
-            Status = status;
-            Memories = memories;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
-
         /// <summary> The status of the tool call. </summary>
         public ToolCallStatus Status { get; }
 

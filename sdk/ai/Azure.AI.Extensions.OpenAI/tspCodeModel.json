@@ -47069,7 +47069,7 @@
         {
           "$id": "3124",
           "kind": "property",
-          "name": "kind",
+          "name": "CSDLActionKind",
           "serializedName": "kind",
           "doc": "The kind of CSDL action (e.g., 'SetVariable', 'InvokeAzureAgent').",
           "type": {

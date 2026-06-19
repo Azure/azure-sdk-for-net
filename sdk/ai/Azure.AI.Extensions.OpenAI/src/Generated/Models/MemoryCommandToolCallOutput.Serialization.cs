@@ -13,14 +13,9 @@ namespace Azure.AI.Extensions.OpenAI
     /// <summary> The output of a memory command tool call. </summary>
     public partial class MemoryCommandToolCallOutput : ResponseItem, IJsonModel<MemoryCommandToolCallOutput>
     {
-        /// <summary> Initializes a new instance of <see cref="MemoryCommandToolCallOutput"/> for deserialization. </summary>
-        internal MemoryCommandToolCallOutput()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResponseItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override ResponseItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<MemoryCommandToolCallOutput>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -36,7 +31,7 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<MemoryCommandToolCallOutput>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -104,7 +99,7 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResponseItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override ResponseItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<MemoryCommandToolCallOutput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

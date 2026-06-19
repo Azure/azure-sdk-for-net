@@ -13,14 +13,9 @@ namespace Azure.AI.Extensions.OpenAI
     /// <summary> Request from the service for the user to perform OAuth consent. </summary>
     public partial class OAuthConsentRequestResponseItem : ResponseItem, IJsonModel<OAuthConsentRequestResponseItem>
     {
-        /// <summary> Initializes a new instance of <see cref="OAuthConsentRequestResponseItem"/> for deserialization. </summary>
-        internal OAuthConsentRequestResponseItem()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResponseItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override ResponseItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<OAuthConsentRequestResponseItem>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -36,7 +31,7 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<OAuthConsentRequestResponseItem>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -104,7 +99,7 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResponseItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override ResponseItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<OAuthConsentRequestResponseItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

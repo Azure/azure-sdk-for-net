@@ -16,17 +16,8 @@ namespace Extensions.Plugin
         /// <inheritdoc />
         public override void Apply(CodeModelGenerator generator)
         {
-            //System.Console.WriteLine("Applying ExtensionsPlugin...!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-
-            var debug = System.Environment.GetEnvironmentVariable("DEBUG_EXTENSION");
-            System.Console.Error.WriteLine($"DEBUG_EXTENSION environment variable is {debug}");
-
-            if (debug == "1")
-            {
-                System.Console.Error.WriteLine("DEBUG_EXTENSION environment variable is set. Breaking into the debugger...");
-                System.Diagnostics.Debugger.Break();
-            }
-            generator.AddVisitor(new ExperimentalAttributeVisitor());
+            //generator.AddVisitor(new ExperimentalAttributeVisitor());
+            generator.AddVisitor(new SerializationOverrideVisitor());
         }
     }
 }
