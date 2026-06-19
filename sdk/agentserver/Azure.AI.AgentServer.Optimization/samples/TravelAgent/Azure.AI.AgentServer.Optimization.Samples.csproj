@@ -4,15 +4,14 @@
     <OutputType>Exe</OutputType>
     <RequiredTargetFrameworks>$(RequiredRunnableTargetFrameworks)</RequiredTargetFrameworks>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <RootNamespace>Azure.AI.AgentServer.Optimization.Configuration.Samples</RootNamespace>
+    <RootNamespace>Azure.AI.AgentServer.Optimization.Samples</RootNamespace>
     <IsSamplesProject>true</IsSamplesProject>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Azure.AI.AgentServer.Optimization.Configuration.csproj" />
-    <ProjectReference Include="..\..\..\Azure.AI.AgentServer.Optimization\src\Azure.AI.AgentServer.Optimization.csproj" />
+    <ProjectReference Include="..\..\src\Azure.AI.AgentServer.Optimization.csproj" />
     <ProjectReference Include="..\..\..\Azure.AI.AgentServer.Core\src\Azure.AI.AgentServer.Core.csproj" />
     <ProjectReference Include="..\..\..\Azure.AI.AgentServer.Responses\src\Azure.AI.AgentServer.Responses.csproj" />
     <PackageReference Include="Azure.AI.OpenAI" />
@@ -23,3 +22,4 @@
   </ItemGroup>
 
 </Project>
+

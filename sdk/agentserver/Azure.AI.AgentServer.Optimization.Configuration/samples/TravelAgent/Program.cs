@@ -8,69 +8,65 @@ using Azure.AI.OpenAI;
 using Azure.Identity;
 using Microsoft.Agents.AI;
 using Microsoft.Extensions.AI;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 // ──────────────────────────────────────────────────────────────────────
-// 1. Load optimization config at startup (resolver API → inline JSON →
-//    local candidate dir → baseline dir).
+// This sample demonstrates the DI / IConfiguration integration provided
+// by Azure.AI.AgentServer.Optimization.Configuration.
+//
+// Instead of calling OptimizationOptionsLoader.LoadAsync() procedurally,
+// it registers AddOptimizationConfigSource() on the IConfigurationBuilder
+// and reads the bound OptimizationOptions from IConfiguration. This gives
+// you first-class integration with ASP.NET's configuration pipeline:
+//   - Reload semantics (via IOptionsMonitor<OptimizationOptions>)
+//   - Layering with other configuration sources (appsettings, env, etc.)
+//   - Consistent with the rest of the DI container
 // ──────────────────────────────────────────────────────────────────────
-OptimizationOptions? config = await OptimizationOptionsLoader.LoadAsync().ConfigureAwait(false);
 
-LogStartupConfig(config);
-
-IReadOnlyList<OptimizationSkill>? loadedSkills = null;
-if (config?.SkillsDirectory is not null)
-{
-    loadedSkills = OptimizationOptionsLoader.LoadSkillsFromDirectory(config.SkillsDirectory);
-    Console.WriteLine($"[Startup] Loaded {loadedSkills.Count} skill(s) from {config.SkillsDirectory}");
-}
-
-// ──────────────────────────────────────────────────────────────────────
-// 2. Build the Azure OpenAI client (singleton) — endpoint comes from env.
-// ──────────────────────────────────────────────────────────────────────
-string aoaiEndpoint = ResolveAzureOpenAIEndpoint();
-Console.Error.WriteLine($"[Startup] AzureOpenAI endpoint: {aoaiEndpoint}");
-var aoaiClient = new AzureOpenAIClient(new Uri(aoaiEndpoint), new DefaultAzureCredential());
-
-// ──────────────────────────────────────────────────────────────────────
-// 3. Build the Microsoft Agent Framework AIAgent from the optimized
-//    config. The agent's `instructions` and chat deployment name come
-//    from the optimization waterfall — change them by rolling out a new
-//    candidate, not by rebuilding the container.
-// ──────────────────────────────────────────────────────────────────────
-string instructions = config?.ComposeInstructions() ?? "You are a helpful travel assistant.";
-string model = config?.Model ?? "gpt-4.1-mini";
-Console.Error.WriteLine($"[Startup] Building MAF agent — model={model}, instructionsLen={instructions.Length}");
-
-AIAgent agent = aoaiClient
-    .GetChatClient(model)
-    .AsIChatClient()
-    .AsAIAgent(
-        name: "TravelPlanAgent",
-        instructions: instructions,
-        tools:
-        [
-            AIFunctionFactory.Create((Func<string>)TravelTools.GetRandomDestination),
-            AIFunctionFactory.Create((Func<string, string, string, string>)TravelTools.SearchFlights),
-            AIFunctionFactory.Create((Func<string, string, string, string>)TravelTools.GetHotelPrices),
-        ]);
-
-// ──────────────────────────────────────────────────────────────────────
-// 4. Run the Foundry-hosted agent server. The TravelHandler resolves the
-//    AIAgent and the OptimizationOptions from DI per request.
-// ──────────────────────────────────────────────────────────────────────
 ResponsesServer.Run<TravelHandler>(args, builder =>
 {
+    // ── 1. Add the optimization configuration source ────────────
+    // AddOptimizationConfigSource() requires IConfigurationBuilder.
+    // AgentHostBuilder.WebApplicationBuilder.Configuration is a ConfigurationManager
+    // which implements both IConfiguration and IConfigurationBuilder.
+    builder.WebApplicationBuilder.Configuration.AddOptimizationConfigSource();
+
+    // ── 2. Read the bound options from IConfiguration ───────────
+    OptimizationOptions config = builder.Configuration.GetOptimizationOptions();
+
+    LogStartupConfig(config);
+
+    // ── 3. Build the Azure OpenAI client ────────────────────────
+    string aoaiEndpoint = ResolveAzureOpenAIEndpoint();
+    Console.Error.WriteLine($"[Startup] AzureOpenAI endpoint: {aoaiEndpoint}");
+    var aoaiClient = new AzureOpenAIClient(new Uri(aoaiEndpoint), new DefaultAzureCredential());
+
+    // ── 4. Build the Microsoft Agent Framework AIAgent ──────────
+    string instructions = config.ComposeInstructions()
+        is { Length: > 0 } composed
+            ? composed
+            : "You are a helpful travel assistant.";
+    string model = config.Model ?? "gpt-4.1-mini";
+    Console.Error.WriteLine($"[Startup] Building MAF agent — model={model}, instructionsLen={instructions.Length}");
+
+    AIAgent agent = aoaiClient
+        .GetChatClient(model)
+        .AsIChatClient()
+        .AsAIAgent(
+            name: "TravelPlanAgent",
+            instructions: instructions,
+            tools:
+            [
+                AIFunctionFactory.Create((Func<string>)TravelTools.GetRandomDestination),
+                AIFunctionFactory.Create((Func<string, string, string, string>)TravelTools.SearchFlights),
+                AIFunctionFactory.Create((Func<string, string, string, string>)TravelTools.GetHotelPrices),
+            ]);
+
+    // ── 5. Register services in DI ──────────────────────────────
     builder.Services.AddSingleton(aoaiClient);
     builder.Services.AddSingleton(agent);
-    if (config is not null)
-    {
-        builder.Services.AddSingleton(config);
-    }
-    if (loadedSkills is not null)
-    {
-        builder.Services.AddSingleton(loadedSkills);
-    }
+    builder.Services.AddSingleton(config);
 });
 
 static string ResolveAzureOpenAIEndpoint()
@@ -85,7 +81,6 @@ static string ResolveAzureOpenAIEndpoint()
         ?? Environment.GetEnvironmentVariable("AZURE_AI_PROJECT_ENDPOINT");
     if (!string.IsNullOrWhiteSpace(projectEndpoint))
     {
-        // Strip /api/projects/... — Azure OpenAI lives at the account host.
         var uri = new Uri(projectEndpoint);
         return $"{uri.Scheme}://{uri.Host}/";
     }
@@ -94,16 +89,16 @@ static string ResolveAzureOpenAIEndpoint()
         "Cannot resolve Azure OpenAI endpoint. Set AZURE_AI_OPENAI_ENDPOINT or FOUNDRY_PROJECT_ENDPOINT.");
 }
 
-static void LogStartupConfig(OptimizationOptions? config)
+static void LogStartupConfig(OptimizationOptions config)
 {
-    if (config is null)
+    if (string.IsNullOrEmpty(config.Instructions) && string.IsNullOrEmpty(config.Model))
     {
         Console.Error.WriteLine("[Startup] No optimization config found — using defaults.");
         return;
     }
 
-    Console.Error.WriteLine("[Startup] ── Optimization Config ──────────────────────");
-    Console.Error.WriteLine($"[Startup] Source:       {config.Source}");
+    Console.Error.WriteLine("[Startup] ── Optimization Config (via IConfiguration) ──");
+    Console.Error.WriteLine($"[Startup] Source:       {config.Source ?? "(bound via config)"}");
     Console.Error.WriteLine($"[Startup] Model:        {config.Model ?? "(not set)"}");
     Console.Error.WriteLine($"[Startup] Temperature:  {config.Temperature?.ToString() ?? "(not set)"}");
     Console.Error.WriteLine($"[Startup] CandidateId:  {config.CandidateId ?? "(none)"}");
@@ -118,10 +113,5 @@ static void LogStartupConfig(OptimizationOptions? config)
     {
         Console.Error.WriteLine($"[Startup]   🔧 {tool.Name}: {(string.IsNullOrEmpty(tool.Description) ? "(no desc)" : tool.Description)}");
     }
-    Console.Error.WriteLine($"[Startup] SkillsDir:    {config.SkillsDirectory ?? "(none)"}");
-    Console.Error.WriteLine("[Startup] ── Instructions ─────────────────────────────");
-    Console.Error.WriteLine(config.Instructions ?? "(no instructions)");
-    Console.Error.WriteLine("[Startup] ── Composed Instructions (with skills) ─────");
-    Console.Error.WriteLine(config.ComposeInstructions());
-    Console.Error.WriteLine("[Startup] ────────────────────────────────────────────");
+    Console.Error.WriteLine("[Startup] ──────────────────────────────────────────────");
 }
