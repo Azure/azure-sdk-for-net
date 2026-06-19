@@ -8,10 +8,9 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Core.Tests.Identity.Mock;
+using Azure.Identity;
 using Microsoft.Identity.Client;
 using NUnit.Framework;
-
-using Azure.Identity;
 namespace Azure.Core.Tests.Identity
 {
     public class MsalConfidentialClientTests

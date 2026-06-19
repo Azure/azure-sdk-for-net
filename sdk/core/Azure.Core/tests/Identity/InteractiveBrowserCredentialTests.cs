@@ -8,11 +8,9 @@ using Azure.Core;
 using Azure.Core.Diagnostics;
 using Azure.Core.TestFramework;
 using Azure.Core.Tests.Identity.Mock;
-using Microsoft.Identity.Client;
-
-using NUnit.Framework;
-
 using Azure.Identity;
+using Microsoft.Identity.Client;
+using NUnit.Framework;
 namespace Azure.Core.Tests.Identity
 {
     internal class InteractiveBrowserCredentialTests : CredentialTestBase<InteractiveBrowserCredentialOptions>

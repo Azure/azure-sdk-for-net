@@ -10,10 +10,9 @@ using System.Security.Cryptography.X509Certificates;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Core.Tests.Identity.Mock;
+using Azure.Identity;
 using Microsoft.Extensions.Configuration;
 using NUnit.Framework;
-
-using Azure.Identity;
 namespace Azure.Core.Tests.Identity.ConfigurableCredentials.WorkloadIdentity
 {
     internal class WorkloadIdentityCredentialTests : Azure.Core.Tests.Identity.WorkloadIdentityCredentialTests

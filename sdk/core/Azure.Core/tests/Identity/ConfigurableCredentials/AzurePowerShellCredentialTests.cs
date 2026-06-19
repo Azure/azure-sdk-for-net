@@ -5,10 +5,9 @@ using System;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Core.Tests.Identity.Mock;
+using Azure.Identity;
 using Microsoft.Extensions.Configuration;
 using NUnit.Framework;
-
-using Azure.Identity;
 namespace Azure.Core.Tests.Identity.ConfigurableCredentials.AzurePowerShell
 {
     internal class AzurePowerShellCredentialTests : Azure.Core.Tests.Identity.AzurePowerShellCredentialsTests

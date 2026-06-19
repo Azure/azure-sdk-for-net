@@ -6,9 +6,8 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
-using NUnit.Framework;
-
 using Azure.Identity;
+using NUnit.Framework;
 namespace Azure.Core.Tests.Identity
 {
     public class X509Certificate2FromPathProviderTests
@@ -37,7 +36,7 @@ namespace Azure.Core.Tests.Identity
             StringAssert.Contains("No certificate found in CurrentUser/My store with thumbprint THUMBPRINT", ex.Message);
         }
 
-        #if NET472_OR_GREATER
+#if NET472_OR_GREATER
         // CertificateRequest introduced in .net4.7.2
         [Test]
         public async ValueTask ValidateCertPathLoad([Values] bool async)
@@ -67,7 +66,7 @@ namespace Azure.Core.Tests.Identity
                 store.Remove(cert);
             }
         }
-        #endif
+#endif
 
         [Test]
         public async Task ValidatePemCertificateLoad([Values] bool async)

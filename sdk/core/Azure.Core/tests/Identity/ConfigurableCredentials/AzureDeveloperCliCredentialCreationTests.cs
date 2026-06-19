@@ -4,10 +4,9 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using Microsoft.Extensions.Configuration;
 using NUnit.Framework;
-
-using Azure.Identity;
 namespace Azure.Core.Tests.Identity.ConfigurableCredentials.AzureDeveloperCli
 {
     /// <summary>

@@ -4,9 +4,8 @@
 using System;
 using System.IO;
 using System.Text.Json;
-using NUnit.Framework;
-
 using Azure.Identity;
+using NUnit.Framework;
 namespace Azure.Core.Tests.Identity
 {
     internal class VisualStudioCodeCredentialTests

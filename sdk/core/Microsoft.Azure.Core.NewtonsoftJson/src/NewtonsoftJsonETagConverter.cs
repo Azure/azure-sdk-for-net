@@ -9,7 +9,7 @@ namespace Azure.Core.Serialization
     /// <summary>
     /// A <see cref="JsonConverter"/> implementation for <see cref="ETag"/>.
     /// </summary>
-    public class NewtonsoftJsonETagConverter: JsonConverter
+    public class NewtonsoftJsonETagConverter : JsonConverter
     {
         /// <inheritdoc/>
         public override bool CanConvert(Type objectType) => objectType == typeof(ETag) || objectType == typeof(ETag?);
@@ -33,7 +33,7 @@ namespace Azure.Core.Serialization
         /// <inheritdoc/>
         public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
         {
-            var eTag = (ETag) value!;
+            var eTag = (ETag)value!;
             if (eTag == default)
             {
                 writer.WriteNull();

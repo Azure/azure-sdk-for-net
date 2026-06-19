@@ -8,9 +8,8 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Microsoft.Identity.Client;
-
 using Azure.Identity;
+using Microsoft.Identity.Client;
 namespace Azure.Core.Tests.Identity.Mock
 {
     internal class MockMsalPublicClient : MsalPublicClient

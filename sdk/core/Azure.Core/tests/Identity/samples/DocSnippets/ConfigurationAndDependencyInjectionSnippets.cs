@@ -119,7 +119,7 @@ namespace Azure.Core.Tests.Identity.Samples.DocSnippets
             HostApplicationBuilder builder = Host.CreateApplicationBuilder();
 
             #region Snippet:Azure_Core_Samples_AzureClient_AddAzureClientEquivalence
-            #pragma warning disable SCME0002
+#pragma warning disable SCME0002
 
             // These two are equivalent:
             builder.AddAzureClient<MyClient, MyClientSettings>("MyClient");
@@ -127,7 +127,7 @@ namespace Azure.Core.Tests.Identity.Samples.DocSnippets
             builder.AddAzureCredentialResolver();
             builder.AddClient<MyClient, MyClientSettings>("MyClient");
 
-            #pragma warning restore SCME0002
+#pragma warning restore SCME0002
             #endregion
         }
 

@@ -9,9 +9,8 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Core.Tests.Identity.Mock;
-using NUnit.Framework;
-
 using Azure.Identity;
+using NUnit.Framework;
 namespace Azure.Core.Tests.Identity
 {
     public class ClientAssertionCredentialTests : CredentialTestBase<ClientAssertionCredentialOptions>
