@@ -84,6 +84,7 @@ DO NOT USE FOR: SDK code generation, pipeline troubleshooting, API review feedba
    - Spec PR URL
 2. **Query** — Run `azure-sdk-mcp:azsdk_get_release_plan` with the provided identifier (always use relative path for `typeSpecProjectPath`), OR run `azure-sdk-mcp:azsdk_get_release_plan_for_spec_pr` if only a spec PR URL is available.
 3. **Display** — Show the release plan ID, status, linked PRs, and SDK details.
+4. If API spec status is ready in the release plan, then run sdk generation for all languages using `azure-sdk-mcp:azsdk_run_sdk_generation`.
 
 **Tools**: `azure-sdk-mcp:azsdk_get_release_plan`, `azure-sdk-mcp:azsdk_get_release_plan_for_spec_pr`
 
