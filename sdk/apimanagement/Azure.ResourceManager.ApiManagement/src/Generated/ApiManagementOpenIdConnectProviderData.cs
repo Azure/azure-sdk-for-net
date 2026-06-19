@@ -30,16 +30,22 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> OpenId Connect Provider contract properties. </param>
+        /// <param name="openId"> Identifier of the OpenID Connect Provider. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApiManagementOpenIdConnectProviderData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, OpenidConnectProviderContractProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal ApiManagementOpenIdConnectProviderData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, OpenidConnectProviderContractProperties properties, string openId, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
+            OpenId = openId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> OpenId Connect Provider contract properties. </summary>
         [WirePath("properties")]
         internal OpenidConnectProviderContractProperties Properties { get; set; }
+
+        /// <summary> Identifier of the OpenID Connect Provider. </summary>
+        [WirePath("name")]
+        public string OpenId { get; }
 
         /// <summary> User-friendly OpenID Connect Provider name. </summary>
         [WirePath("properties.displayName")]
