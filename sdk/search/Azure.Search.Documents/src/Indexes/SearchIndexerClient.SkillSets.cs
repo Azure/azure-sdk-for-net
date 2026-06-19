@@ -79,6 +79,7 @@ namespace Azure.Search.Documents.Indexes
                 cancellationToken).ConfigureAwait(false);
         }
 
+#pragma warning disable AZC0002 // CancellationToken must be required to disambiguate from generated overloads
         /// <summary>
         /// Deletes a skillset.
         /// </summary>
@@ -90,7 +91,7 @@ namespace Azure.Search.Documents.Indexes
         [ForwardsClientCalls]
         public virtual Response DeleteSkillset(
             string skillsetName,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken)
         {
             Argument.AssertNotNull(skillsetName, nameof(skillsetName));
 
@@ -108,12 +109,13 @@ namespace Azure.Search.Documents.Indexes
         [ForwardsClientCalls]
         public virtual async Task<Response> DeleteSkillsetAsync(
             string skillsetName,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken)
         {
             Argument.AssertNotNull(skillsetName, nameof(skillsetName));
 
             return await DeleteSkillsetAsync(skillsetName, matchConditions: null, cancellationToken).ConfigureAwait(false);
         }
+#pragma warning restore AZC0002
 
         /// <summary>
         /// Deletes a skillset.

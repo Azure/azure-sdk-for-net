@@ -8,7 +8,7 @@
 
 ### Bugs Fixed
 
-- Fixed ambiguous overloads in `SearchIndexClient.DeleteIndex` and `SearchIndexClient.DeleteSynonymMap` by making `CancellationToken` required in name-only convenience overloads.
+- Fixed ambiguous overloads in `SearchIndexClient.DeleteIndex`, `SearchIndexClient.DeleteSynonymMap`, `SearchIndexerClient.DeleteIndexer`, `SearchIndexerClient.DeleteDataSourceConnection`, and `SearchIndexerClient.DeleteSkillset` by making `CancellationToken` required in name-only convenience overloads.
 
 ### Other Changes
 

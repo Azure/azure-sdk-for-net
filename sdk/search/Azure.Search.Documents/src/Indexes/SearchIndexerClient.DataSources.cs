@@ -72,6 +72,7 @@ namespace Azure.Search.Documents.Indexes
             return await CreateOrUpdateDataSourceConnectionAsync(dataSourceConnection?.Name, dataSourceConnection, matchConditions, cancellationToken).ConfigureAwait(false);
         }
 
+#pragma warning disable AZC0002 // CancellationToken must be required to disambiguate from generated overloads
         /// <summary>
         /// Deletes a data source connection.
         /// </summary>
@@ -83,7 +84,7 @@ namespace Azure.Search.Documents.Indexes
         [ForwardsClientCalls]
         public virtual Response DeleteDataSourceConnection(
             string dataSourceConnectionName,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken)
         {
             Argument.AssertNotNull(dataSourceConnectionName, nameof(dataSourceConnectionName));
             return DeleteDataSourceConnection(dataSourceConnectionName, matchConditions: null, cancellationToken);
@@ -100,11 +101,12 @@ namespace Azure.Search.Documents.Indexes
         [ForwardsClientCalls]
         public virtual async Task<Response> DeleteDataSourceConnectionAsync(
             string dataSourceConnectionName,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken)
         {
             Argument.AssertNotNull(dataSourceConnectionName, nameof(dataSourceConnectionName));
             return await DeleteDataSourceConnectionAsync(dataSourceConnectionName, matchConditions: null, cancellationToken).ConfigureAwait(false);
         }
+#pragma warning restore AZC0002
 
         /// <summary>
         /// Deletes a data source connection.

@@ -193,6 +193,7 @@ namespace Azure.Search.Documents.Indexes
                 cancellationToken).ConfigureAwait(false);
         }
 
+#pragma warning disable AZC0002 // CancellationToken must be required to disambiguate from generated overloads
         /// <summary>
         /// Deletes an indexer.
         /// </summary>
@@ -204,7 +205,7 @@ namespace Azure.Search.Documents.Indexes
         [ForwardsClientCalls]
         public virtual Response DeleteIndexer(
             string indexerName,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken)
         {
             Argument.AssertNotNull(indexerName, nameof(indexerName));
 
@@ -222,12 +223,13 @@ namespace Azure.Search.Documents.Indexes
         [ForwardsClientCalls]
         public virtual async Task<Response> DeleteIndexerAsync(
             string indexerName,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken)
         {
             Argument.AssertNotNull(indexerName, nameof(indexerName));
 
             return await DeleteIndexerAsync(indexerName, matchConditions: null, cancellationToken).ConfigureAwait(false);
         }
+#pragma warning restore AZC0002
 
         /// <summary>
         /// Deletes an indexer.
