@@ -99,10 +99,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("backend"u8);
                 writer.WriteObjectValue(Backend, options);
             }
-            if (Optional.IsDefined(LogClientIp))
+            if (Optional.IsDefined(IsLogClientIPEnabled))
             {
                 writer.WritePropertyName("logClientIp"u8);
-                writer.WriteBooleanValue(LogClientIp.Value);
+                writer.WriteBooleanValue(IsLogClientIPEnabled.Value);
             }
             if (Optional.IsDefined(HttpCorrelationProtocol))
             {
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             SamplingSettings sampling = default;
             PipelineDiagnosticSettings frontend = default;
             PipelineDiagnosticSettings backend = default;
-            bool? logClientIp = default;
+            bool? isLogClientIPEnabled = default;
             HttpCorrelationProtocol? httpCorrelationProtocol = default;
             TraceVerbosityLevel? verbosity = default;
             OperationNameFormat? operationNameFormat = default;
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    logClientIp = prop.Value.GetBoolean();
+                    isLogClientIPEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("httpCorrelationProtocol"u8))
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 sampling,
                 frontend,
                 backend,
-                logClientIp,
+                isLogClientIPEnabled,
                 httpCorrelationProtocol,
                 verbosity,
                 operationNameFormat,

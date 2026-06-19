@@ -662,7 +662,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 name,
                 resourceType,
                 systemData,
-                templateParameters is null && description is null && request is null && responses is null && policies is null && displayName is null && @method is null ? default : new OperationContractProperties(
+                templateParameters is null && description is null && request is null && responses is null && policies is null && displayName is null && @method is null && uriTemplate is null ? default : new OperationContractProperties(
                     (templateParameters ?? new ChangeTrackingList<ParameterContract>()).ToList(),
                     description,
                     request,
@@ -671,7 +671,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     default,
                     displayName,
                     @method,
-                    default),
+                    uriTemplate),
                 default);
         }
 
@@ -767,11 +767,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="policies"> Operation Policies. </param>
         /// <param name="displayName"> Operation Name. </param>
         /// <param name="method"> A Valid HTTP Operation Method. Typical Http Methods like GET, PUT, POST but not limited by only them. </param>
-        /// <param name="urlTemplate"> Relative URL template identifying the target resource for this operation. May include parameters. Example: /customers/{cid}/orders/{oid}/?date={date}. </param>
+        /// <param name="uriTemplate"> Relative URL template identifying the target resource for this operation. May include parameters. Example: /customers/{cid}/orders/{oid}/?date={date}. </param>
         /// <returns> A new <see cref="Models.ApiOperationPatch"/> instance for mocking. </returns>
-        public static ApiOperationPatch ApiOperationPatch(IEnumerable<ParameterContract> templateParameters = default, string description = default, RequestContract request = default, IEnumerable<ResponseContract> responses = default, string policies = default, string displayName = default, string @method = default, string urlTemplate = default)
+        public static ApiOperationPatch ApiOperationPatch(IEnumerable<ParameterContract> templateParameters = default, string description = default, RequestContract request = default, IEnumerable<ResponseContract> responses = default, string policies = default, string displayName = default, string @method = default, string uriTemplate = default)
         {
-            return new ApiOperationPatch(templateParameters is null && description is null && request is null && responses is null && policies is null && displayName is null && @method is null && urlTemplate is null ? default : new OperationUpdateContractProperties(
+            return new ApiOperationPatch(templateParameters is null && description is null && request is null && responses is null && policies is null && displayName is null && @method is null && uriTemplate is null ? default : new OperationUpdateContractProperties(
                 (templateParameters ?? new ChangeTrackingList<ParameterContract>()).ToList(),
                 description,
                 request,
@@ -780,7 +780,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 default,
                 displayName,
                 @method,
-                urlTemplate), default);
+                uriTemplate), default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -970,13 +970,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 name,
                 resourceType,
                 systemData,
-                alwaysLog is null && loggerId is null && sampling is null && frontend is null && backend is null && httpCorrelationProtocol is null && verbosity is null && operationNameFormat is null && metrics is null ? default : new DiagnosticContractUpdateProperties(
+                alwaysLog is null && loggerId is null && sampling is null && frontend is null && backend is null && isLogClientIPEnabled is null && httpCorrelationProtocol is null && verbosity is null && operationNameFormat is null && metrics is null ? default : new DiagnosticContractUpdateProperties(
                     alwaysLog,
                     loggerId,
                     sampling,
                     frontend,
                     backend,
-                    default,
+                    isLogClientIPEnabled,
                     httpCorrelationProtocol,
                     verbosity,
                     operationNameFormat,
@@ -1680,27 +1680,20 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> Delegation settings contract properties. </param>
+        /// <param name="uri"> A delegation Url. </param>
+        /// <param name="validationKey"> A base64-encoded validation key to validate, that a request is coming from Azure API Management. </param>
+        /// <param name="isSubscriptionDelegationEnabled"> Enable or disable delegation for subscriptions. </param>
+        /// <param name="isUserRegistrationDelegationEnabled"> Enable or disable delegation for user registration. </param>
         /// <returns> A new <see cref="ApiManagement.ApiManagementPortalDelegationSettingData"/> instance for mocking. </returns>
-        public static ApiManagementPortalDelegationSettingData ApiManagementPortalDelegationSettingData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PortalDelegationSettingsProperties properties = default)
+        public static ApiManagementPortalDelegationSettingData ApiManagementPortalDelegationSettingData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, Uri uri = default, string validationKey = default, bool? isSubscriptionDelegationEnabled = default, bool? isUserRegistrationDelegationEnabled = default)
         {
             return new ApiManagementPortalDelegationSettingData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                properties,
+                uri is null && validationKey is null && isSubscriptionDelegationEnabled is null && isUserRegistrationDelegationEnabled is null ? default : new PortalDelegationSettingsProperties(uri, validationKey, new SubscriptionDelegationSettingProperties(isSubscriptionDelegationEnabled, default), new RegistrationDelegationSettingProperties(isUserRegistrationDelegationEnabled, default), default),
                 default);
-        }
-
-        /// <param name="uri"> A delegation Url. </param>
-        /// <param name="validationKey"> A base64-encoded validation key to validate, that a request is coming from Azure API Management. </param>
-        /// <param name="isSubscriptionDelegationEnabled"> Enable or disable delegation for subscriptions. </param>
-        /// <param name="isUserRegistrationDelegationEnabled"> Enable or disable delegation for user registration. </param>
-        /// <returns> A new <see cref="Models.PortalDelegationSettingsProperties"/> instance for mocking. </returns>
-        public static PortalDelegationSettingsProperties PortalDelegationSettingsProperties(Uri uri = default, string validationKey = default, bool? isSubscriptionDelegationEnabled = default, bool? isUserRegistrationDelegationEnabled = default)
-        {
-            return new PortalDelegationSettingsProperties(uri, validationKey, isSubscriptionDelegationEnabled is null ? default : new SubscriptionDelegationSettingProperties(isSubscriptionDelegationEnabled, default), isUserRegistrationDelegationEnabled is null ? default : new RegistrationDelegationSettingProperties(isUserRegistrationDelegationEnabled, default), default);
         }
 
         /// <param name="validationKey"> This is secret value of the validation key in portal settings. </param>
@@ -4409,18 +4402,18 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="principalId"> Principal (User) Identifier. </param>
         /// <param name="primaryKey"> Primary access key. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </param>
         /// <param name="secondaryKey"> Secondary access key. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </param>
-        /// <param name="enabled"> Determines whether direct access is enabled. </param>
+        /// <param name="isDirectAccessEnabled"> Determines whether direct access is enabled. </param>
         /// <returns> A new <see cref="Models.TenantAccessInfoCreateOrUpdateContent"/> instance for mocking. </returns>
-        public static TenantAccessInfoCreateOrUpdateContent TenantAccessInfoCreateOrUpdateContent(string principalId = default, string primaryKey = default, string secondaryKey = default, bool? enabled = default)
+        public static TenantAccessInfoCreateOrUpdateContent TenantAccessInfoCreateOrUpdateContent(string principalId = default, string primaryKey = default, string secondaryKey = default, bool? isDirectAccessEnabled = default)
         {
-            return new TenantAccessInfoCreateOrUpdateContent(principalId is null && primaryKey is null && secondaryKey is null && enabled is null ? default : new AccessInformationCreateParameterProperties(principalId, primaryKey, secondaryKey, enabled, default), default);
+            return new TenantAccessInfoCreateOrUpdateContent(principalId is null && primaryKey is null && secondaryKey is null && isDirectAccessEnabled is null ? default : new AccessInformationCreateParameterProperties(principalId, primaryKey, secondaryKey, isDirectAccessEnabled, default), default);
         }
 
-        /// <param name="enabled"> Determines whether direct access is enabled. </param>
+        /// <param name="isDirectAccessEnabled"> Determines whether direct access is enabled. </param>
         /// <returns> A new <see cref="Models.TenantAccessInfoPatch"/> instance for mocking. </returns>
-        public static TenantAccessInfoPatch TenantAccessInfoPatch(bool? enabled = default)
+        public static TenantAccessInfoPatch TenantAccessInfoPatch(bool? isDirectAccessEnabled = default)
         {
-            return new TenantAccessInfoPatch(enabled is null ? default : new AccessInformationUpdateParameterProperties(enabled, default), default);
+            return new TenantAccessInfoPatch(isDirectAccessEnabled is null ? default : new AccessInformationUpdateParameterProperties(isDirectAccessEnabled, default), default);
         }
 
         /// <param name="accessInfoType"> Access Information type ('access' or 'gitAccess'). </param>
@@ -4441,11 +4434,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <param name="branch"> The name of the Git branch from which the configuration is to be deployed to the configuration database. </param>
-        /// <param name="force"> The value enforcing deleting subscriptions to products that are deleted in this update. </param>
+        /// <param name="forceDelete"> The value enforcing deleting subscriptions to products that are deleted in this update. </param>
         /// <returns> A new <see cref="Models.ConfigurationDeployContent"/> instance for mocking. </returns>
-        public static ConfigurationDeployContent ConfigurationDeployContent(string branch = default, bool? force = default)
+        public static ConfigurationDeployContent ConfigurationDeployContent(string branch = default, bool? forceDelete = default)
         {
-            return new ConfigurationDeployContent(branch is null && force is null ? default : new DeployConfigurationParameterProperties(branch, force, default), default);
+            return new ConfigurationDeployContent(branch is null && forceDelete is null ? default : new DeployConfigurationParameterProperties(branch, forceDelete, default), default);
         }
 
         /// <param name="branch"> The name of the Git branch in which to commit the current configuration snapshot. </param>
@@ -5928,28 +5921,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     isRedirectEnabled,
                     termsOfService,
                     default),
-                default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ApiManagement.ApiManagementPortalDelegationSettingData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="uri"> A delegation Url. </param>
-        /// <param name="validationKey"> A base64-encoded validation key to validate, that a request is coming from Azure API Management. </param>
-        /// <param name="isSubscriptionDelegationEnabled"> Subscriptions delegation settings. </param>
-        /// <param name="isUserRegistrationDelegationEnabled"> User registration delegation settings. </param>
-        /// <returns> A new <see cref="ApiManagement.ApiManagementPortalDelegationSettingData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ApiManagementPortalDelegationSettingData ApiManagementPortalDelegationSettingData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, Uri uri = default, string validationKey = default, bool? isSubscriptionDelegationEnabled = default, bool? isUserRegistrationDelegationEnabled = default)
-        {
-            return new ApiManagementPortalDelegationSettingData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                uri is null && validationKey is null && isSubscriptionDelegationEnabled is null && isUserRegistrationDelegationEnabled is null ? default : new PortalDelegationSettingsProperties(uri, validationKey, new SubscriptionDelegationSettingProperties(isSubscriptionDelegationEnabled, default), new RegistrationDelegationSettingProperties(isUserRegistrationDelegationEnabled, default), default),
                 default);
         }
 

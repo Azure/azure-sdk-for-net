@@ -55,11 +55,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> The value enforcing deleting subscriptions to products that are deleted in this update. </summary>
         [WirePath("properties.force")]
-        public bool? Force
+        public bool? ForceDelete
         {
             get
             {
-                return Properties is null ? default : Properties.Force;
+                return Properties is null ? default : Properties.ForceDelete;
             }
             set
             {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     Properties = new DeployConfigurationParameterProperties();
                 }
-                Properties.Force = value;
+                Properties.ForceDelete = value;
             }
         }
     }

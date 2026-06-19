@@ -28,20 +28,20 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="sampling"> Sampling settings for Diagnostic. </param>
         /// <param name="frontend"> Diagnostic settings for incoming/outgoing HTTP messages to the Gateway. </param>
         /// <param name="backend"> Diagnostic settings for incoming/outgoing HTTP messages to the Backend. </param>
-        /// <param name="logClientIp"> Log the ClientIP. Default is false. </param>
+        /// <param name="isLogClientIPEnabled"> Log the ClientIP. Default is false. </param>
         /// <param name="httpCorrelationProtocol"> Sets correlation protocol to use for Application Insights diagnostics. </param>
         /// <param name="verbosity"> The verbosity level applied to traces emitted by trace policies. </param>
         /// <param name="operationNameFormat"> The format of the Operation Name for Application Insights telemetries. Default is Name. </param>
         /// <param name="metrics"> Emit custom metrics via emit-metric policy. Applicable only to Application Insights diagnostic settings. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DiagnosticContractUpdateProperties(AlwaysLog? alwaysLog, string loggerId, SamplingSettings sampling, PipelineDiagnosticSettings frontend, PipelineDiagnosticSettings backend, bool? logClientIp, HttpCorrelationProtocol? httpCorrelationProtocol, TraceVerbosityLevel? verbosity, OperationNameFormat? operationNameFormat, bool? metrics, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DiagnosticContractUpdateProperties(AlwaysLog? alwaysLog, string loggerId, SamplingSettings sampling, PipelineDiagnosticSettings frontend, PipelineDiagnosticSettings backend, bool? isLogClientIPEnabled, HttpCorrelationProtocol? httpCorrelationProtocol, TraceVerbosityLevel? verbosity, OperationNameFormat? operationNameFormat, bool? metrics, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AlwaysLog = alwaysLog;
             LoggerId = loggerId;
             Sampling = sampling;
             Frontend = frontend;
             Backend = backend;
-            LogClientIp = logClientIp;
+            IsLogClientIPEnabled = isLogClientIPEnabled;
             HttpCorrelationProtocol = httpCorrelationProtocol;
             Verbosity = verbosity;
             OperationNameFormat = operationNameFormat;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Log the ClientIP. Default is false. </summary>
         [WirePath("logClientIp")]
-        public bool? LogClientIp { get; set; }
+        public bool? IsLogClientIPEnabled { get; set; }
 
         /// <summary> Sets correlation protocol to use for Application Insights diagnostics. </summary>
         [WirePath("httpCorrelationProtocol")]

@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WritePropertyName("method"u8);
             writer.WriteStringValue(Method);
             writer.WritePropertyName("urlTemplate"u8);
-            writer.WriteStringValue(UrlTemplate);
+            writer.WriteStringValue(UriTemplate);
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string displayName = default;
             string @method = default;
-            string urlTemplate = default;
+            string uriTemplate = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("templateParameters"u8))
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (prop.NameEquals("urlTemplate"u8))
                 {
-                    urlTemplate = prop.Value.GetString();
+                    uriTemplate = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 additionalBinaryDataProperties,
                 displayName,
                 @method,
-                urlTemplate);
+                uriTemplate);
         }
     }
 }

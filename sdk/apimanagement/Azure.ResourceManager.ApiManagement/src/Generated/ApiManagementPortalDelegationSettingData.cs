@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> Delegation settings contract properties. </summary>
         [WirePath("properties")]
-        public PortalDelegationSettingsProperties Properties { get; set; }
+        internal PortalDelegationSettingsProperties Properties { get; set; }
     }
 }
