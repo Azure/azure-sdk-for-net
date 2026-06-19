@@ -106,6 +106,57 @@ Write-Host "Internalize-Generated: scanned $visited file(s), updated $changed."
 # fragment) so it is a no-op once the upstream emitter is fixed.
 # --------------------------------------------------------------------------
 
+$restClient = Get-ChildItem -Path $GeneratedRoot -Recurse -Filter 'KeyVaultCertificatesClient.RestClient.cs' -File `
+    | Select-Object -First 1
+
+if ($restClient) {
+    $text     = [System.IO.File]::ReadAllText($restClient.FullName)
+    $original = $text
+
+    # Trailing-slash bug: the emitter unconditionally appends "/" after the
+    # certificate name and only THEN gates the version segment behind a null
+    # check. With certificateVersion == null the wire path becomes
+    # "/certificates/{name}/" (trailing slash) instead of the legacy
+    # "/certificates/{name}". Recorded HTTP traffic across years of 4.x
+    # shipped against the latter, so the recordings every customer playback
+    # depends on need the legacy shape. Move the "/" inside the null check so
+    # the request URL is byte-identical to the legacy KeyVaultPipeline path.
+    # Applies to CreateGetCertificateRequest and CreateUpdateCertificateRequest.
+    $pattern = [regex] @"
+(?ms)            uri\.AppendPath\(certificateName, true\);\r?\n            uri\.AppendPath\("/", false\);\r?\n            if \(certificateVersion != null\)\r?\n            \{\r?\n                uri\.AppendPath\(certificateVersion, true\);\r?\n            \}
+"@
+    $replacement = @"
+            uri.AppendPath(certificateName, true);`r`n            if (certificateVersion != null)`r`n            {`r`n                uri.AppendPath("/", false);`r`n                uri.AppendPath(certificateVersion, true);`r`n            }
+"@
+    $text = $pattern.Replace($text, $replacement)
+
+    # Two more legacy-shape URLs the emitter forgot the trailing slash on:
+    # the contacts collection (Get/Set/Delete) and the issuers list endpoint.
+    # Recordings ship with the trailing slash, so add it back. We only target
+    # the standalone collection URLs - the per-issuer routes (which use
+    # "/certificates/issuers/" + issuerName) already have the slash.
+    $text = $text -replace '("\/certificates\/contacts)(", false\))', '$1/$2'
+    # The issuers LIST request is the only one that uses bare "/certificates/issuers";
+    # every per-issuer route uses "/certificates/issuers/" + name so the trailing
+    # slash is already there. Match the exact bare-collection form.
+    $text = $text -replace 'AppendPath\("\/certificates\/issuers", false\)', 'AppendPath("/certificates/issuers/", false)'
+
+    # PurgeDeletedCertificate is the only DELETE in the generated client that
+    # doesn't set the Accept header (because the endpoint returns 204 No
+    # Content -- it's the only handler using PipelineMessageClassifier204).
+    # Every other generated DELETE does, and -- more importantly -- the
+    # legacy KeyVaultPipeline did, so recordings expect it. Anchor on the
+    # unique 204 classifier so we only touch this one method.
+    $purgeBlock     = "            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);`n            Request request = message.Request;`n            request.Uri = uri;`n            request.Method = RequestMethod.Delete;`n            return message;"
+    $purgeBlockFix  = "            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);`n            Request request = message.Request;`n            request.Uri = uri;`n            request.Method = RequestMethod.Delete;`n            request.Headers.SetValue(`"Accept`", `"application/json`");`n            return message;"
+    $text = $text.Replace($purgeBlock, $purgeBlockFix)
+
+    if ($text -ne $original) {
+        [System.IO.File]::WriteAllText($restClient.FullName, $text)
+        Write-Host '  patched: KeyVaultCertificatesClient.RestClient.cs (drop trailing slash for null version)'
+    }
+}
+
 $kvClient = Get-ChildItem -Path $GeneratedRoot -Recurse -Filter 'KeyVaultCertificatesClient.cs' -File `
     | Where-Object { $_.FullName -notlike '*RestClient*' } `
     | Select-Object -First 1
