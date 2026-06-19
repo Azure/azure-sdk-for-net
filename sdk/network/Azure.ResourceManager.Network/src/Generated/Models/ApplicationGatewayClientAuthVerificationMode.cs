@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct ApplicationGatewayClientAuthVerificationMode : IEquatable<ApplicationGatewayClientAuthVerificationMode>
     {
         private readonly string _value;
+        /// <summary> Strict. </summary>
+        private const string StrictValue = "Strict";
+        /// <summary> Passthrough. </summary>
+        private const string PassthroughValue = "Passthrough";
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayClientAuthVerificationMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ApplicationGatewayClientAuthVerificationMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string StrictValue = "Strict";
-        private const string PassthroughValue = "Passthrough";
+            _value = value;
+        }
 
         /// <summary> Strict. </summary>
         public static ApplicationGatewayClientAuthVerificationMode Strict { get; } = new ApplicationGatewayClientAuthVerificationMode(StrictValue);
+
         /// <summary> Passthrough. </summary>
         public static ApplicationGatewayClientAuthVerificationMode Passthrough { get; } = new ApplicationGatewayClientAuthVerificationMode(PassthroughValue);
+
         /// <summary> Determines if two <see cref="ApplicationGatewayClientAuthVerificationMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ApplicationGatewayClientAuthVerificationMode left, ApplicationGatewayClientAuthVerificationMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ApplicationGatewayClientAuthVerificationMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ApplicationGatewayClientAuthVerificationMode left, ApplicationGatewayClientAuthVerificationMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ApplicationGatewayClientAuthVerificationMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ApplicationGatewayClientAuthVerificationMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ApplicationGatewayClientAuthVerificationMode(string value) => new ApplicationGatewayClientAuthVerificationMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ApplicationGatewayClientAuthVerificationMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ApplicationGatewayClientAuthVerificationMode?(string value) => value == null ? null : new ApplicationGatewayClientAuthVerificationMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ApplicationGatewayClientAuthVerificationMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ApplicationGatewayClientAuthVerificationMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -10,14 +10,55 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class NeighborGroupDestination : IUtf8JsonSerializable, IJsonModel<NeighborGroupDestination>
+    /// <summary> An array of destination IPv4 Addresses or IPv6 Addresses. </summary>
+    public partial class NeighborGroupDestination : IJsonModel<NeighborGroupDestination>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NeighborGroupDestination>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual NeighborGroupDestination PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NeighborGroupDestination>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeNeighborGroupDestination(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NeighborGroupDestination)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NeighborGroupDestination>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerManagedNetworkFabricContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(NeighborGroupDestination)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<NeighborGroupDestination>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NeighborGroupDestination IPersistableModel<NeighborGroupDestination>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<NeighborGroupDestination>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NeighborGroupDestination>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,17 +70,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NeighborGroupDestination>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NeighborGroupDestination>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NeighborGroupDestination)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsCollectionDefined(IPv4Addresses))
             {
                 writer.WritePropertyName("ipv4Addresses"u8);
                 writer.WriteStartArray();
-                foreach (var item in IPv4Addresses)
+                foreach (IPAddress item in IPv4Addresses)
                 {
                     if (item == null)
                     {
@@ -54,21 +94,26 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 writer.WritePropertyName("ipv6Addresses"u8);
                 writer.WriteStartArray();
-                foreach (var item in IPv6Addresses)
+                foreach (string item in IPv6Addresses)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -77,40 +122,44 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
         }
 
-        NeighborGroupDestination IJsonModel<NeighborGroupDestination>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NeighborGroupDestination IJsonModel<NeighborGroupDestination>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual NeighborGroupDestination JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NeighborGroupDestination>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NeighborGroupDestination>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NeighborGroupDestination)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeNeighborGroupDestination(document.RootElement, options);
         }
 
-        internal static NeighborGroupDestination DeserializeNeighborGroupDestination(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static NeighborGroupDestination DeserializeNeighborGroupDestination(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<IPAddress> ipv4Addresses = default;
-            IList<string> ipv6Addresses = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IList<IPAddress> iPv4Addresses = default;
+            IList<string> iPv6Addresses = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("ipv4Addresses"u8))
+                if (prop.NameEquals("ipv4Addresses"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<IPAddress> array = new List<IPAddress>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         if (item.ValueKind == JsonValueKind.Null)
                         {
@@ -121,61 +170,36 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             array.Add(IPAddress.Parse(item.GetString()));
                         }
                     }
-                    ipv4Addresses = array;
+                    iPv4Addresses = array;
                     continue;
                 }
-                if (property.NameEquals("ipv6Addresses"u8))
+                if (prop.NameEquals("ipv6Addresses"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
-                    ipv6Addresses = array;
+                    iPv6Addresses = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new NeighborGroupDestination(ipv4Addresses ?? new ChangeTrackingList<IPAddress>(), ipv6Addresses ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new NeighborGroupDestination(iPv4Addresses ?? new ChangeTrackingList<IPAddress>(), iPv6Addresses ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<NeighborGroupDestination>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<NeighborGroupDestination>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerManagedNetworkFabricContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(NeighborGroupDestination)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        NeighborGroupDestination IPersistableModel<NeighborGroupDestination>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<NeighborGroupDestination>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeNeighborGroupDestination(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(NeighborGroupDestination)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<NeighborGroupDestination>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

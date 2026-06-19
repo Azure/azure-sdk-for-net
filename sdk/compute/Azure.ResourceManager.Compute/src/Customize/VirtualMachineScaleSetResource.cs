@@ -26,10 +26,20 @@ namespace Azure.ResourceManager.Compute
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<VirtualMachineScaleSetResource>> UpdateAsync(WaitUntil waitUntil, VirtualMachineScaleSetPatch patch, CancellationToken cancellationToken)
-            => await UpdateAsync(waitUntil, patch, null, null, cancellationToken).ConfigureAwait(false);
+            => await UpdateAsync(waitUntil, patch, null, cancellationToken).ConfigureAwait(false);
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<VirtualMachineScaleSetResource> Update(WaitUntil waitUntil, VirtualMachineScaleSetPatch patch, CancellationToken cancellationToken)
-            => Update(waitUntil, patch, null, null, cancellationToken);
+            => Update(waitUntil, patch, null, cancellationToken);
+
+        // Backward-compatibility shim that accepts ifMatch and ifNoneMatch as positional string parameters; new code should use the MatchConditions overload.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<ArmOperation<VirtualMachineScaleSetResource>> UpdateAsync(WaitUntil waitUntil, VirtualMachineScaleSetPatch patch, string ifMatch, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+            => await UpdateAsync(waitUntil, patch, ConditionalRequestExtensions.BuildMatchConditions(ifMatch, ifNoneMatch), cancellationToken).ConfigureAwait(false);
+
+        // Backward-compatibility shim that accepts ifMatch and ifNoneMatch as positional string parameters; new code should use the MatchConditions overload.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual ArmOperation<VirtualMachineScaleSetResource> Update(WaitUntil waitUntil, VirtualMachineScaleSetPatch patch, string ifMatch, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+            => Update(waitUntil, patch, ConditionalRequestExtensions.BuildMatchConditions(ifMatch, ifNoneMatch), cancellationToken);
     }
 }

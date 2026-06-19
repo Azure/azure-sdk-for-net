@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network.Samples
             NetworkSecurityPerimeterAssociationResource networkSecurityPerimeterAssociation = client.GetNetworkSecurityPerimeterAssociationResource(networkSecurityPerimeterAssociationResourceId);
 
             // invoke the operation
-            await networkSecurityPerimeterAssociation.DeleteAsync(WaitUntil.Completed);
+            await networkSecurityPerimeterAssociation.DeleteAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Network.Samples
                 ProfileId = new ResourceIdentifier("/subscriptions/subId/resourceGroups/rg1/providers/Microsoft.Network/networkSecurityPerimeters/nsp1/profiles/{profileName}"),
                 AccessMode = NetworkSecurityPerimeterAssociationAccessMode.Enforced,
             };
-            ArmOperation<NetworkSecurityPerimeterAssociationResource> lro = await networkSecurityPerimeterAssociation.UpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<NetworkSecurityPerimeterAssociationResource> lro = await networkSecurityPerimeterAssociation.UpdateAsync(WaitUntil.Completed, data, cancellationToken: System.Threading.CancellationToken.None);
             NetworkSecurityPerimeterAssociationResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

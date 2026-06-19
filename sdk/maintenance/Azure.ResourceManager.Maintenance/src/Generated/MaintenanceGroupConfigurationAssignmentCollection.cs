@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -20,7 +22,7 @@ namespace Azure.ResourceManager.Maintenance
     /// Each <see cref="MaintenanceGroupConfigurationAssignmentResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
     /// To get a <see cref="MaintenanceGroupConfigurationAssignmentCollection"/> instance call the GetMaintenanceGroupConfigurationAssignments method from an instance of <see cref="ArmResource"/>.
     /// </summary>
-    public partial class MaintenanceGroupConfigurationAssignmentCollection : ArmCollection
+    public partial class MaintenanceGroupConfigurationAssignmentCollection : ArmCollection, IEnumerable<MaintenanceGroupConfigurationAssignmentResource>, IAsyncEnumerable<MaintenanceGroupConfigurationAssignmentResource>
     {
         private readonly ClientDiagnostics _configurationAssignmentsClientDiagnostics;
         private readonly ConfigurationAssignments _configurationAssignmentsRestClient;
@@ -265,21 +267,10 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="providerName"> Resource provider name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="resourceName"> Resource identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="MaintenanceGroupConfigurationAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MaintenanceGroupConfigurationAssignmentResource> GetAllAsync(string resourceGroupName, string providerName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<MaintenanceGroupConfigurationAssignmentResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
@@ -287,10 +278,10 @@ namespace Azure.ResourceManager.Maintenance
             return new AsyncPageableWrapper<MaintenanceConfigurationAssignmentData, MaintenanceGroupConfigurationAssignmentResource>(new ConfigurationAssignmentsGetAllAsyncCollectionResultOfT(
                 _configurationAssignmentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
-                resourceGroupName,
-                providerName,
-                resourceType,
-                resourceName,
+                Id.ResourceGroupName,
+                Id.ResourceType.Namespace,
+                Id.ResourceType.Type,
+                Id.Name,
                 context,
                 "MaintenanceGroupConfigurationAssignmentCollection.GetAll"), data => new MaintenanceGroupConfigurationAssignmentResource(Client, data));
         }
@@ -312,21 +303,10 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="providerName"> Resource provider name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="resourceName"> Resource identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="MaintenanceGroupConfigurationAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MaintenanceGroupConfigurationAssignmentResource> GetAll(string resourceGroupName, string providerName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
+        public virtual Pageable<MaintenanceGroupConfigurationAssignmentResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
@@ -334,10 +314,10 @@ namespace Azure.ResourceManager.Maintenance
             return new PageableWrapper<MaintenanceConfigurationAssignmentData, MaintenanceGroupConfigurationAssignmentResource>(new ConfigurationAssignmentsGetAllCollectionResultOfT(
                 _configurationAssignmentsRestClient,
                 Guid.Parse(Id.SubscriptionId),
-                resourceGroupName,
-                providerName,
-                resourceType,
-                resourceName,
+                Id.ResourceGroupName,
+                Id.ResourceType.Namespace,
+                Id.ResourceType.Type,
+                Id.Name,
                 context,
                 "MaintenanceGroupConfigurationAssignmentCollection.GetAll"), data => new MaintenanceGroupConfigurationAssignmentResource(Client, data));
         }
@@ -576,6 +556,22 @@ namespace Azure.ResourceManager.Maintenance
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        IEnumerator<MaintenanceGroupConfigurationAssignmentResource> IEnumerable<MaintenanceGroupConfigurationAssignmentResource>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        IAsyncEnumerator<MaintenanceGroupConfigurationAssignmentResource> IAsyncEnumerable<MaintenanceGroupConfigurationAssignmentResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

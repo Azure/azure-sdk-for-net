@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.HybridNetwork
@@ -25,51 +26,49 @@ namespace Azure.ResourceManager.HybridNetwork
     /// </summary>
     public partial class PublisherCollection : ArmCollection, IEnumerable<PublisherResource>, IAsyncEnumerable<PublisherResource>
     {
-        private readonly ClientDiagnostics _publisherClientDiagnostics;
-        private readonly PublishersRestOperations _publisherRestClient;
+        private readonly ClientDiagnostics _publishersClientDiagnostics;
+        private readonly Publishers _publishersRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="PublisherCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of PublisherCollection for mocking. </summary>
         protected PublisherCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="PublisherCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="PublisherCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal PublisherCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _publisherClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridNetwork", PublisherResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(PublisherResource.ResourceType, out string publisherApiVersion);
-            _publisherRestClient = new PublishersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, publisherApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _publishersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridNetwork", PublisherResource.ResourceType.Namespace, Diagnostics);
+            _publishersRestClient = new Publishers(_publishersClientDiagnostics, Pipeline, Endpoint, publisherApiVersion ?? "2025-03-30");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Creates or updates a publisher.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Publishers_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> Publishers_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PublisherResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,21 +76,33 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <param name="publisherName"> The name of the publisher. </param>
         /// <param name="data"> Parameters supplied to the create publisher operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<PublisherResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string publisherName, PublisherData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
-            Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _publisherClientDiagnostics.CreateScope("PublisherCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _publishersClientDiagnostics.CreateScope("PublisherCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _publisherRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, publisherName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new HybridNetworkArmOperation<PublisherResource>(new PublisherOperationSource(Client), _publisherClientDiagnostics, Pipeline, _publisherRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, publisherName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _publishersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, publisherName, PublisherData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                HybridNetworkArmOperation<PublisherResource> operation = new HybridNetworkArmOperation<PublisherResource>(
+                    new PublisherOperationSource(Client),
+                    _publishersClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -105,20 +116,16 @@ namespace Azure.ResourceManager.HybridNetwork
         /// Creates or updates a publisher.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Publishers_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> Publishers_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PublisherResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,21 +133,33 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <param name="publisherName"> The name of the publisher. </param>
         /// <param name="data"> Parameters supplied to the create publisher operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<PublisherResource> CreateOrUpdate(WaitUntil waitUntil, string publisherName, PublisherData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
-            Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _publisherClientDiagnostics.CreateScope("PublisherCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _publishersClientDiagnostics.CreateScope("PublisherCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _publisherRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, publisherName, data, cancellationToken);
-                var operation = new HybridNetworkArmOperation<PublisherResource>(new PublisherOperationSource(Client), _publisherClientDiagnostics, Pipeline, _publisherRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, publisherName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _publishersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, publisherName, PublisherData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                HybridNetworkArmOperation<PublisherResource> operation = new HybridNetworkArmOperation<PublisherResource>(
+                    new PublisherOperationSource(Client),
+                    _publishersClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -154,38 +173,42 @@ namespace Azure.ResourceManager.HybridNetwork
         /// Gets information about the specified publisher.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Publishers_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Publishers_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PublisherResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="publisherName"> The name of the publisher. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<PublisherResource>> GetAsync(string publisherName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
 
-            using var scope = _publisherClientDiagnostics.CreateScope("PublisherCollection.Get");
+            using DiagnosticScope scope = _publishersClientDiagnostics.CreateScope("PublisherCollection.Get");
             scope.Start();
             try
             {
-                var response = await _publisherRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, publisherName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _publishersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, publisherName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<PublisherData> response = Response.FromValue(PublisherData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new PublisherResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -199,38 +222,42 @@ namespace Azure.ResourceManager.HybridNetwork
         /// Gets information about the specified publisher.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Publishers_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Publishers_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PublisherResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="publisherName"> The name of the publisher. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<PublisherResource> Get(string publisherName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
 
-            using var scope = _publisherClientDiagnostics.CreateScope("PublisherCollection.Get");
+            using DiagnosticScope scope = _publishersClientDiagnostics.CreateScope("PublisherCollection.Get");
             scope.Start();
             try
             {
-                var response = _publisherRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, publisherName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _publishersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, publisherName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<PublisherData> response = Response.FromValue(PublisherData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new PublisherResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -244,50 +271,44 @@ namespace Azure.ResourceManager.HybridNetwork
         /// Lists all the publishers in a resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Publishers_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> Publishers_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PublisherResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PublisherResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PublisherResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PublisherResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _publisherRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _publisherRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PublisherResource(Client, PublisherData.DeserializePublisherData(e)), _publisherClientDiagnostics, Pipeline, "PublisherCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<PublisherData, PublisherResource>(new PublishersGetByResourceGroupAsyncCollectionResultOfT(_publishersRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "PublisherCollection.GetAll"), data => new PublisherResource(Client, data));
         }
 
         /// <summary>
         /// Lists all the publishers in a resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Publishers_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> Publishers_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PublisherResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -295,45 +316,61 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <returns> A collection of <see cref="PublisherResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PublisherResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _publisherRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _publisherRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PublisherResource(Client, PublisherData.DeserializePublisherData(e)), _publisherClientDiagnostics, Pipeline, "PublisherCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<PublisherData, PublisherResource>(new PublishersGetByResourceGroupCollectionResultOfT(_publishersRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "PublisherCollection.GetAll"), data => new PublisherResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Publishers_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Publishers_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PublisherResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="publisherName"> The name of the publisher. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string publisherName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
 
-            using var scope = _publisherClientDiagnostics.CreateScope("PublisherCollection.Exists");
+            using DiagnosticScope scope = _publishersClientDiagnostics.CreateScope("PublisherCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _publisherRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, publisherName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _publishersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, publisherName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<PublisherData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(PublisherData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((PublisherData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -347,36 +384,50 @@ namespace Azure.ResourceManager.HybridNetwork
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Publishers_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Publishers_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PublisherResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="publisherName"> The name of the publisher. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string publisherName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
 
-            using var scope = _publisherClientDiagnostics.CreateScope("PublisherCollection.Exists");
+            using DiagnosticScope scope = _publishersClientDiagnostics.CreateScope("PublisherCollection.Exists");
             scope.Start();
             try
             {
-                var response = _publisherRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, publisherName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _publishersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, publisherName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<PublisherData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(PublisherData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((PublisherData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -390,38 +441,54 @@ namespace Azure.ResourceManager.HybridNetwork
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Publishers_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Publishers_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PublisherResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="publisherName"> The name of the publisher. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<PublisherResource>> GetIfExistsAsync(string publisherName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
 
-            using var scope = _publisherClientDiagnostics.CreateScope("PublisherCollection.GetIfExists");
+            using DiagnosticScope scope = _publishersClientDiagnostics.CreateScope("PublisherCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _publisherRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, publisherName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _publishersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, publisherName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<PublisherData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(PublisherData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((PublisherData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<PublisherResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new PublisherResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -435,38 +502,54 @@ namespace Azure.ResourceManager.HybridNetwork
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Publishers_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Publishers_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PublisherResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="publisherName"> The name of the publisher. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<PublisherResource> GetIfExists(string publisherName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
 
-            using var scope = _publisherClientDiagnostics.CreateScope("PublisherCollection.GetIfExists");
+            using DiagnosticScope scope = _publishersClientDiagnostics.CreateScope("PublisherCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _publisherRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, publisherName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _publishersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, publisherName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<PublisherData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(PublisherData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((PublisherData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<PublisherResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new PublisherResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -486,6 +569,7 @@ namespace Azure.ResourceManager.HybridNetwork
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<PublisherResource> IAsyncEnumerable<PublisherResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

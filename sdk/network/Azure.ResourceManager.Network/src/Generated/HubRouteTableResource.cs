@@ -6,46 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary>
-    /// A Class representing a HubRouteTable along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HubRouteTableResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetHubRouteTableResource method.
-    /// Otherwise you can get one from its parent resource <see cref="VirtualHubResource"/> using the GetHubRouteTable method.
+    /// A class representing a HubRouteTable along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HubRouteTableResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="VirtualHubResource"/> using the GetHubRouteTables method.
     /// </summary>
     public partial class HubRouteTableResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="HubRouteTableResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="virtualHubName"> The virtualHubName. </param>
-        /// <param name="routeTableName"> The routeTableName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string virtualHubName, string routeTableName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/hubRouteTables/{routeTableName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _hubRouteTableClientDiagnostics;
-        private readonly HubRouteTablesRestOperations _hubRouteTableRestClient;
+        private readonly ClientDiagnostics _hubRouteTablesClientDiagnostics;
+        private readonly HubRouteTables _hubRouteTablesRestClient;
         private readonly HubRouteTableData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Network/virtualHubs/hubRouteTables";
 
-        /// <summary> Initializes a new instance of the <see cref="HubRouteTableResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of HubRouteTableResource for mocking. </summary>
         protected HubRouteTableResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="HubRouteTableResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="HubRouteTableResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal HubRouteTableResource(ArmClient client, HubRouteTableData data) : this(client, data.Id)
@@ -54,71 +43,93 @@ namespace Azure.ResourceManager.Network
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="HubRouteTableResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="HubRouteTableResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal HubRouteTableResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _hubRouteTableClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string hubRouteTableApiVersion);
-            _hubRouteTableRestClient = new HubRouteTablesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, hubRouteTableApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _hubRouteTablesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
+            _hubRouteTablesRestClient = new HubRouteTables(_hubRouteTablesClientDiagnostics, Pipeline, Endpoint, hubRouteTableApiVersion ?? "2025-07-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual HubRouteTableData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="virtualHubName"> The virtualHubName. </param>
+        /// <param name="routeTableName"> The routeTableName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string virtualHubName, string routeTableName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/hubRouteTables/{routeTableName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Retrieves the details of a RouteTable.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/hubRouteTables/{routeTableName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/hubRouteTables/{routeTableName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>HubRouteTables_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> HubRouteTables_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HubRouteTableResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HubRouteTableResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<HubRouteTableResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _hubRouteTableClientDiagnostics.CreateScope("HubRouteTableResource.Get");
+            using DiagnosticScope scope = _hubRouteTablesClientDiagnostics.CreateScope("HubRouteTableResource.Get");
             scope.Start();
             try
             {
-                var response = await _hubRouteTableRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _hubRouteTablesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<HubRouteTableData> response = Response.FromValue(HubRouteTableData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new HubRouteTableResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -132,33 +143,41 @@ namespace Azure.ResourceManager.Network
         /// Retrieves the details of a RouteTable.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/hubRouteTables/{routeTableName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/hubRouteTables/{routeTableName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>HubRouteTables_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> HubRouteTables_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HubRouteTableResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HubRouteTableResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<HubRouteTableResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _hubRouteTableClientDiagnostics.CreateScope("HubRouteTableResource.Get");
+            using DiagnosticScope scope = _hubRouteTablesClientDiagnostics.CreateScope("HubRouteTableResource.Get");
             scope.Start();
             try
             {
-                var response = _hubRouteTableRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _hubRouteTablesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<HubRouteTableData> response = Response.FromValue(HubRouteTableData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new HubRouteTableResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -172,20 +191,20 @@ namespace Azure.ResourceManager.Network
         /// Deletes a RouteTable.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/hubRouteTables/{routeTableName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/hubRouteTables/{routeTableName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>HubRouteTables_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> HubRouteTables_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HubRouteTableResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HubRouteTableResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -193,14 +212,21 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _hubRouteTableClientDiagnostics.CreateScope("HubRouteTableResource.Delete");
+            using DiagnosticScope scope = _hubRouteTablesClientDiagnostics.CreateScope("HubRouteTableResource.Delete");
             scope.Start();
             try
             {
-                var response = await _hubRouteTableRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation(_hubRouteTableClientDiagnostics, Pipeline, _hubRouteTableRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _hubRouteTablesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                NetworkArmOperation operation = new NetworkArmOperation(_hubRouteTablesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -214,20 +240,20 @@ namespace Azure.ResourceManager.Network
         /// Deletes a RouteTable.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/hubRouteTables/{routeTableName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/hubRouteTables/{routeTableName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>HubRouteTables_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> HubRouteTables_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HubRouteTableResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HubRouteTableResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -235,14 +261,21 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _hubRouteTableClientDiagnostics.CreateScope("HubRouteTableResource.Delete");
+            using DiagnosticScope scope = _hubRouteTablesClientDiagnostics.CreateScope("HubRouteTableResource.Delete");
             scope.Start();
             try
             {
-                var response = _hubRouteTableRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new NetworkArmOperation(_hubRouteTableClientDiagnostics, Pipeline, _hubRouteTableRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _hubRouteTablesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                NetworkArmOperation operation = new NetworkArmOperation(_hubRouteTablesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -253,23 +286,23 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Creates a RouteTable resource if it doesn't exist else updates the existing RouteTable.
+        /// Update a HubRouteTable.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/hubRouteTables/{routeTableName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/hubRouteTables/{routeTableName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>HubRouteTables_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> HubRouteTables_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HubRouteTableResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HubRouteTableResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -281,14 +314,27 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _hubRouteTableClientDiagnostics.CreateScope("HubRouteTableResource.Update");
+            using DiagnosticScope scope = _hubRouteTablesClientDiagnostics.CreateScope("HubRouteTableResource.Update");
             scope.Start();
             try
             {
-                var response = await _hubRouteTableRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<HubRouteTableResource>(new HubRouteTableOperationSource(Client), _hubRouteTableClientDiagnostics, Pipeline, _hubRouteTableRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _hubRouteTablesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, HubRouteTableData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                NetworkArmOperation<HubRouteTableResource> operation = new NetworkArmOperation<HubRouteTableResource>(
+                    new HubRouteTableResourceOperationSource(Client),
+                    _hubRouteTablesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -299,23 +345,23 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Creates a RouteTable resource if it doesn't exist else updates the existing RouteTable.
+        /// Update a HubRouteTable.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/hubRouteTables/{routeTableName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/hubRouteTables/{routeTableName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>HubRouteTables_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> HubRouteTables_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HubRouteTableResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HubRouteTableResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -327,14 +373,27 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _hubRouteTableClientDiagnostics.CreateScope("HubRouteTableResource.Update");
+            using DiagnosticScope scope = _hubRouteTablesClientDiagnostics.CreateScope("HubRouteTableResource.Update");
             scope.Start();
             try
             {
-                var response = _hubRouteTableRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new NetworkArmOperation<HubRouteTableResource>(new HubRouteTableOperationSource(Client), _hubRouteTableClientDiagnostics, Pipeline, _hubRouteTableRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _hubRouteTablesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, HubRouteTableData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                NetworkArmOperation<HubRouteTableResource> operation = new NetworkArmOperation<HubRouteTableResource>(
+                    new HubRouteTableResourceOperationSource(Client),
+                    _hubRouteTablesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)

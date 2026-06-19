@@ -12,6 +12,8 @@
 
 ### Other Changes
 
+- Updated customer SDK stats dimension key names to use camelCase (`computeType`, `telemetryType`, `dropCode`, `dropReason`, `retryCode`, `retryReason`).
+
 ## 1.8.1 (2026-05-20)
 
 ### Features Added

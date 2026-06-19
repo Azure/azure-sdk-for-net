@@ -21,15 +21,15 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> Initializes a new instance of <see cref="OptimizationOptions"/>. </summary>
-        /// <param name="maxIterations"> Maximum optimization iterations per strategy. Must be &gt;= 1. Default: 5. </param>
+        /// <param name="maxCandidates"> Maximum number of optimization candidates to generate. Must be &gt;= 1. Default: 5. </param>
         /// <param name="optimizationConfig"> Per-target-attribute configuration overrides. Contains skills, tools, system_prompt for the agent, plus model space for model optimization. </param>
         /// <param name="evalModel"> Model deployment used for evaluation. Defaults to server config (typically 'gpt-4o'). </param>
         /// <param name="optimizationModel"> Model deployment for optimization reasoning (must be gpt-5 family). Falls back to the default eval model when not set. </param>
         /// <param name="evaluationLevel"> Evaluation granularity. Null/omitted means per-item single-turn. Set to 'conversation' for per-conversation multi-turn simulation scoring. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OptimizationOptions(int? maxIterations, IDictionary<string, BinaryData> optimizationConfig, string evalModel, string optimizationModel, EvaluationLevel? evaluationLevel, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OptimizationOptions(int? maxCandidates, IDictionary<string, BinaryData> optimizationConfig, string evalModel, string optimizationModel, EvaluationLevel? evaluationLevel, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            MaxIterations = maxIterations;
+            MaxCandidates = maxCandidates;
             OptimizationConfig = optimizationConfig;
             EvalModel = evalModel;
             OptimizationModel = optimizationModel;
@@ -37,8 +37,8 @@ namespace Azure.AI.Projects.Agents
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Maximum optimization iterations per strategy. Must be &gt;= 1. Default: 5. </summary>
-        public int? MaxIterations { get; set; }
+        /// <summary> Maximum number of optimization candidates to generate. Must be &gt;= 1. Default: 5. </summary>
+        public int? MaxCandidates { get; set; }
 
         /// <summary>
         /// Per-target-attribute configuration overrides. Contains skills, tools, system_prompt for the agent, plus model space for model optimization.

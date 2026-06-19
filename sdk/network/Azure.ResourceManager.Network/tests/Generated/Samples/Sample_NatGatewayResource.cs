@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Network.Samples
             NatGatewayResource natGateway = client.GetNatGatewayResource(natGatewayResourceId);
 
             // invoke the operation
-            await natGateway.DeleteAsync(WaitUntil.Completed);
+            await natGateway.DeleteAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }

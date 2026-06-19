@@ -142,7 +142,7 @@ namespace Azure.AI.Translation.Document
                 Argument.AssertNotNull(content, nameof(content));
 
                 using HttpMessage message = CreateStartTranslationRequest(content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "DocumentTranslationClient.StartTranslationAsync", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "DocumentTranslationClient.StartTranslation", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -206,7 +206,7 @@ namespace Azure.AI.Translation.Document
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            return ProtocolOperationHelpers.Convert(await StartTranslationAsync(waitUntil, body, cancellationToken.ToRequestContext()).ConfigureAwait(false), response => (TranslationStatusResult)response, ClientDiagnostics, "DocumentTranslationClient.StartTranslationAsync");
+            return ProtocolOperationHelpers.Convert(await StartTranslationAsync(waitUntil, body, cancellationToken.ToRequestContext()).ConfigureAwait(false), response => (TranslationStatusResult)response, ClientDiagnostics, "DocumentTranslationClient.StartTranslation");
         }
 
         /// <summary>

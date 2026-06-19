@@ -654,8 +654,8 @@ Values = {"eastus", "westus", "westus2", "westeurope"},
 
             // invoke the operation and iterate over the result
             ComponentPolicyStatesResource componentPolicyStatesResource = ComponentPolicyStatesResource.Latest;
-            SubscriptionResourceGetQueryResultsForSubscriptionComponentPolicyStatesOptions options = new SubscriptionResourceGetQueryResultsForSubscriptionComponentPolicyStatesOptions(componentPolicyStatesResource) { Filter = "policyAssignmentId eq '/subscriptions/e78961ba-36fe-4739-9212-e3031b4c8db7/providers/microsoft.authorization/policyassignments/560050f83dbb4a24974323f8'", Apply = "groupby((componentType,complianceState),aggregate($count as count))" };
-            await foreach (ComponentPolicyState item in subscriptionResource.GetQueryResultsForSubscriptionComponentPolicyStatesAsync(options))
+            PolicyQuerySettings options = new PolicyQuerySettings() { Filter = "policyAssignmentId eq '/subscriptions/e78961ba-36fe-4739-9212-e3031b4c8db7/providers/microsoft.authorization/policyassignments/560050f83dbb4a24974323f8'", Apply = "groupby((componentType,complianceState),aggregate($count as count))" };
+            await foreach (ComponentPolicyState item in subscriptionResource.GetQueryResultsForSubscriptionComponentPolicyStatesAsync(componentPolicyStatesResource, options))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -683,8 +683,8 @@ Values = {"eastus", "westus", "westus2", "westeurope"},
 
             // invoke the operation and iterate over the result
             ComponentPolicyStatesResource componentPolicyStatesResource = ComponentPolicyStatesResource.Latest;
-            SubscriptionResourceGetQueryResultsForSubscriptionComponentPolicyStatesOptions options = new SubscriptionResourceGetQueryResultsForSubscriptionComponentPolicyStatesOptions(componentPolicyStatesResource);
-            await foreach (ComponentPolicyState item in subscriptionResource.GetQueryResultsForSubscriptionComponentPolicyStatesAsync(options))
+            PolicyQuerySettings options = new PolicyQuerySettings();
+            await foreach (ComponentPolicyState item in subscriptionResource.GetQueryResultsForSubscriptionComponentPolicyStatesAsync(componentPolicyStatesResource, options))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -707,14 +707,13 @@ Values = {"eastus", "westus", "westus2", "westeurope"},
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
             string subscriptionId = "fffedd8f-ffff-fffd-fffd-fffed2f84852";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+            string policyDefinitionName = "24813039-7534-408a-9842-eb99f45721b1";
+            ResourceIdentifier policyDefinitionResourceId = SubscriptionPolicyDefinitionResource.CreateResourceIdentifier(subscriptionId, policyDefinitionName);
 
             // invoke the operation and iterate over the result
-            string policyDefinitionName = "24813039-7534-408a-9842-eb99f45721b1";
             ComponentPolicyStatesResource componentPolicyStatesResource = ComponentPolicyStatesResource.Latest;
-            SubscriptionResourceGetQueryResultsForPolicyDefinitionComponentPolicyStatesOptions options = new SubscriptionResourceGetQueryResultsForPolicyDefinitionComponentPolicyStatesOptions(policyDefinitionName, componentPolicyStatesResource);
-            await foreach (ComponentPolicyState item in subscriptionResource.GetQueryResultsForPolicyDefinitionComponentPolicyStatesAsync(options))
+
+            await foreach (ComponentPolicyState item in client.GetQueryResultsForPolicyDefinitionComponentPolicyStatesAsync(policyDefinitionResourceId, componentPolicyStatesResource))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -742,9 +741,10 @@ Values = {"eastus", "westus", "westus2", "westeurope"},
 
             // invoke the operation and iterate over the result
             string policyAssignmentName = "ec8f9645-8ecb-4abb-9c0b-5292f19d4003";
+            ResourceIdentifier policyAssignmentResourceId = PolicyAssignmentResource.CreateResourceIdentifier(subscriptionResourceId.ToString(), policyAssignmentName);
+
             ComponentPolicyStatesResource componentPolicyStatesResource = ComponentPolicyStatesResource.Latest;
-            SubscriptionResourceGetQueryResultsForSubscriptionLevelPolicyAssignmentComponentPolicyStatesOptions options = new SubscriptionResourceGetQueryResultsForSubscriptionLevelPolicyAssignmentComponentPolicyStatesOptions(policyAssignmentName, componentPolicyStatesResource);
-            await foreach (ComponentPolicyState item in subscriptionResource.GetQueryResultsForSubscriptionLevelPolicyAssignmentComponentPolicyStatesAsync(options))
+            await foreach (ComponentPolicyState item in client.GetQueryResultsForSubscriptionLevelPolicyAssignmentComponentPolicyStatesAsync(policyAssignmentResourceId, componentPolicyStatesResource))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

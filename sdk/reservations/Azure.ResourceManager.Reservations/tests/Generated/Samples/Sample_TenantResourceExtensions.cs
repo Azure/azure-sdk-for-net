@@ -71,7 +71,6 @@ namespace Azure.ResourceManager.Reservations.Samples
                 Quantity = 1,
                 DisplayName = "TestReservationOrder",
                 AppliedScopeType = AppliedScopeType.Shared,
-                AppliedScopes = { },
                 ReservedResourceInstanceFlexibility = InstanceFlexibility.On,
             };
             CalculatePriceResult result = await tenantResource.CalculateReservationOrderAsync(content);
@@ -109,7 +108,6 @@ BillingPlan = ReservationBillingPlan.Upfront,
 Quantity = 1,
 DisplayName = "testDisplayName",
 AppliedScopeType = AppliedScopeType.Shared,
-AppliedScopes = {},
 IsRenewEnabled = false,
 ReservedResourceInstanceFlexibility = InstanceFlexibility.On,
 }},

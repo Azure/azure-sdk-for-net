@@ -19,21 +19,21 @@ namespace Microsoft.Azure.WebPubSub.Common.Tests
 
             MqttConnectEventRequest request = JsonSerializer.Deserialize<MqttConnectEventRequest>(payload, JsonSerializationOptions);
 
-            Assert.NotNull(request);
-            Assert.AreEqual("user1", request.Claims["sub"].Single());
-            Assert.AreEqual(MqttProtocolVersion.V500, request.Mqtt.ProtocolVersion);
-            Assert.AreEqual("user", request.Mqtt.Username);
-            Assert.AreEqual("pass", request.Mqtt.Password);
-            Assert.AreEqual("k", request.Mqtt.UserProperties.Single().Name);
+            Assert.That(request, Is.Not.Null);
+            Assert.That(request.Claims["sub"].Single(), Is.EqualTo("user1"));
+            Assert.That(request.Mqtt.ProtocolVersion, Is.EqualTo(MqttProtocolVersion.V500));
+            Assert.That(request.Mqtt.Username, Is.EqualTo("user"));
+            Assert.That(request.Mqtt.Password, Is.EqualTo("pass"));
+            Assert.That(request.Mqtt.UserProperties.Single().Name, Is.EqualTo("k"));
 
             string serialized = JsonSerializer.Serialize(request, JsonSerializationOptions);
             MqttConnectEventRequest converted = JsonSerializer.Deserialize<MqttConnectEventRequest>(serialized, JsonSerializationOptions);
 
-            Assert.NotNull(converted);
-            Assert.AreEqual(request.Mqtt.ProtocolVersion, converted.Mqtt.ProtocolVersion);
-            Assert.AreEqual(request.Mqtt.Username, converted.Mqtt.Username);
-            Assert.AreEqual(request.Mqtt.Password, converted.Mqtt.Password);
-            Assert.AreEqual(request.Claims["sub"].Single(), converted.Claims["sub"].Single());
+            Assert.That(converted, Is.Not.Null);
+            Assert.That(converted.Mqtt.ProtocolVersion, Is.EqualTo(request.Mqtt.ProtocolVersion));
+            Assert.That(converted.Mqtt.Username, Is.EqualTo(request.Mqtt.Username));
+            Assert.That(converted.Mqtt.Password, Is.EqualTo(request.Mqtt.Password));
+            Assert.That(converted.Claims["sub"].Single(), Is.EqualTo(request.Claims["sub"].Single()));
         }
     }
 }

@@ -7,45 +7,63 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> The ReplicationStatusType. </summary>
+    /// <summary></summary>
     public readonly partial struct ReplicationStatusType : IEquatable<ReplicationStatusType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ReplicationStatusType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ReplicationStatusType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string ReplicationStatusValue = "ReplicationStatus";
         private const string UefiSettingsValue = "UefiSettings";
 
-        /// <summary> ReplicationStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReplicationStatusType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ReplicationStatusType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the ReplicationStatus. </summary>
         public static ReplicationStatusType ReplicationStatus { get; } = new ReplicationStatusType(ReplicationStatusValue);
-        /// <summary> UefiSettings. </summary>
+
+        /// <summary> Gets the UefiSettings. </summary>
         public static ReplicationStatusType UefiSettings { get; } = new ReplicationStatusType(UefiSettingsValue);
+
         /// <summary> Determines if two <see cref="ReplicationStatusType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ReplicationStatusType left, ReplicationStatusType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ReplicationStatusType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ReplicationStatusType left, ReplicationStatusType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ReplicationStatusType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ReplicationStatusType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ReplicationStatusType(string value) => new ReplicationStatusType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ReplicationStatusType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ReplicationStatusType?(string value) => value == null ? null : new ReplicationStatusType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ReplicationStatusType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ReplicationStatusType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

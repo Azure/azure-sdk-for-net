@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct VpnClientProtocol : IEquatable<VpnClientProtocol>
     {
         private readonly string _value;
+        /// <summary> IkeV2. </summary>
+        private const string IkeV2Value = "IkeV2";
+        /// <summary> SSTP. </summary>
+        private const string SSTPValue = "SSTP";
+        /// <summary> OpenVPN. </summary>
+        private const string OpenVPNValue = "OpenVPN";
 
         /// <summary> Initializes a new instance of <see cref="VpnClientProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public VpnClientProtocol(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string IkeV2Value = "IkeV2";
-        private const string SstpValue = "SSTP";
-        private const string OpenVpnValue = "OpenVPN";
+            _value = value;
+        }
 
         /// <summary> IkeV2. </summary>
         public static VpnClientProtocol IkeV2 { get; } = new VpnClientProtocol(IkeV2Value);
+
         /// <summary> SSTP. </summary>
-        public static VpnClientProtocol Sstp { get; } = new VpnClientProtocol(SstpValue);
+        public static VpnClientProtocol SSTP { get; } = new VpnClientProtocol(SSTPValue);
+
         /// <summary> OpenVPN. </summary>
-        public static VpnClientProtocol OpenVpn { get; } = new VpnClientProtocol(OpenVpnValue);
+        public static VpnClientProtocol OpenVPN { get; } = new VpnClientProtocol(OpenVPNValue);
+
         /// <summary> Determines if two <see cref="VpnClientProtocol"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(VpnClientProtocol left, VpnClientProtocol right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="VpnClientProtocol"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(VpnClientProtocol left, VpnClientProtocol right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="VpnClientProtocol"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="VpnClientProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator VpnClientProtocol(string value) => new VpnClientProtocol(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="VpnClientProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator VpnClientProtocol?(string value) => value == null ? null : new VpnClientProtocol(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is VpnClientProtocol other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(VpnClientProtocol other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

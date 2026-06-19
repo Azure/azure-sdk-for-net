@@ -5,100 +5,107 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
-using Autorest.CSharp.Core;
+using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.OperationalInsights;
+using Azure.ResourceManager.OperationalInsights.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.OperationalInsights.Mocking
 {
-    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableOperationalInsightsSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _operationalInsightsClusterClustersClientDiagnostics;
-        private ClustersRestOperations _operationalInsightsClusterClustersRestClient;
-        private ClientDiagnostics _logAnalyticsQueryPackQueryPacksClientDiagnostics;
-        private QueryPacksRestOperations _logAnalyticsQueryPackQueryPacksRestClient;
-        private ClientDiagnostics _operationalInsightsWorkspaceWorkspacesClientDiagnostics;
-        private WorkspacesRestOperations _operationalInsightsWorkspaceWorkspacesRestClient;
+        private ClientDiagnostics _clustersClientDiagnostics;
+        private Clusters _clustersRestClient;
+        private ClientDiagnostics _workspacesClientDiagnostics;
+        private Workspaces _workspacesRestClient;
+        private ClientDiagnostics _queryPacksClientDiagnostics;
+        private QueryPacks _queryPacksRestClient;
+        private ClientDiagnostics _operationStatusesClientDiagnostics;
+        private OperationStatuses _operationStatusesRestClient;
         private ClientDiagnostics _deletedWorkspacesClientDiagnostics;
-        private DeletedWorkspacesRestOperations _deletedWorkspacesRestClient;
+        private DeletedWorkspaces _deletedWorkspacesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableOperationalInsightsSubscriptionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableOperationalInsightsSubscriptionResource for mocking. </summary>
         protected MockableOperationalInsightsSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableOperationalInsightsSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableOperationalInsightsSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableOperationalInsightsSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics OperationalInsightsClusterClustersClientDiagnostics => _operationalInsightsClusterClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.OperationalInsights", OperationalInsightsClusterResource.ResourceType.Namespace, Diagnostics);
-        private ClustersRestOperations OperationalInsightsClusterClustersRestClient => _operationalInsightsClusterClustersRestClient ??= new ClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(OperationalInsightsClusterResource.ResourceType));
-        private ClientDiagnostics LogAnalyticsQueryPackQueryPacksClientDiagnostics => _logAnalyticsQueryPackQueryPacksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.OperationalInsights", LogAnalyticsQueryPackResource.ResourceType.Namespace, Diagnostics);
-        private QueryPacksRestOperations LogAnalyticsQueryPackQueryPacksRestClient => _logAnalyticsQueryPackQueryPacksRestClient ??= new QueryPacksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(LogAnalyticsQueryPackResource.ResourceType));
-        private ClientDiagnostics OperationalInsightsWorkspaceWorkspacesClientDiagnostics => _operationalInsightsWorkspaceWorkspacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.OperationalInsights", OperationalInsightsWorkspaceResource.ResourceType.Namespace, Diagnostics);
-        private WorkspacesRestOperations OperationalInsightsWorkspaceWorkspacesRestClient => _operationalInsightsWorkspaceWorkspacesRestClient ??= new WorkspacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(OperationalInsightsWorkspaceResource.ResourceType));
-        private ClientDiagnostics DeletedWorkspacesClientDiagnostics => _deletedWorkspacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.OperationalInsights", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private DeletedWorkspacesRestOperations DeletedWorkspacesRestClient => _deletedWorkspacesRestClient ??= new DeletedWorkspacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics ClustersClientDiagnostics => _clustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.OperationalInsights.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private Clusters ClustersRestClient => _clustersRestClient ??= new Clusters(ClustersClientDiagnostics, Pipeline, Endpoint, "2025-07-01");
+
+        private ClientDiagnostics WorkspacesClientDiagnostics => _workspacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.OperationalInsights.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private Workspaces WorkspacesRestClient => _workspacesRestClient ??= new Workspaces(WorkspacesClientDiagnostics, Pipeline, Endpoint, "2025-07-01");
+
+        private ClientDiagnostics QueryPacksClientDiagnostics => _queryPacksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.OperationalInsights.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private QueryPacks QueryPacksRestClient => _queryPacksRestClient ??= new QueryPacks(QueryPacksClientDiagnostics, Pipeline, Endpoint, "2025-07-01");
+
+        private ClientDiagnostics OperationStatusesClientDiagnostics => _operationStatusesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.OperationalInsights.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private OperationStatuses OperationStatusesRestClient => _operationStatusesRestClient ??= new OperationStatuses(OperationStatusesClientDiagnostics, Pipeline, Endpoint, "2025-07-01");
+
+        private ClientDiagnostics DeletedWorkspacesClientDiagnostics => _deletedWorkspacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.OperationalInsights.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private DeletedWorkspaces DeletedWorkspacesRestClient => _deletedWorkspacesRestClient ??= new DeletedWorkspaces(DeletedWorkspacesClientDiagnostics, Pipeline, Endpoint, "2025-07-01");
 
         /// <summary>
         /// Gets the Log Analytics clusters in a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.OperationalInsights/clusters</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.OperationalInsights/clusters. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Clusters_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> Clusters_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OperationalInsightsClusterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OperationalInsightsClusterResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="OperationalInsightsClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<OperationalInsightsClusterResource> GetOperationalInsightsClustersAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => OperationalInsightsClusterClustersRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => OperationalInsightsClusterClustersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new OperationalInsightsClusterResource(Client, OperationalInsightsClusterData.DeserializeOperationalInsightsClusterData(e)), OperationalInsightsClusterClustersClientDiagnostics, Pipeline, "MockableOperationalInsightsSubscriptionResource.GetOperationalInsightsClusters", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<OperationalInsightsClusterData, OperationalInsightsClusterResource>(new ClustersGetAllAsyncCollectionResultOfT(ClustersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableOperationalInsightsSubscriptionResource.GetOperationalInsightsClusters"), data => new OperationalInsightsClusterResource(Client, data));
         }
 
         /// <summary>
         /// Gets the Log Analytics clusters in a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.OperationalInsights/clusters</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.OperationalInsights/clusters. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Clusters_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> Clusters_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OperationalInsightsClusterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -106,118 +113,55 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
         /// <returns> A collection of <see cref="OperationalInsightsClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<OperationalInsightsClusterResource> GetOperationalInsightsClusters(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => OperationalInsightsClusterClustersRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => OperationalInsightsClusterClustersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new OperationalInsightsClusterResource(Client, OperationalInsightsClusterData.DeserializeOperationalInsightsClusterData(e)), OperationalInsightsClusterClustersClientDiagnostics, Pipeline, "MockableOperationalInsightsSubscriptionResource.GetOperationalInsightsClusters", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of all Log Analytics QueryPacks within a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.OperationalInsights/queryPacks</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>QueryPacks_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LogAnalyticsQueryPackResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="LogAnalyticsQueryPackResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<LogAnalyticsQueryPackResource> GetLogAnalyticsQueryPacksAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => LogAnalyticsQueryPackQueryPacksRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LogAnalyticsQueryPackQueryPacksRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LogAnalyticsQueryPackResource(Client, LogAnalyticsQueryPackData.DeserializeLogAnalyticsQueryPackData(e)), LogAnalyticsQueryPackQueryPacksClientDiagnostics, Pipeline, "MockableOperationalInsightsSubscriptionResource.GetLogAnalyticsQueryPacks", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of all Log Analytics QueryPacks within a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.OperationalInsights/queryPacks</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>QueryPacks_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="LogAnalyticsQueryPackResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="LogAnalyticsQueryPackResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<LogAnalyticsQueryPackResource> GetLogAnalyticsQueryPacks(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => LogAnalyticsQueryPackQueryPacksRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LogAnalyticsQueryPackQueryPacksRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LogAnalyticsQueryPackResource(Client, LogAnalyticsQueryPackData.DeserializeLogAnalyticsQueryPackData(e)), LogAnalyticsQueryPackQueryPacksClientDiagnostics, Pipeline, "MockableOperationalInsightsSubscriptionResource.GetLogAnalyticsQueryPacks", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<OperationalInsightsClusterData, OperationalInsightsClusterResource>(new ClustersGetAllCollectionResultOfT(ClustersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableOperationalInsightsSubscriptionResource.GetOperationalInsightsClusters"), data => new OperationalInsightsClusterResource(Client, data));
         }
 
         /// <summary>
         /// Gets the workspaces in a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.OperationalInsights/workspaces</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.OperationalInsights/workspaces. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workspaces_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> Workspaces_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OperationalInsightsWorkspaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OperationalInsightsWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="OperationalInsightsWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<OperationalInsightsWorkspaceResource> GetOperationalInsightsWorkspacesAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => OperationalInsightsWorkspaceWorkspacesRestClient.CreateListRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new OperationalInsightsWorkspaceResource(Client, OperationalInsightsWorkspaceData.DeserializeOperationalInsightsWorkspaceData(e)), OperationalInsightsWorkspaceWorkspacesClientDiagnostics, Pipeline, "MockableOperationalInsightsSubscriptionResource.GetOperationalInsightsWorkspaces", "value", null, cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<OperationalInsightsWorkspaceData, OperationalInsightsWorkspaceResource>(new WorkspacesGetAllAsyncCollectionResultOfT(WorkspacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableOperationalInsightsSubscriptionResource.GetOperationalInsightsWorkspaces"), data => new OperationalInsightsWorkspaceResource(Client, data));
         }
 
         /// <summary>
         /// Gets the workspaces in a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.OperationalInsights/workspaces</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.OperationalInsights/workspaces. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workspaces_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> Workspaces_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OperationalInsightsWorkspaceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -225,58 +169,223 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
         /// <returns> A collection of <see cref="OperationalInsightsWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<OperationalInsightsWorkspaceResource> GetOperationalInsightsWorkspaces(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => OperationalInsightsWorkspaceWorkspacesRestClient.CreateListRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new OperationalInsightsWorkspaceResource(Client, OperationalInsightsWorkspaceData.DeserializeOperationalInsightsWorkspaceData(e)), OperationalInsightsWorkspaceWorkspacesClientDiagnostics, Pipeline, "MockableOperationalInsightsSubscriptionResource.GetOperationalInsightsWorkspaces", "value", null, cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<OperationalInsightsWorkspaceData, OperationalInsightsWorkspaceResource>(new WorkspacesGetAllCollectionResultOfT(WorkspacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableOperationalInsightsSubscriptionResource.GetOperationalInsightsWorkspaces"), data => new OperationalInsightsWorkspaceResource(Client, data));
         }
 
         /// <summary>
-        /// Gets recently deleted workspaces in a subscription, available for recovery.
+        /// Gets a list of all Log Analytics QueryPacks within a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.OperationalInsights/deletedWorkspaces</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.OperationalInsights/queryPacks. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DeletedWorkspaces_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> LogAnalyticsQueryPacks_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OperationalInsightsWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<OperationalInsightsWorkspaceResource> GetDeletedWorkspacesAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="LogAnalyticsQueryPackResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<LogAnalyticsQueryPackResource> GetLogAnalyticsQueryPacksAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DeletedWorkspacesRestClient.CreateListRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new OperationalInsightsWorkspaceResource(Client, OperationalInsightsWorkspaceData.DeserializeOperationalInsightsWorkspaceData(e)), DeletedWorkspacesClientDiagnostics, Pipeline, "MockableOperationalInsightsSubscriptionResource.GetDeletedWorkspaces", "value", null, cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<LogAnalyticsQueryPackData, LogAnalyticsQueryPackResource>(new QueryPacksGetAllAsyncCollectionResultOfT(QueryPacksRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableOperationalInsightsSubscriptionResource.GetLogAnalyticsQueryPacks"), data => new LogAnalyticsQueryPackResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets a list of all Log Analytics QueryPacks within a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.OperationalInsights/queryPacks. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> LogAnalyticsQueryPacks_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="LogAnalyticsQueryPackResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<LogAnalyticsQueryPackResource> GetLogAnalyticsQueryPacks(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<LogAnalyticsQueryPackData, LogAnalyticsQueryPackResource>(new QueryPacksGetAllCollectionResultOfT(QueryPacksRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableOperationalInsightsSubscriptionResource.GetLogAnalyticsQueryPacks"), data => new LogAnalyticsQueryPackResource(Client, data));
+        }
+
+        /// <summary>
+        /// Get the status of a long running azure asynchronous operation.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.OperationalInsights/locations/{location}/operationStatuses/{asyncOperationId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> OperationStatusesOperationGroup_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="asyncOperationId"> The operation Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="asyncOperationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="asyncOperationId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<OperationalInsightsOperationStatus>> GetAsync(AzureLocation location, string asyncOperationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(asyncOperationId, nameof(asyncOperationId));
+
+            using DiagnosticScope scope = OperationStatusesClientDiagnostics.CreateScope("MockableOperationalInsightsSubscriptionResource.Get");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = OperationStatusesRestClient.CreateGetRequest(location, asyncOperationId, Guid.Parse(Id.SubscriptionId), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<OperationalInsightsOperationStatus> response = Response.FromValue(OperationalInsightsOperationStatus.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get the status of a long running azure asynchronous operation.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.OperationalInsights/locations/{location}/operationStatuses/{asyncOperationId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> OperationStatusesOperationGroup_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="asyncOperationId"> The operation Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="asyncOperationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="asyncOperationId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<OperationalInsightsOperationStatus> Get(AzureLocation location, string asyncOperationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(asyncOperationId, nameof(asyncOperationId));
+
+            using DiagnosticScope scope = OperationStatusesClientDiagnostics.CreateScope("MockableOperationalInsightsSubscriptionResource.Get");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = OperationStatusesRestClient.CreateGetRequest(location, asyncOperationId, Guid.Parse(Id.SubscriptionId), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<OperationalInsightsOperationStatus> response = Response.FromValue(OperationalInsightsOperationStatus.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
         /// Gets recently deleted workspaces in a subscription, available for recovery.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.OperationalInsights/deletedWorkspaces</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.OperationalInsights/deletedWorkspaces. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DeletedWorkspaces_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> DeletedWorkspacesOperationGroup_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="OperationalInsightsWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<OperationalInsightsWorkspaceResource> GetDeletedWorkspaces(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<OperationalInsightsWorkspaceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DeletedWorkspacesRestClient.CreateListRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new OperationalInsightsWorkspaceResource(Client, OperationalInsightsWorkspaceData.DeserializeOperationalInsightsWorkspaceData(e)), DeletedWorkspacesClientDiagnostics, Pipeline, "MockableOperationalInsightsSubscriptionResource.GetDeletedWorkspaces", "value", null, cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<OperationalInsightsWorkspaceData, OperationalInsightsWorkspaceResource>(new DeletedWorkspacesGetAllAsyncCollectionResultOfT(DeletedWorkspacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableOperationalInsightsSubscriptionResource.GetAll"), data => new OperationalInsightsWorkspaceResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets recently deleted workspaces in a subscription, available for recovery.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.OperationalInsights/deletedWorkspaces. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DeletedWorkspacesOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="OperationalInsightsWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<OperationalInsightsWorkspaceResource> GetAll(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<OperationalInsightsWorkspaceData, OperationalInsightsWorkspaceResource>(new DeletedWorkspacesGetAllCollectionResultOfT(DeletedWorkspacesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableOperationalInsightsSubscriptionResource.GetAll"), data => new OperationalInsightsWorkspaceResource(Client, data));
         }
     }
 }

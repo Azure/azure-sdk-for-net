@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -15,37 +16,8 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Specifies information about the gallery Script Version that you want to update. </summary>
     public partial class GalleryScriptVersionPatch : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="GalleryScriptVersionPatch"/>. </summary>
         public GalleryScriptVersionPatch()
@@ -54,47 +26,76 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="GalleryScriptVersionPatch"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="publishingProfile"> The publishing profile of a gallery image version. </param>
-        /// <param name="safetyProfile"> The safety profile of the Gallery Script Version. </param>
-        /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
-        /// <param name="replicationStatus"> This is the replication status of the gallery image version. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Gallery script version properties to update. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GalleryScriptVersionPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, GalleryScriptVersionPublishingProfile publishingProfile, GalleryScriptVersionSafetyProfile safetyProfile, GalleryProvisioningState? provisioningState, ReplicationStatus replicationStatus, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal GalleryScriptVersionPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, GalleryScriptVersionProperties properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            PublishingProfile = publishingProfile;
-            SafetyProfile = safetyProfile;
-            ProvisioningState = provisioningState;
-            ReplicationStatus = replicationStatus;
+            Properties = properties;
             Tags = tags;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Gallery script version properties to update. </summary>
+        internal GalleryScriptVersionProperties Properties { get; set; }
+
+        /// <summary> Resource tags. </summary>
+        public IDictionary<string, string> Tags { get; }
+
         /// <summary> The publishing profile of a gallery image version. </summary>
-        public GalleryScriptVersionPublishingProfile PublishingProfile { get; set; }
-        /// <summary> The safety profile of the Gallery Script Version. </summary>
-        internal GalleryScriptVersionSafetyProfile SafetyProfile { get; set; }
-        /// <summary> Indicates whether or not removing this Gallery Image Version from replicated regions is allowed. </summary>
-        public bool? AllowDeletionOfReplicatedLocations
+        public GalleryScriptVersionPublishingProfile PublishingProfile
         {
-            get => SafetyProfile is null ? default : SafetyProfile.AllowDeletionOfReplicatedLocations;
+            get
+            {
+                return Properties is null ? default : Properties.PublishingProfile;
+            }
             set
             {
-                if (SafetyProfile is null)
-                    SafetyProfile = new GalleryScriptVersionSafetyProfile();
-                SafetyProfile.AllowDeletionOfReplicatedLocations = value;
+                if (Properties is null)
+                {
+                    Properties = new GalleryScriptVersionProperties();
+                }
+                Properties.PublishingProfile = value;
             }
         }
 
         /// <summary> The provisioning state, which only appears in the response. </summary>
-        public GalleryProvisioningState? ProvisioningState { get; }
+        public GalleryProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> This is the replication status of the gallery image version. </summary>
-        public ReplicationStatus ReplicationStatus { get; }
-        /// <summary> Resource tags. </summary>
-        public IDictionary<string, string> Tags { get; }
+        public ReplicationStatus ReplicationStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ReplicationStatus;
+            }
+        }
+
+        /// <summary> Indicates whether or not removing this Gallery Image Version from replicated regions is allowed. </summary>
+        public bool? AllowDeletionOfReplicatedLocations
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AllowDeletionOfReplicatedLocations;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GalleryScriptVersionProperties();
+                }
+                Properties.AllowDeletionOfReplicatedLocations = value;
+            }
+        }
     }
 }
