@@ -3,9 +3,6 @@
 
 #nullable disable
 
-#pragma warning disable SA1402 // File may only contain a single type
-#pragma warning disable SA1649 // File name should match first type name
-
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -16,6 +13,10 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ApiManagement
 {
+    // #1 ApiGatewayResource.Delete: The generated delete is renamed to DeleteRaw
+    // (@@clientName in client.tsp) because it returns a different LRO shape. This custom
+    // Delete provides the old SDK signature (no If-Match param) with manual LRO construction.
+    // Not spec-fixable: the generated DeleteRaw has no public method on the resource class.
     public partial class ApiGatewayResource
     {
         /// <summary> Deletes the resource. </summary>
@@ -75,16 +76,5 @@ namespace Azure.ResourceManager.ApiManagement
                 throw;
             }
         }
-    }
-
-    public partial class ApiManagementGatewayResource
-    {
-        /// <summary> Deletes the Gateway API. </summary>
-        public virtual async Task<Response> DeleteGatewayApiAsync(string apiId, CancellationToken cancellationToken = default)
-            => await DeleteAsync(apiId, cancellationToken).ConfigureAwait(false);
-
-        /// <summary> Deletes the Gateway API. </summary>
-        public virtual Response DeleteGatewayApi(string apiId, CancellationToken cancellationToken = default)
-            => Delete(apiId, cancellationToken);
     }
 }

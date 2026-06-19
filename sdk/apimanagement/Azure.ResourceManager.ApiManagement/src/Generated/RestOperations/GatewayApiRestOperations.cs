@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.ApiManagement
             return message;
         }
 
-        internal HttpMessage CreateDeleteRequest(Guid subscriptionId, string resourceGroupName, string serviceName, string gatewayId, string apiId, RequestContext context)
+        internal HttpMessage CreateDeleteGatewayApiRequest(Guid subscriptionId, string resourceGroupName, string serviceName, string gatewayId, string apiId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

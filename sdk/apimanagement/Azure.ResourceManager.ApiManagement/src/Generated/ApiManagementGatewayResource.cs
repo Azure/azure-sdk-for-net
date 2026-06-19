@@ -549,11 +549,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="apiId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response> DeleteAsync(string apiId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> DeleteGatewayApiAsync(string apiId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(apiId, nameof(apiId));
 
-            using DiagnosticScope scope = _gatewayApiClientDiagnostics.CreateScope("ApiManagementGatewayResource.Delete");
+            using DiagnosticScope scope = _gatewayApiClientDiagnostics.CreateScope("ApiManagementGatewayResource.DeleteGatewayApi");
             scope.Start();
             try
             {
@@ -561,7 +561,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _gatewayApiRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiId, context);
+                HttpMessage message = _gatewayApiRestClient.CreateDeleteGatewayApiRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiId, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -597,11 +597,11 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="apiId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response Delete(string apiId, CancellationToken cancellationToken = default)
+        public virtual Response DeleteGatewayApi(string apiId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(apiId, nameof(apiId));
 
-            using DiagnosticScope scope = _gatewayApiClientDiagnostics.CreateScope("ApiManagementGatewayResource.Delete");
+            using DiagnosticScope scope = _gatewayApiClientDiagnostics.CreateScope("ApiManagementGatewayResource.DeleteGatewayApi");
             scope.Start();
             try
             {
@@ -609,7 +609,7 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _gatewayApiRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiId, context);
+                HttpMessage message = _gatewayApiRestClient.CreateDeleteGatewayApiRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiId, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
