@@ -153,6 +153,8 @@ jobs:
     - job: "Analyze"
       timeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
       condition: and(succeededOrFailed(), ne(variables['Skip.Analyze'], true))
+      variables:
+        NPM_CONFIG_USERCONFIG: $(Agent.TempDirectory)/analyze-job/.npmrc
       pool:
         name: $(LINUXPOOL)
         image: $(LINUXVMIMAGE)
@@ -186,9 +188,15 @@ jobs:
 
         - template: /eng/common/pipelines/templates/steps/validate-filename.yml
 
+        - template: /eng/common/pipelines/templates/steps/create-authenticated-npmrc.yml
+          parameters:
+            npmrcPath: $(Agent.TempDirectory)/cspell/.npmrc
+            ReplaceRegistryHost: registry.npmjs.org
+
         - template: /eng/common/pipelines/templates/steps/check-spelling.yml
           parameters:
             ScriptToValidateUpgrade: eng/scripts/spell-check-public-api.ps1
+            NpmConfigUserConfig: $(Agent.TempDirectory)/cspell/.npmrc
 
         - template: /eng/common/pipelines/templates/steps/verify-links.yml
           parameters:

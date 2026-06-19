@@ -10,6 +10,9 @@ parameters:
   - name: ServiceConnection
     type: string
     default: ''
+  - name: ReplaceRegistryHost
+    type: string
+    default: ''
 
 steps:
 - pwsh: |
@@ -21,7 +24,10 @@ steps:
       New-Item -Path $parentFolder -ItemType Directory | Out-Null
     }
 
-    $content = "registry=${{ parameters.registryUrl }}"
+    $content = @("registry=${{ parameters.registryUrl }}")
+    if ('${{ parameters.ReplaceRegistryHost }}') {
+      $content += "replace-registry-host=${{ parameters.ReplaceRegistryHost }}"
+    }
     $content | Out-File '${{ parameters.npmrcPath }}'
   displayName: 'Create .npmrc'
   condition: ${{ parameters.CustomCondition }}
