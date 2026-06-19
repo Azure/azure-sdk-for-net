@@ -486,13 +486,13 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApiManagementDeletedServiceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ApiManagementDeletedServiceResource> GetBySubscriptionAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ApiManagementDeletedServiceResource> GetApiManagementDeletedServicesAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApiManagementDeletedServiceData, ApiManagementDeletedServiceResource>(new DeletedServicesGetBySubscriptionAsyncCollectionResultOfT(DeletedServicesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableApiManagementSubscriptionResource.GetBySubscription"), data => new ApiManagementDeletedServiceResource(Client, data));
+            return new AsyncPageableWrapper<ApiManagementDeletedServiceData, ApiManagementDeletedServiceResource>(new DeletedServicesGetApiManagementDeletedServicesAsyncCollectionResultOfT(DeletedServicesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableApiManagementSubscriptionResource.GetApiManagementDeletedServices"), data => new ApiManagementDeletedServiceResource(Client, data));
         }
 
         /// <summary>
@@ -514,13 +514,13 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApiManagementDeletedServiceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ApiManagementDeletedServiceResource> GetBySubscription(CancellationToken cancellationToken = default)
+        public virtual Pageable<ApiManagementDeletedServiceResource> GetApiManagementDeletedServices(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApiManagementDeletedServiceData, ApiManagementDeletedServiceResource>(new DeletedServicesGetBySubscriptionCollectionResultOfT(DeletedServicesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableApiManagementSubscriptionResource.GetBySubscription"), data => new ApiManagementDeletedServiceResource(Client, data));
+            return new PageableWrapper<ApiManagementDeletedServiceData, ApiManagementDeletedServiceResource>(new DeletedServicesGetApiManagementDeletedServicesCollectionResultOfT(DeletedServicesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableApiManagementSubscriptionResource.GetApiManagementDeletedServices"), data => new ApiManagementDeletedServiceResource(Client, data));
         }
 
         /// <summary>
@@ -542,13 +542,13 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApiManagementSku"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ApiManagementSku> GetAllAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ApiManagementSku> GetApiManagementSkusAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new ApiManagementSkusGetAllAsyncCollectionResultOfT(ApiManagementSkusRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableApiManagementSubscriptionResource.GetAll");
+            return new ApiManagementSkusGetApiManagementSkusAsyncCollectionResultOfT(ApiManagementSkusRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableApiManagementSubscriptionResource.GetApiManagementSkus");
         }
 
         /// <summary>
@@ -570,13 +570,13 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApiManagementSku"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ApiManagementSku> GetAll(CancellationToken cancellationToken = default)
+        public virtual Pageable<ApiManagementSku> GetApiManagementSkus(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new ApiManagementSkusGetAllCollectionResultOfT(ApiManagementSkusRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableApiManagementSubscriptionResource.GetAll");
+            return new ApiManagementSkusGetApiManagementSkusCollectionResultOfT(ApiManagementSkusRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableApiManagementSubscriptionResource.GetApiManagementSkus");
         }
 
         /// <summary>

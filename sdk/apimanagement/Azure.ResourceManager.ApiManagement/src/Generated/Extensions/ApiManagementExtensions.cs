@@ -2196,72 +2196,72 @@ namespace Azure.ResourceManager.ApiManagement
         /// Lists all soft-deleted services available for undelete for the given subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetBySubscriptionAsync(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementDeletedServicesAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="ApiManagementDeletedServiceResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ApiManagementDeletedServiceResource> GetBySubscriptionAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ApiManagementDeletedServiceResource> GetApiManagementDeletedServicesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetBySubscriptionAsync(cancellationToken);
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementDeletedServicesAsync(cancellationToken);
         }
 
         /// <summary>
         /// Lists all soft-deleted services available for undelete for the given subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetBySubscription(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementDeletedServices(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="ApiManagementDeletedServiceResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ApiManagementDeletedServiceResource> GetBySubscription(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Pageable<ApiManagementDeletedServiceResource> GetApiManagementDeletedServices(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetBySubscription(cancellationToken);
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementDeletedServices(cancellationToken);
         }
 
         /// <summary>
         /// Gets the list of Microsoft.ApiManagement SKUs available for your Subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetAllAsync(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementSkusAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="ApiManagementSku"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ApiManagementSku> GetAllAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ApiManagementSku> GetApiManagementSkusAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetAllAsync(cancellationToken);
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementSkusAsync(cancellationToken);
         }
 
         /// <summary>
         /// Gets the list of Microsoft.ApiManagement SKUs available for your Subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetAll(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementSkus(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="ApiManagementSku"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ApiManagementSku> GetAll(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Pageable<ApiManagementSku> GetApiManagementSkus(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetAll(cancellationToken);
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementSkus(cancellationToken);
         }
 
         /// <summary>

@@ -65,5 +65,28 @@ namespace Azure.ResourceManager.ApiManagement
             ResourceIdentifier id = new ResourceIdentifier($"{Id}/tenant/{configurationName}");
             return new TenantAccessInfoResource(Client, id);
         }
+
+        // Old SDK accepted AzureLocation; new generator uses string. Forward for compat.
+        // Old SDK had a simpler MigrateToStv2 overload without MigrateToStv2Contract param.
+
+        /// <summary> Gets the Network Status By Location. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<Response<NetworkStatusContract>> GetNetworkStatusByLocationAsync(AzureLocation locationName, CancellationToken cancellationToken = default)
+            => await GetNetworkStatusByLocationAsync(locationName.ToString(), cancellationToken).ConfigureAwait(false);
+
+        /// <summary> Gets the Network Status By Location. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response<NetworkStatusContract> GetNetworkStatusByLocation(AzureLocation locationName, CancellationToken cancellationToken = default)
+            => GetNetworkStatusByLocation(locationName.ToString(), cancellationToken);
+
+        /// <summary> Migrates to stv2. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<ArmOperation<ApiManagementServiceResource>> MigrateToStv2Async(WaitUntil waitUntil, CancellationToken cancellationToken)
+            => await MigrateToStv2Async(waitUntil, default(MigrateToStv2Contract), cancellationToken).ConfigureAwait(false);
+
+        /// <summary> Migrates to stv2. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual ArmOperation<ApiManagementServiceResource> MigrateToStv2(WaitUntil waitUntil, CancellationToken cancellationToken)
+            => MigrateToStv2(waitUntil, default(MigrateToStv2Contract), cancellationToken);
     }
 }
