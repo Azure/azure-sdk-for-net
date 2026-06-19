@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -14,7 +15,14 @@ namespace Azure.ResourceManager.ApiManagement
 {
     public partial class ApiManagementGatewayResource
     {
+        // The old SDK returned IReadOnlyDictionary<string, BinaryData> from GetTrace, but the
+        // generator emits IDictionary. The generated method is renamed to GetTraceRaw via
+        // @@clientName in client.tsp, and these wrappers convert to IReadOnlyDictionary to
+        // avoid a binary-breaking return-type change. Not spec-fixable: the generator always
+        // emits IDictionary for Record<T> responses.
+
         /// <summary> Gets the Trace. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<IReadOnlyDictionary<string, BinaryData>>> GetTraceAsync(GatewayListTraceContract gatewayListTraceContract, CancellationToken cancellationToken = default)
         {
             Response<IDictionary<string, BinaryData>> response = await GetTraceRawAsync(gatewayListTraceContract, cancellationToken).ConfigureAwait(false);
@@ -22,6 +30,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Gets the Trace. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<IReadOnlyDictionary<string, BinaryData>> GetTrace(GatewayListTraceContract gatewayListTraceContract, CancellationToken cancellationToken = default)
         {
             Response<IDictionary<string, BinaryData>> response = GetTraceRaw(gatewayListTraceContract, cancellationToken);
