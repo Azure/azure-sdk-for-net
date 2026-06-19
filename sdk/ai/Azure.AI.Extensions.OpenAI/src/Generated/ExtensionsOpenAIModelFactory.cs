@@ -1096,9 +1096,9 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary> The AgentStructuredOutputsResponseItem. </summary>
         /// <param name="id"></param>
-        /// <param name="agentReference"> The agent that created the item. </param>
-        /// <param name="responseId"> The response on which the item is created. </param>
-        /// <param name="output"> The structured output captured during the response. </param>
+        /// <param name="agentReference"></param>
+        /// <param name="responseId"></param>
+        /// <param name="output"></param>
         /// <returns> A new <see cref="OpenAI.AgentStructuredOutputsResponseItem"/> instance for mocking. </returns>
         public static AgentStructuredOutputsResponseItem AgentStructuredOutputsResponseItem(string id = default, AgentReference agentReference = default, string responseId = default, BinaryData output = default)
         {
