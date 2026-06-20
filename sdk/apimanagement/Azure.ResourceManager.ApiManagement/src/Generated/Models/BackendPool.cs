@@ -12,7 +12,7 @@ using Azure.ResourceManager.ApiManagement;
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Backend pool information. </summary>
-    public partial class BackendPool
+    internal partial class BackendPool
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -20,17 +20,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of <see cref="BackendPool"/>. </summary>
         public BackendPool()
         {
-            Services = new ChangeTrackingList<BackendPoolItem>();
+            PoolServices = new ChangeTrackingList<BackendPoolItem>();
         }
 
         /// <summary> Initializes a new instance of <see cref="BackendPool"/>. </summary>
-        /// <param name="services"> The list of backend entities belonging to a pool. </param>
+        /// <param name="poolServices"> The list of backend entities belonging to a pool. </param>
         /// <param name="failureResponse"> The response to be returned when all the backends in the pool are inactive. </param>
         /// <param name="sessionAffinity"> The session stickiness properties of the backend pool. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BackendPool(IList<BackendPoolItem> services, BackendFailureResponse failureResponse, BackendSessionAffinity sessionAffinity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BackendPool(IList<BackendPoolItem> poolServices, BackendFailureResponse failureResponse, BackendSessionAffinity sessionAffinity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Services = services;
+            PoolServices = poolServices;
             FailureResponse = failureResponse;
             SessionAffinity = sessionAffinity;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> The list of backend entities belonging to a pool. </summary>
         [WirePath("services")]
-        public IList<BackendPoolItem> Services { get; }
+        public IList<BackendPoolItem> PoolServices { get; } = new ChangeTrackingList<BackendPoolItem>();
 
         /// <summary> The response to be returned when all the backends in the pool are inactive. </summary>
         [WirePath("failureResponse")]

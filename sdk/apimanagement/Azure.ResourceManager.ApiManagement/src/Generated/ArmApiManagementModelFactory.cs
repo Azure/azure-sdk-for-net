@@ -1100,21 +1100,23 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="proxy"> Backend gateway Contract Properties. </param>
         /// <param name="tls"> Backend TLS Properties. </param>
         /// <param name="azureRegion"> Azure region in which the backend is deployed. Can be optionally specified to use features such as carbon-optimized load balancer. </param>
-        /// <param name="pool"> Backend Pool Properties. </param>
         /// <param name="typePropertiesType"> Type of the backend. A backend can be either Single or Pool. </param>
         /// <param name="backendServiceFabricCluster"> Backend Service Fabric Cluster Properties. </param>
         /// <param name="circuitBreakerRules"> The rules for tripping the backend. </param>
+        /// <param name="poolServices"> The list of backend entities belonging to a pool. </param>
+        /// <param name="failureResponseStatusCode"> The status code of the response. </param>
+        /// <param name="sessionId"> The id that identifies the requests belonging to the same session. </param>
         /// <param name="uri"> Runtime Url of the Backend. Required when backend type is 'Single'. </param>
         /// <param name="protocol"> Backend communication protocol. Required when backend type is 'Single'. </param>
         /// <returns> A new <see cref="ApiManagement.ApiManagementBackendData"/> instance for mocking. </returns>
-        public static ApiManagementBackendData ApiManagementBackendData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string title = default, string description = default, Uri resourceUri = default, BackendCredentialsContract credentials = default, BackendProxyContract proxy = default, BackendTlsProperties tls = default, string azureRegion = default, BackendBaseParametersPool pool = default, BackendType? typePropertiesType = default, BackendServiceFabricClusterProperties backendServiceFabricCluster = default, IEnumerable<CircuitBreakerRule> circuitBreakerRules = default, Uri uri = default, BackendProtocol? protocol = default)
+        public static ApiManagementBackendData ApiManagementBackendData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string title = default, string description = default, Uri resourceUri = default, BackendCredentialsContract credentials = default, BackendProxyContract proxy = default, BackendTlsProperties tls = default, string azureRegion = default, BackendType? typePropertiesType = default, BackendServiceFabricClusterProperties backendServiceFabricCluster = default, IEnumerable<CircuitBreakerRule> circuitBreakerRules = default, IEnumerable<BackendPoolItem> poolServices = default, int? failureResponseStatusCode = default, BackendSessionId sessionId = default, Uri uri = default, BackendProtocol? protocol = default)
         {
             return new ApiManagementBackendData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                title is null && description is null && resourceUri is null && backendServiceFabricCluster is null && credentials is null && proxy is null && tls is null && circuitBreakerRules is null && azureRegion is null && pool is null && typePropertiesType is null && uri is null && protocol is null ? default : new BackendContractProperties(
+                title is null && description is null && resourceUri is null && backendServiceFabricCluster is null && credentials is null && proxy is null && tls is null && circuitBreakerRules is null && azureRegion is null && poolServices is null && failureResponseStatusCode is null && sessionId is null && typePropertiesType is null && uri is null && protocol is null ? default : new BackendContractProperties(
                     title,
                     description,
                     resourceUri,
@@ -1124,7 +1126,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     tls,
                     new BackendCircuitBreaker((circuitBreakerRules ?? new ChangeTrackingList<CircuitBreakerRule>()).ToList(), default),
                     azureRegion,
-                    pool,
+                    new BackendBaseParametersPool((poolServices ?? new ChangeTrackingList<BackendPoolItem>()).ToList(), new BackendFailureResponse(failureResponseStatusCode, default), new BackendSessionAffinity(sessionId, default), default),
                     typePropertiesType,
                     default,
                     uri,
@@ -1260,28 +1262,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
             return new FailureStatusCodeRange(min, max, default);
         }
 
-        /// <param name="services"> The list of backend entities belonging to a pool. </param>
-        /// <param name="failureResponseStatusCode"> The status code of the response. </param>
-        /// <param name="sessionId"> The id that identifies the requests belonging to the same session. </param>
-        /// <returns> A new <see cref="Models.BackendBaseParametersPool"/> instance for mocking. </returns>
-        public static BackendBaseParametersPool BackendBaseParametersPool(IEnumerable<BackendPoolItem> services = default, int? failureResponseStatusCode = default, BackendSessionId sessionId = default)
-        {
-            services ??= new ChangeTrackingList<BackendPoolItem>();
-
-            return new BackendBaseParametersPool((services ?? new ChangeTrackingList<BackendPoolItem>()).ToList(), failureResponseStatusCode is null ? default : new BackendFailureResponse(failureResponseStatusCode, default), sessionId is null ? default : new BackendSessionAffinity(sessionId, default), default);
-        }
-
-        /// <param name="services"> The list of backend entities belonging to a pool. </param>
-        /// <param name="failureResponseStatusCode"> The status code of the response. </param>
-        /// <param name="sessionId"> The id that identifies the requests belonging to the same session. </param>
-        /// <returns> A new <see cref="Models.BackendPool"/> instance for mocking. </returns>
-        public static BackendPool BackendPool(IEnumerable<BackendPoolItem> services = default, int? failureResponseStatusCode = default, BackendSessionId sessionId = default)
-        {
-            services ??= new ChangeTrackingList<BackendPoolItem>();
-
-            return new BackendPool((services ?? new ChangeTrackingList<BackendPoolItem>()).ToList(), failureResponseStatusCode is null ? default : new BackendFailureResponse(failureResponseStatusCode, default), sessionId is null ? default : new BackendSessionAffinity(sessionId, default), default);
-        }
-
         /// <param name="id"> The unique ARM id of the backend entity. The ARM id should refer to an already existing backend entity. </param>
         /// <param name="weight"> The weight of the backend entity in the backend pool. Must be between 0 and 100. It can be also null if the value not specified. </param>
         /// <param name="priority"> The priority of the backend entity in the backend pool. Must be between 0 and 100. It can be also null if the value not specified. </param>
@@ -1307,16 +1287,18 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="proxy"> Backend gateway Contract Properties. </param>
         /// <param name="tls"> Backend TLS Properties. </param>
         /// <param name="azureRegion"> Azure region in which the backend is deployed. Can be optionally specified to use features such as carbon-optimized load balancer. </param>
-        /// <param name="pool"> Backend Pool Properties. </param>
         /// <param name="typePropertiesType"> Type of the backend. A backend can be either Single or Pool. </param>
         /// <param name="backendServiceFabricCluster"> Backend Service Fabric Cluster Properties. </param>
         /// <param name="circuitBreakerRules"> The rules for tripping the backend. </param>
+        /// <param name="poolServices"> The list of backend entities belonging to a pool. </param>
+        /// <param name="failureResponseStatusCode"> The status code of the response. </param>
+        /// <param name="sessionId"> The id that identifies the requests belonging to the same session. </param>
         /// <param name="uri"> Runtime Url of the Backend. </param>
         /// <param name="protocol"> Backend communication protocol. </param>
         /// <returns> A new <see cref="Models.ApiManagementBackendPatch"/> instance for mocking. </returns>
-        public static ApiManagementBackendPatch ApiManagementBackendPatch(string title = default, string description = default, Uri resourceUri = default, BackendCredentialsContract credentials = default, BackendProxyContract proxy = default, BackendTlsProperties tls = default, string azureRegion = default, BackendBaseParametersPool pool = default, BackendType? typePropertiesType = default, BackendServiceFabricClusterProperties backendServiceFabricCluster = default, IEnumerable<CircuitBreakerRule> circuitBreakerRules = default, Uri uri = default, BackendProtocol? protocol = default)
+        public static ApiManagementBackendPatch ApiManagementBackendPatch(string title = default, string description = default, Uri resourceUri = default, BackendCredentialsContract credentials = default, BackendProxyContract proxy = default, BackendTlsProperties tls = default, string azureRegion = default, BackendType? typePropertiesType = default, BackendServiceFabricClusterProperties backendServiceFabricCluster = default, IEnumerable<CircuitBreakerRule> circuitBreakerRules = default, IEnumerable<BackendPoolItem> poolServices = default, int? failureResponseStatusCode = default, BackendSessionId sessionId = default, Uri uri = default, BackendProtocol? protocol = default)
         {
-            return new ApiManagementBackendPatch(title is null && description is null && resourceUri is null && backendServiceFabricCluster is null && credentials is null && proxy is null && tls is null && circuitBreakerRules is null && azureRegion is null && pool is null && typePropertiesType is null && uri is null && protocol is null ? default : new BackendUpdateParameterProperties(
+            return new ApiManagementBackendPatch(title is null && description is null && resourceUri is null && backendServiceFabricCluster is null && credentials is null && proxy is null && tls is null && circuitBreakerRules is null && azureRegion is null && poolServices is null && failureResponseStatusCode is null && sessionId is null && typePropertiesType is null && uri is null && protocol is null ? default : new BackendUpdateParameterProperties(
                 title,
                 description,
                 resourceUri,
@@ -1326,7 +1308,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 tls,
                 new BackendCircuitBreaker((circuitBreakerRules ?? new ChangeTrackingList<CircuitBreakerRule>()).ToList(), default),
                 azureRegion,
-                pool,
+                new BackendBaseParametersPool((poolServices ?? new ChangeTrackingList<BackendPoolItem>()).ToList(), new BackendFailureResponse(failureResponseStatusCode, default), new BackendSessionAffinity(sessionId, default), default),
                 typePropertiesType,
                 default,
                 uri,

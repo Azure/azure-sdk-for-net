@@ -14,7 +14,7 @@ using Azure.ResourceManager.ApiManagement;
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Backend pool information. </summary>
-    public partial class BackendPool : IJsonModel<BackendPool>
+    internal partial class BackendPool : IJsonModel<BackendPool>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -74,11 +74,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 throw new FormatException($"The model {nameof(BackendPool)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(Services))
+            if (Optional.IsCollectionDefined(PoolServices))
             {
                 writer.WritePropertyName("services"u8);
                 writer.WriteStartArray();
-                foreach (BackendPoolItem item in Services)
+                foreach (BackendPoolItem item in PoolServices)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            IList<BackendPoolItem> services = default;
+            IList<BackendPoolItem> poolServices = default;
             BackendFailureResponse failureResponse = default;
             BackendSessionAffinity sessionAffinity = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         array.Add(BackendPoolItem.DeserializeBackendPoolItem(item, options));
                     }
-                    services = array;
+                    poolServices = array;
                     continue;
                 }
                 if (prop.NameEquals("failureResponse"u8))
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BackendPool(services ?? new ChangeTrackingList<BackendPoolItem>(), failureResponse, sessionAffinity, additionalBinaryDataProperties);
+            return new BackendPool(poolServices ?? new ChangeTrackingList<BackendPoolItem>(), failureResponse, sessionAffinity, additionalBinaryDataProperties);
         }
     }
 }

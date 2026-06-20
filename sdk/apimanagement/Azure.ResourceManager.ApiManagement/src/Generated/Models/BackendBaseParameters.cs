@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Backend Pool Properties. </summary>
         [WirePath("pool")]
-        public BackendBaseParametersPool Pool { get; set; }
+        internal BackendBaseParametersPool Pool { get; set; }
 
         /// <summary> Type of the backend. A backend can be either Single or Pool. </summary>
         [WirePath("type")]
@@ -124,6 +124,56 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     CircuitBreaker = new BackendCircuitBreaker();
                 }
                 return CircuitBreaker.Rules;
+            }
+        }
+
+        /// <summary> The list of backend entities belonging to a pool. </summary>
+        [WirePath("pool.services")]
+        public IList<BackendPoolItem> PoolServices
+        {
+            get
+            {
+                if (Pool is null)
+                {
+                    Pool = new BackendBaseParametersPool();
+                }
+                return Pool.PoolServices;
+            }
+        }
+
+        /// <summary> The status code of the response. </summary>
+        [WirePath("pool.failureResponse.statusCode")]
+        public int? FailureResponseStatusCode
+        {
+            get
+            {
+                return Pool is null ? default : Pool.FailureResponseStatusCode;
+            }
+            set
+            {
+                if (Pool is null)
+                {
+                    Pool = new BackendBaseParametersPool();
+                }
+                Pool.FailureResponseStatusCode = value;
+            }
+        }
+
+        /// <summary> The id that identifies the requests belonging to the same session. </summary>
+        [WirePath("pool.sessionAffinity.sessionId")]
+        public BackendSessionId SessionId
+        {
+            get
+            {
+                return Pool is null ? default : Pool.SessionId;
+            }
+            set
+            {
+                if (Pool is null)
+                {
+                    Pool = new BackendBaseParametersPool();
+                }
+                Pool.SessionId = value;
             }
         }
     }

@@ -161,24 +161,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
         }
 
-        /// <summary> Backend Pool Properties. </summary>
-        [WirePath("properties.pool")]
-        public BackendBaseParametersPool Pool
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Pool;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new BackendUpdateParameterProperties();
-                }
-                Properties.Pool = value;
-            }
-        }
-
         /// <summary> Type of the backend. A backend can be either Single or Pool. </summary>
         [WirePath("properties.type")]
         public BackendType? TypePropertiesType
@@ -226,6 +208,56 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     Properties = new BackendUpdateParameterProperties();
                 }
                 return Properties.CircuitBreakerRules;
+            }
+        }
+
+        /// <summary> The list of backend entities belonging to a pool. </summary>
+        [WirePath("properties.pool.services")]
+        public IList<BackendPoolItem> PoolServices
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new BackendUpdateParameterProperties();
+                }
+                return Properties.PoolServices;
+            }
+        }
+
+        /// <summary> The status code of the response. </summary>
+        [WirePath("properties.pool.failureResponse.statusCode")]
+        public int? FailureResponseStatusCode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FailureResponseStatusCode;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BackendUpdateParameterProperties();
+                }
+                Properties.FailureResponseStatusCode = value;
+            }
+        }
+
+        /// <summary> The id that identifies the requests belonging to the same session. </summary>
+        [WirePath("properties.pool.sessionAffinity.sessionId")]
+        public BackendSessionId SessionId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SessionId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BackendUpdateParameterProperties();
+                }
+                Properties.SessionId = value;
             }
         }
 

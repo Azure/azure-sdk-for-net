@@ -14,7 +14,7 @@ using Azure.ResourceManager.ApiManagement;
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> The BackendBaseParametersPool. </summary>
-    public partial class BackendBaseParametersPool : BackendPool, IJsonModel<BackendBaseParametersPool>
+    internal partial class BackendBaseParametersPool : BackendPool, IJsonModel<BackendBaseParametersPool>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            IList<BackendPoolItem> services = default;
+            IList<BackendPoolItem> poolServices = default;
             BackendFailureResponse failureResponse = default;
             BackendSessionAffinity sessionAffinity = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         array.Add(BackendPoolItem.DeserializeBackendPoolItem(item, options));
                     }
-                    services = array;
+                    poolServices = array;
                     continue;
                 }
                 if (prop.NameEquals("failureResponse"u8))
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BackendBaseParametersPool(services ?? new ChangeTrackingList<BackendPoolItem>(), failureResponse, sessionAffinity, additionalBinaryDataProperties);
+            return new BackendBaseParametersPool(poolServices ?? new ChangeTrackingList<BackendPoolItem>(), failureResponse, sessionAffinity, additionalBinaryDataProperties);
         }
     }
 }

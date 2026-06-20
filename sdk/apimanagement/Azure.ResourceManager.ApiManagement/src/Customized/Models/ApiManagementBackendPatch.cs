@@ -23,24 +23,5 @@ namespace Azure.ResourceManager.ApiManagement.Models
             get => TypePropertiesType;
             set => TypePropertiesType = value;
         }
-
-        // Deep path shortcut (properties.pool.services) with lazy init.
-        // Not spec-fixable: @@flattenProperty only handles one level.
-
-        /// <summary> Backend pool services. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [WirePath("properties.pool.services")]
-        public IList<BackendPoolItem> PoolServices
-        {
-            get
-            {
-                if (Pool is null)
-                {
-                    Pool = new BackendBaseParametersPool();
-                }
-
-                return Pool.Services;
-            }
-        }
     }
 }
