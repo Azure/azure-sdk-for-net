@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
         {
             TryGetApiVersion(ResourceType, out string mongoDBAtlasOrganizationApiVersion);
             _organizationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MongoDBAtlas", ResourceType.Namespace, Diagnostics);
-            _organizationsRestClient = new Organizations(_organizationsClientDiagnostics, Pipeline, Endpoint, mongoDBAtlasOrganizationApiVersion ?? "2025-06-01");
+            _organizationsRestClient = new Organizations(_organizationsClientDiagnostics, Pipeline, Endpoint, mongoDBAtlasOrganizationApiVersion ?? "2026-03-01-preview");
             ValidateResourceId(id);
         }
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -677,6 +677,39 @@ namespace Azure.ResourceManager.MongoDBAtlas
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Gets a collection of Projects in the <see cref="MongoDBAtlasOrganizationResource"/>. </summary>
+        /// <returns> An object representing collection of Projects and their operations over a ProjectResource. </returns>
+        public virtual ProjectCollection GetProjects()
+        {
+            return GetCachedClient(client => new ProjectCollection(client, Id));
+        }
+
+        /// <summary> Get a Project. </summary>
+        /// <param name="projectName"> Name of the MongoDB Atlas Project resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ProjectResource>> GetProjectAsync(string projectName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+
+            return await GetProjects().GetAsync(projectName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get a Project. </summary>
+        /// <param name="projectName"> Name of the MongoDB Atlas Project resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ProjectResource> GetProject(string projectName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+
+            return GetProjects().Get(projectName, cancellationToken);
         }
     }
 }

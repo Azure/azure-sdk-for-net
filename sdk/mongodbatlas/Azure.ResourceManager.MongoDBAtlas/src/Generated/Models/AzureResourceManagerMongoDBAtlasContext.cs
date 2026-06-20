@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.MongoDBAtlas
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(ClusterData))]
+    [ModelReaderWriterBuildable(typeof(ClusterListResult))]
+    [ModelReaderWriterBuildable(typeof(ClusterProperties))]
+    [ModelReaderWriterBuildable(typeof(ClusterResource))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(MongoDBAtlasMarketplaceDetails))]
     [ModelReaderWriterBuildable(typeof(MongoDBAtlasOfferDetails))]
@@ -27,8 +31,16 @@ namespace Azure.ResourceManager.MongoDBAtlas
     [ModelReaderWriterBuildable(typeof(MongoDBAtlasPartnerProperties))]
     [ModelReaderWriterBuildable(typeof(MongoDBAtlasUserDetails))]
     [ModelReaderWriterBuildable(typeof(OrganizationResourceListResult))]
+    [ModelReaderWriterBuildable(typeof(ProjectData))]
+    [ModelReaderWriterBuildable(typeof(ProjectLimitStatus))]
+    [ModelReaderWriterBuildable(typeof(ProjectListResult))]
+    [ModelReaderWriterBuildable(typeof(ProjectProperties))]
+    [ModelReaderWriterBuildable(typeof(ProjectResource))]
+    [ModelReaderWriterBuildable(typeof(RegionsByTierResponse))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(TierLimitReachedResponse))]
+    [ModelReaderWriterBuildable(typeof(TierRegions))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerMongoDBAtlasContext : ModelReaderWriterContext
     {
