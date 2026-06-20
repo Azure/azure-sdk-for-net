@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.AppService;
+using Microsoft.Web;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> MSDeploy ARM PUT core information. </summary>
     public partial class MSDeployCore
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// Setting is &lt;code&gt;false&lt;/code&gt; by default.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MSDeployCore(Uri packageUri, string connectionString, string dbType, Uri setParametersXmlFileUri, IDictionary<string, string> setParameters, bool? skipAppData, bool? appOffline, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MSDeployCore(string packageUri, string connectionString, string dbType, string setParametersXmlFileUri, IDictionary<string, string> setParameters, bool? skipAppData, bool? appOffline, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PackageUri = packageUri;
             ConnectionString = connectionString;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Package URI. </summary>
-        public Uri PackageUri { get; set; }
+        public string PackageUri { get; set; }
 
         /// <summary> SQL Connection String. </summary>
         public string ConnectionString { get; set; }
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.AppService.Models
         public string DbType { get; set; }
 
         /// <summary> URI of MSDeploy Parameters file. Must not be set if SetParameters is used. </summary>
-        public Uri SetParametersXmlFileUri { get; set; }
+        public string SetParametersXmlFileUri { get; set; }
 
         /// <summary> MSDeploy Parameters. Must not be set if SetParametersXmlFileUri is used. </summary>
         public IDictionary<string, string> SetParameters { get; } = new ChangeTrackingDictionary<string, string>();

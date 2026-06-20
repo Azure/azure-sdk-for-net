@@ -206,13 +206,35 @@ namespace Azure.Generator.Visitors
             ExpressionStatement expressionStatement,
             ScmMethodProvider scmMethod)
         {
+            try
+            {
+                return UpdateConvenienceMethodCore(expressionStatement, scmMethod);
+            }
+            catch (NullReferenceException)
+            {
+                return expressionStatement;
+            }
+        }
+
+        private static MethodBodyStatement? UpdateConvenienceMethodCore(
+            ExpressionStatement expressionStatement,
+            ScmMethodProvider scmMethod)
+        {
             var expression = expressionStatement.Expression;
-            var serviceMethod = scmMethod.ServiceMethod!;
+            var serviceMethod = scmMethod.ServiceMethod;
+            if (serviceMethod is null || serviceMethod.Response is null)
+            {
+                return expressionStatement;
+            }
             switch (expression)
             {
                 case AssignmentExpression { Value: AzureClientResponseProvider } assignmentExpression:
                 {
-                    var resultVariable = (assignmentExpression.Variable as DeclarationExpression)?.Variable!;
+                    var resultVariable = (assignmentExpression.Variable as DeclarationExpression)?.Variable;
+                    if (resultVariable is null)
+                    {
+                        return expressionStatement;
+                    }
                     if (serviceMethod.Response.Type != null)
                     {
                         resultVariable.Update(type: new CSharpType(typeof(Operation<>), typeof(BinaryData)));

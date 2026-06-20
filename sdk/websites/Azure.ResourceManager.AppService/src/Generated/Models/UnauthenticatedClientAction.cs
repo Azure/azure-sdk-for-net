@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> The action to take when an unauthenticated client attempts to access the app. </summary>
     public enum UnauthenticatedClientAction

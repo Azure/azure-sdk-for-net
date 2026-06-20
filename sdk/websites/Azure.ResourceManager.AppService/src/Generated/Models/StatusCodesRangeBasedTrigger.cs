@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> Trigger based on range of status codes. </summary>
     public partial class StatusCodesRangeBasedTrigger

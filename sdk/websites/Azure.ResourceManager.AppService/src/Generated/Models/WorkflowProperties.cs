@@ -8,9 +8,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.AppService;
+using Microsoft.Web;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> The workflow properties. </summary>
     internal partial class WorkflowProperties
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="parameters"> The parameters. </param>
         /// <param name="kind"> The workflow kind. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WorkflowProperties(WorkflowProvisioningState? provisioningState, DateTimeOffset? createdOn, DateTimeOffset? changedOn, WorkflowState? state, string version, string accessEndpoint, FlowEndpointsConfiguration endpointsConfiguration, FlowAccessControlConfiguration accessControl, WorkflowSku sku, ResourceReference integrationAccount, ResourceReference integrationServiceEnvironment, BinaryData definition, IDictionary<string, WorkflowParameter> parameters, AppServiceKind? kind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WorkflowProperties(WorkflowProvisioningState? provisioningState, DateTimeOffset? createdOn, DateTimeOffset? changedOn, WorkflowState? state, string version, string accessEndpoint, FlowEndpointsConfiguration endpointsConfiguration, FlowAccessControlConfiguration accessControl, WorkflowSku sku, ResourceReference integrationAccount, ResourceReference integrationServiceEnvironment, BinaryData definition, IDictionary<string, WorkflowParameter> parameters, MicrosoftWebKind? kind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             CreatedOn = createdOn;
@@ -124,6 +124,6 @@ namespace Azure.ResourceManager.AppService.Models
         public IDictionary<string, WorkflowParameter> Parameters { get; } = new ChangeTrackingDictionary<string, WorkflowParameter>();
 
         /// <summary> The workflow kind. </summary>
-        public AppServiceKind? Kind { get; set; }
+        public MicrosoftWebKind? Kind { get; set; }
     }
 }

@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.AppService;
+using Microsoft.Web;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> Resource validation request content. </summary>
     public partial class ValidateRequest

@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.AppService;
+using Microsoft.Web;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> Site resource specific properties. </summary>
     internal partial class SiteProperties : IJsonModel<SiteProperties>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
+                    return ModelReaderWriter.Write(this, options, MicrosoftWebContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(SiteProperties)} does not support writing '{options.Format}' format.");
             }
@@ -108,6 +108,11 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(Enabled.Value);
+            }
+            if (Optional.IsDefined(SiteScopedCertificatesEnabled))
+            {
+                writer.WritePropertyName("siteScopedCertificatesEnabled"u8);
+                writer.WriteBooleanValue(SiteScopedCertificatesEnabled.Value);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(EnabledHostNames))
             {
@@ -188,6 +193,11 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 writer.WritePropertyName("daprConfig"u8);
                 writer.WriteObjectValue(DaprConfig, options);
+            }
+            if (Optional.IsDefined(AiIntegration))
+            {
+                writer.WritePropertyName("aiIntegration"u8);
+                writer.WriteObjectValue(AiIntegration, options);
             }
             if (Optional.IsDefined(WorkloadProfileName))
             {
@@ -389,6 +399,11 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("sku"u8);
                 writer.WriteStringValue(Sku);
             }
+            if (Optional.IsDefined(PlatformReleaseChannel))
+            {
+                writer.WritePropertyName("platformReleaseChannel"u8);
+                writer.WriteStringValue(PlatformReleaseChannel.Value.ToString());
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -436,6 +451,7 @@ namespace Azure.ResourceManager.AppService.Models
             string repositorySiteName = default;
             UsageState? usageState = default;
             bool? enabled = default;
+            bool? siteScopedCertificatesEnabled = default;
             IReadOnlyList<string> enabledHostNames = default;
             SiteAvailabilityState? availabilityState = default;
             IList<HostNameSslState> hostNameSslStates = default;
@@ -449,6 +465,7 @@ namespace Azure.ResourceManager.AppService.Models
             SiteConfig siteConfig = default;
             FunctionAppConfig functionAppConfig = default;
             DaprConfig daprConfig = default;
+            AiIntegration aiIntegration = default;
             string workloadProfileName = default;
             ResourceConfig resourceConfig = default;
             IReadOnlyList<string> trafficManagerHostNames = default;
@@ -487,6 +504,7 @@ namespace Azure.ResourceManager.AppService.Models
             string virtualNetworkSubnetId = default;
             string managedEnvironmentId = default;
             string sku = default;
+            PlatformReleaseChannel? platformReleaseChannel = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -537,6 +555,15 @@ namespace Azure.ResourceManager.AppService.Models
                         continue;
                     }
                     enabled = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("siteScopedCertificatesEnabled"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    siteScopedCertificatesEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("enabledHostNames"u8))
@@ -667,6 +694,15 @@ namespace Azure.ResourceManager.AppService.Models
                         continue;
                     }
                     daprConfig = DaprConfig.DeserializeDaprConfig(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("aiIntegration"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    aiIntegration = AiIntegration.DeserializeAiIntegration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("workloadProfileName"u8))
@@ -967,6 +1003,15 @@ namespace Azure.ResourceManager.AppService.Models
                     sku = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("platformReleaseChannel"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    platformReleaseChannel = new PlatformReleaseChannel(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -978,6 +1023,7 @@ namespace Azure.ResourceManager.AppService.Models
                 repositorySiteName,
                 usageState,
                 enabled,
+                siteScopedCertificatesEnabled,
                 enabledHostNames ?? new ChangeTrackingList<string>(),
                 availabilityState,
                 hostNameSslStates ?? new ChangeTrackingList<HostNameSslState>(),
@@ -991,6 +1037,7 @@ namespace Azure.ResourceManager.AppService.Models
                 siteConfig,
                 functionAppConfig,
                 daprConfig,
+                aiIntegration,
                 workloadProfileName,
                 resourceConfig,
                 trafficManagerHostNames ?? new ChangeTrackingList<string>(),
@@ -1029,6 +1076,7 @@ namespace Azure.ResourceManager.AppService.Models
                 virtualNetworkSubnetId,
                 managedEnvironmentId,
                 sku,
+                platformReleaseChannel,
                 additionalBinaryDataProperties);
         }
     }

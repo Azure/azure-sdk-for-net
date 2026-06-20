@@ -12,10 +12,10 @@ using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
+using Microsoft.Web.Models;
 
-namespace Azure.ResourceManager.AppService
+namespace Microsoft.Web
 {
     /// <summary> A hostname binding object. </summary>
     public partial class HostNameBindingData : ResourceData, IJsonModel<HostNameBindingData>
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppService
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
+                    return ModelReaderWriter.Write(this, options, MicrosoftWebContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(HostNameBindingData)} does not support writing '{options.Format}' format.");
             }
@@ -70,8 +70,8 @@ namespace Azure.ResourceManager.AppService
             return RequestContent.Create(hostNameBindingData, ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="HostNameBindingData"/> from. </param>
-        internal static HostNameBindingData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Azure.Response"/> to deserialize the <see cref="HostNameBindingData"/> from. </param>
+        internal static HostNameBindingData FromResponse(Azure.Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeHostNameBindingData(document.RootElement, ModelSerializationExtensions.WireOptions);
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.AppService
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAppServiceContext.Default);
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, MicrosoftWebContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))

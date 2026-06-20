@@ -16,7 +16,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.AppService
+namespace Microsoft.Web
 {
     /// <summary>
     /// A class representing a collection of <see cref="WorkflowTriggerResource"/> and their operations.
@@ -43,8 +43,8 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(WorkflowTriggerResource.ResourceType, out string workflowTriggerApiVersion);
             _workflowName = workflowName;
-            _workflowTriggersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", WorkflowTriggerResource.ResourceType.Namespace, Diagnostics);
-            _workflowTriggersRestClient = new WorkflowTriggers(_workflowTriggersClientDiagnostics, Pipeline, Endpoint, workflowTriggerApiVersion ?? "2026-03-01-preview");
+            _workflowTriggersClientDiagnostics = new ClientDiagnostics("Microsoft.Web", WorkflowTriggerResource.ResourceType.Namespace, Diagnostics);
+            _workflowTriggersRestClient = new WorkflowTriggers(_workflowTriggersClientDiagnostics, Pipeline, Endpoint, workflowTriggerApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>

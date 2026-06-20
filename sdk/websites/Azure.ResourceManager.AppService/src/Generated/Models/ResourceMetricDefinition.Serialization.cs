@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.AppService;
+using Microsoft.Web;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> Metadata for the metrics. </summary>
     public partial class ResourceMetricDefinition : ProxyOnlyResource, IJsonModel<ResourceMetricDefinition>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
+                    return ModelReaderWriter.Write(this, options, MicrosoftWebContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ResourceMetricDefinition)} does not support writing '{options.Format}' format.");
             }
@@ -75,21 +75,10 @@ namespace Azure.ResourceManager.AppService.Models
                 throw new FormatException($"The model {nameof(ResourceMetricDefinition)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsCollectionDefined(Properties))
+            if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteStartObject();
-                foreach (var item in Properties)
-                {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
+                writer.WriteObjectValue<ResourceMetricDefinitionProperties>(Properties, options);
             }
         }
 
@@ -123,7 +112,7 @@ namespace Azure.ResourceManager.AppService.Models
             string kind = default;
             string @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IReadOnlyDictionary<string, string> properties = default;
+            ResourceMetricDefinitionProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -152,19 +141,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var prop0 in prop.Value.EnumerateObject())
-                    {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(prop0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(prop0.Name, prop0.Value.GetString());
-                        }
-                    }
-                    properties = dictionary;
+                    properties = ResourceMetricDefinitionProperties.DeserializeResourceMetricDefinitionProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -178,7 +155,7 @@ namespace Azure.ResourceManager.AppService.Models
                 kind,
                 @type,
                 additionalBinaryDataProperties,
-                properties ?? new ChangeTrackingDictionary<string, string>());
+                properties);
         }
     }
 }

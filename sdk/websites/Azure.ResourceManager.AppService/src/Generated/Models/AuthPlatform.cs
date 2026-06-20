@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> The configuration settings of the platform of App Service Authentication/Authorization. </summary>
     public partial class AuthPlatform

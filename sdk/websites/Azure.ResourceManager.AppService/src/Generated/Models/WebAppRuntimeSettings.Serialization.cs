@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.AppService;
+using Microsoft.Web;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> Web App runtime settings. </summary>
     public partial class WebAppRuntimeSettings : IJsonModel<WebAppRuntimeSettings>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
+                    return ModelReaderWriter.Write(this, options, MicrosoftWebContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(WebAppRuntimeSettings)} does not support writing '{options.Format}' format.");
             }

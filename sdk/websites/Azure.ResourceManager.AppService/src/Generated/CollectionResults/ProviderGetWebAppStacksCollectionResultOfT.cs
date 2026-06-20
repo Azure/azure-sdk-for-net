@@ -10,9 +10,9 @@ using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.AppService.Models;
+using Microsoft.Web.Models;
 
-namespace Azure.ResourceManager.AppService
+namespace Microsoft.Web
 {
     internal partial class ProviderGetWebAppStacksCollectionResultOfT : Pageable<WebAppStack>
     {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.AppService
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
             {
-                Response response = GetNextResponse(pageSizeHint, nextPage);
+                Azure.Response response = GetNextResponse(pageSizeHint, nextPage);
                 if (response is null)
                 {
                     yield break;
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
+        private Azure.Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetWebAppStacksRequest(nextLink, _stackOsType, _context) : _client.CreateGetWebAppStacksRequest(_stackOsType, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);

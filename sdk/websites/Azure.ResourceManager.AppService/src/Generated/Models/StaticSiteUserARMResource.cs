@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> Static Site User ARM resource. </summary>
     public partial class StaticSiteUserARMResource : ProxyOnlyResource

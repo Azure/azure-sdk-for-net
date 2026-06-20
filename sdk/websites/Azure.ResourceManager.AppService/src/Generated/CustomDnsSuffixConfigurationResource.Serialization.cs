@@ -9,7 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace Azure.ResourceManager.AppService
+namespace Microsoft.Web
 {
     /// <summary></summary>
     public partial class CustomDnsSuffixConfigurationResource : IJsonModel<CustomDnsSuffixConfigurationData>
@@ -27,11 +27,11 @@ namespace Azure.ResourceManager.AppService
         CustomDnsSuffixConfigurationData IJsonModel<CustomDnsSuffixConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CustomDnsSuffixConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CustomDnsSuffixConfigurationData>(Data, options, AzureResourceManagerAppServiceContext.Default);
+        BinaryData IPersistableModel<CustomDnsSuffixConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CustomDnsSuffixConfigurationData>(Data, options, MicrosoftWebContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CustomDnsSuffixConfigurationData IPersistableModel<CustomDnsSuffixConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CustomDnsSuffixConfigurationData>(data, options, AzureResourceManagerAppServiceContext.Default);
+        CustomDnsSuffixConfigurationData IPersistableModel<CustomDnsSuffixConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CustomDnsSuffixConfigurationData>(data, options, MicrosoftWebContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<CustomDnsSuffixConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);

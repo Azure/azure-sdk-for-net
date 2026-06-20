@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> A static site user provided function. </summary>
     public partial class StaticSiteUserProvidedFunctionApp : ProxyOnlyResource

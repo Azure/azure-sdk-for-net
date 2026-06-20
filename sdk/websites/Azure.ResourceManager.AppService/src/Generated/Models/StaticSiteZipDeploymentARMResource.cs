@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> Static site zip deployment ARM resource. </summary>
     public partial class StaticSiteZipDeploymentARMResource : ProxyOnlyResource
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.AppService.Models
         internal StaticSiteZipDeployment Properties { get; set; }
 
         /// <summary> URL for the zipped app content. </summary>
-        public Uri AppZipUri
+        public string AppZipUri
         {
             get
             {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> URL for the zipped api content. </summary>
-        public Uri ApiZipUri
+        public string ApiZipUri
         {
             get
             {

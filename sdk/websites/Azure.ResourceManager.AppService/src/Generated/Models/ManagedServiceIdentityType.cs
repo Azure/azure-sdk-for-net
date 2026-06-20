@@ -5,18 +5,18 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> Type of managed service identity. </summary>
     public enum ManagedServiceIdentityType
     {
-        /// <summary> None. </summary>
-        None,
         /// <summary> SystemAssigned. </summary>
         SystemAssigned,
         /// <summary> UserAssigned. </summary>
         UserAssigned,
         /// <summary> SystemAssignedUserAssigned. </summary>
-        SystemAssignedUserAssigned
+        SystemAssignedUserAssigned,
+        /// <summary> None. </summary>
+        None
     }
 }

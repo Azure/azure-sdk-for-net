@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.AppService;
+using Microsoft.Web;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> Metric information. </summary>
     public partial class PerfMonSet : IJsonModel<PerfMonSet>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
+                    return ModelReaderWriter.Write(this, options, MicrosoftWebContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(PerfMonSet)} does not support writing '{options.Format}' format.");
             }
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.AppService.Models
             DateTimeOffset? startOn = default;
             DateTimeOffset? endOn = default;
             string timeGrain = default;
-            IReadOnlyList<PerfMonSample> values = default;
+            IList<PerfMonSample> values = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

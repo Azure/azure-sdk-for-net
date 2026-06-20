@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.AppService;
+using Microsoft.Web;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> Object with a list of the resources that need to be moved and the resource group they should be moved to. </summary>
     public partial class CsmMoveResourceEnvelope

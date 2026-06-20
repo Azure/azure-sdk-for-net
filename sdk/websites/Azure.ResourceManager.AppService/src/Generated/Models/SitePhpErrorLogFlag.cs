@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> Used for getting PHP error logging flag. </summary>
     public partial class SitePhpErrorLogFlag : ProxyOnlyResource

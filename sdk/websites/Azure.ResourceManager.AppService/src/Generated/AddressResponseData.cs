@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
+using Microsoft.Web.Models;
 
-namespace Azure.ResourceManager.AppService
+namespace Microsoft.Web
 {
     /// <summary> Describes main public IP address and any extra virtual IPs. </summary>
     public partial class AddressResponseData : ResourceData

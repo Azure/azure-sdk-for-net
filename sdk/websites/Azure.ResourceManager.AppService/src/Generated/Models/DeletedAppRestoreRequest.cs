@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> Details about restoring a deleted app. </summary>
     public partial class DeletedAppRestoreRequest : ProxyOnlyResource

@@ -13,10 +13,10 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Resources;
+using Microsoft.Web.Models;
 
-namespace Azure.ResourceManager.AppService
+namespace Microsoft.Web
 {
     /// <summary>
     /// A class representing a Global along with the instance operations that can be performed on it.
@@ -51,8 +51,8 @@ namespace Azure.ResourceManager.AppService
         internal GlobalResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string globalApiVersion);
-            _globalClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
-            _globalRestClient = new Global(_globalClientDiagnostics, Pipeline, Endpoint, globalApiVersion ?? "2026-03-01-preview");
+            _globalClientDiagnostics = new ClientDiagnostics("Microsoft.Web", ResourceType.Namespace, Diagnostics);
+            _globalRestClient = new Global(_globalClientDiagnostics, Pipeline, Endpoint, globalApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -124,13 +124,13 @@ namespace Azure.ResourceManager.AppService
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = _globalRestClient.CreateGetDeletedWebAppRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<DeletedSiteData> response = Response.FromValue(DeletedSiteData.FromResponse(result), result);
+                Azure.Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DeletedSiteData> response = Azure.Response.FromValue(DeletedSiteData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new GlobalResource(Client, response.Value), response.GetRawResponse());
+                return Azure.Response.FromValue(new GlobalResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -172,13 +172,13 @@ namespace Azure.ResourceManager.AppService
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = _globalRestClient.CreateGetDeletedWebAppRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<DeletedSiteData> response = Response.FromValue(DeletedSiteData.FromResponse(result), result);
+                Azure.Response result = Pipeline.ProcessMessage(message, context);
+                Response<DeletedSiteData> response = Azure.Response.FromValue(DeletedSiteData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new GlobalResource(Client, response.Value), response.GetRawResponse());
+                return Azure.Response.FromValue(new GlobalResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace Azure.ResourceManager.AppService
+namespace Microsoft.Web
 {
     internal static partial class Optional
     {

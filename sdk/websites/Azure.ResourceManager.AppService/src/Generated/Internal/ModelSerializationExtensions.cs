@@ -13,7 +13,7 @@ using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Text.Json;
 
-namespace Azure.ResourceManager.AppService
+namespace Microsoft.Web
 {
     internal static partial class ModelSerializationExtensions
     {

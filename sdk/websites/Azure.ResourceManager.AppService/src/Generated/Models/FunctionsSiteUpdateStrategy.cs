@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> Function app site update strategy configuration for deployments and site config updates. </summary>
     internal partial class FunctionsSiteUpdateStrategy

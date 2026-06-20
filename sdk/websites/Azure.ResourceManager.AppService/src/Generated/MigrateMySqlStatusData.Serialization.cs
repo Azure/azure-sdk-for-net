@@ -12,10 +12,10 @@ using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
+using Microsoft.Web.Models;
 
-namespace Azure.ResourceManager.AppService
+namespace Microsoft.Web
 {
     /// <summary> MySQL migration status. </summary>
     public partial class MigrateMySqlStatusData : ResourceData, IJsonModel<MigrateMySqlStatusData>
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppService
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
+                    return ModelReaderWriter.Write(this, options, MicrosoftWebContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(MigrateMySqlStatusData)} does not support writing '{options.Format}' format.");
             }
@@ -60,8 +60,8 @@ namespace Azure.ResourceManager.AppService
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<MigrateMySqlStatusData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="MigrateMySqlStatusData"/> from. </param>
-        internal static MigrateMySqlStatusData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Azure.Response"/> to deserialize the <see cref="MigrateMySqlStatusData"/> from. </param>
+        internal static MigrateMySqlStatusData FromResponse(Azure.Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeMigrateMySqlStatusData(document.RootElement, ModelSerializationExtensions.WireOptions);
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.AppService
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAppServiceContext.Default);
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, MicrosoftWebContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))

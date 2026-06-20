@@ -9,10 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
-using Azure.ResourceManager.AppService;
+using Microsoft.Web;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> Web App stack. </summary>
     public partial class WebAppStack : ProxyOnlyResource, IJsonModel<WebAppStack>
@@ -41,7 +40,7 @@ namespace Azure.ResourceManager.AppService.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
+                    return ModelReaderWriter.Write(this, options, MicrosoftWebContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(WebAppStack)} does not support writing '{options.Format}' format.");
             }
@@ -79,7 +78,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (options.Format != "W" && Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location.Value);
+                writer.WriteStringValue(Location);
             }
             if (Optional.IsDefined(Properties))
             {
@@ -118,7 +117,7 @@ namespace Azure.ResourceManager.AppService.Models
             string kind = default;
             string @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            AzureLocation? location = default;
+            string location = default;
             WebAppStackProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -144,11 +143,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (prop.NameEquals("location"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    location = new AzureLocation(prop.Value.GetString());
+                    location = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))

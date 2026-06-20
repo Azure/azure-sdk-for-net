@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> Virtual Network route contract used to pass routing information for a Virtual Network. </summary>
     public partial class VnetRoute : ResourceData

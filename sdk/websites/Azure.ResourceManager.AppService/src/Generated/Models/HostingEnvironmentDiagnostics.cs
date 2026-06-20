@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> Diagnostics for an App Service Environment. </summary>
     public partial class HostingEnvironmentDiagnostics

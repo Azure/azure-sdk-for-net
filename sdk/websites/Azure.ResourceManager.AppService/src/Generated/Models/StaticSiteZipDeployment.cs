@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> A static site zip deployment. </summary>
     internal partial class StaticSiteZipDeployment
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="provider"> The provider submitting this deployment. </param>
         /// <param name="functionLanguage"> The language of the api content, if it exists. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StaticSiteZipDeployment(Uri appZipUri, Uri apiZipUri, string deploymentTitle, string provider, string functionLanguage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StaticSiteZipDeployment(string appZipUri, string apiZipUri, string deploymentTitle, string provider, string functionLanguage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AppZipUri = appZipUri;
             ApiZipUri = apiZipUri;
@@ -39,10 +39,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> URL for the zipped app content. </summary>
-        public Uri AppZipUri { get; set; }
+        public string AppZipUri { get; set; }
 
         /// <summary> URL for the zipped api content. </summary>
-        public Uri ApiZipUri { get; set; }
+        public string ApiZipUri { get; set; }
 
         /// <summary> A title to label the deployment. </summary>
         public string DeploymentTitle { get; set; }

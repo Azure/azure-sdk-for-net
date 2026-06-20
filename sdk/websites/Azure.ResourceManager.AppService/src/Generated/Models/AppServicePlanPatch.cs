@@ -7,9 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> ARM resource for a app service plan. </summary>
     public partial class AppServicePlanPatch : ProxyOnlyResource
@@ -27,7 +26,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> AppServicePlanPatchResource resource specific properties. </param>
         /// <param name="identity"> Managed service identity. </param>
-        internal AppServicePlanPatch(string id, string name, string kind, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, AppServicePlanPatchResourceProperties properties, ResourceManager.Models.ManagedServiceIdentity identity) : base(id, name, kind, @type, additionalBinaryDataProperties)
+        internal AppServicePlanPatch(string id, string name, string kind, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, AppServicePlanPatchResourceProperties properties, ManagedServiceIdentity identity) : base(id, name, kind, @type, additionalBinaryDataProperties)
         {
             Properties = properties;
             Identity = identity;
@@ -37,7 +36,7 @@ namespace Azure.ResourceManager.AppService.Models
         internal AppServicePlanPatchResourceProperties Properties { get; set; }
 
         /// <summary> Managed service identity. </summary>
-        public ResourceManager.Models.ManagedServiceIdentity Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> Target worker tier assigned to the App Service plan. </summary>
         public string WorkerTierName

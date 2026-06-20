@@ -9,7 +9,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.AppService
+namespace Microsoft.Web
 {
     internal static partial class Argument
     {

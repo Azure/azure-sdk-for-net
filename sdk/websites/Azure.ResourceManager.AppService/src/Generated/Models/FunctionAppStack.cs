@@ -7,9 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> Function App Stack. </summary>
     public partial class FunctionAppStack : ProxyOnlyResource
@@ -27,14 +26,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="location"> Function App stack location. </param>
         /// <param name="properties"> FunctionAppStack resource specific properties. </param>
-        internal FunctionAppStack(string id, string name, string kind, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation? location, FunctionAppStackProperties properties) : base(id, name, kind, @type, additionalBinaryDataProperties)
+        internal FunctionAppStack(string id, string name, string kind, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string location, FunctionAppStackProperties properties) : base(id, name, kind, @type, additionalBinaryDataProperties)
         {
             Location = location;
             Properties = properties;
         }
 
         /// <summary> Function App stack location. </summary>
-        public AzureLocation? Location { get; }
+        public string Location { get; }
 
         /// <summary> FunctionAppStack resource specific properties. </summary>
         internal FunctionAppStackProperties Properties { get; }

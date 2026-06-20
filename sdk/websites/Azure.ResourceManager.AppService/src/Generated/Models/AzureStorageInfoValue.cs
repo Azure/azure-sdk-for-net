@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> Azure Files or Blob Storage access information value for dictionary storage. </summary>
     public partial class AzureStorageInfoValue

@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> A setting difference between two deployment slots of an app. </summary>
     public partial class SlotDifference : ProxyOnlyResource

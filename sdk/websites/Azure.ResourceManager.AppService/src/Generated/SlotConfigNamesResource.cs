@@ -14,7 +14,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.AppService
+namespace Microsoft.Web
 {
     /// <summary>
     /// A class representing a SlotConfigNamesResource along with the instance operations that can be performed on it.
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.AppService
         internal SlotConfigNamesResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string slotConfigNamesResourceApiVersion);
-            _webAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
-            _webAppsRestClient = new WebApps(_webAppsClientDiagnostics, Pipeline, Endpoint, slotConfigNamesResourceApiVersion ?? "2026-03-01-preview");
+            _webAppsClientDiagnostics = new ClientDiagnostics("Microsoft.Web", ResourceType.Namespace, Diagnostics);
+            _webAppsRestClient = new WebApps(_webAppsClientDiagnostics, Pipeline, Endpoint, slotConfigNamesResourceApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.AppService
                 Response<SlotConfigNamesResourceData> response = Response.FromValue(SlotConfigNamesResourceData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                AppServiceArmOperation<SlotConfigNamesResource> operation = new AppServiceArmOperation<SlotConfigNamesResource>(Response.FromValue(new SlotConfigNamesResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                WebArmOperation<SlotConfigNamesResource> operation = new WebArmOperation<SlotConfigNamesResource>(Response.FromValue(new SlotConfigNamesResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.AppService
                 Response<SlotConfigNamesResourceData> response = Response.FromValue(SlotConfigNamesResourceData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                AppServiceArmOperation<SlotConfigNamesResource> operation = new AppServiceArmOperation<SlotConfigNamesResource>(Response.FromValue(new SlotConfigNamesResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                WebArmOperation<SlotConfigNamesResource> operation = new WebArmOperation<SlotConfigNamesResource>(Response.FromValue(new SlotConfigNamesResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

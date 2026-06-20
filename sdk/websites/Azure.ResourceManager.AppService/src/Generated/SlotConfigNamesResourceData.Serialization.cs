@@ -12,10 +12,10 @@ using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
+using Microsoft.Web.Models;
 
-namespace Azure.ResourceManager.AppService
+namespace Microsoft.Web
 {
     /// <summary> Slot Config names azure resource. </summary>
     public partial class SlotConfigNamesResourceData : ResourceData, IJsonModel<SlotConfigNamesResourceData>
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppService
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
+                    return ModelReaderWriter.Write(this, options, MicrosoftWebContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(SlotConfigNamesResourceData)} does not support writing '{options.Format}' format.");
             }
@@ -70,8 +70,8 @@ namespace Azure.ResourceManager.AppService
             return RequestContent.Create(slotConfigNamesResourceData, ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SlotConfigNamesResourceData"/> from. </param>
-        internal static SlotConfigNamesResourceData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Azure.Response"/> to deserialize the <see cref="SlotConfigNamesResourceData"/> from. </param>
+        internal static SlotConfigNamesResourceData FromResponse(Azure.Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeSlotConfigNamesResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.AppService
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAppServiceContext.Default);
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, MicrosoftWebContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))

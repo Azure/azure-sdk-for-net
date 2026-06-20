@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> Stamp capacity information. </summary>
     public partial class StampCapacity
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="siteMode"> Shared or Dedicated. </param>
         /// <param name="isLinux"> Is this a linux stamp capacity. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StampCapacity(string name, long? availableCapacity, long? totalCapacity, string unit, Models.ComputeModeOption? computeMode, Models.WorkerSizeOption? workerSize, int? workerSizeId, bool? excludeFromCapacityAllocation, bool? isApplicableForAllComputeModes, string siteMode, bool? isLinux, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StampCapacity(string name, long? availableCapacity, long? totalCapacity, string unit, ComputeModeOptions? computeMode, WorkerSizeOptions? workerSize, int? workerSizeId, bool? excludeFromCapacityAllocation, bool? isApplicableForAllComputeModes, string siteMode, bool? isLinux, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             AvailableCapacity = availableCapacity;
@@ -71,10 +71,10 @@ namespace Azure.ResourceManager.AppService.Models
         public string Unit { get; }
 
         /// <summary> Shared/dedicated workers. </summary>
-        public Models.ComputeModeOption? ComputeMode { get; }
+        public ComputeModeOptions? ComputeMode { get; }
 
         /// <summary> Size of the machines. </summary>
-        public Models.WorkerSizeOption? WorkerSize { get; }
+        public WorkerSizeOptions? WorkerSize { get; }
 
         /// <summary>
         /// Size ID of machines:

@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.AppService;
+using Microsoft.Web;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> Definition of Detector. </summary>
     public partial class DetectorInfo : IJsonModel<DetectorInfo>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
+                    return ModelReaderWriter.Write(this, options, MicrosoftWebContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DetectorInfo)} does not support writing '{options.Format}' format.");
             }
@@ -103,9 +103,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 writer.WritePropertyName("supportTopicList"u8);
                 writer.WriteStartArray();
-                foreach (Models.DetectorSupportTopic item in SupportTopicList)
+                foreach (SupportTopic item in SupportTopicList)
                 {
-                    writer.WriteObjectValue<Models.DetectorSupportTopic>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.AppService.Models
             string description = default;
             string author = default;
             string category = default;
-            IReadOnlyList<Models.DetectorSupportTopic> supportTopicList = default;
+            IReadOnlyList<SupportTopic> supportTopicList = default;
             IReadOnlyList<string> analysisType = default;
             DetectorType? @type = default;
             float? score = default;
@@ -219,10 +219,10 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    List<Models.DetectorSupportTopic> array = new List<Models.DetectorSupportTopic>();
+                    List<SupportTopic> array = new List<SupportTopic>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Models.DetectorSupportTopic.DeserializeDetectorSupportTopic(item, options));
+                        array.Add(SupportTopic.DeserializeSupportTopic(item, options));
                     }
                     supportTopicList = array;
                     continue;
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.AppService.Models
                 description,
                 author,
                 category,
-                supportTopicList ?? new ChangeTrackingList<Models.DetectorSupportTopic>(),
+                supportTopicList ?? new ChangeTrackingList<SupportTopic>(),
                 analysisType ?? new ChangeTrackingList<string>(),
                 @type,
                 score,

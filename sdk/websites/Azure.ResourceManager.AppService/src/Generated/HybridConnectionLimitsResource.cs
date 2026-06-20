@@ -14,7 +14,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.AppService
+namespace Microsoft.Web
 {
     /// <summary>
     /// A class representing a HybridConnectionLimits along with the instance operations that can be performed on it.
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.AppService
         internal HybridConnectionLimitsResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string hybridConnectionLimitsApiVersion);
-            _appServicePlansClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
-            _appServicePlansRestClient = new AppServicePlans(_appServicePlansClientDiagnostics, Pipeline, Endpoint, hybridConnectionLimitsApiVersion ?? "2026-03-01-preview");
+            _appServicePlansClientDiagnostics = new ClientDiagnostics("Microsoft.Web", ResourceType.Namespace, Diagnostics);
+            _appServicePlansRestClient = new AppServicePlans(_appServicePlansClientDiagnostics, Pipeline, Endpoint, hybridConnectionLimitsApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

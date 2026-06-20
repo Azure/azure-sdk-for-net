@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> The workflow run trigger. </summary>
     public partial class WorkflowRunTrigger
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="error"> Gets the error. </param>
         /// <param name="trackedProperties"> Gets the tracked properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WorkflowRunTrigger(string name, BinaryData inputs, Models.WebAppContentLink inputsLink, BinaryData outputs, Models.WebAppContentLink outputsLink, DateTimeOffset? scheduledOn, DateTimeOffset? startOn, DateTimeOffset? endOn, string trackingId, Correlation correlation, string code, WorkflowStatus? status, BinaryData error, BinaryData trackedProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WorkflowRunTrigger(string name, BinaryData inputs, ContentLink inputsLink, BinaryData outputs, ContentLink outputsLink, DateTimeOffset? scheduledOn, DateTimeOffset? startOn, DateTimeOffset? endOn, string trackingId, Correlation correlation, string code, WorkflowStatus? status, BinaryData error, BinaryData trackedProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Inputs = inputs;
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AppService.Models
         public BinaryData Inputs { get; }
 
         /// <summary> Gets the link to inputs. </summary>
-        public Models.WebAppContentLink InputsLink { get; }
+        public ContentLink InputsLink { get; }
 
         /// <summary>
         /// Gets the outputs.
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.AppService.Models
         public BinaryData Outputs { get; }
 
         /// <summary> Gets the link to outputs. </summary>
-        public Models.WebAppContentLink OutputsLink { get; }
+        public ContentLink OutputsLink { get; }
 
         /// <summary> Gets the scheduled time. </summary>
         public DateTimeOffset? ScheduledOn { get; }

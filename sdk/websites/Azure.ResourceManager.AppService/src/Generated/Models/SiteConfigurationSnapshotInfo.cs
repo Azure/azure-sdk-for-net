@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> A snapshot of a web app configuration. </summary>
     public partial class SiteConfigurationSnapshotInfo : ProxyOnlyResource

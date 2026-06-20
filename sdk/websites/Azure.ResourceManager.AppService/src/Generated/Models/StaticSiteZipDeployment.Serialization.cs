@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.AppService;
+using Microsoft.Web;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> A static site zip deployment. </summary>
     internal partial class StaticSiteZipDeployment : IJsonModel<StaticSiteZipDeployment>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
+                    return ModelReaderWriter.Write(this, options, MicrosoftWebContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(StaticSiteZipDeployment)} does not support writing '{options.Format}' format.");
             }
@@ -77,12 +77,12 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(AppZipUri))
             {
                 writer.WritePropertyName("appZipUrl"u8);
-                writer.WriteStringValue(AppZipUri.AbsoluteUri);
+                writer.WriteStringValue(AppZipUri);
             }
             if (Optional.IsDefined(ApiZipUri))
             {
                 writer.WritePropertyName("apiZipUrl"u8);
-                writer.WriteStringValue(ApiZipUri.AbsoluteUri);
+                writer.WriteStringValue(ApiZipUri);
             }
             if (Optional.IsDefined(DeploymentTitle))
             {
@@ -141,8 +141,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Uri appZipUri = default;
-            Uri apiZipUri = default;
+            string appZipUri = default;
+            string apiZipUri = default;
             string deploymentTitle = default;
             string provider = default;
             string functionLanguage = default;
@@ -151,20 +151,12 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (prop.NameEquals("appZipUrl"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    appZipUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    appZipUri = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("apiZipUrl"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    apiZipUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    apiZipUri = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("deploymentTitle"u8))

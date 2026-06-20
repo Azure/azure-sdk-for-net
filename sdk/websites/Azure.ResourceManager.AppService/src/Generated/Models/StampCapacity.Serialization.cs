@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.AppService;
+using Microsoft.Web;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> Stamp capacity information. </summary>
     public partial class StampCapacity : IJsonModel<StampCapacity>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
+                    return ModelReaderWriter.Write(this, options, MicrosoftWebContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(StampCapacity)} does not support writing '{options.Format}' format.");
             }
@@ -175,8 +175,8 @@ namespace Azure.ResourceManager.AppService.Models
             long? availableCapacity = default;
             long? totalCapacity = default;
             string unit = default;
-            Models.ComputeModeOption? computeMode = default;
-            Models.WorkerSizeOption? workerSize = default;
+            ComputeModeOptions? computeMode = default;
+            WorkerSizeOptions? workerSize = default;
             int? workerSizeId = default;
             bool? excludeFromCapacityAllocation = default;
             bool? isApplicableForAllComputeModes = default;
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    computeMode = prop.Value.GetString().ToComputeModeOption();
+                    computeMode = prop.Value.GetString().ToComputeModeOptions();
                     continue;
                 }
                 if (prop.NameEquals("workerSize"u8))
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    workerSize = prop.Value.GetString().ToWorkerSizeOption();
+                    workerSize = prop.Value.GetString().ToWorkerSizeOptions();
                     continue;
                 }
                 if (prop.NameEquals("workerSizeId"u8))

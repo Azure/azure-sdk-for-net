@@ -14,7 +14,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.AppService
+namespace Microsoft.Web
 {
     /// <summary>
     /// A class representing a AppServiceEnvironment along with the instance operations that can be performed on it.
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.AppService
         internal AppServiceEnvironmentResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             this.TryGetApiVersion(ResourceType, out string appServiceEnvironmentApiVersion);
-            _appServiceEnvironmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
-            _appServiceEnvironmentsRestClient = new AppServiceEnvironments(_appServiceEnvironmentsClientDiagnostics, Pipeline, Endpoint, appServiceEnvironmentApiVersion ?? "2026-03-01-preview");
+            _appServiceEnvironmentsClientDiagnostics = new ClientDiagnostics("Microsoft.Web", ResourceType.Namespace, Diagnostics);
+            _appServiceEnvironmentsRestClient = new AppServiceEnvironments(_appServiceEnvironmentsClientDiagnostics, Pipeline, Endpoint, appServiceEnvironmentApiVersion ?? "2026-03-15");
             AppServiceEnvironmentResource.ValidateResourceId(id);
         }
 
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BinaryData>> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _appServiceEnvironmentsClientDiagnostics.CreateScope("AppServiceEnvironmentResource.Delete");
             scope.Start();
@@ -222,10 +222,16 @@ namespace Azure.ResourceManager.AppService
                 };
                 HttpMessage message = _appServiceEnvironmentsRestClient.CreateDeletePrivateEndpointConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                AppServiceArmOperation operation = new AppServiceArmOperation(_appServiceEnvironmentsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                WebArmOperation<BinaryData> operation = new WebArmOperation<BinaryData>(
+                    new BinaryDataOperationSource(),
+                    _appServiceEnvironmentsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 }
                 return operation;
             }
@@ -249,7 +255,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -259,7 +265,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BinaryData> Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _appServiceEnvironmentsClientDiagnostics.CreateScope("AppServiceEnvironmentResource.Delete");
             scope.Start();
@@ -271,10 +277,16 @@ namespace Azure.ResourceManager.AppService
                 };
                 HttpMessage message = _appServiceEnvironmentsRestClient.CreateDeletePrivateEndpointConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                AppServiceArmOperation operation = new AppServiceArmOperation(_appServiceEnvironmentsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                WebArmOperation<BinaryData> operation = new WebArmOperation<BinaryData>(
+                    new BinaryDataOperationSource(),
+                    _appServiceEnvironmentsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
-                    operation.WaitForCompletionResponse(cancellationToken);
+                    operation.WaitForCompletion(cancellationToken);
                 }
                 return operation;
             }
@@ -298,7 +310,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -324,7 +336,7 @@ namespace Azure.ResourceManager.AppService
                 };
                 HttpMessage message = _appServiceEnvironmentsRestClient.CreateApproveOrRejectPrivateEndpointConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RemotePrivateEndpointConnectionARMResourceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                AppServiceArmOperation<AppServiceEnvironmentResource> operation = new AppServiceArmOperation<AppServiceEnvironmentResource>(
+                WebArmOperation<AppServiceEnvironmentResource> operation = new WebArmOperation<AppServiceEnvironmentResource>(
                     new AppServiceEnvironmentResourceOperationSource(Client),
                     _appServiceEnvironmentsClientDiagnostics,
                     Pipeline,
@@ -357,7 +369,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -383,7 +395,7 @@ namespace Azure.ResourceManager.AppService
                 };
                 HttpMessage message = _appServiceEnvironmentsRestClient.CreateApproveOrRejectPrivateEndpointConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RemotePrivateEndpointConnectionARMResourceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                AppServiceArmOperation<AppServiceEnvironmentResource> operation = new AppServiceArmOperation<AppServiceEnvironmentResource>(
+                WebArmOperation<AppServiceEnvironmentResource> operation = new WebArmOperation<AppServiceEnvironmentResource>(
                     new AppServiceEnvironmentResourceOperationSource(Client),
                     _appServiceEnvironmentsClientDiagnostics,
                     Pipeline,

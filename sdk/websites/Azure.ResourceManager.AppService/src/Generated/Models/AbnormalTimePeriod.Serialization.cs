@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.AppService;
+using Microsoft.Web;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> Class representing Abnormal Time Period identified in diagnosis. </summary>
     public partial class AbnormalTimePeriod : IJsonModel<AbnormalTimePeriod>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
+                    return ModelReaderWriter.Write(this, options, MicrosoftWebContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AbnormalTimePeriod)} does not support writing '{options.Format}' format.");
             }
@@ -98,9 +98,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 writer.WritePropertyName("solutions"u8);
                 writer.WriteStartArray();
-                foreach (Models.DiagnosticSolution item in Solutions)
+                foreach (Solution item in Solutions)
                 {
-                    writer.WriteObjectValue<Models.DiagnosticSolution>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.AppService.Models
             DateTimeOffset? startOn = default;
             DateTimeOffset? endOn = default;
             IList<DetectorAbnormalTimePeriod> events = default;
-            IList<Models.DiagnosticSolution> solutions = default;
+            IList<Solution> solutions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -191,10 +191,10 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    List<Models.DiagnosticSolution> array = new List<Models.DiagnosticSolution>();
+                    List<Solution> array = new List<Solution>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Models.DiagnosticSolution.DeserializeDiagnosticSolution(item, options));
+                        array.Add(Solution.DeserializeSolution(item, options));
                     }
                     solutions = array;
                     continue;
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.AppService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AbnormalTimePeriod(startOn, endOn, events ?? new ChangeTrackingList<DetectorAbnormalTimePeriod>(), solutions ?? new ChangeTrackingList<Models.DiagnosticSolution>(), additionalBinaryDataProperties);
+            return new AbnormalTimePeriod(startOn, endOn, events ?? new ChangeTrackingList<DetectorAbnormalTimePeriod>(), solutions ?? new ChangeTrackingList<Solution>(), additionalBinaryDataProperties);
         }
     }
 }

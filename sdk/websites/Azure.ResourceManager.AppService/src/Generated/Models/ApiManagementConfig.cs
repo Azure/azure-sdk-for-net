@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> Azure API management (APIM) configuration linked to the app. </summary>
     internal partial class ApiManagementConfig

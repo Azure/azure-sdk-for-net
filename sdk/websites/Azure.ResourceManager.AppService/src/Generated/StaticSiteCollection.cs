@@ -16,7 +16,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.AppService
+namespace Microsoft.Web
 {
     /// <summary>
     /// A class representing a collection of <see cref="StaticSiteResource"/> and their operations.
@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.AppService
         internal StaticSiteCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             this.TryGetApiVersion(StaticSiteResource.ResourceType, out string staticSiteApiVersion);
-            _staticSitesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", StaticSiteResource.ResourceType.Namespace, Diagnostics);
-            _staticSitesRestClient = new StaticSites(_staticSitesClientDiagnostics, Pipeline, Endpoint, staticSiteApiVersion ?? "2026-03-01-preview");
+            _staticSitesClientDiagnostics = new ClientDiagnostics("Microsoft.Web", StaticSiteResource.ResourceType.Namespace, Diagnostics);
+            _staticSitesRestClient = new StaticSites(_staticSitesClientDiagnostics, Pipeline, Endpoint, staticSiteApiVersion ?? "2026-03-15");
             StaticSiteCollection.ValidateResourceId(id);
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.AppService
                 };
                 HttpMessage message = _staticSitesRestClient.CreateLinkBackendToBuildRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, linkedBackendName, StaticSiteLinkedBackendARMResourceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                AppServiceArmOperation<StaticSiteResource> operation = new AppServiceArmOperation<StaticSiteResource>(
+                WebArmOperation<StaticSiteResource> operation = new WebArmOperation<StaticSiteResource>(
                     new StaticSiteResourceOperationSource(Client),
                     _staticSitesClientDiagnostics,
                     Pipeline,
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.AppService
                 };
                 HttpMessage message = _staticSitesRestClient.CreateLinkBackendToBuildRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, linkedBackendName, StaticSiteLinkedBackendARMResourceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                AppServiceArmOperation<StaticSiteResource> operation = new AppServiceArmOperation<StaticSiteResource>(
+                WebArmOperation<StaticSiteResource> operation = new WebArmOperation<StaticSiteResource>(
                     new StaticSiteResourceOperationSource(Client),
                     _staticSitesClientDiagnostics,
                     Pipeline,
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -465,7 +465,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -526,7 +526,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>

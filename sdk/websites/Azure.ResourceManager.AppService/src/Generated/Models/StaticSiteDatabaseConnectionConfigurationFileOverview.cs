@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> A database connection configuration file. </summary>
     public partial class StaticSiteDatabaseConnectionConfigurationFileOverview

@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> ARM resource for a static site when patching. </summary>
     public partial class StaticSiteARMResourcePatch : ProxyOnlyResource

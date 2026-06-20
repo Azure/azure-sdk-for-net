@@ -9,10 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
-using Azure.ResourceManager.AppService;
+using Microsoft.Web;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> Information needed for cloning operation. </summary>
     public partial class CloningInfo : IJsonModel<CloningInfo>
@@ -46,7 +45,7 @@ namespace Azure.ResourceManager.AppService.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
+                    return ModelReaderWriter.Write(this, options, MicrosoftWebContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(CloningInfo)} does not support writing '{options.Format}' format.");
             }
@@ -83,7 +82,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(CorrelationId))
             {
                 writer.WritePropertyName("correlationId"u8);
-                writer.WriteStringValue(CorrelationId.Value);
+                writer.WriteStringValue(CorrelationId);
             }
             if (Optional.IsDefined(Overwrite))
             {
@@ -105,7 +104,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(SourceWebAppLocation))
             {
                 writer.WritePropertyName("sourceWebAppLocation"u8);
-                writer.WriteStringValue(SourceWebAppLocation.Value);
+                writer.WriteStringValue(SourceWebAppLocation);
             }
             if (Optional.IsDefined(HostingEnvironment))
             {
@@ -185,27 +184,23 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Guid? correlationId = default;
+            string correlationId = default;
             bool? overwrite = default;
             bool? cloneCustomHostNames = default;
             bool? cloneSourceControl = default;
-            ResourceIdentifier sourceWebAppId = default;
-            AzureLocation? sourceWebAppLocation = default;
+            string sourceWebAppId = default;
+            string sourceWebAppLocation = default;
             string hostingEnvironment = default;
             IDictionary<string, string> appSettingsOverrides = default;
             bool? configureLoadBalancing = default;
-            ResourceIdentifier trafficManagerProfileId = default;
+            string trafficManagerProfileId = default;
             string trafficManagerProfileName = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("correlationId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    correlationId = new Guid(prop.Value.GetString());
+                    correlationId = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("overwrite"u8))
@@ -237,16 +232,12 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (prop.NameEquals("sourceWebAppId"u8))
                 {
-                    sourceWebAppId = new ResourceIdentifier(prop.Value.GetString());
+                    sourceWebAppId = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("sourceWebAppLocation"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    sourceWebAppLocation = new AzureLocation(prop.Value.GetString());
+                    sourceWebAppLocation = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("hostingEnvironment"u8))
@@ -286,11 +277,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (prop.NameEquals("trafficManagerProfileId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    trafficManagerProfileId = new ResourceIdentifier(prop.Value.GetString());
+                    trafficManagerProfileId = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("trafficManagerProfileName"u8))

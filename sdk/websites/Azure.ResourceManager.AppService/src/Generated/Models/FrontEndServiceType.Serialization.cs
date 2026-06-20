@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     internal static partial class FrontEndServiceTypeExtensions
     {

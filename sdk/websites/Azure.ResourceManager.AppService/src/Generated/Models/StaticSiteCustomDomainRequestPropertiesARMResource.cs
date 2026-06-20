@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> Static Site Custom Domain Request Properties ARM resource. </summary>
     public partial class StaticSiteCustomDomainRequestPropertiesARMResource : ProxyOnlyResource

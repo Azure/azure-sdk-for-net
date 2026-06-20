@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> App Service plans this offer is restricted to. </summary>
     public enum AppServicePlanRestrictions

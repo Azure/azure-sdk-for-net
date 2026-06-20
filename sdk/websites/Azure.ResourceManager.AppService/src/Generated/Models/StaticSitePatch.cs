@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> Static Site Database Connection Request Properties resource when patching. </summary>
     public partial class StaticSitePatch

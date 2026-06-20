@@ -9,7 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace Azure.ResourceManager.AppService
+namespace Microsoft.Web
 {
     /// <summary></summary>
     public partial class RecommendationResource : IJsonModel<RecommendationRuleData>
@@ -27,11 +27,11 @@ namespace Azure.ResourceManager.AppService
         RecommendationRuleData IJsonModel<RecommendationRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RecommendationRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RecommendationRuleData>(Data, options, AzureResourceManagerAppServiceContext.Default);
+        BinaryData IPersistableModel<RecommendationRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RecommendationRuleData>(Data, options, MicrosoftWebContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RecommendationRuleData IPersistableModel<RecommendationRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RecommendationRuleData>(data, options, AzureResourceManagerAppServiceContext.Default);
+        RecommendationRuleData IPersistableModel<RecommendationRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RecommendationRuleData>(data, options, MicrosoftWebContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<RecommendationRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);

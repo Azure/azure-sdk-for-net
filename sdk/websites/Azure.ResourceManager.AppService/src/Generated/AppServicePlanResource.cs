@@ -14,7 +14,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.AppService
+namespace Microsoft.Web
 {
     /// <summary>
     /// A class representing a AppServicePlan along with the instance operations that can be performed on it.
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.AppService
         internal AppServicePlanResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             this.TryGetApiVersion(ResourceType, out string appServicePlanApiVersion);
-            _appServicePlansClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
-            _appServicePlansRestClient = new AppServicePlans(_appServicePlansClientDiagnostics, Pipeline, Endpoint, appServicePlanApiVersion ?? "2026-03-01-preview");
+            _appServicePlansClientDiagnostics = new ClientDiagnostics("Microsoft.Web", ResourceType.Namespace, Diagnostics);
+            _appServicePlansRestClient = new AppServicePlans(_appServicePlansClientDiagnostics, Pipeline, Endpoint, appServicePlanApiVersion ?? "2026-03-15");
             AppServicePlanResource.ValidateResourceId(id);
         }
 
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.AppService
                 Response<VnetGatewayData> response = Response.FromValue(VnetGatewayData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                AppServiceArmOperation<AppServicePlanResource> operation = new AppServiceArmOperation<AppServicePlanResource>(Response.FromValue(new AppServicePlanResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                WebArmOperation<AppServicePlanResource> operation = new WebArmOperation<AppServicePlanResource>(Response.FromValue(new AppServicePlanResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.AppService
                 Response<VnetGatewayData> response = Response.FromValue(VnetGatewayData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                AppServiceArmOperation<AppServicePlanResource> operation = new AppServiceArmOperation<AppServicePlanResource>(Response.FromValue(new AppServicePlanResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                WebArmOperation<AppServicePlanResource> operation = new WebArmOperation<AppServicePlanResource>(Response.FromValue(new AppServicePlanResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);

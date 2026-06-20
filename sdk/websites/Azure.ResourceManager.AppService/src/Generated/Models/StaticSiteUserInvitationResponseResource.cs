@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> Static sites user roles invitation link resource. </summary>
     public partial class StaticSiteUserInvitationResponseResource : ProxyOnlyResource

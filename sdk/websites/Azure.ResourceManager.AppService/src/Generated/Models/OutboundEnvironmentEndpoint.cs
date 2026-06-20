@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.AppService;
+using Microsoft.Web;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> Endpoints accessed for a common purpose that the App Service Environment requires outbound network access to. </summary>
     public partial class OutboundEnvironmentEndpoint
@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of <see cref="OutboundEnvironmentEndpoint"/>. </summary>
         internal OutboundEnvironmentEndpoint()
         {
-            Endpoints = new ChangeTrackingList<Models.AppServiceEndpointDependency>();
+            Endpoints = new ChangeTrackingList<EndpointDependency>();
         }
 
         /// <summary> Initializes a new instance of <see cref="OutboundEnvironmentEndpoint"/>. </summary>
         /// <param name="category"> The type of service accessed by the App Service Environment, e.g., Azure Storage, Azure SQL Database, and Azure Active Directory. </param>
         /// <param name="endpoints"> The endpoints that the App Service Environment reaches the service at. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OutboundEnvironmentEndpoint(string category, IReadOnlyList<Models.AppServiceEndpointDependency> endpoints, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OutboundEnvironmentEndpoint(string category, IList<EndpointDependency> endpoints, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Category = category;
             Endpoints = endpoints;
@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.AppService.Models
         public string Category { get; }
 
         /// <summary> The endpoints that the App Service Environment reaches the service at. </summary>
-        public IReadOnlyList<Models.AppServiceEndpointDependency> Endpoints { get; }
+        public IList<EndpointDependency> Endpoints { get; }
     }
 }

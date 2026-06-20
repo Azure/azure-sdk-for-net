@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> StaticSiteResetPropertiesARMResource resource specific properties. </summary>
     internal partial class StaticSiteResetPropertiesARMResourceProperties

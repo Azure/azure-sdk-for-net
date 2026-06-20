@@ -10,9 +10,9 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
-using Azure.ResourceManager.AppService;
+using Microsoft.Web;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> Paged collection of OutboundEnvironmentEndpoint items. </summary>
     internal partial class OutboundEnvironmentEndpointCollection : IJsonModel<OutboundEnvironmentEndpointCollection>
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.AppService.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
+                    return ModelReaderWriter.Write(this, options, MicrosoftWebContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(OutboundEnvironmentEndpointCollection)} does not support writing '{options.Format}' format.");
             }

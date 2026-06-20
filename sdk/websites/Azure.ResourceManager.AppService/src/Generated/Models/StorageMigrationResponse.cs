@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> Response for a migration of app content request. </summary>
     public partial class StorageMigrationResponse : ProxyOnlyResource

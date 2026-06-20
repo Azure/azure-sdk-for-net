@@ -9,7 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace Azure.ResourceManager.AppService
+namespace Microsoft.Web
 {
     /// <summary></summary>
     public partial class AppServicePlanResource : IJsonModel<VnetGatewayData>
@@ -27,11 +27,11 @@ namespace Azure.ResourceManager.AppService
         VnetGatewayData IJsonModel<VnetGatewayData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<VnetGatewayData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<VnetGatewayData>(Data, options, AzureResourceManagerAppServiceContext.Default);
+        BinaryData IPersistableModel<VnetGatewayData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<VnetGatewayData>(Data, options, MicrosoftWebContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VnetGatewayData IPersistableModel<VnetGatewayData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VnetGatewayData>(data, options, AzureResourceManagerAppServiceContext.Default);
+        VnetGatewayData IPersistableModel<VnetGatewayData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VnetGatewayData>(data, options, MicrosoftWebContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<VnetGatewayData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);

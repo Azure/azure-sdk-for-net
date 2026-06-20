@@ -7,9 +7,9 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.AppService;
+using Microsoft.Web;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> The workflow provisioning state. </summary>
     public readonly partial struct WorkflowProvisioningState : IEquatable<WorkflowProvisioningState>

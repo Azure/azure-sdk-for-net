@@ -12,10 +12,10 @@ using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
+using Microsoft.Web.Models;
 
-namespace Azure.ResourceManager.AppService
+namespace Microsoft.Web
 {
     /// <summary> Represents a recommendation rule that the recommendation engine can perform. </summary>
     public partial class RecommendationRuleData : ResourceData, IJsonModel<RecommendationRuleData>
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppService
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
+                    return ModelReaderWriter.Write(this, options, MicrosoftWebContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(RecommendationRuleData)} does not support writing '{options.Format}' format.");
             }
@@ -60,8 +60,8 @@ namespace Azure.ResourceManager.AppService
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<RecommendationRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="RecommendationRuleData"/> from. </param>
-        internal static RecommendationRuleData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Azure.Response"/> to deserialize the <see cref="RecommendationRuleData"/> from. </param>
+        internal static RecommendationRuleData FromResponse(Azure.Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeRecommendationRuleData(document.RootElement, ModelSerializationExtensions.WireOptions);
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.AppService
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAppServiceContext.Default);
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, MicrosoftWebContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))

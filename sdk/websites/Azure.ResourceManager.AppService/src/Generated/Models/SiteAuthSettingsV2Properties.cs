@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> SiteAuthSettingsV2 resource specific properties. </summary>
     internal partial class SiteAuthSettingsV2Properties

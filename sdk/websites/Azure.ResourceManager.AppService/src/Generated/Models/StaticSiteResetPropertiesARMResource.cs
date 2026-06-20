@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> Static Site Reset Properties ARM resource. </summary>
     public partial class StaticSiteResetPropertiesARMResource : ProxyOnlyResource

@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> PremierAddOnPatchResource resource specific properties. </summary>
     public partial class PremierAddOnPatchResourceProperties

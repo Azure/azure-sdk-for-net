@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> Request entity for previewing the Static Site workflow. </summary>
     public partial class StaticSitesWorkflowPreviewRequest : ProxyOnlyResource

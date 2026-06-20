@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.AppService;
+using Microsoft.Web;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> Object to hold install script reference. </summary>
     public partial class InstallScriptSource : IJsonModel<InstallScriptSource>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
+                    return ModelReaderWriter.Write(this, options, MicrosoftWebContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(InstallScriptSource)} does not support writing '{options.Format}' format.");
             }
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(SourceUri))
             {
                 writer.WritePropertyName("sourceUri"u8);
-                writer.WriteStringValue(SourceUri.AbsoluteUri);
+                writer.WriteStringValue(SourceUri);
             }
             if (Optional.IsDefined(Type))
             {
@@ -126,18 +126,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Uri sourceUri = default;
+            string sourceUri = default;
             InstallScriptType? @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("sourceUri"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    sourceUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    sourceUri = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("type"u8))

@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.AppService;
+using Microsoft.Web;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> The configuration settings of the Azure Active Directory default authorization policy. </summary>
     public partial class DefaultAuthorizationPolicy : IJsonModel<DefaultAuthorizationPolicy>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
+                    return ModelReaderWriter.Write(this, options, MicrosoftWebContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DefaultAuthorizationPolicy)} does not support writing '{options.Format}' format.");
             }
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(AllowedPrincipals))
             {
                 writer.WritePropertyName("allowedPrincipals"u8);
-                writer.WriteObjectValue<Models.AppServiceAadAllowedPrincipals>(AllowedPrincipals, options);
+                writer.WriteObjectValue(AllowedPrincipals, options);
             }
             if (Optional.IsCollectionDefined(AllowedApplications))
             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Models.AppServiceAadAllowedPrincipals allowedPrincipals = default;
+            AllowedPrincipals allowedPrincipals = default;
             IList<string> allowedApplications = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    allowedPrincipals = Models.AppServiceAadAllowedPrincipals.DeserializeAppServiceAadAllowedPrincipals(prop.Value, options);
+                    allowedPrincipals = AllowedPrincipals.DeserializeAllowedPrincipals(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("allowedApplications"u8))

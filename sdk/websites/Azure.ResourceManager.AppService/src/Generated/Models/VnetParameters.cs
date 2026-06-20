@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> The required set of inputs to validate a VNET. </summary>
     public partial class VnetParameters : ProxyOnlyResource

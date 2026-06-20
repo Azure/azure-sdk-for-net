@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> Information regarding availability of a resource name for DNL apps with regionalized default hostnames. </summary>
     public partial class DnlResourceNameAvailability

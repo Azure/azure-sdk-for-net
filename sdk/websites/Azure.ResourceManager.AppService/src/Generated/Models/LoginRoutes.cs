@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> The routes that specify the endpoints used for login and logout requests. </summary>
     internal partial class LoginRoutes

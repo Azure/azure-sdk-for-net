@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> SSL-enabled hostname. </summary>
     public partial class HostNameSslState
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="toUpdate"> Set to &lt;code&gt;true&lt;/code&gt; to update existing hostname. </param>
         /// <param name="hostType"> Indicates whether the hostname is a standard or repository hostname. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HostNameSslState(string name, Models.HostNameBindingSslState? sslState, string virtualIP, BinaryData thumbprint, bool? toUpdate, Models.AppServiceHostType? hostType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HostNameSslState(string name, SslState? sslState, string virtualIP, string thumbprint, bool? toUpdate, HostType? hostType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             SslState = sslState;
@@ -44,18 +44,18 @@ namespace Azure.ResourceManager.AppService.Models
         public string Name { get; set; }
 
         /// <summary> SSL type. </summary>
-        public Models.HostNameBindingSslState? SslState { get; set; }
+        public SslState? SslState { get; set; }
 
         /// <summary> Virtual IP address assigned to the hostname if IP based SSL is enabled. </summary>
         public string VirtualIP { get; set; }
 
         /// <summary> SSL certificate thumbprint. </summary>
-        public BinaryData Thumbprint { get; set; }
+        public string Thumbprint { get; set; }
 
         /// <summary> Set to &lt;code&gt;true&lt;/code&gt; to update existing hostname. </summary>
         public bool? ToUpdate { get; set; }
 
         /// <summary> Indicates whether the hostname is a standard or repository hostname. </summary>
-        public Models.AppServiceHostType? HostType { get; set; }
+        public HostType? HostType { get; set; }
     }
 }

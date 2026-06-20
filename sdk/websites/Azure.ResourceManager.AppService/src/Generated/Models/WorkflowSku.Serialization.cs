@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.AppService;
+using Microsoft.Web;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> The sku type. </summary>
     public partial class WorkflowSku : IJsonModel<WorkflowSku>
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.AppService.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
+                    return ModelReaderWriter.Write(this, options, MicrosoftWebContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(WorkflowSku)} does not support writing '{options.Format}' format.");
             }
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(Plan))
             {
                 writer.WritePropertyName("plan"u8);
-                writer.WriteObjectValue<Models.WorkflowResourceReference>(Plan, options);
+                writer.WriteObjectValue(Plan, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             WorkflowSkuName name = default;
-            Models.WorkflowResourceReference plan = default;
+            ResourceReference plan = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    plan = Models.WorkflowResourceReference.DeserializeWorkflowResourceReference(prop.Value, options);
+                    plan = ResourceReference.DeserializeResourceReference(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

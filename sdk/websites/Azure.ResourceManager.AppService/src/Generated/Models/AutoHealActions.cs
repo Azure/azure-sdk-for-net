@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> Actions which to take by the auto-heal module when a rule is triggered. </summary>
     public partial class AutoHealActions

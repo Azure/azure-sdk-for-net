@@ -13,9 +13,9 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.AppService.Models;
+using Microsoft.Web.Models;
 
-namespace Azure.ResourceManager.AppService
+namespace Microsoft.Web
 {
     internal partial class MicrosoftWebAppServicePlansListCapabilitiesCollectionResultOfT : Pageable<Capability>
     {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> The pages of MicrosoftWebAppServicePlansListCapabilitiesCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<Capability>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Response response = GetNextResponse(pageSizeHint, null);
+            Azure.Response response = GetNextResponse(pageSizeHint, null);
             if (response is null)
             {
                 yield break;
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
+        private Azure.Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = _client.CreateGetCapabilitiesRequest(_subscriptionId, _resourceGroupName, _name, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
@@ -80,14 +80,14 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Parse the array from the response. </summary>
         /// <param name="response"> The response to parse. </param>
         /// <returns> The parsed array. </returns>
-        private static IReadOnlyList<Capability> ParseArrayFromResponse(Response response)
+        private static IReadOnlyList<Capability> ParseArrayFromResponse(Azure.Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             JsonElement array = document.RootElement;
             List<Capability> result = new List<Capability>();
             foreach (JsonElement element in array.EnumerateArray())
             {
-                result.Add(ModelReaderWriter.Read<Capability>(new BinaryData(Encoding.UTF8.GetBytes(element.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAppServiceContext.Default));
+                result.Add(ModelReaderWriter.Read<Capability>(new BinaryData(Encoding.UTF8.GetBytes(element.GetRawText())), ModelSerializationExtensions.WireOptions, MicrosoftWebContext.Default));
             }
             return result;
         }

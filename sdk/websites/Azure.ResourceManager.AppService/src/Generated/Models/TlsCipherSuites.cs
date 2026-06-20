@@ -7,9 +7,9 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.AppService;
+using Microsoft.Web;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> The minimum strength TLS cipher suite allowed for an application. </summary>
     public readonly partial struct TlsCipherSuites : IEquatable<TlsCipherSuites>

@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.AppService;
+using Microsoft.Web;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> Application logs configuration. </summary>
     public partial class ApplicationLogsConfig : IJsonModel<ApplicationLogsConfig>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
+                    return ModelReaderWriter.Write(this, options, MicrosoftWebContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ApplicationLogsConfig)} does not support writing '{options.Format}' format.");
             }
@@ -82,12 +82,12 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(AzureTableStorage))
             {
                 writer.WritePropertyName("azureTableStorage"u8);
-                writer.WriteObjectValue<Models.AppServiceTableStorageApplicationLogsConfig>(AzureTableStorage, options);
+                writer.WriteObjectValue(AzureTableStorage, options);
             }
             if (Optional.IsDefined(AzureBlobStorage))
             {
                 writer.WritePropertyName("azureBlobStorage"u8);
-                writer.WriteObjectValue<Models.AppServiceBlobStorageApplicationLogsConfig>(AzureBlobStorage, options);
+                writer.WriteObjectValue(AzureBlobStorage, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -132,8 +132,8 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             FileSystemApplicationLogsConfig fileSystem = default;
-            Models.AppServiceTableStorageApplicationLogsConfig azureTableStorage = default;
-            Models.AppServiceBlobStorageApplicationLogsConfig azureBlobStorage = default;
+            AzureTableStorageApplicationLogsConfig azureTableStorage = default;
+            AzureBlobStorageApplicationLogsConfig azureBlobStorage = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    azureTableStorage = Models.AppServiceTableStorageApplicationLogsConfig.DeserializeAppServiceTableStorageApplicationLogsConfig(prop.Value, options);
+                    azureTableStorage = AzureTableStorageApplicationLogsConfig.DeserializeAzureTableStorageApplicationLogsConfig(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("azureBlobStorage"u8))
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    azureBlobStorage = Models.AppServiceBlobStorageApplicationLogsConfig.DeserializeAppServiceBlobStorageApplicationLogsConfig(prop.Value, options);
+                    azureBlobStorage = AzureBlobStorageApplicationLogsConfig.DeserializeAzureBlobStorageApplicationLogsConfig(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

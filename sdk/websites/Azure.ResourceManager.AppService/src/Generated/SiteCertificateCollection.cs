@@ -16,7 +16,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.AppService
+namespace Microsoft.Web
 {
     /// <summary>
     /// A class representing a collection of <see cref="SiteCertificateResource"/> and their operations.
@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.AppService
         internal SiteCertificateCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             this.TryGetApiVersion(SiteCertificateResource.ResourceType, out string siteCertificateApiVersion);
-            _siteCertificatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteCertificateResource.ResourceType.Namespace, Diagnostics);
-            _siteCertificatesRestClient = new SiteCertificates(_siteCertificatesClientDiagnostics, Pipeline, Endpoint, siteCertificateApiVersion ?? "2026-03-01-preview");
+            _siteCertificatesClientDiagnostics = new ClientDiagnostics("Microsoft.Web", SiteCertificateResource.ResourceType.Namespace, Diagnostics);
+            _siteCertificatesRestClient = new SiteCertificates(_siteCertificatesClientDiagnostics, Pipeline, Endpoint, siteCertificateApiVersion ?? "2026-03-15");
             SiteCertificateCollection.ValidateResourceId(id);
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.AppService
                 Response<CertificateData> response = Response.FromValue(CertificateData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                AppServiceArmOperation<SiteCertificateResource> operation = new AppServiceArmOperation<SiteCertificateResource>(Response.FromValue(new SiteCertificateResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                WebArmOperation<SiteCertificateResource> operation = new WebArmOperation<SiteCertificateResource>(Response.FromValue(new SiteCertificateResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.AppService
                 Response<CertificateData> response = Response.FromValue(CertificateData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                AppServiceArmOperation<SiteCertificateResource> operation = new AppServiceArmOperation<SiteCertificateResource>(Response.FromValue(new SiteCertificateResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                WebArmOperation<SiteCertificateResource> operation = new WebArmOperation<SiteCertificateResource>(Response.FromValue(new SiteCertificateResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -459,7 +459,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -520,7 +520,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>

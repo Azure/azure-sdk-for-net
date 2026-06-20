@@ -10,7 +10,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.ResourceManager.AppService
+namespace Microsoft.Web
 {
     internal partial class StaticSites
     {
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/microsoft.Web/staticSites/", false);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/authproviders/", false);
             uri.AppendPath(authprovider, true);
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/microsoft.Web/staticSites/", false);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/authproviders/", false);
             uri.AppendPath(authprovider, true);
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/microsoft.Web/staticSites/", false);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/authproviders/", false);
             uri.AppendPath(authprovider, true);

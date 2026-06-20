@@ -10,7 +10,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.ResourceManager.AppService
+namespace Microsoft.Web
 {
     internal partial class WebApps
     {
@@ -920,7 +920,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/microsoft.Web/sites/", false);
+            uri.AppendPath("/providers/Microsoft.Web/sites/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/slots/", false);
             uri.AppendPath(slot, true);
@@ -950,7 +950,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/microsoft.Web/sites/", false);
+            uri.AppendPath("/providers/Microsoft.Web/sites/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/slots/", false);
             uri.AppendPath(slot, true);
@@ -1125,7 +1125,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/microsoft.Web/sites/", false);
+            uri.AppendPath("/providers/Microsoft.Web/sites/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/slots/", false);
             uri.AppendPath(slot, true);
@@ -1249,7 +1249,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/microsoft.Web/sites/", false);
+            uri.AppendPath("/providers/Microsoft.Web/sites/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/slots/", false);
             uri.AppendPath(slot, true);
@@ -1275,7 +1275,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/microsoft.Web/sites/", false);
+            uri.AppendPath("/providers/Microsoft.Web/sites/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/slots/", false);
             uri.AppendPath(slot, true);
@@ -1301,7 +1301,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/microsoft.Web/sites/", false);
+            uri.AppendPath("/providers/Microsoft.Web/sites/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/slots/", false);
             uri.AppendPath(slot, true);
@@ -3774,7 +3774,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/microsoft.Web/sites/", false);
+            uri.AppendPath("/providers/Microsoft.Web/sites/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/host/default/", false);
             uri.AppendPath(keyType, true);
@@ -3802,7 +3802,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/microsoft.Web/sites/", false);
+            uri.AppendPath("/providers/Microsoft.Web/sites/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/host/default/", false);
             uri.AppendPath(keyType, true);
@@ -4039,7 +4039,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/microsoft.Web/sites/", false);
+            uri.AppendPath("/providers/Microsoft.Web/sites/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/networkTrace/operationresults/", false);
             uri.AppendPath(operationId, true);
@@ -4155,7 +4155,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/microsoft.Web/sites/", false);
+            uri.AppendPath("/providers/Microsoft.Web/sites/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/networkTrace/", false);
             uri.AppendPath(operationId, true);
@@ -4179,7 +4179,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/microsoft.Web/sites/", false);
+            uri.AppendPath("/providers/Microsoft.Web/sites/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/networkTraces/current/operationresults/", false);
             uri.AppendPath(operationId, true);
@@ -4203,7 +4203,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/microsoft.Web/sites/", false);
+            uri.AppendPath("/providers/Microsoft.Web/sites/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/networkTraces/", false);
             uri.AppendPath(operationId, true);
@@ -8008,7 +8008,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/microsoft.Web/sites/", false);
+            uri.AppendPath("/providers/Microsoft.Web/sites/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/functions/", false);
             uri.AppendPath(functionName, true);
@@ -8036,7 +8036,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/microsoft.Web/sites/", false);
+            uri.AppendPath("/providers/Microsoft.Web/sites/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/functions/", false);
             uri.AppendPath(functionName, true);

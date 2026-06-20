@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.AppService;
+using Microsoft.Web;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> Additional configuration for a data providers. </summary>
     public partial class DataProviderMetadata
@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of <see cref="DataProviderMetadata"/>. </summary>
         internal DataProviderMetadata()
         {
-            PropertyBag = new ChangeTrackingList<Models.DataProviderKeyValuePair>();
+            PropertyBag = new ChangeTrackingList<KeyValuePairStringObject>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DataProviderMetadata"/>. </summary>
         /// <param name="providerName"></param>
         /// <param name="propertyBag"> Settings for the data provider. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataProviderMetadata(string providerName, IReadOnlyList<Models.DataProviderKeyValuePair> propertyBag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataProviderMetadata(string providerName, IReadOnlyList<KeyValuePairStringObject> propertyBag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProviderName = providerName;
             PropertyBag = propertyBag;
@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.AppService.Models
         public string ProviderName { get; }
 
         /// <summary> Settings for the data provider. </summary>
-        public IReadOnlyList<Models.DataProviderKeyValuePair> PropertyBag { get; }
+        public IReadOnlyList<KeyValuePairStringObject> PropertyBag { get; }
     }
 }

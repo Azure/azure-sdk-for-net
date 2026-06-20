@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> App Service billing entity that contains information about meter which the Azure billing system utilizes to charge users for services. </summary>
     public partial class BillingMeter : ProxyOnlyResource

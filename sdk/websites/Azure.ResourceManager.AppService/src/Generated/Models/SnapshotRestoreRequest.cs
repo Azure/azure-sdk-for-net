@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> Details about app recovery operation. </summary>
     public partial class SnapshotRestoreRequest : ProxyOnlyResource

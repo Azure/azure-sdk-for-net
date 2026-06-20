@@ -13,10 +13,10 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Resources;
+using Microsoft.Web.Models;
 
-namespace Azure.ResourceManager.AppService
+namespace Microsoft.Web
 {
     /// <summary>
     /// A class representing a Certificate along with the instance operations that can be performed on it.
@@ -51,8 +51,8 @@ namespace Azure.ResourceManager.AppService
         internal CertificateResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string certificateApiVersion);
-            _certificatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
-            _certificatesRestClient = new Certificates(_certificatesClientDiagnostics, Pipeline, Endpoint, certificateApiVersion ?? "2026-03-01-preview");
+            _certificatesClientDiagnostics = new ClientDiagnostics("Microsoft.Web", ResourceType.Namespace, Diagnostics);
+            _certificatesRestClient = new Certificates(_certificatesClientDiagnostics, Pipeline, Endpoint, certificateApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -125,13 +125,13 @@ namespace Azure.ResourceManager.AppService
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = _certificatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<CertificateData> response = Response.FromValue(CertificateData.FromResponse(result), result);
+                Azure.Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<CertificateData> response = Azure.Response.FromValue(CertificateData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new CertificateResource(Client, response.Value), response.GetRawResponse());
+                return Azure.Response.FromValue(new CertificateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -173,13 +173,13 @@ namespace Azure.ResourceManager.AppService
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = _certificatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<CertificateData> response = Response.FromValue(CertificateData.FromResponse(result), result);
+                Azure.Response result = Pipeline.ProcessMessage(message, context);
+                Response<CertificateData> response = Azure.Response.FromValue(CertificateData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new CertificateResource(Client, response.Value), response.GetRawResponse());
+                return Azure.Response.FromValue(new CertificateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -225,13 +225,13 @@ namespace Azure.ResourceManager.AppService
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = _certificatesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CertificatePatchResource.ToRequestContent(certificateEnvelope), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<CertificateData> response = Response.FromValue(CertificateData.FromResponse(result), result);
+                Azure.Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<CertificateData> response = Azure.Response.FromValue(CertificateData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new CertificateResource(Client, response.Value), response.GetRawResponse());
+                return Azure.Response.FromValue(new CertificateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -277,13 +277,13 @@ namespace Azure.ResourceManager.AppService
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = _certificatesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CertificatePatchResource.ToRequestContent(certificateEnvelope), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<CertificateData> response = Response.FromValue(CertificateData.FromResponse(result), result);
+                Azure.Response result = Pipeline.ProcessMessage(message, context);
+                Response<CertificateData> response = Azure.Response.FromValue(CertificateData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new CertificateResource(Client, response.Value), response.GetRawResponse());
+                return Azure.Response.FromValue(new CertificateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -326,10 +326,10 @@ namespace Azure.ResourceManager.AppService
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = _certificatesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Azure.Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                AppServiceArmOperation operation = new AppServiceArmOperation(response, rehydrationToken);
+                WebArmOperation operation = new WebArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -377,10 +377,10 @@ namespace Azure.ResourceManager.AppService
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = _certificatesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response response = Pipeline.ProcessMessage(message, context);
+                Azure.Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                AppServiceArmOperation operation = new AppServiceArmOperation(response, rehydrationToken);
+                WebArmOperation operation = new WebArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletionResponse(cancellationToken);

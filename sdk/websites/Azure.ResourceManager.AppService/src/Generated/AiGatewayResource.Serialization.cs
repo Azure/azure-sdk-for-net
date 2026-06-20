@@ -9,7 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace Azure.ResourceManager.AppService
+namespace Microsoft.Web
 {
     /// <summary></summary>
     public partial class AiGatewayResource : IJsonModel<AiGatewayData>
@@ -27,11 +27,11 @@ namespace Azure.ResourceManager.AppService
         AiGatewayData IJsonModel<AiGatewayData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AiGatewayData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AiGatewayData>(Data, options, AzureResourceManagerAppServiceContext.Default);
+        BinaryData IPersistableModel<AiGatewayData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AiGatewayData>(Data, options, MicrosoftWebContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AiGatewayData IPersistableModel<AiGatewayData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AiGatewayData>(data, options, AzureResourceManagerAppServiceContext.Default);
+        AiGatewayData IPersistableModel<AiGatewayData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AiGatewayData>(data, options, MicrosoftWebContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AiGatewayData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);

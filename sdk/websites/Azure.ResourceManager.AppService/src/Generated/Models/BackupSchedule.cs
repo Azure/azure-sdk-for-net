@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> Description of a backup schedule. Describes how often should be the backup performed and what should be the retention policy. </summary>
     public partial class BackupSchedule

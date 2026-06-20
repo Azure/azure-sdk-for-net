@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> Storage for deployed package used by the function app. </summary>
     public partial class FunctionsDeploymentStorage

@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> Class representing a diagnostic analysis done on an application. </summary>
     public partial class DiagnosticAnalysis : ProxyOnlyResource

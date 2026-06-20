@@ -12,10 +12,10 @@ using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
+using Microsoft.Web.Models;
 
-namespace Azure.ResourceManager.AppService
+namespace Microsoft.Web
 {
     /// <summary> Static Site Custom Domain Overview ARM resource. </summary>
     public partial class StaticSiteCustomDomainOverviewARMResourceData : ResourceData, IJsonModel<StaticSiteCustomDomainOverviewARMResourceData>
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppService
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
+                    return ModelReaderWriter.Write(this, options, MicrosoftWebContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(StaticSiteCustomDomainOverviewARMResourceData)} does not support writing '{options.Format}' format.");
             }
@@ -60,8 +60,8 @@ namespace Azure.ResourceManager.AppService
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<StaticSiteCustomDomainOverviewARMResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="StaticSiteCustomDomainOverviewARMResourceData"/> from. </param>
-        internal static StaticSiteCustomDomainOverviewARMResourceData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Azure.Response"/> to deserialize the <see cref="StaticSiteCustomDomainOverviewARMResourceData"/> from. </param>
+        internal static StaticSiteCustomDomainOverviewARMResourceData FromResponse(Azure.Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeStaticSiteCustomDomainOverviewARMResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.AppService
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAppServiceContext.Default);
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, MicrosoftWebContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))

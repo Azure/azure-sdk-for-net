@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> A remote private endpoint connection. </summary>
     public partial class RemotePrivateEndpointConnection : ProxyOnlyResource

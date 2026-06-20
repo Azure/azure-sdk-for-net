@@ -14,9 +14,9 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.AppService.Models;
+using Microsoft.Web.Models;
 
-namespace Azure.ResourceManager.AppService
+namespace Microsoft.Web
 {
     internal partial class MicrosoftWebAppServiceEnvironmentResourcesListDiagnosticsAsyncCollectionResultOfT : AsyncPageable<HostingEnvironmentDiagnostics>
     {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> The pages of MicrosoftWebAppServiceEnvironmentResourcesListDiagnosticsAsyncCollectionResultOfT as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<HostingEnvironmentDiagnostics>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Response response = await GetNextResponseAsync(pageSizeHint, null).ConfigureAwait(false);
+            Azure.Response response = await GetNextResponseAsync(pageSizeHint, null).ConfigureAwait(false);
             if (response is null)
             {
                 yield break;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
+        private async ValueTask<Azure.Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = _client.CreateGetDiagnosticsRequest(_subscriptionId, _resourceGroupName, _name, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
@@ -81,14 +81,14 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Parse the array from the response. </summary>
         /// <param name="response"> The response to parse. </param>
         /// <returns> The parsed array. </returns>
-        private static IReadOnlyList<HostingEnvironmentDiagnostics> ParseArrayFromResponse(Response response)
+        private static IReadOnlyList<HostingEnvironmentDiagnostics> ParseArrayFromResponse(Azure.Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             JsonElement array = document.RootElement;
             List<HostingEnvironmentDiagnostics> result = new List<HostingEnvironmentDiagnostics>();
             foreach (JsonElement element in array.EnumerateArray())
             {
-                result.Add(ModelReaderWriter.Read<HostingEnvironmentDiagnostics>(new BinaryData(Encoding.UTF8.GetBytes(element.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAppServiceContext.Default));
+                result.Add(ModelReaderWriter.Read<HostingEnvironmentDiagnostics>(new BinaryData(Encoding.UTF8.GetBytes(element.GetRawText())), ModelSerializationExtensions.WireOptions, MicrosoftWebContext.Default));
             }
             return result;
         }

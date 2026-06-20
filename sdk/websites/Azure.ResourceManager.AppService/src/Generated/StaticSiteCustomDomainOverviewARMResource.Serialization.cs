@@ -9,7 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace Azure.ResourceManager.AppService
+namespace Microsoft.Web
 {
     /// <summary></summary>
     public partial class StaticSiteCustomDomainOverviewARMResource : IJsonModel<StaticSiteCustomDomainOverviewARMResourceData>
@@ -27,11 +27,11 @@ namespace Azure.ResourceManager.AppService
         StaticSiteCustomDomainOverviewARMResourceData IJsonModel<StaticSiteCustomDomainOverviewARMResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<StaticSiteCustomDomainOverviewARMResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<StaticSiteCustomDomainOverviewARMResourceData>(Data, options, AzureResourceManagerAppServiceContext.Default);
+        BinaryData IPersistableModel<StaticSiteCustomDomainOverviewARMResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<StaticSiteCustomDomainOverviewARMResourceData>(Data, options, MicrosoftWebContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        StaticSiteCustomDomainOverviewARMResourceData IPersistableModel<StaticSiteCustomDomainOverviewARMResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StaticSiteCustomDomainOverviewARMResourceData>(data, options, AzureResourceManagerAppServiceContext.Default);
+        StaticSiteCustomDomainOverviewARMResourceData IPersistableModel<StaticSiteCustomDomainOverviewARMResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StaticSiteCustomDomainOverviewARMResourceData>(data, options, MicrosoftWebContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<StaticSiteCustomDomainOverviewARMResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);

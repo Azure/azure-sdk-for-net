@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> A class that describes the reason for a validation failure. </summary>
     public partial class VnetValidationFailureDetails : ProxyOnlyResource

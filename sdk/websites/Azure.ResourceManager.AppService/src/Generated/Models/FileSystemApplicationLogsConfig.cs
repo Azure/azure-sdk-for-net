@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> Application logs to file system configuration. </summary>
     internal partial class FileSystemApplicationLogsConfig

@@ -7,9 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> Specification for a Kubernetes Environment to use for this resource. </summary>
     public partial class KubeEnvironmentProfile
@@ -27,7 +26,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> Name of the Kubernetes Environment. </param>
         /// <param name="type"> Resource type of the Kubernetes Environment. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KubeEnvironmentProfile(ResourceIdentifier id, string name, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KubeEnvironmentProfile(string id, string name, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
@@ -36,7 +35,7 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Resource ID of the Kubernetes Environment. </summary>
-        public ResourceIdentifier Id { get; set; }
+        public string Id { get; set; }
 
         /// <summary> Name of the Kubernetes Environment. </summary>
         public string Name { get; }

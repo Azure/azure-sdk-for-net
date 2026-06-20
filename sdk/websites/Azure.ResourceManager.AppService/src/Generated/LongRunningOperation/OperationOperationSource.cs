@@ -10,9 +10,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.AppService.Models;
+using Microsoft.Web.Models;
 
-namespace Azure.ResourceManager.AppService
+namespace Microsoft.Web
 {
     /// <summary></summary>
     internal partial class OperationOperationSource : IOperationSource<Models.Operation>
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        Models.Operation IOperationSource<Models.Operation>.CreateResult(Response response, CancellationToken cancellationToken)
+        Models.Operation IOperationSource<Models.Operation>.CreateResult(Azure.Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
             return Models.Operation.DeserializeOperation(document.RootElement, ModelSerializationExtensions.WireOptions);
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<Models.Operation> IOperationSource<Models.Operation>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<Models.Operation> IOperationSource<Models.Operation>.CreateResultAsync(Azure.Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return Models.Operation.DeserializeOperation(document.RootElement, ModelSerializationExtensions.WireOptions);

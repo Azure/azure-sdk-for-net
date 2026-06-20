@@ -13,10 +13,10 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Resources;
+using Microsoft.Web.Models;
 
-namespace Azure.ResourceManager.AppService
+namespace Microsoft.Web
 {
     /// <summary>
     /// A class representing a KubeEnvironment along with the instance operations that can be performed on it.
@@ -51,8 +51,8 @@ namespace Azure.ResourceManager.AppService
         internal KubeEnvironmentResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string kubeEnvironmentApiVersion);
-            _kubeEnvironmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
-            _kubeEnvironmentsRestClient = new KubeEnvironments(_kubeEnvironmentsClientDiagnostics, Pipeline, Endpoint, kubeEnvironmentApiVersion ?? "2026-03-01-preview");
+            _kubeEnvironmentsClientDiagnostics = new ClientDiagnostics("Microsoft.Web", ResourceType.Namespace, Diagnostics);
+            _kubeEnvironmentsRestClient = new KubeEnvironments(_kubeEnvironmentsClientDiagnostics, Pipeline, Endpoint, kubeEnvironmentApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -125,13 +125,13 @@ namespace Azure.ResourceManager.AppService
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = _kubeEnvironmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<KubeEnvironmentData> response = Response.FromValue(KubeEnvironmentData.FromResponse(result), result);
+                Azure.Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<KubeEnvironmentData> response = Azure.Response.FromValue(KubeEnvironmentData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new KubeEnvironmentResource(Client, response.Value), response.GetRawResponse());
+                return Azure.Response.FromValue(new KubeEnvironmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -173,13 +173,13 @@ namespace Azure.ResourceManager.AppService
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = _kubeEnvironmentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<KubeEnvironmentData> response = Response.FromValue(KubeEnvironmentData.FromResponse(result), result);
+                Azure.Response result = Pipeline.ProcessMessage(message, context);
+                Response<KubeEnvironmentData> response = Azure.Response.FromValue(KubeEnvironmentData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new KubeEnvironmentResource(Client, response.Value), response.GetRawResponse());
+                return Azure.Response.FromValue(new KubeEnvironmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -225,13 +225,13 @@ namespace Azure.ResourceManager.AppService
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = _kubeEnvironmentsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, KubeEnvironmentPatch.ToRequestContent(patch), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<KubeEnvironmentData> response = Response.FromValue(KubeEnvironmentData.FromResponse(result), result);
+                Azure.Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<KubeEnvironmentData> response = Azure.Response.FromValue(KubeEnvironmentData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new KubeEnvironmentResource(Client, response.Value), response.GetRawResponse());
+                return Azure.Response.FromValue(new KubeEnvironmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -277,13 +277,13 @@ namespace Azure.ResourceManager.AppService
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = _kubeEnvironmentsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, KubeEnvironmentPatch.ToRequestContent(patch), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<KubeEnvironmentData> response = Response.FromValue(KubeEnvironmentData.FromResponse(result), result);
+                Azure.Response result = Pipeline.ProcessMessage(message, context);
+                Response<KubeEnvironmentData> response = Azure.Response.FromValue(KubeEnvironmentData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new KubeEnvironmentResource(Client, response.Value), response.GetRawResponse());
+                return Azure.Response.FromValue(new KubeEnvironmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -326,8 +326,8 @@ namespace Azure.ResourceManager.AppService
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = _kubeEnvironmentsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                AppServiceArmOperation operation = new AppServiceArmOperation(_kubeEnvironmentsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                Azure.Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                WebArmOperation operation = new WebArmOperation(_kubeEnvironmentsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -375,8 +375,8 @@ namespace Azure.ResourceManager.AppService
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = _kubeEnvironmentsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                AppServiceArmOperation operation = new AppServiceArmOperation(_kubeEnvironmentsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                Azure.Response response = Pipeline.ProcessMessage(message, context);
+                WebArmOperation operation = new WebArmOperation(_kubeEnvironmentsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletionResponse(cancellationToken);

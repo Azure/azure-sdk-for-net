@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.AppService;
+using Microsoft.Web;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> Additional configuration for a data providers. </summary>
     public partial class DataProviderMetadata : IJsonModel<DataProviderMetadata>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
+                    return ModelReaderWriter.Write(this, options, MicrosoftWebContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DataProviderMetadata)} does not support writing '{options.Format}' format.");
             }
@@ -83,9 +83,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 writer.WritePropertyName("propertyBag"u8);
                 writer.WriteStartArray();
-                foreach (Models.DataProviderKeyValuePair item in PropertyBag)
+                foreach (KeyValuePairStringObject item in PropertyBag)
                 {
-                    writer.WriteObjectValue<Models.DataProviderKeyValuePair>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             string providerName = default;
-            IReadOnlyList<Models.DataProviderKeyValuePair> propertyBag = default;
+            IReadOnlyList<KeyValuePairStringObject> propertyBag = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -147,10 +147,10 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    List<Models.DataProviderKeyValuePair> array = new List<Models.DataProviderKeyValuePair>();
+                    List<KeyValuePairStringObject> array = new List<KeyValuePairStringObject>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Models.DataProviderKeyValuePair.DeserializeDataProviderKeyValuePair(item, options));
+                        array.Add(KeyValuePairStringObject.DeserializeKeyValuePairStringObject(item, options));
                     }
                     propertyBag = array;
                     continue;
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.AppService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DataProviderMetadata(providerName, propertyBag ?? new ChangeTrackingList<Models.DataProviderKeyValuePair>(), additionalBinaryDataProperties);
+            return new DataProviderMetadata(providerName, propertyBag ?? new ChangeTrackingList<KeyValuePairStringObject>(), additionalBinaryDataProperties);
         }
     }
 }

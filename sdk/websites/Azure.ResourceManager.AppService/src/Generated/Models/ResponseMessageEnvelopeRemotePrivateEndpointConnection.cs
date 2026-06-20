@@ -7,12 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
-using Azure.Core;
-using Azure.ResourceManager.AppService;
-using Azure.ResourceManager.Models;
+using Microsoft.Web;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> Message envelope that contains the common Azure resource manager properties and the resource provider specific content. </summary>
     public partial class ResponseMessageEnvelopeRemotePrivateEndpointConnection
@@ -45,7 +42,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="identity"> MSI resource. </param>
         /// <param name="zones"> Logical Availability Zones the service is hosted in. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResponseMessageEnvelopeRemotePrivateEndpointConnection(string id, string name, string @type, AzureLocation? location, IReadOnlyDictionary<string, string> tags, Models.AppServiceArmPlan plan, RemotePrivateEndpointConnection properties, Models.AppServiceSkuDescription sku, string status, ResponseError error, ResourceManager.Models.ManagedServiceIdentity identity, IReadOnlyList<string> zones, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResponseMessageEnvelopeRemotePrivateEndpointConnection(string id, string name, string @type, string location, IDictionary<string, string> tags, ArmPlan plan, RemotePrivateEndpointConnection properties, SkuDescription sku, string status, ErrorEntity error, ManagedServiceIdentity identity, IList<string> zones, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
@@ -76,30 +73,30 @@ namespace Azure.ResourceManager.AppService.Models
         public string Type { get; }
 
         /// <summary> Geographical region resource belongs to e.g. SouthCentralUS, SouthEastAsia. </summary>
-        public AzureLocation? Location { get; }
+        public string Location { get; }
 
         /// <summary> Tags associated with resource. </summary>
-        public IReadOnlyDictionary<string, string> Tags { get; }
+        public IDictionary<string, string> Tags { get; }
 
         /// <summary> Azure resource manager plan. </summary>
-        public Models.AppServiceArmPlan Plan { get; }
+        public ArmPlan Plan { get; }
 
         /// <summary> Resource specific properties. </summary>
         public RemotePrivateEndpointConnection Properties { get; }
 
         /// <summary> SKU description of the resource. </summary>
-        public Models.AppServiceSkuDescription Sku { get; }
+        public SkuDescription Sku { get; }
 
         /// <summary> Azure-AsyncOperation Status info. </summary>
         public string Status { get; }
 
         /// <summary> Azure-AsyncOperation Error info. </summary>
-        public ResponseError Error { get; }
+        public ErrorEntity Error { get; }
 
         /// <summary> MSI resource. </summary>
-        public ResourceManager.Models.ManagedServiceIdentity Identity { get; }
+        public ManagedServiceIdentity Identity { get; }
 
         /// <summary> Logical Availability Zones the service is hosted in. </summary>
-        public IReadOnlyList<string> Zones { get; }
+        public IList<string> Zones { get; }
     }
 }

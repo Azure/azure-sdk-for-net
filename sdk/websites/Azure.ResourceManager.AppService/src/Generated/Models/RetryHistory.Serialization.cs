@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.AppService;
+using Microsoft.Web;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> The retry history. </summary>
     public partial class RetryHistory : IJsonModel<RetryHistory>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
+                    return ModelReaderWriter.Write(this, options, MicrosoftWebContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(RetryHistory)} does not support writing '{options.Format}' format.");
             }
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue<WorkflowErrorResponse>(Error, options);
+                writer.WriteObjectValue<ErrorResponse>(Error, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.AppService.Models
             string code = default;
             string clientRequestId = default;
             string serviceRequestId = default;
-            WorkflowErrorResponse error = default;
+            ErrorResponse error = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    error = WorkflowErrorResponse.DeserializeWorkflowErrorResponse(prop.Value, options);
+                    error = ErrorResponse.DeserializeErrorResponse(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

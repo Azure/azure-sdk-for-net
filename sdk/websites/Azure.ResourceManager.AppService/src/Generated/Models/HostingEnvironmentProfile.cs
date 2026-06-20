@@ -7,9 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> Specification for an App Service Environment to use for this resource. </summary>
     public partial class HostingEnvironmentProfile
@@ -27,7 +26,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="type"> Resource type of the App Service Environment. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HostingEnvironmentProfile(ResourceIdentifier id, string name, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HostingEnvironmentProfile(string id, string name, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
@@ -36,7 +35,7 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Resource ID of the App Service Environment. </summary>
-        public ResourceIdentifier Id { get; set; }
+        public string Id { get; set; }
 
         /// <summary> Name of the App Service Environment. </summary>
         public string Name { get; }

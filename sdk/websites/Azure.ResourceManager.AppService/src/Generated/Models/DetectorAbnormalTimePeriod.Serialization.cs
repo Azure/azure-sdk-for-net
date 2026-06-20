@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.AppService;
+using Microsoft.Web;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> Class representing Abnormal Time Period detected. </summary>
     public partial class DetectorAbnormalTimePeriod : IJsonModel<DetectorAbnormalTimePeriod>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
+                    return ModelReaderWriter.Write(this, options, MicrosoftWebContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DetectorAbnormalTimePeriod)} does not support writing '{options.Format}' format.");
             }
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 writer.WritePropertyName("metaData"u8);
                 writer.WriteStartArray();
-                foreach (IList<Models.AppServiceNameValuePair> item in MetaData)
+                foreach (IList<NameValuePair> item in MetaData)
                 {
                     if (item == null)
                     {
@@ -111,9 +111,9 @@ namespace Azure.ResourceManager.AppService.Models
                         continue;
                     }
                     writer.WriteStartArray();
-                    foreach (Models.AppServiceNameValuePair item0 in item)
+                    foreach (NameValuePair item0 in item)
                     {
-                        writer.WriteObjectValue<Models.AppServiceNameValuePair>(item0, options);
+                        writer.WriteObjectValue(item0, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -128,9 +128,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 writer.WritePropertyName("solutions"u8);
                 writer.WriteStartArray();
-                foreach (Models.DiagnosticSolution item in Solutions)
+                foreach (Solution item in Solutions)
                 {
-                    writer.WriteObjectValue<Models.DiagnosticSolution>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -181,9 +181,9 @@ namespace Azure.ResourceManager.AppService.Models
             string message = default;
             string source = default;
             double? priority = default;
-            IList<IList<Models.AppServiceNameValuePair>> metaData = default;
+            IList<IList<NameValuePair>> metaData = default;
             IssueType? @type = default;
-            IList<Models.DiagnosticSolution> solutions = default;
+            IList<Solution> solutions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    List<IList<Models.AppServiceNameValuePair>> array = new List<IList<Models.AppServiceNameValuePair>>();
+                    List<IList<NameValuePair>> array = new List<IList<NameValuePair>>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
                         if (item.ValueKind == JsonValueKind.Null)
@@ -239,10 +239,10 @@ namespace Azure.ResourceManager.AppService.Models
                         }
                         else
                         {
-                            List<Models.AppServiceNameValuePair> array0 = new List<Models.AppServiceNameValuePair>();
+                            List<NameValuePair> array0 = new List<NameValuePair>();
                             foreach (var item0 in item.EnumerateArray())
                             {
-                                array0.Add(Models.AppServiceNameValuePair.DeserializeAppServiceNameValuePair(item0, options));
+                                array0.Add(NameValuePair.DeserializeNameValuePair(item0, options));
                             }
                             array.Add(array0);
                         }
@@ -265,10 +265,10 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    List<Models.DiagnosticSolution> array = new List<Models.DiagnosticSolution>();
+                    List<Solution> array = new List<Solution>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Models.DiagnosticSolution.DeserializeDiagnosticSolution(item, options));
+                        array.Add(Solution.DeserializeSolution(item, options));
                     }
                     solutions = array;
                     continue;
@@ -284,9 +284,9 @@ namespace Azure.ResourceManager.AppService.Models
                 message,
                 source,
                 priority,
-                metaData ?? new ChangeTrackingList<IList<Models.AppServiceNameValuePair>>(),
+                metaData ?? new ChangeTrackingList<IList<NameValuePair>>(),
                 @type,
-                solutions ?? new ChangeTrackingList<Models.DiagnosticSolution>(),
+                solutions ?? new ChangeTrackingList<Solution>(),
                 additionalBinaryDataProperties);
         }
     }

@@ -7,10 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.AppService;
+using Microsoft.Web;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> Information needed for cloning operation. </summary>
     public partial class CloningInfo
@@ -25,7 +24,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slotName} for other slots.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceWebAppId"/> is null. </exception>
-        public CloningInfo(ResourceIdentifier sourceWebAppId)
+        public CloningInfo(string sourceWebAppId)
         {
             Argument.AssertNotNull(sourceWebAppId, nameof(sourceWebAppId));
 
@@ -59,7 +58,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// </param>
         /// <param name="trafficManagerProfileName"> Name of Traffic Manager profile to create. This is only needed if Traffic Manager profile does not already exist. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CloningInfo(Guid? correlationId, bool? overwrite, bool? cloneCustomHostNames, bool? cloneSourceControl, ResourceIdentifier sourceWebAppId, AzureLocation? sourceWebAppLocation, string hostingEnvironment, IDictionary<string, string> appSettingsOverrides, bool? configureLoadBalancing, ResourceIdentifier trafficManagerProfileId, string trafficManagerProfileName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CloningInfo(string correlationId, bool? overwrite, bool? cloneCustomHostNames, bool? cloneSourceControl, string sourceWebAppId, string sourceWebAppLocation, string hostingEnvironment, IDictionary<string, string> appSettingsOverrides, bool? configureLoadBalancing, string trafficManagerProfileId, string trafficManagerProfileName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CorrelationId = correlationId;
             Overwrite = overwrite;
@@ -79,7 +78,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// Correlation ID of cloning operation. This ID ties multiple cloning operations
         /// together to use the same snapshot.
         /// </summary>
-        public Guid? CorrelationId { get; set; }
+        public string CorrelationId { get; set; }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; to overwrite destination app; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         public bool? Overwrite { get; set; }
@@ -95,10 +94,10 @@ namespace Azure.ResourceManager.AppService.Models
         /// /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName} for production slots and
         /// /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slotName} for other slots.
         /// </summary>
-        public ResourceIdentifier SourceWebAppId { get; set; }
+        public string SourceWebAppId { get; set; }
 
         /// <summary> Location of source app ex: West US or North Europe. </summary>
-        public AzureLocation? SourceWebAppLocation { get; set; }
+        public string SourceWebAppLocation { get; set; }
 
         /// <summary> App Service Environment. </summary>
         public string HostingEnvironment { get; set; }
@@ -116,7 +115,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// ARM resource ID of the Traffic Manager profile to use, if it exists. Traffic Manager resource ID is of the form
         /// /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficManagerProfiles/{profileName}.
         /// </summary>
-        public ResourceIdentifier TrafficManagerProfileId { get; set; }
+        public string TrafficManagerProfileId { get; set; }
 
         /// <summary> Name of Traffic Manager profile to create. This is only needed if Traffic Manager profile does not already exist. </summary>
         public string TrafficManagerProfileName { get; set; }

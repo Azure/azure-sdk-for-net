@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.AppService;
+using Microsoft.Web;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> Function app configuration. </summary>
     public partial class FunctionAppConfig : IJsonModel<FunctionAppConfig>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
+                    return ModelReaderWriter.Write(this, options, MicrosoftWebContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(FunctionAppConfig)} does not support writing '{options.Format}' format.");
             }
@@ -82,12 +82,12 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(Runtime))
             {
                 writer.WritePropertyName("runtime"u8);
-                writer.WriteObjectValue<Models.FunctionAppRuntime>(Runtime, options);
+                writer.WriteObjectValue(Runtime, options);
             }
             if (Optional.IsDefined(ScaleAndConcurrency))
             {
                 writer.WritePropertyName("scaleAndConcurrency"u8);
-                writer.WriteObjectValue<Models.FunctionAppScaleAndConcurrency>(ScaleAndConcurrency, options);
+                writer.WriteObjectValue(ScaleAndConcurrency, options);
             }
             if (Optional.IsDefined(SiteUpdateStrategy))
             {
@@ -137,8 +137,8 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             FunctionsDeployment deployment = default;
-            Models.FunctionAppRuntime runtime = default;
-            Models.FunctionAppScaleAndConcurrency scaleAndConcurrency = default;
+            FunctionsRuntime runtime = default;
+            FunctionsScaleAndConcurrency scaleAndConcurrency = default;
             FunctionsSiteUpdateStrategy siteUpdateStrategy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    runtime = Models.FunctionAppRuntime.DeserializeFunctionAppRuntime(prop.Value, options);
+                    runtime = FunctionsRuntime.DeserializeFunctionsRuntime(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("scaleAndConcurrency"u8))
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    scaleAndConcurrency = Models.FunctionAppScaleAndConcurrency.DeserializeFunctionAppScaleAndConcurrency(prop.Value, options);
+                    scaleAndConcurrency = FunctionsScaleAndConcurrency.DeserializeFunctionsScaleAndConcurrency(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("siteUpdateStrategy"u8))

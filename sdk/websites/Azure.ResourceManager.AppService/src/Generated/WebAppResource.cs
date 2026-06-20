@@ -14,7 +14,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.AppService
+namespace Microsoft.Web
 {
     /// <summary>
     /// A class representing a WebApp along with the instance operations that can be performed on it.
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.AppService
         internal WebAppResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             this.TryGetApiVersion(ResourceType, out string webAppApiVersion);
-            _webAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
-            _webAppsRestClient = new WebApps(_webAppsClientDiagnostics, Pipeline, Endpoint, webAppApiVersion ?? "2026-03-01-preview");
+            _webAppsClientDiagnostics = new ClientDiagnostics("Microsoft.Web", ResourceType.Namespace, Diagnostics);
+            _webAppsRestClient = new WebApps(_webAppsClientDiagnostics, Pipeline, Endpoint, webAppApiVersion ?? "2026-03-15");
             WebAppResource.ValidateResourceId(id);
         }
 
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

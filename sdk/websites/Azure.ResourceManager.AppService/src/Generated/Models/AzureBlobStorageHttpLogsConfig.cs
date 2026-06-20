@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> Http logs to azure blob storage configuration. </summary>
     public partial class AzureBlobStorageHttpLogsConfig

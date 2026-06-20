@@ -5,16 +5,16 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary></summary>
     public enum SiteRuntimeState
     {
-        /// <summary> UNKNOWN. </summary>
-        UNKNOWN,
         /// <summary> READY. </summary>
         READY,
         /// <summary> STOPPED. </summary>
-        STOPPED
+        STOPPED,
+        /// <summary> UNKNOWN. </summary>
+        UNKNOWN
     }
 }

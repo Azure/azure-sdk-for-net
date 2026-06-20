@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> Triggered Web Job Run Information. </summary>
     public partial class TriggeredJobRun
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="jobName"> Job name. </param>
         /// <param name="trigger"> Job trigger. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TriggeredJobRun(string webJobId, string webJobName, TriggeredWebJobStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, TimeSpan? duration, Uri outputUri, Uri errorUri, Uri uri, string jobName, string trigger, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TriggeredJobRun(string webJobId, string webJobName, TriggeredWebJobStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, string duration, string outputUri, string errorUri, string uri, string jobName, string trigger, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             WebJobId = webJobId;
             WebJobName = webJobName;
@@ -66,16 +66,16 @@ namespace Azure.ResourceManager.AppService.Models
         public DateTimeOffset? EndOn { get; }
 
         /// <summary> Job duration. </summary>
-        public TimeSpan? Duration { get; }
+        public string Duration { get; }
 
         /// <summary> Output URL. </summary>
-        public Uri OutputUri { get; }
+        public string OutputUri { get; }
 
         /// <summary> Error URL. </summary>
-        public Uri ErrorUri { get; }
+        public string ErrorUri { get; }
 
         /// <summary> Job URL. </summary>
-        public Uri Uri { get; }
+        public string Uri { get; }
 
         /// <summary> Job name. </summary>
         public string JobName { get; }

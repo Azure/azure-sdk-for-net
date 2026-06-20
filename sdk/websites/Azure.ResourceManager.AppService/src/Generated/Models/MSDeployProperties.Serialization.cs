@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.AppService;
+using Microsoft.Web;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> MSDeploy ARM PUT information properties. </summary>
     public partial class MSDeployProperties : MSDeployCore, IJsonModel<MSDeployProperties>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
+                    return ModelReaderWriter.Write(this, options, MicrosoftWebContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(MSDeployProperties)} does not support writing '{options.Format}' format.");
             }
@@ -112,10 +112,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Uri packageUri = default;
+            string packageUri = default;
             string connectionString = default;
             string dbType = default;
-            Uri setParametersXmlFileUri = default;
+            string setParametersXmlFileUri = default;
             IDictionary<string, string> setParameters = default;
             bool? skipAppData = default;
             bool? appOffline = default;
@@ -125,11 +125,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (prop.NameEquals("packageUri"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    packageUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    packageUri = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("connectionString"u8))
@@ -144,11 +140,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (prop.NameEquals("setParametersXmlFileUri"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    setParametersXmlFileUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    setParametersXmlFileUri = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("setParameters"u8))

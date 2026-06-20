@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.AppService;
+using Microsoft.Web;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> The configuration settings of the endpoints used for the custom Open ID Connect provider. </summary>
     public partial class OpenIdConnectConfig : IJsonModel<OpenIdConnectConfig>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
+                    return ModelReaderWriter.Write(this, options, MicrosoftWebContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(OpenIdConnectConfig)} does not support writing '{options.Format}' format.");
             }
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(CertificationUri))
             {
                 writer.WritePropertyName("certificationUri"u8);
-                writer.WriteStringValue(CertificationUri.AbsoluteUri);
+                writer.WriteStringValue(CertificationUri);
             }
             if (Optional.IsDefined(WellKnownOpenIdConfiguration))
             {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.AppService.Models
             string authorizationEndpoint = default;
             string tokenEndpoint = default;
             string issuer = default;
-            Uri certificationUri = default;
+            string certificationUri = default;
             string wellKnownOpenIdConfiguration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -166,11 +166,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (prop.NameEquals("certificationUri"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    certificationUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    certificationUri = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("wellKnownOpenIdConfiguration"u8))

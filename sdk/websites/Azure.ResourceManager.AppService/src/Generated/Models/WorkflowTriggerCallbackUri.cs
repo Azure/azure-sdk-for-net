@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.AppService;
+using Microsoft.Web;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> The workflow trigger callback URL. </summary>
     public partial class WorkflowTriggerCallbackUri
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="relativePathParameters"> Gets the workflow trigger callback URL relative path parameters. </param>
         /// <param name="queries"> Gets the workflow trigger callback URL query parameters. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WorkflowTriggerCallbackUri(string value, string @method, string basePath, string relativePath, IReadOnlyList<string> relativePathParameters, Models.WorkflowTriggerListCallbackUriQueries queries, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WorkflowTriggerCallbackUri(string value, string @method, string basePath, string relativePath, IList<string> relativePathParameters, WorkflowTriggerListCallbackUrlQueries queries, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             Method = @method;
@@ -55,9 +55,9 @@ namespace Azure.ResourceManager.AppService.Models
         public string RelativePath { get; }
 
         /// <summary> Gets the workflow trigger callback URL relative path parameters. </summary>
-        public IReadOnlyList<string> RelativePathParameters { get; }
+        public IList<string> RelativePathParameters { get; }
 
         /// <summary> Gets the workflow trigger callback URL query parameters. </summary>
-        public Models.WorkflowTriggerListCallbackUriQueries Queries { get; }
+        public WorkflowTriggerListCallbackUrlQueries Queries { get; }
     }
 }

@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> The configuration settings of the endpoints used for the custom Open ID Connect provider. </summary>
     public partial class OpenIdConnectConfig
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="certificationUri"> The endpoint that provides the keys necessary to validate the token. </param>
         /// <param name="wellKnownOpenIdConfiguration"> The endpoint that contains all the configuration endpoints for the provider. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OpenIdConnectConfig(string authorizationEndpoint, string tokenEndpoint, string issuer, Uri certificationUri, string wellKnownOpenIdConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OpenIdConnectConfig(string authorizationEndpoint, string tokenEndpoint, string issuer, string certificationUri, string wellKnownOpenIdConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AuthorizationEndpoint = authorizationEndpoint;
             TokenEndpoint = tokenEndpoint;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.AppService.Models
         public string Issuer { get; set; }
 
         /// <summary> The endpoint that provides the keys necessary to validate the token. </summary>
-        public Uri CertificationUri { get; set; }
+        public string CertificationUri { get; set; }
 
         /// <summary> The endpoint that contains all the configuration endpoints for the provider. </summary>
         public string WellKnownOpenIdConfiguration { get; set; }

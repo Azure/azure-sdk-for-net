@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> MSDeploy ARM PUT information. </summary>
     public partial class MSDeploy : ProxyOnlyResource
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.AppService.Models
         internal MSDeployProperties Properties { get; set; }
 
         /// <summary> Package URI. </summary>
-        public Uri PackageUri
+        public string PackageUri
         {
             get
             {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> URI of MSDeploy Parameters file. Must not be set if SetParameters is used. </summary>
-        public Uri SetParametersXmlFileUri
+        public string SetParametersXmlFileUri
         {
             get
             {

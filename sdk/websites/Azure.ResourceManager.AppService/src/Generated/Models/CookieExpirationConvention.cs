@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> The convention used when determining the session cookie's expiration. </summary>
     public enum CookieExpirationConvention

@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.AppService;
+using Microsoft.Web;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> The workflow trigger recurrence. </summary>
     public partial class WorkflowTriggerRecurrence : IJsonModel<WorkflowTriggerRecurrence>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
+                    return ModelReaderWriter.Write(this, options, MicrosoftWebContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(WorkflowTriggerRecurrence)} does not support writing '{options.Format}' format.");
             }
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(Schedule))
             {
                 writer.WritePropertyName("schedule"u8);
-                writer.WriteObjectValue<Models.WorkflowRecurrenceSchedule>(Schedule, options);
+                writer.WriteObjectValue(Schedule, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -146,12 +146,12 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Models.WorkflowRecurrenceFrequency? frequency = default;
+            RecurrenceFrequency? frequency = default;
             int? interval = default;
             string startTime = default;
             string endTime = default;
             string timeZone = default;
-            Models.WorkflowRecurrenceSchedule schedule = default;
+            RecurrenceSchedule schedule = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    frequency = new Models.WorkflowRecurrenceFrequency(prop.Value.GetString());
+                    frequency = new RecurrenceFrequency(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("interval"u8))
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    schedule = Models.WorkflowRecurrenceSchedule.DeserializeWorkflowRecurrenceSchedule(prop.Value, options);
+                    schedule = RecurrenceSchedule.DeserializeRecurrenceSchedule(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

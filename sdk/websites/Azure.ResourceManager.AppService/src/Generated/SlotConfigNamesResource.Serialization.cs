@@ -9,7 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace Azure.ResourceManager.AppService
+namespace Microsoft.Web
 {
     /// <summary></summary>
     public partial class SlotConfigNamesResource : IJsonModel<SlotConfigNamesResourceData>
@@ -27,11 +27,11 @@ namespace Azure.ResourceManager.AppService
         SlotConfigNamesResourceData IJsonModel<SlotConfigNamesResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SlotConfigNamesResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SlotConfigNamesResourceData>(Data, options, AzureResourceManagerAppServiceContext.Default);
+        BinaryData IPersistableModel<SlotConfigNamesResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SlotConfigNamesResourceData>(Data, options, MicrosoftWebContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SlotConfigNamesResourceData IPersistableModel<SlotConfigNamesResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SlotConfigNamesResourceData>(data, options, AzureResourceManagerAppServiceContext.Default);
+        SlotConfigNamesResourceData IPersistableModel<SlotConfigNamesResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SlotConfigNamesResourceData>(data, options, MicrosoftWebContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<SlotConfigNamesResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);

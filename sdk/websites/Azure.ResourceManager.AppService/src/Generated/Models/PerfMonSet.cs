@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.AppService;
+using Microsoft.Web;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> Metric information. </summary>
     public partial class PerfMonSet
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="timeGrain"> Presented time grain. </param>
         /// <param name="values"> Collection of workers that are active during this time. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PerfMonSet(string name, DateTimeOffset? startOn, DateTimeOffset? endOn, string timeGrain, IReadOnlyList<PerfMonSample> values, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PerfMonSet(string name, DateTimeOffset? startOn, DateTimeOffset? endOn, string timeGrain, IList<PerfMonSample> values, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             StartOn = startOn;
@@ -53,6 +53,6 @@ namespace Azure.ResourceManager.AppService.Models
         public string TimeGrain { get; }
 
         /// <summary> Collection of workers that are active during this time. </summary>
-        public IReadOnlyList<PerfMonSample> Values { get; }
+        public IList<PerfMonSample> Values { get; }
     }
 }

@@ -10,9 +10,9 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
-using Azure.ResourceManager.AppService;
+using Microsoft.Web;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> Represents whether or not an app is cloneable. </summary>
     public partial class SiteCloneability : IJsonModel<SiteCloneability>
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AppService.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
+                    return ModelReaderWriter.Write(this, options, MicrosoftWebContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(SiteCloneability)} does not support writing '{options.Format}' format.");
             }
@@ -160,9 +160,9 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             CloneAbilityResult? result = default;
-            IReadOnlyList<SiteCloneabilityCriterion> blockingFeatures = default;
-            IReadOnlyList<SiteCloneabilityCriterion> unsupportedFeatures = default;
-            IReadOnlyList<SiteCloneabilityCriterion> blockingCharacteristics = default;
+            IList<SiteCloneabilityCriterion> blockingFeatures = default;
+            IList<SiteCloneabilityCriterion> unsupportedFeatures = default;
+            IList<SiteCloneabilityCriterion> blockingCharacteristics = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

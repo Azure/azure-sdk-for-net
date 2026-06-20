@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.AppService;
+using Microsoft.Web;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> Triggered Web Job Run Information. </summary>
     public partial class TriggeredJobRun : IJsonModel<TriggeredJobRun>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
+                    return ModelReaderWriter.Write(this, options, MicrosoftWebContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(TriggeredJobRun)} does not support writing '{options.Format}' format.");
             }
@@ -102,22 +102,22 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(Duration))
             {
                 writer.WritePropertyName("duration"u8);
-                writer.WriteStringValue(Duration.Value);
+                writer.WriteStringValue(Duration);
             }
             if (Optional.IsDefined(OutputUri))
             {
                 writer.WritePropertyName("output_url"u8);
-                writer.WriteStringValue(OutputUri.AbsoluteUri);
+                writer.WriteStringValue(OutputUri);
             }
             if (Optional.IsDefined(ErrorUri))
             {
                 writer.WritePropertyName("error_url"u8);
-                writer.WriteStringValue(ErrorUri.AbsoluteUri);
+                writer.WriteStringValue(ErrorUri);
             }
             if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("url"u8);
-                writer.WriteStringValue(Uri.AbsoluteUri);
+                writer.WriteStringValue(Uri);
             }
             if (Optional.IsDefined(JobName))
             {
@@ -176,10 +176,10 @@ namespace Azure.ResourceManager.AppService.Models
             TriggeredWebJobStatus? status = default;
             DateTimeOffset? startOn = default;
             DateTimeOffset? endOn = default;
-            TimeSpan? duration = default;
-            Uri outputUri = default;
-            Uri errorUri = default;
-            Uri uri = default;
+            string duration = default;
+            string outputUri = default;
+            string errorUri = default;
+            string uri = default;
             string jobName = default;
             string trigger = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -224,38 +224,22 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (prop.NameEquals("duration"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    duration = prop.Value.GetTimeSpan();
+                    duration = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("output_url"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    outputUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    outputUri = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("error_url"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    errorUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    errorUri = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("url"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    uri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    uri = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("job_name"u8))

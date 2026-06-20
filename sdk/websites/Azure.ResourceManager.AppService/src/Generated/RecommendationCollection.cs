@@ -14,7 +14,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.AppService
+namespace Microsoft.Web
 {
     /// <summary>
     /// A class representing a collection of <see cref="RecommendationResource"/> and their operations.
@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.AppService
         internal RecommendationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             this.TryGetApiVersion(RecommendationResource.ResourceType, out string recommendationApiVersion);
-            _recommendationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", RecommendationResource.ResourceType.Namespace, Diagnostics);
-            _recommendationsRestClient = new Recommendations(_recommendationsClientDiagnostics, Pipeline, Endpoint, recommendationApiVersion ?? "2026-03-01-preview");
+            _recommendationsClientDiagnostics = new ClientDiagnostics("Microsoft.Web", RecommendationResource.ResourceType.Namespace, Diagnostics);
+            _recommendationsRestClient = new Recommendations(_recommendationsClientDiagnostics, Pipeline, Endpoint, recommendationApiVersion ?? "2026-03-15");
             RecommendationCollection.ValidateResourceId(id);
         }
 
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>

@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
+using Microsoft.Web.Models;
 
-namespace Azure.ResourceManager.AppService
+namespace Microsoft.Web
 {
     /// <summary> A web app, a mobile app backend, or an API app. </summary>
     public partial class SiteData : TrackedResourceData
@@ -112,6 +112,23 @@ namespace Azure.ResourceManager.AppService
                     Properties = new SiteProperties();
                 }
                 Properties.Enabled = value;
+            }
+        }
+
+        /// <summary> &lt;code&gt;true&lt;/code&gt; if site scoped certificates are enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        public bool? SiteScopedCertificatesEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SiteScopedCertificatesEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteProperties();
+                }
+                Properties.SiteScopedCertificatesEnabled = value;
             }
         }
 
@@ -312,6 +329,23 @@ namespace Azure.ResourceManager.AppService
                     Properties = new SiteProperties();
                 }
                 Properties.DaprConfig = value;
+            }
+        }
+
+        /// <summary> AI integration configuration for the app. </summary>
+        public AiIntegration AiIntegration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AiIntegration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteProperties();
+                }
+                Properties.AiIntegration = value;
             }
         }
 
@@ -881,6 +915,23 @@ namespace Azure.ResourceManager.AppService
             get
             {
                 return Properties is null ? default : Properties.Sku;
+            }
+        }
+
+        /// <summary> The platform release channel for the site. Latest receives updates earliest, followed by Standard, then Extended. </summary>
+        public PlatformReleaseChannel? PlatformReleaseChannel
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PlatformReleaseChannel;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SiteProperties();
+                }
+                Properties.PlatformReleaseChannel = value;
             }
         }
     }

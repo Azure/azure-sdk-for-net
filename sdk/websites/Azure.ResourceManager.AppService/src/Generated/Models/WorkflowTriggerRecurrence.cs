@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> The workflow trigger recurrence. </summary>
     public partial class WorkflowTriggerRecurrence
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="timeZone"> The time zone. </param>
         /// <param name="schedule"> The recurrence schedule. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WorkflowTriggerRecurrence(Models.WorkflowRecurrenceFrequency? frequency, int? interval, string startTime, string endTime, string timeZone, Models.WorkflowRecurrenceSchedule schedule, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WorkflowTriggerRecurrence(RecurrenceFrequency? frequency, int? interval, string startTime, string endTime, string timeZone, RecurrenceSchedule schedule, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Frequency = frequency;
             Interval = interval;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> The frequency. </summary>
-        public Models.WorkflowRecurrenceFrequency? Frequency { get; }
+        public RecurrenceFrequency? Frequency { get; }
 
         /// <summary> The interval. </summary>
         public int? Interval { get; }
@@ -56,6 +56,6 @@ namespace Azure.ResourceManager.AppService.Models
         public string TimeZone { get; }
 
         /// <summary> The recurrence schedule. </summary>
-        public Models.WorkflowRecurrenceSchedule Schedule { get; }
+        public RecurrenceSchedule Schedule { get; }
     }
 }

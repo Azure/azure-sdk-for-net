@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> Azure proxy only resource. This resource is not tracked by Azure Resource Manager. </summary>
     public partial class ProxyOnlyResource

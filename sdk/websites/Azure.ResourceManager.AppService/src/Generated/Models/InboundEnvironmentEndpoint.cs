@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.AppService;
+using Microsoft.Web;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> The IP Addresses and Ports that require inbound network access to and within the subnet of the App Service Environment. </summary>
     public partial class InboundEnvironmentEndpoint
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="endpoints"> The IP addresses that network traffic will originate from in cidr notation. </param>
         /// <param name="ports"> The ports that network traffic will arrive to the App Service Environment at. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InboundEnvironmentEndpoint(string description, IReadOnlyList<string> endpoints, IReadOnlyList<string> ports, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InboundEnvironmentEndpoint(string description, IList<string> endpoints, IList<string> ports, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             Endpoints = endpoints;
@@ -41,9 +41,9 @@ namespace Azure.ResourceManager.AppService.Models
         public string Description { get; }
 
         /// <summary> The IP addresses that network traffic will originate from in cidr notation. </summary>
-        public IReadOnlyList<string> Endpoints { get; }
+        public IList<string> Endpoints { get; }
 
         /// <summary> The ports that network traffic will arrive to the App Service Environment at. </summary>
-        public IReadOnlyList<string> Ports { get; }
+        public IList<string> Ports { get; }
     }
 }

@@ -12,10 +12,10 @@ using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
+using Microsoft.Web.Models;
 
-namespace Azure.ResourceManager.AppService
+namespace Microsoft.Web
 {
     /// <summary> The workflow run. </summary>
     public partial class WorkflowRunData : ResourceData, IJsonModel<WorkflowRunData>
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppService
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
+                    return ModelReaderWriter.Write(this, options, MicrosoftWebContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(WorkflowRunData)} does not support writing '{options.Format}' format.");
             }
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.AppService
         string IPersistableModel<WorkflowRunData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="response"> The <see cref="Azure.Response"/> to deserialize the <see cref="WorkflowRunData"/> from. </param>
-        internal static WorkflowRunData FromResponse(Response response)
+        internal static WorkflowRunData FromResponse(Azure.Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeWorkflowRunData(document.RootElement, ModelSerializationExtensions.WireOptions);
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.AppService
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAppServiceContext.Default);
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, MicrosoftWebContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))

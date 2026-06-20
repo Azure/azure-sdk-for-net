@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> Configuration settings for the Azure App Service Authentication / Authorization feature. </summary>
     public partial class SiteAuthSettings : ProxyOnlyResource

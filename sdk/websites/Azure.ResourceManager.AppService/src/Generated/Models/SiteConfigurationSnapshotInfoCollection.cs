@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> Collection of metadata for the app configuration snapshots that can be restored. </summary>
     internal partial class SiteConfigurationSnapshotInfoCollection

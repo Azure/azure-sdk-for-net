@@ -10,7 +10,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.ResourceManager.AppService
+namespace Microsoft.Web
 {
     internal partial class AppServiceEnvironments
     {
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/microsoft.Web/hostingEnvironments/", false);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/workerPools/", false);
             uri.AppendPath(workerPoolName, true);
@@ -640,7 +640,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/microsoft.Web/hostingEnvironments/", false);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/diagnostics/", false);
             uri.AppendPath(diagnosticsName, true);
@@ -1321,7 +1321,7 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/microsoft.Web/hostingEnvironments/", false);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/multiRolePools/default/instances/", false);
             uri.AppendPath(instance, true);

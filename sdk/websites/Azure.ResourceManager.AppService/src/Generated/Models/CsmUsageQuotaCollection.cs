@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> Paged collection of CsmUsageQuota items. </summary>
     internal partial class CsmUsageQuotaCollection

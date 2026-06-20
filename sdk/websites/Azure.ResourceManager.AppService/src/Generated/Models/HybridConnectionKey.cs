@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> Hybrid Connection key contract. This has the send key name and value for a Hybrid Connection. </summary>
     public partial class HybridConnectionKey : ProxyOnlyResource

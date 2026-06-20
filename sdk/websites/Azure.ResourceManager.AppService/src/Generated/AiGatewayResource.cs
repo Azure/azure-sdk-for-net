@@ -14,10 +14,10 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Resources;
+using Microsoft.Web.Models;
 
-namespace Azure.ResourceManager.AppService
+namespace Microsoft.Web
 {
     /// <summary>
     /// A class representing a AiGateway along with the instance operations that can be performed on it.
@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.AppService
         internal AiGatewayResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string aiGatewayApiVersion);
-            _aiGatewaysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
-            _aiGatewaysRestClient = new AiGateways(_aiGatewaysClientDiagnostics, Pipeline, Endpoint, aiGatewayApiVersion ?? "2026-03-01-preview");
+            _aiGatewaysClientDiagnostics = new ClientDiagnostics("Microsoft.Web", ResourceType.Namespace, Diagnostics);
+            _aiGatewaysRestClient = new AiGateways(_aiGatewaysClientDiagnostics, Pipeline, Endpoint, aiGatewayApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -126,13 +126,13 @@ namespace Azure.ResourceManager.AppService
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = _aiGatewaysRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<AiGatewayData> response = Response.FromValue(AiGatewayData.FromResponse(result), result);
+                Azure.Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<AiGatewayData> response = Azure.Response.FromValue(AiGatewayData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new AiGatewayResource(Client, response.Value), response.GetRawResponse());
+                return Azure.Response.FromValue(new AiGatewayResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -174,13 +174,13 @@ namespace Azure.ResourceManager.AppService
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = _aiGatewaysRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<AiGatewayData> response = Response.FromValue(AiGatewayData.FromResponse(result), result);
+                Azure.Response result = Pipeline.ProcessMessage(message, context);
+                Response<AiGatewayData> response = Azure.Response.FromValue(AiGatewayData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new AiGatewayResource(Client, response.Value), response.GetRawResponse());
+                return Azure.Response.FromValue(new AiGatewayResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -226,13 +226,13 @@ namespace Azure.ResourceManager.AppService
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = _aiGatewaysRestClient.CreatePatchRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AiGatewayPatch.ToRequestContent(patch), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<AiGatewayData> response = Response.FromValue(AiGatewayData.FromResponse(result), result);
+                Azure.Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<AiGatewayData> response = Azure.Response.FromValue(AiGatewayData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new AiGatewayResource(Client, response.Value), response.GetRawResponse());
+                return Azure.Response.FromValue(new AiGatewayResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -278,13 +278,13 @@ namespace Azure.ResourceManager.AppService
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = _aiGatewaysRestClient.CreatePatchRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AiGatewayPatch.ToRequestContent(patch), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<AiGatewayData> response = Response.FromValue(AiGatewayData.FromResponse(result), result);
+                Azure.Response result = Pipeline.ProcessMessage(message, context);
+                Response<AiGatewayData> response = Azure.Response.FromValue(AiGatewayData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new AiGatewayResource(Client, response.Value), response.GetRawResponse());
+                return Azure.Response.FromValue(new AiGatewayResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -327,10 +327,10 @@ namespace Azure.ResourceManager.AppService
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = _aiGatewaysRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Azure.Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                AppServiceArmOperation operation = new AppServiceArmOperation(response, rehydrationToken);
+                WebArmOperation operation = new WebArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -378,10 +378,10 @@ namespace Azure.ResourceManager.AppService
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = _aiGatewaysRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response response = Pipeline.ProcessMessage(message, context);
+                Azure.Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                AppServiceArmOperation operation = new AppServiceArmOperation(response, rehydrationToken);
+                WebArmOperation operation = new WebArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -419,9 +419,9 @@ namespace Azure.ResourceManager.AppService
                         CancellationToken = cancellationToken
                     };
                     HttpMessage message = _aiGatewaysRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<AiGatewayData> response = Response.FromValue(AiGatewayData.FromResponse(result), result);
-                    return Response.FromValue(new AiGatewayResource(Client, response.Value), response.GetRawResponse());
+                    Azure.Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<AiGatewayData> response = Azure.Response.FromValue(AiGatewayData.FromResponse(result), result);
+                    return Azure.Response.FromValue(new AiGatewayResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.AppService
                     }
                     patch.Tags[key] = value;
                     Response<AiGatewayResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(result.Value, result.GetRawResponse());
+                    return Azure.Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -467,9 +467,9 @@ namespace Azure.ResourceManager.AppService
                         CancellationToken = cancellationToken
                     };
                     HttpMessage message = _aiGatewaysRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                    Response result = Pipeline.ProcessMessage(message, context);
-                    Response<AiGatewayData> response = Response.FromValue(AiGatewayData.FromResponse(result), result);
-                    return Response.FromValue(new AiGatewayResource(Client, response.Value), response.GetRawResponse());
+                    Azure.Response result = Pipeline.ProcessMessage(message, context);
+                    Response<AiGatewayData> response = Azure.Response.FromValue(AiGatewayData.FromResponse(result), result);
+                    return Azure.Response.FromValue(new AiGatewayResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.AppService
                     }
                     patch.Tags[key] = value;
                     Response<AiGatewayResource> result = Update(patch, cancellationToken: cancellationToken);
-                    return Response.FromValue(result.Value, result.GetRawResponse());
+                    return Azure.Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -514,9 +514,9 @@ namespace Azure.ResourceManager.AppService
                         CancellationToken = cancellationToken
                     };
                     HttpMessage message = _aiGatewaysRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<AiGatewayData> response = Response.FromValue(AiGatewayData.FromResponse(result), result);
-                    return Response.FromValue(new AiGatewayResource(Client, response.Value), response.GetRawResponse());
+                    Azure.Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<AiGatewayData> response = Azure.Response.FromValue(AiGatewayData.FromResponse(result), result);
+                    return Azure.Response.FromValue(new AiGatewayResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.AppService
                     AiGatewayPatch patch = new AiGatewayPatch();
                     patch.Tags.ReplaceWith(tags);
                     Response<AiGatewayResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(result.Value, result.GetRawResponse());
+                    return Azure.Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -557,9 +557,9 @@ namespace Azure.ResourceManager.AppService
                         CancellationToken = cancellationToken
                     };
                     HttpMessage message = _aiGatewaysRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                    Response result = Pipeline.ProcessMessage(message, context);
-                    Response<AiGatewayData> response = Response.FromValue(AiGatewayData.FromResponse(result), result);
-                    return Response.FromValue(new AiGatewayResource(Client, response.Value), response.GetRawResponse());
+                    Azure.Response result = Pipeline.ProcessMessage(message, context);
+                    Response<AiGatewayData> response = Azure.Response.FromValue(AiGatewayData.FromResponse(result), result);
+                    return Azure.Response.FromValue(new AiGatewayResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
@@ -567,7 +567,7 @@ namespace Azure.ResourceManager.AppService
                     AiGatewayPatch patch = new AiGatewayPatch();
                     patch.Tags.ReplaceWith(tags);
                     Response<AiGatewayResource> result = Update(patch, cancellationToken: cancellationToken);
-                    return Response.FromValue(result.Value, result.GetRawResponse());
+                    return Azure.Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -599,9 +599,9 @@ namespace Azure.ResourceManager.AppService
                         CancellationToken = cancellationToken
                     };
                     HttpMessage message = _aiGatewaysRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<AiGatewayData> response = Response.FromValue(AiGatewayData.FromResponse(result), result);
-                    return Response.FromValue(new AiGatewayResource(Client, response.Value), response.GetRawResponse());
+                    Azure.Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<AiGatewayData> response = Azure.Response.FromValue(AiGatewayData.FromResponse(result), result);
+                    return Azure.Response.FromValue(new AiGatewayResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
@@ -613,7 +613,7 @@ namespace Azure.ResourceManager.AppService
                     }
                     patch.Tags.Remove(key);
                     Response<AiGatewayResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(result.Value, result.GetRawResponse());
+                    return Azure.Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -645,9 +645,9 @@ namespace Azure.ResourceManager.AppService
                         CancellationToken = cancellationToken
                     };
                     HttpMessage message = _aiGatewaysRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                    Response result = Pipeline.ProcessMessage(message, context);
-                    Response<AiGatewayData> response = Response.FromValue(AiGatewayData.FromResponse(result), result);
-                    return Response.FromValue(new AiGatewayResource(Client, response.Value), response.GetRawResponse());
+                    Azure.Response result = Pipeline.ProcessMessage(message, context);
+                    Response<AiGatewayData> response = Azure.Response.FromValue(AiGatewayData.FromResponse(result), result);
+                    return Azure.Response.FromValue(new AiGatewayResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
@@ -659,7 +659,7 @@ namespace Azure.ResourceManager.AppService
                     }
                     patch.Tags.Remove(key);
                     Response<AiGatewayResource> result = Update(patch, cancellationToken: cancellationToken);
-                    return Response.FromValue(result.Value, result.GetRawResponse());
+                    return Azure.Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)

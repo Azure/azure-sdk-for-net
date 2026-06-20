@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.AppService;
+using Microsoft.Web;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> Object to hold key vault reference and the resolution status. </summary>
     public partial class KeyVaultReferenceWithStatus : IJsonModel<KeyVaultReferenceWithStatus>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
+                    return ModelReaderWriter.Write(this, options, MicrosoftWebContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(KeyVaultReferenceWithStatus)} does not support writing '{options.Format}' format.");
             }
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(SecretUri))
             {
                 writer.WritePropertyName("secretUri"u8);
-                writer.WriteStringValue(SecretUri.AbsoluteUri);
+                writer.WriteStringValue(SecretUri);
             }
             if (Optional.IsDefined(ReferenceStatus))
             {
@@ -126,18 +126,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Uri secretUri = default;
+            string secretUri = default;
             string referenceStatus = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("secretUri"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    secretUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    secretUri = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("referenceStatus"u8))

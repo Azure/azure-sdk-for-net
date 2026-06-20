@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> Routing rules for ramp up testing. This rule allows to redirect static traffic % to a slot or to gradually change routing % based on performance. </summary>
     public partial class RampUpRule
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="changeDecisionCallbackUri"> Custom decision algorithm can be provided in TiPCallback site extension which URL can be specified. </param>
         /// <param name="name"> Name of the routing rule. The recommended name would be to point to the slot which will receive the traffic in the experiment. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RampUpRule(string actionHostName, double? reroutePercentage, double? changeStep, int? changeIntervalInMinutes, double? minReroutePercentage, double? maxReroutePercentage, Uri changeDecisionCallbackUri, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RampUpRule(string actionHostName, double? reroutePercentage, double? changeStep, int? changeIntervalInMinutes, double? minReroutePercentage, double? maxReroutePercentage, string changeDecisionCallbackUri, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ActionHostName = actionHostName;
             ReroutePercentage = reroutePercentage;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.AppService.Models
         public double? MaxReroutePercentage { get; set; }
 
         /// <summary> Custom decision algorithm can be provided in TiPCallback site extension which URL can be specified. </summary>
-        public Uri ChangeDecisionCallbackUri { get; set; }
+        public string ChangeDecisionCallbackUri { get; set; }
 
         /// <summary> Name of the routing rule. The recommended name would be to point to the slot which will receive the traffic in the experiment. </summary>
         public string Name { get; set; }

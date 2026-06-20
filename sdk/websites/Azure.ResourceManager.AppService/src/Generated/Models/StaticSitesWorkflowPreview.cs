@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> Preview for the Static Site Workflow to be generated. </summary>
     public partial class StaticSitesWorkflowPreview : ProxyOnlyResource

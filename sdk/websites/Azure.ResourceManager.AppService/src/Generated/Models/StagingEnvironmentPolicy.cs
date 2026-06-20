@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> State indicating whether staging environments are allowed or not allowed for a static web app. </summary>
     public enum StagingEnvironmentPolicy

@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> Application logs configuration. </summary>
     public partial class ApplicationLogsConfig
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="azureTableStorage"> Application logs to azure table storage configuration. </param>
         /// <param name="azureBlobStorage"> Application logs to blob storage configuration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationLogsConfig(FileSystemApplicationLogsConfig fileSystem, Models.AppServiceTableStorageApplicationLogsConfig azureTableStorage, Models.AppServiceBlobStorageApplicationLogsConfig azureBlobStorage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApplicationLogsConfig(FileSystemApplicationLogsConfig fileSystem, AzureTableStorageApplicationLogsConfig azureTableStorage, AzureBlobStorageApplicationLogsConfig azureBlobStorage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FileSystem = fileSystem;
             AzureTableStorage = azureTableStorage;
@@ -38,10 +38,10 @@ namespace Azure.ResourceManager.AppService.Models
         internal FileSystemApplicationLogsConfig FileSystem { get; set; }
 
         /// <summary> Application logs to azure table storage configuration. </summary>
-        public Models.AppServiceTableStorageApplicationLogsConfig AzureTableStorage { get; set; }
+        public AzureTableStorageApplicationLogsConfig AzureTableStorage { get; set; }
 
         /// <summary> Application logs to blob storage configuration. </summary>
-        public Models.AppServiceBlobStorageApplicationLogsConfig AzureBlobStorage { get; set; }
+        public AzureBlobStorageApplicationLogsConfig AzureBlobStorage { get; set; }
 
         /// <summary> Log level. </summary>
         public LogLevel? FileSystemLevel

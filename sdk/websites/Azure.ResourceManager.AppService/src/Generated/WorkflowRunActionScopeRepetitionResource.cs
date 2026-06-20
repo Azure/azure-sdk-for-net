@@ -14,7 +14,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.AppService
+namespace Microsoft.Web
 {
     /// <summary>
     /// A class representing a WorkflowRunActionScopeRepetition along with the instance operations that can be performed on it.
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.AppService
         internal WorkflowRunActionScopeRepetitionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string workflowRunActionScopeRepetitionApiVersion);
-            _workflowRunActionScopeRepetitionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
-            _workflowRunActionScopeRepetitionsRestClient = new WorkflowRunActionScopeRepetitions(_workflowRunActionScopeRepetitionsClientDiagnostics, Pipeline, Endpoint, workflowRunActionScopeRepetitionApiVersion ?? "2026-03-01-preview");
+            _workflowRunActionScopeRepetitionsClientDiagnostics = new ClientDiagnostics("Microsoft.Web", ResourceType.Namespace, Diagnostics);
+            _workflowRunActionScopeRepetitionsRestClient = new WorkflowRunActionScopeRepetitions(_workflowRunActionScopeRepetitionsClientDiagnostics, Pipeline, Endpoint, workflowRunActionScopeRepetitionApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> Function secrets. </summary>
     public partial class FunctionSecrets
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="key"> Secret key. </param>
         /// <param name="triggerUri"> Trigger URL. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FunctionSecrets(string key, Uri triggerUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FunctionSecrets(string key, string triggerUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Key = key;
             TriggerUri = triggerUri;
@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.AppService.Models
         public string Key { get; }
 
         /// <summary> Trigger URL. </summary>
-        public Uri TriggerUri { get; }
+        public string TriggerUri { get; }
     }
 }

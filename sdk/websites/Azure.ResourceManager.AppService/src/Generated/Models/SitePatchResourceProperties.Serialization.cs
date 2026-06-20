@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.AppService;
+using Microsoft.Web;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> SitePatchResource resource specific properties. </summary>
     internal partial class SitePatchResourceProperties : IJsonModel<SitePatchResourceProperties>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
+                    return ModelReaderWriter.Write(this, options, MicrosoftWebContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(SitePatchResourceProperties)} does not support writing '{options.Format}' format.");
             }
@@ -109,6 +109,11 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(Enabled.Value);
             }
+            if (Optional.IsDefined(SiteScopedCertificatesEnabled))
+            {
+                writer.WritePropertyName("siteScopedCertificatesEnabled"u8);
+                writer.WriteBooleanValue(SiteScopedCertificatesEnabled.Value);
+            }
             if (options.Format != "W" && Optional.IsCollectionDefined(EnabledHostNames))
             {
                 writer.WritePropertyName("enabledHostNames"u8);
@@ -173,6 +178,11 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 writer.WritePropertyName("siteConfig"u8);
                 writer.WriteObjectValue(SiteConfig, options);
+            }
+            if (Optional.IsDefined(AiIntegration))
+            {
+                writer.WritePropertyName("aiIntegration"u8);
+                writer.WriteObjectValue(AiIntegration, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(TrafficManagerHostNames))
             {
@@ -376,6 +386,7 @@ namespace Azure.ResourceManager.AppService.Models
             string repositorySiteName = default;
             UsageState? usageState = default;
             bool? enabled = default;
+            bool? siteScopedCertificatesEnabled = default;
             IReadOnlyList<string> enabledHostNames = default;
             SiteAvailabilityState? availabilityState = default;
             IList<HostNameSslState> hostNameSslStates = default;
@@ -386,6 +397,7 @@ namespace Azure.ResourceManager.AppService.Models
             DateTimeOffset? lastModifiedTimeUtc = default;
             SiteDnsConfig dnsConfiguration = default;
             SiteConfig siteConfig = default;
+            AiIntegration aiIntegration = default;
             IReadOnlyList<string> trafficManagerHostNames = default;
             bool? scmSiteAlsoStopped = default;
             string targetSwapSlot = default;
@@ -465,6 +477,15 @@ namespace Azure.ResourceManager.AppService.Models
                         continue;
                     }
                     enabled = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("siteScopedCertificatesEnabled"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    siteScopedCertificatesEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("enabledHostNames"u8))
@@ -568,6 +589,15 @@ namespace Azure.ResourceManager.AppService.Models
                         continue;
                     }
                     siteConfig = SiteConfig.DeserializeSiteConfig(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("aiIntegration"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    aiIntegration = AiIntegration.DeserializeAiIntegration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("trafficManagerHostNames"u8))
@@ -810,6 +840,7 @@ namespace Azure.ResourceManager.AppService.Models
                 repositorySiteName,
                 usageState,
                 enabled,
+                siteScopedCertificatesEnabled,
                 enabledHostNames ?? new ChangeTrackingList<string>(),
                 availabilityState,
                 hostNameSslStates ?? new ChangeTrackingList<HostNameSslState>(),
@@ -820,6 +851,7 @@ namespace Azure.ResourceManager.AppService.Models
                 lastModifiedTimeUtc,
                 dnsConfiguration,
                 siteConfig,
+                aiIntegration,
                 trafficManagerHostNames ?? new ChangeTrackingList<string>(),
                 scmSiteAlsoStopped,
                 targetSwapSlot,

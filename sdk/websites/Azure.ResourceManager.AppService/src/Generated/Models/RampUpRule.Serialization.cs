@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.AppService;
+using Microsoft.Web;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> Routing rules for ramp up testing. This rule allows to redirect static traffic % to a slot or to gradually change routing % based on performance. </summary>
     public partial class RampUpRule : IJsonModel<RampUpRule>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
+                    return ModelReaderWriter.Write(this, options, MicrosoftWebContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(RampUpRule)} does not support writing '{options.Format}' format.");
             }
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(ChangeDecisionCallbackUri))
             {
                 writer.WritePropertyName("changeDecisionCallbackUrl"u8);
-                writer.WriteStringValue(ChangeDecisionCallbackUri.AbsoluteUri);
+                writer.WriteStringValue(ChangeDecisionCallbackUri);
             }
             if (Optional.IsDefined(Name))
             {
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.AppService.Models
             int? changeIntervalInMinutes = default;
             double? minReroutePercentage = default;
             double? maxReroutePercentage = default;
-            Uri changeDecisionCallbackUri = default;
+            string changeDecisionCallbackUri = default;
             string name = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -219,11 +219,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (prop.NameEquals("changeDecisionCallbackUrl"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    changeDecisionCallbackUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    changeDecisionCallbackUri = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("name"u8))

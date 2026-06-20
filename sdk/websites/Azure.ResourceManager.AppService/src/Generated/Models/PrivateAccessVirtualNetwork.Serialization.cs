@@ -9,10 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
-using Azure.ResourceManager.AppService;
+using Microsoft.Web;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> Description of a Virtual Network that is useable for private site access. </summary>
     public partial class PrivateAccessVirtualNetwork : IJsonModel<PrivateAccessVirtualNetwork>
@@ -41,7 +40,7 @@ namespace Azure.ResourceManager.AppService.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
+                    return ModelReaderWriter.Write(this, options, MicrosoftWebContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(PrivateAccessVirtualNetwork)} does not support writing '{options.Format}' format.");
             }
@@ -144,7 +143,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
             string name = default;
             int? key = default;
-            ResourceIdentifier resourceId = default;
+            string resourceId = default;
             IList<PrivateAccessSubnet> subnets = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -165,11 +164,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (prop.NameEquals("resourceId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    resourceId = new ResourceIdentifier(prop.Value.GetString());
+                    resourceId = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("subnets"u8))

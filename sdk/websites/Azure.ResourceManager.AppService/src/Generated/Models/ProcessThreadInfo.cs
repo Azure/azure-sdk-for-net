@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> Process Thread Information. </summary>
     public partial class ProcessThreadInfo : ProxyOnlyResource

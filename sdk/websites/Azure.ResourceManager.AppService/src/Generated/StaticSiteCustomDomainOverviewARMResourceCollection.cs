@@ -15,9 +15,9 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.AppService.Models;
+using Microsoft.Web.Models;
 
-namespace Azure.ResourceManager.AppService
+namespace Microsoft.Web
 {
     /// <summary>
     /// A class representing a collection of <see cref="StaticSiteCustomDomainOverviewARMResource"/> and their operations.
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.AppService
         internal StaticSiteCustomDomainOverviewARMResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(StaticSiteCustomDomainOverviewARMResource.ResourceType, out string staticSiteCustomDomainOverviewARMResourceApiVersion);
-            _staticSitesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", StaticSiteCustomDomainOverviewARMResource.ResourceType.Namespace, Diagnostics);
-            _staticSitesRestClient = new StaticSites(_staticSitesClientDiagnostics, Pipeline, Endpoint, staticSiteCustomDomainOverviewARMResourceApiVersion ?? "2026-03-01-preview");
+            _staticSitesClientDiagnostics = new ClientDiagnostics("Microsoft.Web", StaticSiteCustomDomainOverviewARMResource.ResourceType.Namespace, Diagnostics);
+            _staticSitesRestClient = new StaticSites(_staticSitesClientDiagnostics, Pipeline, Endpoint, staticSiteCustomDomainOverviewARMResourceApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -92,8 +92,8 @@ namespace Azure.ResourceManager.AppService
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = _staticSitesRestClient.CreateCreateOrUpdateStaticSiteCustomDomainRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, domainName, StaticSiteCustomDomainRequestPropertiesARMResource.ToRequestContent(staticSiteCustomDomainRequestPropertiesEnvelope), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                AppServiceArmOperation<StaticSiteCustomDomainOverviewARMResource> operation = new AppServiceArmOperation<StaticSiteCustomDomainOverviewARMResource>(
+                Azure.Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                WebArmOperation<StaticSiteCustomDomainOverviewARMResource> operation = new WebArmOperation<StaticSiteCustomDomainOverviewARMResource>(
                     new StaticSiteCustomDomainOverviewARMResourceOperationSource(Client),
                     _staticSitesClientDiagnostics,
                     Pipeline,
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -150,8 +150,8 @@ namespace Azure.ResourceManager.AppService
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = _staticSitesRestClient.CreateCreateOrUpdateStaticSiteCustomDomainRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, domainName, StaticSiteCustomDomainRequestPropertiesARMResource.ToRequestContent(staticSiteCustomDomainRequestPropertiesEnvelope), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                AppServiceArmOperation<StaticSiteCustomDomainOverviewARMResource> operation = new AppServiceArmOperation<StaticSiteCustomDomainOverviewARMResource>(
+                Azure.Response response = Pipeline.ProcessMessage(message, context);
+                WebArmOperation<StaticSiteCustomDomainOverviewARMResource> operation = new WebArmOperation<StaticSiteCustomDomainOverviewARMResource>(
                     new StaticSiteCustomDomainOverviewARMResourceOperationSource(Client),
                     _staticSitesClientDiagnostics,
                     Pipeline,
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -205,13 +205,13 @@ namespace Azure.ResourceManager.AppService
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = _staticSitesRestClient.CreateGetStaticSiteCustomDomainRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, domainName, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<StaticSiteCustomDomainOverviewARMResourceData> response = Response.FromValue(StaticSiteCustomDomainOverviewARMResourceData.FromResponse(result), result);
+                Azure.Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<StaticSiteCustomDomainOverviewARMResourceData> response = Azure.Response.FromValue(StaticSiteCustomDomainOverviewARMResourceData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new StaticSiteCustomDomainOverviewARMResource(Client, response.Value), response.GetRawResponse());
+                return Azure.Response.FromValue(new StaticSiteCustomDomainOverviewARMResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -254,13 +254,13 @@ namespace Azure.ResourceManager.AppService
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = _staticSitesRestClient.CreateGetStaticSiteCustomDomainRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, domainName, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<StaticSiteCustomDomainOverviewARMResourceData> response = Response.FromValue(StaticSiteCustomDomainOverviewARMResourceData.FromResponse(result), result);
+                Azure.Response result = Pipeline.ProcessMessage(message, context);
+                Response<StaticSiteCustomDomainOverviewARMResourceData> response = Azure.Response.FromValue(StaticSiteCustomDomainOverviewARMResourceData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new StaticSiteCustomDomainOverviewARMResource(Client, response.Value), response.GetRawResponse());
+                return Azure.Response.FromValue(new StaticSiteCustomDomainOverviewARMResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -372,20 +372,20 @@ namespace Azure.ResourceManager.AppService
                 };
                 HttpMessage message = _staticSitesRestClient.CreateGetStaticSiteCustomDomainRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, domainName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
+                Azure.Response result = message.Response;
                 Response<StaticSiteCustomDomainOverviewARMResourceData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(StaticSiteCustomDomainOverviewARMResourceData.FromResponse(result), result);
+                        response = Azure.Response.FromValue(StaticSiteCustomDomainOverviewARMResourceData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((StaticSiteCustomDomainOverviewARMResourceData)null, result);
+                        response = Azure.Response.FromValue((StaticSiteCustomDomainOverviewARMResourceData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
+                return Azure.Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -429,20 +429,20 @@ namespace Azure.ResourceManager.AppService
                 };
                 HttpMessage message = _staticSitesRestClient.CreateGetStaticSiteCustomDomainRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, domainName, context);
                 Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
+                Azure.Response result = message.Response;
                 Response<StaticSiteCustomDomainOverviewARMResourceData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(StaticSiteCustomDomainOverviewARMResourceData.FromResponse(result), result);
+                        response = Azure.Response.FromValue(StaticSiteCustomDomainOverviewARMResourceData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((StaticSiteCustomDomainOverviewARMResourceData)null, result);
+                        response = Azure.Response.FromValue((StaticSiteCustomDomainOverviewARMResourceData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
-                return Response.FromValue(response.Value != null, response.GetRawResponse());
+                return Azure.Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -464,7 +464,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -486,15 +486,15 @@ namespace Azure.ResourceManager.AppService
                 };
                 HttpMessage message = _staticSitesRestClient.CreateGetStaticSiteCustomDomainRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, domainName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Response result = message.Response;
+                Azure.Response result = message.Response;
                 Response<StaticSiteCustomDomainOverviewARMResourceData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(StaticSiteCustomDomainOverviewARMResourceData.FromResponse(result), result);
+                        response = Azure.Response.FromValue(StaticSiteCustomDomainOverviewARMResourceData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((StaticSiteCustomDomainOverviewARMResourceData)null, result);
+                        response = Azure.Response.FromValue((StaticSiteCustomDomainOverviewARMResourceData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -503,7 +503,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     return new NoValueResponse<StaticSiteCustomDomainOverviewARMResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new StaticSiteCustomDomainOverviewARMResource(Client, response.Value), response.GetRawResponse());
+                return Azure.Response.FromValue(new StaticSiteCustomDomainOverviewARMResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -525,7 +525,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -547,15 +547,15 @@ namespace Azure.ResourceManager.AppService
                 };
                 HttpMessage message = _staticSitesRestClient.CreateGetStaticSiteCustomDomainRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, domainName, context);
                 Pipeline.Send(message, context.CancellationToken);
-                Response result = message.Response;
+                Azure.Response result = message.Response;
                 Response<StaticSiteCustomDomainOverviewARMResourceData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(StaticSiteCustomDomainOverviewARMResourceData.FromResponse(result), result);
+                        response = Azure.Response.FromValue(StaticSiteCustomDomainOverviewARMResourceData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((StaticSiteCustomDomainOverviewARMResourceData)null, result);
+                        response = Azure.Response.FromValue((StaticSiteCustomDomainOverviewARMResourceData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -564,7 +564,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     return new NoValueResponse<StaticSiteCustomDomainOverviewARMResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new StaticSiteCustomDomainOverviewARMResource(Client, response.Value), response.GetRawResponse());
+                return Azure.Response.FromValue(new StaticSiteCustomDomainOverviewARMResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

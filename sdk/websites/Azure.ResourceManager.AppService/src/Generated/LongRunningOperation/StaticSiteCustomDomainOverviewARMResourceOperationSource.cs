@@ -12,7 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.AppService
+namespace Microsoft.Web
 {
     /// <summary></summary>
     internal partial class StaticSiteCustomDomainOverviewARMResourceOperationSource : IOperationSource<StaticSiteCustomDomainOverviewARMResource>

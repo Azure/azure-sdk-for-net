@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.AppService;
+using Microsoft.Web;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> SitePatchResource resource specific properties. </summary>
     internal partial class SitePatchResourceProperties
@@ -32,6 +32,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="repositorySiteName"> Name of the repository site. </param>
         /// <param name="usageState"> State indicating whether the app has exceeded its quota usage. Read-only. </param>
         /// <param name="enabled"> &lt;code&gt;true&lt;/code&gt; if the app is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. Setting this value to false disables the app (takes the app offline). </param>
+        /// <param name="siteScopedCertificatesEnabled"> &lt;code&gt;true&lt;/code&gt; if site scoped certificates are enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="enabledHostNames">
         /// Enabled hostnames for the app.Hostnames need to be assigned (see HostNames) AND enabled. Otherwise,
         /// the app is not served on those hostnames.
@@ -45,6 +46,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="lastModifiedTimeUtc"> Last time the app was modified, in UTC. Read-only. </param>
         /// <param name="dnsConfiguration"> Property to configure various DNS related settings for a site. </param>
         /// <param name="siteConfig"> Configuration of the app. </param>
+        /// <param name="aiIntegration"> AI integration configuration for the app. </param>
         /// <param name="trafficManagerHostNames"> Azure Traffic Manager hostnames associated with the app. Read-only. </param>
         /// <param name="scmSiteAlsoStopped"> &lt;code&gt;true&lt;/code&gt; to stop SCM (KUDU) site when the app is stopped; otherwise, &lt;code&gt;false&lt;/code&gt;. The default is &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="targetSwapSlot"> Specifies which deployment slot this app will swap into. Read-only. </param>
@@ -87,13 +89,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// This must be of the form /subscriptions/{subscriptionName}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{vnetName}/subnets/{subnetName}
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SitePatchResourceProperties(string state, IReadOnlyList<string> hostNames, string repositorySiteName, UsageState? usageState, bool? enabled, IReadOnlyList<string> enabledHostNames, SiteAvailabilityState? availabilityState, IList<HostNameSslState> hostNameSslStates, string serverFarmId, bool? reserved, bool? isXenon, bool? hyperV, DateTimeOffset? lastModifiedTimeUtc, SiteDnsConfig dnsConfiguration, SiteConfig siteConfig, IReadOnlyList<string> trafficManagerHostNames, bool? scmSiteAlsoStopped, string targetSwapSlot, HostingEnvironmentProfile hostingEnvironmentProfile, bool? clientAffinityEnabled, bool? clientAffinityProxyEnabled, bool? clientCertEnabled, ClientCertMode? clientCertMode, string clientCertExclusionPaths, bool? hostNamesDisabled, string customDomainVerificationId, string outboundIpAddresses, string possibleOutboundIpAddresses, int? containerSize, int? dailyMemoryTimeQuota, DateTimeOffset? suspendedTill, int? maxNumberOfWorkers, CloningInfo cloningInfo, string resourceGroup, bool? isDefaultContainer, string defaultHostName, SlotSwapStatus slotSwapStatus, bool? httpsOnly, RedundancyMode? redundancyMode, string inProgressOperationId, string publicNetworkAccess, bool? storageAccountRequired, string keyVaultReferenceIdentity, string virtualNetworkSubnetId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SitePatchResourceProperties(string state, IReadOnlyList<string> hostNames, string repositorySiteName, UsageState? usageState, bool? enabled, bool? siteScopedCertificatesEnabled, IReadOnlyList<string> enabledHostNames, SiteAvailabilityState? availabilityState, IList<HostNameSslState> hostNameSslStates, string serverFarmId, bool? reserved, bool? isXenon, bool? hyperV, DateTimeOffset? lastModifiedTimeUtc, SiteDnsConfig dnsConfiguration, SiteConfig siteConfig, AiIntegration aiIntegration, IReadOnlyList<string> trafficManagerHostNames, bool? scmSiteAlsoStopped, string targetSwapSlot, HostingEnvironmentProfile hostingEnvironmentProfile, bool? clientAffinityEnabled, bool? clientAffinityProxyEnabled, bool? clientCertEnabled, ClientCertMode? clientCertMode, string clientCertExclusionPaths, bool? hostNamesDisabled, string customDomainVerificationId, string outboundIpAddresses, string possibleOutboundIpAddresses, int? containerSize, int? dailyMemoryTimeQuota, DateTimeOffset? suspendedTill, int? maxNumberOfWorkers, CloningInfo cloningInfo, string resourceGroup, bool? isDefaultContainer, string defaultHostName, SlotSwapStatus slotSwapStatus, bool? httpsOnly, RedundancyMode? redundancyMode, string inProgressOperationId, string publicNetworkAccess, bool? storageAccountRequired, string keyVaultReferenceIdentity, string virtualNetworkSubnetId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             State = state;
             HostNames = hostNames;
             RepositorySiteName = repositorySiteName;
             UsageState = usageState;
             Enabled = enabled;
+            SiteScopedCertificatesEnabled = siteScopedCertificatesEnabled;
             EnabledHostNames = enabledHostNames;
             AvailabilityState = availabilityState;
             HostNameSslStates = hostNameSslStates;
@@ -104,6 +107,7 @@ namespace Azure.ResourceManager.AppService.Models
             LastModifiedTimeUtc = lastModifiedTimeUtc;
             DnsConfiguration = dnsConfiguration;
             SiteConfig = siteConfig;
+            AiIntegration = aiIntegration;
             TrafficManagerHostNames = trafficManagerHostNames;
             ScmSiteAlsoStopped = scmSiteAlsoStopped;
             TargetSwapSlot = targetSwapSlot;
@@ -151,6 +155,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> &lt;code&gt;true&lt;/code&gt; if the app is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. Setting this value to false disables the app (takes the app offline). </summary>
         public bool? Enabled { get; set; }
 
+        /// <summary> &lt;code&gt;true&lt;/code&gt; if site scoped certificates are enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        public bool? SiteScopedCertificatesEnabled { get; set; }
+
         /// <summary>
         /// Enabled hostnames for the app.Hostnames need to be assigned (see HostNames) AND enabled. Otherwise,
         /// the app is not served on those hostnames.
@@ -183,6 +190,9 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Configuration of the app. </summary>
         public SiteConfig SiteConfig { get; set; }
+
+        /// <summary> AI integration configuration for the app. </summary>
+        public AiIntegration AiIntegration { get; set; }
 
         /// <summary> Azure Traffic Manager hostnames associated with the app. Read-only. </summary>
         public IReadOnlyList<string> TrafficManagerHostNames { get; } = new ChangeTrackingList<string>();

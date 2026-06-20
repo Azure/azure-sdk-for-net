@@ -9,7 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace Azure.ResourceManager.AppService
+namespace Microsoft.Web
 {
     /// <summary></summary>
     public partial class StaticSiteResource : IJsonModel<StaticSiteLinkedBackendARMResourceData>
@@ -27,11 +27,11 @@ namespace Azure.ResourceManager.AppService
         StaticSiteLinkedBackendARMResourceData IJsonModel<StaticSiteLinkedBackendARMResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<StaticSiteLinkedBackendARMResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<StaticSiteLinkedBackendARMResourceData>(Data, options, AzureResourceManagerAppServiceContext.Default);
+        BinaryData IPersistableModel<StaticSiteLinkedBackendARMResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<StaticSiteLinkedBackendARMResourceData>(Data, options, MicrosoftWebContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        StaticSiteLinkedBackendARMResourceData IPersistableModel<StaticSiteLinkedBackendARMResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StaticSiteLinkedBackendARMResourceData>(data, options, AzureResourceManagerAppServiceContext.Default);
+        StaticSiteLinkedBackendARMResourceData IPersistableModel<StaticSiteLinkedBackendARMResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StaticSiteLinkedBackendARMResourceData>(data, options, MicrosoftWebContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<StaticSiteLinkedBackendARMResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);

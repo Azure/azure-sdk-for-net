@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> Authentication method to access the storage account for deployment. </summary>
     public partial class FunctionsDeploymentStorageAuthentication

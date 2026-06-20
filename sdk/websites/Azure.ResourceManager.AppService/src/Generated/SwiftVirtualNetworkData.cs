@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
+using Microsoft.Web.Models;
 
-namespace Azure.ResourceManager.AppService
+namespace Microsoft.Web
 {
     /// <summary> Swift Virtual Network Contract. This is used to enable the new Swift way of doing virtual network integration. </summary>
     public partial class SwiftVirtualNetworkData : ResourceData

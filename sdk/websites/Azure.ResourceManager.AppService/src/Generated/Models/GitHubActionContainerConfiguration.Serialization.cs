@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.AppService;
+using Microsoft.Web;
 
-namespace Azure.ResourceManager.AppService.Models
+namespace Microsoft.Web.Models
 {
     /// <summary> The GitHub action container configuration. </summary>
     public partial class GitHubActionContainerConfiguration : IJsonModel<GitHubActionContainerConfiguration>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
+                    return ModelReaderWriter.Write(this, options, MicrosoftWebContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(GitHubActionContainerConfiguration)} does not support writing '{options.Format}' format.");
             }
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(ServerUri))
             {
                 writer.WritePropertyName("serverUrl"u8);
-                writer.WriteStringValue(ServerUri.AbsoluteUri);
+                writer.WriteStringValue(ServerUri);
             }
             if (Optional.IsDefined(ImageName))
             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Uri serverUri = default;
+            string serverUri = default;
             string imageName = default;
             string username = default;
             string password = default;
@@ -145,11 +145,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (prop.NameEquals("serverUrl"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    serverUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    serverUri = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("imageName"u8))
