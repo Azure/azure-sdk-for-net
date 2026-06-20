@@ -3774,7 +3774,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <param name="keyType"> The Key being regenerated. </param>
         /// <returns> A new <see cref="Models.GatewayKeyRegenerateContent"/> instance for mocking. </returns>
-        public static GatewayKeyRegenerateContent GatewayKeyRegenerateContent(Models.GatewayRegenerateKeyType keyType = default)
+        public static GatewayKeyRegenerateContent GatewayKeyRegenerateContent(GatewayRegenerateKeyType keyType = default)
         {
             return new GatewayKeyRegenerateContent(keyType, default);
         }
