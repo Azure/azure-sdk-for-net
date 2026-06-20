@@ -92,11 +92,8 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 writer.WritePropertyName("opType"u8);
                 writer.WriteStringValue(OperationType.Value.ToString());
             }
-            if (Optional.IsDefined(SubscriptionId))
-            {
-                writer.WritePropertyName("subscriptionId"u8);
-                writer.WriteStringValue(SubscriptionId);
-            }
+            writer.WritePropertyName("subscriptionId"u8);
+            writer.WriteStringValue(SubscriptionId);
             if (Optional.IsDefined(DeadlineOn))
             {
                 writer.WritePropertyName("deadline"u8);
@@ -182,7 +179,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             string operationId = default;
             ResourceIdentifier resourceId = default;
             ComputeBulkOperationType? operationType = default;
-            string subscriptionId = default;
+            Guid subscriptionId = default;
             DateTimeOffset? deadlineOn = default;
             ScheduledActionDeadlineType? deadlineType = default;
             ScheduledActionOperationState? state = default;
@@ -219,7 +216,11 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 }
                 if (prop.NameEquals("subscriptionId"u8))
                 {
-                    subscriptionId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    subscriptionId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("deadline"u8))
