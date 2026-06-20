@@ -11,21 +11,21 @@ using NUnit.Framework;
 namespace Azure.AI.AgentServer.Responses.Tests.Protocol;
 
 /// <summary>
-/// E2E tests verifying that <c>x-agent-user-isolation-key</c> and
-/// <c>x-agent-chat-isolation-key</c> headers flow through to the
-/// <see cref="ResponseContext.Isolation"/> property.
+/// E2E tests verifying that <c>x-agent-user-id</c> and
+/// <c>x-agent-foundry-call-id</c> headers flow through to the
+/// <see cref="ResponseContext.PlatformContext"/> property.
 /// </summary>
-public class IsolationContextProtocolTests : ProtocolTestBase
+public class PlatformContextProtocolTests : ProtocolTestBase
 {
     [Test]
     public async Task POST_Responses_IsolationHeaders_FlowToContext()
     {
-        var response = await PostWithIsolationAsync("user-abc", "chat-xyz");
+        var response = await PostWithIsolationAsync("user-abc", "call-xyz");
 
         Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         Assert.That(Handler.LastContext, Is.Not.Null);
-        Assert.That(Handler.LastContext!.Isolation.UserIsolationKey, Is.EqualTo("user-abc"));
-        Assert.That(Handler.LastContext.Isolation.ChatIsolationKey, Is.EqualTo("chat-xyz"));
+        Assert.That(Handler.LastContext!.PlatformContext.UserIdKey, Is.EqualTo("user-abc"));
+        Assert.That(Handler.LastContext.PlatformContext.CallId, Is.EqualTo("call-xyz"));
     }
 
     [Test]
@@ -34,40 +34,40 @@ public class IsolationContextProtocolTests : ProtocolTestBase
         await PostResponsesAsync(new { model = "test" });
 
         Assert.That(Handler.LastContext, Is.Not.Null);
-        Assert.That(Handler.LastContext!.Isolation, Is.SameAs(IsolationContext.Empty));
-        Assert.That(Handler.LastContext.Isolation.UserIsolationKey, Is.Null);
-        Assert.That(Handler.LastContext.Isolation.ChatIsolationKey, Is.Null);
+        Assert.That(Handler.LastContext!.PlatformContext, Is.SameAs(PlatformContext.Empty));
+        Assert.That(Handler.LastContext.PlatformContext.UserIdKey, Is.Null);
+        Assert.That(Handler.LastContext.PlatformContext.CallId, Is.Null);
     }
 
     [Test]
-    public async Task POST_Responses_OnlyUserIsolationHeader_ChatIsNull()
+    public async Task POST_Responses_OnlyUserIsolationHeader_CallIsNull()
     {
         var response = await PostWithIsolationAsync("user-only", null);
 
         Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
-        Assert.That(Handler.LastContext!.Isolation.UserIsolationKey, Is.EqualTo("user-only"));
-        Assert.That(Handler.LastContext.Isolation.ChatIsolationKey, Is.Null);
+        Assert.That(Handler.LastContext!.PlatformContext.UserIdKey, Is.EqualTo("user-only"));
+        Assert.That(Handler.LastContext.PlatformContext.CallId, Is.Null);
     }
 
     [Test]
-    public async Task POST_Responses_OnlyChatIsolationHeader_UserIsNull()
+    public async Task POST_Responses_OnlyCallIsolationHeader_UserIsNull()
     {
-        var response = await PostWithIsolationAsync(null, "chat-only");
+        var response = await PostWithIsolationAsync(null, "call-only");
 
         Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
-        Assert.That(Handler.LastContext!.Isolation.UserIsolationKey, Is.Null);
-        Assert.That(Handler.LastContext.Isolation.ChatIsolationKey, Is.EqualTo("chat-only"));
+        Assert.That(Handler.LastContext!.PlatformContext.UserIdKey, Is.Null);
+        Assert.That(Handler.LastContext.PlatformContext.CallId, Is.EqualTo("call-only"));
     }
 
     [Test]
-    public async Task POST_Responses_EqualKeys_OneToOneChat()
+    public async Task POST_Responses_EqualKeys_OneToOneCall()
     {
-        // In a 1:1 chat, both keys are equal.
+        // In a 1:1 call, both keys are equal.
         var response = await PostWithIsolationAsync("same-key", "same-key");
 
         Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
-        Assert.That(Handler.LastContext!.Isolation.UserIsolationKey, Is.EqualTo("same-key"));
-        Assert.That(Handler.LastContext.Isolation.ChatIsolationKey, Is.EqualTo("same-key"));
+        Assert.That(Handler.LastContext!.PlatformContext.UserIdKey, Is.EqualTo("same-key"));
+        Assert.That(Handler.LastContext.PlatformContext.CallId, Is.EqualTo("same-key"));
     }
 
     [Test]
@@ -80,17 +80,17 @@ public class IsolationContextProtocolTests : ProtocolTestBase
                 Encoding.UTF8,
                 "application/json")
         };
-        request.Headers.Add(PlatformHeaders.UserIsolationKey, "");
-        request.Headers.Add(PlatformHeaders.ChatIsolationKey, "");
+        request.Headers.Add(PlatformHeaders.UserId, "");
+        request.Headers.Add(PlatformHeaders.FoundryCallId, "");
         await Client.SendAsync(request);
 
-        Assert.That(Handler.LastContext!.Isolation, Is.SameAs(IsolationContext.Empty));
+        Assert.That(Handler.LastContext!.PlatformContext, Is.SameAs(PlatformContext.Empty));
     }
 
     // ─── helpers ──────────────────────────────────────────────
 
     private async Task<HttpResponseMessage> PostWithIsolationAsync(
-        string? userKey, string? chatKey)
+        string? userKey, string? callId)
     {
         var request = new HttpRequestMessage(HttpMethod.Post, "/responses")
         {
@@ -102,12 +102,12 @@ public class IsolationContextProtocolTests : ProtocolTestBase
 
         if (userKey is not null)
         {
-            request.Headers.Add(PlatformHeaders.UserIsolationKey, userKey);
+            request.Headers.Add(PlatformHeaders.UserId, userKey);
         }
 
-        if (chatKey is not null)
+        if (callId is not null)
         {
-            request.Headers.Add(PlatformHeaders.ChatIsolationKey, chatKey);
+            request.Headers.Add(PlatformHeaders.FoundryCallId, callId);
         }
 
         return await Client.SendAsync(request);

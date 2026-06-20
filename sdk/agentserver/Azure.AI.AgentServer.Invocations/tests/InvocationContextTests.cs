@@ -18,7 +18,7 @@ public class InvocationContextTests
     {
         var headers = new Dictionary<string, string> { ["x-client-foo"] = "bar" };
         var queryParams = new Dictionary<string, StringValues> { ["key"] = "value" };
-        var isolation = new IsolationContext("user-1", "chat-2");
+        var isolation = new PlatformContext("user-1", "chat-2");
 
         var context = new InvocationContext("inv-1", "sess-2", headers, queryParams, isolation);
 
@@ -26,15 +26,15 @@ public class InvocationContextTests
         Assert.That(context.SessionId, Is.EqualTo("sess-2"));
         Assert.That(context.ClientHeaders, Is.SameAs(headers));
         Assert.That(context.QueryParameters, Is.SameAs(queryParams));
-        Assert.That(context.Isolation, Is.SameAs(isolation));
+        Assert.That(context.PlatformContext, Is.SameAs(isolation));
     }
 
     [Test]
     public void Constructor_WithEmptyIsolation_SetsEmpty()
     {
-        var context = new InvocationContext("inv-1", "sess-2", s_emptyHeaders, s_emptyQueryParams, IsolationContext.Empty);
+        var context = new InvocationContext("inv-1", "sess-2", s_emptyHeaders, s_emptyQueryParams, PlatformContext.Empty);
 
-        Assert.That(context.Isolation, Is.SameAs(IsolationContext.Empty));
+        Assert.That(context.PlatformContext, Is.SameAs(PlatformContext.Empty));
     }
 
     [Test]
@@ -49,7 +49,7 @@ public class InvocationContextTests
     public void Constructor_ThrowsArgumentException_WhenInvocationIdIsNull()
     {
         Assert.That(
-            () => new InvocationContext(null!, "sess", s_emptyHeaders, s_emptyQueryParams, IsolationContext.Empty),
+            () => new InvocationContext(null!, "sess", s_emptyHeaders, s_emptyQueryParams, PlatformContext.Empty),
             Throws.InstanceOf<ArgumentNullException>());
     }
 
@@ -57,7 +57,7 @@ public class InvocationContextTests
     public void Constructor_ThrowsArgumentException_WhenInvocationIdIsEmpty()
     {
         Assert.That(
-            () => new InvocationContext("", "sess", s_emptyHeaders, s_emptyQueryParams, IsolationContext.Empty),
+            () => new InvocationContext("", "sess", s_emptyHeaders, s_emptyQueryParams, PlatformContext.Empty),
             Throws.InstanceOf<ArgumentException>());
     }
 
@@ -65,7 +65,7 @@ public class InvocationContextTests
     public void Constructor_ThrowsArgumentException_WhenSessionIdIsNull()
     {
         Assert.That(
-            () => new InvocationContext("inv-1", null!, s_emptyHeaders, s_emptyQueryParams, IsolationContext.Empty),
+            () => new InvocationContext("inv-1", null!, s_emptyHeaders, s_emptyQueryParams, PlatformContext.Empty),
             Throws.InstanceOf<ArgumentNullException>());
     }
 
@@ -73,7 +73,7 @@ public class InvocationContextTests
     public void Constructor_ThrowsArgumentException_WhenSessionIdIsEmpty()
     {
         Assert.That(
-            () => new InvocationContext("inv-1", "", s_emptyHeaders, s_emptyQueryParams, IsolationContext.Empty),
+            () => new InvocationContext("inv-1", "", s_emptyHeaders, s_emptyQueryParams, PlatformContext.Empty),
             Throws.InstanceOf<ArgumentException>());
     }
 
@@ -81,7 +81,7 @@ public class InvocationContextTests
     public void Constructor_ThrowsArgumentNullException_WhenClientHeadersIsNull()
     {
         Assert.That(
-            () => new InvocationContext("inv-1", "sess", null!, s_emptyQueryParams, IsolationContext.Empty),
+            () => new InvocationContext("inv-1", "sess", null!, s_emptyQueryParams, PlatformContext.Empty),
             Throws.InstanceOf<ArgumentNullException>());
     }
 
@@ -89,7 +89,7 @@ public class InvocationContextTests
     public void Constructor_ThrowsArgumentNullException_WhenQueryParametersIsNull()
     {
         Assert.That(
-            () => new InvocationContext("inv-1", "sess", s_emptyHeaders, null!, IsolationContext.Empty),
+            () => new InvocationContext("inv-1", "sess", s_emptyHeaders, null!, PlatformContext.Empty),
             Throws.InstanceOf<ArgumentNullException>());
     }
 }

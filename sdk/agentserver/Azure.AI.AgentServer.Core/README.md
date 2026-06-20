@@ -93,8 +93,8 @@ The `PlatformHeaders` static class defines all HTTP header name constants used a
 | `RequestId` | `x-request-id` | Request ↔ Response | Request correlation ID |
 | `ServerVersion` | `x-platform-server` | Response | Server SDK identity |
 | `SessionId` | `x-agent-session-id` | Response | Resolved session ID |
-| `UserIsolationKey` | `x-agent-user-isolation-key` | Request | Platform user partition key |
-| `ChatIsolationKey` | `x-agent-chat-isolation-key` | Request | Platform conversation partition key |
+| `UserId` | `x-agent-user-id` | Request | Global per-user partition key |
+| `FoundryCallId` | `x-agent-foundry-call-id` | Request | Opaque per-request call ID (protocol `2.0.0`); forwarded on outbound 1P calls |
 | `ClientHeaderPrefix` | `x-client-` | Request | Pass-through client header prefix |
 | `ErrorSource` | `x-platform-error-source` | Response | Error origin classification |
 | `ErrorDetail` | `x-platform-error-detail` | Response | Diagnostic error context |

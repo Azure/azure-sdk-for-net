@@ -215,9 +215,9 @@ All error responses (4xx/5xx) include the `x-platform-error-source` header class
 
 ### Chat isolation and session ID
 
-When the platform injects `x-agent-user-isolation-key` and `x-agent-chat-isolation-key` request headers, the library forwards them to the storage provider so that responses are scoped to the correct tenant and conversation. The resolved session ID is returned on every response via the `x-agent-session-id` header.
+When the platform injects `x-agent-user-id` and `x-agent-foundry-call-id` request headers, the library reads them into the platform context and forwards the per-request call ID to the storage provider so that responses resolve the correct caller context server-side. The resolved session ID is returned on every response via the `x-agent-session-id` header.
 
-Handlers can access the isolation context through `ResponseContext.Isolation` for custom partitioning logic.
+Handlers can access the platform context through `ResponseContext.PlatformContext` for custom partitioning logic.
 
 ### Persistence resilience
 
