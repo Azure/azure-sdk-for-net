@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.ResourceManager.Compute.BulkActions.Models;
 using Azure.ResourceManager.Resources;
 
@@ -44,7 +45,20 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> The deallocate operation result response. </returns>
         public virtual async Task<Response<DeallocateResourceOperationResult>> BulkDeallocateOperationAsync(ExecuteDeallocateContent content, CancellationToken cancellationToken = default)
-            => await BulkDeallocateOperationAsync(await GetResourceGroupLocationAsync(cancellationToken).ConfigureAwait(false), content, cancellationToken).ConfigureAwait(false);
+        {
+            using DiagnosticScope scope = VirtualMachineBulkOperationsClientDiagnostics.CreateScope("MockableComputeBulkActionsResourceGroupResource.BulkDeallocateOperation");
+            scope.Start();
+            try
+            {
+                var location = await GetResourceGroupLocationAsync(cancellationToken).ConfigureAwait(false);
+                return await BulkDeallocateOperationAsync(location, content, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
         /// <summary>
         /// BulkDeallocate: Execute deallocate operation for a batch of virtual machines.
@@ -53,7 +67,20 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> The deallocate operation result response. </returns>
         public virtual Response<DeallocateResourceOperationResult> BulkDeallocateOperation(ExecuteDeallocateContent content, CancellationToken cancellationToken = default)
-            => BulkDeallocateOperation(GetResourceGroupLocation(cancellationToken), content, cancellationToken);
+        {
+            using DiagnosticScope scope = VirtualMachineBulkOperationsClientDiagnostics.CreateScope("MockableComputeBulkActionsResourceGroupResource.BulkDeallocateOperation");
+            scope.Start();
+            try
+            {
+                var location = GetResourceGroupLocation(cancellationToken);
+                return BulkDeallocateOperation(location, content, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
         /// <summary>
         /// BulkHibernate: Execute hibernate operation for a batch of virtual machines.
@@ -62,7 +89,20 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> The hibernate operation result response. </returns>
         public virtual async Task<Response<HibernateResourceOperationResult>> BulkHibernateOperationAsync(ExecuteHibernateContent content, CancellationToken cancellationToken = default)
-            => await BulkHibernateOperationAsync(await GetResourceGroupLocationAsync(cancellationToken).ConfigureAwait(false), content, cancellationToken).ConfigureAwait(false);
+        {
+            using DiagnosticScope scope = VirtualMachineBulkOperationsClientDiagnostics.CreateScope("MockableComputeBulkActionsResourceGroupResource.BulkHibernateOperation");
+            scope.Start();
+            try
+            {
+                var location = await GetResourceGroupLocationAsync(cancellationToken).ConfigureAwait(false);
+                return await BulkHibernateOperationAsync(location, content, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
         /// <summary>
         /// BulkHibernate: Execute hibernate operation for a batch of virtual machines.
@@ -71,7 +111,20 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> The hibernate operation result response. </returns>
         public virtual Response<HibernateResourceOperationResult> BulkHibernateOperation(ExecuteHibernateContent content, CancellationToken cancellationToken = default)
-            => BulkHibernateOperation(GetResourceGroupLocation(cancellationToken), content, cancellationToken);
+        {
+            using DiagnosticScope scope = VirtualMachineBulkOperationsClientDiagnostics.CreateScope("MockableComputeBulkActionsResourceGroupResource.BulkHibernateOperation");
+            scope.Start();
+            try
+            {
+                var location = GetResourceGroupLocation(cancellationToken);
+                return BulkHibernateOperation(location, content, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
         /// <summary>
         /// BulkStart: Execute start operation for a batch of virtual machines.
@@ -80,7 +133,20 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> The start operation result response. </returns>
         public virtual async Task<Response<StartResourceOperationResult>> BulkStartOperationAsync(ExecuteStartContent content, CancellationToken cancellationToken = default)
-            => await BulkStartOperationAsync(await GetResourceGroupLocationAsync(cancellationToken).ConfigureAwait(false), content, cancellationToken).ConfigureAwait(false);
+        {
+            using DiagnosticScope scope = VirtualMachineBulkOperationsClientDiagnostics.CreateScope("MockableComputeBulkActionsResourceGroupResource.BulkStartOperation");
+            scope.Start();
+            try
+            {
+                var location = await GetResourceGroupLocationAsync(cancellationToken).ConfigureAwait(false);
+                return await BulkStartOperationAsync(location, content, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
         /// <summary>
         /// BulkStart: Execute start operation for a batch of virtual machines.
@@ -89,7 +155,20 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> The start operation result response. </returns>
         public virtual Response<StartResourceOperationResult> BulkStartOperation(ExecuteStartContent content, CancellationToken cancellationToken = default)
-            => BulkStartOperation(GetResourceGroupLocation(cancellationToken), content, cancellationToken);
+        {
+            using DiagnosticScope scope = VirtualMachineBulkOperationsClientDiagnostics.CreateScope("MockableComputeBulkActionsResourceGroupResource.BulkStartOperation");
+            scope.Start();
+            try
+            {
+                var location = GetResourceGroupLocation(cancellationToken);
+                return BulkStartOperation(location, content, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
         /// <summary>
         /// BulkDelete: Execute delete operation for a batch of virtual machines.
@@ -98,7 +177,20 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> The delete operation result response. </returns>
         public virtual async Task<Response<DeleteResourceOperationResult>> BulkDeleteOperationAsync(ExecuteDeleteContent content, CancellationToken cancellationToken = default)
-            => await BulkDeleteOperationAsync(await GetResourceGroupLocationAsync(cancellationToken).ConfigureAwait(false), content, cancellationToken).ConfigureAwait(false);
+        {
+            using DiagnosticScope scope = VirtualMachineBulkOperationsClientDiagnostics.CreateScope("MockableComputeBulkActionsResourceGroupResource.BulkDeleteOperation");
+            scope.Start();
+            try
+            {
+                var location = await GetResourceGroupLocationAsync(cancellationToken).ConfigureAwait(false);
+                return await BulkDeleteOperationAsync(location, content, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
         /// <summary>
         /// BulkDelete: Execute delete operation for a batch of virtual machines.
@@ -107,7 +199,20 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> The delete operation result response. </returns>
         public virtual Response<DeleteResourceOperationResult> BulkDeleteOperation(ExecuteDeleteContent content, CancellationToken cancellationToken = default)
-            => BulkDeleteOperation(GetResourceGroupLocation(cancellationToken), content, cancellationToken);
+        {
+            using DiagnosticScope scope = VirtualMachineBulkOperationsClientDiagnostics.CreateScope("MockableComputeBulkActionsResourceGroupResource.BulkDeleteOperation");
+            scope.Start();
+            try
+            {
+                var location = GetResourceGroupLocation(cancellationToken);
+                return BulkDeleteOperation(location, content, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
         /// <summary>
         /// BulkGetOperationsStatus: Polling endpoint to read status of operations performed on virtual machines.
@@ -116,7 +221,20 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> The status operation result response. </returns>
         public virtual async Task<Response<GetBulkOperationStatusResult>> BulkGetOperationsStatusAsync(GetBulkOperationStatusContent content, CancellationToken cancellationToken = default)
-            => await BulkGetOperationsStatusAsync(await GetResourceGroupLocationAsync(cancellationToken).ConfigureAwait(false), content, cancellationToken).ConfigureAwait(false);
+        {
+            using DiagnosticScope scope = VirtualMachineBulkOperationsClientDiagnostics.CreateScope("MockableComputeBulkActionsResourceGroupResource.BulkGetOperationsStatus");
+            scope.Start();
+            try
+            {
+                var location = await GetResourceGroupLocationAsync(cancellationToken).ConfigureAwait(false);
+                return await BulkGetOperationsStatusAsync(location, content, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
         /// <summary>
         /// BulkGetOperationsStatus: Polling endpoint to read status of operations performed on virtual machines.
@@ -125,7 +243,20 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> The status operation result response. </returns>
         public virtual Response<GetBulkOperationStatusResult> BulkGetOperationsStatus(GetBulkOperationStatusContent content, CancellationToken cancellationToken = default)
-            => BulkGetOperationsStatus(GetResourceGroupLocation(cancellationToken), content, cancellationToken);
+        {
+            using DiagnosticScope scope = VirtualMachineBulkOperationsClientDiagnostics.CreateScope("MockableComputeBulkActionsResourceGroupResource.BulkGetOperationsStatus");
+            scope.Start();
+            try
+            {
+                var location = GetResourceGroupLocation(cancellationToken);
+                return BulkGetOperationsStatus(location, content, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
         /// <summary>
         /// BulkCancelOperations: Cancel a previously submitted (start/deallocate/hibernate) request.
@@ -134,7 +265,20 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> The cancel operation result response. </returns>
         public virtual async Task<Response<CancelBulkOperationsResult>> BulkCancelOperationsAsync(CancelBulkOperationsContent content, CancellationToken cancellationToken = default)
-            => await BulkCancelOperationsAsync(await GetResourceGroupLocationAsync(cancellationToken).ConfigureAwait(false), content, cancellationToken).ConfigureAwait(false);
+        {
+            using DiagnosticScope scope = VirtualMachineBulkOperationsClientDiagnostics.CreateScope("MockableComputeBulkActionsResourceGroupResource.BulkCancelOperations");
+            scope.Start();
+            try
+            {
+                var location = await GetResourceGroupLocationAsync(cancellationToken).ConfigureAwait(false);
+                return await BulkCancelOperationsAsync(location, content, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
         /// <summary>
         /// BulkCancelOperations: Cancel a previously submitted (start/deallocate/hibernate) request.
@@ -143,6 +287,19 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> The cancel operation result response. </returns>
         public virtual Response<CancelBulkOperationsResult> BulkCancelOperations(CancelBulkOperationsContent content, CancellationToken cancellationToken = default)
-            => BulkCancelOperations(GetResourceGroupLocation(cancellationToken), content, cancellationToken);
+        {
+            using DiagnosticScope scope = VirtualMachineBulkOperationsClientDiagnostics.CreateScope("MockableComputeBulkActionsResourceGroupResource.BulkCancelOperations");
+            scope.Start();
+            try
+            {
+                var location = GetResourceGroupLocation(cancellationToken);
+                return BulkCancelOperations(location, content, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
     }
 }
