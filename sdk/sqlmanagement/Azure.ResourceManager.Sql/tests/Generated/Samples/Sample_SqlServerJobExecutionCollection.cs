@@ -140,23 +140,23 @@ namespace Azure.ResourceManager.Sql.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SqlServerJobResource created on azure
-            // for more information of creating SqlServerJobResource, please refer to the document of SqlServerJobResource
+            // this example assumes you already have this SqlServerJobExecutionStepResource created on azure
+            // for more information of creating SqlServerJobExecutionStepResource, please refer to the document of SqlServerJobExecutionStepResource
             string subscriptionId = "00000000-1111-2222-3333-444444444444";
             string resourceGroupName = "group1";
             string serverName = "server1";
             string jobAgentName = "agent1";
             string jobName = "job1";
-            ResourceIdentifier sqlServerJobResourceId = SqlServerJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, jobAgentName, jobName);
-            SqlServerJobResource sqlServerJob = client.GetSqlServerJobResource(sqlServerJobResourceId);
+            Guid jobExecutionId = Guid.Parse("5A86BF65-43AC-F258-2524-9E92992F97CA");
+            string stepName = "step1";
+            ResourceIdentifier sqlServerJobExecutionStepResourceId = SqlServerJobExecutionStepResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, jobAgentName, jobName, jobExecutionId, stepName);
+            SqlServerJobExecutionStepResource sqlServerJobExecutionStep = client.GetSqlServerJobExecutionStepResource(sqlServerJobExecutionStepResourceId);
 
-            // get the collection of this SqlServerJobExecutionResource
-            SqlServerJobExecutionCollection collection = sqlServerJob.GetSqlServerJobExecutions();
+            // get the collection of this SqlServerJobExecutionStepTargetResource
+            SqlServerJobExecutionStepTargetCollection collection = sqlServerJobExecutionStep.GetSqlServerJobExecutionStepTargets();
 
             // invoke the operation and iterate over the result
-            Guid jobExecutionId = Guid.Parse("5A86BF65-43AC-F258-2524-9E92992F97CA");
-            SqlServerJobExecutionCollectionGetJobTargetExecutionsOptions options = new SqlServerJobExecutionCollectionGetJobTargetExecutionsOptions(jobExecutionId);
-            await foreach (SqlServerJobExecutionStepTargetResource item in collection.GetJobTargetExecutionsAsync(options))
+            await foreach (SqlServerJobExecutionStepTargetResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance

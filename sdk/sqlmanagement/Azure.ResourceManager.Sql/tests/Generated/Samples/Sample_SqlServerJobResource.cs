@@ -179,12 +179,9 @@ namespace Azure.ResourceManager.Sql.Samples
             SqlServerJobResource sqlServerJob = client.GetSqlServerJobResource(sqlServerJobResourceId);
 
             // invoke the operation
-            ArmOperation<SqlServerJobExecutionResource> lro = await sqlServerJob.CreateJobExecutionAsync(WaitUntil.Completed);
-            SqlServerJobExecutionResource result = lro.Value;
+            ArmOperation<SqlServerJobExecutionData> lro = await sqlServerJob.CreateAsync(WaitUntil.Completed);
+            SqlServerJobExecutionData resourceData = lro.Value;
 
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            SqlServerJobExecutionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

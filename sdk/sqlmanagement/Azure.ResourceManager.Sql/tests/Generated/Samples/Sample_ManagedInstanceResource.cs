@@ -488,8 +488,7 @@ namespace Azure.ResourceManager.Sql.Samples
             ManagedInstanceResource managedInstance = client.GetManagedInstanceResource(managedInstanceResourceId);
 
             // invoke the operation and iterate over the result
-            ManagedInstanceResourceGetTopQueriesOptions options = new ManagedInstanceResourceGetTopQueriesOptions { Interval = QueryTimeGrainType.PT1H, ObservationMetric = SqlMetricType.Duration };
-            await foreach (TopQueries item in managedInstance.GetTopQueriesAsync(options))
+            await foreach (TopQueries item in managedInstance.GetTopQueriesAsync(interval: QueryTimeGrainType.PT1H, observationMetric: SqlMetricType.Duration))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -518,8 +517,7 @@ namespace Azure.ResourceManager.Sql.Samples
             ManagedInstanceResource managedInstance = client.GetManagedInstanceResource(managedInstanceResourceId);
 
             // invoke the operation and iterate over the result
-            ManagedInstanceResourceGetTopQueriesOptions options = new ManagedInstanceResourceGetTopQueriesOptions { Databases = "db1,db2", StartTime = "2020-03-10T12:00:00Z", EndTime = "2020-03-12T12:00:00Z", Interval = QueryTimeGrainType.P1D, ObservationMetric = SqlMetricType.Cpu };
-            await foreach (TopQueries item in managedInstance.GetTopQueriesAsync(options))
+            await foreach (TopQueries item in managedInstance.GetTopQueriesAsync(databases: "db1,db2", startTime: "2020-03-10T12:00:00Z", endTime: "2020-03-12T12:00:00Z", interval: QueryTimeGrainType.P1D, observationMetric: SqlMetricType.Cpu))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -548,8 +546,7 @@ namespace Azure.ResourceManager.Sql.Samples
             ManagedInstanceResource managedInstance = client.GetManagedInstanceResource(managedInstanceResourceId);
 
             // invoke the operation and iterate over the result
-            ManagedInstanceResourceGetTopQueriesOptions options = new ManagedInstanceResourceGetTopQueriesOptions();
-            await foreach (TopQueries item in managedInstance.GetTopQueriesAsync(options))
+            await foreach (TopQueries item in managedInstance.GetTopQueriesAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

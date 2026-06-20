@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // invoke the operation
             string queryId = "42";
-            ManagedInstanceQuery result = await managedDatabase.GetManagedDatabaseQueryAsync(queryId);
+            ManagedInstanceQueryResource result = await managedDatabase.GetManagedInstanceQueryAsync(queryId);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -276,7 +276,8 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // invoke the operation and iterate over the result
             string queryId = "42";
-            await foreach (QueryStatistics item in managedDatabase.GetQueryStatisticsAsync(queryId))
+            ManagedInstanceQueryResource query = await managedDatabase.GetManagedInstanceQueryAsync(queryId);
+            await foreach (QueryStatistics item in query.GetQueryStatisticsAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -310,7 +311,8 @@ namespace Azure.ResourceManager.Sql.Samples
             string startTime = "03/01/2020 16:23:09";
             string endTime = "03/11/2020 14:00:00";
             QueryTimeGrainType? interval = QueryTimeGrainType.P1D;
-            await foreach (QueryStatistics item in managedDatabase.GetQueryStatisticsAsync(queryId, startTime: startTime, endTime: endTime, interval: interval))
+            ManagedInstanceQueryResource query = await managedDatabase.GetManagedInstanceQueryAsync(queryId);
+            await foreach (QueryStatistics item in query.GetQueryStatisticsAsync(startTime: startTime, endTime: endTime, interval: interval))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -342,7 +344,8 @@ namespace Azure.ResourceManager.Sql.Samples
             // invoke the operation and iterate over the result
             string queryId = "42";
             QueryTimeGrainType? interval = QueryTimeGrainType.PT1H;
-            await foreach (QueryStatistics item in managedDatabase.GetQueryStatisticsAsync(queryId, interval: interval))
+            ManagedInstanceQueryResource query = await managedDatabase.GetManagedInstanceQueryAsync(queryId);
+            await foreach (QueryStatistics item in query.GetQueryStatisticsAsync(interval: interval))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
