@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Compute.Models
 {
     internal static partial class VirtualMachineScaleSetUpgradeModeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this VirtualMachineScaleSetUpgradeMode value) => value switch
         {
             VirtualMachineScaleSetUpgradeMode.Automatic => "Automatic",
@@ -19,11 +20,21 @@ namespace Azure.ResourceManager.Compute.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown VirtualMachineScaleSetUpgradeMode value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static VirtualMachineScaleSetUpgradeMode ToVirtualMachineScaleSetUpgradeMode(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Automatic")) return VirtualMachineScaleSetUpgradeMode.Automatic;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Manual")) return VirtualMachineScaleSetUpgradeMode.Manual;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Rolling")) return VirtualMachineScaleSetUpgradeMode.Rolling;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Automatic"))
+            {
+                return VirtualMachineScaleSetUpgradeMode.Automatic;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Manual"))
+            {
+                return VirtualMachineScaleSetUpgradeMode.Manual;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Rolling"))
+            {
+                return VirtualMachineScaleSetUpgradeMode.Rolling;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown VirtualMachineScaleSetUpgradeMode value.");
         }
     }

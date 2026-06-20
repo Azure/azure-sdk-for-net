@@ -10,13 +10,65 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class VpnDeviceScriptContent : IUtf8JsonSerializable, IJsonModel<VpnDeviceScriptContent>
+    /// <summary> Vpn device configuration script generation parameters. </summary>
+    public partial class VpnDeviceScriptContent : IJsonModel<VpnDeviceScriptContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VpnDeviceScriptContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual VpnDeviceScriptContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<VpnDeviceScriptContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeVpnDeviceScriptContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VpnDeviceScriptContent)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<VpnDeviceScriptContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(VpnDeviceScriptContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<VpnDeviceScriptContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        VpnDeviceScriptContent IPersistableModel<VpnDeviceScriptContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<VpnDeviceScriptContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="vpnDeviceScriptContent"> The <see cref="VpnDeviceScriptContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(VpnDeviceScriptContent vpnDeviceScriptContent)
+        {
+            if (vpnDeviceScriptContent == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(vpnDeviceScriptContent, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<VpnDeviceScriptContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +80,11 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VpnDeviceScriptContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VpnDeviceScriptContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VpnDeviceScriptContent)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(Vendor))
             {
                 writer.WritePropertyName("vendor"u8);
@@ -49,15 +100,15 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("firmwareVersion"u8);
                 writer.WriteStringValue(FirmwareVersion);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -66,22 +117,27 @@ namespace Azure.ResourceManager.Network.Models
             }
         }
 
-        VpnDeviceScriptContent IJsonModel<VpnDeviceScriptContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        VpnDeviceScriptContent IJsonModel<VpnDeviceScriptContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual VpnDeviceScriptContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VpnDeviceScriptContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VpnDeviceScriptContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VpnDeviceScriptContent)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeVpnDeviceScriptContent(document.RootElement, options);
         }
 
-        internal static VpnDeviceScriptContent DeserializeVpnDeviceScriptContent(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static VpnDeviceScriptContent DeserializeVpnDeviceScriptContent(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -89,63 +145,30 @@ namespace Azure.ResourceManager.Network.Models
             string vendor = default;
             string deviceFamily = default;
             string firmwareVersion = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("vendor"u8))
+                if (prop.NameEquals("vendor"u8))
                 {
-                    vendor = property.Value.GetString();
+                    vendor = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("deviceFamily"u8))
+                if (prop.NameEquals("deviceFamily"u8))
                 {
-                    deviceFamily = property.Value.GetString();
+                    deviceFamily = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("firmwareVersion"u8))
+                if (prop.NameEquals("firmwareVersion"u8))
                 {
-                    firmwareVersion = property.Value.GetString();
+                    firmwareVersion = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new VpnDeviceScriptContent(vendor, deviceFamily, firmwareVersion, serializedAdditionalRawData);
+            return new VpnDeviceScriptContent(vendor, deviceFamily, firmwareVersion, additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<VpnDeviceScriptContent>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<VpnDeviceScriptContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(VpnDeviceScriptContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        VpnDeviceScriptContent IPersistableModel<VpnDeviceScriptContent>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<VpnDeviceScriptContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeVpnDeviceScriptContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(VpnDeviceScriptContent)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<VpnDeviceScriptContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -1,11 +1,13 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #nullable disable
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Net;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Dns;
@@ -14,420 +16,248 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Dns.Models
 {
-    /// <summary> Model factory for models. </summary>
     public static partial class ArmDnsModelFactory
     {
-        /// <summary> Initializes a new instance of DnsAaaaRecordData. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="etag"> The etag of the record set. </param>
-        /// <param name="metadata"> The metadata attached to the record set. </param>
-        /// <param name="ttl"> The Ttl (time-to-live) of the records in the record set. </param>
-        /// <param name="fqdn"> Fully qualified domain name of the record set. </param>
-        /// <param name="provisioningState"> provisioning State of the record set. </param>
-        /// <param name="targetResource"> A reference to an azure resource from where the dns resource value is taken. </param>
-        /// <param name="aaaaRecords"> The list of AAAA records in the record set. </param>
-        /// <returns> A new <see cref="Dns.DnsAaaaRecordData"/> instance for mocking. </returns>
-        public static DnsAaaaRecordData DnsAaaaRecordData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, ETag? etag = default, IDictionary<string, string> metadata = null, long? ttl = null, string fqdn = null, string provisioningState = null, WritableSubResource targetResource = null, IList<DnsAaaaRecordInfo> aaaaRecords = null)
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        /// <param name="resourceType"></param>
+        /// <param name="systemData"></param>
+        /// <param name="properties"></param>
+        /// <param name="eTag"></param>
+        /// <returns> A new <see cref="Dns.DnsRecordData"/> instance for mocking. </returns>
+        public static DnsRecordData DnsRecordData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DnsRecordSetProperties properties = default, ETag? eTag = default)
         {
-            metadata ??= new Dictionary<string, string>();
-            aaaaRecords ??= new List<DnsAaaaRecordInfo>();
-
-            return new DnsAaaaRecordData(
-                id: id,
-                name: name,
-                resourceType: resourceType,
-                systemData: systemData,
-                etag: etag,
-                metadata: metadata,
-                ttl: ttl,
-                fqdn: fqdn,
-                provisioningState: provisioningState,
-                targetResource: targetResource,
-                trafficManagementProfile: new WritableSubResource(),
-                aaaaRecords: aaaaRecords,
-                serializedAdditionalRawData: null);
+            return new DnsRecordData(id, name, resourceType, systemData, new Dictionary<string, BinaryData>(), properties, eTag);
         }
 
-        /// <summary> Initializes a new instance of DnsARecordData. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> Initializes a new instance of <see cref="Dns.DnsARecordData"/> for mocking. </summary>
+        /// <param name="id"> The resource identifier. </param>
+        /// <param name="name"> The resource name. </param>
+        /// <param name="resourceType"> The resource type. </param>
+        /// <param name="systemData"> The system data. </param>
         /// <param name="etag"> The etag of the record set. </param>
         /// <param name="metadata"> The metadata attached to the record set. </param>
-        /// <param name="ttl"> The Ttl (time-to-live) of the records in the record set. </param>
-        /// <param name="fqdn"> Fully qualified domain name of the record set. </param>
-        /// <param name="provisioningState"> provisioning State of the record set. </param>
+        /// <param name="ttl"> The TTL of the record set. </param>
+        /// <param name="fqdn"> The fully qualified domain name of the record set. </param>
+        /// <param name="provisioningState"> The provisioning state of the record set. </param>
         /// <param name="targetResource"> A reference to an azure resource from where the dns resource value is taken. </param>
         /// <param name="aRecords"> The list of A records in the record set. </param>
         /// <returns> A new <see cref="Dns.DnsARecordData"/> instance for mocking. </returns>
-        public static DnsARecordData DnsARecordData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, ETag? etag = default, IDictionary<string, string> metadata = null, long? ttl = null, string fqdn = null, string provisioningState = null, WritableSubResource targetResource = null, IList<DnsARecordInfo> aRecords = null)
+        public static DnsARecordData DnsARecordData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? etag = default, IDictionary<string, string> metadata = default, long? ttl = default, string fqdn = default, string provisioningState = default, WritableSubResource targetResource = default, IList<DnsARecordInfo> aRecords = default)
         {
-            metadata ??= new Dictionary<string, string>();
-            aRecords ??= new List<DnsARecordInfo>();
-
-            return new DnsARecordData(
-                id: id,
-                name: name,
-                resourceType: resourceType,
-                systemData: systemData,
-                etag: etag,
-                metadata: metadata,
-                ttl: ttl,
-                fqdn: fqdn,
-                provisioningState: provisioningState,
-                targetResource: targetResource,
-                trafficManagementProfile: new WritableSubResource(),
-                aRecords: aRecords,
-                serializedAdditionalRawData: null);
+            DnsRecordSetProperties properties = CreateDnsRecordSetProperties(metadata, ttl, fqdn, provisioningState, targetResource, dnsARecords: aRecords);
+            return new DnsARecordData(id, name, resourceType, systemData, new Dictionary<string, BinaryData>(), properties, etag);
         }
 
-        /// <summary> Initializes a new instance of DnsCaaRecordData. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> Initializes a new instance of <see cref="Dns.DnsAaaaRecordData"/> for mocking. </summary>
+        /// <param name="id"> The resource identifier. </param>
+        /// <param name="name"> The resource name. </param>
+        /// <param name="resourceType"> The resource type. </param>
+        /// <param name="systemData"> The system data. </param>
         /// <param name="etag"> The etag of the record set. </param>
         /// <param name="metadata"> The metadata attached to the record set. </param>
-        /// <param name="ttl"> The Ttl (time-to-live) of the records in the record set. </param>
-        /// <param name="fqdn"> Fully qualified domain name of the record set. </param>
-        /// <param name="provisioningState"> provisioning State of the record set. </param>
+        /// <param name="ttl"> The TTL of the record set. </param>
+        /// <param name="fqdn"> The fully qualified domain name of the record set. </param>
+        /// <param name="provisioningState"> The provisioning state of the record set. </param>
         /// <param name="targetResource"> A reference to an azure resource from where the dns resource value is taken. </param>
-        /// <param name="caaRecords"> The list of Caa records in the record set. </param>
-        /// <returns> A new <see cref="Dns.DnsCaaRecordData"/> instance for mocking. </returns>
-        public static DnsCaaRecordData DnsCaaRecordData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, ETag? etag = default, IDictionary<string, string> metadata = null, long? ttl = null, string fqdn = null, string provisioningState = null, WritableSubResource targetResource = null, IList<DnsCaaRecordInfo> caaRecords = null)
+        /// <param name="aaaaRecords"> The list of AAAA records in the record set. </param>
+        /// <returns> A new <see cref="Dns.DnsAaaaRecordData"/> instance for mocking. </returns>
+        public static DnsAaaaRecordData DnsAaaaRecordData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? etag = default, IDictionary<string, string> metadata = default, long? ttl = default, string fqdn = default, string provisioningState = default, WritableSubResource targetResource = default, IList<DnsAaaaRecordInfo> aaaaRecords = default)
         {
-            metadata ??= new Dictionary<string, string>();
-            caaRecords ??= new List<DnsCaaRecordInfo>();
-
-            return new DnsCaaRecordData(
-                id: id,
-                name: name,
-                resourceType: resourceType,
-                systemData: systemData,
-                etag: etag,
-                metadata: metadata,
-                ttl: ttl,
-                fqdn: fqdn,
-                provisioningState: provisioningState,
-                targetResource: targetResource,
-                trafficManagementProfile: new WritableSubResource(),
-                caaRecords: caaRecords,
-                serializedAdditionalRawData: null);
+            DnsRecordSetProperties properties = CreateDnsRecordSetProperties(metadata, ttl, fqdn, provisioningState, targetResource, dnsAaaaRecords: aaaaRecords);
+            return new DnsAaaaRecordData(id, name, resourceType, systemData, new Dictionary<string, BinaryData>(), properties, etag);
         }
 
-        /// <summary> Initializes a new instance of DnsCnameRecordData. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> Initializes a new instance of <see cref="Dns.DnsCaaRecordData"/> for mocking. </summary>
+        /// <param name="id"> The resource identifier. </param>
+        /// <param name="name"> The resource name. </param>
+        /// <param name="resourceType"> The resource type. </param>
+        /// <param name="systemData"> The system data. </param>
         /// <param name="etag"> The etag of the record set. </param>
         /// <param name="metadata"> The metadata attached to the record set. </param>
-        /// <param name="ttl"> The Ttl (time-to-live) of the records in the record set. </param>
-        /// <param name="fqdn"> Fully qualified domain name of the record set. </param>
-        /// <param name="provisioningState"> provisioning State of the record set. </param>
+        /// <param name="ttl"> The TTL of the record set. </param>
+        /// <param name="fqdn"> The fully qualified domain name of the record set. </param>
+        /// <param name="provisioningState"> The provisioning state of the record set. </param>
+        /// <param name="targetResource"> A reference to an azure resource from where the dns resource value is taken. </param>
+        /// <param name="caaRecords"> The list of CAA records in the record set. </param>
+        /// <returns> A new <see cref="Dns.DnsCaaRecordData"/> instance for mocking. </returns>
+        public static DnsCaaRecordData DnsCaaRecordData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? etag = default, IDictionary<string, string> metadata = default, long? ttl = default, string fqdn = default, string provisioningState = default, WritableSubResource targetResource = default, IList<DnsCaaRecordInfo> caaRecords = default)
+        {
+            DnsRecordSetProperties properties = CreateDnsRecordSetProperties(metadata, ttl, fqdn, provisioningState, targetResource, dnsCaaRecords: caaRecords);
+            return new DnsCaaRecordData(id, name, resourceType, systemData, new Dictionary<string, BinaryData>(), properties, etag);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Dns.DnsCnameRecordData"/> for mocking. </summary>
+        /// <param name="id"> The resource identifier. </param>
+        /// <param name="name"> The resource name. </param>
+        /// <param name="resourceType"> The resource type. </param>
+        /// <param name="systemData"> The system data. </param>
+        /// <param name="etag"> The etag of the record set. </param>
+        /// <param name="metadata"> The metadata attached to the record set. </param>
+        /// <param name="ttl"> The TTL of the record set. </param>
+        /// <param name="fqdn"> The fully qualified domain name of the record set. </param>
+        /// <param name="provisioningState"> The provisioning state of the record set. </param>
         /// <param name="targetResource"> A reference to an azure resource from where the dns resource value is taken. </param>
         /// <param name="CnameRecordName"> The canonical name for this CNAME record. </param>
         /// <returns> A new <see cref="Dns.DnsCnameRecordData"/> instance for mocking. </returns>
-        public static DnsCnameRecordData DnsCnameRecordData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, ETag? etag = default, IDictionary<string, string> metadata = null, long? ttl = null, string fqdn = null, string provisioningState = null, WritableSubResource targetResource = null, string CnameRecordName = null)
+        public static DnsCnameRecordData DnsCnameRecordData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? etag = default, IDictionary<string, string> metadata = default, long? ttl = default, string fqdn = default, string provisioningState = default, WritableSubResource targetResource = default, string CnameRecordName = default)
         {
-            metadata ??= new Dictionary<string, string>();
-            DnsCnameRecordInfo cnameRecord = new DnsCnameRecordInfo(CnameRecordName, serializedAdditionalRawData: null);
-
-            return new DnsCnameRecordData(
-                id: id,
-                name: name,
-                resourceType: resourceType,
-                systemData: systemData,
-                etag: etag,
-                metadata: metadata,
-                ttl: ttl,
-                fqdn: fqdn,
-                provisioningState: provisioningState,
-                targetResource: targetResource,
-                trafficManagementProfile: new WritableSubResource(),
-                cnameRecord: new DnsCnameRecordInfo(),
-                serializedAdditionalRawData: null)
-            {
-                Cname = CnameRecordName
-            };
+            DnsRecordSetProperties properties = CreateDnsRecordSetProperties(metadata, ttl, fqdn, provisioningState, targetResource, cname: CnameRecordName);
+            return new DnsCnameRecordData(id, name, resourceType, systemData, new Dictionary<string, BinaryData>(), properties, etag);
         }
 
-        /// <summary> Initializes a new instance of DnsMXRecordData. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> Initializes a new instance of <see cref="Dns.DnsMXRecordData"/> for mocking. </summary>
+        /// <param name="id"> The resource identifier. </param>
+        /// <param name="name"> The resource name. </param>
+        /// <param name="resourceType"> The resource type. </param>
+        /// <param name="systemData"> The system data. </param>
         /// <param name="etag"> The etag of the record set. </param>
         /// <param name="metadata"> The metadata attached to the record set. </param>
-        /// <param name="ttl"> The Ttl (time-to-live) of the records in the record set. </param>
-        /// <param name="fqdn"> Fully qualified domain name of the record set. </param>
-        /// <param name="provisioningState"> provisioning State of the record set. </param>
+        /// <param name="ttl"> The TTL of the record set. </param>
+        /// <param name="fqdn"> The fully qualified domain name of the record set. </param>
+        /// <param name="provisioningState"> The provisioning state of the record set. </param>
         /// <param name="targetResource"> A reference to an azure resource from where the dns resource value is taken. </param>
         /// <param name="mxRecords"> The list of MX records in the record set. </param>
-        /// <returns> A new <see cref="Dns.DnsDSRecordData"/> instance for mocking. </returns>
-        public static DnsMXRecordData DnsMXRecordData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, ETag? etag = default, IDictionary<string, string> metadata = null, long? ttl = null, string fqdn = null, string provisioningState = null, WritableSubResource targetResource = null, IList<DnsMXRecordInfo> mxRecords = null)
+        /// <returns> A new <see cref="Dns.DnsMXRecordData"/> instance for mocking. </returns>
+        public static DnsMXRecordData DnsMXRecordData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? etag = default, IDictionary<string, string> metadata = default, long? ttl = default, string fqdn = default, string provisioningState = default, WritableSubResource targetResource = default, IList<DnsMXRecordInfo> mxRecords = default)
         {
-            metadata ??= new Dictionary<string, string>();
-            mxRecords ??= new List<DnsMXRecordInfo>();
-
-            return new DnsMXRecordData(
-                id: id,
-                name: name,
-                resourceType: resourceType,
-                systemData: systemData,
-                etag: etag,
-                metadata: metadata,
-                ttl: ttl,
-                fqdn: fqdn,
-                provisioningState: provisioningState,
-                targetResource: targetResource,
-                trafficManagementProfile: new WritableSubResource(),
-                mxRecords: mxRecords,
-                serializedAdditionalRawData: null);
+            DnsRecordSetProperties properties = CreateDnsRecordSetProperties(metadata, ttl, fqdn, provisioningState, targetResource, dnsMXRecords: mxRecords);
+            return new DnsMXRecordData(id, name, resourceType, systemData, new Dictionary<string, BinaryData>(), properties, etag);
         }
 
-        /// <summary> Initializes a new instance of DnsNSRecordData. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> Initializes a new instance of <see cref="Dns.DnsNSRecordData"/> for mocking. </summary>
+        /// <param name="id"> The resource identifier. </param>
+        /// <param name="name"> The resource name. </param>
+        /// <param name="resourceType"> The resource type. </param>
+        /// <param name="systemData"> The system data. </param>
         /// <param name="etag"> The etag of the record set. </param>
         /// <param name="metadata"> The metadata attached to the record set. </param>
-        /// <param name="ttl"> The Ttl (time-to-live) of the records in the record set. </param>
-        /// <param name="fqdn"> Fully qualified domain name of the record set. </param>
-        /// <param name="provisioningState"> provisioning State of the record set. </param>
+        /// <param name="ttl"> The TTL of the record set. </param>
+        /// <param name="fqdn"> The fully qualified domain name of the record set. </param>
+        /// <param name="provisioningState"> The provisioning state of the record set. </param>
         /// <param name="targetResource"> A reference to an azure resource from where the dns resource value is taken. </param>
         /// <param name="nsRecords"> The list of NS records in the record set. </param>
         /// <returns> A new <see cref="Dns.DnsNSRecordData"/> instance for mocking. </returns>
-        public static DnsNSRecordData DnsNSRecordData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, ETag? etag = default, IDictionary<string, string> metadata = null, long? ttl = null, string fqdn = null, string provisioningState = null, WritableSubResource targetResource = null, IList<DnsNSRecordInfo> nsRecords = null)
+        public static DnsNSRecordData DnsNSRecordData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? etag = default, IDictionary<string, string> metadata = default, long? ttl = default, string fqdn = default, string provisioningState = default, WritableSubResource targetResource = default, IList<DnsNSRecordInfo> nsRecords = default)
         {
-            metadata ??= new Dictionary<string, string>();
-            nsRecords ??= new List<DnsNSRecordInfo>();
-
-            return new DnsNSRecordData(
-                id: id,
-                name: name,
-                resourceType: resourceType,
-                systemData: systemData,
-                etag: etag,
-                metadata: metadata,
-                ttl: ttl,
-                fqdn: fqdn,
-                provisioningState: provisioningState,
-                targetResource: targetResource,
-                trafficManagementProfile: new WritableSubResource(),
-                nsRecords: nsRecords,
-                serializedAdditionalRawData: null);
+            DnsRecordSetProperties properties = CreateDnsRecordSetProperties(metadata, ttl, fqdn, provisioningState, targetResource, dnsNSRecords: nsRecords);
+            return new DnsNSRecordData(id, name, resourceType, systemData, new Dictionary<string, BinaryData>(), properties, etag);
         }
 
-        /// <summary> Initializes a new instance of DnsPtrRecordData. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> Initializes a new instance of <see cref="Dns.DnsPtrRecordData"/> for mocking. </summary>
+        /// <param name="id"> The resource identifier. </param>
+        /// <param name="name"> The resource name. </param>
+        /// <param name="resourceType"> The resource type. </param>
+        /// <param name="systemData"> The system data. </param>
         /// <param name="etag"> The etag of the record set. </param>
         /// <param name="metadata"> The metadata attached to the record set. </param>
-        /// <param name="ttl"> The Ttl (time-to-live) of the records in the record set. </param>
-        /// <param name="fqdn"> Fully qualified domain name of the record set. </param>
-        /// <param name="provisioningState"> provisioning State of the record set. </param>
+        /// <param name="ttl"> The TTL of the record set. </param>
+        /// <param name="fqdn"> The fully qualified domain name of the record set. </param>
+        /// <param name="provisioningState"> The provisioning state of the record set. </param>
         /// <param name="targetResource"> A reference to an azure resource from where the dns resource value is taken. </param>
-        /// <param name="ptrRecords"> The list of Ptr records in the record set. </param>
+        /// <param name="ptrRecords"> The list of PTR records in the record set. </param>
         /// <returns> A new <see cref="Dns.DnsPtrRecordData"/> instance for mocking. </returns>
-        public static DnsPtrRecordData DnsPtrRecordData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, ETag? etag = default, IDictionary<string, string> metadata = null, long? ttl = null, string fqdn = null, string provisioningState = null, WritableSubResource targetResource = null, IList<DnsPtrRecordInfo> ptrRecords = null)
+        public static DnsPtrRecordData DnsPtrRecordData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? etag = default, IDictionary<string, string> metadata = default, long? ttl = default, string fqdn = default, string provisioningState = default, WritableSubResource targetResource = default, IList<DnsPtrRecordInfo> ptrRecords = default)
         {
-            metadata ??= new Dictionary<string, string>();
-            ptrRecords ??= new List<DnsPtrRecordInfo>();
-
-            return new DnsPtrRecordData(
-                id: id,
-                name: name,
-                resourceType: resourceType,
-                systemData: systemData,
-                etag: etag,
-                metadata: metadata,
-                ttl: ttl,
-                fqdn: fqdn,
-                provisioningState: provisioningState,
-                targetResource: targetResource,
-                trafficManagementProfile: new WritableSubResource(),
-                ptrRecords: ptrRecords,
-                serializedAdditionalRawData: null);
+            DnsRecordSetProperties properties = CreateDnsRecordSetProperties(metadata, ttl, fqdn, provisioningState, targetResource, dnsPtrRecords: ptrRecords);
+            return new DnsPtrRecordData(id, name, resourceType, systemData, new Dictionary<string, BinaryData>(), properties, etag);
         }
 
-        /// <summary> Initializes a new instance of DnsSoaRecordData. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> Initializes a new instance of <see cref="Dns.DnsSoaRecordData"/> for mocking. </summary>
+        /// <param name="id"> The resource identifier. </param>
+        /// <param name="name"> The resource name. </param>
+        /// <param name="resourceType"> The resource type. </param>
+        /// <param name="systemData"> The system data. </param>
         /// <param name="etag"> The etag of the record set. </param>
         /// <param name="metadata"> The metadata attached to the record set. </param>
-        /// <param name="ttl"> The Ttl (time-to-live) of the records in the record set. </param>
-        /// <param name="fqdn"> Fully qualified domain name of the record set. </param>
-        /// <param name="provisioningState"> provisioning State of the record set. </param>
+        /// <param name="ttl"> The TTL of the record set. </param>
+        /// <param name="fqdn"> The fully qualified domain name of the record set. </param>
+        /// <param name="provisioningState"> The provisioning state of the record set. </param>
         /// <param name="targetResource"> A reference to an azure resource from where the dns resource value is taken. </param>
         /// <param name="soaRecords"> The SOA record in the record set. </param>
         /// <returns> A new <see cref="Dns.DnsSoaRecordData"/> instance for mocking. </returns>
-        public static DnsSoaRecordData DnsSoaRecordData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, ETag? etag = default, IDictionary<string, string> metadata = null, long? ttl = null, string fqdn = null, string provisioningState = null, WritableSubResource targetResource = null, DnsSoaRecordInfo soaRecords = null)
+        public static DnsSoaRecordData DnsSoaRecordData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? etag = default, IDictionary<string, string> metadata = default, long? ttl = default, string fqdn = default, string provisioningState = default, WritableSubResource targetResource = default, DnsSoaRecordInfo soaRecords = default)
         {
-            metadata ??= new Dictionary<string, string>();
-
-            return new DnsSoaRecordData(
-                id: id,
-                name: name,
-                resourceType: resourceType,
-                systemData: systemData,
-                etag: etag,
-                metadata: metadata,
-                ttl: ttl,
-                fqdn: fqdn,
-                provisioningState: provisioningState,
-                targetResource: targetResource,
-                trafficManagementProfile: new WritableSubResource(),
-                soaRecord: soaRecords,
-                serializedAdditionalRawData: null);
+            DnsRecordSetProperties properties = CreateDnsRecordSetProperties(metadata, ttl, fqdn, provisioningState, targetResource, dnsSoaRecord: soaRecords);
+            return new DnsSoaRecordData(id, name, resourceType, systemData, new Dictionary<string, BinaryData>(), properties, etag);
         }
 
-        /// <summary> Initializes a new instance of DnsSrvRecordData. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> Initializes a new instance of <see cref="Dns.DnsSrvRecordData"/> for mocking. </summary>
+        /// <param name="id"> The resource identifier. </param>
+        /// <param name="name"> The resource name. </param>
+        /// <param name="resourceType"> The resource type. </param>
+        /// <param name="systemData"> The system data. </param>
         /// <param name="etag"> The etag of the record set. </param>
         /// <param name="metadata"> The metadata attached to the record set. </param>
-        /// <param name="ttl"> The Ttl (time-to-live) of the records in the record set. </param>
-        /// <param name="fqdn"> Fully qualified domain name of the record set. </param>
-        /// <param name="provisioningState"> provisioning State of the record set. </param>
+        /// <param name="ttl"> The TTL of the record set. </param>
+        /// <param name="fqdn"> The fully qualified domain name of the record set. </param>
+        /// <param name="provisioningState"> The provisioning state of the record set. </param>
         /// <param name="targetResource"> A reference to an azure resource from where the dns resource value is taken. </param>
-        /// <param name="srvRecords"> The list of Srv records in the record set. </param>
-        /// <returns> A new <see cref="Dns.DnsSrvRecordData"/> instance for mocking. </returns>
-        public static DnsSrvRecordData DnsSrvRecordData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, ETag? etag = default, IDictionary<string, string> metadata = null, long? ttl = null, string fqdn = null, string provisioningState = null, WritableSubResource targetResource = null, IList<DnsSrvRecordInfo> srvRecords = null)
-        {
-            metadata ??= new Dictionary<string, string>();
-            srvRecords ??= new List<DnsSrvRecordInfo>();
-
-            return new DnsSrvRecordData(
-                id: id,
-                name: name,
-                resourceType: resourceType,
-                systemData: systemData,
-                etag: etag,
-                metadata: metadata,
-                ttl: ttl,
-                fqdn: fqdn,
-                provisioningState: provisioningState,
-                targetResource: targetResource,
-                trafficManagementProfile: new WritableSubResource(),
-                srvRecords: srvRecords,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of DnsTxtRecordData. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="etag"> The etag of the record set. </param>
-        /// <param name="metadata"> The metadata attached to the record set. </param>
-        /// <param name="ttl"> The Ttl (time-to-live) of the records in the record set. </param>
-        /// <param name="fqdn"> Fully qualified domain name of the record set. </param>
-        /// <param name="provisioningState"> provisioning State of the record set. </param>
-        /// <param name="targetResource"> A reference to an azure resource from where the dns resource value is taken. </param>
-        /// <param name="txtRecords"> The list of Txt records in the record set. </param>
-        /// <returns> A new <see cref="Dns.DnsTxtRecordData"/> instance for mocking. </returns>
-        public static DnsTxtRecordData DnsTxtRecordData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, ETag? etag = default, IDictionary<string, string> metadata = null, long? ttl = null, string fqdn = null, string provisioningState = null, WritableSubResource targetResource = null, IList<DnsTxtRecordInfo> txtRecords = null)
-        {
-            metadata ??= new Dictionary<string, string>();
-            txtRecords ??= new List<DnsTxtRecordInfo>();
-
-            return new DnsTxtRecordData(
-                id: id,
-                name: name,
-                resourceType: resourceType,
-                systemData: systemData,
-                etag: etag,
-                metadata: metadata,
-                ttl: ttl,
-                fqdn: fqdn,
-                provisioningState: provisioningState,
-                targetResource: targetResource,
-                trafficManagementProfile: new WritableSubResource(),
-                txtRecords: txtRecords,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DnsRecordData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="etag"> The etag of the record set. </param>
-        /// <param name="metadata"> The metadata attached to the record set. </param>
-        /// <param name="ttl"> The TTL (time-to-live) of the records in the record set. </param>
-        /// <param name="fqdn"> Fully qualified domain name of the record set. </param>
-        /// <param name="provisioningState"> provisioning State of the record set. </param>
-        /// <param name="targetResource"> A reference to an azure resource from where the dns resource value is taken. </param>
-        /// <param name="trafficManagementProfile"> A reference to an azure traffic manager profile resource from where the dns resource value is taken. </param>
-        /// <param name="aRecords"> The list of A records in the record set. </param>
-        /// <param name="aaaaRecords"> The list of AAAA records in the record set. </param>
-        /// <param name="mxRecords"> The list of MX records in the record set. </param>
-        /// <param name="nsRecords"> The list of NS records in the record set. </param>
-        /// <param name="ptrRecords"> The list of PTR records in the record set. </param>
         /// <param name="srvRecords"> The list of SRV records in the record set. </param>
-        /// <param name="txtRecords"> The list of TXT records in the record set. </param>
-        /// <param name="cname"> The canonical name for this CNAME record. </param>
-        /// <param name="soaRecordInfo"> The SOA record in the record set. </param>
-        /// <param name="caaRecords"> The list of CAA records in the record set. </param>
-        /// <param name="dsRecords"> The list of DS records in the record set. </param>
-        /// <param name="tlsaRecords"> The list of TLSA records in the record set. </param>
-        /// <param name="naptrRecords"> The list of NAPTR records in the record set. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        public static DnsRecordData DnsRecordData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttl, string fqdn, string provisioningState, WritableSubResource targetResource, WritableSubResource trafficManagementProfile, IList<DnsARecordInfo> aRecords, IList<DnsAaaaRecordInfo> aaaaRecords, IList<DnsMXRecordInfo> mxRecords, IList<DnsNSRecordInfo> nsRecords, IList<DnsPtrRecordInfo> ptrRecords, IList<DnsSrvRecordInfo> srvRecords, IList<DnsTxtRecordInfo> txtRecords, string cname, DnsSoaRecordInfo soaRecordInfo, IList<DnsCaaRecordInfo> caaRecords, IList<DnsDSRecordInfo> dsRecords, IList<DnsTlsaRecordInfo> tlsaRecords, IList<DnsNaptrRecordInfo> naptrRecords, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <returns> A new <see cref="Dns.DnsSrvRecordData"/> instance for mocking. </returns>
+        public static DnsSrvRecordData DnsSrvRecordData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? etag = default, IDictionary<string, string> metadata = default, long? ttl = default, string fqdn = default, string provisioningState = default, WritableSubResource targetResource = default, IList<DnsSrvRecordInfo> srvRecords = default)
         {
-            metadata ??= new Dictionary<string, string>();
-            aRecords ??= new List<DnsARecordInfo>();
-            aaaaRecords ??= new List<DnsAaaaRecordInfo>();
-            mxRecords ??= new List<DnsMXRecordInfo>();
-            nsRecords ??= new List<DnsNSRecordInfo>();
-            ptrRecords ??= new List<DnsPtrRecordInfo>();
-            srvRecords ??= new List<DnsSrvRecordInfo>();
-            txtRecords ??= new List<DnsTxtRecordInfo>();
-            caaRecords ??= new List<DnsCaaRecordInfo>();
-            dsRecords ??= new List<DnsDSRecordInfo>();
-            tlsaRecords ??= new List<DnsTlsaRecordInfo>();
-            naptrRecords ??= new List<DnsNaptrRecordInfo>();
-            serializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
-            DnsCnameRecordInfo cnameRecodrInfo = new DnsCnameRecordInfo() { Cname = cname };
+            DnsRecordSetProperties properties = CreateDnsRecordSetProperties(metadata, ttl, fqdn, provisioningState, targetResource, dnsSrvRecords: srvRecords);
+            return new DnsSrvRecordData(id, name, resourceType, systemData, new Dictionary<string, BinaryData>(), properties, etag);
+        }
 
-            return new DnsRecordData(
-                id,
-                name: name,
-                resourceType: resourceType,
-                systemData: systemData,
-                etag: etag,
-                metadata: metadata,
-                ttl: ttl,
-                fqdn: fqdn,
-                provisioningState: provisioningState,
-                targetResource: targetResource,
-                trafficManagementProfile: trafficManagementProfile,
-                aRecords: aRecords,
-                aaaaRecords: aaaaRecords,
-                mxRecords: mxRecords,
-                nsRecords: nsRecords,
-                ptrRecords: ptrRecords,
-                srvRecords: srvRecords,
-                txtRecords: txtRecords,
-                cnameRecordInfo: cnameRecodrInfo,
-                soaRecordInfo: soaRecordInfo,
-                caaRecords: caaRecords,
-                dsRecords: dsRecords,
-                tlsaRecords: tlsaRecords,
-                naptrRecords: naptrRecords,
-                serializedAdditionalRawData: serializedAdditionalRawData);
+        /// <summary> Initializes a new instance of <see cref="Dns.DnsTxtRecordData"/> for mocking. </summary>
+        /// <param name="id"> The resource identifier. </param>
+        /// <param name="name"> The resource name. </param>
+        /// <param name="resourceType"> The resource type. </param>
+        /// <param name="systemData"> The system data. </param>
+        /// <param name="etag"> The etag of the record set. </param>
+        /// <param name="metadata"> The metadata attached to the record set. </param>
+        /// <param name="ttl"> The TTL of the record set. </param>
+        /// <param name="fqdn"> The fully qualified domain name of the record set. </param>
+        /// <param name="provisioningState"> The provisioning state of the record set. </param>
+        /// <param name="targetResource"> A reference to an azure resource from where the dns resource value is taken. </param>
+        /// <param name="txtRecords"> The list of TXT records in the record set. </param>
+        /// <returns> A new <see cref="Dns.DnsTxtRecordData"/> instance for mocking. </returns>
+        public static DnsTxtRecordData DnsTxtRecordData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? etag = default, IDictionary<string, string> metadata = default, long? ttl = default, string fqdn = default, string provisioningState = default, WritableSubResource targetResource = default, IList<DnsTxtRecordInfo> txtRecords = default)
+        {
+            DnsRecordSetProperties properties = CreateDnsRecordSetProperties(metadata, ttl, fqdn, provisioningState, targetResource, dnsTxtRecords: txtRecords);
+            return new DnsTxtRecordData(id, name, resourceType, systemData, new Dictionary<string, BinaryData>(), properties, etag);
+        }
+
+        private static DnsRecordSetProperties CreateDnsRecordSetProperties(
+            IDictionary<string, string> metadata,
+            long? ttlInSeconds,
+            string fqdn,
+            string provisioningState,
+            WritableSubResource targetResource,
+            IList<DnsARecordInfo> dnsARecords = default,
+            IList<DnsAaaaRecordInfo> dnsAaaaRecords = default,
+            IList<DnsMXRecordInfo> dnsMXRecords = default,
+            IList<DnsNSRecordInfo> dnsNSRecords = default,
+            IList<DnsPtrRecordInfo> dnsPtrRecords = default,
+            IList<DnsSrvRecordInfo> dnsSrvRecords = default,
+            IList<DnsTxtRecordInfo> dnsTxtRecords = default,
+            string cname = default,
+            DnsSoaRecordInfo dnsSoaRecord = default,
+            IList<DnsCaaRecordInfo> dnsCaaRecords = default)
+        {
+            return new DnsRecordSetProperties(
+                metadata ?? new Dictionary<string, string>(),
+                ttlInSeconds,
+                fqdn,
+                provisioningState,
+                targetResource,
+                default,
+                dnsARecords ?? new List<DnsARecordInfo>(),
+                dnsAaaaRecords ?? new List<DnsAaaaRecordInfo>(),
+                dnsMXRecords ?? new List<DnsMXRecordInfo>(),
+                dnsNSRecords ?? new List<DnsNSRecordInfo>(),
+                dnsPtrRecords ?? new List<DnsPtrRecordInfo>(),
+                dnsSrvRecords ?? new List<DnsSrvRecordInfo>(),
+                dnsTxtRecords ?? new List<DnsTxtRecordInfo>(),
+                cname is null ? default : new DnsCnameRecordInfo() { Cname = cname },
+                dnsSoaRecord,
+                dnsCaaRecords ?? new List<DnsCaaRecordInfo>(),
+                new List<DnsDSRecordInfo>(),
+                new List<DnsTlsaRecordInfo>(),
+                new List<DnsNaptrRecordInfo>(),
+                new Dictionary<string, BinaryData>());
         }
     }
 }

@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.HybridNetwork
 {
-    internal class NetworkFunctionDefinitionGroupOperationSource : IOperationSource<NetworkFunctionDefinitionGroupResource>
+    /// <summary></summary>
+    internal partial class NetworkFunctionDefinitionGroupOperationSource : IOperationSource<NetworkFunctionDefinitionGroupResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal NetworkFunctionDefinitionGroupOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         NetworkFunctionDefinitionGroupResource IOperationSource<NetworkFunctionDefinitionGroupResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetworkFunctionDefinitionGroupData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHybridNetworkContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            NetworkFunctionDefinitionGroupData data = NetworkFunctionDefinitionGroupData.DeserializeNetworkFunctionDefinitionGroupData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new NetworkFunctionDefinitionGroupResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<NetworkFunctionDefinitionGroupResource> IOperationSource<NetworkFunctionDefinitionGroupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetworkFunctionDefinitionGroupData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHybridNetworkContext.Default);
-            return await Task.FromResult(new NetworkFunctionDefinitionGroupResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            NetworkFunctionDefinitionGroupData data = NetworkFunctionDefinitionGroupData.DeserializeNetworkFunctionDefinitionGroupData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new NetworkFunctionDefinitionGroupResource(_client, data);
         }
     }
 }

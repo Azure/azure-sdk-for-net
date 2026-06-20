@@ -4,11 +4,22 @@
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
+- Added strongly-typed `Guid?` properties alongside the existing GA `[Obsolete] string` aliases:
+  - `BillingSubscriptionData.SubscriptionBeneficiaryTenantId` (Guid?) – supersedes `BeneficiaryTenantId`.
+  - `BillingSubscriptionData.SubscriptionCustomerId` (string) – supersedes `CustomerId`.
+  - `BillingSubscriptionAliasData.SubscriptionAliasBeneficiaryTenantId` (Guid?) – supersedes `BeneficiaryTenantId`.
+  - `BillingSubscriptionAliasData.SubscriptionAliasCustomerId` (string) – supersedes `CustomerId`.
 
 ### Other Changes
+
+- Migrated `Azure.ResourceManager.Billing` management-plane generation from AutoRest to TypeSpec via the `@azure-typespec/http-client-csharp-mgmt` emitter. Generation is now driven by `tsp-location.yaml` and the TypeSpec spec under `specification/billing/resource-manager/Microsoft.Billing/Billing`. The 1.2.2 GA public API surface is preserved via partial-class shims under `src/Custom/`; `ApiCompat` against 1.2.2 passes with zero warnings.
+- The `[WirePath]` attribute on a few flattened properties (`BillingReservationData.Aggregates` / `.Trend`, `BillingSubscriptionData` / `BillingSubscriptionAliasData` / `BillingSubscriptionPatch` enrollment-account fields, `BillingReservationPatch.PurchaseProperties`, `ReservationPurchaseRequest.InstanceFlexibilityPropertiesReservedResourcePropertiesInstanceFlexibility`) now reflects the deeper wire path used by the 2024-04-01 API (e.g. `properties.utilization.aggregates`). The C# property names and runtime values are unchanged; only diagnostics that surface the wire path are affected.
+- `BillingAccountResource.GetByBillingAccountSavingsPlan` / `GetByBillingAccountSavingsPlanAsync` have been removed because the 2024-04-01 `SavingsPlanModelList is Page<SavingsPlanModel>` envelope is rejected by the management-plane emitter. Callers should iterate `BillingAccountResource.GetBillingSavingsPlanModels().GetAllAsync(...)` (the `BillingSavingsPlanModelCollection.GetAll` overload) instead.
+- Temporary generator-bug workarounds shipped in this beta (each tracked by an open issue; the corresponding `src/Custom/` shim will be removed once the upstream fix ships):
+  - [#58747](https://github.com/Azure/azure-sdk-for-net/issues/58747) – `[CodeGenSuppress]` for `AddTag` / `SetTags` / `RemoveTag` on `BillingTransferDetailResource` and `PartnerTransferDetailResource` (tag-helper boilerplate is emitted against a PUT operation whose request body is not the resource data type).
+  - [#59539](https://github.com/Azure/azure-sdk-for-net/issues/59539) – `[CodeGenSuppress]` plus hand-written `BillingAccountResource.CancelPaymentTerms` / `CancelPaymentTermsAsync`, because the generator emits `DateTimeOffset.ToRequestContent(...)` which does not exist.
+  - [#59540](https://github.com/Azure/azure-sdk-for-net/issues/59540) – `[CodeGenSuppress]` plus hand-written `BillingProfileResource.GetProducts` / `GetProductsAsync`, because the shared `ProductsGetProductsCollectionResultOfT` constructor demands an `invoiceSectionName` argument the billing-profile call site cannot supply.
+  - [#59545](https://github.com/Azure/azure-sdk-for-net/issues/59545) – `[CodeGenSuppress("Tags")]` plus a redeclared `Tags` property on `BillingAccountPatch`, `BillingProductPatch`, `BillingSubscriptionPatch`, and `BillingTransactionData`, because `enable-wire-path-attribute: true` emits a duplicate `[WirePath("tags")]` attribute.
 
 ## 1.2.2 (2026-04-20)
 

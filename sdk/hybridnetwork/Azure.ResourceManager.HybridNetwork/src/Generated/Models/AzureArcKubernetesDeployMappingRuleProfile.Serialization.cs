@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.HybridNetwork;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    public partial class AzureArcKubernetesDeployMappingRuleProfile : IUtf8JsonSerializable, IJsonModel<AzureArcKubernetesDeployMappingRuleProfile>
+    /// <summary> Azure arc kubernetes deploy mapping rule profile. </summary>
+    public partial class AzureArcKubernetesDeployMappingRuleProfile : MappingRuleProfile, IJsonModel<AzureArcKubernetesDeployMappingRuleProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureArcKubernetesDeployMappingRuleProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override MappingRuleProfile PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AzureArcKubernetesDeployMappingRuleProfile>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAzureArcKubernetesDeployMappingRuleProfile(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AzureArcKubernetesDeployMappingRuleProfile)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AzureArcKubernetesDeployMappingRuleProfile>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHybridNetworkContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AzureArcKubernetesDeployMappingRuleProfile)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AzureArcKubernetesDeployMappingRuleProfile>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AzureArcKubernetesDeployMappingRuleProfile IPersistableModel<AzureArcKubernetesDeployMappingRuleProfile>.Create(BinaryData data, ModelReaderWriterOptions options) => (AzureArcKubernetesDeployMappingRuleProfile)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AzureArcKubernetesDeployMappingRuleProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AzureArcKubernetesDeployMappingRuleProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureArcKubernetesDeployMappingRuleProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AzureArcKubernetesDeployMappingRuleProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AzureArcKubernetesDeployMappingRuleProfile)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(HelmMappingRuleProfile))
             {
@@ -42,88 +82,60 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
         }
 
-        AzureArcKubernetesDeployMappingRuleProfile IJsonModel<AzureArcKubernetesDeployMappingRuleProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AzureArcKubernetesDeployMappingRuleProfile IJsonModel<AzureArcKubernetesDeployMappingRuleProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AzureArcKubernetesDeployMappingRuleProfile)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override MappingRuleProfile JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureArcKubernetesDeployMappingRuleProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AzureArcKubernetesDeployMappingRuleProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AzureArcKubernetesDeployMappingRuleProfile)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAzureArcKubernetesDeployMappingRuleProfile(document.RootElement, options);
         }
 
-        internal static AzureArcKubernetesDeployMappingRuleProfile DeserializeAzureArcKubernetesDeployMappingRuleProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static AzureArcKubernetesDeployMappingRuleProfile DeserializeAzureArcKubernetesDeployMappingRuleProfile(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            HelmMappingRuleProfile helmMappingRuleProfile = default;
             ApplicationEnablement? applicationEnablement = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            HelmMappingRuleProfile helmMappingRuleProfile = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("helmMappingRuleProfile"u8))
+                if (prop.NameEquals("applicationEnablement"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    helmMappingRuleProfile = HelmMappingRuleProfile.DeserializeHelmMappingRuleProfile(property.Value, options);
+                    applicationEnablement = new ApplicationEnablement(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("applicationEnablement"u8))
+                if (prop.NameEquals("helmMappingRuleProfile"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    applicationEnablement = new ApplicationEnablement(property.Value.GetString());
+                    helmMappingRuleProfile = HelmMappingRuleProfile.DeserializeHelmMappingRuleProfile(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new AzureArcKubernetesDeployMappingRuleProfile(applicationEnablement, serializedAdditionalRawData, helmMappingRuleProfile);
+            return new AzureArcKubernetesDeployMappingRuleProfile(applicationEnablement, additionalBinaryDataProperties, helmMappingRuleProfile);
         }
-
-        BinaryData IPersistableModel<AzureArcKubernetesDeployMappingRuleProfile>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureArcKubernetesDeployMappingRuleProfile>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHybridNetworkContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(AzureArcKubernetesDeployMappingRuleProfile)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        AzureArcKubernetesDeployMappingRuleProfile IPersistableModel<AzureArcKubernetesDeployMappingRuleProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureArcKubernetesDeployMappingRuleProfile>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeAzureArcKubernetesDeployMappingRuleProfile(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AzureArcKubernetesDeployMappingRuleProfile)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<AzureArcKubernetesDeployMappingRuleProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

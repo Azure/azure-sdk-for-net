@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct NicTypeInResponse : IEquatable<NicTypeInResponse>
     {
         private readonly string _value;
+        /// <summary> PublicNic. </summary>
+        private const string PublicNicValue = "PublicNic";
+        /// <summary> PrivateNic. </summary>
+        private const string PrivateNicValue = "PrivateNic";
+        /// <summary> AdditionalNic. </summary>
+        private const string AdditionalNicValue = "AdditionalNic";
 
         /// <summary> Initializes a new instance of <see cref="NicTypeInResponse"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NicTypeInResponse(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PublicNicValue = "PublicNic";
-        private const string PrivateNicValue = "PrivateNic";
-        private const string AdditionalNicValue = "AdditionalNic";
+            _value = value;
+        }
 
         /// <summary> PublicNic. </summary>
         public static NicTypeInResponse PublicNic { get; } = new NicTypeInResponse(PublicNicValue);
+
         /// <summary> PrivateNic. </summary>
         public static NicTypeInResponse PrivateNic { get; } = new NicTypeInResponse(PrivateNicValue);
+
         /// <summary> AdditionalNic. </summary>
         public static NicTypeInResponse AdditionalNic { get; } = new NicTypeInResponse(AdditionalNicValue);
+
         /// <summary> Determines if two <see cref="NicTypeInResponse"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NicTypeInResponse left, NicTypeInResponse right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NicTypeInResponse"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NicTypeInResponse left, NicTypeInResponse right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NicTypeInResponse"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NicTypeInResponse"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NicTypeInResponse(string value) => new NicTypeInResponse(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NicTypeInResponse"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NicTypeInResponse?(string value) => value == null ? null : new NicTypeInResponse(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NicTypeInResponse other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NicTypeInResponse other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

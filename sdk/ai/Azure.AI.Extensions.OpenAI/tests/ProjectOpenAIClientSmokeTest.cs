@@ -1,8 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 using System;
+using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Azure.AI.Projects;
@@ -127,13 +131,147 @@ public class ProjectOpenAIClientSmokeTest : ProjectsOpenAITestBase
         Assert.That(deletion.Deleted, Is.True);
     }
 
+    [RecordedTest]
+    [TestCase(true, true)]
+    [TestCase(false, true)]
+    [TestCase(true, false)]
+    [TestCase(false, false)]
+    public async Task TestEncryptedPayload(bool useProjects, bool storedOutputEnabled)
+    {
+        ProjectResponsesClient oaiClient;
+        if (useProjects)
+        {
+            AIProjectClient projectClient = GetTestProjectClient();
+            oaiClient = projectClient.GetProjectOpenAIClient().GetProjectResponsesClientForModel(TestEnvironment.FOUNDRY_MODEL_NAME);
+        }
+        else
+        {
+            oaiClient = GetTestProjectOpenAIClient().GetProjectResponsesClientForModel(TestEnvironment.FOUNDRY_MODEL_NAME);
+        }
+        CreateResponseOptions options = new()
+        {
+            ReasoningOptions = new()
+            {
+                ReasoningEffortLevel = ResponseReasoningEffortLevel.High,
+                ReasoningSummaryVerbosity = ResponseReasoningSummaryVerbosity.Detailed
+            },
+            InputItems = {
+                ResponseItem.CreateSystemMessageItem("You are helpful assistant who knows that Plagiarus praepotens likes cookies with raisins."),
+                ResponseItem.CreateUserMessageItem("Hello, tell me about Plagiarus praepotens.")},
+            StoredOutputEnabled = storedOutputEnabled,
+            IncludedProperties = { IncludedResponseProperty.ReasoningEncryptedContent }
+        };
+        ResponseResult result = await oaiClient.CreateResponseAsync(options);
+        Assert.That(result.Error, Is.Null, $"Error code: {result.Error?.Code}, {result.Error?.Message}");
+        Assert.That(result.OutputItems, Has.Count.GreaterThan(0));
+        Assert.That(result.OutputItems.Any(x => x is ReasoningResponseItem), Is.True);
+        options.InputItems.Clear();
+        foreach (ResponseItem item in result.OutputItems)
+        {
+            options.InputItems.Add(item);
+        }
+        options.InputItems.Add(ResponseItem.CreateUserMessageItem("Could you please explain more?"));
+        result = await oaiClient.CreateResponseAsync(options);
+        Assert.That(result.Error, Is.Null, $"Error code: {result.Error?.Code}, {result.Error?.Message}");
+        Assert.That(result.OutputItems.Any(x => x is ReasoningResponseItem), Is.True);
+        Assert.That(result.OutputItems, Has.Count.GreaterThan(0));
+    }
+
+    [RecordedTest]
+    [TestCase(true)]
+    [TestCase(false)]
+    public async Task TestCompaction(bool useProjects)
+    {
+        ProjectResponsesClient oaiClient;
+        if (useProjects)
+        {
+            AIProjectClient projectClient = GetTestProjectClient();
+            oaiClient = projectClient.GetProjectOpenAIClient().GetProjectResponsesClientForModel(TestEnvironment.FOUNDRY_MODEL_NAME);
+        }
+        else
+        {
+            oaiClient = GetTestProjectOpenAIClient().GetProjectResponsesClientForModel(TestEnvironment.FOUNDRY_MODEL_NAME);
+        }
+        BinaryData options = BinaryData.FromObjectAsJson(
+        new {
+            model = TestEnvironment.FOUNDRY_MODEL_NAME,
+            input = new[]
+            {
+                new {
+                    role = "system",
+                    content = "You are helpful assistant who knows that Plagiarus praepotens likes cookies with raisins."
+                },
+                new {
+                    role = "user",
+                    content = "Hello, tell me about Plagiarus praepotens."
+                }
+            }
+        });
+        ClientResult result;
+        using BinaryContent optionsContent = BinaryContent.Create(options);
+        {
+            result = await oaiClient.CompactResponseAsync("application/json", optionsContent);
+        }
+        List<object> items = ParseAndValidateCompactedResponse(result);
+        items.Add(new
+        {
+            role = "user",
+            content = "Could you please explain more?"
+        });
+        options = BinaryData.FromObjectAsJson(
+        new
+        {
+            model = TestEnvironment.FOUNDRY_MODEL_NAME,
+            input = items.ToArray()
+        });
+        using BinaryContent newOptionsContent = BinaryContent.Create(options);
+        {
+            result = await oaiClient.CompactResponseAsync("application/json", newOptionsContent);
+        }
+        ParseAndValidateCompactedResponse(result);
+    }
+
+    private static List<object> ParseAndValidateCompactedResponse(ClientResult compactionResponse)
+    {
+        List<object> items = [];
+        Utf8JsonReader reader = new(compactionResponse.GetRawResponse().Content.ToMemory().ToArray());
+        using JsonDocument document = JsonDocument.ParseValue(ref reader);
+        HashSet<string> expectedTypes = ["compaction", "message"];
+        foreach (JsonProperty prop in document.RootElement.EnumerateObject())
+        {
+            if (prop.NameEquals("output"u8) && prop.Value.ValueKind == JsonValueKind.Array && prop.Value is JsonElement countsElement)
+            {
+                foreach (JsonElement itemNode in countsElement.EnumerateArray())
+                {
+                    // Define the item type
+                    string itemType = default;
+                    foreach (JsonProperty node in itemNode.EnumerateObject())
+                    {
+                        if (node.NameEquals("type"u8) && node.Value.ValueKind == JsonValueKind.String)
+                        {
+                            itemType = node.Value.GetString();
+                            expectedTypes.Remove(itemType);
+                            break;
+                        }
+                    }
+                    Assert.That(itemType, Is.Not.Null.And.Not.Empty);
+                    items.Add(itemNode.GetObject());
+                }
+            }
+        }
+        // Check that we have met all the expected types.
+        Assert.That(expectedTypes, Is.Empty);
+        Assert.That(items, Has.Count.GreaterThanOrEqualTo(3));
+        return items;
+    }
+
     [TearDown]
     public override void Cleanup()
     {
         if (Mode == RecordedTestMode.Playback)
             return;
         Uri connectionString = new(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT);
-        AIProjectClient projectClient = new(connectionString, TestEnvironment.Credential);
+        AIProjectClient projectClient = new(connectionString, GetTestAuthenticationProvider());
         // Remove Agents.
         foreach (ProjectsAgentVersion ag in projectClient.AgentAdministrationClient.GetAgentVersions(agentName: FOUNDRY_AGENT_NAME))
         {

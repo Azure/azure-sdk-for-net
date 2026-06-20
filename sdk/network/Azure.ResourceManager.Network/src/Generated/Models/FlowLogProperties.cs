@@ -7,65 +7,70 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Parameters that define the flow log format. </summary>
+    /// <summary> Parameters that define the configuration of flow log. </summary>
     public partial class FlowLogProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FlowLogProperties"/>. </summary>
-        public FlowLogProperties()
+        /// <param name="storageId"> ID of the storage account which is used to store the flow log. </param>
+        /// <param name="enabled"> Flag to enable/disable flow logging. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="storageId"/> is null. </exception>
+        public FlowLogProperties(ResourceIdentifier storageId, bool enabled)
         {
+            Argument.AssertNotNull(storageId, nameof(storageId));
+
+            StorageId = storageId;
+            Enabled = enabled;
         }
 
         /// <summary> Initializes a new instance of <see cref="FlowLogProperties"/>. </summary>
-        /// <param name="formatType"> The file type of flow log. </param>
-        /// <param name="version"> The version (revision) of the flow log. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FlowLogProperties(FlowLogFormatType? formatType, int? version, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="storageId"> ID of the storage account which is used to store the flow log. </param>
+        /// <param name="enabledFilteringCriteria"> Optional field to filter network traffic logs based on SrcIP, SrcPort, DstIP, DstPort, Protocol, Encryption, Direction and Action. If not specified, all network traffic will be logged. </param>
+        /// <param name="recordTypes"> Optional field to filter network traffic logs based on flow states. Value of this field could be any comma separated combination string of letters B,C,E or D. B represents Begin, when a flow is created. C represents Continue for an ongoing flow generated at every five-minute interval. E represents End, when a flow is terminated. D represents Deny, when a flow is denied. If not specified, all network traffic will be logged. </param>
+        /// <param name="enabled"> Flag to enable/disable flow logging. </param>
+        /// <param name="retentionPolicy"> Parameters that define the retention policy for flow log. </param>
+        /// <param name="format"> Parameters that define the flow log format. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal FlowLogProperties(ResourceIdentifier storageId, string enabledFilteringCriteria, string recordTypes, bool enabled, RetentionPolicyParameters retentionPolicy, FlowLogFormatParameters format, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            FormatType = formatType;
-            Version = version;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            StorageId = storageId;
+            EnabledFilteringCriteria = enabledFilteringCriteria;
+            RecordTypes = recordTypes;
+            Enabled = enabled;
+            RetentionPolicy = retentionPolicy;
+            Format = format;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The file type of flow log. </summary>
-        [WirePath("type")]
-        public FlowLogFormatType? FormatType { get; set; }
-        /// <summary> The version (revision) of the flow log. </summary>
-        [WirePath("version")]
-        public int? Version { get; set; }
+        /// <summary> ID of the storage account which is used to store the flow log. </summary>
+        [WirePath("storageId")]
+        public ResourceIdentifier StorageId { get; set; }
+
+        /// <summary> Optional field to filter network traffic logs based on SrcIP, SrcPort, DstIP, DstPort, Protocol, Encryption, Direction and Action. If not specified, all network traffic will be logged. </summary>
+        [WirePath("enabledFilteringCriteria")]
+        public string EnabledFilteringCriteria { get; set; }
+
+        /// <summary> Optional field to filter network traffic logs based on flow states. Value of this field could be any comma separated combination string of letters B,C,E or D. B represents Begin, when a flow is created. C represents Continue for an ongoing flow generated at every five-minute interval. E represents End, when a flow is terminated. D represents Deny, when a flow is denied. If not specified, all network traffic will be logged. </summary>
+        [WirePath("recordTypes")]
+        public string RecordTypes { get; set; }
+
+        /// <summary> Flag to enable/disable flow logging. </summary>
+        [WirePath("enabled")]
+        public bool Enabled { get; set; }
+
+        /// <summary> Parameters that define the retention policy for flow log. </summary>
+        [WirePath("retentionPolicy")]
+        public RetentionPolicyParameters RetentionPolicy { get; set; }
+
+        /// <summary> Parameters that define the flow log format. </summary>
+        [WirePath("format")]
+        public FlowLogFormatParameters Format { get; set; }
     }
 }

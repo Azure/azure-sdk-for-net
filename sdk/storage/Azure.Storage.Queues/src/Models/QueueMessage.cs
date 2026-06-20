@@ -91,22 +91,22 @@ namespace Azure.Storage.Queues.Models
                 InsertedOn,
                 ExpiresOn);
 
-        internal static QueueMessage ToQueueMessage(DequeuedMessageItem dequeuedMessageItem, QueueMessageEncoding messageEncoding)
+        internal static QueueMessage ToQueueMessage(ReceivedMessage message, QueueMessageEncoding messageEncoding)
         {
-            if (dequeuedMessageItem == null)
+            if (message == null)
             {
                 return null;
             }
 
             return new QueueMessage()
             {
-                MessageId = dequeuedMessageItem.MessageId,
-                PopReceipt = dequeuedMessageItem.PopReceipt,
-                Body = QueueMessageCodec.DecodeMessageBody(dequeuedMessageItem.MessageText, messageEncoding),
-                DequeueCount = dequeuedMessageItem.DequeueCount,
-                NextVisibleOn = dequeuedMessageItem.TimeNextVisible,
-                InsertedOn = dequeuedMessageItem.InsertionTime,
-                ExpiresOn = dequeuedMessageItem.ExpirationTime,
+                MessageId = message.MessageId,
+                PopReceipt = message.PopReceipt,
+                Body = QueueMessageCodec.DecodeMessageBody(message.MessageText, messageEncoding),
+                DequeueCount = message.DequeueCount,
+                NextVisibleOn = message.TimeNextVisible,
+                InsertedOn = message.InsertionTime,
+                ExpiresOn = message.ExpirationTime,
             };
         }
     }

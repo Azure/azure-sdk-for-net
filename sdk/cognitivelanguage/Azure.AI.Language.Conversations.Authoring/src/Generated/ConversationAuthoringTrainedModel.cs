@@ -291,7 +291,7 @@ namespace Azure.AI.Language.Conversations.Authoring
                 Argument.AssertNotNull(content, nameof(content));
 
                 using HttpMessage message = CreateEvaluateModelRequest(projectName, trainedModelLabel, content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "ConversationAuthoringTrainedModel.EvaluateModelAsync", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "ConversationAuthoringTrainedModel.EvaluateModel", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -331,7 +331,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
             Argument.AssertNotNull(details, nameof(details));
 
-            return ProtocolOperationHelpers.Convert(await EvaluateModelAsync(waitUntil, projectName, trainedModelLabel, details, cancellationToken.ToRequestContext()).ConfigureAwait(false), response => ConversationAuthoringEvaluationJobResult.FromLroResponse(response), ClientDiagnostics, "ConversationAuthoringTrainedModel.EvaluateModelAsync");
+            return ProtocolOperationHelpers.Convert(await EvaluateModelAsync(waitUntil, projectName, trainedModelLabel, details, cancellationToken.ToRequestContext()).ConfigureAwait(false), response => ConversationAuthoringEvaluationJobResult.FromLroResponse(response), ClientDiagnostics, "ConversationAuthoringTrainedModel.EvaluateModel");
         }
 
         /// <summary> Restores the snapshot of this trained model to be the current working directory of the project. </summary>
@@ -379,7 +379,7 @@ namespace Azure.AI.Language.Conversations.Authoring
                 Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
 
                 using HttpMessage message = CreateLoadSnapshotRequest(projectName, trainedModelLabel, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "ConversationAuthoringTrainedModel.LoadSnapshotAsync", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "ConversationAuthoringTrainedModel.LoadSnapshot", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {

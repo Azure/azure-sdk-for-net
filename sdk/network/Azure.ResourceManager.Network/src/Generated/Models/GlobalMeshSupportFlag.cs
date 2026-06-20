@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct GlobalMeshSupportFlag : IEquatable<GlobalMeshSupportFlag>
     {
         private readonly string _value;
+        /// <summary> False. </summary>
+        private const string FalseValue = "False";
+        /// <summary> True. </summary>
+        private const string TrueValue = "True";
 
         /// <summary> Initializes a new instance of <see cref="GlobalMeshSupportFlag"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public GlobalMeshSupportFlag(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string FalseValue = "False";
-        private const string TrueValue = "True";
+            _value = value;
+        }
 
         /// <summary> False. </summary>
         public static GlobalMeshSupportFlag False { get; } = new GlobalMeshSupportFlag(FalseValue);
+
         /// <summary> True. </summary>
         public static GlobalMeshSupportFlag True { get; } = new GlobalMeshSupportFlag(TrueValue);
+
         /// <summary> Determines if two <see cref="GlobalMeshSupportFlag"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(GlobalMeshSupportFlag left, GlobalMeshSupportFlag right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="GlobalMeshSupportFlag"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(GlobalMeshSupportFlag left, GlobalMeshSupportFlag right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="GlobalMeshSupportFlag"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="GlobalMeshSupportFlag"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator GlobalMeshSupportFlag(string value) => new GlobalMeshSupportFlag(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="GlobalMeshSupportFlag"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator GlobalMeshSupportFlag?(string value) => value == null ? null : new GlobalMeshSupportFlag(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is GlobalMeshSupportFlag other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(GlobalMeshSupportFlag other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

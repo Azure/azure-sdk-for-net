@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct ScopeConnectionState : IEquatable<ScopeConnectionState>
     {
         private readonly string _value;
+        /// <summary> Connected. </summary>
+        private const string ConnectedValue = "Connected";
+        /// <summary> Pending. </summary>
+        private const string PendingValue = "Pending";
+        /// <summary> Conflict. </summary>
+        private const string ConflictValue = "Conflict";
+        /// <summary> Revoked. </summary>
+        private const string RevokedValue = "Revoked";
+        /// <summary> Rejected. </summary>
+        private const string RejectedValue = "Rejected";
 
         /// <summary> Initializes a new instance of <see cref="ScopeConnectionState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ScopeConnectionState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ConnectedValue = "Connected";
-        private const string PendingValue = "Pending";
-        private const string ConflictValue = "Conflict";
-        private const string RevokedValue = "Revoked";
-        private const string RejectedValue = "Rejected";
+            _value = value;
+        }
 
         /// <summary> Connected. </summary>
         public static ScopeConnectionState Connected { get; } = new ScopeConnectionState(ConnectedValue);
+
         /// <summary> Pending. </summary>
         public static ScopeConnectionState Pending { get; } = new ScopeConnectionState(PendingValue);
+
         /// <summary> Conflict. </summary>
         public static ScopeConnectionState Conflict { get; } = new ScopeConnectionState(ConflictValue);
+
         /// <summary> Revoked. </summary>
         public static ScopeConnectionState Revoked { get; } = new ScopeConnectionState(RevokedValue);
+
         /// <summary> Rejected. </summary>
         public static ScopeConnectionState Rejected { get; } = new ScopeConnectionState(RejectedValue);
+
         /// <summary> Determines if two <see cref="ScopeConnectionState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ScopeConnectionState left, ScopeConnectionState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ScopeConnectionState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ScopeConnectionState left, ScopeConnectionState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ScopeConnectionState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ScopeConnectionState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ScopeConnectionState(string value) => new ScopeConnectionState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ScopeConnectionState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ScopeConnectionState?(string value) => value == null ? null : new ScopeConnectionState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ScopeConnectionState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ScopeConnectionState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

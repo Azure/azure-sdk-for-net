@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network.Samples
             NetworkVirtualApplianceResource networkVirtualAppliance = client.GetNetworkVirtualApplianceResource(networkVirtualApplianceResourceId);
 
             // invoke the operation
-            await networkVirtualAppliance.DeleteAsync(WaitUntil.Completed);
+            await networkVirtualAppliance.DeleteAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Network.Samples
             NetworkVirtualApplianceResource networkVirtualAppliance = client.GetNetworkVirtualApplianceResource(networkVirtualApplianceResourceId);
 
             // invoke the operation
-            ArmOperation<NetworkVirtualApplianceInstanceIds> lro = await networkVirtualAppliance.RestartAsync(WaitUntil.Completed);
+            ArmOperation<NetworkVirtualApplianceInstanceIds> lro = await networkVirtualAppliance.RestartAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
             NetworkVirtualApplianceInstanceIds result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Network.Samples
             NetworkVirtualApplianceResource networkVirtualAppliance = client.GetNetworkVirtualApplianceResource(networkVirtualApplianceResourceId);
 
             // invoke the operation
-            ArmOperation<NetworkVirtualApplianceInstanceIds> lro = await networkVirtualAppliance.RestartAsync(WaitUntil.Completed);
+            ArmOperation<NetworkVirtualApplianceInstanceIds> lro = await networkVirtualAppliance.RestartAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
             NetworkVirtualApplianceInstanceIds result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Network.Samples
             NetworkVirtualApplianceResource networkVirtualAppliance = client.GetNetworkVirtualApplianceResource(networkVirtualApplianceResourceId);
 
             // invoke the operation
-            ArmOperation<NetworkVirtualApplianceInstanceIds> lro = await networkVirtualAppliance.ReimageAsync(WaitUntil.Completed);
+            ArmOperation<NetworkVirtualApplianceInstanceIds> lro = await networkVirtualAppliance.ReimageAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
             NetworkVirtualApplianceInstanceIds result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Network.Samples
                 SerialConsoleStorageSasUri = new Uri("https://blobcortextesturl.blob.core.windows.net/nvaBootDiagContainer/serialLogs.txt?sp=rw&se=2018-01-10T03%3A42%3A04Z&sv=2017-04-17&sig=WvXrT5bDmDFfgHs%2Brz%2BjAu123eRCNE9BO0eQYcPDT7pY%3D&sr=b"),
                 ConsoleScreenshotStorageSasUri = new Uri("https://blobcortextesturl.blob.core.windows.net/nvaBootDiagContainer/consoleScreenshot.png?sp=rw&se=2018-01-10T03%3A42%3A04Z&sv=2017-04-17&sig=WvXrT5bDmDFfgHs%2Brz%2BjAu123eRCNE9BO0eQYcPDT7pY%3D&sr=b"),
             };
-            ArmOperation<NetworkVirtualApplianceInstanceId> lro = await networkVirtualAppliance.GetBootDiagnosticLogsAsync(WaitUntil.Completed, content);
+            ArmOperation<NetworkVirtualApplianceInstanceId> lro = await networkVirtualAppliance.GetBootDiagnosticLogsAsync(WaitUntil.Completed, content, cancellationToken: System.Threading.CancellationToken.None);
             NetworkVirtualApplianceInstanceId result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
