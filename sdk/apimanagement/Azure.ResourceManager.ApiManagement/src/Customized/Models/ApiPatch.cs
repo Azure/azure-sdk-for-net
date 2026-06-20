@@ -8,6 +8,9 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
+    // Old SDK exposed both string (TermsOfServiceLink/ServiceLink) and Uri (TermsOfServiceUri/ServiceUri).
+    // The string versions are generated natively. These provide Uri wrappers for backward compat.
+    // Not spec-fixable: @@alternateType replaces the property type entirely.
     public partial class ApiPatch
     {
         /// <summary> A URL to the Terms of Service for the API. MUST be in the format of a URL. </summary>
