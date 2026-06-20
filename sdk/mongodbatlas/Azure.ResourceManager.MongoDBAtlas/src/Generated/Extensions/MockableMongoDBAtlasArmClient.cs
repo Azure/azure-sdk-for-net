@@ -34,5 +34,23 @@ namespace Azure.ResourceManager.MongoDBAtlas.Mocking
             MongoDBAtlasOrganizationResource.ValidateResourceId(id);
             return new MongoDBAtlasOrganizationResource(Client, id);
         }
+
+        /// <summary> Gets an object representing a <see cref="ProjectResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ProjectResource"/> object. </returns>
+        public virtual ProjectResource GetProjectResource(ResourceIdentifier id)
+        {
+            ProjectResource.ValidateResourceId(id);
+            return new ProjectResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ClusterResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ClusterResource"/> object. </returns>
+        public virtual ClusterResource GetClusterResource(ResourceIdentifier id)
+        {
+            ClusterResource.ValidateResourceId(id);
+            return new ClusterResource(Client, id);
+        }
     }
 }
