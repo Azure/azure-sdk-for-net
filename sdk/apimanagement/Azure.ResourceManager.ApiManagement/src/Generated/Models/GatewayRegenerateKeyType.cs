@@ -7,12 +7,12 @@
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary></summary>
+    /// <summary> The Key being regenerated. </summary>
     public enum GatewayRegenerateKeyType
     {
-        /// <summary> Primary. </summary>
+        /// <summary> Primary key. </summary>
         Primary,
-        /// <summary> Secondary. </summary>
+        /// <summary> Secondary key. </summary>
         Secondary
     }
 }

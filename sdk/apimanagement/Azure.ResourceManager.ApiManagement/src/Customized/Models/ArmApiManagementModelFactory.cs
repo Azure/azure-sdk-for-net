@@ -3,157 +3,15 @@
 
 #nullable disable
 
-#pragma warning disable SA1402 // File may only contain a single type
-#pragma warning disable SA1649 // File name should match first type name
-
 using System;
-using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> API data returned from gateway API operations. </summary>
-    public partial class GatewayApiData : ApiData, IJsonModel<GatewayApiData>, IPersistableModel<GatewayApiData>
-    {
-        /// <summary> Initializes a new instance of <see cref="GatewayApiData"/>. </summary>
-        public GatewayApiData()
-        {
-        }
-
-        internal GatewayApiData(ApiData data)
-            : base(data.Id, data.Name, data.ResourceType, data.SystemData, data.Properties, default)
-        {
-        }
-
-        void IJsonModel<GatewayApiData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-            => ((IJsonModel<ApiData>)this).Write(writer, options);
-
-        GatewayApiData IJsonModel<GatewayApiData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            ApiData data = ((IJsonModel<ApiData>)new ApiData()).Create(ref reader, options);
-            return data is null ? null : new GatewayApiData(data);
-        }
-
-        BinaryData IPersistableModel<GatewayApiData>.Write(ModelReaderWriterOptions options)
-            => ((IPersistableModel<ApiData>)this).Write(options);
-
-        GatewayApiData IPersistableModel<GatewayApiData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            ApiData value = ((IPersistableModel<ApiData>)new ApiData()).Create(data, options);
-            return value is null ? null : new GatewayApiData(value);
-        }
-
-        string IPersistableModel<GatewayApiData>.GetFormatFromOptions(ModelReaderWriterOptions options)
-            => ((IPersistableModel<ApiData>)new ApiData()).GetFormatFromOptions(options);
-    }
-
-    /// <summary> API data returned from product API operations. </summary>
-    public partial class ProductApiData : ApiData, IJsonModel<ProductApiData>, IPersistableModel<ProductApiData>
-    {
-        /// <summary> Initializes a new instance of <see cref="ProductApiData"/>. </summary>
-        public ProductApiData()
-        {
-        }
-
-        internal ProductApiData(ApiData data)
-            : base(data.Id, data.Name, data.ResourceType, data.SystemData, data.Properties, default)
-        {
-        }
-
-        void IJsonModel<ProductApiData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-            => ((IJsonModel<ApiData>)this).Write(writer, options);
-
-        ProductApiData IJsonModel<ProductApiData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            ApiData data = ((IJsonModel<ApiData>)new ApiData()).Create(ref reader, options);
-            return data is null ? null : new ProductApiData(data);
-        }
-
-        BinaryData IPersistableModel<ProductApiData>.Write(ModelReaderWriterOptions options)
-            => ((IPersistableModel<ApiData>)this).Write(options);
-
-        ProductApiData IPersistableModel<ProductApiData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            ApiData value = ((IPersistableModel<ApiData>)new ApiData()).Create(data, options);
-            return value is null ? null : new ProductApiData(value);
-        }
-
-        string IPersistableModel<ProductApiData>.GetFormatFromOptions(ModelReaderWriterOptions options)
-            => ((IPersistableModel<ApiData>)new ApiData()).GetFormatFromOptions(options);
-    }
-
-    /// <summary> Group data returned from product group operations. </summary>
-    public partial class ProductGroupData : ApiManagementGroupData, IJsonModel<ProductGroupData>, IPersistableModel<ProductGroupData>
-    {
-        /// <summary> Initializes a new instance of <see cref="ProductGroupData"/>. </summary>
-        public ProductGroupData()
-        {
-        }
-
-        internal ProductGroupData(ApiManagementGroupData data)
-            : base(data.Id, data.Name, data.ResourceType, data.SystemData, data.Properties, default)
-        {
-        }
-
-        void IJsonModel<ProductGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-            => ((IJsonModel<ApiManagementGroupData>)this).Write(writer, options);
-
-        ProductGroupData IJsonModel<ProductGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            ApiManagementGroupData data = ((IJsonModel<ApiManagementGroupData>)new ApiManagementGroupData()).Create(ref reader, options);
-            return data is null ? null : new ProductGroupData(data);
-        }
-
-        BinaryData IPersistableModel<ProductGroupData>.Write(ModelReaderWriterOptions options)
-            => ((IPersistableModel<ApiManagementGroupData>)this).Write(options);
-
-        ProductGroupData IPersistableModel<ProductGroupData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            ApiManagementGroupData value = ((IPersistableModel<ApiManagementGroupData>)new ApiManagementGroupData()).Create(data, options);
-            return value is null ? null : new ProductGroupData(value);
-        }
-
-        string IPersistableModel<ProductGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options)
-            => ((IPersistableModel<ApiManagementGroupData>)new ApiManagementGroupData()).GetFormatFromOptions(options);
-    }
-
-    /// <summary> User data returned from group user operations. </summary>
-    public partial class ApiManagementGroupUserData : UserContractData, IJsonModel<ApiManagementGroupUserData>, IPersistableModel<ApiManagementGroupUserData>
-    {
-        /// <summary> Initializes a new instance of <see cref="ApiManagementGroupUserData"/>. </summary>
-        public ApiManagementGroupUserData()
-        {
-        }
-
-        internal ApiManagementGroupUserData(UserContractData data)
-            : base(data.Id, data.Name, data.ResourceType, data.SystemData, data.Properties, default)
-        {
-        }
-
-        void IJsonModel<ApiManagementGroupUserData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-            => ((IJsonModel<UserContractData>)this).Write(writer, options);
-
-        ApiManagementGroupUserData IJsonModel<ApiManagementGroupUserData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            UserContractData data = ((IJsonModel<UserContractData>)new UserContractData()).Create(ref reader, options);
-            return data is null ? null : new ApiManagementGroupUserData(data);
-        }
-
-        BinaryData IPersistableModel<ApiManagementGroupUserData>.Write(ModelReaderWriterOptions options)
-            => ((IPersistableModel<UserContractData>)this).Write(options);
-
-        ApiManagementGroupUserData IPersistableModel<ApiManagementGroupUserData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            UserContractData value = ((IPersistableModel<UserContractData>)new UserContractData()).Create(data, options);
-            return value is null ? null : new ApiManagementGroupUserData(value);
-        }
-
-        string IPersistableModel<ApiManagementGroupUserData>.GetFormatFromOptions(ModelReaderWriterOptions options)
-            => ((IPersistableModel<UserContractData>)new UserContractData()).GetFormatFromOptions(options);
-    }
+    // Model factory overloads for contextual wrapper types.
+    // Tracking: https://github.com/Azure/azure-sdk-for-net/issues/60083
 
     public static partial class ArmApiManagementModelFactory
     {
