@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network.Samples
                 AddressPrefix = "10.0.0.0/16",
                 ServiceGatewayId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/serviceGateways/SG1"),
             };
-            ArmOperation<SubnetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, subnetName, data);
+            ArmOperation<SubnetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, subnetName, data, cancellationToken: System.Threading.CancellationToken.None);
             SubnetResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Network.Samples
             {
                 AddressPrefix = "10.0.0.0/16",
             };
-            ArmOperation<SubnetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, subnetName, data);
+            ArmOperation<SubnetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, subnetName, data, cancellationToken: System.Threading.CancellationToken.None);
             SubnetResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Network.Samples
             {
                 AddressPrefix = "10.0.0.0/16",
             };
-            ArmOperation<SubnetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, subnetName, data);
+            ArmOperation<SubnetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, subnetName, data, cancellationToken: System.Threading.CancellationToken.None);
             SubnetResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Network.Samples
 Service = "Microsoft.Storage",
 }},
             };
-            ArmOperation<SubnetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, subnetName, data);
+            ArmOperation<SubnetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, subnetName, data, cancellationToken: System.Threading.CancellationToken.None);
             SubnetResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -211,7 +211,7 @@ Service = "Microsoft.Storage",
 NetworkIdentifierId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/subnet-test/providers/Microsoft.Network/publicIPAddresses/test-ip"),
 }},
             };
-            ArmOperation<SubnetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, subnetName, data);
+            ArmOperation<SubnetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, subnetName, data, cancellationToken: System.Threading.CancellationToken.None);
             SubnetResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -250,7 +250,7 @@ NetworkIdentifierId = new ResourceIdentifier("/subscriptions/subid/resourceGroup
             {
                 AddressPrefix = "10.0.0.0/16",
             };
-            ArmOperation<SubnetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, subnetName, data);
+            ArmOperation<SubnetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, subnetName, data, cancellationToken: System.Threading.CancellationToken.None);
             SubnetResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

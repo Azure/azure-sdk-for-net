@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Gets resiliency solutions enabled on the VM. This includes backup or disaster recovery solutions. </summary>
     internal partial class ResiliencyProfile
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ResiliencyProfile"/>. </summary>
         public ResiliencyProfile()
@@ -52,23 +23,29 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of <see cref="ResiliencyProfile"/>. </summary>
         /// <param name="zoneMovement"> Zone movement configuration. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResiliencyProfile(ZoneMovement zoneMovement, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ResiliencyProfile(ZoneMovement zoneMovement, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ZoneMovement = zoneMovement;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Zone movement configuration. </summary>
         internal ZoneMovement ZoneMovement { get; set; }
+
         /// <summary> Indicates if zone movement is enabled. By default isEnabled is set to false i.e VM can't be moved from one zone to another. </summary>
         public bool? IsEnabled
         {
-            get => ZoneMovement is null ? default : ZoneMovement.IsEnabled;
+            get
+            {
+                return ZoneMovement is null ? default : ZoneMovement.IsEnabled;
+            }
             set
             {
                 if (ZoneMovement is null)
+                {
                     ZoneMovement = new ZoneMovement();
+                }
                 ZoneMovement.IsEnabled = value;
             }
         }

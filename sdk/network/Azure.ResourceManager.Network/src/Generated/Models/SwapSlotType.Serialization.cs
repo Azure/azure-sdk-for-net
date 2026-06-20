@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Network.Models
 {
     internal static partial class SwapSlotTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this SwapSlotType value) => value switch
         {
             SwapSlotType.Production => "Production",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.Network.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SwapSlotType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static SwapSlotType ToSwapSlotType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Production")) return SwapSlotType.Production;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Staging")) return SwapSlotType.Staging;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Production"))
+            {
+                return SwapSlotType.Production;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Staging"))
+            {
+                return SwapSlotType.Staging;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SwapSlotType value.");
         }
     }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,63 +15,68 @@ namespace Azure.ResourceManager.Network.Models
     public partial class NatRule : FirewallPolicyRule
     {
         /// <summary> Initializes a new instance of <see cref="NatRule"/>. </summary>
-        public NatRule()
+        public NatRule() : base(FirewallPolicyRuleType.NatRule)
         {
-            IPProtocols = new ChangeTrackingList<FirewallPolicyRuleNetworkProtocol>();
+            IpProtocols = new ChangeTrackingList<FirewallPolicyRuleNetworkProtocol>();
             SourceAddresses = new ChangeTrackingList<string>();
             DestinationAddresses = new ChangeTrackingList<string>();
             DestinationPorts = new ChangeTrackingList<string>();
-            SourceIPGroups = new ChangeTrackingList<string>();
-            RuleType = FirewallPolicyRuleType.NatRule;
+            SourceIpGroups = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NatRule"/>. </summary>
         /// <param name="name"> Name of the rule. </param>
         /// <param name="description"> Description of the rule. </param>
         /// <param name="ruleType"> Rule Type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="ipProtocols"> Array of FirewallPolicyRuleNetworkProtocols. </param>
         /// <param name="sourceAddresses"> List of source IP addresses for this rule. </param>
         /// <param name="destinationAddresses"> List of destination IP addresses or Service Tags. </param>
         /// <param name="destinationPorts"> List of destination ports. </param>
         /// <param name="translatedAddress"> The translated address for this NAT rule. </param>
         /// <param name="translatedPort"> The translated port for this NAT rule. </param>
-        /// <param name="sourceIPGroups"> List of source IpGroups for this rule. </param>
+        /// <param name="sourceIpGroups"> List of source IpGroups for this rule. </param>
         /// <param name="translatedFqdn"> The translated FQDN for this NAT rule. </param>
-        internal NatRule(string name, string description, FirewallPolicyRuleType ruleType, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<FirewallPolicyRuleNetworkProtocol> ipProtocols, IList<string> sourceAddresses, IList<string> destinationAddresses, IList<string> destinationPorts, string translatedAddress, string translatedPort, IList<string> sourceIPGroups, string translatedFqdn) : base(name, description, ruleType, serializedAdditionalRawData)
+        internal NatRule(string name, string description, FirewallPolicyRuleType ruleType, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<FirewallPolicyRuleNetworkProtocol> ipProtocols, IList<string> sourceAddresses, IList<string> destinationAddresses, IList<string> destinationPorts, string translatedAddress, string translatedPort, IList<string> sourceIpGroups, string translatedFqdn) : base(name, description, ruleType, additionalBinaryDataProperties)
         {
-            IPProtocols = ipProtocols;
+            IpProtocols = ipProtocols;
             SourceAddresses = sourceAddresses;
             DestinationAddresses = destinationAddresses;
             DestinationPorts = destinationPorts;
             TranslatedAddress = translatedAddress;
             TranslatedPort = translatedPort;
-            SourceIPGroups = sourceIPGroups;
+            SourceIpGroups = sourceIpGroups;
             TranslatedFqdn = translatedFqdn;
-            RuleType = ruleType;
         }
 
         /// <summary> Array of FirewallPolicyRuleNetworkProtocols. </summary>
         [WirePath("ipProtocols")]
-        public IList<FirewallPolicyRuleNetworkProtocol> IPProtocols { get; }
+        public IList<FirewallPolicyRuleNetworkProtocol> IpProtocols { get; }
+
         /// <summary> List of source IP addresses for this rule. </summary>
         [WirePath("sourceAddresses")]
         public IList<string> SourceAddresses { get; }
+
         /// <summary> List of destination IP addresses or Service Tags. </summary>
         [WirePath("destinationAddresses")]
         public IList<string> DestinationAddresses { get; }
+
         /// <summary> List of destination ports. </summary>
         [WirePath("destinationPorts")]
         public IList<string> DestinationPorts { get; }
+
         /// <summary> The translated address for this NAT rule. </summary>
         [WirePath("translatedAddress")]
         public string TranslatedAddress { get; set; }
+
         /// <summary> The translated port for this NAT rule. </summary>
         [WirePath("translatedPort")]
         public string TranslatedPort { get; set; }
+
         /// <summary> List of source IpGroups for this rule. </summary>
         [WirePath("sourceIpGroups")]
-        public IList<string> SourceIPGroups { get; }
+        public IList<string> SourceIpGroups { get; }
+
         /// <summary> The translated FQDN for this NAT rule. </summary>
         [WirePath("translatedFqdn")]
         public string TranslatedFqdn { get; set; }

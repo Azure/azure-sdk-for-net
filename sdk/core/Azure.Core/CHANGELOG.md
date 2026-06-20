@@ -1,14 +1,11 @@
 # Release History
 
-## 1.60.0-beta.1 (Unreleased)
+## 1.60.0 (2026-06-23)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added experimental (`AZID0004`) `DisableMtlsProofOfPossession` property to `ManagedIdentityCredentialOptions` to allow explicit opt-out of mTLS proof-of-possession token acquisition when the underlying requirements are met.
+- Simplified mTLS token binding integration for Managed Identity by moving to an optional, runtime-resolved attestation model using lazy reflection-based resolution of the `Microsoft.Identity.Client.KeyAttestation` extension package.
 
 ## 1.59.0 (2026-06-09)
 

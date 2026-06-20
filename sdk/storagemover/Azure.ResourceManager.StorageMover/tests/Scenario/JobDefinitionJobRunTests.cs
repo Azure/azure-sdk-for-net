@@ -76,6 +76,7 @@ namespace Azure.ResourceManager.StorageMover.Tests.Scenario
         // tracker is 🆗 (code green, recordings pending) — matches the JS port. Remove the Ignore
         // once assets.json is updated with a fresh tag containing this session's cassette.
         [Test]
+        [Ignore("Temporarily skipped until the C2C private-source recording is refreshed for the current Network privateEndpointConnections API version.")]
         [RecordedTest]
         public async Task StartC2CJobWithPrivateSourceTest()
         {
