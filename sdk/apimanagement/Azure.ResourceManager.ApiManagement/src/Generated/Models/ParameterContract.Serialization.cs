@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStringValue(Description);
             }
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type);
+            writer.WriteStringValue(ParameterContractType);
             if (Optional.IsDefined(DefaultValue))
             {
                 writer.WritePropertyName("defaultValue"u8);
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             string name = default;
             string description = default;
-            string @type = default;
+            string parameterContractType = default;
             string defaultValue = default;
             bool? isRequired = default;
             IList<string> values = default;
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    parameterContractType = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("defaultValue"u8))
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             return new ParameterContract(
                 name,
                 description,
-                @type,
+                parameterContractType,
                 defaultValue,
                 isRequired,
                 values ?? new ChangeTrackingList<string>(),

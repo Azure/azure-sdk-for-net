@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AssociatedOperationProperties"/>. </summary>
-        internal AssociatedOperationProperties()
+        public AssociatedOperationProperties()
         {
         }
 
@@ -30,9 +30,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="apiVersion"> API Version. </param>
         /// <param name="description"> Operation Description. </param>
         /// <param name="method"> A Valid HTTP Operation Method. Typical Http Methods like GET, PUT, POST but not limited by only them. </param>
-        /// <param name="urlTemplate"> Relative URL template identifying the target resource for this operation. May include parameters. Example: /customers/{cid}/orders/{oid}/?date={date}. </param>
+        /// <param name="uriTemplate"> Relative URL template identifying the target resource for this operation. May include parameters. Example: /customers/{cid}/orders/{oid}/?date={date}. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AssociatedOperationProperties(string id, string name, string apiName, string apiRevision, string apiVersion, string description, string @method, string urlTemplate, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AssociatedOperationProperties(string id, string name, string apiName, string apiRevision, string apiVersion, string description, string @method, string uriTemplate, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
@@ -41,13 +41,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
             ApiVersion = apiVersion;
             Description = description;
             Method = @method;
-            UrlTemplate = urlTemplate;
+            UriTemplate = uriTemplate;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Identifier of the operation in form /operations/{operationId}. </summary>
         [WirePath("id")]
-        public string Id { get; }
+        public string Id { get; set; }
 
         /// <summary> Operation name. </summary>
         [WirePath("name")]
@@ -75,6 +75,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Relative URL template identifying the target resource for this operation. May include parameters. Example: /customers/{cid}/orders/{oid}/?date={date}. </summary>
         [WirePath("urlTemplate")]
-        public string UrlTemplate { get; }
+        public string UriTemplate { get; }
     }
 }

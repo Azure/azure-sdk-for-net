@@ -601,7 +601,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             issues ??= new ChangeTrackingList<ConnectivityIssue>();
 
             return new ConnectivityHop(
-                default,
+                connectivityHopType,
                 id,
                 address,
                 resourceId,
@@ -677,7 +677,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <param name="name"> Parameter name. </param>
         /// <param name="description"> Parameter description. </param>
-        /// <param name="type"> Parameter type. </param>
+        /// <param name="parameterContractType"> Parameter type. </param>
         /// <param name="defaultValue"> Default parameter value. </param>
         /// <param name="isRequired"> Specifies whether parameter is required or not. </param>
         /// <param name="values"> Parameter values. </param>
@@ -685,7 +685,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="typeName"> Type name defined by the schema. </param>
         /// <param name="examples"> Exampled defined for the parameter. </param>
         /// <returns> A new <see cref="Models.ParameterContract"/> instance for mocking. </returns>
-        public static ParameterContract ParameterContract(string name = default, string description = default, string @type = default, string defaultValue = default, bool? isRequired = default, IEnumerable<string> values = default, string schemaId = default, string typeName = default, IDictionary<string, ParameterExampleContract> examples = default)
+        public static ParameterContract ParameterContract(string name = default, string description = default, string parameterContractType = default, string defaultValue = default, bool? isRequired = default, IEnumerable<string> values = default, string schemaId = default, string typeName = default, IDictionary<string, ParameterExampleContract> examples = default)
         {
             values ??= new ChangeTrackingList<string>();
             examples ??= new ChangeTrackingDictionary<string, ParameterExampleContract>();
@@ -693,7 +693,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             return new ParameterContract(
                 name,
                 description,
-                @type,
+                parameterContractType,
                 defaultValue,
                 isRequired,
                 (values ?? new ChangeTrackingList<string>()).ToList(),
@@ -2244,7 +2244,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 apiVersion,
                 description,
                 @method,
-                default,
+                uriTemplate,
                 default);
         }
 
