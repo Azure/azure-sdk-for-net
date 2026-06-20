@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> ARM resource for a KubeEnvironment when patching. </summary>
     public partial class KubeEnvironmentPatch : ProxyOnlyResource
@@ -31,9 +32,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> KubeEnvironmentPatchResource resource specific properties. </summary>
+        [WirePath("properties")]
         internal KubeEnvironmentPatchResourceProperties Properties { get; set; }
 
         /// <summary> Provisioning state of the Kubernetes Environment. </summary>
+        [WirePath("properties.provisioningState")]
         public KubeEnvironmentProvisioningState? ProvisioningState
         {
             get
@@ -43,6 +46,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Any errors that occurred during deployment or deployment validation. </summary>
+        [WirePath("properties.deploymentErrors")]
         public string DeploymentErrors
         {
             get
@@ -52,6 +56,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Only visible within Vnet/Subnet. </summary>
+        [WirePath("properties.internalLoadBalancerEnabled")]
         public bool? InternalLoadBalancerEnabled
         {
             get
@@ -69,6 +74,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Default Domain Name for the cluster. </summary>
+        [WirePath("properties.defaultDomain")]
         public string DefaultDomain
         {
             get
@@ -78,6 +84,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Static IP of the KubeEnvironment. </summary>
+        [WirePath("properties.staticIp")]
         public string StaticIp
         {
             get
@@ -99,6 +106,7 @@ namespace Microsoft.Web.Models
         /// components types. Eg: Choosing between BuildService kind,
         /// FrontEnd Service ArtifactsStorageType etc.
         /// </summary>
+        [WirePath("properties.arcConfiguration")]
         public ArcConfiguration ArcConfiguration
         {
             get
@@ -120,6 +128,7 @@ namespace Microsoft.Web.Models
         /// app logs to a destination. Currently only "log-analytics" is
         /// supported
         /// </summary>
+        [WirePath("properties.appLogsConfiguration")]
         public AppLogsConfiguration AppLogsConfiguration
         {
             get
@@ -137,6 +146,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Cluster configuration for Container Apps Environments to configure Dapr Instrumentation Key and VNET Configuration. </summary>
+        [WirePath("properties.containerAppsConfiguration")]
         public ContainerAppsConfiguration ContainerAppsConfiguration
         {
             get
@@ -154,6 +164,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Gets or sets the AksResourceID. </summary>
+        [WirePath("properties.aksResourceID")]
         public string AksResourceID
         {
             get

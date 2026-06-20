@@ -9,12 +9,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Metrics availability and retention. </summary>
-    public partial class ResourceMetricAvailability : IJsonModel<ResourceMetricAvailability>
+    internal partial class ResourceMetricAvailability : IJsonModel<ResourceMetricAvailability>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -40,7 +40,7 @@ namespace Microsoft.Web.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, MicrosoftWebContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ResourceMetricAvailability)} does not support writing '{options.Format}' format.");
             }

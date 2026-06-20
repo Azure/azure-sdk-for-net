@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> CustomHostnameAnalysisResult resource specific properties. </summary>
     internal partial class CustomHostnameAnalysisResultProperties
@@ -57,36 +57,47 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if hostname is already verified; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("isHostnameAlreadyVerified")]
         public bool? IsHostnameAlreadyVerified { get; }
 
         /// <summary> DNS verification test result. </summary>
+        [WirePath("customDomainVerificationTest")]
         public DnsVerificationTestResult? CustomDomainVerificationTest { get; }
 
         /// <summary> Raw failure information if DNS verification fails. </summary>
+        [WirePath("customDomainVerificationFailureInfo")]
         public ErrorEntity CustomDomainVerificationFailureInfo { get; }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if there is a conflict on a scale unit; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("hasConflictOnScaleUnit")]
         public bool? HasConflictOnScaleUnit { get; }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if there is a conflict across subscriptions; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("hasConflictAcrossSubscription")]
         public bool? HasConflictAcrossSubscription { get; }
 
         /// <summary> Name of the conflicting app on scale unit if it's within the same subscription. </summary>
+        [WirePath("conflictingAppResourceId")]
         public string ConflictingAppResourceId { get; }
 
         /// <summary> CName records controller can see for this hostname. </summary>
+        [WirePath("cNameRecords")]
         public IList<string> CNameRecords { get; } = new ChangeTrackingList<string>();
 
         /// <summary> TXT records controller can see for this hostname. </summary>
+        [WirePath("txtRecords")]
         public IList<string> TxtRecords { get; } = new ChangeTrackingList<string>();
 
         /// <summary> A records controller can see for this hostname. </summary>
+        [WirePath("aRecords")]
         public IList<string> ARecords { get; } = new ChangeTrackingList<string>();
 
         /// <summary> Alternate CName records controller can see for this hostname. </summary>
+        [WirePath("alternateCNameRecords")]
         public IList<string> AlternateCNameRecords { get; } = new ChangeTrackingList<string>();
 
         /// <summary> Alternate TXT records controller can see for this hostname. </summary>
+        [WirePath("alternateTxtRecords")]
         public IList<string> AlternateTxtRecords { get; } = new ChangeTrackingList<string>();
     }
 }

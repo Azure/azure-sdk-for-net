@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> ARM resource for a app service environment. </summary>
     public partial class AppServiceEnvironmentResourcePatch : ProxyOnlyResource
@@ -32,9 +32,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Core resource properties. </summary>
+        [WirePath("properties")]
         internal AppServiceEnvironment Properties { get; set; }
 
         /// <summary> Provisioning state of the App Service Environment. </summary>
+        [WirePath("properties.provisioningState")]
         public ProvisioningState? ProvisioningState
         {
             get
@@ -44,6 +46,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Current status of the App Service Environment. </summary>
+        [WirePath("properties.status")]
         public HostingEnvironmentStatus? Status
         {
             get
@@ -53,6 +56,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Description of the Virtual Network. </summary>
+        [WirePath("properties.virtualNetwork")]
         public VirtualNetworkProfile VirtualNetwork
         {
             get
@@ -70,6 +74,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Specifies which endpoints to serve internally in the Virtual Network for the App Service Environment. </summary>
+        [WirePath("properties.internalLoadBalancingMode")]
         public LoadBalancingMode? InternalLoadBalancingMode
         {
             get
@@ -87,6 +92,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Front-end VM size, e.g. "Medium", "Large". </summary>
+        [WirePath("properties.multiSize")]
         public string MultiSize
         {
             get
@@ -104,6 +110,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Number of front-end instances. </summary>
+        [WirePath("properties.multiRoleCount")]
         public int? MultiRoleCount
         {
             get
@@ -113,6 +120,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Number of IP SSL addresses reserved for the App Service Environment. </summary>
+        [WirePath("properties.ipsslAddressCount")]
         public int? IpsslAddressCount
         {
             get
@@ -130,6 +138,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> DNS suffix of the App Service Environment. </summary>
+        [WirePath("properties.dnsSuffix")]
         public string DnsSuffix
         {
             get
@@ -147,6 +156,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Maximum number of VMs in the App Service Environment. </summary>
+        [WirePath("properties.maximumNumberOfMachines")]
         public int? MaximumNumberOfMachines
         {
             get
@@ -156,6 +166,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Scale factor for front-ends. </summary>
+        [WirePath("properties.frontEndScaleFactor")]
         public int? FrontEndScaleFactor
         {
             get
@@ -176,6 +187,7 @@ namespace Microsoft.Web.Models
         /// &lt;code&gt;true&lt;/code&gt; if the App Service Environment is suspended; otherwise, &lt;code&gt;false&lt;/code&gt;. The environment can be suspended, e.g. when the management endpoint is no longer available
         /// (most likely because NSG blocked the incoming traffic).
         /// </summary>
+        [WirePath("properties.suspended")]
         public bool? Suspended
         {
             get
@@ -185,6 +197,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Custom settings for changing the behavior of the App Service Environment. </summary>
+        [WirePath("properties.clusterSettings")]
         public IList<NameValuePair> ClusterSettings
         {
             get
@@ -198,6 +211,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> User added ip ranges to whitelist on ASE db. </summary>
+        [WirePath("properties.userWhitelistedIpRanges")]
         public IList<string> UserWhitelistedIpRanges
         {
             get
@@ -211,6 +225,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Flag that displays whether an ASE has linux workers or not. </summary>
+        [WirePath("properties.hasLinuxWorkers")]
         public bool? HasLinuxWorkers
         {
             get
@@ -220,6 +235,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Upgrade Preference. </summary>
+        [WirePath("properties.upgradePreference")]
         public UpgradePreference? UpgradePreference
         {
             get
@@ -237,6 +253,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Dedicated Host Count. </summary>
+        [WirePath("properties.dedicatedHostCount")]
         public int? DedicatedHostCount
         {
             get
@@ -254,6 +271,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Whether or not this App Service Environment is zone-redundant. </summary>
+        [WirePath("properties.zoneRedundant")]
         public bool? ZoneRedundant
         {
             get
@@ -271,6 +289,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Full view of the custom domain suffix configuration for ASEv3. </summary>
+        [WirePath("properties.customDnsSuffixConfiguration")]
         public CustomDnsSuffixConfigurationData CustomDnsSuffixConfiguration
         {
             get
@@ -288,6 +307,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Full view of networking configuration for an ASE. </summary>
+        [WirePath("properties.networkingConfiguration")]
         public AseV3NetworkingConfigurationData NetworkingConfiguration
         {
             get
@@ -305,6 +325,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Whether an upgrade is available for this App Service Environment. </summary>
+        [WirePath("properties.upgradeAvailability")]
         public UpgradeAvailability? UpgradeAvailability
         {
             get

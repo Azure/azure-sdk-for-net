@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Geographical region. </summary>
     public partial class GeoRegion : ProxyOnlyResource
@@ -31,9 +32,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> GeoRegion resource specific properties. </summary>
+        [WirePath("properties")]
         internal GeoRegionProperties Properties { get; }
 
         /// <summary> Region description. </summary>
+        [WirePath("properties.description")]
         public string Description
         {
             get
@@ -43,6 +46,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Display name for region. </summary>
+        [WirePath("properties.displayName")]
         public string DisplayName
         {
             get
@@ -52,6 +56,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Display name for region. </summary>
+        [WirePath("properties.orgDomain")]
         public string OrgDomain
         {
             get

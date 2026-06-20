@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Custom DNS record type. </summary>
     public enum CustomHostNameDnsRecordType

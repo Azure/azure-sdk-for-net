@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Static Site Database Connection overview. </summary>
     public partial class DatabaseConnectionOverview
@@ -41,18 +41,23 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The resource id of the database. </summary>
+        [WirePath("resourceId")]
         public string ResourceId { get; }
 
         /// <summary> If present, the identity is used in conjunction with connection string to connect to the database. Use of the system-assigned managed identity is indicated with the string 'SystemAssigned', while use of a user-assigned managed identity is indicated with the resource id of the managed identity resource. </summary>
+        [WirePath("connectionIdentity")]
         public string ConnectionIdentity { get; }
 
         /// <summary> The region of the database resource. </summary>
+        [WirePath("region")]
         public string Region { get; }
 
         /// <summary> A list of configuration files associated with this database connection. </summary>
+        [WirePath("configurationFiles")]
         public IReadOnlyList<StaticSiteDatabaseConnectionConfigurationFileOverview> ConfigurationFiles { get; }
 
         /// <summary> If present, the name of this database connection resource. </summary>
+        [WirePath("name")]
         public string Name { get; }
     }
 }

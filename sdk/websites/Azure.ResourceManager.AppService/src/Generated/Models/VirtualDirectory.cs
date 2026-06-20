@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Directory for virtual application. </summary>
     public partial class VirtualDirectory
@@ -33,9 +34,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Path to virtual application. </summary>
+        [WirePath("virtualPath")]
         public string VirtualPath { get; set; }
 
         /// <summary> Physical path. </summary>
+        [WirePath("physicalPath")]
         public string PhysicalPath { get; set; }
     }
 }

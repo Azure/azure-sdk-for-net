@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> List of channels that this recommendation can apply. </summary>
     public enum Channels

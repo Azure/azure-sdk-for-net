@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The configuration settings of the custom Open ID Connect provider. </summary>
     public partial class CustomOpenIdConnectProvider
@@ -35,12 +36,15 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> &lt;code&gt;false&lt;/code&gt; if the custom Open ID provider provider should not be enabled; otherwise, &lt;code&gt;true&lt;/code&gt;. </summary>
+        [WirePath("enabled")]
         public bool? Enabled { get; set; }
 
         /// <summary> The configuration settings of the app registration for the custom Open ID Connect provider. </summary>
+        [WirePath("registration")]
         public OpenIdConnectRegistration Registration { get; set; }
 
         /// <summary> The configuration settings of the login flow of the custom Open ID Connect provider. </summary>
+        [WirePath("login")]
         public OpenIdConnectLogin Login { get; set; }
     }
 }

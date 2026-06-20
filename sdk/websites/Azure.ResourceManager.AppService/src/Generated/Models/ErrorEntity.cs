@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Body of the error response returned from the API. </summary>
     public partial class ErrorEntity
@@ -49,27 +49,35 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Type of error. </summary>
+        [WirePath("extendedCode")]
         public string ExtendedCode { get; }
 
         /// <summary> Message template. </summary>
+        [WirePath("messageTemplate")]
         public string MessageTemplate { get; }
 
         /// <summary> Parameters for the template. </summary>
+        [WirePath("parameters")]
         public IList<string> Parameters { get; }
 
         /// <summary> Inner errors. </summary>
+        [WirePath("innerErrors")]
         public IList<ErrorEntity> InnerErrors { get; }
 
         /// <summary> Error Details. </summary>
+        [WirePath("details")]
         public IList<ErrorEntity> Details { get; }
 
         /// <summary> The error target. </summary>
+        [WirePath("target")]
         public string Target { get; }
 
         /// <summary> Basic error code. </summary>
+        [WirePath("code")]
         public string Code { get; }
 
         /// <summary> Any details of the error. </summary>
+        [WirePath("message")]
         public string Message { get; }
     }
 }

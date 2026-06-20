@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The workflow run action repetition index. </summary>
     public partial class RepetitionIndex
@@ -35,9 +36,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The scope. </summary>
+        [WirePath("scopeName")]
         public string ScopeName { get; }
 
         /// <summary> The index. </summary>
+        [WirePath("itemIndex")]
         public int ItemIndex { get; }
     }
 }

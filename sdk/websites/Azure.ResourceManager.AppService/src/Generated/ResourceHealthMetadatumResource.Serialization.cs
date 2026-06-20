@@ -9,7 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary></summary>
     public partial class ResourceHealthMetadatumResource : IJsonModel<ResourceHealthMetadataData>
@@ -27,11 +27,11 @@ namespace Microsoft.Web
         ResourceHealthMetadataData IJsonModel<ResourceHealthMetadataData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ResourceHealthMetadataData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ResourceHealthMetadataData>(Data, options, MicrosoftWebContext.Default);
+        BinaryData IPersistableModel<ResourceHealthMetadataData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ResourceHealthMetadataData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ResourceHealthMetadataData IPersistableModel<ResourceHealthMetadataData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ResourceHealthMetadataData>(data, options, MicrosoftWebContext.Default);
+        ResourceHealthMetadataData IPersistableModel<ResourceHealthMetadataData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ResourceHealthMetadataData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ResourceHealthMetadataData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);

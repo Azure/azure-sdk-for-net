@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The endpoints configuration. </summary>
     public partial class FlowEndpointsConfiguration
@@ -33,9 +34,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The workflow endpoints. </summary>
+        [WirePath("workflow")]
         public FlowEndpoints Workflow { get; set; }
 
         /// <summary> The connector endpoints. </summary>
+        [WirePath("connector")]
         public FlowEndpoints Connector { get; set; }
     }
 }

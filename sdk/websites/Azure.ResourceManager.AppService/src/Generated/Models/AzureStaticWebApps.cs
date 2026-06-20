@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The configuration settings of the Azure Static Web Apps provider. </summary>
     public partial class AzureStaticWebApps
@@ -33,12 +34,15 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> &lt;code&gt;false&lt;/code&gt; if the Azure Static Web Apps provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;. </summary>
+        [WirePath("enabled")]
         public bool? Enabled { get; set; }
 
         /// <summary> The configuration settings of the Azure Static Web Apps registration. </summary>
+        [WirePath("registration")]
         internal AzureStaticWebAppsRegistration Registration { get; set; }
 
         /// <summary> The Client ID of the app used for login. </summary>
+        [WirePath("registration.clientId")]
         public string RegistrationClientId
         {
             get

@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The LogAnalyticsConfiguration. </summary>
     public partial class LogAnalyticsConfiguration
@@ -33,9 +34,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Gets or sets the CustomerId. </summary>
+        [WirePath("customerId")]
         public string CustomerId { get; set; }
 
         /// <summary> Gets or sets the SharedKey. </summary>
+        [WirePath("sharedKey")]
         public string SharedKey { get; set; }
     }
 }

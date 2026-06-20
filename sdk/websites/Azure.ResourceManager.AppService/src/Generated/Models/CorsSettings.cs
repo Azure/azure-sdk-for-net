@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Cross-Origin Resource Sharing (CORS) settings for the app. </summary>
     public partial class CorsSettings
@@ -45,6 +45,7 @@ namespace Microsoft.Web.Models
         /// Gets or sets the list of origins that should be allowed to make cross-origin
         /// calls (for example: http://example.com:12345). Use "*" to allow all.
         /// </summary>
+        [WirePath("allowedOrigins")]
         public IList<string> AllowedOrigins { get; }
 
         /// <summary>
@@ -52,6 +53,7 @@ namespace Microsoft.Web.Models
         /// https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS#Requests_with_credentials
         /// for more details.
         /// </summary>
+        [WirePath("supportCredentials")]
         public bool? SupportCredentials { get; set; }
     }
 }

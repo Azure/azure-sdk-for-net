@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
-using Microsoft.Web.Models;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary> User credentials used for publishing activity. </summary>
     public partial class DeploymentData : ResourceData
@@ -40,12 +40,15 @@ namespace Microsoft.Web
         }
 
         /// <summary> Deployment resource specific properties. </summary>
+        [WirePath("properties")]
         internal DeploymentProperties Properties { get; set; }
 
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
 
         /// <summary> Deployment status. </summary>
+        [WirePath("properties.status")]
         public int? Status
         {
             get
@@ -63,6 +66,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Details about deployment status. </summary>
+        [WirePath("properties.message")]
         public string Message
         {
             get
@@ -80,6 +84,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Who authored the deployment. </summary>
+        [WirePath("properties.author")]
         public string Author
         {
             get
@@ -97,6 +102,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Who performed the deployment. </summary>
+        [WirePath("properties.deployer")]
         public string Deployer
         {
             get
@@ -114,6 +120,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Author email. </summary>
+        [WirePath("properties.author_email")]
         public string AuthorEmail
         {
             get
@@ -131,6 +138,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Start time. </summary>
+        [WirePath("properties.start_time")]
         public DateTimeOffset? StartOn
         {
             get
@@ -148,6 +156,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> End time. </summary>
+        [WirePath("properties.end_time")]
         public DateTimeOffset? EndOn
         {
             get
@@ -165,6 +174,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> True if deployment is currently active, false if completed and null if not started. </summary>
+        [WirePath("properties.active")]
         public bool? Active
         {
             get
@@ -182,6 +192,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Details on deployment. </summary>
+        [WirePath("properties.details")]
         public string Details
         {
             get

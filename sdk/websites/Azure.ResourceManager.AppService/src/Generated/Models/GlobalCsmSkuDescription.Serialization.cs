@@ -9,9 +9,10 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Microsoft.Web;
+using Azure.Core;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> A Global SKU Description. </summary>
     public partial class GlobalCsmSkuDescription : IJsonModel<GlobalCsmSkuDescription>
@@ -40,7 +41,7 @@ namespace Microsoft.Web.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, MicrosoftWebContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(GlobalCsmSkuDescription)} does not support writing '{options.Format}' format.");
             }
@@ -97,19 +98,14 @@ namespace Microsoft.Web.Models
             if (Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
-                writer.WriteObjectValue(Capacity, options);
+                writer.WriteObjectValue<Models.AppServiceSkuCapacity>(Capacity, options);
             }
             if (Optional.IsCollectionDefined(Locations))
             {
                 writer.WritePropertyName("locations"u8);
                 writer.WriteStartArray();
-                foreach (string item in Locations)
+                foreach (AzureLocation item in Locations)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -118,9 +114,9 @@ namespace Microsoft.Web.Models
             {
                 writer.WritePropertyName("capabilities"u8);
                 writer.WriteStartArray();
-                foreach (Capability item in Capabilities)
+                foreach (Models.AppServiceSkuCapability item in Capabilities)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<Models.AppServiceSkuCapability>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -170,9 +166,9 @@ namespace Microsoft.Web.Models
             string tier = default;
             string size = default;
             string family = default;
-            SkuCapacity capacity = default;
-            IList<string> locations = default;
-            IList<Capability> capabilities = default;
+            Models.AppServiceSkuCapacity capacity = default;
+            IReadOnlyList<AzureLocation> locations = default;
+            IReadOnlyList<Models.AppServiceSkuCapability> capabilities = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -202,7 +198,7 @@ namespace Microsoft.Web.Models
                     {
                         continue;
                     }
-                    capacity = SkuCapacity.DeserializeSkuCapacity(prop.Value, options);
+                    capacity = Models.AppServiceSkuCapacity.DeserializeAppServiceSkuCapacity(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("locations"u8))
@@ -211,17 +207,10 @@ namespace Microsoft.Web.Models
                     {
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<AzureLocation> array = new List<AzureLocation>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(new AzureLocation(item.GetString()));
                     }
                     locations = array;
                     continue;
@@ -232,10 +221,10 @@ namespace Microsoft.Web.Models
                     {
                         continue;
                     }
-                    List<Capability> array = new List<Capability>();
+                    List<Models.AppServiceSkuCapability> array = new List<Models.AppServiceSkuCapability>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Capability.DeserializeCapability(item, options));
+                        array.Add(Models.AppServiceSkuCapability.DeserializeAppServiceSkuCapability(item, options));
                     }
                     capabilities = array;
                     continue;
@@ -251,8 +240,8 @@ namespace Microsoft.Web.Models
                 size,
                 family,
                 capacity,
-                locations ?? new ChangeTrackingList<string>(),
-                capabilities ?? new ChangeTrackingList<Capability>(),
+                locations ?? new ChangeTrackingList<AzureLocation>(),
+                capabilities ?? new ChangeTrackingList<Models.AppServiceSkuCapability>(),
                 additionalBinaryDataProperties);
         }
     }

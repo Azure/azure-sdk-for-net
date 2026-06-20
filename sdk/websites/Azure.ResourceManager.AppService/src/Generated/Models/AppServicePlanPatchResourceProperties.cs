@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> AppServicePlanPatchResource resource specific properties. </summary>
     internal partial class AppServicePlanPatchResourceProperties
@@ -81,78 +82,101 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Target worker tier assigned to the App Service plan. </summary>
+        [WirePath("workerTierName")]
         public string WorkerTierName { get; set; }
 
         /// <summary> App Service plan status. </summary>
+        [WirePath("status")]
         public StatusOptions? Status { get; }
 
         /// <summary> App Service plan subscription. </summary>
+        [WirePath("subscription")]
         public string Subscription { get; }
 
         /// <summary> Specification for the App Service Environment to use for the App Service plan. </summary>
+        [WirePath("hostingEnvironmentProfile")]
         public HostingEnvironmentProfile HostingEnvironmentProfile { get; set; }
 
         /// <summary> Maximum number of instances that can be assigned to this App Service plan. </summary>
+        [WirePath("maximumNumberOfWorkers")]
         public int? MaximumNumberOfWorkers { get; }
 
         /// <summary> The number of instances that are assigned to this App Service plan. </summary>
+        [WirePath("numberOfWorkers")]
         public int? NumberOfWorkers { get; }
 
         /// <summary> Geographical location for the App Service plan. </summary>
+        [WirePath("geoRegion")]
         public string GeoRegion { get; }
 
         /// <summary>
         /// If &lt;code&gt;true&lt;/code&gt;, apps assigned to this App Service plan can be scaled independently.
         /// If &lt;code&gt;false&lt;/code&gt;, apps assigned to this App Service plan will scale to all instances of the plan.
         /// </summary>
+        [WirePath("perSiteScaling")]
         public bool? PerSiteScaling { get; set; }
 
         /// <summary> ServerFarm supports ElasticScale. Apps in this plan will scale as if the ServerFarm was ElasticPremium sku. </summary>
+        [WirePath("elasticScaleEnabled")]
         public bool? ElasticScaleEnabled { get; set; }
 
         /// <summary> Maximum number of total workers allowed for this ElasticScaleEnabled App Service Plan. </summary>
+        [WirePath("maximumElasticWorkerCount")]
         public int? MaximumElasticWorkerCount { get; set; }
 
         /// <summary> Number of apps assigned to this App Service plan. </summary>
+        [WirePath("numberOfSites")]
         public int? NumberOfSites { get; }
 
         /// <summary> If &lt;code&gt;true&lt;/code&gt;, this App Service Plan owns spot instances. </summary>
+        [WirePath("isSpot")]
         public bool? IsSpot { get; set; }
 
         /// <summary> The time when the server farm expires. Valid only if it is a spot server farm. </summary>
+        [WirePath("spotExpirationTime")]
         public DateTimeOffset? SpotExpirationOn { get; set; }
 
         /// <summary> The time when the server farm free offer expires. </summary>
+        [WirePath("freeOfferExpirationTime")]
         public DateTimeOffset? FreeOfferExpirationOn { get; set; }
 
         /// <summary> Resource group of the App Service plan. </summary>
+        [WirePath("resourceGroup")]
         public string ResourceGroup { get; }
 
         /// <summary> If Linux app service plan &lt;code&gt;true&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt; otherwise. </summary>
+        [WirePath("reserved")]
         public bool? Reserved { get; set; }
 
         /// <summary> Obsolete: If Hyper-V container app service plan &lt;code&gt;true&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt; otherwise. </summary>
+        [WirePath("isXenon")]
         public bool? IsXenon { get; set; }
 
         /// <summary> If Hyper-V container app service plan &lt;code&gt;true&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt; otherwise. </summary>
+        [WirePath("hyperV")]
         public bool? HyperV { get; set; }
 
         /// <summary> Scaling worker count. </summary>
+        [WirePath("targetWorkerCount")]
         public int? TargetWorkerCount { get; set; }
 
         /// <summary> Scaling worker size ID. </summary>
+        [WirePath("targetWorkerSizeId")]
         public int? TargetWorkerSizeId { get; set; }
 
         /// <summary> Provisioning state of the App Service Plan. </summary>
+        [WirePath("provisioningState")]
         public ProvisioningState? ProvisioningState { get; }
 
         /// <summary> Specification for the Kubernetes Environment to use for the App Service plan. </summary>
+        [WirePath("kubeEnvironmentProfile")]
         public KubeEnvironmentProfile KubeEnvironmentProfile { get; set; }
 
         /// <summary>
         /// If &lt;code&gt;true&lt;/code&gt;, this App Service Plan will perform availability zone balancing.
         /// If &lt;code&gt;false&lt;/code&gt;, this App Service Plan will not perform availability zone balancing.
         /// </summary>
+        [WirePath("zoneRedundant")]
         public bool? ZoneRedundant { get; set; }
     }
 }

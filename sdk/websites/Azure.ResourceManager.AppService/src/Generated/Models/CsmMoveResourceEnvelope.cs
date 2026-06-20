@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Object with a list of the resources that need to be moved and the resource group they should be moved to. </summary>
     public partial class CsmMoveResourceEnvelope
@@ -35,9 +35,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Gets or sets the TargetResourceGroup. </summary>
+        [WirePath("targetResourceGroup")]
         public string TargetResourceGroup { get; set; }
 
         /// <summary> Gets the Resources. </summary>
+        [WirePath("resources")]
         public IList<string> Resources { get; }
     }
 }

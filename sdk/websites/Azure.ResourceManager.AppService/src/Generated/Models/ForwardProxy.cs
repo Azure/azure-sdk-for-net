@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The configuration settings of a forward proxy used to make the requests. </summary>
     public partial class ForwardProxy
@@ -35,12 +36,15 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The convention used to determine the url of the request made. </summary>
+        [WirePath("convention")]
         public ForwardProxyConvention? Convention { get; set; }
 
         /// <summary> The name of the header containing the host of the request. </summary>
+        [WirePath("customHostHeaderName")]
         public string CustomHostHeaderName { get; set; }
 
         /// <summary> The name of the header containing the scheme of the request. </summary>
+        [WirePath("customProtoHeaderName")]
         public string CustomProtoHeaderName { get; set; }
     }
 }

@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Class representing Abnormal Time Period identified in diagnosis. </summary>
     public partial class AbnormalTimePeriod : IJsonModel<AbnormalTimePeriod>
@@ -40,7 +40,7 @@ namespace Microsoft.Web.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, MicrosoftWebContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AbnormalTimePeriod)} does not support writing '{options.Format}' format.");
             }
@@ -98,9 +98,9 @@ namespace Microsoft.Web.Models
             {
                 writer.WritePropertyName("solutions"u8);
                 writer.WriteStartArray();
-                foreach (Solution item in Solutions)
+                foreach (Models.DiagnosticSolution item in Solutions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<Models.DiagnosticSolution>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -149,7 +149,7 @@ namespace Microsoft.Web.Models
             DateTimeOffset? startOn = default;
             DateTimeOffset? endOn = default;
             IList<DetectorAbnormalTimePeriod> events = default;
-            IList<Solution> solutions = default;
+            IList<Models.DiagnosticSolution> solutions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -191,10 +191,10 @@ namespace Microsoft.Web.Models
                     {
                         continue;
                     }
-                    List<Solution> array = new List<Solution>();
+                    List<Models.DiagnosticSolution> array = new List<Models.DiagnosticSolution>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Solution.DeserializeSolution(item, options));
+                        array.Add(Models.DiagnosticSolution.DeserializeDiagnosticSolution(item, options));
                     }
                     solutions = array;
                     continue;
@@ -204,7 +204,7 @@ namespace Microsoft.Web.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AbnormalTimePeriod(startOn, endOn, events ?? new ChangeTrackingList<DetectorAbnormalTimePeriod>(), solutions ?? new ChangeTrackingList<Solution>(), additionalBinaryDataProperties);
+            return new AbnormalTimePeriod(startOn, endOn, events ?? new ChangeTrackingList<DetectorAbnormalTimePeriod>(), solutions ?? new ChangeTrackingList<Models.DiagnosticSolution>(), additionalBinaryDataProperties);
         }
     }
 }

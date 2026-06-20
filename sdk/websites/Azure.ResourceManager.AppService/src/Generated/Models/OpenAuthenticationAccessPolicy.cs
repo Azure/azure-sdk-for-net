@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Open authentication access policy defined by user. </summary>
     public partial class OpenAuthenticationAccessPolicy
@@ -35,9 +35,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Type of provider for OAuth. </summary>
+        [WirePath("type")]
         public OpenAuthenticationProviderType? Type { get; set; }
 
         /// <summary> The access policy claims. </summary>
+        [WirePath("claims")]
         public IList<OpenAuthenticationPolicyClaim> Claims { get; }
     }
 }

@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> MSDeploy ARM PUT information. </summary>
     public partial class MSDeploy : ProxyOnlyResource
@@ -31,10 +32,12 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Core resource properties. </summary>
+        [WirePath("properties")]
         internal MSDeployProperties Properties { get; set; }
 
         /// <summary> Package URI. </summary>
-        public string PackageUri
+        [WirePath("properties.packageUri")]
+        public Uri PackageUri
         {
             get
             {
@@ -51,6 +54,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> SQL Connection String. </summary>
+        [WirePath("properties.connectionString")]
         public string ConnectionString
         {
             get
@@ -68,6 +72,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Database Type. </summary>
+        [WirePath("properties.dbType")]
         public string DbType
         {
             get
@@ -85,7 +90,8 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> URI of MSDeploy Parameters file. Must not be set if SetParameters is used. </summary>
-        public string SetParametersXmlFileUri
+        [WirePath("properties.setParametersXmlFileUri")]
+        public Uri SetParametersXmlFileUri
         {
             get
             {
@@ -102,6 +108,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> MSDeploy Parameters. Must not be set if SetParametersXmlFileUri is used. </summary>
+        [WirePath("properties.setParameters")]
         public IDictionary<string, string> SetParameters
         {
             get
@@ -120,6 +127,7 @@ namespace Microsoft.Web.Models
         /// will not be deleted, and any App_Data directory in the source will be ignored.
         /// Setting is &lt;code&gt;false&lt;/code&gt; by default.
         /// </summary>
+        [WirePath("properties.skipAppData")]
         public bool? SkipAppData
         {
             get
@@ -140,6 +148,7 @@ namespace Microsoft.Web.Models
         /// Sets the AppOffline rule while the MSDeploy operation executes.
         /// Setting is &lt;code&gt;false&lt;/code&gt; by default.
         /// </summary>
+        [WirePath("properties.appOffline")]
         public bool? AppOffline
         {
             get
@@ -157,6 +166,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> List of Add-On packages. Add-On packages implicitly enable the Do Not Delete MSDeploy rule. </summary>
+        [WirePath("properties.addOnPackages")]
         public IList<MSDeployCore> AddOnPackages
         {
             get

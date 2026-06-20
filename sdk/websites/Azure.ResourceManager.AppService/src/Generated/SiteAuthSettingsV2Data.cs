@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
-using Microsoft.Web.Models;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary> Configuration settings for the Azure App Service Authentication / Authorization V2 feature. </summary>
     public partial class SiteAuthSettingsV2Data : ResourceData
@@ -40,12 +40,15 @@ namespace Microsoft.Web
         }
 
         /// <summary> SiteAuthSettingsV2 resource specific properties. </summary>
+        [WirePath("properties")]
         internal SiteAuthSettingsV2Properties Properties { get; set; }
 
         /// <summary> Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
 
         /// <summary> The configuration settings of the platform of App Service Authentication/Authorization. </summary>
+        [WirePath("properties.platform")]
         public AuthPlatform Platform
         {
             get
@@ -63,6 +66,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> The configuration settings that determines the validation flow of users using App Service Authentication/Authorization. </summary>
+        [WirePath("properties.globalValidation")]
         public GlobalValidation GlobalValidation
         {
             get
@@ -80,6 +84,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> The configuration settings of each of the identity providers used to configure App Service Authentication/Authorization. </summary>
+        [WirePath("properties.identityProviders")]
         public IdentityProviders IdentityProviders
         {
             get
@@ -97,6 +102,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> The configuration settings of the login flow of users using App Service Authentication/Authorization. </summary>
+        [WirePath("properties.login")]
         public Login Login
         {
             get
@@ -114,6 +120,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> The configuration settings of the HTTP requests for authentication and authorization requests made against App Service Authentication/Authorization. </summary>
+        [WirePath("properties.httpSettings")]
         public HttpSettings HttpSettings
         {
             get

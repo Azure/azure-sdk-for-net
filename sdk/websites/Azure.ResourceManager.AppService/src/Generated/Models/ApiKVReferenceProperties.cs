@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> ApiKVReference resource specific properties. </summary>
     internal partial class ApiKVReferenceProperties
@@ -47,30 +48,39 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Gets the Reference. </summary>
+        [WirePath("reference")]
         public string Reference { get; }
 
         /// <summary> Gets the Status. </summary>
+        [WirePath("status")]
         public ResolveStatus? Status { get; }
 
         /// <summary> Gets the VaultName. </summary>
+        [WirePath("vaultName")]
         public string VaultName { get; }
 
         /// <summary> Gets the SecretName. </summary>
+        [WirePath("secretName")]
         public string SecretName { get; }
 
         /// <summary> Gets the SecretVersion. </summary>
+        [WirePath("secretVersion")]
         public string SecretVersion { get; }
 
         /// <summary> Managed service identity. </summary>
+        [WirePath("identityType")]
         public ManagedServiceIdentity IdentityType { get; }
 
         /// <summary> Gets the Details. </summary>
+        [WirePath("details")]
         public string Details { get; }
 
         /// <summary> Gets the Source. </summary>
+        [WirePath("source")]
         public ApiKVReferencePropertiesSource? Source { get; }
 
         /// <summary> Gets the ActiveVersion. </summary>
+        [WirePath("activeVersion")]
         public string ActiveVersion { get; }
     }
 }

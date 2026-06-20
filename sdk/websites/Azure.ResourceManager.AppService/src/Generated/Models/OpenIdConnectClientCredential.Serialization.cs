@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The authentication client credentials of the custom Open ID Connect provider. </summary>
     public partial class OpenIdConnectClientCredential : IJsonModel<OpenIdConnectClientCredential>
@@ -40,7 +40,7 @@ namespace Microsoft.Web.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, MicrosoftWebContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(OpenIdConnectClientCredential)} does not support writing '{options.Format}' format.");
             }
@@ -126,7 +126,7 @@ namespace Microsoft.Web.Models
             {
                 return null;
             }
-            OpenIdConnectClientCredentialMethod? @method = default;
+            Models.ClientCredentialMethod? @method = default;
             string clientSecretSettingName = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Microsoft.Web.Models
                     {
                         continue;
                     }
-                    @method = new OpenIdConnectClientCredentialMethod(prop.Value.GetString());
+                    @method = new Models.ClientCredentialMethod(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("clientSecretSettingName"u8))

@@ -8,8 +8,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> A request. </summary>
     public partial class Request
@@ -61,12 +62,15 @@ namespace Microsoft.Web.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("headers")]
         public BinaryData Headers { get; }
 
         /// <summary> The destination for the request. </summary>
+        [WirePath("uri")]
         public string Uri { get; }
 
         /// <summary> The HTTP method used for the request. </summary>
+        [WirePath("method")]
         public string Method { get; }
     }
 }

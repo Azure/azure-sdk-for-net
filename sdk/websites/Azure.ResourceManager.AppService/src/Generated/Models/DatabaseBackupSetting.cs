@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Database backup settings. </summary>
     public partial class DatabaseBackupSetting
@@ -42,18 +43,22 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Database type (e.g. SqlAzure / MySql). </summary>
+        [WirePath("databaseType")]
         public DatabaseType DatabaseType { get; set; }
 
         /// <summary> Gets or sets the Name. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
 
         /// <summary>
         /// Contains a connection string name that is linked to the SiteConfig.ConnectionStrings.
         /// This is used during restore with overwrite connection strings options.
         /// </summary>
+        [WirePath("connectionStringName")]
         public string ConnectionStringName { get; set; }
 
         /// <summary> Contains a connection string to a database which is being backed up or restored. If the restore should happen to a new database, the database name inside is the new one. </summary>
+        [WirePath("connectionString")]
         public string ConnectionString { get; set; }
     }
 }

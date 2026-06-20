@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The configuration settings of the login flow of users using App Service Authentication/Authorization. </summary>
     public partial class Login
@@ -47,12 +47,15 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The routes that specify the endpoints used for login and logout requests. </summary>
+        [WirePath("routes")]
         internal LoginRoutes Routes { get; set; }
 
         /// <summary> The configuration settings of the token store. </summary>
+        [WirePath("tokenStore")]
         public TokenStore TokenStore { get; set; }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if the fragments from the request are preserved after the login request is made; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("preserveUrlFragmentsForLogins")]
         public bool? PreserveUrlFragmentsForLogins { get; set; }
 
         /// <summary>
@@ -60,15 +63,19 @@ namespace Microsoft.Web.Models
         /// This is an advanced setting typically only needed by Windows Store application backends.
         /// Note that URLs within the current domain are always implicitly allowed.
         /// </summary>
+        [WirePath("allowedExternalRedirectUrls")]
         public IList<string> AllowedExternalRedirectUrls { get; }
 
         /// <summary> The configuration settings of the session cookie's expiration. </summary>
+        [WirePath("cookieExpiration")]
         public CookieExpiration CookieExpiration { get; set; }
 
         /// <summary> The configuration settings of the nonce used in the login flow. </summary>
+        [WirePath("nonce")]
         public Nonce Nonce { get; set; }
 
         /// <summary> The endpoint at which a logout request should be made. </summary>
+        [WirePath("routes.logoutEndpoint")]
         public string RoutesLogoutEndpoint
         {
             get

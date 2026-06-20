@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
-using Microsoft.Web.Models;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary> Full view of networking configuration for an ASE. </summary>
     public partial class AseV3NetworkingConfigurationData : ResourceData
@@ -40,12 +40,15 @@ namespace Microsoft.Web
         }
 
         /// <summary> AseV3NetworkingConfiguration resource specific properties. </summary>
+        [WirePath("properties")]
         internal AseV3NetworkingConfigurationProperties Properties { get; set; }
 
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
 
         /// <summary> Gets the WindowsOutboundIpAddresses. </summary>
+        [WirePath("properties.windowsOutboundIpAddresses")]
         public IReadOnlyList<string> WindowsOutboundIpAddresses
         {
             get
@@ -59,6 +62,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Gets the LinuxOutboundIpAddresses. </summary>
+        [WirePath("properties.linuxOutboundIpAddresses")]
         public IReadOnlyList<string> LinuxOutboundIpAddresses
         {
             get
@@ -72,6 +76,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Gets the ExternalInboundIpAddresses. </summary>
+        [WirePath("properties.externalInboundIpAddresses")]
         public IReadOnlyList<string> ExternalInboundIpAddresses
         {
             get
@@ -85,6 +90,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Gets the InternalInboundIpAddresses. </summary>
+        [WirePath("properties.internalInboundIpAddresses")]
         public IReadOnlyList<string> InternalInboundIpAddresses
         {
             get
@@ -98,6 +104,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Property to enable and disable new private endpoint connection creation on ASE. </summary>
+        [WirePath("properties.allowNewPrivateEndpointConnections")]
         public bool? AllowNewPrivateEndpointConnections
         {
             get
@@ -115,6 +122,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Property to enable and disable FTP on ASEV3. </summary>
+        [WirePath("properties.ftpEnabled")]
         public bool? FtpEnabled
         {
             get
@@ -132,6 +140,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Property to enable and disable Remote Debug on ASEV3. </summary>
+        [WirePath("properties.remoteDebugEnabled")]
         public bool? RemoteDebugEnabled
         {
             get
@@ -149,6 +158,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Customer provided Inbound IP Address. Only able to be set on Ase create. </summary>
+        [WirePath("properties.inboundIpAddressOverride")]
         public string InboundIpAddressOverride
         {
             get

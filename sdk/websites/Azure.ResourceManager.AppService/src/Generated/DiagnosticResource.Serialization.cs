@@ -9,7 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary></summary>
     public partial class DiagnosticResource : IJsonModel<DetectorDefinitionResourceData>
@@ -27,11 +27,11 @@ namespace Microsoft.Web
         DetectorDefinitionResourceData IJsonModel<DetectorDefinitionResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DetectorDefinitionResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DetectorDefinitionResourceData>(Data, options, MicrosoftWebContext.Default);
+        BinaryData IPersistableModel<DetectorDefinitionResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DetectorDefinitionResourceData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DetectorDefinitionResourceData IPersistableModel<DetectorDefinitionResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DetectorDefinitionResourceData>(data, options, MicrosoftWebContext.Default);
+        DetectorDefinitionResourceData IPersistableModel<DetectorDefinitionResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DetectorDefinitionResourceData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DetectorDefinitionResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);

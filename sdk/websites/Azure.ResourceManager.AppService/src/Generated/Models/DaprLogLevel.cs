@@ -7,9 +7,9 @@
 
 using System;
 using System.ComponentModel;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Sets the log level for the Dapr sidecar. Allowed values are debug, info, warn, error. Default is info. </summary>
     public readonly partial struct DaprLogLevel : IEquatable<DaprLogLevel>

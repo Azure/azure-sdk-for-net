@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Data Table which defines columns and raw row values. </summary>
     public partial class DataTableResponseObject
@@ -38,12 +38,15 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Name of the table. </summary>
+        [WirePath("tableName")]
         public string TableName { get; }
 
         /// <summary> List of columns with data types. </summary>
+        [WirePath("columns")]
         public IList<DataTableResponseColumn> Columns { get; }
 
         /// <summary> Raw row values. </summary>
+        [WirePath("rows")]
         public IList<IList<string>> Rows { get; }
     }
 }

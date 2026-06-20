@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Details about app recovery operation. </summary>
     public partial class SnapshotRestoreRequest : ProxyOnlyResource
@@ -31,9 +32,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> SnapshotRestoreRequest resource specific properties. </summary>
+        [WirePath("properties")]
         internal SnapshotRestoreRequestProperties Properties { get; set; }
 
         /// <summary> Point in time in which the app restore should be done, formatted as a DateTime string. </summary>
+        [WirePath("properties.snapshotTime")]
         public string SnapshotTime
         {
             get
@@ -54,6 +57,7 @@ namespace Microsoft.Web.Models
         /// Optional. Specifies the web app that snapshot contents will be retrieved from.
         /// If empty, the targeted web app will be used as the source.
         /// </summary>
+        [WirePath("properties.recoverySource")]
         public SnapshotRecoverySource RecoverySource
         {
             get
@@ -71,6 +75,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> If &lt;code&gt;true&lt;/code&gt; the restore operation can overwrite source app; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("properties.overwrite")]
         public bool? Overwrite
         {
             get
@@ -80,6 +85,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> If true, site configuration, in addition to content, will be reverted. </summary>
+        [WirePath("properties.recoverConfiguration")]
         public bool? RecoverConfiguration
         {
             get
@@ -100,6 +106,7 @@ namespace Microsoft.Web.Models
         /// If true, custom hostname conflicts will be ignored when recovering to a target web app.
         /// This setting is only necessary when RecoverConfiguration is enabled.
         /// </summary>
+        [WirePath("properties.ignoreConflictingHostNames")]
         public bool? IgnoreConflictingHostNames
         {
             get
@@ -117,6 +124,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> If true, the snapshot is retrieved from DRSecondary endpoint. </summary>
+        [WirePath("properties.useDRSecondary")]
         public bool? UseDRSecondary
         {
             get

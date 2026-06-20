@@ -14,7 +14,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     internal partial class MicrosoftWebVnetInfoResourcesListVnetsCollectionResultOfT : Pageable<VnetInfoResourceData>
     {
@@ -86,7 +86,7 @@ namespace Microsoft.Web
             List<VnetInfoResourceData> result = new List<VnetInfoResourceData>();
             foreach (JsonElement element in array.EnumerateArray())
             {
-                result.Add(ModelReaderWriter.Read<VnetInfoResourceData>(new BinaryData(Encoding.UTF8.GetBytes(element.GetRawText())), ModelSerializationExtensions.WireOptions, MicrosoftWebContext.Default));
+                result.Add(ModelReaderWriter.Read<VnetInfoResourceData>(new BinaryData(Encoding.UTF8.GetBytes(element.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAppServiceContext.Default));
             }
             return result;
         }

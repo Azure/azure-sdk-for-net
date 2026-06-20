@@ -17,7 +17,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A class representing a collection of <see cref="AppServiceEnvironmentResource"/> and their operations.
@@ -40,7 +40,7 @@ namespace Microsoft.Web
         internal AppServiceEnvironmentResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             this.TryGetApiVersion(AppServiceEnvironmentResource.ResourceType, out string appServiceEnvironmentResourceApiVersion);
-            _appServiceEnvironmentsClientDiagnostics = new ClientDiagnostics("Microsoft.Web", AppServiceEnvironmentResource.ResourceType.Namespace, Diagnostics);
+            _appServiceEnvironmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", AppServiceEnvironmentResource.ResourceType.Namespace, Diagnostics);
             _appServiceEnvironmentsRestClient = new AppServiceEnvironments(_appServiceEnvironmentsClientDiagnostics, Pipeline, Endpoint, appServiceEnvironmentResourceApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
@@ -93,7 +93,7 @@ namespace Microsoft.Web
                 };
                 HttpMessage message = _appServiceEnvironmentsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, AppServiceEnvironmentResourceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                WebArmOperation<AppServiceEnvironmentResource> operation = new WebArmOperation<AppServiceEnvironmentResource>(
+                AppServiceArmOperation<AppServiceEnvironmentResource> operation = new AppServiceArmOperation<AppServiceEnvironmentResource>(
                     new AppServiceEnvironmentResourceOperationSource(Client),
                     _appServiceEnvironmentsClientDiagnostics,
                     Pipeline,
@@ -151,7 +151,7 @@ namespace Microsoft.Web
                 };
                 HttpMessage message = _appServiceEnvironmentsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, AppServiceEnvironmentResourceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                WebArmOperation<AppServiceEnvironmentResource> operation = new WebArmOperation<AppServiceEnvironmentResource>(
+                AppServiceArmOperation<AppServiceEnvironmentResource> operation = new AppServiceArmOperation<AppServiceEnvironmentResource>(
                     new AppServiceEnvironmentResourceOperationSource(Client),
                     _appServiceEnvironmentsClientDiagnostics,
                     Pipeline,

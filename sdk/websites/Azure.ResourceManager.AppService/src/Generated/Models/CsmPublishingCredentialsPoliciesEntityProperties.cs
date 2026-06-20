@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> CsmPublishingCredentialsPoliciesEntity resource specific properties. </summary>
     internal partial class CsmPublishingCredentialsPoliciesEntityProperties
@@ -33,6 +34,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; to allow access to a publishing method; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("allow")]
         public bool Allow { get; set; }
     }
 }

@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> App Service plan status. </summary>
     public enum StatusOptions

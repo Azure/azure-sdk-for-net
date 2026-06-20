@@ -8,9 +8,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Collection of Kubernetes Environments. </summary>
     public partial class KubeEnvironmentCollection
@@ -37,9 +37,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The KubeEnvironment items on this page. </summary>
+        [WirePath("value")]
         public IList<KubeEnvironmentData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
+        [WirePath("nextLink")]
         public Uri NextLink { get; }
     }
 }

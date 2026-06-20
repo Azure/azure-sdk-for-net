@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The GitHub action container configuration. </summary>
     public partial class GitHubActionContainerConfiguration
@@ -27,7 +28,7 @@ namespace Microsoft.Web.Models
         /// <param name="username"> The username used to upload the image to the container registry. </param>
         /// <param name="password"> The password used to upload the image to the container registry. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GitHubActionContainerConfiguration(string serverUri, string imageName, string username, string password, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GitHubActionContainerConfiguration(Uri serverUri, string imageName, string username, string password, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ServerUri = serverUri;
             ImageName = imageName;
@@ -37,15 +38,19 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The server URL for the container registry where the build will be hosted. </summary>
-        public string ServerUri { get; set; }
+        [WirePath("serverUrl")]
+        public Uri ServerUri { get; set; }
 
         /// <summary> The image name for the build. </summary>
+        [WirePath("imageName")]
         public string ImageName { get; set; }
 
         /// <summary> The username used to upload the image to the container registry. </summary>
+        [WirePath("username")]
         public string Username { get; set; }
 
         /// <summary> The password used to upload the image to the container registry. </summary>
+        [WirePath("password")]
         public string Password { get; set; }
     }
 }

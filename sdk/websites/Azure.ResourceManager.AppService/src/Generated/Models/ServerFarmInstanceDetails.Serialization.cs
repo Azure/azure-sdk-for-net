@@ -10,9 +10,9 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Represents instance details for an app service plan. </summary>
     public partial class ServerFarmInstanceDetails : IJsonModel<ServerFarmInstanceDetails>
@@ -41,7 +41,7 @@ namespace Microsoft.Web.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, MicrosoftWebContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ServerFarmInstanceDetails)} does not support writing '{options.Format}' format.");
             }
@@ -145,7 +145,7 @@ namespace Microsoft.Web.Models
                 return null;
             }
             string serverFarmName = default;
-            IList<ServerFarmInstance> instances = default;
+            IReadOnlyList<ServerFarmInstance> instances = default;
             int? instanceCount = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())

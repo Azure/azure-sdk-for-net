@@ -12,10 +12,10 @@ using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
-using Microsoft.Web.Models;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary> The source control OAuth token. </summary>
     public partial class SourceControlData : ResourceData, IJsonModel<SourceControlData>
@@ -44,7 +44,7 @@ namespace Microsoft.Web
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, MicrosoftWebContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(SourceControlData)} does not support writing '{options.Format}' format.");
             }
@@ -70,8 +70,8 @@ namespace Microsoft.Web
             return RequestContent.Create(sourceControlData, ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="response"> The <see cref="Azure.Response"/> to deserialize the <see cref="SourceControlData"/> from. </param>
-        internal static SourceControlData FromResponse(Azure.Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SourceControlData"/> from. </param>
+        internal static SourceControlData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeSourceControlData(document.RootElement, ModelSerializationExtensions.WireOptions);
@@ -186,7 +186,7 @@ namespace Microsoft.Web
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, MicrosoftWebContext.Default);
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAppServiceContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))

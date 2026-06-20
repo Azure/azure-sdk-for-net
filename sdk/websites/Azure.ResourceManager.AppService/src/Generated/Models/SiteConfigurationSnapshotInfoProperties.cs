@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> SiteConfigurationSnapshotInfo resource specific properties. </summary>
     internal partial class SiteConfigurationSnapshotInfoProperties
@@ -33,9 +34,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The time the snapshot was taken. </summary>
+        [WirePath("time")]
         public DateTimeOffset? Time { get; }
 
         /// <summary> The id of the snapshot. </summary>
+        [WirePath("snapshotId")]
         public int? SnapshotId { get; }
     }
 }

@@ -10,9 +10,9 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The workflow trigger callback URL. </summary>
     public partial class WorkflowTriggerCallbackUri : IJsonModel<WorkflowTriggerCallbackUri>
@@ -41,7 +41,7 @@ namespace Microsoft.Web.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, MicrosoftWebContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(WorkflowTriggerCallbackUri)} does not support writing '{options.Format}' format.");
             }
@@ -120,7 +120,7 @@ namespace Microsoft.Web.Models
             if (Optional.IsDefined(Queries))
             {
                 writer.WritePropertyName("queries"u8);
-                writer.WriteObjectValue(Queries, options);
+                writer.WriteObjectValue<Models.WorkflowTriggerListCallbackUriQueries>(Queries, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -168,8 +168,8 @@ namespace Microsoft.Web.Models
             string @method = default;
             string basePath = default;
             string relativePath = default;
-            IList<string> relativePathParameters = default;
-            WorkflowTriggerListCallbackUrlQueries queries = default;
+            IReadOnlyList<string> relativePathParameters = default;
+            Models.WorkflowTriggerListCallbackUriQueries queries = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -220,7 +220,7 @@ namespace Microsoft.Web.Models
                     {
                         continue;
                     }
-                    queries = WorkflowTriggerListCallbackUrlQueries.DeserializeWorkflowTriggerListCallbackUrlQueries(prop.Value, options);
+                    queries = Models.WorkflowTriggerListCallbackUriQueries.DeserializeWorkflowTriggerListCallbackUriQueries(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

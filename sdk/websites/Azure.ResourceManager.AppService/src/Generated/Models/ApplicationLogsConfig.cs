@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Application logs configuration. </summary>
     public partial class ApplicationLogsConfig
@@ -26,7 +27,7 @@ namespace Microsoft.Web.Models
         /// <param name="azureTableStorage"> Application logs to azure table storage configuration. </param>
         /// <param name="azureBlobStorage"> Application logs to blob storage configuration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationLogsConfig(FileSystemApplicationLogsConfig fileSystem, AzureTableStorageApplicationLogsConfig azureTableStorage, AzureBlobStorageApplicationLogsConfig azureBlobStorage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApplicationLogsConfig(FileSystemApplicationLogsConfig fileSystem, Models.AppServiceTableStorageApplicationLogsConfig azureTableStorage, Models.AppServiceBlobStorageApplicationLogsConfig azureBlobStorage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FileSystem = fileSystem;
             AzureTableStorage = azureTableStorage;
@@ -35,15 +36,19 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Application logs to file system configuration. </summary>
+        [WirePath("fileSystem")]
         internal FileSystemApplicationLogsConfig FileSystem { get; set; }
 
         /// <summary> Application logs to azure table storage configuration. </summary>
-        public AzureTableStorageApplicationLogsConfig AzureTableStorage { get; set; }
+        [WirePath("azureTableStorage")]
+        public Models.AppServiceTableStorageApplicationLogsConfig AzureTableStorage { get; set; }
 
         /// <summary> Application logs to blob storage configuration. </summary>
-        public AzureBlobStorageApplicationLogsConfig AzureBlobStorage { get; set; }
+        [WirePath("azureBlobStorage")]
+        public Models.AppServiceBlobStorageApplicationLogsConfig AzureBlobStorage { get; set; }
 
         /// <summary> Log level. </summary>
+        [WirePath("fileSystem.level")]
         public LogLevel? FileSystemLevel
         {
             get

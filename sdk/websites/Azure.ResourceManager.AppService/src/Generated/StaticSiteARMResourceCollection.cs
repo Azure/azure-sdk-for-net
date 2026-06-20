@@ -17,7 +17,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A class representing a collection of <see cref="StaticSiteARMResource"/> and their operations.
@@ -40,7 +40,7 @@ namespace Microsoft.Web
         internal StaticSiteARMResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(StaticSiteARMResource.ResourceType, out string staticSiteARMResourceApiVersion);
-            _staticSitesClientDiagnostics = new ClientDiagnostics("Microsoft.Web", StaticSiteARMResource.ResourceType.Namespace, Diagnostics);
+            _staticSitesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", StaticSiteARMResource.ResourceType.Namespace, Diagnostics);
             _staticSitesRestClient = new StaticSites(_staticSitesClientDiagnostics, Pipeline, Endpoint, staticSiteARMResourceApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
@@ -93,7 +93,7 @@ namespace Microsoft.Web
                 };
                 HttpMessage message = _staticSitesRestClient.CreateCreateOrUpdateStaticSiteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, StaticSiteARMResourceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                WebArmOperation<StaticSiteARMResource> operation = new WebArmOperation<StaticSiteARMResource>(
+                AppServiceArmOperation<StaticSiteARMResource> operation = new AppServiceArmOperation<StaticSiteARMResource>(
                     new StaticSiteARMResourceOperationSource(Client),
                     _staticSitesClientDiagnostics,
                     Pipeline,
@@ -151,7 +151,7 @@ namespace Microsoft.Web
                 };
                 HttpMessage message = _staticSitesRestClient.CreateCreateOrUpdateStaticSiteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, StaticSiteARMResourceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                WebArmOperation<StaticSiteARMResource> operation = new WebArmOperation<StaticSiteARMResource>(
+                AppServiceArmOperation<StaticSiteARMResource> operation = new AppServiceArmOperation<StaticSiteARMResource>(
                     new StaticSiteARMResourceOperationSource(Client),
                     _staticSitesClientDiagnostics,
                     Pipeline,

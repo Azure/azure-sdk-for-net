@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
-using Microsoft.Web.Models;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary> Static Site Build ARM resource. </summary>
     public partial class StaticSiteBuildARMResourceData : ResourceData
@@ -40,12 +40,15 @@ namespace Microsoft.Web
         }
 
         /// <summary> StaticSiteBuildARMResource resource specific properties. </summary>
+        [WirePath("properties")]
         internal StaticSiteBuildARMResourceProperties Properties { get; }
 
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; }
 
         /// <summary> An identifier for the static site build. </summary>
+        [WirePath("properties.buildId")]
         public string BuildId
         {
             get
@@ -55,6 +58,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> The source branch. </summary>
+        [WirePath("properties.sourceBranch")]
         public string SourceBranch
         {
             get
@@ -64,6 +68,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> The title of a pull request that a static site build is related to. </summary>
+        [WirePath("properties.pullRequestTitle")]
         public string PullRequestTitle
         {
             get
@@ -73,6 +78,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> The hostname for a static site build. </summary>
+        [WirePath("properties.hostname")]
         public string Hostname
         {
             get
@@ -82,6 +88,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> When this build was created. </summary>
+        [WirePath("properties.createdTimeUtc")]
         public DateTimeOffset? CreatedTimeUtc
         {
             get
@@ -91,6 +98,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> When this build was updated. </summary>
+        [WirePath("properties.lastUpdatedOn")]
         public DateTimeOffset? LastUpdatedOn
         {
             get
@@ -100,6 +108,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> The status of the static site build. </summary>
+        [WirePath("properties.status")]
         public BuildStatus? Status
         {
             get
@@ -109,6 +118,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> User provided function apps registered with the static site build. </summary>
+        [WirePath("properties.userProvidedFunctionApps")]
         public IReadOnlyList<StaticSiteUserProvidedFunctionApp> UserProvidedFunctionApps
         {
             get
@@ -118,6 +128,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Backends linked to the static side build. </summary>
+        [WirePath("properties.linkedBackends")]
         public IReadOnlyList<StaticSiteLinkedBackend> LinkedBackends
         {
             get
@@ -127,6 +138,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Database connections for the static site build. </summary>
+        [WirePath("properties.databaseConnections")]
         public IReadOnlyList<DatabaseConnectionOverview> DatabaseConnections
         {
             get

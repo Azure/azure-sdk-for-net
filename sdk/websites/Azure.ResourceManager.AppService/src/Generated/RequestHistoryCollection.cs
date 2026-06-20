@@ -16,7 +16,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A class representing a collection of <see cref="RequestHistoryResource"/> and their operations.
@@ -39,7 +39,7 @@ namespace Microsoft.Web
         internal RequestHistoryCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(RequestHistoryResource.ResourceType, out string requestHistoryApiVersion);
-            _workflowRunActionRepetitionsRequestHistoriesClientDiagnostics = new ClientDiagnostics("Microsoft.Web", RequestHistoryResource.ResourceType.Namespace, Diagnostics);
+            _workflowRunActionRepetitionsRequestHistoriesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", RequestHistoryResource.ResourceType.Namespace, Diagnostics);
             _workflowRunActionRepetitionsRequestHistoriesRestClient = new WorkflowRunActionRepetitionsRequestHistories(_workflowRunActionRepetitionsRequestHistoriesClientDiagnostics, Pipeline, Endpoint, requestHistoryApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }

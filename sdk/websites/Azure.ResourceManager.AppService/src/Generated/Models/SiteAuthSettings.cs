@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Configuration settings for the Azure App Service Authentication / Authorization feature. </summary>
     public partial class SiteAuthSettings : ProxyOnlyResource
@@ -31,9 +32,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> SiteAuthSettings resource specific properties. </summary>
+        [WirePath("properties")]
         internal SiteAuthSettingsProperties Properties { get; set; }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if the Authentication / Authorization feature is enabled for the current app; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("properties.enabled")]
         public bool? Enabled
         {
             get
@@ -54,6 +57,7 @@ namespace Microsoft.Web.Models
         /// The RuntimeVersion of the Authentication / Authorization feature in use for the current app.
         /// The setting in this value can control the behavior of certain features in the Authentication / Authorization module.
         /// </summary>
+        [WirePath("properties.runtimeVersion")]
         public string RuntimeVersion
         {
             get
@@ -71,6 +75,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The action to take when an unauthenticated client attempts to access the app. </summary>
+        [WirePath("properties.unauthenticatedClientAction")]
         public UnauthenticatedClientAction? UnauthenticatedClientAction
         {
             get
@@ -91,6 +96,7 @@ namespace Microsoft.Web.Models
         /// &lt;code&gt;true&lt;/code&gt; to durably store platform-specific security tokens that are obtained during login flows; otherwise, &lt;code&gt;false&lt;/code&gt;.
         /// The default is &lt;code&gt;false&lt;/code&gt;.
         /// </summary>
+        [WirePath("properties.tokenStoreEnabled")]
         public bool? TokenStoreEnabled
         {
             get
@@ -112,6 +118,7 @@ namespace Microsoft.Web.Models
         /// This is an advanced setting typically only needed by Windows Store application backends.
         /// Note that URLs within the current domain are always implicitly allowed.
         /// </summary>
+        [WirePath("properties.allowedExternalRedirectUrls")]
         public IList<string> AllowedExternalRedirectUrls
         {
             get
@@ -129,6 +136,7 @@ namespace Microsoft.Web.Models
         /// This setting is only needed if multiple providers are configured and the unauthenticated client
         /// action is set to "RedirectToLoginPage".
         /// </summary>
+        [WirePath("properties.defaultProvider")]
         public BuiltInAuthenticationProvider? DefaultProvider
         {
             get
@@ -149,6 +157,7 @@ namespace Microsoft.Web.Models
         /// The number of hours after session token expiration that a session token can be used to
         /// call the token refresh API. The default is 72 hours.
         /// </summary>
+        [WirePath("properties.tokenRefreshExtensionHours")]
         public double? TokenRefreshExtensionHours
         {
             get
@@ -171,6 +180,7 @@ namespace Microsoft.Web.Models
         /// other 3rd party OpenID Connect providers.
         /// More information on OpenID Connect: http://openid.net/specs/openid-connect-core-1_0.html
         /// </summary>
+        [WirePath("properties.clientId")]
         public string ClientId
         {
             get
@@ -193,6 +203,7 @@ namespace Microsoft.Web.Models
         /// Otherwise, the OpenID Connect Authorization Code Flow is used to authenticate end users.
         /// More information on OpenID Connect: http://openid.net/specs/openid-connect-core-1_0.html
         /// </summary>
+        [WirePath("properties.clientSecret")]
         public string ClientSecret
         {
             get
@@ -210,6 +221,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The app setting name that contains the client secret of the relying party application. </summary>
+        [WirePath("properties.clientSecretSettingName")]
         public string ClientSecretSettingName
         {
             get
@@ -230,6 +242,7 @@ namespace Microsoft.Web.Models
         /// An alternative to the client secret, that is the thumbprint of a certificate used for signing purposes. This property acts as
         /// a replacement for the Client Secret. It is also optional.
         /// </summary>
+        [WirePath("properties.clientSecretCertificateThumbprint")]
         public string ClientSecretCertificateThumbprint
         {
             get
@@ -252,6 +265,7 @@ namespace Microsoft.Web.Models
         /// This URI is a case-sensitive identifier for the token issuer.
         /// More information on OpenID Connect Discovery: http://openid.net/specs/openid-connect-discovery-1_0.html
         /// </summary>
+        [WirePath("properties.issuer")]
         public string Issuer
         {
             get
@@ -269,6 +283,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Gets a value indicating whether the issuer should be a valid HTTPS url and be validated as such. </summary>
+        [WirePath("properties.validateIssuer")]
         public bool? ValidateIssuer
         {
             get
@@ -290,6 +305,7 @@ namespace Microsoft.Web.Models
         /// Azure Active Directory. Note that the &lt;code&gt;ClientID&lt;/code&gt; value is always considered an
         /// allowed audience, regardless of this setting.
         /// </summary>
+        [WirePath("properties.allowedAudiences")]
         public IList<string> AllowedAudiences
         {
             get
@@ -306,6 +322,7 @@ namespace Microsoft.Web.Models
         /// Login parameters to send to the OpenID Connect authorization endpoint when
         /// a user logs in. Each parameter must be in the form "key=value".
         /// </summary>
+        [WirePath("properties.additionalLoginParams")]
         public IList<string> AdditionalLoginParams
         {
             get
@@ -319,6 +336,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Gets a JSON string containing the Azure AD Acl settings. </summary>
+        [WirePath("properties.aadClaimsAuthorization")]
         public string AadClaimsAuthorization
         {
             get
@@ -340,6 +358,7 @@ namespace Microsoft.Web.Models
         /// This setting is required for enabling Google Sign-In.
         /// Google Sign-In documentation: https://developers.google.com/identity/sign-in/web/
         /// </summary>
+        [WirePath("properties.googleClientId")]
         public string GoogleClientId
         {
             get
@@ -361,6 +380,7 @@ namespace Microsoft.Web.Models
         /// This setting is required for enabling Google Sign-In.
         /// Google Sign-In documentation: https://developers.google.com/identity/sign-in/web/
         /// </summary>
+        [WirePath("properties.googleClientSecret")]
         public string GoogleClientSecret
         {
             get
@@ -381,6 +401,7 @@ namespace Microsoft.Web.Models
         /// The app setting name that contains the client secret associated with
         /// the Google web application.
         /// </summary>
+        [WirePath("properties.googleClientSecretSettingName")]
         public string GoogleClientSecretSettingName
         {
             get
@@ -402,6 +423,7 @@ namespace Microsoft.Web.Models
         /// This setting is optional. If not specified, "openid", "profile", and "email" are used as default scopes.
         /// Google Sign-In documentation: https://developers.google.com/identity/sign-in/web/
         /// </summary>
+        [WirePath("properties.googleOAuthScopes")]
         public IList<string> GoogleOAuthScopes
         {
             get
@@ -419,6 +441,7 @@ namespace Microsoft.Web.Models
         /// This setting is required for enabling Facebook Login.
         /// Facebook Login documentation: https://developers.facebook.com/docs/facebook-login
         /// </summary>
+        [WirePath("properties.facebookAppId")]
         public string FacebookAppId
         {
             get
@@ -440,6 +463,7 @@ namespace Microsoft.Web.Models
         /// This setting is required for enabling Facebook Login.
         /// Facebook Login documentation: https://developers.facebook.com/docs/facebook-login
         /// </summary>
+        [WirePath("properties.facebookAppSecret")]
         public string FacebookAppSecret
         {
             get
@@ -457,6 +481,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The app setting name that contains the app secret used for Facebook Login. </summary>
+        [WirePath("properties.facebookAppSecretSettingName")]
         public string FacebookAppSecretSettingName
         {
             get
@@ -478,6 +503,7 @@ namespace Microsoft.Web.Models
         /// This setting is optional.
         /// Facebook Login documentation: https://developers.facebook.com/docs/facebook-login
         /// </summary>
+        [WirePath("properties.facebookOAuthScopes")]
         public IList<string> FacebookOAuthScopes
         {
             get
@@ -494,6 +520,7 @@ namespace Microsoft.Web.Models
         /// The Client Id of the GitHub app used for login.
         /// This setting is required for enabling Github login
         /// </summary>
+        [WirePath("properties.gitHubClientId")]
         public string GitHubClientId
         {
             get
@@ -514,6 +541,7 @@ namespace Microsoft.Web.Models
         /// The Client Secret of the GitHub app used for Github Login.
         /// This setting is required for enabling Github login.
         /// </summary>
+        [WirePath("properties.gitHubClientSecret")]
         public string GitHubClientSecret
         {
             get
@@ -534,6 +562,7 @@ namespace Microsoft.Web.Models
         /// The app setting name that contains the client secret of the Github
         /// app used for GitHub Login.
         /// </summary>
+        [WirePath("properties.gitHubClientSecretSettingName")]
         public string GitHubClientSecretSettingName
         {
             get
@@ -554,6 +583,7 @@ namespace Microsoft.Web.Models
         /// The OAuth 2.0 scopes that will be requested as part of GitHub Login authentication.
         /// This setting is optional
         /// </summary>
+        [WirePath("properties.gitHubOAuthScopes")]
         public IList<string> GitHubOAuthScopes
         {
             get
@@ -571,6 +601,7 @@ namespace Microsoft.Web.Models
         /// This setting is required for enabling Twitter Sign-In.
         /// Twitter Sign-In documentation: https://dev.twitter.com/web/sign-in
         /// </summary>
+        [WirePath("properties.twitterConsumerKey")]
         public string TwitterConsumerKey
         {
             get
@@ -592,6 +623,7 @@ namespace Microsoft.Web.Models
         /// This setting is required for enabling Twitter Sign-In.
         /// Twitter Sign-In documentation: https://dev.twitter.com/web/sign-in
         /// </summary>
+        [WirePath("properties.twitterConsumerSecret")]
         public string TwitterConsumerSecret
         {
             get
@@ -612,6 +644,7 @@ namespace Microsoft.Web.Models
         /// The app setting name that contains the OAuth 1.0a consumer secret of the Twitter
         /// application used for sign-in.
         /// </summary>
+        [WirePath("properties.twitterConsumerSecretSettingName")]
         public string TwitterConsumerSecretSettingName
         {
             get
@@ -633,6 +666,7 @@ namespace Microsoft.Web.Models
         /// This setting is required for enabling Microsoft Account authentication.
         /// Microsoft Account OAuth documentation: https://dev.onedrive.com/auth/msa_oauth.htm
         /// </summary>
+        [WirePath("properties.microsoftAccountClientId")]
         public string MicrosoftAccountClientId
         {
             get
@@ -654,6 +688,7 @@ namespace Microsoft.Web.Models
         /// This setting is required for enabling Microsoft Account authentication.
         /// Microsoft Account OAuth documentation: https://dev.onedrive.com/auth/msa_oauth.htm
         /// </summary>
+        [WirePath("properties.microsoftAccountClientSecret")]
         public string MicrosoftAccountClientSecret
         {
             get
@@ -674,6 +709,7 @@ namespace Microsoft.Web.Models
         /// The app setting name containing the OAuth 2.0 client secret that was created for the
         /// app used for authentication.
         /// </summary>
+        [WirePath("properties.microsoftAccountClientSecretSettingName")]
         public string MicrosoftAccountClientSecretSettingName
         {
             get
@@ -695,6 +731,7 @@ namespace Microsoft.Web.Models
         /// This setting is optional. If not specified, "wl.basic" is used as the default scope.
         /// Microsoft Account Scopes and permissions documentation: https://msdn.microsoft.com/en-us/library/dn631845.aspx
         /// </summary>
+        [WirePath("properties.microsoftAccountOAuthScopes")]
         public IList<string> MicrosoftAccountOAuthScopes
         {
             get
@@ -711,6 +748,7 @@ namespace Microsoft.Web.Models
         /// "true" if the auth config settings should be read from a file,
         /// "false" otherwise
         /// </summary>
+        [WirePath("properties.isAuthFromFile")]
         public string IsAuthFromFile
         {
             get
@@ -731,6 +769,7 @@ namespace Microsoft.Web.Models
         /// The path of the config file containing auth settings.
         /// If the path is relative, base will the site's root directory.
         /// </summary>
+        [WirePath("properties.authFilePath")]
         public string AuthFilePath
         {
             get
@@ -751,6 +790,7 @@ namespace Microsoft.Web.Models
         /// The ConfigVersion of the Authentication / Authorization feature in use for the current app.
         /// The setting in this value can control the behavior of the control plane for Authentication / Authorization.
         /// </summary>
+        [WirePath("properties.configVersion")]
         public string ConfigVersion
         {
             get

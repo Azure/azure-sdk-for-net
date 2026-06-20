@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> StorageMigrationResponse resource specific properties. </summary>
     internal partial class StorageMigrationResponseProperties
@@ -31,6 +32,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> When server starts the migration process, it will return an operation ID identifying that particular migration operation. </summary>
+        [WirePath("operationId")]
         public string OperationId { get; }
     }
 }

@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Premier add-on offer. </summary>
     public partial class PremierAddOnOffer : ProxyOnlyResource
@@ -31,9 +32,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> PremierAddOnOffer resource specific properties. </summary>
+        [WirePath("properties")]
         internal PremierAddOnOfferProperties Properties { get; }
 
         /// <summary> Premier add on SKU. </summary>
+        [WirePath("properties.sku")]
         public string Sku
         {
             get
@@ -43,6 +46,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Premier add on offer Product. </summary>
+        [WirePath("properties.product")]
         public string Product
         {
             get
@@ -52,6 +56,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Premier add on offer Vendor. </summary>
+        [WirePath("properties.vendor")]
         public string Vendor
         {
             get
@@ -61,6 +66,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if promotion code is required; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("properties.promoCodeRequired")]
         public bool? PromoCodeRequired
         {
             get
@@ -70,6 +76,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Premier add on offer Quota. </summary>
+        [WirePath("properties.quota")]
         public int? Quota
         {
             get
@@ -79,6 +86,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> App Service plans this offer is restricted to. </summary>
+        [WirePath("properties.webHostingPlanRestrictions")]
         public AppServicePlanRestrictions? WebHostingPlanRestrictions
         {
             get
@@ -88,6 +96,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Privacy policy URL. </summary>
+        [WirePath("properties.privacyPolicyUrl")]
         public string PrivacyPolicyUri
         {
             get
@@ -97,6 +106,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Legal terms URL. </summary>
+        [WirePath("properties.legalTermsUrl")]
         public string LegalTermsUri
         {
             get
@@ -106,6 +116,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Marketplace publisher. </summary>
+        [WirePath("properties.marketplacePublisher")]
         public string MarketplacePublisher
         {
             get
@@ -115,6 +126,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Marketplace offer. </summary>
+        [WirePath("properties.marketplaceOffer")]
         public string MarketplaceOffer
         {
             get

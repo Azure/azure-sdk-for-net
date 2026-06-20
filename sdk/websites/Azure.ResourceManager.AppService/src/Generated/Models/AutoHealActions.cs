@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Actions which to take by the auto-heal module when a rule is triggered. </summary>
     public partial class AutoHealActions
@@ -38,15 +39,18 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Predefined action to be taken. </summary>
+        [WirePath("actionType")]
         public AutoHealActionType? ActionType { get; set; }
 
         /// <summary> Custom action to be taken. </summary>
+        [WirePath("customAction")]
         public AutoHealCustomAction CustomAction { get; set; }
 
         /// <summary>
         /// Minimum time the process must execute
         /// before taking the action
         /// </summary>
+        [WirePath("minProcessExecutionTime")]
         public string MinProcessExecutionTime { get; set; }
     }
 }

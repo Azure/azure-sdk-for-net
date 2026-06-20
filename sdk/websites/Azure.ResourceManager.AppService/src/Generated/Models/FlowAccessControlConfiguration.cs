@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The access control configuration. </summary>
     public partial class FlowAccessControlConfiguration
@@ -37,15 +38,19 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The access control configuration for invoking workflow triggers. </summary>
+        [WirePath("triggers")]
         public FlowAccessControlConfigurationPolicy Triggers { get; set; }
 
         /// <summary> The access control configuration for accessing workflow run contents. </summary>
+        [WirePath("contents")]
         public FlowAccessControlConfigurationPolicy Contents { get; set; }
 
         /// <summary> The access control configuration for workflow actions. </summary>
+        [WirePath("actions")]
         public FlowAccessControlConfigurationPolicy Actions { get; set; }
 
         /// <summary> The access control configuration for workflow management. </summary>
+        [WirePath("workflowManagement")]
         public FlowAccessControlConfigurationPolicy WorkflowManagement { get; set; }
     }
 }

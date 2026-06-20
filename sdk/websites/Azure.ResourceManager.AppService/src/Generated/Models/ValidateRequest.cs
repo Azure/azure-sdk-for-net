@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Resource validation request content. </summary>
     public partial class ValidateRequest
@@ -48,18 +48,23 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Resource name to verify. </summary>
+        [WirePath("name")]
         public string Name { get; }
 
         /// <summary> Resource type used for verification. </summary>
+        [WirePath("type")]
         public ValidateResourceTypes Type { get; }
 
         /// <summary> Expected location of the resource. </summary>
+        [WirePath("location")]
         public string Location { get; }
 
         /// <summary> Properties of the resource to validate. </summary>
+        [WirePath("properties")]
         internal ValidateProperties Properties { get; }
 
         /// <summary> ARM resource ID of an App Service plan that would host the app. </summary>
+        [WirePath("properties.serverFarmId")]
         public string ServerFarmId
         {
             get
@@ -69,6 +74,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Name of the target SKU for the App Service plan. </summary>
+        [WirePath("properties.skuName")]
         public string SkuName
         {
             get
@@ -78,6 +84,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if App Service plan is for Linux workers; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("properties.needLinuxWorkers")]
         public bool? NeedLinuxWorkers
         {
             get
@@ -87,6 +94,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if App Service plan is for Spot instances; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("properties.isSpot")]
         public bool? IsSpot
         {
             get
@@ -96,6 +104,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Target capacity of the App Service plan (number of VMs). </summary>
+        [WirePath("properties.capacity")]
         public int? Capacity
         {
             get
@@ -105,6 +114,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Name of App Service Environment where app or App Service plan should be created. </summary>
+        [WirePath("properties.hostingEnvironment")]
         public string HostingEnvironment
         {
             get
@@ -114,6 +124,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if App Service plan is running as a windows container. </summary>
+        [WirePath("properties.isXenon")]
         public bool? IsXenon
         {
             get
@@ -123,6 +134,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Base URL of the container registry. </summary>
+        [WirePath("properties.containerRegistryBaseUrl")]
         public string ContainerRegistryBaseUri
         {
             get
@@ -132,6 +144,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Username for to access the container registry. </summary>
+        [WirePath("properties.containerRegistryUsername")]
         public string ContainerRegistryUsername
         {
             get
@@ -141,6 +154,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Password for to access the container registry. </summary>
+        [WirePath("properties.containerRegistryPassword")]
         public string ContainerRegistryPassword
         {
             get
@@ -150,6 +164,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Repository name (image name). </summary>
+        [WirePath("properties.containerImageRepository")]
         public string ContainerImageRepository
         {
             get
@@ -159,6 +174,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Image tag. </summary>
+        [WirePath("properties.containerImageTag")]
         public string ContainerImageTag
         {
             get
@@ -168,6 +184,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Platform (windows or linux). </summary>
+        [WirePath("properties.containerImagePlatform")]
         public string ContainerImagePlatform
         {
             get
@@ -177,6 +194,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> App Service Environment Properties. </summary>
+        [WirePath("properties.appServiceEnvironment")]
         public AppServiceEnvironment AppServiceEnvironment
         {
             get

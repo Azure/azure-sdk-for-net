@@ -16,7 +16,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A class representing a collection of <see cref="WebAppResource"/> and their operations.
@@ -39,7 +39,7 @@ namespace Microsoft.Web
         internal WebAppCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             this.TryGetApiVersion(WebAppResource.ResourceType, out string webAppApiVersion);
-            _webAppsClientDiagnostics = new ClientDiagnostics("Microsoft.Web", WebAppResource.ResourceType.Namespace, Diagnostics);
+            _webAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", WebAppResource.ResourceType.Namespace, Diagnostics);
             _webAppsRestClient = new WebApps(_webAppsClientDiagnostics, Pipeline, Endpoint, webAppApiVersion ?? "2026-03-15");
             WebAppCollection.ValidateResourceId(id);
         }

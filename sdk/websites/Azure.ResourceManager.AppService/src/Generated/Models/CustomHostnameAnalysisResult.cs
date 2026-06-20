@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Custom domain analysis. </summary>
     public partial class CustomHostnameAnalysisResult : ProxyOnlyResource
@@ -31,9 +32,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> CustomHostnameAnalysisResult resource specific properties. </summary>
+        [WirePath("properties")]
         internal CustomHostnameAnalysisResultProperties Properties { get; }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if hostname is already verified; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("properties.isHostnameAlreadyVerified")]
         public bool? IsHostnameAlreadyVerified
         {
             get
@@ -43,6 +46,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> DNS verification test result. </summary>
+        [WirePath("properties.customDomainVerificationTest")]
         public DnsVerificationTestResult? CustomDomainVerificationTest
         {
             get
@@ -52,6 +56,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Raw failure information if DNS verification fails. </summary>
+        [WirePath("properties.customDomainVerificationFailureInfo")]
         public ErrorEntity CustomDomainVerificationFailureInfo
         {
             get
@@ -61,6 +66,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if there is a conflict on a scale unit; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("properties.hasConflictOnScaleUnit")]
         public bool? HasConflictOnScaleUnit
         {
             get
@@ -70,6 +76,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if there is a conflict across subscriptions; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("properties.hasConflictAcrossSubscription")]
         public bool? HasConflictAcrossSubscription
         {
             get
@@ -79,6 +86,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Name of the conflicting app on scale unit if it's within the same subscription. </summary>
+        [WirePath("properties.conflictingAppResourceId")]
         public string ConflictingAppResourceId
         {
             get
@@ -88,6 +96,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> CName records controller can see for this hostname. </summary>
+        [WirePath("properties.cNameRecords")]
         public IList<string> CNameRecords
         {
             get
@@ -97,6 +106,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> TXT records controller can see for this hostname. </summary>
+        [WirePath("properties.txtRecords")]
         public IList<string> TxtRecords
         {
             get
@@ -106,6 +116,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> A records controller can see for this hostname. </summary>
+        [WirePath("properties.aRecords")]
         public IList<string> ARecords
         {
             get
@@ -115,6 +126,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Alternate CName records controller can see for this hostname. </summary>
+        [WirePath("properties.alternateCNameRecords")]
         public IList<string> AlternateCNameRecords
         {
             get
@@ -124,6 +136,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Alternate TXT records controller can see for this hostname. </summary>
+        [WirePath("properties.alternateTxtRecords")]
         public IList<string> AlternateTxtRecords
         {
             get

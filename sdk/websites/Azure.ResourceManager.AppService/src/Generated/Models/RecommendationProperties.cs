@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Recommendation resource specific properties. </summary>
     internal partial class RecommendationProperties
@@ -78,72 +78,95 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Timestamp when this instance was created. </summary>
+        [WirePath("creationTime")]
         public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> A GUID value that each recommendation object is associated with. </summary>
+        [WirePath("recommendationId")]
         public string RecommendationId { get; }
 
         /// <summary> Full ARM resource ID string that this recommendation object is associated with. </summary>
+        [WirePath("resourceId")]
         public string ResourceId { get; }
 
         /// <summary> Name of a resource type this recommendation applies, e.g. Subscription, ServerFarm, Site. </summary>
+        [WirePath("resourceScope")]
         public ResourceScopeType? ResourceScope { get; }
 
         /// <summary> Unique name of the rule. </summary>
+        [WirePath("ruleName")]
         public string RuleName { get; }
 
         /// <summary> UI friendly name of the rule (may not be unique). </summary>
+        [WirePath("displayName")]
         public string DisplayName { get; }
 
         /// <summary> Recommendation text. </summary>
+        [WirePath("message")]
         public string Message { get; }
 
         /// <summary> Level indicating how critical this recommendation can impact. </summary>
+        [WirePath("level")]
         public NotificationLevel? Level { get; }
 
         /// <summary> List of channels that this recommendation can apply. </summary>
+        [WirePath("channels")]
         public Channels? Channels { get; }
 
         /// <summary> The list of category tags that this recommendation belongs to. </summary>
+        [WirePath("categoryTags")]
         public IReadOnlyList<string> CategoryTags { get; } = new ChangeTrackingList<string>();
 
         /// <summary> Name of action recommended by this object. </summary>
+        [WirePath("actionName")]
         public string ActionName { get; }
 
         /// <summary> True if this recommendation is still valid (i.e. "actionable"). False if it is invalid. </summary>
+        [WirePath("enabled")]
         public int? Enabled { get; }
 
         /// <summary> The list of states of this recommendation. If it's null then it should be considered "Active". </summary>
+        [WirePath("states")]
         public IList<string> States { get; } = new ChangeTrackingList<string>();
 
         /// <summary> The beginning time in UTC of a range that the recommendation refers to. </summary>
+        [WirePath("startTime")]
         public DateTimeOffset? StartOn { get; }
 
         /// <summary> The end time in UTC of a range that the recommendation refers to. </summary>
+        [WirePath("endTime")]
         public DateTimeOffset? EndOn { get; }
 
         /// <summary> When to notify this recommendation next in UTC. Null means that this will never be notified anymore. </summary>
+        [WirePath("nextNotificationTime")]
         public DateTimeOffset? NextNotificationOn { get; }
 
         /// <summary> Date and time in UTC when this notification expires. </summary>
+        [WirePath("notificationExpirationTime")]
         public DateTimeOffset? NotificationExpirationOn { get; }
 
         /// <summary> Last timestamp in UTC this instance was actually notified. Null means that this recommendation hasn't been notified yet. </summary>
+        [WirePath("notifiedTime")]
         public DateTimeOffset? NotifiedOn { get; }
 
         /// <summary> A metric value measured by the rule. </summary>
+        [WirePath("score")]
         public double? Score { get; }
 
         /// <summary> True if this is associated with a dynamically added rule. </summary>
+        [WirePath("isDynamic")]
         public bool? IsDynamic { get; }
 
         /// <summary> Extension name of the portal if exists. </summary>
+        [WirePath("extensionName")]
         public string ExtensionName { get; }
 
         /// <summary> Deep link to a blade on the portal. </summary>
+        [WirePath("bladeName")]
         public string BladeName { get; }
 
         /// <summary> Forward link to an external document associated with the rule. </summary>
+        [WirePath("forwardLink")]
         public string ForwardLink { get; }
     }
 }

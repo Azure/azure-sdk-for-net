@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The ContainerCpuUsage. </summary>
     public partial class ContainerCpuUsage
@@ -39,15 +39,19 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Gets the TotalUsage. </summary>
+        [WirePath("totalUsage")]
         public long? TotalUsage { get; }
 
         /// <summary> Gets the PerCpuUsage. </summary>
+        [WirePath("perCpuUsage")]
         public IList<long> PerCpuUsage { get; }
 
         /// <summary> Gets the KernelModeUsage. </summary>
+        [WirePath("kernelModeUsage")]
         public long? KernelModeUsage { get; }
 
         /// <summary> Gets the UserModeUsage. </summary>
+        [WirePath("userModeUsage")]
         public long? UserModeUsage { get; }
     }
 }

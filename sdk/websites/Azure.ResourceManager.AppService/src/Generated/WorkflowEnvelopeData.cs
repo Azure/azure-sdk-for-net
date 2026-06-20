@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
-using Microsoft.Web.Models;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary> Workflow properties definition. </summary>
     public partial class WorkflowEnvelopeData : ResourceData
@@ -42,12 +42,15 @@ namespace Microsoft.Web
         }
 
         /// <summary> Additional workflow properties. </summary>
+        [WirePath("properties")]
         public WorkflowEnvelopeProperties Properties { get; }
 
         /// <summary> The resource kind. </summary>
+        [WirePath("kind")]
         public string Kind { get; }
 
         /// <summary> The resource location. </summary>
+        [WirePath("location")]
         public string Location { get; }
     }
 }

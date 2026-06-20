@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Network Security Perimeter Association Provisioning Issue. </summary>
     public partial class NspProvisioningIssue
@@ -33,9 +34,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Provisioning Issue Name. </summary>
+        [WirePath("name")]
         public string Name { get; }
 
         /// <summary> Provisioning Issue Properties. </summary>
+        [WirePath("properties")]
         public NspProvisioningIssueProperties Properties { get; }
     }
 }

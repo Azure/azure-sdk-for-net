@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
-using Microsoft.Web.Models;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary> Premier add-on. </summary>
     public partial class PremierAddOnData : TrackedResourceData
@@ -43,12 +43,15 @@ namespace Microsoft.Web
         }
 
         /// <summary> PremierAddOn resource specific properties. </summary>
+        [WirePath("properties")]
         internal PremierAddOnProperties Properties { get; set; }
 
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
 
         /// <summary> Premier add on SKU. </summary>
+        [WirePath("properties.sku")]
         public string Sku
         {
             get
@@ -66,6 +69,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Premier add on Product. </summary>
+        [WirePath("properties.product")]
         public string Product
         {
             get
@@ -83,6 +87,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Premier add on Vendor. </summary>
+        [WirePath("properties.vendor")]
         public string Vendor
         {
             get
@@ -100,6 +105,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Premier add on Marketplace publisher. </summary>
+        [WirePath("properties.marketplacePublisher")]
         public string MarketplacePublisher
         {
             get
@@ -117,6 +123,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Premier add on Marketplace offer. </summary>
+        [WirePath("properties.marketplaceOffer")]
         public string MarketplaceOffer
         {
             get

@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Template Options for the static site. </summary>
     public partial class StaticSiteTemplateOptions
@@ -39,18 +40,23 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> URL of the template repository. The newly generated repository will be based on this one. </summary>
+        [WirePath("templateRepositoryUrl")]
         public string TemplateRepositoryUri { get; set; }
 
         /// <summary> Owner of the newly generated repository. </summary>
+        [WirePath("owner")]
         public string Owner { get; set; }
 
         /// <summary> Name of the newly generated repository. </summary>
+        [WirePath("repositoryName")]
         public string RepositoryName { get; set; }
 
         /// <summary> Description of the newly generated repository. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
 
         /// <summary> Whether or not the newly generated repository is a private repository. Defaults to false (i.e. public). </summary>
+        [WirePath("isPrivate")]
         public bool? IsPrivate { get; set; }
     }
 }

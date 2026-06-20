@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The sku type. </summary>
     public partial class WorkflowSku
@@ -27,7 +28,7 @@ namespace Microsoft.Web.Models
         /// <param name="name"> The name. </param>
         /// <param name="plan"> The reference to plan. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WorkflowSku(WorkflowSkuName name, ResourceReference plan, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WorkflowSku(WorkflowSkuName name, Models.WorkflowResourceReference plan, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Plan = plan;
@@ -35,9 +36,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The name. </summary>
+        [WirePath("name")]
         public WorkflowSkuName Name { get; }
 
         /// <summary> The reference to plan. </summary>
-        public ResourceReference Plan { get; }
+        [WirePath("plan")]
+        public Models.WorkflowResourceReference Plan { get; }
     }
 }

@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> WebAppStack resource specific properties. </summary>
     internal partial class WebAppStackProperties
@@ -39,15 +39,19 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Web App stack (display only). </summary>
+        [WirePath("displayText")]
         public string DisplayText { get; }
 
         /// <summary> Web App stack name. </summary>
+        [WirePath("value")]
         public string Value { get; }
 
         /// <summary> List of major versions available. </summary>
+        [WirePath("majorVersions")]
         public IReadOnlyList<WebAppMajorVersion> MajorVersions { get; } = new ChangeTrackingList<WebAppMajorVersion>();
 
         /// <summary> Web App stack preferred OS. </summary>
+        [WirePath("preferredOs")]
         public StackPreferredOs? PreferredOs { get; }
     }
 }

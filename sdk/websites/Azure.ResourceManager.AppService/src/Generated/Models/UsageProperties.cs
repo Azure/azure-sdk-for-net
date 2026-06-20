@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Usage resource specific properties. </summary>
     internal partial class UsageProperties
@@ -45,27 +46,35 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Friendly name shown in the UI. </summary>
+        [WirePath("displayName")]
         public string DisplayName { get; }
 
         /// <summary> Name of the quota resource. </summary>
+        [WirePath("resourceName")]
         public string ResourceName { get; }
 
         /// <summary> Units of measurement for the quota resource. </summary>
+        [WirePath("unit")]
         public string Unit { get; }
 
         /// <summary> The current value of the resource counter. </summary>
+        [WirePath("currentValue")]
         public long? CurrentValue { get; }
 
         /// <summary> The resource limit. </summary>
+        [WirePath("limit")]
         public long? Limit { get; }
 
         /// <summary> Next reset time for the resource counter. </summary>
+        [WirePath("nextResetTime")]
         public DateTimeOffset? NextResetOn { get; }
 
         /// <summary> Compute mode used for this usage. </summary>
+        [WirePath("computeMode")]
         public ComputeModeOptions? ComputeMode { get; }
 
         /// <summary> Site mode used for this usage. </summary>
+        [WirePath("siteMode")]
         public string SiteMode { get; }
     }
 }

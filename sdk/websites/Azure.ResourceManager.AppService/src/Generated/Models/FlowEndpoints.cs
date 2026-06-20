@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The flow endpoints configuration. </summary>
     public partial class FlowEndpoints
@@ -36,9 +36,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The outgoing ip address. </summary>
+        [WirePath("outgoingIpAddresses")]
         public IList<IpAddress> OutgoingIpAddresses { get; }
 
         /// <summary> The access endpoint ip address. </summary>
+        [WirePath("accessEndpointIpAddresses")]
         public IList<IpAddress> AccessEndpointIpAddresses { get; }
     }
 }

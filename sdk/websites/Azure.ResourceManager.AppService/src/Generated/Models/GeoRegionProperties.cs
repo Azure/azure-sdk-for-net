@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> GeoRegion resource specific properties. </summary>
     internal partial class GeoRegionProperties
@@ -35,12 +36,15 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Region description. </summary>
+        [WirePath("description")]
         public string Description { get; }
 
         /// <summary> Display name for region. </summary>
+        [WirePath("displayName")]
         public string DisplayName { get; }
 
         /// <summary> Display name for region. </summary>
+        [WirePath("orgDomain")]
         public string OrgDomain { get; }
     }
 }

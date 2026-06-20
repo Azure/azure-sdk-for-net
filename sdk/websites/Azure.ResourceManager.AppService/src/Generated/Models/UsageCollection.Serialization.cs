@@ -10,9 +10,9 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Collection of usages. </summary>
     internal partial class UsageCollection : IJsonModel<UsageCollection>
@@ -46,7 +46,7 @@ namespace Microsoft.Web.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, MicrosoftWebContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(UsageCollection)} does not support writing '{options.Format}' format.");
             }
@@ -89,7 +89,7 @@ namespace Microsoft.Web.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (MicrosoftWebUsage item in Value)
+            foreach (AppServiceUsage item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Microsoft.Web.Models
             {
                 return null;
             }
-            IList<MicrosoftWebUsage> value = default;
+            IList<AppServiceUsage> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<MicrosoftWebUsage> array = new List<MicrosoftWebUsage>();
+                    List<AppServiceUsage> array = new List<AppServiceUsage>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(MicrosoftWebUsage.DeserializeMicrosoftWebUsage(item, options));
+                        array.Add(AppServiceUsage.DeserializeAppServiceUsage(item, options));
                     }
                     value = array;
                     continue;

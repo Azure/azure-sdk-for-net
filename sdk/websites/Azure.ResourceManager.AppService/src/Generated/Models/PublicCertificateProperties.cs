@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> PublicCertificate resource specific properties. </summary>
     internal partial class PublicCertificateProperties
@@ -50,12 +51,15 @@ namespace Microsoft.Web.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("blob")]
         public BinaryData Blob { get; set; }
 
         /// <summary> Public Certificate Location. </summary>
+        [WirePath("publicCertificateLocation")]
         public PublicCertificateLocation? PublicCertificateLocation { get; set; }
 
         /// <summary> Certificate Thumbprint. </summary>
+        [WirePath("thumbprint")]
         public string Thumbprint { get; }
     }
 }

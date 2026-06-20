@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
-using Microsoft.Web.Models;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary> Static Site Database Connection resource. </summary>
     public partial class DatabaseConnectionData : ResourceData
@@ -40,12 +40,15 @@ namespace Microsoft.Web
         }
 
         /// <summary> DatabaseConnection resource specific properties. </summary>
+        [WirePath("properties")]
         internal DatabaseConnectionProperties Properties { get; set; }
 
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
 
         /// <summary> The resource id of the database. </summary>
+        [WirePath("properties.resourceId")]
         public string ResourceId
         {
             get
@@ -63,6 +66,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> If present, the identity is used in conjunction with connection string to connect to the database. Use of the system-assigned managed identity is indicated with the string 'SystemAssigned', while use of a user-assigned managed identity is indicated with the resource id of the managed identity resource. </summary>
+        [WirePath("properties.connectionIdentity")]
         public string ConnectionIdentity
         {
             get
@@ -80,6 +84,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> The connection string to use to connect to the database. </summary>
+        [WirePath("properties.connectionString")]
         public string ConnectionString
         {
             get
@@ -97,6 +102,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> The region of the database resource. </summary>
+        [WirePath("properties.region")]
         public string Region
         {
             get
@@ -114,6 +120,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> A list of configuration files associated with this database connection. </summary>
+        [WirePath("properties.configurationFiles")]
         public IReadOnlyList<StaticSiteDatabaseConnectionConfigurationFileOverview> ConfigurationFiles
         {
             get

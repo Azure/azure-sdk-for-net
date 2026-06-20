@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The configuration settings of the registration for the Azure Static Web Apps provider. </summary>
     internal partial class AzureStaticWebAppsRegistration
@@ -31,6 +32,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The Client ID of the app used for login. </summary>
+        [WirePath("clientId")]
         public string ClientId { get; set; }
     }
 }

@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Suggested utterances where the detector can be applicable. </summary>
     public partial class QueryUtterancesResults
@@ -35,9 +35,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Search Query. </summary>
+        [WirePath("query")]
         public string Query { get; }
 
         /// <summary> Array of utterance results for search query. </summary>
+        [WirePath("results")]
         public IList<QueryUtterancesResult> Results { get; }
     }
 }

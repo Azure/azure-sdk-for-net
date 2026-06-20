@@ -16,7 +16,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A class representing a collection of <see cref="AppServiceEnvironmentResource"/> and their operations.
@@ -39,7 +39,7 @@ namespace Microsoft.Web
         internal AppServiceEnvironmentCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             this.TryGetApiVersion(AppServiceEnvironmentResource.ResourceType, out string appServiceEnvironmentApiVersion);
-            _appServiceEnvironmentsClientDiagnostics = new ClientDiagnostics("Microsoft.Web", AppServiceEnvironmentResource.ResourceType.Namespace, Diagnostics);
+            _appServiceEnvironmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", AppServiceEnvironmentResource.ResourceType.Namespace, Diagnostics);
             _appServiceEnvironmentsRestClient = new AppServiceEnvironments(_appServiceEnvironmentsClientDiagnostics, Pipeline, Endpoint, appServiceEnvironmentApiVersion ?? "2026-03-15");
             AppServiceEnvironmentCollection.ValidateResourceId(id);
         }
@@ -92,7 +92,7 @@ namespace Microsoft.Web
                 };
                 HttpMessage message = _appServiceEnvironmentsRestClient.CreateApproveOrRejectPrivateEndpointConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, RemotePrivateEndpointConnectionARMResourceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                WebArmOperation<AppServiceEnvironmentResource> operation = new WebArmOperation<AppServiceEnvironmentResource>(
+                AppServiceArmOperation<AppServiceEnvironmentResource> operation = new AppServiceArmOperation<AppServiceEnvironmentResource>(
                     new AppServiceEnvironmentResourceOperationSource(Client),
                     _appServiceEnvironmentsClientDiagnostics,
                     Pipeline,
@@ -150,7 +150,7 @@ namespace Microsoft.Web
                 };
                 HttpMessage message = _appServiceEnvironmentsRestClient.CreateApproveOrRejectPrivateEndpointConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, RemotePrivateEndpointConnectionARMResourceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                WebArmOperation<AppServiceEnvironmentResource> operation = new WebArmOperation<AppServiceEnvironmentResource>(
+                AppServiceArmOperation<AppServiceEnvironmentResource> operation = new AppServiceArmOperation<AppServiceEnvironmentResource>(
                     new AppServiceEnvironmentResourceOperationSource(Client),
                     _appServiceEnvironmentsClientDiagnostics,
                     Pipeline,

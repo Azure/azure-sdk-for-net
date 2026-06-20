@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The error info. </summary>
     public partial class ErrorInfo
@@ -33,6 +34,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The error code. </summary>
+        [WirePath("code")]
         public string Code { get; }
     }
 }

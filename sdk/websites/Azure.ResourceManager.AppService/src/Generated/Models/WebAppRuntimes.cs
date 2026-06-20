@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Web App stack runtimes. </summary>
     public partial class WebAppRuntimes
@@ -37,15 +38,19 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Linux-specific settings associated with the minor version. </summary>
+        [WirePath("linuxRuntimeSettings")]
         public WebAppRuntimeSettings LinuxRuntimeSettings { get; }
 
         /// <summary> Windows-specific settings associated with the minor version. </summary>
+        [WirePath("windowsRuntimeSettings")]
         public WebAppRuntimeSettings WindowsRuntimeSettings { get; }
 
         /// <summary> Linux-specific settings associated with the Java container minor version. </summary>
+        [WirePath("linuxContainerSettings")]
         public LinuxJavaContainerSettings LinuxContainerSettings { get; }
 
         /// <summary> Windows-specific settings associated with the Java container minor version. </summary>
+        [WirePath("windowsContainerSettings")]
         public WindowsJavaContainerSettings WindowsContainerSettings { get; }
     }
 }

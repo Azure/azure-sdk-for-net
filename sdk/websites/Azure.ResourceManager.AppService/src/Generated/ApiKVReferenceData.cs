@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
-using Microsoft.Web.Models;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary> Description of site key vault references. </summary>
     public partial class ApiKVReferenceData : ResourceData
@@ -40,12 +40,15 @@ namespace Microsoft.Web
         }
 
         /// <summary> ApiKVReference resource specific properties. </summary>
+        [WirePath("properties")]
         internal ApiKVReferenceProperties Properties { get; }
 
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; }
 
         /// <summary> Gets the Reference. </summary>
+        [WirePath("properties.reference")]
         public string Reference
         {
             get
@@ -55,6 +58,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Gets the Status. </summary>
+        [WirePath("properties.status")]
         public ResolveStatus? Status
         {
             get
@@ -64,6 +68,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Gets the VaultName. </summary>
+        [WirePath("properties.vaultName")]
         public string VaultName
         {
             get
@@ -73,6 +78,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Gets the SecretName. </summary>
+        [WirePath("properties.secretName")]
         public string SecretName
         {
             get
@@ -82,6 +88,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Gets the SecretVersion. </summary>
+        [WirePath("properties.secretVersion")]
         public string SecretVersion
         {
             get
@@ -91,6 +98,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Managed service identity. </summary>
+        [WirePath("properties.identityType")]
         public Models.ManagedServiceIdentity IdentityType
         {
             get
@@ -100,6 +108,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Gets the Details. </summary>
+        [WirePath("properties.details")]
         public string Details
         {
             get
@@ -109,6 +118,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Gets the Source. </summary>
+        [WirePath("properties.source")]
         public ApiKVReferencePropertiesSource? Source
         {
             get
@@ -118,6 +128,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Gets the ActiveVersion. </summary>
+        [WirePath("properties.activeVersion")]
         public string ActiveVersion
         {
             get

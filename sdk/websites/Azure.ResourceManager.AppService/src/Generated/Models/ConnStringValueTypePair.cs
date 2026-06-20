@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Database connection string value to type pair. </summary>
     public partial class ConnStringValueTypePair
@@ -41,9 +41,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Value of pair. </summary>
+        [WirePath("value")]
         public string Value { get; set; }
 
         /// <summary> Type of database. </summary>
+        [WirePath("type")]
         public ConnectionStringType Type { get; set; }
     }
 }

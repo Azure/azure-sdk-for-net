@@ -7,9 +7,9 @@
 
 using System;
 using System.ComponentModel;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Deployment build status. </summary>
     public readonly partial struct DeploymentBuildStatus : IEquatable<DeploymentBuildStatus>

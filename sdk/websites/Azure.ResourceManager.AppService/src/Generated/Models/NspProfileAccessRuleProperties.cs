@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Network Security Perimeter Profile Access Rule Properties. </summary>
     public partial class NspProfileAccessRuleProperties
@@ -56,30 +56,39 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Direction of Access Rule (Inbound/Outbound). </summary>
+        [WirePath("direction")]
         public string Direction { get; }
 
         /// <summary> IP Address Ranges of Access Rule. </summary>
+        [WirePath("addressPrefixes")]
         public IList<string> AddressPrefixes { get; }
 
         /// <summary> Service Tags of Access Rule. </summary>
+        [WirePath("serviceTags")]
         public IList<string> ServiceTags { get; }
 
         /// <summary> Granular Features of Access Rule. </summary>
+        [WirePath("appliesTo")]
         public IList<NspProfileAccessRuleGranularFeature> AppliesTo { get; }
 
         /// <summary> Subscriptions of Access Rule. Not supported by App Service. </summary>
+        [WirePath("subscriptions")]
         public IList<NspSubscription> Subscriptions { get; }
 
         /// <summary> NetworkSecurityPerimeter of Access Rule. Not supported by App Service. </summary>
+        [WirePath("networkSecurityPerimeters")]
         public IList<NetworkSecurityPerimeter> NetworkSecurityPerimeters { get; }
 
         /// <summary> Fully Qualified Domain Names of Access Rule. Not supported by App Service. </summary>
+        [WirePath("fullyQualifiedDomainNames")]
         public IList<string> FullyQualifiedDomainNames { get; }
 
         /// <summary> Email Addresses of Access Rule. Not supported by App Service. </summary>
+        [WirePath("emailAddresses")]
         public IList<string> EmailAddresses { get; }
 
         /// <summary> Phone Numbers of Access Rule. Not supported by App Service. </summary>
+        [WirePath("phoneNumbers")]
         public IList<string> PhoneNumbers { get; }
     }
 }

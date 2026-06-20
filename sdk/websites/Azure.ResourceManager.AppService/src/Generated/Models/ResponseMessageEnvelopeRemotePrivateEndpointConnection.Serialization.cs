@@ -8,10 +8,14 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
-using Microsoft.Web;
+using Azure;
+using Azure.Core;
+using Azure.ResourceManager.AppService;
+using Azure.ResourceManager.Models;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Message envelope that contains the common Azure resource manager properties and the resource provider specific content. </summary>
     public partial class ResponseMessageEnvelopeRemotePrivateEndpointConnection : IJsonModel<ResponseMessageEnvelopeRemotePrivateEndpointConnection>
@@ -40,7 +44,7 @@ namespace Microsoft.Web.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, MicrosoftWebContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ResponseMessageEnvelopeRemotePrivateEndpointConnection)} does not support writing '{options.Format}' format.");
             }
@@ -92,7 +96,7 @@ namespace Microsoft.Web.Models
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location);
+                writer.WriteStringValue(Location.Value);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -113,7 +117,7 @@ namespace Microsoft.Web.Models
             if (Optional.IsDefined(Plan))
             {
                 writer.WritePropertyName("plan"u8);
-                writer.WriteObjectValue(Plan, options);
+                writer.WriteObjectValue<Models.AppServiceArmPlan>(Plan, options);
             }
             if (Optional.IsDefined(Properties))
             {
@@ -123,7 +127,7 @@ namespace Microsoft.Web.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                writer.WriteObjectValue<Models.AppServiceSkuDescription>(Sku, options);
             }
             if (Optional.IsDefined(Status))
             {
@@ -133,12 +137,12 @@ namespace Microsoft.Web.Models
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error, options);
+                ((IJsonModel<ResponseError>)Error).Write(writer, options);
             }
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
+                ((IJsonModel<ResourceManager.Models.ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Zones))
             {
@@ -200,15 +204,15 @@ namespace Microsoft.Web.Models
             string id = default;
             string name = default;
             string @type = default;
-            string location = default;
-            IDictionary<string, string> tags = default;
-            ArmPlan plan = default;
+            AzureLocation? location = default;
+            IReadOnlyDictionary<string, string> tags = default;
+            Models.AppServiceArmPlan plan = default;
             RemotePrivateEndpointConnection properties = default;
-            SkuDescription sku = default;
+            Models.AppServiceSkuDescription sku = default;
             string status = default;
-            ErrorEntity error = default;
-            ManagedServiceIdentity identity = default;
-            IList<string> zones = default;
+            ResponseError error = default;
+            ResourceManager.Models.ManagedServiceIdentity identity = default;
+            IReadOnlyList<string> zones = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -229,7 +233,11 @@ namespace Microsoft.Web.Models
                 }
                 if (prop.NameEquals("location"u8))
                 {
-                    location = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("tags"u8))
@@ -259,7 +267,7 @@ namespace Microsoft.Web.Models
                     {
                         continue;
                     }
-                    plan = ArmPlan.DeserializeArmPlan(prop.Value, options);
+                    plan = Models.AppServiceArmPlan.DeserializeAppServiceArmPlan(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))
@@ -277,7 +285,7 @@ namespace Microsoft.Web.Models
                     {
                         continue;
                     }
-                    sku = SkuDescription.DeserializeSkuDescription(prop.Value, options);
+                    sku = Models.AppServiceSkuDescription.DeserializeAppServiceSkuDescription(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
@@ -291,7 +299,7 @@ namespace Microsoft.Web.Models
                     {
                         continue;
                     }
-                    error = ErrorEntity.DeserializeErrorEntity(prop.Value, options);
+                    error = ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAppServiceContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("identity"u8))
@@ -300,7 +308,7 @@ namespace Microsoft.Web.Models
                     {
                         continue;
                     }
-                    identity = ManagedServiceIdentity.DeserializeManagedServiceIdentity(prop.Value, options);
+                    identity = ModelReaderWriter.Read<ResourceManager.Models.ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAppServiceContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("zones"u8))

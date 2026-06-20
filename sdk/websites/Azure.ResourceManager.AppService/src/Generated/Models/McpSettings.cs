@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> MCP configuration settings. </summary>
     internal partial class McpSettings
@@ -33,6 +33,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Array of MCP server configurations. This array is replaced in its entirety on update; individual servers cannot be patched independently. An empty array signals that MCP should be disabled/deleted. </summary>
+        [WirePath("servers")]
         public IList<McpServerConfig> Servers { get; }
     }
 }

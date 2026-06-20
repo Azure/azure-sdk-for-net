@@ -8,8 +8,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The workflow output parameter. </summary>
     public partial class WorkflowOutputParameter : WorkflowParameter
@@ -57,6 +58,7 @@ namespace Microsoft.Web.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("error")]
         public BinaryData Error { get; }
     }
 }

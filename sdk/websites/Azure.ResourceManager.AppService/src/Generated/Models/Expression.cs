@@ -8,9 +8,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The expression. </summary>
     public partial class Expression
@@ -40,6 +40,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The text. </summary>
+        [WirePath("text")]
         public string Text { get; }
 
         /// <summary>
@@ -68,12 +69,15 @@ namespace Microsoft.Web.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("value")]
         public BinaryData Value { get; }
 
         /// <summary> The sub expressions. </summary>
+        [WirePath("subexpressions")]
         public IList<Expression> Subexpressions { get; }
 
         /// <summary> The azure resource error info. </summary>
+        [WirePath("error")]
         public AzureResourceErrorInfo Error { get; }
     }
 }

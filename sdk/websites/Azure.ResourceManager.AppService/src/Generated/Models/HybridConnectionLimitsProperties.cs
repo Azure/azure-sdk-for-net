@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> HybridConnectionLimits resource specific properties. </summary>
     internal partial class HybridConnectionLimitsProperties
@@ -33,9 +34,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The current number of Hybrid Connections. </summary>
+        [WirePath("current")]
         public int? Current { get; }
 
         /// <summary> The maximum number of Hybrid Connections allowed. </summary>
+        [WirePath("maximum")]
         public int? Maximum { get; }
     }
 }

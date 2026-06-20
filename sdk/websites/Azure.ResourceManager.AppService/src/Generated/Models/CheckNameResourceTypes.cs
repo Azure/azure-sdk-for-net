@@ -7,9 +7,9 @@
 
 using System;
 using System.ComponentModel;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Resource type used for verification. </summary>
     public readonly partial struct CheckNameResourceTypes : IEquatable<CheckNameResourceTypes>

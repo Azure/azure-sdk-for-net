@@ -15,7 +15,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A class representing a User along with the instance operations that can be performed on it.
@@ -50,7 +50,7 @@ namespace Microsoft.Web
         internal UserResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string userApiVersion);
-            _webClientClientDiagnostics = new ClientDiagnostics("Microsoft.Web", ResourceType.Namespace, Diagnostics);
+            _webClientClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
             _webClientRestClient = new WebClient(_webClientClientDiagnostics, Pipeline, Endpoint, userApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
@@ -130,7 +130,7 @@ namespace Microsoft.Web
                 Response<UserData> response = Response.FromValue(UserData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                WebArmOperation<UserResource> operation = new WebArmOperation<UserResource>(Response.FromValue(new UserResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                AppServiceArmOperation<UserResource> operation = new AppServiceArmOperation<UserResource>(Response.FromValue(new UserResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -186,7 +186,7 @@ namespace Microsoft.Web
                 Response<UserData> response = Response.FromValue(UserData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                WebArmOperation<UserResource> operation = new WebArmOperation<UserResource>(Response.FromValue(new UserResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                AppServiceArmOperation<UserResource> operation = new AppServiceArmOperation<UserResource>(Response.FromValue(new UserResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);

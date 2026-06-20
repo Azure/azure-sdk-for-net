@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Deployment resource specific properties. </summary>
     internal partial class DeploymentProperties
@@ -47,30 +48,39 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Deployment status. </summary>
+        [WirePath("status")]
         public int? Status { get; set; }
 
         /// <summary> Details about deployment status. </summary>
+        [WirePath("message")]
         public string Message { get; set; }
 
         /// <summary> Who authored the deployment. </summary>
+        [WirePath("author")]
         public string Author { get; set; }
 
         /// <summary> Who performed the deployment. </summary>
+        [WirePath("deployer")]
         public string Deployer { get; set; }
 
         /// <summary> Author email. </summary>
+        [WirePath("author_email")]
         public string AuthorEmail { get; set; }
 
         /// <summary> Start time. </summary>
+        [WirePath("start_time")]
         public DateTimeOffset? StartOn { get; set; }
 
         /// <summary> End time. </summary>
+        [WirePath("end_time")]
         public DateTimeOffset? EndOn { get; set; }
 
         /// <summary> True if deployment is currently active, false if completed and null if not started. </summary>
+        [WirePath("active")]
         public bool? Active { get; set; }
 
         /// <summary> Details on deployment. </summary>
+        [WirePath("details")]
         public string Details { get; set; }
     }
 }

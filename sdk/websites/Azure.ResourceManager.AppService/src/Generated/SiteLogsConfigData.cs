@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
-using Microsoft.Web.Models;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary> Configuration of App Service site logs. </summary>
     public partial class SiteLogsConfigData : ResourceData
@@ -40,12 +40,15 @@ namespace Microsoft.Web
         }
 
         /// <summary> SiteLogsConfig resource specific properties. </summary>
+        [WirePath("properties")]
         internal SiteLogsConfigProperties Properties { get; set; }
 
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
 
         /// <summary> Application logs configuration. </summary>
+        [WirePath("properties.applicationLogs")]
         public ApplicationLogsConfig ApplicationLogs
         {
             get
@@ -63,6 +66,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> HTTP logs configuration. </summary>
+        [WirePath("properties.httpLogs")]
         public HttpLogsConfig HttpLogs
         {
             get
@@ -80,6 +84,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> True if configuration is enabled, false if it is disabled and null if configuration is not set. </summary>
+        [WirePath("properties.failedRequestsTracing.enabled")]
         public bool? FailedRequestsTracingEnabled
         {
             get
@@ -97,6 +102,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> True if configuration is enabled, false if it is disabled and null if configuration is not set. </summary>
+        [WirePath("properties.detailedErrorMessages.enabled")]
         public bool? DetailedErrorMessagesEnabled
         {
             get

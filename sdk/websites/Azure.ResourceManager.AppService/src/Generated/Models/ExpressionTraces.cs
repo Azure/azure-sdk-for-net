@@ -8,9 +8,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The expression traces. </summary>
     internal partial class ExpressionTraces
@@ -63,12 +63,15 @@ namespace Microsoft.Web.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("value")]
         public BinaryData Value { get; }
 
         /// <summary> Gets the Inputs. </summary>
+        [WirePath("inputs")]
         public IList<ExpressionRoot> Inputs { get; }
 
         /// <summary> The link used to get the next page of recommendations. </summary>
+        [WirePath("nextLink")]
         public string NextLink { get; }
     }
 }

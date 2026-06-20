@@ -8,8 +8,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Paged collection of OutboundEnvironmentEndpoint items. </summary>
     internal partial class OutboundEnvironmentEndpointCollection
@@ -36,9 +37,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The OutboundEnvironmentEndpoint items on this page. </summary>
+        [WirePath("value")]
         public IList<OutboundEnvironmentEndpoint> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
+        [WirePath("nextLink")]
         public Uri NextLink { get; }
     }
 }

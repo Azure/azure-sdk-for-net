@@ -7,9 +7,9 @@
 
 using System;
 using System.ComponentModel;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Specifies which endpoints to serve internally in the Virtual Network for the App Service Environment. </summary>
     public readonly partial struct LoadBalancingMode : IEquatable<LoadBalancingMode>

@@ -8,9 +8,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The workflow version properties. </summary>
     internal partial class WorkflowVersionProperties
@@ -56,33 +56,43 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The provisioning state. </summary>
+        [WirePath("provisioningState")]
         public WorkflowProvisioningState? ProvisioningState { get; }
 
         /// <summary> Gets the created time. </summary>
+        [WirePath("createdTime")]
         public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> Gets the changed time. </summary>
+        [WirePath("changedTime")]
         public DateTimeOffset? ChangedOn { get; }
 
         /// <summary> The state. </summary>
+        [WirePath("state")]
         public WorkflowState? State { get; }
 
         /// <summary> Gets the version. </summary>
+        [WirePath("version")]
         public string Version { get; }
 
         /// <summary> Gets the access endpoint. </summary>
+        [WirePath("accessEndpoint")]
         public string AccessEndpoint { get; }
 
         /// <summary> The endpoints configuration. </summary>
+        [WirePath("endpointsConfiguration")]
         public FlowEndpointsConfiguration EndpointsConfiguration { get; }
 
         /// <summary> The access control configuration. </summary>
+        [WirePath("accessControl")]
         public FlowAccessControlConfiguration AccessControl { get; }
 
         /// <summary> The sku. </summary>
+        [WirePath("sku")]
         public WorkflowSku Sku { get; }
 
         /// <summary> The integration account. </summary>
+        [WirePath("integrationAccount")]
         public ResourceReference IntegrationAccount { get; }
 
         /// <summary>
@@ -111,9 +121,11 @@ namespace Microsoft.Web.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("definition")]
         public BinaryData Definition { get; }
 
         /// <summary> The parameters. </summary>
+        [WirePath("parameters")]
         public IDictionary<string, WorkflowParameter> Parameters { get; } = new ChangeTrackingDictionary<string, WorkflowParameter>();
     }
 }

@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
-using Microsoft.Web.Models;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary> Hybrid Connection limits contract. This is used to return the plan limits of Hybrid Connections. </summary>
     public partial class HybridConnectionLimitsData : ResourceData
@@ -40,12 +40,15 @@ namespace Microsoft.Web
         }
 
         /// <summary> HybridConnectionLimits resource specific properties. </summary>
+        [WirePath("properties")]
         internal HybridConnectionLimitsProperties Properties { get; }
 
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; }
 
         /// <summary> The current number of Hybrid Connections. </summary>
+        [WirePath("properties.current")]
         public int? Current
         {
             get
@@ -55,6 +58,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> The maximum number of Hybrid Connections allowed. </summary>
+        [WirePath("properties.maximum")]
         public int? Maximum
         {
             get

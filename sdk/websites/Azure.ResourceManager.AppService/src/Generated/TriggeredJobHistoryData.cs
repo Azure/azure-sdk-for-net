@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
-using Microsoft.Web.Models;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary> Triggered Web Job History. List of Triggered Web Job Run Information elements. </summary>
     public partial class TriggeredJobHistoryData : ResourceData
@@ -40,12 +40,15 @@ namespace Microsoft.Web
         }
 
         /// <summary> TriggeredJobHistory resource specific properties. </summary>
+        [WirePath("properties")]
         internal TriggeredJobHistoryProperties Properties { get; }
 
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; }
 
         /// <summary> List of triggered web job runs. </summary>
+        [WirePath("properties.runs")]
         public IList<TriggeredJobRun> Runs
         {
             get

@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> MSDeploy log. </summary>
     public partial class MSDeployLog : ProxyOnlyResource
@@ -31,9 +32,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> MSDeployLog resource specific properties. </summary>
+        [WirePath("properties")]
         internal MSDeployLogProperties Properties { get; }
 
         /// <summary> List of log entry messages. </summary>
+        [WirePath("properties.entries")]
         public IReadOnlyList<MSDeployLogEntry> Entries
         {
             get

@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Definition of Detector. </summary>
     public partial class DetectorInfo : IJsonModel<DetectorInfo>
@@ -40,7 +40,7 @@ namespace Microsoft.Web.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, MicrosoftWebContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DetectorInfo)} does not support writing '{options.Format}' format.");
             }
@@ -103,9 +103,9 @@ namespace Microsoft.Web.Models
             {
                 writer.WritePropertyName("supportTopicList"u8);
                 writer.WriteStartArray();
-                foreach (SupportTopic item in SupportTopicList)
+                foreach (Models.DetectorSupportTopic item in SupportTopicList)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<Models.DetectorSupportTopic>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -181,7 +181,7 @@ namespace Microsoft.Web.Models
             string description = default;
             string author = default;
             string category = default;
-            IReadOnlyList<SupportTopic> supportTopicList = default;
+            IReadOnlyList<Models.DetectorSupportTopic> supportTopicList = default;
             IReadOnlyList<string> analysisType = default;
             DetectorType? @type = default;
             float? score = default;
@@ -219,10 +219,10 @@ namespace Microsoft.Web.Models
                     {
                         continue;
                     }
-                    List<SupportTopic> array = new List<SupportTopic>();
+                    List<Models.DetectorSupportTopic> array = new List<Models.DetectorSupportTopic>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SupportTopic.DeserializeSupportTopic(item, options));
+                        array.Add(Models.DetectorSupportTopic.DeserializeDetectorSupportTopic(item, options));
                     }
                     supportTopicList = array;
                     continue;
@@ -277,7 +277,7 @@ namespace Microsoft.Web.Models
                 description,
                 author,
                 category,
-                supportTopicList ?? new ChangeTrackingList<SupportTopic>(),
+                supportTopicList ?? new ChangeTrackingList<Models.DetectorSupportTopic>(),
                 analysisType ?? new ChangeTrackingList<string>(),
                 @type,
                 score,

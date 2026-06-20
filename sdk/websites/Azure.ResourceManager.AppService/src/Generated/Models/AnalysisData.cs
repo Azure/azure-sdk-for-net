@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Class Representing Detector Evidence used for analysis. </summary>
     public partial class AnalysisData
@@ -42,21 +42,27 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Name of the Detector. </summary>
+        [WirePath("source")]
         public string Source { get; }
 
         /// <summary> Detector Definition. </summary>
+        [WirePath("detectorDefinition")]
         public DetectorDefinition DetectorDefinition { get; }
 
         /// <summary> Source Metrics. </summary>
+        [WirePath("metrics")]
         public IList<DiagnosticMetricSet> Metrics { get; }
 
         /// <summary> Additional Source Data. </summary>
+        [WirePath("data")]
         public IList<IList<NameValuePair>> Data { get; }
 
         /// <summary> Detector Meta Data. </summary>
+        [WirePath("detectorMetaData")]
         internal ResponseMetaData DetectorMetaData { get; }
 
         /// <summary> Source of the Data. </summary>
+        [WirePath("detectorMetaData.dataSource")]
         public DataSource DataSource
         {
             get

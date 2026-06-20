@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
-using Microsoft.Web.Models;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary> MySQL migration status. </summary>
     public partial class MigrateMySqlStatusData : ResourceData
@@ -40,12 +40,15 @@ namespace Microsoft.Web
         }
 
         /// <summary> MigrateMySqlStatus resource specific properties. </summary>
+        [WirePath("properties")]
         internal MigrateMySqlStatusProperties Properties { get; }
 
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; }
 
         /// <summary> Status of the migration task. </summary>
+        [WirePath("properties.migrationOperationStatus")]
         public OperationStatus? MigrationOperationStatus
         {
             get
@@ -55,6 +58,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Operation ID for the migration task. </summary>
+        [WirePath("properties.operationId")]
         public string OperationId
         {
             get
@@ -64,6 +68,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> True if the web app has in app MySql enabled. </summary>
+        [WirePath("properties.localMySqlEnabled")]
         public bool? LocalMySqlEnabled
         {
             get

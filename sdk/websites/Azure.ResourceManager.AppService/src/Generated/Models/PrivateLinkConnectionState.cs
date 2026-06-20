@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The state of a private link connection. </summary>
     public partial class PrivateLinkConnectionState
@@ -35,12 +36,15 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Status of a private link connection. </summary>
+        [WirePath("status")]
         public string Status { get; set; }
 
         /// <summary> Description of a private link connection. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
 
         /// <summary> ActionsRequired for a private link connection. </summary>
+        [WirePath("actionsRequired")]
         public string ActionsRequired { get; set; }
     }
 }

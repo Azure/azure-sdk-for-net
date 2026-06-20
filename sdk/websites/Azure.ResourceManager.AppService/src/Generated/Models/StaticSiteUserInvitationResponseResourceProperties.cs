@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> StaticSiteUserInvitationResponseResource resource specific properties. </summary>
     internal partial class StaticSiteUserInvitationResponseResourceProperties
@@ -33,9 +34,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The expiration time of the invitation. </summary>
+        [WirePath("expiresOn")]
         public DateTimeOffset? ExpiresOn { get; }
 
         /// <summary> The url for the invitation link. </summary>
+        [WirePath("invitationUrl")]
         public string InvitationUri { get; }
     }
 }

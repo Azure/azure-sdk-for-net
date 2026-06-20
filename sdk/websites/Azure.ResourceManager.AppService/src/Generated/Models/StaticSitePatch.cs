@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Static Site Database Connection Request Properties resource when patching. </summary>
     public partial class StaticSitePatch
@@ -31,9 +32,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> DatabaseConnectionPatchRequest resource specific properties. </summary>
+        [WirePath("properties")]
         internal DatabaseConnectionPatchRequestProperties Properties { get; set; }
 
         /// <summary> The resource id of the database. </summary>
+        [WirePath("properties.resourceId")]
         public string ResourceId
         {
             get
@@ -51,6 +54,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> If present, the identity is used in conjunction with connection string to connect to the database. Use of the system-assigned managed identity is indicated with the string 'SystemAssigned', while use of a user-assigned managed identity is indicated with the resource id of the managed identity resource. </summary>
+        [WirePath("properties.connectionIdentity")]
         public string ConnectionIdentity
         {
             get
@@ -68,6 +72,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The connection string to use to connect to the database. </summary>
+        [WirePath("properties.connectionString")]
         public string ConnectionString
         {
             get
@@ -85,6 +90,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The region of the database resource. </summary>
+        [WirePath("properties.region")]
         public string Region
         {
             get

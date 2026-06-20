@@ -8,9 +8,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The workflow filter. </summary>
     public partial class WorkflowArtifacts
@@ -64,6 +64,7 @@ namespace Microsoft.Web.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("appSettings")]
         public BinaryData AppSettings { get; set; }
 
         /// <summary>
@@ -92,9 +93,11 @@ namespace Microsoft.Web.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("files")]
         public IDictionary<string, BinaryData> Files { get; }
 
         /// <summary> Files of the app to delete. </summary>
+        [WirePath("filesToDelete")]
         public IList<string> FilesToDelete { get; }
     }
 }

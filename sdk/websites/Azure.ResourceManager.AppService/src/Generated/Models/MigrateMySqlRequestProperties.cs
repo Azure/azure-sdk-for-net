@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> MigrateMySqlRequest resource specific properties. </summary>
     internal partial class MigrateMySqlRequestProperties
@@ -41,9 +41,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Connection string to the remote MySQL database. </summary>
+        [WirePath("connectionString")]
         public string ConnectionString { get; }
 
         /// <summary> The type of migration operation to be done. </summary>
+        [WirePath("migrationType")]
         public MySqlMigrationType MigrationType { get; }
     }
 }

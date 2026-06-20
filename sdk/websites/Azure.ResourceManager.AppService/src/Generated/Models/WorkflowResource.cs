@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The base resource type. </summary>
     public partial class WorkflowResource
@@ -41,18 +41,23 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The resource id. </summary>
+        [WirePath("id")]
         public string Id { get; }
 
         /// <summary> Gets the resource name. </summary>
+        [WirePath("name")]
         public string Name { get; }
 
         /// <summary> Gets the resource type. </summary>
+        [WirePath("type")]
         public string Type { get; }
 
         /// <summary> The resource location. </summary>
+        [WirePath("location")]
         public string Location { get; set; }
 
         /// <summary> The resource tags. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
     }
 }

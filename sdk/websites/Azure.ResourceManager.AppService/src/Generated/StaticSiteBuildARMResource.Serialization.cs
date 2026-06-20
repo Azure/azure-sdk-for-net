@@ -9,7 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary></summary>
     public partial class StaticSiteBuildARMResource : IJsonModel<StaticSiteBuildARMResourceData>
@@ -27,11 +27,11 @@ namespace Microsoft.Web
         StaticSiteBuildARMResourceData IJsonModel<StaticSiteBuildARMResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<StaticSiteBuildARMResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<StaticSiteBuildARMResourceData>(Data, options, MicrosoftWebContext.Default);
+        BinaryData IPersistableModel<StaticSiteBuildARMResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<StaticSiteBuildARMResourceData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        StaticSiteBuildARMResourceData IPersistableModel<StaticSiteBuildARMResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StaticSiteBuildARMResourceData>(data, options, MicrosoftWebContext.Default);
+        StaticSiteBuildARMResourceData IPersistableModel<StaticSiteBuildARMResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StaticSiteBuildARMResourceData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<StaticSiteBuildARMResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);

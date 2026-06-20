@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The DefaultIdentity. </summary>
     public partial class DefaultIdentity
@@ -33,9 +34,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Gets or sets the IdentityType. </summary>
+        [WirePath("identityType")]
         public ManagedServiceIdentityType? IdentityType { get; set; }
 
         /// <summary> Gets or sets the UserAssignedIdentityResourceId. </summary>
+        [WirePath("userAssignedIdentityResourceId")]
         public string UserAssignedIdentityResourceId { get; set; }
     }
 }

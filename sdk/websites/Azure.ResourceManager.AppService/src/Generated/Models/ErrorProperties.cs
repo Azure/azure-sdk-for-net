@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Error properties indicate why the Logic service was not able to process the incoming request. The reason is provided in the error message. </summary>
-    internal partial class ErrorProperties
+    public partial class ErrorProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -33,9 +34,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Error code. </summary>
+        [WirePath("code")]
         public string Code { get; }
 
         /// <summary> Error message indicating why the operation failed. </summary>
+        [WirePath("message")]
         public string Message { get; }
     }
 }

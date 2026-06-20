@@ -5,16 +5,16 @@
 
 #nullable disable
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Public Certificate Location. </summary>
     public enum PublicCertificateLocation
     {
+        /// <summary> Unknown. </summary>
+        Unknown,
         /// <summary> CurrentUserMy. </summary>
         CurrentUserMy,
         /// <summary> LocalMachineMy. </summary>
-        LocalMachineMy,
-        /// <summary> Unknown. </summary>
-        Unknown
+        LocalMachineMy
     }
 }

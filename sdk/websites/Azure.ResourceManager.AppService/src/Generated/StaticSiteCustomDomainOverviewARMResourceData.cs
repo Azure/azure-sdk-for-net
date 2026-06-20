@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
-using Microsoft.Web.Models;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary> Static Site Custom Domain Overview ARM resource. </summary>
     public partial class StaticSiteCustomDomainOverviewARMResourceData : ResourceData
@@ -40,12 +40,15 @@ namespace Microsoft.Web
         }
 
         /// <summary> StaticSiteCustomDomainOverviewARMResource resource specific properties. </summary>
+        [WirePath("properties")]
         internal StaticSiteCustomDomainOverviewARMResourceProperties Properties { get; }
 
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; }
 
         /// <summary> The domain name for the static site custom domain. </summary>
+        [WirePath("properties.domainName")]
         public string DomainName
         {
             get
@@ -55,6 +58,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> The date and time on which the custom domain was created for the static site. </summary>
+        [WirePath("properties.createdOn")]
         public DateTimeOffset? CreatedOn
         {
             get
@@ -64,6 +68,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> The status of the custom domain. </summary>
+        [WirePath("properties.status")]
         public CustomDomainStatus? Status
         {
             get
@@ -73,6 +78,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> The TXT record validation token. </summary>
+        [WirePath("properties.validationToken")]
         public string ValidationToken
         {
             get
@@ -82,6 +88,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Gets the ErrorMessage. </summary>
+        [WirePath("properties.errorMessage")]
         public string ErrorMessage
         {
             get

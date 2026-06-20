@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> MySQL migration request. </summary>
     public partial class MigrateMySqlRequest : ProxyOnlyResource
@@ -31,9 +32,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> MigrateMySqlRequest resource specific properties. </summary>
+        [WirePath("properties")]
         internal MigrateMySqlRequestProperties Properties { get; set; }
 
         /// <summary> Connection string to the remote MySQL database. </summary>
+        [WirePath("properties.connectionString")]
         public string ConnectionString
         {
             get
@@ -43,6 +46,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The type of migration operation to be done. </summary>
+        [WirePath("properties.migrationType")]
         public MySqlMigrationType? MigrationType
         {
             get

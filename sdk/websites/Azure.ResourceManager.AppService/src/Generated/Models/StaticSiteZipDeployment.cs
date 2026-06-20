@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> A static site zip deployment. </summary>
     internal partial class StaticSiteZipDeployment
@@ -28,7 +29,7 @@ namespace Microsoft.Web.Models
         /// <param name="provider"> The provider submitting this deployment. </param>
         /// <param name="functionLanguage"> The language of the api content, if it exists. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StaticSiteZipDeployment(string appZipUri, string apiZipUri, string deploymentTitle, string provider, string functionLanguage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StaticSiteZipDeployment(Uri appZipUri, Uri apiZipUri, string deploymentTitle, string provider, string functionLanguage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AppZipUri = appZipUri;
             ApiZipUri = apiZipUri;
@@ -39,18 +40,23 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> URL for the zipped app content. </summary>
-        public string AppZipUri { get; set; }
+        [WirePath("appZipUrl")]
+        public Uri AppZipUri { get; set; }
 
         /// <summary> URL for the zipped api content. </summary>
-        public string ApiZipUri { get; set; }
+        [WirePath("apiZipUrl")]
+        public Uri ApiZipUri { get; set; }
 
         /// <summary> A title to label the deployment. </summary>
+        [WirePath("deploymentTitle")]
         public string DeploymentTitle { get; set; }
 
         /// <summary> The provider submitting this deployment. </summary>
+        [WirePath("provider")]
         public string Provider { get; set; }
 
         /// <summary> The language of the api content, if it exists. </summary>
+        [WirePath("functionLanguage")]
         public string FunctionLanguage { get; set; }
     }
 }

@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The configuration settings of the app registration for providers that have client ids and client secrets. </summary>
     public partial class ClientRegistration
@@ -33,9 +34,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The Client ID of the app used for login. </summary>
+        [WirePath("clientId")]
         public string ClientId { get; set; }
 
         /// <summary> The app setting name that contains the client secret. </summary>
+        [WirePath("clientSecretSettingName")]
         public string ClientSecretSettingName { get; set; }
     }
 }

@@ -8,11 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
+using Azure.ResourceManager.Models;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> ARM resource for a app service plan. </summary>
     public partial class AppServicePlanPatch : ProxyOnlyResource, IJsonModel<AppServicePlanPatch>
@@ -41,7 +43,7 @@ namespace Microsoft.Web.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, MicrosoftWebContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AppServicePlanPatch)} does not support writing '{options.Format}' format.");
             }
@@ -94,7 +96,7 @@ namespace Microsoft.Web.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
+                ((IJsonModel<ResourceManager.Models.ManagedServiceIdentity>)Identity).Write(writer, options);
             }
         }
 
@@ -129,7 +131,7 @@ namespace Microsoft.Web.Models
             string @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             AppServicePlanPatchResourceProperties properties = default;
-            ManagedServiceIdentity identity = default;
+            ResourceManager.Models.ManagedServiceIdentity identity = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -167,7 +169,7 @@ namespace Microsoft.Web.Models
                     {
                         continue;
                     }
-                    identity = ManagedServiceIdentity.DeserializeManagedServiceIdentity(prop.Value, options);
+                    identity = ModelReaderWriter.Read<ResourceManager.Models.ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAppServiceContext.Default);
                     continue;
                 }
                 if (options.Format != "W")

@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The IP Addresses and Ports that require inbound network access to and within the subnet of the App Service Environment. </summary>
     public partial class InboundEnvironmentEndpoint : IJsonModel<InboundEnvironmentEndpoint>
@@ -40,7 +40,7 @@ namespace Microsoft.Web.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, MicrosoftWebContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(InboundEnvironmentEndpoint)} does not support writing '{options.Format}' format.");
             }
@@ -152,8 +152,8 @@ namespace Microsoft.Web.Models
                 return null;
             }
             string description = default;
-            IList<string> endpoints = default;
-            IList<string> ports = default;
+            IReadOnlyList<string> endpoints = default;
+            IReadOnlyList<string> ports = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

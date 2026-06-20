@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Network Security Perimeter. </summary>
     public partial class NetworkSecurityPerimeter
@@ -35,12 +36,15 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> ARM URI of the Network Security Perimeter resource. </summary>
+        [WirePath("id")]
         public string Id { get; }
 
         /// <summary> GUID of the Network Security Perimeter resource. </summary>
+        [WirePath("perimeterGuid")]
         public string PerimeterGuid { get; }
 
         /// <summary> Location where the Network Security Perimeter resource. </summary>
+        [WirePath("location")]
         public string Location { get; }
     }
 }

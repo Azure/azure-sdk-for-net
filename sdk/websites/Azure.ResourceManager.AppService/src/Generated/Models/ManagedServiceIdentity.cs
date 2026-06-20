@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Managed service identity. </summary>
     public partial class ManagedServiceIdentity
@@ -39,15 +39,19 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Type of managed service identity. </summary>
+        [WirePath("type")]
         public ManagedServiceIdentityType? Type { get; set; }
 
         /// <summary> Tenant of managed service identity. </summary>
+        [WirePath("tenantId")]
         public string TenantId { get; }
 
         /// <summary> Principal Id of managed service identity. </summary>
+        [WirePath("principalId")]
         public string PrincipalId { get; }
 
         /// <summary> The list of user assigned identities associated with the resource. The user identity dictionary key references will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}. </summary>
+        [WirePath("userAssignedIdentities")]
         public IDictionary<string, UserAssignedIdentity> UserAssignedIdentities { get; }
     }
 }

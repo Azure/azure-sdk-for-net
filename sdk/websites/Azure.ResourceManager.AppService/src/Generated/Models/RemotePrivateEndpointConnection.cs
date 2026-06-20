@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> A remote private endpoint connection. </summary>
     public partial class RemotePrivateEndpointConnection : ProxyOnlyResource
@@ -31,9 +32,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> RemotePrivateEndpointConnection resource specific properties. </summary>
+        [WirePath("properties")]
         internal RemotePrivateEndpointConnectionProperties Properties { get; }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [WirePath("properties.provisioningState")]
         public string ProvisioningState
         {
             get
@@ -43,6 +46,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The state of a private link connection. </summary>
+        [WirePath("properties.privateLinkServiceConnectionState")]
         public PrivateLinkConnectionState PrivateLinkServiceConnectionState
         {
             get
@@ -52,6 +56,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Private IPAddresses mapped to the remote private endpoint. </summary>
+        [WirePath("properties.ipAddresses")]
         public IList<string> IpAddresses
         {
             get
@@ -61,6 +66,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Gets the Id. </summary>
+        [WirePath("properties.privateEndpoint.id")]
         public string PrivateEndpointId
         {
             get

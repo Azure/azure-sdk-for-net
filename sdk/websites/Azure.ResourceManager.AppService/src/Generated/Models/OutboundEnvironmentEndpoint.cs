@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Endpoints accessed for a common purpose that the App Service Environment requires outbound network access to. </summary>
     public partial class OutboundEnvironmentEndpoint
@@ -20,14 +20,14 @@ namespace Microsoft.Web.Models
         /// <summary> Initializes a new instance of <see cref="OutboundEnvironmentEndpoint"/>. </summary>
         internal OutboundEnvironmentEndpoint()
         {
-            Endpoints = new ChangeTrackingList<EndpointDependency>();
+            Endpoints = new ChangeTrackingList<Models.AppServiceEndpointDependency>();
         }
 
         /// <summary> Initializes a new instance of <see cref="OutboundEnvironmentEndpoint"/>. </summary>
         /// <param name="category"> The type of service accessed by the App Service Environment, e.g., Azure Storage, Azure SQL Database, and Azure Active Directory. </param>
         /// <param name="endpoints"> The endpoints that the App Service Environment reaches the service at. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OutboundEnvironmentEndpoint(string category, IList<EndpointDependency> endpoints, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OutboundEnvironmentEndpoint(string category, IReadOnlyList<Models.AppServiceEndpointDependency> endpoints, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Category = category;
             Endpoints = endpoints;
@@ -35,9 +35,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The type of service accessed by the App Service Environment, e.g., Azure Storage, Azure SQL Database, and Azure Active Directory. </summary>
+        [WirePath("category")]
         public string Category { get; }
 
         /// <summary> The endpoints that the App Service Environment reaches the service at. </summary>
-        public IList<EndpointDependency> Endpoints { get; }
+        [WirePath("endpoints")]
+        public IReadOnlyList<Models.AppServiceEndpointDependency> Endpoints { get; }
     }
 }

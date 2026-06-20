@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Static sites user roles invitation resource. </summary>
     public partial class StaticSiteUserInvitationRequestResource : ProxyOnlyResource
@@ -31,9 +32,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> StaticSiteUserInvitationRequestResource resource specific properties. </summary>
+        [WirePath("properties")]
         internal StaticSiteUserInvitationRequestResourceProperties Properties { get; set; }
 
         /// <summary> The domain name for the static site custom domain. </summary>
+        [WirePath("properties.domain")]
         public string Domain
         {
             get
@@ -51,6 +54,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The identity provider for the static site user. </summary>
+        [WirePath("properties.provider")]
         public string Provider
         {
             get
@@ -68,6 +72,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The user id for the static site user. </summary>
+        [WirePath("properties.userDetails")]
         public string UserDetails
         {
             get
@@ -85,6 +90,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The roles for the static site user, in free-form string format. </summary>
+        [WirePath("properties.roles")]
         public string Roles
         {
             get
@@ -102,6 +108,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The number of hours the sas token stays valid. </summary>
+        [WirePath("properties.numHoursToExpiration")]
         public int? NumHoursToExpiration
         {
             get

@@ -8,8 +8,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Collection of usages. </summary>
     internal partial class UsageCollection
@@ -19,7 +20,7 @@ namespace Microsoft.Web.Models
 
         /// <summary> Initializes a new instance of <see cref="UsageCollection"/>. </summary>
         /// <param name="value"> The Usage items on this page. </param>
-        internal UsageCollection(IEnumerable<MicrosoftWebUsage> value)
+        internal UsageCollection(IEnumerable<AppServiceUsage> value)
         {
             Value = value.ToList();
         }
@@ -28,7 +29,7 @@ namespace Microsoft.Web.Models
         /// <param name="value"> The Usage items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UsageCollection(IList<MicrosoftWebUsage> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal UsageCollection(IList<AppServiceUsage> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -36,9 +37,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The Usage items on this page. </summary>
-        public IList<MicrosoftWebUsage> Value { get; }
+        [WirePath("value")]
+        public IList<AppServiceUsage> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
+        [WirePath("nextLink")]
         public Uri NextLink { get; }
     }
 }

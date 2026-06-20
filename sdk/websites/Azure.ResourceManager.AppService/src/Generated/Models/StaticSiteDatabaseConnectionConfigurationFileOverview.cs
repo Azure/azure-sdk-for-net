@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> A database connection configuration file. </summary>
     public partial class StaticSiteDatabaseConnectionConfigurationFileOverview
@@ -35,12 +36,15 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The name of the configuration file. </summary>
+        [WirePath("fileName")]
         public string FileName { get; }
 
         /// <summary> The Base64 encoding of the file contents. </summary>
+        [WirePath("contents")]
         public string Contents { get; }
 
         /// <summary> The type of configuration file. </summary>
+        [WirePath("type")]
         public string Type { get; }
     }
 }

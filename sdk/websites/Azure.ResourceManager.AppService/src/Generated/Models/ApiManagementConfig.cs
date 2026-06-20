@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Azure API management (APIM) configuration linked to the app. </summary>
     internal partial class ApiManagementConfig
@@ -31,6 +32,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> APIM-Api Identifier. </summary>
+        [WirePath("id")]
         public string Id { get; set; }
     }
 }

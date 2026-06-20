@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
-using Microsoft.Web.Models;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary> Represents a recommendation rule that the recommendation engine can perform. </summary>
     public partial class RecommendationRuleData : ResourceData
@@ -40,12 +40,15 @@ namespace Microsoft.Web
         }
 
         /// <summary> RecommendationRule resource specific properties. </summary>
+        [WirePath("properties")]
         internal RecommendationRuleProperties Properties { get; }
 
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; }
 
         /// <summary> Unique name of the rule. </summary>
+        [WirePath("properties.recommendationName")]
         public string RecommendationName
         {
             get
@@ -55,6 +58,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> UI friendly name of the rule. </summary>
+        [WirePath("properties.displayName")]
         public string DisplayName
         {
             get
@@ -64,6 +68,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Localized name of the rule (Good for UI). </summary>
+        [WirePath("properties.message")]
         public string Message
         {
             get
@@ -76,6 +81,7 @@ namespace Microsoft.Web
         /// Recommendation ID of an associated recommendation object tied to the rule, if exists.
         /// If such an object doesn't exist, it is set to null.
         /// </summary>
+        [WirePath("properties.recommendationId")]
         public string RecommendationId
         {
             get
@@ -85,6 +91,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Localized detailed description of the rule. </summary>
+        [WirePath("properties.description")]
         public string Description
         {
             get
@@ -94,6 +101,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Name of action that is recommended by this rule in string. </summary>
+        [WirePath("properties.actionName")]
         public string ActionName
         {
             get
@@ -103,6 +111,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Level of impact indicating how critical this rule is. </summary>
+        [WirePath("properties.level")]
         public NotificationLevel? Level
         {
             get
@@ -112,6 +121,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> List of available channels that this rule applies. </summary>
+        [WirePath("properties.channels")]
         public Channels? Channels
         {
             get
@@ -121,6 +131,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> The list of category tags that this recommendation rule belongs to. </summary>
+        [WirePath("properties.categoryTags")]
         public IReadOnlyList<string> CategoryTags
         {
             get
@@ -130,6 +141,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> True if this is associated with a dynamically added rule. </summary>
+        [WirePath("properties.isDynamic")]
         public bool? IsDynamic
         {
             get
@@ -139,6 +151,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Extension name of the portal if exists. Applicable to dynamic rule only. </summary>
+        [WirePath("properties.extensionName")]
         public string ExtensionName
         {
             get
@@ -148,6 +161,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Deep link to a blade on the portal. Applicable to dynamic rule only. </summary>
+        [WirePath("properties.bladeName")]
         public string BladeName
         {
             get
@@ -157,6 +171,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Forward link to an external document associated with the rule. Applicable to dynamic rule only. </summary>
+        [WirePath("properties.forwardLink")]
         public string ForwardLink
         {
             get

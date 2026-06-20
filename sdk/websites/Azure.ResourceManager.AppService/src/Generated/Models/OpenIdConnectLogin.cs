@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The configuration settings of the login flow of the custom Open ID Connect provider. </summary>
     public partial class OpenIdConnectLogin
@@ -35,9 +35,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The name of the claim that contains the users name. </summary>
+        [WirePath("nameClaimType")]
         public string NameClaimType { get; set; }
 
         /// <summary> A list of the scopes that should be requested while authenticating. </summary>
+        [WirePath("scopes")]
         public IList<string> Scopes { get; }
     }
 }

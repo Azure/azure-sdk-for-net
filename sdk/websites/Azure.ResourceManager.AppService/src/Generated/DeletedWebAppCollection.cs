@@ -17,7 +17,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A class representing a collection of <see cref="DeletedWebAppResource"/> and their operations.
@@ -44,7 +44,7 @@ namespace Microsoft.Web
         {
             TryGetApiVersion(DeletedWebAppResource.ResourceType, out string deletedWebAppApiVersion);
             _location = location;
-            _deletedWebAppsClientDiagnostics = new ClientDiagnostics("Microsoft.Web", DeletedWebAppResource.ResourceType.Namespace, Diagnostics);
+            _deletedWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", DeletedWebAppResource.ResourceType.Namespace, Diagnostics);
             _deletedWebAppsRestClient = new DeletedWebApps(_deletedWebAppsClientDiagnostics, Pipeline, Endpoint, deletedWebAppApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }

@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Class representing detector definition. </summary>
     public partial class DetectorDefinition
@@ -37,15 +38,19 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Display name of the detector. </summary>
+        [WirePath("displayName")]
         public string DisplayName { get; }
 
         /// <summary> Description of the detector. </summary>
+        [WirePath("description")]
         public string Description { get; }
 
         /// <summary> Detector Rank. </summary>
+        [WirePath("rank")]
         public double? Rank { get; }
 
         /// <summary> Flag representing whether detector is enabled or not. </summary>
+        [WirePath("isEnabled")]
         public bool? IsEnabled { get; }
     }
 }

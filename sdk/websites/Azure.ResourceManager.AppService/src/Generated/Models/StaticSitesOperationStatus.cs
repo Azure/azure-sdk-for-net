@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Status object for a static sites asynchronous operation. </summary>
     public partial class StaticSitesOperationStatus
@@ -37,15 +38,19 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The fully qualified ID for the staticSitesOperationStatus.  For example, /subscriptions/{subscriptionId}/providers/Microsoft.Web/staticSitesOperationStatuses/{operationId}. </summary>
+        [WirePath("id")]
         public string Id { get; }
 
         /// <summary> The type of the resource.  For example, Microsoft.Web/staticSitesOperationStatuses. </summary>
+        [WirePath("type")]
         public string Type { get; }
 
         /// <summary> The name of the staticSitesOperationStatus. For example, a1f6e015-a5de-468f-ad54-9c75638d7134. </summary>
+        [WirePath("name")]
         public string Name { get; }
 
         /// <summary> Properties of the async operation status. </summary>
+        [WirePath("properties")]
         public StaticSitesOperationStatusProperties Properties { get; }
     }
 }

@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The resource reference. </summary>
     public partial class ResourceReference
@@ -35,12 +36,15 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The resource id. </summary>
+        [WirePath("id")]
         public string Id { get; set; }
 
         /// <summary> Gets the resource name. </summary>
+        [WirePath("name")]
         public string Name { get; }
 
         /// <summary> Gets the resource type. </summary>
+        [WirePath("type")]
         public string Type { get; }
     }
 }

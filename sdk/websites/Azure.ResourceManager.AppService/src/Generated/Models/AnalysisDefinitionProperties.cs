@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> AnalysisDefinition resource specific properties. </summary>
     internal partial class AnalysisDefinitionProperties
@@ -31,6 +32,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Description of the Analysis. </summary>
+        [WirePath("description")]
         public string Description { get; }
     }
 }

@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> PrivateAccess resource specific properties. </summary>
     internal partial class PrivateAccessProperties
@@ -35,9 +35,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Whether private access is enabled or not. </summary>
+        [WirePath("enabled")]
         public bool? Enabled { get; set; }
 
         /// <summary> The Virtual Networks (and subnets) allowed to access the site privately. </summary>
+        [WirePath("virtualNetworks")]
         public IList<PrivateAccessVirtualNetwork> VirtualNetworks { get; } = new ChangeTrackingList<PrivateAccessVirtualNetwork>();
     }
 }

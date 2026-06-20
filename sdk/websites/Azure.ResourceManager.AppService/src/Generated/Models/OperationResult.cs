@@ -8,9 +8,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The operation result definition. </summary>
     internal partial class OperationResult : OperationResultProperties
@@ -50,6 +50,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Gets the tracking id. </summary>
+        [WirePath("trackingId")]
         public string TrackingId { get; }
 
         /// <summary>
@@ -78,9 +79,11 @@ namespace Microsoft.Web.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("inputs")]
         public BinaryData Inputs { get; }
 
         /// <summary> Gets the link to inputs. </summary>
+        [WirePath("inputsLink")]
         public ContentLink InputsLink { get; }
 
         /// <summary>
@@ -109,9 +112,11 @@ namespace Microsoft.Web.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("outputs")]
         public BinaryData Outputs { get; }
 
         /// <summary> Gets the link to outputs. </summary>
+        [WirePath("outputsLink")]
         public ContentLink OutputsLink { get; }
 
         /// <summary>
@@ -140,12 +145,15 @@ namespace Microsoft.Web.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("trackedProperties")]
         public BinaryData TrackedProperties { get; }
 
         /// <summary> Gets the retry histories. </summary>
+        [WirePath("retryHistory")]
         public IList<RetryHistory> RetryHistory { get; } = new ChangeTrackingList<RetryHistory>();
 
         /// <summary> Gets the IterationCount. </summary>
+        [WirePath("iterationCount")]
         public int? IterationCount { get; }
     }
 }

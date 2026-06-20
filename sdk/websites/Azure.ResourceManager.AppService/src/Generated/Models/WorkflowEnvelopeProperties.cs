@@ -8,9 +8,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Additional workflow properties. </summary>
     public partial class WorkflowEnvelopeProperties
@@ -29,7 +29,7 @@ namespace Microsoft.Web.Models
         /// <param name="flowState"> Gets or sets the state of the workflow. </param>
         /// <param name="health"> Gets or sets workflow health. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WorkflowEnvelopeProperties(IDictionary<string, BinaryData> files, WorkflowState? flowState, WorkflowHealth health, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WorkflowEnvelopeProperties(IReadOnlyDictionary<string, BinaryData> files, WorkflowState? flowState, WorkflowHealth health, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Files = files;
             FlowState = flowState;
@@ -63,12 +63,15 @@ namespace Microsoft.Web.Models
         /// </list>
         /// </para>
         /// </summary>
-        public IDictionary<string, BinaryData> Files { get; }
+        [WirePath("files")]
+        public IReadOnlyDictionary<string, BinaryData> Files { get; }
 
         /// <summary> Gets or sets the state of the workflow. </summary>
+        [WirePath("flowState")]
         public WorkflowState? FlowState { get; }
 
         /// <summary> Gets or sets workflow health. </summary>
+        [WirePath("health")]
         public WorkflowHealth Health { get; }
     }
 }

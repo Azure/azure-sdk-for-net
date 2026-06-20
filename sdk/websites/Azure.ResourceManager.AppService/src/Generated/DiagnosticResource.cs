@@ -13,9 +13,9 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Microsoft.Web.Models;
+using Azure.ResourceManager.AppService.Models;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A class representing a Diagnostic along with the instance operations that can be performed on it.
@@ -50,7 +50,7 @@ namespace Microsoft.Web
         internal DiagnosticResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             this.TryGetApiVersion(ResourceType, out string diagnosticApiVersion);
-            _diagnosticsClientDiagnostics = new ClientDiagnostics("Microsoft.Web", ResourceType.Namespace, Diagnostics);
+            _diagnosticsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
             _diagnosticsRestClient = new Diagnostics(_diagnosticsClientDiagnostics, Pipeline, Endpoint, diagnosticApiVersion ?? "2026-03-15");
             DiagnosticResource.ValidateResourceId(id);
         }
@@ -127,13 +127,13 @@ namespace Microsoft.Web
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = _diagnosticsRestClient.CreateGetSiteDetectorSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
-                Azure.Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<DetectorDefinitionResourceData> response = Azure.Response.FromValue(DetectorDefinitionResourceData.FromResponse(result), result);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DetectorDefinitionResourceData> response = Response.FromValue(DetectorDefinitionResourceData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Azure.Response.FromValue(new DiagnosticResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DiagnosticResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -175,13 +175,13 @@ namespace Microsoft.Web
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = _diagnosticsRestClient.CreateGetSiteDetectorSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
-                Azure.Response result = Pipeline.ProcessMessage(message, context);
-                Response<DetectorDefinitionResourceData> response = Azure.Response.FromValue(DetectorDefinitionResourceData.FromResponse(result), result);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DetectorDefinitionResourceData> response = Response.FromValue(DetectorDefinitionResourceData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Azure.Response.FromValue(new DiagnosticResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DiagnosticResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -226,8 +226,8 @@ namespace Microsoft.Web
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = _diagnosticsRestClient.CreateExecuteSiteDetectorSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, startTime, endTime, timeGrain, context);
-                Azure.Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<DiagnosticDetectorResponse> response = Azure.Response.FromValue(DiagnosticDetectorResponse.FromResponse(result), result);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DiagnosticDetectorResponse> response = Response.FromValue(DiagnosticDetectorResponse.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -277,8 +277,8 @@ namespace Microsoft.Web
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = _diagnosticsRestClient.CreateExecuteSiteDetectorSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, startTime, endTime, timeGrain, context);
-                Azure.Response result = Pipeline.ProcessMessage(message, context);
-                Response<DiagnosticDetectorResponse> response = Azure.Response.FromValue(DiagnosticDetectorResponse.FromResponse(result), result);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DiagnosticDetectorResponse> response = Response.FromValue(DiagnosticDetectorResponse.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

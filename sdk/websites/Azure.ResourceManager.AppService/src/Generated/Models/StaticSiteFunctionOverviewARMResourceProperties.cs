@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> StaticSiteFunctionOverviewARMResource resource specific properties. </summary>
     internal partial class StaticSiteFunctionOverviewARMResourceProperties
@@ -33,9 +34,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The name for the function. </summary>
+        [WirePath("functionName")]
         public string FunctionName { get; }
 
         /// <summary> The trigger type of the function. </summary>
+        [WirePath("triggerType")]
         public TriggerTypes? TriggerType { get; }
     }
 }

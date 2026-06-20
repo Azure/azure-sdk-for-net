@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Function app resource requirements. </summary>
     public partial class ResourceConfig
@@ -33,9 +34,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Required CPU in cores, e.g. 0.5. </summary>
+        [WirePath("cpu")]
         public double? Cpu { get; set; }
 
         /// <summary> Required memory, e.g. "1Gi". </summary>
+        [WirePath("memory")]
         public string Memory { get; set; }
     }
 }

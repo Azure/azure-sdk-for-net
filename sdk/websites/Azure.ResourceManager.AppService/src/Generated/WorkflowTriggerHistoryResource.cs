@@ -14,7 +14,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A class representing a WorkflowTriggerHistory along with the instance operations that can be performed on it.
@@ -49,7 +49,7 @@ namespace Microsoft.Web
         internal WorkflowTriggerHistoryResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string workflowTriggerHistoryApiVersion);
-            _workflowTriggerHistoriesClientDiagnostics = new ClientDiagnostics("Microsoft.Web", ResourceType.Namespace, Diagnostics);
+            _workflowTriggerHistoriesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
             _workflowTriggerHistoriesRestClient = new WorkflowTriggerHistories(_workflowTriggerHistoriesClientDiagnostics, Pipeline, Endpoint, workflowTriggerHistoryApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
@@ -224,7 +224,7 @@ namespace Microsoft.Web
                 };
                 HttpMessage message = _workflowTriggerHistoriesRestClient.CreateResubmitRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                WebArmOperation operation = new WebArmOperation(_workflowTriggerHistoriesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                AppServiceArmOperation operation = new AppServiceArmOperation(_workflowTriggerHistoriesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -273,7 +273,7 @@ namespace Microsoft.Web
                 };
                 HttpMessage message = _workflowTriggerHistoriesRestClient.CreateResubmitRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                WebArmOperation operation = new WebArmOperation(_workflowTriggerHistoriesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                AppServiceArmOperation operation = new AppServiceArmOperation(_workflowTriggerHistoriesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletionResponse(cancellationToken);

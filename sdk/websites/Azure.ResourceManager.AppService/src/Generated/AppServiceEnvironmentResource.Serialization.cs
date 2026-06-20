@@ -9,7 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary></summary>
     public partial class AppServiceEnvironmentResource : IJsonModel<RemotePrivateEndpointConnectionARMResourceData>
@@ -27,11 +27,11 @@ namespace Microsoft.Web
         RemotePrivateEndpointConnectionARMResourceData IJsonModel<RemotePrivateEndpointConnectionARMResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RemotePrivateEndpointConnectionARMResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RemotePrivateEndpointConnectionARMResourceData>(Data, options, MicrosoftWebContext.Default);
+        BinaryData IPersistableModel<RemotePrivateEndpointConnectionARMResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RemotePrivateEndpointConnectionARMResourceData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RemotePrivateEndpointConnectionARMResourceData IPersistableModel<RemotePrivateEndpointConnectionARMResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RemotePrivateEndpointConnectionARMResourceData>(data, options, MicrosoftWebContext.Default);
+        RemotePrivateEndpointConnectionARMResourceData IPersistableModel<RemotePrivateEndpointConnectionARMResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RemotePrivateEndpointConnectionARMResourceData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<RemotePrivateEndpointConnectionARMResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);

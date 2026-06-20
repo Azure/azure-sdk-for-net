@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The configuration settings of the Azure Active Directory token validation flow. </summary>
     public partial class AzureActiveDirectoryValidation
@@ -37,12 +37,15 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The configuration settings of the checks that should be made while validating the JWT Claims. </summary>
+        [WirePath("jwtClaimChecks")]
         public JwtClaimChecks JwtClaimChecks { get; set; }
 
         /// <summary> The list of audiences that can make successful authentication/authorization requests. </summary>
+        [WirePath("allowedAudiences")]
         public IList<string> AllowedAudiences { get; }
 
         /// <summary> The configuration settings of the default authorization policy. </summary>
+        [WirePath("defaultAuthorizationPolicy")]
         public DefaultAuthorizationPolicy DefaultAuthorizationPolicy { get; set; }
     }
 }

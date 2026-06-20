@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> StaticSiteUserARMResource resource specific properties. </summary>
     internal partial class StaticSiteUserARMResourceProperties
@@ -37,15 +38,19 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The identity provider for the static site user. </summary>
+        [WirePath("provider")]
         public string Provider { get; }
 
         /// <summary> The user id for the static site user. </summary>
+        [WirePath("userId")]
         public string UserId { get; }
 
         /// <summary> The display name for the static site user. </summary>
+        [WirePath("displayName")]
         public string DisplayName { get; }
 
         /// <summary> The roles for the static site user, in free-form string format. </summary>
+        [WirePath("roles")]
         public string Roles { get; set; }
     }
 }

@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Site resource specific properties. </summary>
     internal partial class SiteProperties
@@ -170,198 +170,257 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Current state of the app. </summary>
+        [WirePath("state")]
         public string State { get; }
 
         /// <summary> Hostnames associated with the app. </summary>
+        [WirePath("hostNames")]
         public IReadOnlyList<string> HostNames { get; } = new ChangeTrackingList<string>();
 
         /// <summary> Name of the repository site. </summary>
+        [WirePath("repositorySiteName")]
         public string RepositorySiteName { get; }
 
         /// <summary> State indicating whether the app has exceeded its quota usage. Read-only. </summary>
+        [WirePath("usageState")]
         public UsageState? UsageState { get; }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if the app is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. Setting this value to false disables the app (takes the app offline). </summary>
+        [WirePath("enabled")]
         public bool? Enabled { get; set; }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if site scoped certificates are enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("siteScopedCertificatesEnabled")]
         public bool? SiteScopedCertificatesEnabled { get; set; }
 
         /// <summary>
         /// Enabled hostnames for the app.Hostnames need to be assigned (see HostNames) AND enabled. Otherwise,
         /// the app is not served on those hostnames.
         /// </summary>
+        [WirePath("enabledHostNames")]
         public IReadOnlyList<string> EnabledHostNames { get; } = new ChangeTrackingList<string>();
 
         /// <summary> Management information availability state for the app. </summary>
+        [WirePath("availabilityState")]
         public SiteAvailabilityState? AvailabilityState { get; }
 
         /// <summary> Hostname SSL states are used to manage the SSL bindings for app's hostnames. </summary>
+        [WirePath("hostNameSslStates")]
         public IList<HostNameSslState> HostNameSslStates { get; } = new ChangeTrackingList<HostNameSslState>();
 
         /// <summary> Resource ID of the associated App Service plan, formatted as: "/subscriptions/{subscriptionID}/resourceGroups/{groupName}/providers/Microsoft.Web/serverfarms/{appServicePlanName}". </summary>
+        [WirePath("serverFarmId")]
         public string ServerFarmId { get; set; }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if reserved; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("reserved")]
         public bool? Reserved { get; set; }
 
         /// <summary> Obsolete: Hyper-V sandbox. </summary>
+        [WirePath("isXenon")]
         public bool? IsXenon { get; set; }
 
         /// <summary> Hyper-V sandbox. </summary>
+        [WirePath("hyperV")]
         public bool? HyperV { get; set; }
 
         /// <summary> Last time the app was modified, in UTC. Read-only. </summary>
+        [WirePath("lastModifiedTimeUtc")]
         public DateTimeOffset? LastModifiedTimeUtc { get; }
 
         /// <summary> Property to configure various DNS related settings for a site. </summary>
+        [WirePath("dnsConfiguration")]
         public SiteDnsConfig DnsConfiguration { get; set; }
 
         /// <summary> Property to configure various outbound traffic routing options over virtual network for a site. </summary>
+        [WirePath("outboundVnetRouting")]
         public OutboundVnetRouting OutboundVnetRouting { get; set; }
 
         /// <summary> Configuration of an App Service app. This property is not returned in response to normal create and read requests since it may contain sensitive information. </summary>
+        [WirePath("siteConfig")]
         public SiteConfig SiteConfig { get; set; }
 
         /// <summary> Configuration specific of the Azure Function app. </summary>
+        [WirePath("functionAppConfig")]
         public FunctionAppConfig FunctionAppConfig { get; set; }
 
         /// <summary> Dapr configuration of the app. </summary>
+        [WirePath("daprConfig")]
         public DaprConfig DaprConfig { get; set; }
 
         /// <summary> AI integration configuration for the app. </summary>
+        [WirePath("aiIntegration")]
         public AiIntegration AiIntegration { get; set; }
 
         /// <summary> Workload profile name for function app to execute on. </summary>
+        [WirePath("workloadProfileName")]
         public string WorkloadProfileName { get; set; }
 
         /// <summary> Function app resource requirements. </summary>
+        [WirePath("resourceConfig")]
         public ResourceConfig ResourceConfig { get; set; }
 
         /// <summary> Azure Traffic Manager hostnames associated with the app. Read-only. </summary>
+        [WirePath("trafficManagerHostNames")]
         public IReadOnlyList<string> TrafficManagerHostNames { get; } = new ChangeTrackingList<string>();
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; to stop SCM (KUDU) site when the app is stopped; otherwise, &lt;code&gt;false&lt;/code&gt;. The default is &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("scmSiteAlsoStopped")]
         public bool? ScmSiteAlsoStopped { get; set; }
 
         /// <summary> Specifies which deployment slot this app will swap into. Read-only. </summary>
+        [WirePath("targetSwapSlot")]
         public string TargetSwapSlot { get; }
 
         /// <summary> App Service Environment to use for the app. </summary>
+        [WirePath("hostingEnvironmentProfile")]
         public HostingEnvironmentProfile HostingEnvironmentProfile { get; set; }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; to enable client affinity; &lt;code&gt;false&lt;/code&gt; to stop sending session affinity cookies, which route client requests in the same session to the same instance. Default is &lt;code&gt;true&lt;/code&gt;. </summary>
+        [WirePath("clientAffinityEnabled")]
         public bool? ClientAffinityEnabled { get; set; }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; to enable client affinity partitioning using CHIPS cookies, this will add the &lt;code&gt;partitioned&lt;/code&gt; property to the affinity cookies; &lt;code&gt;false&lt;/code&gt; to stop sending partitioned affinity cookies. Default is &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("clientAffinityPartitioningEnabled")]
         public bool? ClientAffinityPartitioningEnabled { get; set; }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; to override client affinity cookie domain with X-Forwarded-Host request header. &lt;code&gt;false&lt;/code&gt; to use default domain. Default is &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("clientAffinityProxyEnabled")]
         public bool? ClientAffinityProxyEnabled { get; set; }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; to enable client certificate authentication (TLS mutual authentication); otherwise, &lt;code&gt;false&lt;/code&gt;. Default is &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("clientCertEnabled")]
         public bool? ClientCertEnabled { get; set; }
 
         /// <summary>
         /// This composes with ClientCertEnabled setting.
         /// <list type="bullet"><item><description>ClientCertEnabled: false means ClientCert is ignored.</description></item><item><description>ClientCertEnabled: true and ClientCertMode: Required means ClientCert is required.</description></item><item><description>ClientCertEnabled: true and ClientCertMode: Optional means ClientCert is optional or accepted.</description></item></list>
         /// </summary>
+        [WirePath("clientCertMode")]
         public ClientCertMode? ClientCertMode { get; set; }
 
         /// <summary> client certificate authentication comma-separated exclusion paths. </summary>
+        [WirePath("clientCertExclusionPaths")]
         public string ClientCertExclusionPaths { get; set; }
 
         /// <summary> Specifies the IP mode of the app. </summary>
+        [WirePath("ipMode")]
         public IPMode? IpMode { get; set; }
 
         /// <summary> Whether to use end to end encryption between the FrontEnd and the Worker. </summary>
+        [WirePath("endToEndEncryptionEnabled")]
         public bool? EndToEndEncryptionEnabled { get; set; }
 
         /// <summary> Whether to enable ssh access. </summary>
+        [WirePath("sshEnabled")]
         public bool? SshEnabled { get; set; }
 
         /// <summary>
         /// &lt;code&gt;true&lt;/code&gt; to disable the public hostnames of the app; otherwise, &lt;code&gt;false&lt;/code&gt;.
         /// If &lt;code&gt;true&lt;/code&gt;, the app is only accessible via API management process.
         /// </summary>
+        [WirePath("hostNamesDisabled")]
         public bool? HostNamesDisabled { get; set; }
 
         /// <summary> Unique identifier that verifies the custom domains assigned to the app. Customer will add this id to a txt record for verification. </summary>
+        [WirePath("customDomainVerificationId")]
         public string CustomDomainVerificationId { get; set; }
 
         /// <summary> List of IP addresses that the app uses for outbound connections (e.g. database access). Includes VIPs from tenants that site can be hosted with current settings. Read-only. </summary>
+        [WirePath("outboundIpAddresses")]
         public string OutboundIpAddresses { get; }
 
         /// <summary> List of IP addresses that the app uses for outbound connections (e.g. database access). Includes VIPs from all tenants except dataComponent. Read-only. </summary>
+        [WirePath("possibleOutboundIpAddresses")]
         public string PossibleOutboundIpAddresses { get; }
 
         /// <summary> Size of the function container. </summary>
+        [WirePath("containerSize")]
         public int? ContainerSize { get; set; }
 
         /// <summary> Maximum allowed daily memory-time quota (applicable on dynamic apps only). </summary>
+        [WirePath("dailyMemoryTimeQuota")]
         public int? DailyMemoryTimeQuota { get; set; }
 
         /// <summary> App suspended till in case memory-time quota is exceeded. </summary>
+        [WirePath("suspendedTill")]
         public DateTimeOffset? SuspendedTill { get; }
 
         /// <summary>
         /// Maximum number of workers.
         /// This only applies to Functions container.
         /// </summary>
+        [WirePath("maxNumberOfWorkers")]
         public int? MaxNumberOfWorkers { get; }
 
         /// <summary> If specified during app creation, the app is cloned from a source app. </summary>
+        [WirePath("cloningInfo")]
         public CloningInfo CloningInfo { get; set; }
 
         /// <summary> Name of the resource group the app belongs to. Read-only. </summary>
+        [WirePath("resourceGroup")]
         public string ResourceGroup { get; }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if the app is a default container; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("isDefaultContainer")]
         public bool? IsDefaultContainer { get; }
 
         /// <summary> Default hostname of the app. Read-only. </summary>
+        [WirePath("defaultHostName")]
         public string DefaultHostName { get; }
 
         /// <summary> Status of the last deployment slot swap operation. </summary>
+        [WirePath("slotSwapStatus")]
         public SlotSwapStatus SlotSwapStatus { get; }
 
         /// <summary>
         /// HttpsOnly: configures a web site to accept only https requests. Issues redirect for
         /// http requests
         /// </summary>
+        [WirePath("httpsOnly")]
         public bool? HttpsOnly { get; set; }
 
         /// <summary> Site redundancy mode. </summary>
+        [WirePath("redundancyMode")]
         public RedundancyMode? RedundancyMode { get; set; }
 
         /// <summary> Specifies an operation id if this site has a pending operation. </summary>
+        [WirePath("inProgressOperationId")]
         public string InProgressOperationId { get; }
 
         /// <summary> Property to allow or block all public traffic. Allowed Values: 'Enabled', 'Disabled' or an empty string. </summary>
+        [WirePath("publicNetworkAccess")]
         public string PublicNetworkAccess { get; set; }
 
         /// <summary> Checks if Customer provided storage account is required. </summary>
+        [WirePath("storageAccountRequired")]
         public bool? StorageAccountRequired { get; set; }
 
         /// <summary> Identity to use for Key Vault Reference authentication. </summary>
+        [WirePath("keyVaultReferenceIdentity")]
         public string KeyVaultReferenceIdentity { get; set; }
 
         /// <summary> Specifies the scope of uniqueness for the default hostname during resource creation. </summary>
+        [WirePath("autoGeneratedDomainNameLabelScope")]
         public AutoGeneratedDomainNameLabelScope? AutoGeneratedDomainNameLabelScope { get; set; }
 
         /// <summary>
         /// Azure Resource Manager ID of the Virtual network and subnet to be joined by Regional VNET Integration.
         /// This must be of the form /subscriptions/{subscriptionName}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{vnetName}/subnets/{subnetName}
         /// </summary>
+        [WirePath("virtualNetworkSubnetId")]
         public string VirtualNetworkSubnetId { get; set; }
 
         /// <summary> Azure Resource Manager ID of the customer's selected Managed Environment on which to host this app. This must be of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.App/managedEnvironments/{managedEnvironmentName}. </summary>
+        [WirePath("managedEnvironmentId")]
         public string ManagedEnvironmentId { get; set; }
 
         /// <summary> Current SKU of application based on associated App Service Plan. Some valid SKU values are Free, Shared, Basic, Dynamic, FlexConsumption, Standard, Premium, PremiumV2, PremiumV3, Isolated, IsolatedV2. </summary>
+        [WirePath("sku")]
         public string Sku { get; }
 
         /// <summary> The platform release channel for the site. Latest receives updates earliest, followed by Standard, then Extended. </summary>
+        [WirePath("platformReleaseChannel")]
         public PlatformReleaseChannel? PlatformReleaseChannel { get; set; }
     }
 }

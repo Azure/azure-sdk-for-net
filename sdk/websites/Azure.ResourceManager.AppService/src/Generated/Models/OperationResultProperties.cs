@@ -8,8 +8,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The run operation result properties. </summary>
     internal partial class OperationResultProperties
@@ -42,18 +43,23 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The start time of the workflow scope repetition. </summary>
+        [WirePath("startTime")]
         public DateTimeOffset? StartOn { get; }
 
         /// <summary> The end time of the workflow scope repetition. </summary>
+        [WirePath("endTime")]
         public DateTimeOffset? EndOn { get; }
 
         /// <summary> The correlation properties. </summary>
+        [WirePath("correlation")]
         public RunActionCorrelation Correlation { get; }
 
         /// <summary> The status of the workflow scope repetition. </summary>
+        [WirePath("status")]
         public WorkflowStatus? Status { get; }
 
         /// <summary> The workflow scope repetition code. </summary>
+        [WirePath("code")]
         public string Code { get; }
 
         /// <summary>
@@ -82,6 +88,7 @@ namespace Microsoft.Web.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("error")]
         public BinaryData Error { get; }
     }
 }

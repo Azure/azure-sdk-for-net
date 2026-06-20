@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The azure resource error info. </summary>
     public partial class AzureResourceErrorInfo : ErrorInfo
@@ -31,6 +32,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The error message. </summary>
+        [WirePath("message")]
         public string Message { get; }
     }
 }

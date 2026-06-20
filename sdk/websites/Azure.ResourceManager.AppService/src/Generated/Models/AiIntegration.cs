@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> AI integration configuration for the app. </summary>
     public partial class AiIntegration
@@ -35,15 +36,19 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Relative path to the API specification file from /home in site files. </summary>
+        [WirePath("apiSpecPath")]
         public string ApiSpecPath { get; set; }
 
         /// <summary> MCP configuration. </summary>
+        [WirePath("mcp")]
         internal McpSettings Mcp { get; set; }
 
         /// <summary> External auth configuration for the MCP endpoint (used when EasyAuth is not enabled). </summary>
+        [WirePath("siteAuth")]
         public SiteAuthInfo SiteAuth { get; set; }
 
         /// <summary> Array of MCP server configurations. This array is replaced in its entirety on update; individual servers cannot be patched independently. An empty array signals that MCP should be disabled/deleted. </summary>
+        [WirePath("mcp.servers")]
         public IList<McpServerConfig> McpServers
         {
             get

@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Web App stack major version. </summary>
     public partial class WebAppMajorVersion
@@ -37,12 +37,15 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Web App stack major version (display only). </summary>
+        [WirePath("displayText")]
         public string DisplayText { get; }
 
         /// <summary> Web App stack major version name. </summary>
+        [WirePath("value")]
         public string Value { get; }
 
         /// <summary> Minor versions associated with the major version. </summary>
+        [WirePath("minorVersions")]
         public IReadOnlyList<WebAppMinorVersion> MinorVersions { get; }
     }
 }

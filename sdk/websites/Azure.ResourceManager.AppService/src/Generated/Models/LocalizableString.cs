@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Localizable string object containing the name and a localized value. </summary>
     public partial class LocalizableString
@@ -33,9 +34,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Non-localized name. </summary>
+        [WirePath("value")]
         public string Value { get; }
 
         /// <summary> Localized name. </summary>
+        [WirePath("localizedValue")]
         public string LocalizedValue { get; }
     }
 }

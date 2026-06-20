@@ -7,9 +7,10 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.Core;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Description of a Virtual Network that is useable for private site access. </summary>
     public partial class PrivateAccessVirtualNetwork
@@ -29,7 +30,7 @@ namespace Microsoft.Web.Models
         /// <param name="resourceId"> The ARM uri of the Virtual Network. </param>
         /// <param name="subnets"> A List of subnets that access is allowed to on this Virtual Network. An empty array (but not null) is interpreted to mean that all subnets are allowed within this Virtual Network. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateAccessVirtualNetwork(string name, int? key, string resourceId, IList<PrivateAccessSubnet> subnets, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PrivateAccessVirtualNetwork(string name, int? key, ResourceIdentifier resourceId, IList<PrivateAccessSubnet> subnets, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Key = key;
@@ -39,15 +40,19 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The name of the Virtual Network. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
 
         /// <summary> The key (ID) of the Virtual Network. </summary>
+        [WirePath("key")]
         public int? Key { get; set; }
 
         /// <summary> The ARM uri of the Virtual Network. </summary>
-        public string ResourceId { get; set; }
+        [WirePath("resourceId")]
+        public ResourceIdentifier ResourceId { get; set; }
 
         /// <summary> A List of subnets that access is allowed to on this Virtual Network. An empty array (but not null) is interpreted to mean that all subnets are allowed within this Virtual Network. </summary>
+        [WirePath("subnets")]
         public IList<PrivateAccessSubnet> Subnets { get; }
     }
 }

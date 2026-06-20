@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> RelayServiceConnectionEntity resource specific properties. </summary>
     internal partial class RelayServiceConnectionEntityProperties
@@ -43,24 +44,31 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Gets or sets the EntityName. </summary>
+        [WirePath("entityName")]
         public string EntityName { get; set; }
 
         /// <summary> Gets or sets the EntityConnectionString. </summary>
+        [WirePath("entityConnectionString")]
         public string EntityConnectionString { get; set; }
 
         /// <summary> Gets or sets the ResourceType. </summary>
+        [WirePath("resourceType")]
         public string ResourceType { get; set; }
 
         /// <summary> Gets or sets the ResourceConnectionString. </summary>
+        [WirePath("resourceConnectionString")]
         public string ResourceConnectionString { get; set; }
 
         /// <summary> Gets or sets the Hostname. </summary>
+        [WirePath("hostname")]
         public string Hostname { get; set; }
 
         /// <summary> Gets or sets the Port. </summary>
+        [WirePath("port")]
         public int? Port { get; set; }
 
         /// <summary> Gets or sets the BiztalkUri. </summary>
+        [WirePath("biztalkUri")]
         public string BiztalkUri { get; set; }
     }
 }

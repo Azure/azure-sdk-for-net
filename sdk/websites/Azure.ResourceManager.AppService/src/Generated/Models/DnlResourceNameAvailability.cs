@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Information regarding availability of a resource name for DNL apps with regionalized default hostnames. </summary>
     public partial class DnlResourceNameAvailability
@@ -37,15 +38,19 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Gets the HostName. </summary>
+        [WirePath("hostName")]
         public string HostName { get; }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; indicates name is valid and available. &lt;code&gt;false&lt;/code&gt; indicates the name is invalid, unavailable, or both. </summary>
+        [WirePath("nameAvailable")]
         public bool? NameAvailable { get; }
 
         /// <summary> &lt;code&gt;Invalid&lt;/code&gt; indicates the name provided does not match Azure App Service naming requirements. &lt;code&gt;AlreadyExists&lt;/code&gt; indicates that the name is already in use and is therefore unavailable. </summary>
+        [WirePath("reason")]
         public InAvailabilityReasonType? Reason { get; }
 
         /// <summary> If reason == invalid, provide the user with the reason why the given name is invalid, and provide the resource naming requirements so that the user can select a valid name. If reason == AlreadyExists, explain that resource name is already in use, and direct them to select a different name. </summary>
+        [WirePath("message")]
         public string Message { get; }
     }
 }

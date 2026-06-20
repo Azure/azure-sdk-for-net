@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Functions host level keys. </summary>
     public partial class HostKeys
@@ -38,12 +38,15 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Secret key. </summary>
+        [WirePath("masterKey")]
         public string MasterKey { get; }
 
         /// <summary> Host level function keys. </summary>
+        [WirePath("functionKeys")]
         public IDictionary<string, string> FunctionKeys { get; }
 
         /// <summary> System keys. </summary>
+        [WirePath("systemKeys")]
         public IDictionary<string, string> SystemKeys { get; }
     }
 }

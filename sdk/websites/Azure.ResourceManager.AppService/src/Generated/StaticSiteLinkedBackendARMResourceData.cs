@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
-using Microsoft.Web.Models;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary> Static Site Linked Backend ARM resource. </summary>
     public partial class StaticSiteLinkedBackendARMResourceData : ResourceData
@@ -40,12 +40,15 @@ namespace Microsoft.Web
         }
 
         /// <summary> StaticSiteLinkedBackendARMResource resource specific properties. </summary>
+        [WirePath("properties")]
         internal StaticSiteLinkedBackendARMResourceProperties Properties { get; set; }
 
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
 
         /// <summary> The resource id of the backend linked to the static site. </summary>
+        [WirePath("properties.backendResourceId")]
         public string BackendResourceId
         {
             get
@@ -63,6 +66,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> The region of the backend linked to the static site. </summary>
+        [WirePath("properties.region")]
         public string Region
         {
             get
@@ -80,6 +84,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> The date and time on which the backend was linked to the static site. </summary>
+        [WirePath("properties.createdOn")]
         public DateTimeOffset? CreatedOn
         {
             get
@@ -89,6 +94,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> The provisioning state of the linking process. </summary>
+        [WirePath("properties.provisioningState")]
         public string ProvisioningState
         {
             get

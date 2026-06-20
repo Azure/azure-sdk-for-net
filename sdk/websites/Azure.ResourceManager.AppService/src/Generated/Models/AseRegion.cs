@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> ASE region. </summary>
     public partial class AseRegion : ProxyOnlyResource
@@ -31,9 +32,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> ASE region resource specific properties. </summary>
+        [WirePath("properties")]
         internal AseRegionProperties Properties { get; }
 
         /// <summary> Display name for region. </summary>
+        [WirePath("properties.displayName")]
         public string DisplayName
         {
             get
@@ -43,6 +46,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Is region standard. </summary>
+        [WirePath("properties.standard")]
         public bool? Standard
         {
             get
@@ -52,6 +56,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Dedicated host enabled. </summary>
+        [WirePath("properties.dedicatedHost")]
         public bool? DedicatedHost
         {
             get
@@ -61,6 +66,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Zone redundant deployment enabled. </summary>
+        [WirePath("properties.zoneRedundant")]
         public bool? ZoneRedundant
         {
             get
@@ -70,6 +76,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Available Skus in region. </summary>
+        [WirePath("properties.availableSku")]
         public IList<string> AvailableSku
         {
             get
@@ -79,6 +86,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Available OSs in region. </summary>
+        [WirePath("properties.availableOS")]
         public IList<string> AvailableOS
         {
             get

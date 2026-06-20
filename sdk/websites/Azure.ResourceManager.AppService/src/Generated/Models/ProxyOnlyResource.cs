@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Azure proxy only resource. This resource is not tracked by Azure Resource Manager. </summary>
     public partial class ProxyOnlyResource
@@ -37,15 +38,19 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Resource Id. </summary>
+        [WirePath("id")]
         public string Id { get; }
 
         /// <summary> Resource Name. </summary>
+        [WirePath("name")]
         public string Name { get; }
 
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
 
         /// <summary> Resource type. </summary>
+        [WirePath("type")]
         public string Type { get; }
     }
 }

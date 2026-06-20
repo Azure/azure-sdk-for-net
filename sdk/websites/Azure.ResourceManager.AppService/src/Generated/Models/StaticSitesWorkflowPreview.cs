@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Preview for the Static Site Workflow to be generated. </summary>
     public partial class StaticSitesWorkflowPreview : ProxyOnlyResource
@@ -31,9 +32,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> StaticSitesWorkflowPreview resource specific properties. </summary>
+        [WirePath("properties")]
         internal StaticSitesWorkflowPreviewProperties Properties { get; }
 
         /// <summary> The path for the workflow file to be generated. </summary>
+        [WirePath("properties.path")]
         public string Path
         {
             get
@@ -43,6 +46,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The contents for the workflow file to be generated. </summary>
+        [WirePath("properties.contents")]
         public string Contents
         {
             get

@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> SiteExtensionInfo resource specific properties. </summary>
     internal partial class SiteExtensionInfoProperties
@@ -71,63 +71,83 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Site extension ID. </summary>
+        [WirePath("extension_id")]
         public string ExtensionId { get; }
 
         /// <summary> Gets the Title. </summary>
+        [WirePath("title")]
         public string Title { get; }
 
         /// <summary> Site extension type. </summary>
+        [WirePath("extension_type")]
         public SiteExtensionType? ExtensionType { get; }
 
         /// <summary> Summary description. </summary>
+        [WirePath("summary")]
         public string Summary { get; }
 
         /// <summary> Detailed description. </summary>
+        [WirePath("description")]
         public string Description { get; }
 
         /// <summary> Version information. </summary>
+        [WirePath("version")]
         public string Version { get; }
 
         /// <summary> Extension URL. </summary>
+        [WirePath("extension_url")]
         public string ExtensionUri { get; }
 
         /// <summary> Project URL. </summary>
+        [WirePath("project_url")]
         public string ProjectUri { get; }
 
         /// <summary> Icon URL. </summary>
+        [WirePath("icon_url")]
         public string IconUri { get; }
 
         /// <summary> License URL. </summary>
+        [WirePath("license_url")]
         public string LicenseUri { get; }
 
         /// <summary> Feed URL. </summary>
+        [WirePath("feed_url")]
         public string FeedUri { get; }
 
         /// <summary> List of authors. </summary>
+        [WirePath("authors")]
         public IList<string> Authors { get; } = new ChangeTrackingList<string>();
 
         /// <summary> Installer command line parameters. </summary>
+        [WirePath("installer_command_line_params")]
         public string InstallerCommandLineParams { get; }
 
         /// <summary> Published timestamp. </summary>
+        [WirePath("published_date_time")]
         public DateTimeOffset? PublishedOn { get; }
 
         /// <summary> Count of downloads. </summary>
+        [WirePath("download_count")]
         public int? DownloadCount { get; }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if the local version is the latest version; &lt;code&gt;false&lt;/code&gt; otherwise. </summary>
+        [WirePath("local_is_latest_version")]
         public bool? LocalIsLatestVersion { get; }
 
         /// <summary> Local path. </summary>
+        [WirePath("local_path")]
         public string LocalPath { get; }
 
         /// <summary> Installed timestamp. </summary>
+        [WirePath("installed_date_time")]
         public DateTimeOffset? InstalledOn { get; }
 
         /// <summary> Provisioning state. </summary>
+        [WirePath("provisioningState")]
         public string ProvisioningState { get; }
 
         /// <summary> Site Extension comment. </summary>
+        [WirePath("comment")]
         public string Comment { get; }
     }
 }

@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Description of a backup which will be performed. </summary>
     public partial class BackupRequest : ProxyOnlyResource
@@ -31,9 +32,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> BackupRequest resource specific properties. </summary>
+        [WirePath("properties")]
         internal BackupRequestProperties Properties { get; set; }
 
         /// <summary> Name of the backup. </summary>
+        [WirePath("properties.backupName")]
         public string BackupName
         {
             get
@@ -51,6 +54,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> True if the backup schedule is enabled (must be included in that case), false if the backup schedule should be disabled. </summary>
+        [WirePath("properties.enabled")]
         public bool? Enabled
         {
             get
@@ -68,6 +72,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> SAS URL to the container. </summary>
+        [WirePath("properties.storageAccountUrl")]
         public string StorageAccountUri
         {
             get
@@ -85,6 +90,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Schedule for the backup if it is executed periodically. </summary>
+        [WirePath("properties.backupSchedule")]
         public BackupSchedule BackupSchedule
         {
             get
@@ -102,6 +108,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Databases included in the backup. </summary>
+        [WirePath("properties.databases")]
         public IList<DatabaseBackupSetting> Databases
         {
             get

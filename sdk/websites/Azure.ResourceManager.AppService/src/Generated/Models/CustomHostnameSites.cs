@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> A hostname and its assigned sites. </summary>
     public partial class CustomHostnameSites : ProxyOnlyResource
@@ -32,9 +32,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> CustomHostnameSites resource specific properties. </summary>
+        [WirePath("properties")]
         internal CustomHostnameSitesProperties Properties { get; }
 
         /// <summary> Gets the CustomHostname. </summary>
+        [WirePath("properties.customHostname")]
         public string CustomHostname
         {
             get
@@ -44,6 +46,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Gets the Region. </summary>
+        [WirePath("properties.region")]
         public string Region
         {
             get
@@ -53,6 +56,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Gets the SiteResourceIds. </summary>
+        [WirePath("properties.siteResourceIds")]
         public IList<IdentifierData> SiteResourceIds
         {
             get

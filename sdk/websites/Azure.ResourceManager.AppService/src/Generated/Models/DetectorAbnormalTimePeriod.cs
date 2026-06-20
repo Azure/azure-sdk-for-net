@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Class representing Abnormal Time Period detected. </summary>
     public partial class DetectorAbnormalTimePeriod
@@ -20,8 +20,8 @@ namespace Microsoft.Web.Models
         /// <summary> Initializes a new instance of <see cref="DetectorAbnormalTimePeriod"/>. </summary>
         internal DetectorAbnormalTimePeriod()
         {
-            MetaData = new ChangeTrackingList<IList<NameValuePair>>();
-            Solutions = new ChangeTrackingList<Solution>();
+            MetaData = new ChangeTrackingList<IList<Models.AppServiceNameValuePair>>();
+            Solutions = new ChangeTrackingList<Models.DiagnosticSolution>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DetectorAbnormalTimePeriod"/>. </summary>
@@ -34,7 +34,7 @@ namespace Microsoft.Web.Models
         /// <param name="type"> Represents the type of the Detector. </param>
         /// <param name="solutions"> List of proposed solutions. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DetectorAbnormalTimePeriod(DateTimeOffset? startOn, DateTimeOffset? endOn, string message, string source, double? priority, IList<IList<NameValuePair>> metaData, IssueType? @type, IList<Solution> solutions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DetectorAbnormalTimePeriod(DateTimeOffset? startOn, DateTimeOffset? endOn, string message, string source, double? priority, IList<IList<Models.AppServiceNameValuePair>> metaData, IssueType? @type, IList<Models.DiagnosticSolution> solutions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StartOn = startOn;
             EndOn = endOn;
@@ -48,27 +48,35 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Start time of the correlated event. </summary>
+        [WirePath("startTime")]
         public DateTimeOffset? StartOn { get; }
 
         /// <summary> End time of the correlated event. </summary>
+        [WirePath("endTime")]
         public DateTimeOffset? EndOn { get; }
 
         /// <summary> Message describing the event. </summary>
+        [WirePath("message")]
         public string Message { get; }
 
         /// <summary> Represents the name of the Detector. </summary>
+        [WirePath("source")]
         public string Source { get; }
 
         /// <summary> Represents the rank of the Detector. </summary>
+        [WirePath("priority")]
         public double? Priority { get; }
 
         /// <summary> Downtime metadata. </summary>
-        public IList<IList<NameValuePair>> MetaData { get; }
+        [WirePath("metaData")]
+        public IList<IList<Models.AppServiceNameValuePair>> MetaData { get; }
 
         /// <summary> Represents the type of the Detector. </summary>
+        [WirePath("type")]
         public IssueType? Type { get; }
 
         /// <summary> List of proposed solutions. </summary>
-        public IList<Solution> Solutions { get; }
+        [WirePath("solutions")]
+        public IList<Models.DiagnosticSolution> Solutions { get; }
     }
 }

@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The configuration settings that determines the validation flow of users using App Service Authentication/Authorization. </summary>
     public partial class GlobalValidation
@@ -43,9 +43,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if the authentication flow is required any request is made; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("requireAuthentication")]
         public bool? RequireAuthentication { get; set; }
 
         /// <summary> The action to take when an unauthenticated client attempts to access the app. </summary>
+        [WirePath("unauthenticatedClientAction")]
         public UnauthenticatedClientActionV2? UnauthenticatedClientAction { get; set; }
 
         /// <summary>
@@ -53,9 +55,11 @@ namespace Microsoft.Web.Models
         /// This setting is only needed if multiple providers are configured and the unauthenticated client
         /// action is set to "RedirectToLoginPage".
         /// </summary>
+        [WirePath("redirectToProvider")]
         public string RedirectToProvider { get; set; }
 
         /// <summary> The paths for which unauthenticated flow would not be redirected to the login page. </summary>
+        [WirePath("excludedPaths")]
         public IList<string> ExcludedPaths { get; }
     }
 }

@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The ip address range. </summary>
     public partial class IpAddressRange
@@ -31,6 +32,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The IP address range. </summary>
+        [WirePath("addressRange")]
         public string AddressRange { get; set; }
     }
 }

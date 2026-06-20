@@ -13,9 +13,9 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Microsoft.Web.Models;
+using Azure.ResourceManager.AppService.Models;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A class representing a SiteCertificate along with the instance operations that can be performed on it.
@@ -50,7 +50,7 @@ namespace Microsoft.Web
         internal SiteCertificateResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             this.TryGetApiVersion(ResourceType, out string siteCertificateApiVersion);
-            _siteCertificatesClientDiagnostics = new ClientDiagnostics("Microsoft.Web", ResourceType.Namespace, Diagnostics);
+            _siteCertificatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
             _siteCertificatesRestClient = new SiteCertificates(_siteCertificatesClientDiagnostics, Pipeline, Endpoint, siteCertificateApiVersion ?? "2026-03-15");
             SiteCertificateResource.ValidateResourceId(id);
         }
@@ -126,13 +126,13 @@ namespace Microsoft.Web
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = _siteCertificatesRestClient.CreateGetSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
-                Azure.Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<CertificateData> response = Azure.Response.FromValue(CertificateData.FromResponse(result), result);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<CertificateData> response = Response.FromValue(CertificateData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Azure.Response.FromValue(new SiteCertificateResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteCertificateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -174,13 +174,13 @@ namespace Microsoft.Web
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = _siteCertificatesRestClient.CreateGetSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
-                Azure.Response result = Pipeline.ProcessMessage(message, context);
-                Response<CertificateData> response = Azure.Response.FromValue(CertificateData.FromResponse(result), result);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<CertificateData> response = Response.FromValue(CertificateData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Azure.Response.FromValue(new SiteCertificateResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteCertificateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -226,13 +226,13 @@ namespace Microsoft.Web
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = _siteCertificatesRestClient.CreateUpdateSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, CertificatePatchResource.ToRequestContent(certificateEnvelope), context);
-                Azure.Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<CertificateData> response = Azure.Response.FromValue(CertificateData.FromResponse(result), result);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<CertificateData> response = Response.FromValue(CertificateData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Azure.Response.FromValue(new SiteCertificateResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteCertificateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -278,13 +278,13 @@ namespace Microsoft.Web
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = _siteCertificatesRestClient.CreateUpdateSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, CertificatePatchResource.ToRequestContent(certificateEnvelope), context);
-                Azure.Response result = Pipeline.ProcessMessage(message, context);
-                Response<CertificateData> response = Azure.Response.FromValue(CertificateData.FromResponse(result), result);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<CertificateData> response = Response.FromValue(CertificateData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Azure.Response.FromValue(new SiteCertificateResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SiteCertificateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -327,10 +327,10 @@ namespace Microsoft.Web
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = _siteCertificatesRestClient.CreateDeleteSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
-                Azure.Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                WebArmOperation operation = new WebArmOperation(response, rehydrationToken);
+                AppServiceArmOperation operation = new AppServiceArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -378,10 +378,10 @@ namespace Microsoft.Web
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = _siteCertificatesRestClient.CreateDeleteSlotRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
-                Azure.Response response = Pipeline.ProcessMessage(message, context);
+                Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                WebArmOperation operation = new WebArmOperation(response, rehydrationToken);
+                AppServiceArmOperation operation = new AppServiceArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletionResponse(cancellationToken);

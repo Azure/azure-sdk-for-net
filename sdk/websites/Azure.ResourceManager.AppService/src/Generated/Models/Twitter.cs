@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The configuration settings of the Twitter provider. </summary>
     public partial class Twitter
@@ -33,9 +34,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> &lt;code&gt;false&lt;/code&gt; if the Twitter provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;. </summary>
+        [WirePath("enabled")]
         public bool? Enabled { get; set; }
 
         /// <summary> The configuration settings of the app registration for the Twitter provider. </summary>
+        [WirePath("registration")]
         public TwitterRegistration Registration { get; set; }
     }
 }

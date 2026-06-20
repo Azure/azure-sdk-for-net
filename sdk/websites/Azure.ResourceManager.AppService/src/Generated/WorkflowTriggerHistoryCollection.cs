@@ -16,7 +16,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A class representing a collection of <see cref="WorkflowTriggerHistoryResource"/> and their operations.
@@ -39,7 +39,7 @@ namespace Microsoft.Web
         internal WorkflowTriggerHistoryCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(WorkflowTriggerHistoryResource.ResourceType, out string workflowTriggerHistoryApiVersion);
-            _workflowTriggerHistoriesClientDiagnostics = new ClientDiagnostics("Microsoft.Web", WorkflowTriggerHistoryResource.ResourceType.Namespace, Diagnostics);
+            _workflowTriggerHistoriesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", WorkflowTriggerHistoryResource.ResourceType.Namespace, Diagnostics);
             _workflowTriggerHistoriesRestClient = new WorkflowTriggerHistories(_workflowTriggerHistoriesClientDiagnostics, Pipeline, Endpoint, workflowTriggerHistoryApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }

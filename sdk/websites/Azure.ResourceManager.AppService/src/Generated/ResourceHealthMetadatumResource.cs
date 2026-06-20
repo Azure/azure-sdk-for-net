@@ -14,7 +14,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A class representing a ResourceHealthMetadatum along with the instance operations that can be performed on it.
@@ -49,7 +49,7 @@ namespace Microsoft.Web
         internal ResourceHealthMetadatumResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             this.TryGetApiVersion(ResourceType, out string resourceHealthMetadatumApiVersion);
-            _resourceHealthMetadataClientDiagnostics = new ClientDiagnostics("Microsoft.Web", ResourceType.Namespace, Diagnostics);
+            _resourceHealthMetadataClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
             _resourceHealthMetadataRestClient = new ResourceHealthMetadata(_resourceHealthMetadataClientDiagnostics, Pipeline, Endpoint, resourceHealthMetadatumApiVersion ?? "2026-03-15");
             ResourceHealthMetadatumResource.ValidateResourceId(id);
         }

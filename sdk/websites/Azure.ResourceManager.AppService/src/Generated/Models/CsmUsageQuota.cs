@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Usage of the quota resource. </summary>
     public partial class CsmUsageQuota
@@ -39,18 +40,23 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Units of measurement for the quota resource. </summary>
+        [WirePath("unit")]
         public string Unit { get; }
 
         /// <summary> Next reset time for the resource counter. </summary>
+        [WirePath("nextResetTime")]
         public DateTimeOffset? NextResetOn { get; }
 
         /// <summary> The current value of the resource counter. </summary>
+        [WirePath("currentValue")]
         public long? CurrentValue { get; }
 
         /// <summary> The resource limit. </summary>
+        [WirePath("limit")]
         public long? Limit { get; }
 
         /// <summary> Quota name. </summary>
+        [WirePath("name")]
         public LocalizableString Name { get; }
     }
 }

@@ -11,11 +11,11 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Microsoft.Web.Models;
+using Azure.ResourceManager.AppService.Models;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
-    internal partial class AppServiceEnvironmentsGetMultiRoleUsagesAsyncCollectionResultOfT : AsyncPageable<MicrosoftWebUsage>
+    internal partial class AppServiceEnvironmentsGetMultiRoleUsagesAsyncCollectionResultOfT : AsyncPageable<AppServiceUsage>
     {
         private readonly AppServiceEnvironments _client;
         private readonly Guid _subscriptionId;
@@ -45,18 +45,18 @@ namespace Microsoft.Web
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of AppServiceEnvironmentsGetMultiRoleUsagesAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<MicrosoftWebUsage>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<AppServiceUsage>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
             {
-                Azure.Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
+                Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
                 if (response is null)
                 {
                     yield break;
                 }
                 UsageCollection result = UsageCollection.FromResponse(response);
-                yield return Page<MicrosoftWebUsage>.FromValues((IReadOnlyList<MicrosoftWebUsage>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<AppServiceUsage>.FromValues((IReadOnlyList<AppServiceUsage>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -68,7 +68,7 @@ namespace Microsoft.Web
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private async ValueTask<Azure.Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
+        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetMultiRoleUsagesRequest(nextLink, _subscriptionId, _resourceGroupName, _name, _context) : _client.CreateGetMultiRoleUsagesRequest(_subscriptionId, _resourceGroupName, _name, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);

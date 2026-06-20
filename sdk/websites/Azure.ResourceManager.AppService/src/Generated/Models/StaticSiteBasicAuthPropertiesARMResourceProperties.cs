@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> StaticSiteBasicAuthPropertiesARMResource resource specific properties. </summary>
     internal partial class StaticSiteBasicAuthPropertiesARMResourceProperties
@@ -46,18 +46,23 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The password for basic auth. </summary>
+        [WirePath("password")]
         public string Password { get; set; }
 
         /// <summary> Url to the secret in Key Vault. </summary>
+        [WirePath("secretUrl")]
         public string SecretUri { get; set; }
 
         /// <summary> State indicating if basic auth is enabled and for what environments it is active. </summary>
+        [WirePath("applicableEnvironmentsMode")]
         public string ApplicableEnvironmentsMode { get; set; }
 
         /// <summary> The list of enabled environments for Basic Auth if ApplicableEnvironmentsMode is set to SpecifiedEnvironments. </summary>
+        [WirePath("environments")]
         public IList<string> Environments { get; } = new ChangeTrackingList<string>();
 
         /// <summary> State indicating if basic auth has a secret and what type it is. </summary>
+        [WirePath("secretState")]
         public string SecretState { get; }
     }
 }

@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary>
     /// External auth configuration for the MCP endpoint (used when EasyAuth is not enabled).
@@ -44,18 +44,23 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> JWKS URL for verifying JWT signatures. </summary>
+        [WirePath("jwksUri")]
         public Uri JwksUri { get; set; }
 
         /// <summary> Expected 'iss' claim. Required for custom site authentication if `wellKnownOpenIdConfiguration` is not provided. </summary>
+        [WirePath("issuer")]
         public string Issuer { get; set; }
 
         /// <summary> Expected 'aud' claim. </summary>
+        [WirePath("audience")]
         public string Audience { get; set; }
 
         /// <summary> OIDC metadata URL. Required for custom site authentication if `issuer` is not provided. </summary>
+        [WirePath("wellKnownOpenIdConfiguration")]
         public Uri WellKnownOpenIdConfiguration { get; set; }
 
         /// <summary> OAuth scopes for Protected Resource Metadata (PRM). Required for custom site authentication. </summary>
+        [WirePath("scopes")]
         public IList<string> Scopes { get; }
     }
 }

@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Routing rules for ramp up testing. This rule allows to redirect static traffic % to a slot or to gradually change routing % based on performance. </summary>
     public partial class RampUpRule : IJsonModel<RampUpRule>
@@ -40,7 +40,7 @@ namespace Microsoft.Web.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, MicrosoftWebContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(RampUpRule)} does not support writing '{options.Format}' format.");
             }
@@ -107,7 +107,7 @@ namespace Microsoft.Web.Models
             if (Optional.IsDefined(ChangeDecisionCallbackUri))
             {
                 writer.WritePropertyName("changeDecisionCallbackUrl"u8);
-                writer.WriteStringValue(ChangeDecisionCallbackUri);
+                writer.WriteStringValue(ChangeDecisionCallbackUri.AbsoluteUri);
             }
             if (Optional.IsDefined(Name))
             {
@@ -162,7 +162,7 @@ namespace Microsoft.Web.Models
             int? changeIntervalInMinutes = default;
             double? minReroutePercentage = default;
             double? maxReroutePercentage = default;
-            string changeDecisionCallbackUri = default;
+            Uri changeDecisionCallbackUri = default;
             string name = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -219,7 +219,11 @@ namespace Microsoft.Web.Models
                 }
                 if (prop.NameEquals("changeDecisionCallbackUrl"u8))
                 {
-                    changeDecisionCallbackUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    changeDecisionCallbackUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("name"u8))

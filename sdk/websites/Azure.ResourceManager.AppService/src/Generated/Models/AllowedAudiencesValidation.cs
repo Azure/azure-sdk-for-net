@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The configuration settings of the Allowed Audiences validation flow. </summary>
     internal partial class AllowedAudiencesValidation
@@ -33,6 +33,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The configuration settings of the allowed list of audiences from which to validate the JWT token. </summary>
+        [WirePath("allowedAudiences")]
         public IList<string> AllowedAudiences { get; }
     }
 }

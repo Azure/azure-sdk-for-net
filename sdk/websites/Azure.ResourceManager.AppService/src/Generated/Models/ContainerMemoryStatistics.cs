@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The ContainerMemoryStatistics. </summary>
     public partial class ContainerMemoryStatistics
@@ -35,12 +36,15 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Gets the Usage. </summary>
+        [WirePath("usage")]
         public long? Usage { get; }
 
         /// <summary> Gets the MaxUsage. </summary>
+        [WirePath("maxUsage")]
         public long? MaxUsage { get; }
 
         /// <summary> Gets the Limit. </summary>
+        [WirePath("limit")]
         public long? Limit { get; }
     }
 }

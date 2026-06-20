@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Represents details of a single instance in a server farm. </summary>
     public partial class ServerFarmInstance
@@ -35,12 +36,15 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The instance name. </summary>
+        [WirePath("instanceName")]
         public string InstanceName { get; }
 
         /// <summary> The instance IP address. </summary>
+        [WirePath("ipAddress")]
         public string IpAddress { get; }
 
         /// <summary> The instance status. </summary>
+        [WirePath("status")]
         public string Status { get; }
     }
 }

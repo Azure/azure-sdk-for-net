@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Metadata for the metrics. </summary>
     public partial class ResourceMetricDefinition : ProxyOnlyResource
@@ -16,6 +17,7 @@ namespace Microsoft.Web.Models
         /// <summary> Initializes a new instance of <see cref="ResourceMetricDefinition"/>. </summary>
         internal ResourceMetricDefinition()
         {
+            Properties = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceMetricDefinition"/>. </summary>
@@ -25,57 +27,13 @@ namespace Microsoft.Web.Models
         /// <param name="type"> Resource type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> ResourceMetricDefinition resource specific properties. </param>
-        internal ResourceMetricDefinition(string id, string name, string kind, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceMetricDefinitionProperties properties) : base(id, name, kind, @type, additionalBinaryDataProperties)
+        internal ResourceMetricDefinition(string id, string name, string kind, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, IReadOnlyDictionary<string, string> properties) : base(id, name, kind, @type, additionalBinaryDataProperties)
         {
             Properties = properties;
         }
 
         /// <summary> ResourceMetricDefinition resource specific properties. </summary>
-        internal ResourceMetricDefinitionProperties Properties { get; }
-
-        /// <summary> Unit of the metric. </summary>
-        public string Unit
-        {
-            get
-            {
-                return this.Properties is null ? default : Properties.Unit;
-            }
-        }
-
-        /// <summary> Primary aggregation type. </summary>
-        public string PrimaryAggregationType
-        {
-            get
-            {
-                return this.Properties is null ? default : Properties.PrimaryAggregationType;
-            }
-        }
-
-        /// <summary> List of time grains supported for the metric together with retention period. </summary>
-        public IReadOnlyList<ResourceMetricAvailability> MetricAvailabilities
-        {
-            get
-            {
-                return this.Properties is null ? default : Properties.MetricAvailabilities;
-            }
-        }
-
-        /// <summary> Resource URI. </summary>
-        public string ResourceUri
-        {
-            get
-            {
-                return this.Properties is null ? default : Properties.ResourceUri;
-            }
-        }
-
-        /// <summary> Resource metric definition properties. </summary>
-        public IReadOnlyDictionary<string, string> Properties
-        {
-            get
-            {
-                return this.Properties is null ? default : Properties.Properties;
-            }
-        }
+        [WirePath("properties")]
+        public IReadOnlyDictionary<string, string> Properties { get; }
     }
 }

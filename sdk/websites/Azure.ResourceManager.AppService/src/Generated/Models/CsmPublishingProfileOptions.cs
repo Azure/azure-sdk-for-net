@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Publishing options for requested profile. </summary>
     public partial class CsmPublishingProfileOptions
@@ -43,9 +44,11 @@ namespace Microsoft.Web.Models
         /// WebDeploy -- default
         /// Ftp
         /// </summary>
+        [WirePath("format")]
         public PublishingProfileFormat? Format { get; set; }
 
         /// <summary> Include the DisasterRecover endpoint if true. </summary>
+        [WirePath("includeDisasterRecoveryEndpoints")]
         public bool? IncludeDisasterRecoveryEndpoints { get; set; }
     }
 }

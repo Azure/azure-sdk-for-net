@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> ASE region resource specific properties. </summary>
     internal partial class AseRegionProperties
@@ -44,21 +44,27 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Display name for region. </summary>
+        [WirePath("displayName")]
         public string DisplayName { get; }
 
         /// <summary> Is region standard. </summary>
+        [WirePath("standard")]
         public bool? Standard { get; }
 
         /// <summary> Dedicated host enabled. </summary>
+        [WirePath("dedicatedHost")]
         public bool? DedicatedHost { get; }
 
         /// <summary> Zone redundant deployment enabled. </summary>
+        [WirePath("zoneRedundant")]
         public bool? ZoneRedundant { get; }
 
         /// <summary> Available Skus in region. </summary>
+        [WirePath("availableSku")]
         public IList<string> AvailableSku { get; } = new ChangeTrackingList<string>();
 
         /// <summary> Available OSs in region. </summary>
+        [WirePath("availableOS")]
         public IList<string> AvailableOS { get; } = new ChangeTrackingList<string>();
     }
 }

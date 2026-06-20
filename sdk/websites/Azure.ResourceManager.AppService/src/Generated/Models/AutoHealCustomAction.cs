@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary>
     /// Custom action to be executed
@@ -36,9 +37,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Executable to be run. </summary>
+        [WirePath("exe")]
         public string Exe { get; set; }
 
         /// <summary> Parameters for the executable. </summary>
+        [WirePath("parameters")]
         public string Parameters { get; set; }
     }
 }

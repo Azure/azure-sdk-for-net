@@ -8,9 +8,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Collection of Diagnostic Analyses. </summary>
     internal partial class DiagnosticAnalysisCollection
@@ -37,9 +37,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The AnalysisDefinition items on this page. </summary>
+        [WirePath("value")]
         public IList<AnalysisDefinitionData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
+        [WirePath("nextLink")]
         public Uri NextLink { get; }
     }
 }

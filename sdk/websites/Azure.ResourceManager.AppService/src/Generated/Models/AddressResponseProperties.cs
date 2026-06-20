@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> AddressResponse resource specific properties. </summary>
     internal partial class AddressResponseProperties
@@ -40,15 +40,19 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Main public virtual IP. </summary>
+        [WirePath("serviceIpAddress")]
         public string ServiceIpAddress { get; }
 
         /// <summary> Virtual Network internal IP address of the App Service Environment if it is in internal load-balancing mode. </summary>
+        [WirePath("internalIpAddress")]
         public string InternalIpAddress { get; }
 
         /// <summary> IP addresses appearing on outbound connections. </summary>
+        [WirePath("outboundIpAddresses")]
         public IList<string> OutboundIpAddresses { get; } = new ChangeTrackingList<string>();
 
         /// <summary> Additional virtual IPs. </summary>
+        [WirePath("vipMappings")]
         public IList<VirtualIPMapping> VipMappings { get; } = new ChangeTrackingList<VirtualIPMapping>();
     }
 }

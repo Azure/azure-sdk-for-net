@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
-using Microsoft.Web.Models;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary> Virtual Network information ARM resource. </summary>
     public partial class VnetInfoResourceData : ResourceData
@@ -40,12 +40,15 @@ namespace Microsoft.Web
         }
 
         /// <summary> Core resource properties. </summary>
+        [WirePath("properties")]
         internal VnetInfo Properties { get; set; }
 
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
 
         /// <summary> The Virtual Network's resource ID. </summary>
+        [WirePath("properties.vnetResourceId")]
         public string VnetResourceId
         {
             get
@@ -63,6 +66,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> The client certificate thumbprint. </summary>
+        [WirePath("properties.certThumbprint")]
         public string CertThumbprint
         {
             get
@@ -72,6 +76,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> A certificate file (.cer) blob containing the public key of the private key used to authenticate a \nPoint-To-Site VPN connection. </summary>
+        [WirePath("properties.certBlob")]
         public string CertBlob
         {
             get
@@ -89,6 +94,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> The routes that this Virtual Network connection uses. </summary>
+        [WirePath("properties.routes")]
         public IReadOnlyList<VnetRoute> Routes
         {
             get
@@ -102,6 +108,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if a resync is required; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("properties.resyncRequired")]
         public bool? ResyncRequired
         {
             get
@@ -111,6 +118,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> DNS servers to be used by this Virtual Network. This should be a comma-separated list of IP addresses. </summary>
+        [WirePath("properties.dnsServers")]
         public string DnsServers
         {
             get
@@ -128,6 +136,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Flag that is used to denote if this is VNET injection. </summary>
+        [WirePath("properties.isSwift")]
         public bool? IsSwift
         {
             get

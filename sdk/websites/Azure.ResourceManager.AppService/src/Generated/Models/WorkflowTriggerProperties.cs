@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The workflow trigger properties. </summary>
     internal partial class WorkflowTriggerProperties
@@ -47,30 +48,39 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Gets the provisioning state. </summary>
+        [WirePath("provisioningState")]
         public WorkflowTriggerProvisioningState? ProvisioningState { get; }
 
         /// <summary> Gets the created time. </summary>
+        [WirePath("createdTime")]
         public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> Gets the changed time. </summary>
+        [WirePath("changedTime")]
         public DateTimeOffset? ChangedOn { get; }
 
         /// <summary> Gets the state. </summary>
+        [WirePath("state")]
         public WorkflowState? State { get; }
 
         /// <summary> Gets the status. </summary>
+        [WirePath("status")]
         public WorkflowStatus? Status { get; }
 
         /// <summary> Gets the last execution time. </summary>
+        [WirePath("lastExecutionTime")]
         public DateTimeOffset? LastExecutionOn { get; }
 
         /// <summary> Gets the next execution time. </summary>
+        [WirePath("nextExecutionTime")]
         public DateTimeOffset? NextExecutionOn { get; }
 
         /// <summary> Gets the workflow trigger recurrence. </summary>
+        [WirePath("recurrence")]
         public WorkflowTriggerRecurrence Recurrence { get; }
 
         /// <summary> Gets the reference to workflow. </summary>
+        [WirePath("workflow")]
         public ResourceReference Workflow { get; }
     }
 }

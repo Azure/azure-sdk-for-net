@@ -13,9 +13,9 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Microsoft.Web.Models;
+using Azure.ResourceManager.AppService.Models;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A class representing a WorkflowRunActionRepetition along with the instance operations that can be performed on it.
@@ -50,7 +50,7 @@ namespace Microsoft.Web
         internal WorkflowRunActionRepetitionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string workflowRunActionRepetitionApiVersion);
-            _workflowRunActionRepetitionsClientDiagnostics = new ClientDiagnostics("Microsoft.Web", ResourceType.Namespace, Diagnostics);
+            _workflowRunActionRepetitionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
             _workflowRunActionRepetitionsRestClient = new WorkflowRunActionRepetitions(_workflowRunActionRepetitionsClientDiagnostics, Pipeline, Endpoint, workflowRunActionRepetitionApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
@@ -128,13 +128,13 @@ namespace Microsoft.Web
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = _workflowRunActionRepetitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
-                Azure.Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<WorkflowRunActionRepetitionDefinitionData> response = Azure.Response.FromValue(WorkflowRunActionRepetitionDefinitionData.FromResponse(result), result);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<WorkflowRunActionRepetitionDefinitionData> response = Response.FromValue(WorkflowRunActionRepetitionDefinitionData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Azure.Response.FromValue(new WorkflowRunActionRepetitionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new WorkflowRunActionRepetitionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -176,13 +176,13 @@ namespace Microsoft.Web
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = _workflowRunActionRepetitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
-                Azure.Response result = Pipeline.ProcessMessage(message, context);
-                Response<WorkflowRunActionRepetitionDefinitionData> response = Azure.Response.FromValue(WorkflowRunActionRepetitionDefinitionData.FromResponse(result), result);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<WorkflowRunActionRepetitionDefinitionData> response = Response.FromValue(WorkflowRunActionRepetitionDefinitionData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Azure.Response.FromValue(new WorkflowRunActionRepetitionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new WorkflowRunActionRepetitionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Server Farm RDP connection details. </summary>
     public partial class ServerFarmRdpDetails
@@ -33,9 +34,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The RDP password for the server farm. </summary>
+        [WirePath("rdpPassword")]
         public string RdpPassword { get; }
 
         /// <summary> The RDP password expiry date. </summary>
+        [WirePath("rdpPasswordExpiry")]
         public DateTimeOffset? RdpPasswordExpiry { get; }
     }
 }

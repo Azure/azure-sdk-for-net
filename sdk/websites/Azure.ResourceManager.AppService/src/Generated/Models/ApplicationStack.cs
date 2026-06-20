@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Application stack. </summary>
     public partial class ApplicationStack
@@ -45,21 +45,27 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Application stack name. </summary>
+        [WirePath("name")]
         public string Name { get; }
 
         /// <summary> Application stack display name. </summary>
+        [WirePath("display")]
         public string Display { get; }
 
         /// <summary> Application stack dependency. </summary>
+        [WirePath("dependency")]
         public string Dependency { get; }
 
         /// <summary> List of major versions available. </summary>
+        [WirePath("majorVersions")]
         public IList<StackMajorVersion> MajorVersions { get; } = new ChangeTrackingList<StackMajorVersion>();
 
         /// <summary> List of frameworks associated with application stack. </summary>
+        [WirePath("frameworks")]
         public IList<ApplicationStack> Frameworks { get; } = new ChangeTrackingList<ApplicationStack>();
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if this is the stack is deprecated; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("isDeprecated")]
         public IList<ApplicationStack> IsDeprecated { get; } = new ChangeTrackingList<ApplicationStack>();
     }
 }

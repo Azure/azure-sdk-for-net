@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> User resource specific properties. </summary>
     internal partial class UserProperties
@@ -45,18 +45,23 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Username used for publishing. </summary>
+        [WirePath("publishingUserName")]
         public string PublishingUserName { get; set; }
 
         /// <summary> Password used for publishing. </summary>
+        [WirePath("publishingPassword")]
         public string PublishingPassword { get; set; }
 
         /// <summary> Password hash used for publishing. </summary>
+        [WirePath("publishingPasswordHash")]
         public string PublishingPasswordHash { get; set; }
 
         /// <summary> Password hash salt used for publishing. </summary>
+        [WirePath("publishingPasswordHashSalt")]
         public string PublishingPasswordHashSalt { get; set; }
 
         /// <summary> Url of SCM site. </summary>
+        [WirePath("scmUri")]
         public string ScmUri { get; set; }
     }
 }

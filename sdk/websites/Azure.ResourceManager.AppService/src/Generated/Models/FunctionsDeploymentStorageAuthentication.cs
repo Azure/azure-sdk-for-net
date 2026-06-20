@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Authentication method to access the storage account for deployment. </summary>
     public partial class FunctionsDeploymentStorageAuthentication
@@ -35,12 +36,15 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Property to select authentication type to access the selected storage account. Available options: SystemAssignedIdentity, UserAssignedIdentity, StorageAccountConnectionString. </summary>
+        [WirePath("type")]
         public AuthenticationType? Type { get; set; }
 
         /// <summary> Use this property for UserAssignedIdentity. Set the resource ID of the identity. Do not set a value for this property when using other authentication type. </summary>
+        [WirePath("userAssignedIdentityResourceId")]
         public string UserAssignedIdentityResourceId { get; set; }
 
         /// <summary> Use this property for StorageAccountConnectionString. Set the name of the app setting that has the storage account connection string. Do not set a value for this property when using other authentication type. </summary>
+        [WirePath("storageAccountConnectionStringName")]
         public string StorageAccountConnectionStringName { get; set; }
     }
 }

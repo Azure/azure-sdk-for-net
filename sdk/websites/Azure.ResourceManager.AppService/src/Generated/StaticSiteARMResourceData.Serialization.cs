@@ -12,10 +12,10 @@ using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
-using Microsoft.Web.Models;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
     public partial class StaticSiteARMResourceData : TrackedResourceData, IJsonModel<StaticSiteARMResourceData>
@@ -49,7 +49,7 @@ namespace Microsoft.Web
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, MicrosoftWebContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(StaticSiteARMResourceData)} does not support writing '{options.Format}' format.");
             }
@@ -75,8 +75,8 @@ namespace Microsoft.Web
             return RequestContent.Create(staticSiteARMResourceData, ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="response"> The <see cref="Azure.Response"/> to deserialize the <see cref="StaticSiteARMResourceData"/> from. </param>
-        internal static StaticSiteARMResourceData FromResponse(Azure.Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="StaticSiteARMResourceData"/> from. </param>
+        internal static StaticSiteARMResourceData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeStaticSiteARMResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
@@ -205,7 +205,7 @@ namespace Microsoft.Web
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, MicrosoftWebContext.Default);
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAppServiceContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("tags"u8))

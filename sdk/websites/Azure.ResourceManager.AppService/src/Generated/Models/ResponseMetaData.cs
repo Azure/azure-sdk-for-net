@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The ResponseMetaData. </summary>
     internal partial class ResponseMetaData
@@ -31,6 +32,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Source of the Data. </summary>
+        [WirePath("dataSource")]
         public DataSource DataSource { get; }
     }
 }

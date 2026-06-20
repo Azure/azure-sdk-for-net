@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Column definition. </summary>
     public partial class DataTableResponseColumn
@@ -35,12 +36,15 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Name of the column. </summary>
+        [WirePath("columnName")]
         public string ColumnName { get; }
 
         /// <summary> Data type which looks like 'String' or 'Int32'. </summary>
+        [WirePath("dataType")]
         public string DataType { get; }
 
         /// <summary> Column Type. </summary>
+        [WirePath("columnType")]
         public string ColumnType { get; }
     }
 }

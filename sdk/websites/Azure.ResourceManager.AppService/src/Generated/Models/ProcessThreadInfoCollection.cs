@@ -8,8 +8,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Collection of Kudu thread information elements. </summary>
     internal partial class ProcessThreadInfoCollection
@@ -36,9 +37,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The ProcessThreadInfo items on this page. </summary>
+        [WirePath("value")]
         public IList<ProcessThreadInfo> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
+        [WirePath("nextLink")]
         public Uri NextLink { get; }
     }
 }

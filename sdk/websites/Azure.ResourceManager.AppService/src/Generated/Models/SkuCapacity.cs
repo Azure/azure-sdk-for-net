@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Description of the App Service plan scale options. </summary>
     public partial class SkuCapacity
@@ -39,18 +40,23 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Minimum number of workers for this App Service plan SKU. </summary>
+        [WirePath("minimum")]
         public int? Minimum { get; set; }
 
         /// <summary> Maximum number of workers for this App Service plan SKU. </summary>
+        [WirePath("maximum")]
         public int? Maximum { get; set; }
 
         /// <summary> Maximum number of Elastic workers for this App Service plan SKU. </summary>
+        [WirePath("elasticMaximum")]
         public int? ElasticMaximum { get; set; }
 
         /// <summary> Default number of workers for this App Service plan SKU. </summary>
+        [WirePath("default")]
         public int? Default { get; set; }
 
         /// <summary> Available scale configurations for an App Service plan. </summary>
+        [WirePath("scaleType")]
         public string ScaleType { get; set; }
     }
 }

@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary>
     /// List of available locations (regions or App Service Environments) for
@@ -42,12 +42,15 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Available regions. </summary>
+        [WirePath("locations")]
         public IList<GeoRegion> Locations { get; }
 
         /// <summary> Available App Service Environments with full descriptions of the environments. </summary>
+        [WirePath("hostingEnvironments")]
         public IList<AppServiceEnvironment> HostingEnvironments { get; }
 
         /// <summary> Available App Service Environments with basic information. </summary>
+        [WirePath("hostingEnvironmentDeploymentInfos")]
         public IList<HostingEnvironmentDeploymentInfo> HostingEnvironmentDeploymentInfos { get; }
     }
 }

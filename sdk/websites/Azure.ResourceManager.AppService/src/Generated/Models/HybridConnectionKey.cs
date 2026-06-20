@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Hybrid Connection key contract. This has the send key name and value for a Hybrid Connection. </summary>
     public partial class HybridConnectionKey : ProxyOnlyResource
@@ -31,9 +32,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> HybridConnectionKey resource specific properties. </summary>
+        [WirePath("properties")]
         internal HybridConnectionKeyProperties Properties { get; }
 
         /// <summary> The name of the send key. </summary>
+        [WirePath("properties.sendKeyName")]
         public string SendKeyName
         {
             get
@@ -43,6 +46,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The value of the send key. </summary>
+        [WirePath("properties.sendKeyValue")]
         public string SendKeyValue
         {
             get

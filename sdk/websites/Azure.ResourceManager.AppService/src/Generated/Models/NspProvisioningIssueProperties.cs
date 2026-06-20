@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Network Security Perimeter Association Provisioning Issue Properties. </summary>
     public partial class NspProvisioningIssueProperties
@@ -42,18 +42,23 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Provisioning Issue Type. </summary>
+        [WirePath("issueType")]
         public string IssueType { get; }
 
         /// <summary> Provisioning Issue Severity. </summary>
+        [WirePath("severity")]
         public string Severity { get; }
 
         /// <summary> Provisioning Issue Description. </summary>
+        [WirePath("description")]
         public string Description { get; }
 
         /// <summary> Recommended ARM Ids to resolve the issue. </summary>
+        [WirePath("suggestedResourceIds")]
         public IList<string> SuggestedResourceIds { get; }
 
         /// <summary> Recommended access rules to resolve the issue. </summary>
+        [WirePath("suggestedAccessRules")]
         public IList<string> SuggestedAccessRules { get; }
     }
 }

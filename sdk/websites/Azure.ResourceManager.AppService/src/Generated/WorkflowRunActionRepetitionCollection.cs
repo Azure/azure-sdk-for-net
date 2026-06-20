@@ -16,7 +16,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A class representing a collection of <see cref="WorkflowRunActionRepetitionResource"/> and their operations.
@@ -39,7 +39,7 @@ namespace Microsoft.Web
         internal WorkflowRunActionRepetitionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(WorkflowRunActionRepetitionResource.ResourceType, out string workflowRunActionRepetitionApiVersion);
-            _workflowRunActionRepetitionsClientDiagnostics = new ClientDiagnostics("Microsoft.Web", WorkflowRunActionRepetitionResource.ResourceType.Namespace, Diagnostics);
+            _workflowRunActionRepetitionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", WorkflowRunActionRepetitionResource.ResourceType.Namespace, Diagnostics);
             _workflowRunActionRepetitionsRestClient = new WorkflowRunActionRepetitions(_workflowRunActionRepetitionsClientDiagnostics, Pipeline, Endpoint, workflowRunActionRepetitionApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }

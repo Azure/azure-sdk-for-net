@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> DiagnosticCategory resource specific properties. </summary>
     internal partial class DiagnosticCategoryProperties
@@ -31,6 +32,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Description of the diagnostic category. </summary>
+        [WirePath("description")]
         public string Description { get; }
     }
 }

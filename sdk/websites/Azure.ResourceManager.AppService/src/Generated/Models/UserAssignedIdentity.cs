@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> User Assigned identity. </summary>
     public partial class UserAssignedIdentity
@@ -33,9 +34,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Principal Id of user assigned identity. </summary>
+        [WirePath("principalId")]
         public string PrincipalId { get; }
 
         /// <summary> Client Id of user assigned identity. </summary>
+        [WirePath("clientId")]
         public string ClientId { get; }
     }
 }

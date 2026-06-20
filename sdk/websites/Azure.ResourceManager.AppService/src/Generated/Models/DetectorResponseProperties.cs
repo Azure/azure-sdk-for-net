@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> DetectorResponse resource specific properties. </summary>
     internal partial class DetectorResponseProperties
@@ -42,18 +42,23 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> metadata for the detector. </summary>
+        [WirePath("metadata")]
         public DetectorInfo Metadata { get; }
 
         /// <summary> Data Set. </summary>
+        [WirePath("dataset")]
         public IList<DiagnosticData> Dataset { get; } = new ChangeTrackingList<DiagnosticData>();
 
         /// <summary> Indicates status of the most severe insight. </summary>
+        [WirePath("status")]
         public Status Status { get; }
 
         /// <summary> Additional configuration for different data providers to be used by the UI. </summary>
+        [WirePath("dataProvidersMetadata")]
         public IList<DataProviderMetadata> DataProvidersMetadata { get; } = new ChangeTrackingList<DataProviderMetadata>();
 
         /// <summary> Suggested utterances where the detector can be applicable. </summary>
+        [WirePath("suggestedUtterances")]
         public QueryUtterancesResults SuggestedUtterances { get; }
     }
 }

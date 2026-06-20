@@ -14,7 +14,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A class representing a AseV3NetworkingConfiguration along with the instance operations that can be performed on it.
@@ -49,7 +49,7 @@ namespace Microsoft.Web
         internal AseV3NetworkingConfigurationResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string aseV3NetworkingConfigurationApiVersion);
-            _appServiceEnvironmentsClientDiagnostics = new ClientDiagnostics("Microsoft.Web", ResourceType.Namespace, Diagnostics);
+            _appServiceEnvironmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
             _appServiceEnvironmentsRestClient = new AppServiceEnvironments(_appServiceEnvironmentsClientDiagnostics, Pipeline, Endpoint, aseV3NetworkingConfigurationApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
@@ -132,7 +132,7 @@ namespace Microsoft.Web
                 Response<AseV3NetworkingConfigurationData> response = Response.FromValue(AseV3NetworkingConfigurationData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                WebArmOperation<AseV3NetworkingConfigurationResource> operation = new WebArmOperation<AseV3NetworkingConfigurationResource>(Response.FromValue(new AseV3NetworkingConfigurationResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                AppServiceArmOperation<AseV3NetworkingConfigurationResource> operation = new AppServiceArmOperation<AseV3NetworkingConfigurationResource>(Response.FromValue(new AseV3NetworkingConfigurationResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -188,7 +188,7 @@ namespace Microsoft.Web
                 Response<AseV3NetworkingConfigurationData> response = Response.FromValue(AseV3NetworkingConfigurationData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                WebArmOperation<AseV3NetworkingConfigurationResource> operation = new WebArmOperation<AseV3NetworkingConfigurationResource>(Response.FromValue(new AseV3NetworkingConfigurationResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                AppServiceArmOperation<AseV3NetworkingConfigurationResource> operation = new AppServiceArmOperation<AseV3NetworkingConfigurationResource>(Response.FromValue(new AseV3NetworkingConfigurationResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);

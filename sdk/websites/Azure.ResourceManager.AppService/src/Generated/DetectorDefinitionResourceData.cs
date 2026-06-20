@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
-using Microsoft.Web.Models;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary> ARM resource for a detector definition. </summary>
     public partial class DetectorDefinitionResourceData : ResourceData
@@ -40,12 +40,15 @@ namespace Microsoft.Web
         }
 
         /// <summary> Core resource properties. </summary>
+        [WirePath("properties")]
         internal DetectorDefinition Properties { get; }
 
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; }
 
         /// <summary> Display name of the detector. </summary>
+        [WirePath("properties.displayName")]
         public string DisplayName
         {
             get
@@ -55,6 +58,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Description of the detector. </summary>
+        [WirePath("properties.description")]
         public string Description
         {
             get
@@ -64,6 +68,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Detector Rank. </summary>
+        [WirePath("properties.rank")]
         public double? Rank
         {
             get
@@ -73,6 +78,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Flag representing whether detector is enabled or not. </summary>
+        [WirePath("properties.isEnabled")]
         public bool? IsEnabled
         {
             get

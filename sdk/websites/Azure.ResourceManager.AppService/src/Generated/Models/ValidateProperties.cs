@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> App properties used for validation. </summary>
     internal partial class ValidateProperties
@@ -57,45 +58,59 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> ARM resource ID of an App Service plan that would host the app. </summary>
+        [WirePath("serverFarmId")]
         public string ServerFarmId { get; set; }
 
         /// <summary> Name of the target SKU for the App Service plan. </summary>
+        [WirePath("skuName")]
         public string SkuName { get; set; }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if App Service plan is for Linux workers; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("needLinuxWorkers")]
         public bool? NeedLinuxWorkers { get; set; }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if App Service plan is for Spot instances; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("isSpot")]
         public bool? IsSpot { get; set; }
 
         /// <summary> Target capacity of the App Service plan (number of VMs). </summary>
+        [WirePath("capacity")]
         public int? Capacity { get; set; }
 
         /// <summary> Name of App Service Environment where app or App Service plan should be created. </summary>
+        [WirePath("hostingEnvironment")]
         public string HostingEnvironment { get; set; }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if App Service plan is running as a windows container. </summary>
+        [WirePath("isXenon")]
         public bool? IsXenon { get; set; }
 
         /// <summary> Base URL of the container registry. </summary>
+        [WirePath("containerRegistryBaseUrl")]
         public string ContainerRegistryBaseUri { get; set; }
 
         /// <summary> Username for to access the container registry. </summary>
+        [WirePath("containerRegistryUsername")]
         public string ContainerRegistryUsername { get; set; }
 
         /// <summary> Password for to access the container registry. </summary>
+        [WirePath("containerRegistryPassword")]
         public string ContainerRegistryPassword { get; set; }
 
         /// <summary> Repository name (image name). </summary>
+        [WirePath("containerImageRepository")]
         public string ContainerImageRepository { get; set; }
 
         /// <summary> Image tag. </summary>
+        [WirePath("containerImageTag")]
         public string ContainerImageTag { get; set; }
 
         /// <summary> Platform (windows or linux). </summary>
+        [WirePath("containerImagePlatform")]
         public string ContainerImagePlatform { get; set; }
 
         /// <summary> App Service Environment Properties. </summary>
+        [WirePath("appServiceEnvironment")]
         public AppServiceEnvironment AppServiceEnvironment { get; set; }
     }
 }

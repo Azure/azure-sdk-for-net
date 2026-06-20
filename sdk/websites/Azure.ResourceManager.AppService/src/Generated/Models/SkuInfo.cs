@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> SKU discovery information. </summary>
     public partial class SkuInfo
@@ -35,12 +36,15 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Resource type that this SKU applies to. </summary>
+        [WirePath("resourceType")]
         public string ResourceType { get; }
 
         /// <summary> Name and tier of the SKU. </summary>
+        [WirePath("sku")]
         public SkuDescription Sku { get; }
 
         /// <summary> Min, max, and default scale values of the SKU. </summary>
+        [WirePath("capacity")]
         public SkuCapacity Capacity { get; }
     }
 }

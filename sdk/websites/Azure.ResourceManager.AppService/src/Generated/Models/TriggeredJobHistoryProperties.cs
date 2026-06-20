@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> TriggeredJobHistory resource specific properties. </summary>
     internal partial class TriggeredJobHistoryProperties
@@ -33,6 +33,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> List of triggered web job runs. </summary>
+        [WirePath("runs")]
         public IList<TriggeredJobRun> Runs { get; } = new ChangeTrackingList<TriggeredJobRun>();
     }
 }

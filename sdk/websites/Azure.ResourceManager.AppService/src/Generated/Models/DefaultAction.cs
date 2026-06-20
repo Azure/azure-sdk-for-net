@@ -7,9 +7,9 @@
 
 using System;
 using System.ComponentModel;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Default action for main access restriction if no rules are matched. </summary>
     public readonly partial struct DefaultAction : IEquatable<DefaultAction>

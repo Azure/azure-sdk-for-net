@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Detailed view of a Network Security Perimeter Configured for the site. </summary>
     public partial class NetworkSecurityPerimeterConfiguration : ProxyOnlyResource
@@ -31,6 +32,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Name of the Network Security Perimeter Profile Access Rule. </summary>
+        [WirePath("properties")]
         public NetworkSecurityPerimeterConfigurationProperties Properties { get; }
     }
 }

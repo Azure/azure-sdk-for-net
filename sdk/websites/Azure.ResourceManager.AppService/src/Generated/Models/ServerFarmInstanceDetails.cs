@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Represents instance details for an app service plan. </summary>
     public partial class ServerFarmInstanceDetails
@@ -28,7 +28,7 @@ namespace Microsoft.Web.Models
         /// <param name="instances"> The list of server farm instances. </param>
         /// <param name="instanceCount"> The total number of instances. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ServerFarmInstanceDetails(string serverFarmName, IList<ServerFarmInstance> instances, int? instanceCount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ServerFarmInstanceDetails(string serverFarmName, IReadOnlyList<ServerFarmInstance> instances, int? instanceCount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ServerFarmName = serverFarmName;
             Instances = instances;
@@ -37,12 +37,15 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The server farm name. </summary>
+        [WirePath("serverFarmName")]
         public string ServerFarmName { get; }
 
         /// <summary> The list of server farm instances. </summary>
-        public IList<ServerFarmInstance> Instances { get; }
+        [WirePath("instances")]
+        public IReadOnlyList<ServerFarmInstance> Instances { get; }
 
         /// <summary> The total number of instances. </summary>
+        [WirePath("instanceCount")]
         public int? InstanceCount { get; }
     }
 }

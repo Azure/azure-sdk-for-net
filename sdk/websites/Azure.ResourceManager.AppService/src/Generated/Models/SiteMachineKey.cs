@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> MachineKey of an app. </summary>
     public partial class SiteMachineKey
@@ -37,15 +38,19 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> MachineKey validation. </summary>
+        [WirePath("validation")]
         public string Validation { get; }
 
         /// <summary> Validation key. </summary>
+        [WirePath("validationKey")]
         public string ValidationKey { get; }
 
         /// <summary> Algorithm used for decryption. </summary>
+        [WirePath("decryption")]
         public string Decryption { get; }
 
         /// <summary> Decryption key. </summary>
+        [WirePath("decryptionKey")]
         public string DecryptionKey { get; }
     }
 }

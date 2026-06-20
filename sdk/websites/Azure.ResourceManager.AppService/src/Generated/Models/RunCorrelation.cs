@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The correlation properties. </summary>
     public partial class RunCorrelation
@@ -35,9 +35,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The client tracking identifier. </summary>
+        [WirePath("clientTrackingId")]
         public string ClientTrackingId { get; }
 
         /// <summary> The client keywords. </summary>
+        [WirePath("clientKeywords")]
         public IList<string> ClientKeywords { get; }
     }
 }

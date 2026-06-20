@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> HostNameBinding resource specific properties. </summary>
     internal partial class HostNameBindingProperties
@@ -47,30 +48,39 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> App Service app name. </summary>
+        [WirePath("siteName")]
         public string SiteName { get; set; }
 
         /// <summary> Fully qualified ARM domain resource URI. </summary>
+        [WirePath("domainId")]
         public string DomainId { get; set; }
 
         /// <summary> Azure resource name. </summary>
+        [WirePath("azureResourceName")]
         public string AzureResourceName { get; set; }
 
         /// <summary> Azure resource type. </summary>
+        [WirePath("azureResourceType")]
         public AzureResourceType? AzureResourceType { get; set; }
 
         /// <summary> Custom DNS record type. </summary>
+        [WirePath("customHostNameDnsRecordType")]
         public CustomHostNameDnsRecordType? CustomHostNameDnsRecordType { get; set; }
 
         /// <summary> Hostname type. </summary>
+        [WirePath("hostNameType")]
         public HostNameType? HostNameType { get; set; }
 
         /// <summary> SSL type. </summary>
+        [WirePath("sslState")]
         public SslState? SslState { get; set; }
 
         /// <summary> SSL certificate thumbprint. </summary>
+        [WirePath("thumbprint")]
         public string Thumbprint { get; set; }
 
         /// <summary> Virtual IP address assigned to the hostname if IP based SSL is enabled. </summary>
+        [WirePath("virtualIP")]
         public string VirtualIP { get; }
     }
 }

@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
-using Microsoft.Web.Models;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary> Full view of the custom domain suffix configuration for ASEv3. </summary>
     public partial class CustomDnsSuffixConfigurationData : ResourceData
@@ -40,12 +40,15 @@ namespace Microsoft.Web
         }
 
         /// <summary> CustomDnsSuffixConfiguration resource specific properties. </summary>
+        [WirePath("properties")]
         internal CustomDnsSuffixConfigurationProperties Properties { get; set; }
 
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [WirePath("properties.provisioningState")]
         public CustomDnsSuffixProvisioningState? ProvisioningState
         {
             get
@@ -55,6 +58,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Gets the ProvisioningDetails. </summary>
+        [WirePath("properties.provisioningDetails")]
         public string ProvisioningDetails
         {
             get
@@ -64,6 +68,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> The default custom domain suffix to use for all sites deployed on the ASE. </summary>
+        [WirePath("properties.dnsSuffix")]
         public string DnsSuffix
         {
             get
@@ -81,6 +86,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> The URL referencing the Azure Key Vault certificate secret that should be used as the default SSL/TLS certificate for sites with the custom domain suffix. </summary>
+        [WirePath("properties.certificateUrl")]
         public string CertificateUri
         {
             get
@@ -98,6 +104,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> The user-assigned identity to use for resolving the key vault certificate reference. If not specified, the system-assigned ASE identity will be used if available. </summary>
+        [WirePath("properties.keyVaultReferenceIdentity")]
         public string KeyVaultReferenceIdentity
         {
             get

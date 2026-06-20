@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
-using Microsoft.Web.Models;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary> A hostname binding object. </summary>
     public partial class HostNameBindingData : ResourceData
@@ -40,12 +40,15 @@ namespace Microsoft.Web
         }
 
         /// <summary> HostNameBinding resource specific properties. </summary>
+        [WirePath("properties")]
         internal HostNameBindingProperties Properties { get; set; }
 
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
 
         /// <summary> App Service app name. </summary>
+        [WirePath("properties.siteName")]
         public string SiteName
         {
             get
@@ -63,6 +66,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Fully qualified ARM domain resource URI. </summary>
+        [WirePath("properties.domainId")]
         public string DomainId
         {
             get
@@ -80,6 +84,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Azure resource name. </summary>
+        [WirePath("properties.azureResourceName")]
         public string AzureResourceName
         {
             get
@@ -97,6 +102,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Azure resource type. </summary>
+        [WirePath("properties.azureResourceType")]
         public AzureResourceType? AzureResourceType
         {
             get
@@ -114,6 +120,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Custom DNS record type. </summary>
+        [WirePath("properties.customHostNameDnsRecordType")]
         public CustomHostNameDnsRecordType? CustomHostNameDnsRecordType
         {
             get
@@ -131,6 +138,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Hostname type. </summary>
+        [WirePath("properties.hostNameType")]
         public HostNameType? HostNameType
         {
             get
@@ -148,6 +156,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> SSL type. </summary>
+        [WirePath("properties.sslState")]
         public SslState? SslState
         {
             get
@@ -165,6 +174,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> SSL certificate thumbprint. </summary>
+        [WirePath("properties.thumbprint")]
         public string Thumbprint
         {
             get
@@ -182,6 +192,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Virtual IP address assigned to the hostname if IP based SSL is enabled. </summary>
+        [WirePath("properties.virtualIP")]
         public string VirtualIP
         {
             get

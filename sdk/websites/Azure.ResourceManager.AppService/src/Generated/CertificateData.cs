@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
-using Microsoft.Web.Models;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary> SSL certificate for an app. </summary>
     public partial class CertificateData : TrackedResourceData
@@ -43,12 +43,15 @@ namespace Microsoft.Web
         }
 
         /// <summary> Certificate resource specific properties. </summary>
+        [WirePath("properties")]
         internal CertificateProperties Properties { get; set; }
 
         /// <summary> Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
 
         /// <summary> Certificate password. </summary>
+        [WirePath("properties.password")]
         public string Password
         {
             get
@@ -66,6 +69,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Friendly name of the certificate. </summary>
+        [WirePath("properties.friendlyName")]
         public string FriendlyName
         {
             get
@@ -75,6 +79,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Subject name of the certificate. </summary>
+        [WirePath("properties.subjectName")]
         public string SubjectName
         {
             get
@@ -84,6 +89,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Host names the certificate applies to. </summary>
+        [WirePath("properties.hostNames")]
         public IList<string> HostNames
         {
             get
@@ -97,6 +103,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Pfx blob. </summary>
+        [WirePath("properties.pfxBlob")]
         public BinaryData PfxBlob
         {
             get
@@ -114,6 +121,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> App name. </summary>
+        [WirePath("properties.siteName")]
         public string SiteName
         {
             get
@@ -123,6 +131,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Self link. </summary>
+        [WirePath("properties.selfLink")]
         public string SelfLink
         {
             get
@@ -132,6 +141,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Certificate issuer. </summary>
+        [WirePath("properties.issuer")]
         public string Issuer
         {
             get
@@ -141,6 +151,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Certificate issue Date. </summary>
+        [WirePath("properties.issueDate")]
         public DateTimeOffset? IssueOn
         {
             get
@@ -150,6 +161,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Certificate expiration date. </summary>
+        [WirePath("properties.expirationDate")]
         public DateTimeOffset? ExpireOn
         {
             get
@@ -159,6 +171,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Certificate thumbprint. </summary>
+        [WirePath("properties.thumbprint")]
         public string Thumbprint
         {
             get
@@ -168,6 +181,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Is the certificate valid?. </summary>
+        [WirePath("properties.valid")]
         public bool? Valid
         {
             get
@@ -177,6 +191,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Raw bytes of .cer file. </summary>
+        [WirePath("properties.cerBlob")]
         public BinaryData CerBlob
         {
             get
@@ -186,6 +201,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Public key hash. </summary>
+        [WirePath("properties.publicKeyHash")]
         public string PublicKeyHash
         {
             get
@@ -195,6 +211,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Specification for the App Service Environment to use for the certificate. </summary>
+        [WirePath("properties.hostingEnvironmentProfile")]
         public HostingEnvironmentProfile HostingEnvironmentProfile
         {
             get
@@ -204,6 +221,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Azure Key Vault Csm resource Id. </summary>
+        [WirePath("properties.keyVaultId")]
         public ResourceIdentifier KeyVaultId
         {
             get
@@ -221,6 +239,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Azure Key Vault secret name. </summary>
+        [WirePath("properties.keyVaultSecretName")]
         public string KeyVaultSecretName
         {
             get
@@ -238,6 +257,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Status of the Key Vault secret. </summary>
+        [WirePath("properties.keyVaultSecretStatus")]
         public KeyVaultSecretStatus? KeyVaultSecretStatus
         {
             get
@@ -247,6 +267,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Resource ID of the associated App Service plan. </summary>
+        [WirePath("properties.serverFarmId")]
         public ResourceIdentifier ServerFarmId
         {
             get
@@ -264,6 +285,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> CNAME of the certificate to be issued via free certificate. </summary>
+        [WirePath("properties.canonicalName")]
         public string CanonicalName
         {
             get
@@ -281,6 +303,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Method of domain validation for free cert. </summary>
+        [WirePath("properties.domainValidationMethod")]
         public string DomainValidationMethod
         {
             get

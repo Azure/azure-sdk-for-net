@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     internal partial class AsyncPageableWrapper<T, U> : AsyncPageable<U>
     {

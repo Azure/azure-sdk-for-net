@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Push settings for the App. </summary>
     public partial class PushSettings : ProxyOnlyResource
@@ -31,9 +32,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> PushSettings resource specific properties. </summary>
+        [WirePath("properties")]
         internal PushSettingsProperties Properties { get; set; }
 
         /// <summary> Gets or sets a flag indicating whether the Push endpoint is enabled. </summary>
+        [WirePath("properties.isPushEnabled")]
         public bool? IsPushEnabled
         {
             get
@@ -54,6 +57,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Gets or sets a JSON string containing a list of tags that are whitelisted for use by the push registration endpoint. </summary>
+        [WirePath("properties.tagWhitelistJson")]
         public string TagWhitelistJson
         {
             get
@@ -76,6 +80,7 @@ namespace Microsoft.Web.Models
         /// '_', '@', '#', '.', ':', '-'. 
         /// Validation should be performed at the PushRequestHandler.
         /// </summary>
+        [WirePath("properties.tagsRequiringAuth")]
         public string TagsRequiringAuth
         {
             get
@@ -93,6 +98,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Gets or sets a JSON string containing a list of dynamic tags that will be evaluated from user claims in the push registration endpoint. </summary>
+        [WirePath("properties.dynamicTagsJson")]
         public string DynamicTagsJson
         {
             get

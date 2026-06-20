@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> MigrateMySqlStatus resource specific properties. </summary>
     internal partial class MigrateMySqlStatusProperties
@@ -35,12 +36,15 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Status of the migration task. </summary>
+        [WirePath("migrationOperationStatus")]
         public OperationStatus? MigrationOperationStatus { get; }
 
         /// <summary> Operation ID for the migration task. </summary>
+        [WirePath("operationId")]
         public string OperationId { get; }
 
         /// <summary> True if the web app has in app MySql enabled. </summary>
+        [WirePath("localMySqlEnabled")]
         public bool? LocalMySqlEnabled { get; }
     }
 }

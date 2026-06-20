@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary></summary>
     internal partial class BinaryDataOperationSource : IOperationSource<BinaryData>
@@ -30,7 +30,7 @@ namespace Microsoft.Web
         BinaryData IOperationSource<BinaryData>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            return ModelReaderWriter.Read<BinaryData>(new BinaryData(Encoding.UTF8.GetBytes(document.RootElement.GetRawText())), ModelSerializationExtensions.WireOptions, MicrosoftWebContext.Default);
+            return ModelReaderWriter.Read<BinaryData>(new BinaryData(Encoding.UTF8.GetBytes(document.RootElement.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAppServiceContext.Default);
         }
 
         /// <param name="response"> The response from the service. </param>
@@ -39,7 +39,7 @@ namespace Microsoft.Web
         async ValueTask<BinaryData> IOperationSource<BinaryData>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return ModelReaderWriter.Read<BinaryData>(new BinaryData(Encoding.UTF8.GetBytes(document.RootElement.GetRawText())), ModelSerializationExtensions.WireOptions, MicrosoftWebContext.Default);
+            return ModelReaderWriter.Read<BinaryData>(new BinaryData(Encoding.UTF8.GetBytes(document.RootElement.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAppServiceContext.Default);
         }
     }
 }

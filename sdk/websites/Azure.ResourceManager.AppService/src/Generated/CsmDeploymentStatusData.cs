@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
-using Microsoft.Web.Models;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary> Deployment status response payload. </summary>
     public partial class CsmDeploymentStatusData : ResourceData
@@ -40,12 +40,15 @@ namespace Microsoft.Web
         }
 
         /// <summary> CsmDeploymentStatus resource specific properties. </summary>
+        [WirePath("properties")]
         internal CsmDeploymentStatusProperties Properties { get; }
 
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; }
 
         /// <summary> Deployment operation id. </summary>
+        [WirePath("properties.deploymentId")]
         public string DeploymentId
         {
             get
@@ -55,6 +58,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Deployment build status. </summary>
+        [WirePath("properties.status")]
         public DeploymentBuildStatus? Status
         {
             get
@@ -64,6 +68,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Number of site instances currently being provisioned. </summary>
+        [WirePath("properties.numberOfInstancesInProgress")]
         public int? NumberOfInstancesInProgress
         {
             get
@@ -73,6 +78,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Number of site instances provisioned successfully. </summary>
+        [WirePath("properties.numberOfInstancesSuccessful")]
         public int? NumberOfInstancesSuccessful
         {
             get
@@ -82,6 +88,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Number of site instances failed to provision. </summary>
+        [WirePath("properties.numberOfInstancesFailed")]
         public int? NumberOfInstancesFailed
         {
             get
@@ -91,6 +98,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> List of URLs pointing to logs for instances which failed to provision. </summary>
+        [WirePath("properties.failedInstancesLogs")]
         public IList<string> FailedInstancesLogs
         {
             get
@@ -100,6 +108,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> List of errors. </summary>
+        [WirePath("properties.errors")]
         public IList<ErrorEntity> Errors
         {
             get

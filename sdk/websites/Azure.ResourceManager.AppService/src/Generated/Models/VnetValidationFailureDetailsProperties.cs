@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> VnetValidationFailureDetails resource specific properties. </summary>
     internal partial class VnetValidationFailureDetailsProperties
@@ -40,15 +40,19 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Text describing the validation outcome. </summary>
+        [WirePath("message")]
         public string Message { get; }
 
         /// <summary> A flag describing whether or not validation failed. </summary>
+        [WirePath("failed")]
         public bool? Failed { get; }
 
         /// <summary> A list of tests that failed in the validation. </summary>
+        [WirePath("failedTests")]
         public IList<VnetValidationTestFailure> FailedTests { get; } = new ChangeTrackingList<VnetValidationTestFailure>();
 
         /// <summary> A list of warnings generated during validation. </summary>
+        [WirePath("warnings")]
         public IList<VnetValidationTestFailure> Warnings { get; } = new ChangeTrackingList<VnetValidationTestFailure>();
     }
 }

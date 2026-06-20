@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The workflow run action correlation properties. </summary>
     public partial class RunActionCorrelation : RunCorrelation
@@ -29,6 +30,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The action tracking identifier. </summary>
+        [WirePath("actionTrackingId")]
         public string ActionTrackingId { get; }
     }
 }

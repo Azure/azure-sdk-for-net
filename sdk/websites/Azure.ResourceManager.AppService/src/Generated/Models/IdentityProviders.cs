@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The configuration settings of each of the identity providers used to configure App Service Authentication/Authorization. </summary>
     public partial class IdentityProviders
@@ -52,33 +52,42 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The configuration settings of the Azure Active directory provider. </summary>
+        [WirePath("azureActiveDirectory")]
         public AzureActiveDirectory AzureActiveDirectory { get; set; }
 
         /// <summary> The configuration settings of the Facebook provider. </summary>
+        [WirePath("facebook")]
         public Facebook Facebook { get; set; }
 
         /// <summary> The configuration settings of the GitHub provider. </summary>
+        [WirePath("gitHub")]
         public GitHub GitHub { get; set; }
 
         /// <summary> The configuration settings of the Google provider. </summary>
+        [WirePath("google")]
         public Google Google { get; set; }
 
         /// <summary> The configuration settings of the legacy Microsoft Account provider. </summary>
+        [WirePath("legacyMicrosoftAccount")]
         public LegacyMicrosoftAccount LegacyMicrosoftAccount { get; set; }
 
         /// <summary> The configuration settings of the Twitter provider. </summary>
+        [WirePath("twitter")]
         public Twitter Twitter { get; set; }
 
         /// <summary> The configuration settings of the Apple provider. </summary>
+        [WirePath("apple")]
         public Apple Apple { get; set; }
 
         /// <summary> The configuration settings of the Azure Static Web Apps provider. </summary>
+        [WirePath("azureStaticWebApps")]
         public AzureStaticWebApps AzureStaticWebApps { get; set; }
 
         /// <summary>
         /// The map of the name of the alias of each custom Open ID Connect provider to the
         /// configuration settings of the custom Open ID Connect provider.
         /// </summary>
+        [WirePath("customOpenIdConnectProviders")]
         public IDictionary<string, CustomOpenIdConnectProvider> CustomOpenIdConnectProviders { get; }
     }
 }

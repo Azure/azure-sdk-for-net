@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
-using Microsoft.Web.Models;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary> Describes main public IP address and any extra virtual IPs. </summary>
     public partial class AddressResponseData : ResourceData
@@ -40,12 +40,15 @@ namespace Microsoft.Web
         }
 
         /// <summary> AddressResponse resource specific properties. </summary>
+        [WirePath("properties")]
         internal AddressResponseProperties Properties { get; }
 
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; }
 
         /// <summary> Main public virtual IP. </summary>
+        [WirePath("properties.serviceIpAddress")]
         public string ServiceIpAddress
         {
             get
@@ -55,6 +58,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Virtual Network internal IP address of the App Service Environment if it is in internal load-balancing mode. </summary>
+        [WirePath("properties.internalIpAddress")]
         public string InternalIpAddress
         {
             get
@@ -64,6 +68,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> IP addresses appearing on outbound connections. </summary>
+        [WirePath("properties.outboundIpAddresses")]
         public IList<string> OutboundIpAddresses
         {
             get
@@ -73,6 +78,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Additional virtual IPs. </summary>
+        [WirePath("properties.vipMappings")]
         public IList<VirtualIPMapping> VipMappings
         {
             get

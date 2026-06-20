@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> StaticSiteCustomDomainOverviewARMResource resource specific properties. </summary>
     internal partial class StaticSiteCustomDomainOverviewARMResourceProperties
@@ -39,18 +40,23 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The domain name for the static site custom domain. </summary>
+        [WirePath("domainName")]
         public string DomainName { get; }
 
         /// <summary> The date and time on which the custom domain was created for the static site. </summary>
+        [WirePath("createdOn")]
         public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> The status of the custom domain. </summary>
+        [WirePath("status")]
         public CustomDomainStatus? Status { get; }
 
         /// <summary> The TXT record validation token. </summary>
+        [WirePath("validationToken")]
         public string ValidationToken { get; }
 
         /// <summary> Gets the ErrorMessage. </summary>
+        [WirePath("errorMessage")]
         public string ErrorMessage { get; }
     }
 }

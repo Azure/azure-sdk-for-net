@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The ContainerAppsConfiguration. </summary>
     public partial class ContainerAppsConfiguration
@@ -41,21 +42,27 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Azure Monitor instrumentation key used by Dapr to export Service to Service communication telemetry. </summary>
+        [WirePath("daprAIInstrumentationKey")]
         public string DaprAIInstrumentationKey { get; set; }
 
         /// <summary> IP range in CIDR notation that can be reserved for environment infrastructure IP addresses. It must not overlap with any other Subnet IP ranges. </summary>
+        [WirePath("platformReservedCidr")]
         public string PlatformReservedCidr { get; set; }
 
         /// <summary> An IP address from the IP range defined by platformReservedCidr that will be reserved for the internal DNS server. </summary>
+        [WirePath("platformReservedDnsIP")]
         public string PlatformReservedDnsIP { get; set; }
 
         /// <summary> Resource ID of a subnet for control plane infrastructure components. This subnet must be in the same VNET as the subnet defined in appSubnetResourceId. Must not overlap with the IP range defined in platformReservedCidr, if defined. </summary>
+        [WirePath("controlPlaneSubnetResourceId")]
         public string ControlPlaneSubnetResourceId { get; set; }
 
         /// <summary> Resource ID of a subnet for control plane infrastructure components. This subnet must be in the same VNET as the subnet defined in appSubnetResourceId. Must not overlap with the IP range defined in platformReservedCidr, if defined. </summary>
+        [WirePath("appSubnetResourceId")]
         public string AppSubnetResourceId { get; set; }
 
         /// <summary> CIDR notation IP range assigned to the Docker bridge network. It must not overlap with any Subnet IP ranges or the IP range defined in platformReservedCidr, if defined. </summary>
+        [WirePath("dockerBridgeCidr")]
         public string DockerBridgeCidr { get; set; }
     }
 }

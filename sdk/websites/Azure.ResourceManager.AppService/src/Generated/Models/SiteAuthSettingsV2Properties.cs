@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> SiteAuthSettingsV2 resource specific properties. </summary>
     internal partial class SiteAuthSettingsV2Properties
@@ -39,18 +40,23 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The configuration settings of the platform of App Service Authentication/Authorization. </summary>
+        [WirePath("platform")]
         public AuthPlatform Platform { get; set; }
 
         /// <summary> The configuration settings that determines the validation flow of users using App Service Authentication/Authorization. </summary>
+        [WirePath("globalValidation")]
         public GlobalValidation GlobalValidation { get; set; }
 
         /// <summary> The configuration settings of each of the identity providers used to configure App Service Authentication/Authorization. </summary>
+        [WirePath("identityProviders")]
         public IdentityProviders IdentityProviders { get; set; }
 
         /// <summary> The configuration settings of the login flow of users using App Service Authentication/Authorization. </summary>
+        [WirePath("login")]
         public Login Login { get; set; }
 
         /// <summary> The configuration settings of the HTTP requests for authentication and authorization requests made against App Service Authentication/Authorization. </summary>
+        [WirePath("httpSettings")]
         public HttpSettings HttpSettings { get; set; }
     }
 }

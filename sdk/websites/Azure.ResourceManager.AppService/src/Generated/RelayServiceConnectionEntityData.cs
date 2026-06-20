@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
-using Microsoft.Web.Models;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary> Hybrid Connection for an App Service app. </summary>
     public partial class RelayServiceConnectionEntityData : ResourceData
@@ -40,12 +40,15 @@ namespace Microsoft.Web
         }
 
         /// <summary> RelayServiceConnectionEntity resource specific properties. </summary>
+        [WirePath("properties")]
         internal RelayServiceConnectionEntityProperties Properties { get; set; }
 
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
 
         /// <summary> Gets or sets the EntityName. </summary>
+        [WirePath("properties.entityName")]
         public string EntityName
         {
             get
@@ -63,6 +66,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Gets or sets the EntityConnectionString. </summary>
+        [WirePath("properties.entityConnectionString")]
         public string EntityConnectionString
         {
             get
@@ -80,6 +84,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Gets or sets the ResourceType. </summary>
+        [WirePath("properties.resourceType")]
         public string ResourceType
         {
             get
@@ -97,6 +102,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Gets or sets the ResourceConnectionString. </summary>
+        [WirePath("properties.resourceConnectionString")]
         public string ResourceConnectionString
         {
             get
@@ -114,6 +120,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Gets or sets the Hostname. </summary>
+        [WirePath("properties.hostname")]
         public string Hostname
         {
             get
@@ -131,6 +138,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Gets or sets the Port. </summary>
+        [WirePath("properties.port")]
         public int? Port
         {
             get
@@ -148,6 +156,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Gets or sets the BiztalkUri. </summary>
+        [WirePath("properties.biztalkUri")]
         public string BiztalkUri
         {
             get

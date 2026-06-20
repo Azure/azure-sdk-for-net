@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
-using Microsoft.Web.Models;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary> An AI gateway resource. </summary>
     public partial class AiGatewayData : TrackedResourceData
@@ -41,9 +41,11 @@ namespace Microsoft.Web
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
+        [WirePath("properties")]
         internal AiGatewayProperties Properties { get; set; }
 
         /// <summary> The description of the resource. </summary>
+        [WirePath("properties.aiGatewayId")]
         public string AiGatewayId
         {
             get

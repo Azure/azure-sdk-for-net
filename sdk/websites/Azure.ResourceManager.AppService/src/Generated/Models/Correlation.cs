@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The correlation property. </summary>
     internal partial class Correlation
@@ -31,6 +32,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The client tracking id. </summary>
+        [WirePath("clientTrackingId")]
         public string ClientTrackingId { get; }
     }
 }

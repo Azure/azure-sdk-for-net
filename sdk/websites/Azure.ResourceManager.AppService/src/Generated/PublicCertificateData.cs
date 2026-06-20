@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
-using Microsoft.Web.Models;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary> Public certificate object. </summary>
     public partial class PublicCertificateData : ResourceData
@@ -40,12 +40,15 @@ namespace Microsoft.Web
         }
 
         /// <summary> PublicCertificate resource specific properties. </summary>
+        [WirePath("properties")]
         internal PublicCertificateProperties Properties { get; set; }
 
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
 
         /// <summary> Public Certificate byte array. </summary>
+        [WirePath("properties.blob")]
         public BinaryData Blob
         {
             get
@@ -63,6 +66,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Public Certificate Location. </summary>
+        [WirePath("properties.publicCertificateLocation")]
         public PublicCertificateLocation? PublicCertificateLocation
         {
             get
@@ -80,6 +84,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Certificate Thumbprint. </summary>
+        [WirePath("properties.thumbprint")]
         public string Thumbprint
         {
             get

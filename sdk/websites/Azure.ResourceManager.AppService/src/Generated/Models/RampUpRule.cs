@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Routing rules for ramp up testing. This rule allows to redirect static traffic % to a slot or to gradually change routing % based on performance. </summary>
     public partial class RampUpRule
@@ -35,7 +36,7 @@ namespace Microsoft.Web.Models
         /// <param name="changeDecisionCallbackUri"> Custom decision algorithm can be provided in TiPCallback site extension which URL can be specified. </param>
         /// <param name="name"> Name of the routing rule. The recommended name would be to point to the slot which will receive the traffic in the experiment. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RampUpRule(string actionHostName, double? reroutePercentage, double? changeStep, int? changeIntervalInMinutes, double? minReroutePercentage, double? maxReroutePercentage, string changeDecisionCallbackUri, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RampUpRule(string actionHostName, double? reroutePercentage, double? changeStep, int? changeIntervalInMinutes, double? minReroutePercentage, double? maxReroutePercentage, Uri changeDecisionCallbackUri, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ActionHostName = actionHostName;
             ReroutePercentage = reroutePercentage;
@@ -49,9 +50,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Hostname of a slot to which the traffic will be redirected if decided to. E.g. myapp-stage.azurewebsites.net. </summary>
+        [WirePath("actionHostName")]
         public string ActionHostName { get; set; }
 
         /// <summary> Percentage of the traffic which will be redirected to &lt;code&gt;ActionHostName&lt;/code&gt;. </summary>
+        [WirePath("reroutePercentage")]
         public double? ReroutePercentage { get; set; }
 
         /// <summary>
@@ -59,21 +62,27 @@ namespace Microsoft.Web.Models
         /// &lt;code&gt;MaxReroutePercentage&lt;/code&gt;. Site metrics are checked every N minutes specified in &lt;code&gt;ChangeIntervalInMinutes&lt;/code&gt;.\nCustom decision algorithm
         /// can be provided in TiPCallback site extension which URL can be specified in &lt;code&gt;ChangeDecisionCallbackUrl&lt;/code&gt;.
         /// </summary>
+        [WirePath("changeStep")]
         public double? ChangeStep { get; set; }
 
         /// <summary> Specifies interval in minutes to reevaluate ReroutePercentage. </summary>
+        [WirePath("changeIntervalInMinutes")]
         public int? ChangeIntervalInMinutes { get; set; }
 
         /// <summary> Specifies lower boundary above which ReroutePercentage will stay. </summary>
+        [WirePath("minReroutePercentage")]
         public double? MinReroutePercentage { get; set; }
 
         /// <summary> Specifies upper boundary below which ReroutePercentage will stay. </summary>
+        [WirePath("maxReroutePercentage")]
         public double? MaxReroutePercentage { get; set; }
 
         /// <summary> Custom decision algorithm can be provided in TiPCallback site extension which URL can be specified. </summary>
-        public string ChangeDecisionCallbackUri { get; set; }
+        [WirePath("changeDecisionCallbackUrl")]
+        public Uri ChangeDecisionCallbackUri { get; set; }
 
         /// <summary> Name of the routing rule. The recommended name would be to point to the slot which will receive the traffic in the experiment. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
     }
 }

@@ -5,18 +5,18 @@
 
 #nullable disable
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Gets or sets the workflow health state. </summary>
     public enum WorkflowHealthState
     {
+        /// <summary> Unknown. </summary>
+        Unknown,
         /// <summary> NotSpecified. </summary>
         NotSpecified,
         /// <summary> Healthy. </summary>
         Healthy,
         /// <summary> Unhealthy. </summary>
-        Unhealthy,
-        /// <summary> Unknown. </summary>
-        Unknown
+        Unhealthy
     }
 }

@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> App Service billing entity that contains information about meter which the Azure billing system utilizes to charge users for services. </summary>
     public partial class BillingMeter : ProxyOnlyResource
@@ -31,9 +32,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> BillingMeter resource specific properties. </summary>
+        [WirePath("properties")]
         internal BillingMeterProperties Properties { get; }
 
         /// <summary> Meter GUID onboarded in Commerce. </summary>
+        [WirePath("properties.meterId")]
         public string MeterId
         {
             get
@@ -43,6 +46,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Azure Location of billable resource. </summary>
+        [WirePath("properties.billingLocation")]
         public string BillingLocation
         {
             get
@@ -52,6 +56,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Short Name from App Service Azure pricing Page. </summary>
+        [WirePath("properties.shortName")]
         public string ShortName
         {
             get
@@ -61,6 +66,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Friendly name of the meter. </summary>
+        [WirePath("properties.friendlyName")]
         public string FriendlyName
         {
             get
@@ -70,6 +76,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> App Service ResourceType meter used for. </summary>
+        [WirePath("properties.resourceType")]
         public string ResourceType
         {
             get
@@ -79,6 +86,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> App Service OS type meter used for. </summary>
+        [WirePath("properties.osType")]
         public string OsType
         {
             get
@@ -88,6 +96,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Meter Multiplier. </summary>
+        [WirePath("properties.multiplier")]
         public double? Multiplier
         {
             get

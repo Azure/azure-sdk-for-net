@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Server farm install script configuration. </summary>
     public partial class InstallScript
@@ -33,9 +34,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Name of the install script. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
 
         /// <summary> Source of the install script. </summary>
+        [WirePath("source")]
         public InstallScriptSource Source { get; set; }
     }
 }

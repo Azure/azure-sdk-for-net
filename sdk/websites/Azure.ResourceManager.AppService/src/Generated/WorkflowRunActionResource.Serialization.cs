@@ -9,7 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary></summary>
     public partial class WorkflowRunActionResource : IJsonModel<WorkflowRunActionData>
@@ -27,11 +27,11 @@ namespace Microsoft.Web
         WorkflowRunActionData IJsonModel<WorkflowRunActionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<WorkflowRunActionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<WorkflowRunActionData>(Data, options, MicrosoftWebContext.Default);
+        BinaryData IPersistableModel<WorkflowRunActionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<WorkflowRunActionData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        WorkflowRunActionData IPersistableModel<WorkflowRunActionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WorkflowRunActionData>(data, options, MicrosoftWebContext.Default);
+        WorkflowRunActionData IPersistableModel<WorkflowRunActionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WorkflowRunActionData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<WorkflowRunActionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);

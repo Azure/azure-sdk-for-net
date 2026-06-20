@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Set of data with rendering instructions. </summary>
     public partial class DiagnosticData
@@ -33,9 +34,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Data in table form. </summary>
+        [WirePath("table")]
         public DataTableResponseObject Table { get; }
 
         /// <summary> Properties that describe how the table should be rendered. </summary>
+        [WirePath("renderingProperties")]
         public Rendering RenderingProperties { get; }
     }
 }

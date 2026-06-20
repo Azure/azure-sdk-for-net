@@ -17,7 +17,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A class representing a collection of <see cref="SourceControlResource"/> and their operations.
@@ -40,7 +40,7 @@ namespace Microsoft.Web
         internal SourceControlCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(SourceControlResource.ResourceType, out string sourceControlApiVersion);
-            _webClientClientDiagnostics = new ClientDiagnostics("Microsoft.Web", SourceControlResource.ResourceType.Namespace, Diagnostics);
+            _webClientClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SourceControlResource.ResourceType.Namespace, Diagnostics);
             _webClientRestClient = new WebClient(_webClientClientDiagnostics, Pipeline, Endpoint, sourceControlApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
@@ -96,7 +96,7 @@ namespace Microsoft.Web
                 Response<SourceControlData> response = Response.FromValue(SourceControlData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                WebArmOperation<SourceControlResource> operation = new WebArmOperation<SourceControlResource>(Response.FromValue(new SourceControlResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                AppServiceArmOperation<SourceControlResource> operation = new AppServiceArmOperation<SourceControlResource>(Response.FromValue(new SourceControlResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -151,7 +151,7 @@ namespace Microsoft.Web
                 Response<SourceControlData> response = Response.FromValue(SourceControlData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                WebArmOperation<SourceControlResource> operation = new WebArmOperation<SourceControlResource>(Response.FromValue(new SourceControlResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                AppServiceArmOperation<SourceControlResource> operation = new AppServiceArmOperation<SourceControlResource>(Response.FromValue(new SourceControlResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);

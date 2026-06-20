@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> ProcessModuleInfo resource specific properties. </summary>
     internal partial class ProcessModuleInfoProperties
@@ -51,36 +52,47 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Base address. Used as module identifier in ARM resource URI. </summary>
+        [WirePath("base_address")]
         public string BaseAddress { get; }
 
         /// <summary> File name. </summary>
+        [WirePath("file_name")]
         public string FileName { get; }
 
         /// <summary> HRef URI. </summary>
+        [WirePath("href")]
         public string Href { get; }
 
         /// <summary> File path. </summary>
+        [WirePath("file_path")]
         public string FilePath { get; }
 
         /// <summary> Module memory size. </summary>
+        [WirePath("module_memory_size")]
         public int? ModuleMemorySize { get; }
 
         /// <summary> File version. </summary>
+        [WirePath("file_version")]
         public string FileVersion { get; }
 
         /// <summary> File description. </summary>
+        [WirePath("file_description")]
         public string FileDescription { get; }
 
         /// <summary> Product name. </summary>
+        [WirePath("product")]
         public string Product { get; }
 
         /// <summary> Product version. </summary>
+        [WirePath("product_version")]
         public string ProductVersion { get; }
 
         /// <summary> Is debug?. </summary>
+        [WirePath("is_debug")]
         public bool? IsDebug { get; }
 
         /// <summary> Module language (locale). </summary>
+        [WirePath("language")]
         public string Language { get; }
     }
 }

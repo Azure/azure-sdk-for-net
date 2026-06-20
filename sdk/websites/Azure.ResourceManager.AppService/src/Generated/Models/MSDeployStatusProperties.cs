@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> MSDeployStatus resource specific properties. </summary>
     internal partial class MSDeployStatusProperties
@@ -39,18 +40,23 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Username of deployer. </summary>
+        [WirePath("deployer")]
         public string Deployer { get; }
 
         /// <summary> Provisioning state. </summary>
+        [WirePath("provisioningState")]
         public MSDeployProvisioningState? ProvisioningState { get; }
 
         /// <summary> Start time of deploy operation. </summary>
+        [WirePath("startTime")]
         public DateTimeOffset? StartOn { get; }
 
         /// <summary> End time of deploy operation. </summary>
+        [WirePath("endTime")]
         public DateTimeOffset? EndOn { get; }
 
         /// <summary> Whether the deployment operation has completed. </summary>
+        [WirePath("complete")]
         public bool? Complete { get; }
     }
 }

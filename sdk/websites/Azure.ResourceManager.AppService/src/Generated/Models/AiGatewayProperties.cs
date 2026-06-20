@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The properties of an AI gateway. </summary>
     internal partial class AiGatewayProperties
@@ -31,6 +32,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The description of the resource. </summary>
+        [WirePath("aiGatewayId")]
         public string AiGatewayId { get; }
     }
 }

@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> PremierAddOn resource specific properties. </summary>
     internal partial class PremierAddOnProperties
@@ -39,18 +40,23 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Premier add on SKU. </summary>
+        [WirePath("sku")]
         public string Sku { get; set; }
 
         /// <summary> Premier add on Product. </summary>
+        [WirePath("product")]
         public string Product { get; set; }
 
         /// <summary> Premier add on Vendor. </summary>
+        [WirePath("vendor")]
         public string Vendor { get; set; }
 
         /// <summary> Premier add on Marketplace publisher. </summary>
+        [WirePath("marketplacePublisher")]
         public string MarketplacePublisher { get; set; }
 
         /// <summary> Premier add on Marketplace offer. </summary>
+        [WirePath("marketplaceOffer")]
         public string MarketplaceOffer { get; set; }
     }
 }

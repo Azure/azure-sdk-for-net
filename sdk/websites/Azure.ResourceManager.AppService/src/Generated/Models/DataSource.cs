@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Class representing data source used by the detectors. </summary>
     public partial class DataSource
@@ -36,9 +36,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Instructions if any for the data source. </summary>
+        [WirePath("instructions")]
         public IList<string> Instructions { get; }
 
         /// <summary> Datasource Uri Links. </summary>
+        [WirePath("dataSourceUri")]
         public IList<NameValuePair> DataSourceUri { get; }
     }
 }

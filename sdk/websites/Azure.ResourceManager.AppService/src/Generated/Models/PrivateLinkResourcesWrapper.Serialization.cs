@@ -10,9 +10,9 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Wrapper for a collection of private link resources. </summary>
     public partial class PrivateLinkResourcesWrapper : IJsonModel<PrivateLinkResourcesWrapper>
@@ -46,7 +46,7 @@ namespace Microsoft.Web.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, MicrosoftWebContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(PrivateLinkResourcesWrapper)} does not support writing '{options.Format}' format.");
             }
@@ -89,7 +89,7 @@ namespace Microsoft.Web.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (MicrosoftWebPrivateLinkResource item in Value)
+            foreach (AppServicePrivateLinkResource item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -136,16 +136,16 @@ namespace Microsoft.Web.Models
             {
                 return null;
             }
-            IList<MicrosoftWebPrivateLinkResource> value = default;
+            IList<AppServicePrivateLinkResource> value = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<MicrosoftWebPrivateLinkResource> array = new List<MicrosoftWebPrivateLinkResource>();
+                    List<AppServicePrivateLinkResource> array = new List<AppServicePrivateLinkResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(MicrosoftWebPrivateLinkResource.DeserializeMicrosoftWebPrivateLinkResource(item, options));
+                        array.Add(AppServicePrivateLinkResource.DeserializeAppServicePrivateLinkResource(item, options));
                     }
                     value = array;
                     continue;

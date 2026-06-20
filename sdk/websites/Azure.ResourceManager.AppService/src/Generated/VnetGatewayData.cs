@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
-using Microsoft.Web.Models;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary> The Virtual Network gateway contract. This is used to give the Virtual Network gateway access to the VPN package. </summary>
     public partial class VnetGatewayData : ResourceData
@@ -40,12 +40,15 @@ namespace Microsoft.Web
         }
 
         /// <summary> VnetGateway resource specific properties. </summary>
+        [WirePath("properties")]
         internal VnetGatewayProperties Properties { get; set; }
 
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
 
         /// <summary> The Virtual Network name. </summary>
+        [WirePath("properties.vnetName")]
         public string VnetName
         {
             get
@@ -63,6 +66,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> The URI where the VPN package can be downloaded. </summary>
+        [WirePath("properties.vpnPackageUri")]
         public string VpnPackageUri
         {
             get

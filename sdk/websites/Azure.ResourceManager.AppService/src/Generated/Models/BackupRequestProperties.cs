@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> BackupRequest resource specific properties. </summary>
     internal partial class BackupRequestProperties
@@ -46,18 +46,23 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Name of the backup. </summary>
+        [WirePath("backupName")]
         public string BackupName { get; set; }
 
         /// <summary> True if the backup schedule is enabled (must be included in that case), false if the backup schedule should be disabled. </summary>
+        [WirePath("enabled")]
         public bool? Enabled { get; set; }
 
         /// <summary> SAS URL to the container. </summary>
+        [WirePath("storageAccountUrl")]
         public string StorageAccountUri { get; set; }
 
         /// <summary> Schedule for the backup if it is executed periodically. </summary>
+        [WirePath("backupSchedule")]
         public BackupSchedule BackupSchedule { get; set; }
 
         /// <summary> Databases included in the backup. </summary>
+        [WirePath("databases")]
         public IList<DatabaseBackupSetting> Databases { get; } = new ChangeTrackingList<DatabaseBackupSetting>();
     }
 }

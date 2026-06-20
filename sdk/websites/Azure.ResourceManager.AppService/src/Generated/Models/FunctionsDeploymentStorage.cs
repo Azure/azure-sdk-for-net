@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Storage for deployed package used by the function app. </summary>
     public partial class FunctionsDeploymentStorage
@@ -35,12 +36,15 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Property to select Azure Storage type. Available options: blobContainer. </summary>
+        [WirePath("type")]
         public FunctionsDeploymentStorageType? Type { get; set; }
 
         /// <summary> Property to set the URL for the selected Azure Storage type. Example: For blobContainer, the value could be https://&lt;storageAccountName&gt;.blob.core.windows.net/&lt;containerName&gt;. </summary>
+        [WirePath("value")]
         public Uri Value { get; set; }
 
         /// <summary> Authentication method to access the storage account for deployment. </summary>
+        [WirePath("authentication")]
         public FunctionsDeploymentStorageAuthentication Authentication { get; set; }
     }
 }

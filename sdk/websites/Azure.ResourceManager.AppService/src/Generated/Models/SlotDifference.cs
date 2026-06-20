@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> A setting difference between two deployment slots of an app. </summary>
     public partial class SlotDifference : ProxyOnlyResource
@@ -31,9 +32,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> SlotDifference resource specific properties. </summary>
+        [WirePath("properties")]
         internal SlotDifferenceProperties Properties { get; }
 
         /// <summary> Level of the difference: Information, Warning or Error. </summary>
+        [WirePath("properties.level")]
         public string Level
         {
             get
@@ -43,6 +46,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The type of the setting: General, AppSetting or ConnectionString. </summary>
+        [WirePath("properties.settingType")]
         public string SettingType
         {
             get
@@ -52,6 +56,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Rule that describes how to process the setting difference during a slot swap. </summary>
+        [WirePath("properties.diffRule")]
         public string DiffRule
         {
             get
@@ -61,6 +66,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Name of the setting. </summary>
+        [WirePath("properties.settingName")]
         public string SettingName
         {
             get
@@ -70,6 +76,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Value of the setting in the current slot. </summary>
+        [WirePath("properties.valueInCurrentSlot")]
         public string ValueInCurrentSlot
         {
             get
@@ -79,6 +86,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Value of the setting in the target slot. </summary>
+        [WirePath("properties.valueInTargetSlot")]
         public string ValueInTargetSlot
         {
             get
@@ -88,6 +96,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Description of the setting difference. </summary>
+        [WirePath("properties.description")]
         public string Description
         {
             get

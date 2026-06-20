@@ -16,7 +16,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A class representing a collection of <see cref="WorkflowRunActionResource"/> and their operations.
@@ -39,7 +39,7 @@ namespace Microsoft.Web
         internal WorkflowRunActionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(WorkflowRunActionResource.ResourceType, out string workflowRunActionApiVersion);
-            _workflowRunActionsClientDiagnostics = new ClientDiagnostics("Microsoft.Web", WorkflowRunActionResource.ResourceType.Namespace, Diagnostics);
+            _workflowRunActionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", WorkflowRunActionResource.ResourceType.Namespace, Diagnostics);
             _workflowRunActionsRestClient = new WorkflowRunActions(_workflowRunActionsClientDiagnostics, Pipeline, Endpoint, workflowRunActionApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }

@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Represents whether or not an app is cloneable. </summary>
     public partial class SiteCloneability
@@ -34,7 +34,7 @@ namespace Microsoft.Web.Models
         /// </param>
         /// <param name="blockingCharacteristics"> List of blocking application characteristics. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SiteCloneability(CloneAbilityResult? result, IList<SiteCloneabilityCriterion> blockingFeatures, IList<SiteCloneabilityCriterion> unsupportedFeatures, IList<SiteCloneabilityCriterion> blockingCharacteristics, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SiteCloneability(CloneAbilityResult? result, IReadOnlyList<SiteCloneabilityCriterion> blockingFeatures, IReadOnlyList<SiteCloneabilityCriterion> unsupportedFeatures, IReadOnlyList<SiteCloneabilityCriterion> blockingCharacteristics, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Result = result;
             BlockingFeatures = blockingFeatures;
@@ -44,18 +44,22 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Name of app. </summary>
+        [WirePath("result")]
         public CloneAbilityResult? Result { get; }
 
         /// <summary> List of features enabled on app that prevent cloning. </summary>
-        public IList<SiteCloneabilityCriterion> BlockingFeatures { get; }
+        [WirePath("blockingFeatures")]
+        public IReadOnlyList<SiteCloneabilityCriterion> BlockingFeatures { get; }
 
         /// <summary>
         /// List of features enabled on app that are non-blocking but cannot be cloned. The app can still be cloned
         /// but the features in this list will not be set up on cloned app.
         /// </summary>
-        public IList<SiteCloneabilityCriterion> UnsupportedFeatures { get; }
+        [WirePath("unsupportedFeatures")]
+        public IReadOnlyList<SiteCloneabilityCriterion> UnsupportedFeatures { get; }
 
         /// <summary> List of blocking application characteristics. </summary>
-        public IList<SiteCloneabilityCriterion> BlockingCharacteristics { get; }
+        [WirePath("blockingCharacteristics")]
+        public IReadOnlyList<SiteCloneabilityCriterion> BlockingCharacteristics { get; }
     }
 }

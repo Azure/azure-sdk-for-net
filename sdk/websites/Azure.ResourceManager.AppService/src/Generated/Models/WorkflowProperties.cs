@@ -8,9 +8,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The workflow properties. </summary>
     internal partial class WorkflowProperties
@@ -40,7 +40,7 @@ namespace Microsoft.Web.Models
         /// <param name="parameters"> The parameters. </param>
         /// <param name="kind"> The workflow kind. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WorkflowProperties(WorkflowProvisioningState? provisioningState, DateTimeOffset? createdOn, DateTimeOffset? changedOn, WorkflowState? state, string version, string accessEndpoint, FlowEndpointsConfiguration endpointsConfiguration, FlowAccessControlConfiguration accessControl, WorkflowSku sku, ResourceReference integrationAccount, ResourceReference integrationServiceEnvironment, BinaryData definition, IDictionary<string, WorkflowParameter> parameters, MicrosoftWebKind? kind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WorkflowProperties(WorkflowProvisioningState? provisioningState, DateTimeOffset? createdOn, DateTimeOffset? changedOn, WorkflowState? state, string version, string accessEndpoint, FlowEndpointsConfiguration endpointsConfiguration, FlowAccessControlConfiguration accessControl, WorkflowSku sku, ResourceReference integrationAccount, ResourceReference integrationServiceEnvironment, BinaryData definition, IDictionary<string, WorkflowParameter> parameters, AppServiceKind? kind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             CreatedOn = createdOn;
@@ -60,36 +60,47 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Gets the provisioning state. </summary>
+        [WirePath("provisioningState")]
         public WorkflowProvisioningState? ProvisioningState { get; }
 
         /// <summary> Gets the created time. </summary>
+        [WirePath("createdTime")]
         public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> Gets the changed time. </summary>
+        [WirePath("changedTime")]
         public DateTimeOffset? ChangedOn { get; }
 
         /// <summary> The state. </summary>
+        [WirePath("state")]
         public WorkflowState? State { get; set; }
 
         /// <summary> Gets the version. </summary>
+        [WirePath("version")]
         public string Version { get; }
 
         /// <summary> Gets the access endpoint. </summary>
+        [WirePath("accessEndpoint")]
         public string AccessEndpoint { get; }
 
         /// <summary> The endpoints configuration. </summary>
+        [WirePath("endpointsConfiguration")]
         public FlowEndpointsConfiguration EndpointsConfiguration { get; set; }
 
         /// <summary> The access control configuration. </summary>
+        [WirePath("accessControl")]
         public FlowAccessControlConfiguration AccessControl { get; set; }
 
         /// <summary> The sku. </summary>
+        [WirePath("sku")]
         public WorkflowSku Sku { get; }
 
         /// <summary> The integration account. </summary>
+        [WirePath("integrationAccount")]
         public ResourceReference IntegrationAccount { get; set; }
 
         /// <summary> The integration service environment. </summary>
+        [WirePath("integrationServiceEnvironment")]
         public ResourceReference IntegrationServiceEnvironment { get; set; }
 
         /// <summary>
@@ -118,12 +129,15 @@ namespace Microsoft.Web.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("definition")]
         public BinaryData Definition { get; set; }
 
         /// <summary> The parameters. </summary>
+        [WirePath("parameters")]
         public IDictionary<string, WorkflowParameter> Parameters { get; } = new ChangeTrackingDictionary<string, WorkflowParameter>();
 
         /// <summary> The workflow kind. </summary>
-        public MicrosoftWebKind? Kind { get; set; }
+        [WirePath("kind")]
+        public AppServiceKind? Kind { get; set; }
     }
 }

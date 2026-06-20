@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
-using Microsoft.Web.Models;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary> Worker pool of an App Service Environment ARM resource. </summary>
     public partial class WorkerPoolResourceData : ResourceData
@@ -42,15 +42,19 @@ namespace Microsoft.Web
         }
 
         /// <summary> Core resource properties. </summary>
+        [WirePath("properties")]
         internal WorkerPool Properties { get; set; }
 
         /// <summary> Description of a SKU for a scalable resource. </summary>
+        [WirePath("sku")]
         public SkuDescription Sku { get; set; }
 
         /// <summary> Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
 
         /// <summary> Worker size ID for referencing this worker pool. </summary>
+        [WirePath("properties.workerSizeId")]
         public int? WorkerSizeId
         {
             get
@@ -68,6 +72,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Shared or dedicated app hosting. </summary>
+        [WirePath("properties.computeMode")]
         public ComputeModeOptions? ComputeMode
         {
             get
@@ -85,6 +90,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> VM size of the worker pool instances. </summary>
+        [WirePath("properties.workerSize")]
         public string WorkerSize
         {
             get
@@ -102,6 +108,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Number of instances in the worker pool. </summary>
+        [WirePath("properties.workerCount")]
         public int? WorkerCount
         {
             get
@@ -119,6 +126,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Names of all instances in the worker pool (read only). </summary>
+        [WirePath("properties.instanceNames")]
         public IReadOnlyList<string> InstanceNames
         {
             get

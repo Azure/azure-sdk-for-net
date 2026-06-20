@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> RemotePrivateEndpointConnectionARMResource resource specific properties. </summary>
     internal partial class RemotePrivateEndpointConnectionARMResourceProperties
@@ -39,18 +39,23 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [WirePath("provisioningState")]
         public string ProvisioningState { get; }
 
         /// <summary> PrivateEndpoint of a remote private endpoint connection. </summary>
+        [WirePath("privateEndpoint")]
         internal ArmIdWrapper PrivateEndpoint { get; set; }
 
         /// <summary> The state of a private link connection. </summary>
+        [WirePath("privateLinkServiceConnectionState")]
         public PrivateLinkConnectionState PrivateLinkServiceConnectionState { get; set; }
 
         /// <summary> Private IPAddresses mapped to the remote private endpoint. </summary>
+        [WirePath("ipAddresses")]
         public IList<string> IpAddresses { get; } = new ChangeTrackingList<string>();
 
         /// <summary> Gets the Id. </summary>
+        [WirePath("privateEndpoint.id")]
         public string PrivateEndpointId
         {
             get

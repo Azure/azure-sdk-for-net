@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The configuration settings of the storage of the tokens if blob storage is used. </summary>
     internal partial class BlobStorageTokenStore
@@ -31,6 +32,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The name of the app setting containing the SAS URL of the blob storage containing the tokens. </summary>
+        [WirePath("sasUrlSettingName")]
         public string SasUrlSettingName { get; set; }
     }
 }

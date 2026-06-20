@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
-using Microsoft.Web.Models;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary> Description of the parameters of Private Access for a Web Site. </summary>
     public partial class PrivateAccessData : ResourceData
@@ -40,12 +40,15 @@ namespace Microsoft.Web
         }
 
         /// <summary> PrivateAccess resource specific properties. </summary>
+        [WirePath("properties")]
         internal PrivateAccessProperties Properties { get; set; }
 
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
 
         /// <summary> Whether private access is enabled or not. </summary>
+        [WirePath("properties.enabled")]
         public bool? Enabled
         {
             get
@@ -63,6 +66,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> The Virtual Networks (and subnets) allowed to access the site privately. </summary>
+        [WirePath("properties.virtualNetworks")]
         public IList<PrivateAccessVirtualNetwork> VirtualNetworks
         {
             get

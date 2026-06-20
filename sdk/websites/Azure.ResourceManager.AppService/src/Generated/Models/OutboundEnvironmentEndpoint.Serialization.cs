@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Endpoints accessed for a common purpose that the App Service Environment requires outbound network access to. </summary>
     public partial class OutboundEnvironmentEndpoint : IJsonModel<OutboundEnvironmentEndpoint>
@@ -40,7 +40,7 @@ namespace Microsoft.Web.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, MicrosoftWebContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(OutboundEnvironmentEndpoint)} does not support writing '{options.Format}' format.");
             }
@@ -83,9 +83,9 @@ namespace Microsoft.Web.Models
             {
                 writer.WritePropertyName("endpoints"u8);
                 writer.WriteStartArray();
-                foreach (EndpointDependency item in Endpoints)
+                foreach (Models.AppServiceEndpointDependency item in Endpoints)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<Models.AppServiceEndpointDependency>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -132,7 +132,7 @@ namespace Microsoft.Web.Models
                 return null;
             }
             string category = default;
-            IList<EndpointDependency> endpoints = default;
+            IReadOnlyList<Models.AppServiceEndpointDependency> endpoints = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -147,10 +147,10 @@ namespace Microsoft.Web.Models
                     {
                         continue;
                     }
-                    List<EndpointDependency> array = new List<EndpointDependency>();
+                    List<Models.AppServiceEndpointDependency> array = new List<Models.AppServiceEndpointDependency>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(EndpointDependency.DeserializeEndpointDependency(item, options));
+                        array.Add(Models.AppServiceEndpointDependency.DeserializeAppServiceEndpointDependency(item, options));
                     }
                     endpoints = array;
                     continue;
@@ -160,7 +160,7 @@ namespace Microsoft.Web.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new OutboundEnvironmentEndpoint(category, endpoints ?? new ChangeTrackingList<EndpointDependency>(), additionalBinaryDataProperties);
+            return new OutboundEnvironmentEndpoint(category, endpoints ?? new ChangeTrackingList<Models.AppServiceEndpointDependency>(), additionalBinaryDataProperties);
         }
     }
 }

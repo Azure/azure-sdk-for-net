@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> VnetGateway resource specific properties. </summary>
     internal partial class VnetGatewayProperties
@@ -39,9 +39,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The Virtual Network name. </summary>
+        [WirePath("vnetName")]
         public string VnetName { get; set; }
 
         /// <summary> The URI where the VPN package can be downloaded. </summary>
+        [WirePath("vpnPackageUri")]
         public string VpnPackageUri { get; set; }
     }
 }

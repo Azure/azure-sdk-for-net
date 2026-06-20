@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> ProcessInfo resource specific properties. </summary>
     internal partial class ProcessInfoProperties
@@ -107,111 +107,147 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> ARM Identifier for deployment. </summary>
+        [WirePath("identifier")]
         public int? Identifier { get; }
 
         /// <summary> Deployment name. </summary>
+        [WirePath("deployment_name")]
         public string DeploymentName { get; }
 
         /// <summary> HRef URI. </summary>
+        [WirePath("href")]
         public string Href { get; }
 
         /// <summary> Minidump URI. </summary>
+        [WirePath("minidump")]
         public string Minidump { get; }
 
         /// <summary> Is profile running?. </summary>
+        [WirePath("is_profile_running")]
         public bool? IsProfileRunning { get; }
 
         /// <summary> Is the IIS Profile running?. </summary>
+        [WirePath("is_iis_profile_running")]
         public bool? IsIisProfileRunning { get; }
 
         /// <summary> IIS Profile timeout (seconds). </summary>
+        [WirePath("iis_profile_timeout_in_seconds")]
         public double? IisProfileTimeoutInSeconds { get; }
 
         /// <summary> Parent process. </summary>
+        [WirePath("parent")]
         public string Parent { get; }
 
         /// <summary> Child process list. </summary>
+        [WirePath("children")]
         public IList<string> Children { get; } = new ChangeTrackingList<string>();
 
         /// <summary> Thread list. </summary>
+        [WirePath("threads")]
         public IList<ProcessThreadInfo> Threads { get; } = new ChangeTrackingList<ProcessThreadInfo>();
 
         /// <summary> List of open files. </summary>
+        [WirePath("open_file_handles")]
         public IList<string> OpenFileHandles { get; } = new ChangeTrackingList<string>();
 
         /// <summary> List of modules. </summary>
+        [WirePath("modules")]
         public IList<ProcessModuleInfoData> Modules { get; } = new ChangeTrackingList<ProcessModuleInfoData>();
 
         /// <summary> File name of this process. </summary>
+        [WirePath("file_name")]
         public string FileName { get; }
 
         /// <summary> Command line. </summary>
+        [WirePath("command_line")]
         public string CommandLine { get; }
 
         /// <summary> User name. </summary>
+        [WirePath("user_name")]
         public string UserName { get; }
 
         /// <summary> Handle count. </summary>
+        [WirePath("handle_count")]
         public int? HandleCount { get; }
 
         /// <summary> Module count. </summary>
+        [WirePath("module_count")]
         public int? ModuleCount { get; }
 
         /// <summary> Thread count. </summary>
+        [WirePath("thread_count")]
         public int? ThreadCount { get; }
 
         /// <summary> Start time. </summary>
+        [WirePath("start_time")]
         public DateTimeOffset? StartOn { get; }
 
         /// <summary> Total CPU time. </summary>
+        [WirePath("total_cpu_time")]
         public string TotalCpuTime { get; }
 
         /// <summary> User CPU time. </summary>
+        [WirePath("user_cpu_time")]
         public string UserCpuTime { get; }
 
         /// <summary> Privileged CPU time. </summary>
+        [WirePath("privileged_cpu_time")]
         public string PrivilegedCpuTime { get; }
 
         /// <summary> Working set. </summary>
+        [WirePath("working_set")]
         public long? WorkingSet { get; }
 
         /// <summary> Peak working set. </summary>
+        [WirePath("peak_working_set")]
         public long? PeakWorkingSet { get; }
 
         /// <summary> Private memory size. </summary>
+        [WirePath("private_memory")]
         public long? PrivateMemory { get; }
 
         /// <summary> Virtual memory size. </summary>
+        [WirePath("virtual_memory")]
         public long? VirtualMemory { get; }
 
         /// <summary> Peak virtual memory usage. </summary>
+        [WirePath("peak_virtual_memory")]
         public long? PeakVirtualMemory { get; }
 
         /// <summary> Paged system memory. </summary>
+        [WirePath("paged_system_memory")]
         public long? PagedSystemMemory { get; }
 
         /// <summary> Non-paged system memory. </summary>
+        [WirePath("non_paged_system_memory")]
         public long? NonPagedSystemMemory { get; }
 
         /// <summary> Paged memory. </summary>
+        [WirePath("paged_memory")]
         public long? PagedMemory { get; }
 
         /// <summary> Peak paged memory. </summary>
+        [WirePath("peak_paged_memory")]
         public long? PeakPagedMemory { get; }
 
         /// <summary> Time stamp. </summary>
+        [WirePath("time_stamp")]
         public DateTimeOffset? TimeStamp { get; }
 
         /// <summary> List of environment variables. </summary>
+        [WirePath("environment_variables")]
         public IDictionary<string, string> EnvironmentVariables { get; } = new ChangeTrackingDictionary<string, string>();
 
         /// <summary> Is this the SCM site?. </summary>
+        [WirePath("is_scm_site")]
         public bool? IsScmSite { get; }
 
         /// <summary> Is this a Web Job?. </summary>
+        [WirePath("is_webjob")]
         public bool? IsWebjob { get; }
 
         /// <summary> Description of process. </summary>
+        [WirePath("description")]
         public string Description { get; }
     }
 }

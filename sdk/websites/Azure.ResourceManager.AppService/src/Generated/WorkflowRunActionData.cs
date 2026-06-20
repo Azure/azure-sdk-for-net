@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
-using Microsoft.Web.Models;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary> The workflow run action. </summary>
     public partial class WorkflowRunActionData : ResourceData
@@ -38,9 +38,11 @@ namespace Microsoft.Web
         }
 
         /// <summary> The workflow run action properties. </summary>
+        [WirePath("properties")]
         internal WorkflowRunActionProperties Properties { get; }
 
         /// <summary> Gets the start time. </summary>
+        [WirePath("properties.startTime")]
         public DateTimeOffset? StartOn
         {
             get
@@ -50,6 +52,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Gets the end time. </summary>
+        [WirePath("properties.endTime")]
         public DateTimeOffset? EndOn
         {
             get
@@ -59,6 +62,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Gets the status. </summary>
+        [WirePath("properties.status")]
         public WorkflowStatus? Status
         {
             get
@@ -68,6 +72,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Gets the code. </summary>
+        [WirePath("properties.code")]
         public string Code
         {
             get
@@ -77,6 +82,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Gets the error. </summary>
+        [WirePath("properties.error")]
         public BinaryData Error
         {
             get
@@ -86,6 +92,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Gets the tracking id. </summary>
+        [WirePath("properties.trackingId")]
         public string TrackingId
         {
             get
@@ -95,6 +102,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> The correlation properties. </summary>
+        [WirePath("properties.correlation")]
         public RunActionCorrelation Correlation
         {
             get
@@ -104,6 +112,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Gets the link to inputs. </summary>
+        [WirePath("properties.inputsLink")]
         public ContentLink InputsLink
         {
             get
@@ -113,6 +122,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Gets the link to outputs. </summary>
+        [WirePath("properties.outputsLink")]
         public ContentLink OutputsLink
         {
             get
@@ -122,6 +132,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Gets the tracked properties. </summary>
+        [WirePath("properties.trackedProperties")]
         public BinaryData TrackedProperties
         {
             get
@@ -131,6 +142,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Gets the retry histories. </summary>
+        [WirePath("properties.retryHistory")]
         public IList<RetryHistory> RetryHistory
         {
             get

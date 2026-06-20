@@ -8,9 +8,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> FunctionEnvelope resource specific properties. </summary>
     internal partial class FunctionEnvelopeProperties
@@ -58,24 +58,31 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Function App ID. </summary>
+        [WirePath("function_app_id")]
         public string FunctionAppId { get; set; }
 
         /// <summary> Script root path URI. </summary>
+        [WirePath("script_root_path_href")]
         public string ScriptRootPathHref { get; set; }
 
         /// <summary> Script URI. </summary>
+        [WirePath("script_href")]
         public string ScriptHref { get; set; }
 
         /// <summary> Config URI. </summary>
+        [WirePath("config_href")]
         public string ConfigHref { get; set; }
 
         /// <summary> Test data URI. </summary>
+        [WirePath("test_data_href")]
         public string TestDataHref { get; set; }
 
         /// <summary> Secrets file URI. </summary>
+        [WirePath("secrets_file_href")]
         public string SecretsFileHref { get; set; }
 
         /// <summary> Function URI. </summary>
+        [WirePath("href")]
         public string Href { get; set; }
 
         /// <summary>
@@ -104,21 +111,27 @@ namespace Microsoft.Web.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("config")]
         public BinaryData Config { get; set; }
 
         /// <summary> File list. </summary>
+        [WirePath("files")]
         public IDictionary<string, string> Files { get; } = new ChangeTrackingDictionary<string, string>();
 
         /// <summary> Test data used when testing via the Azure Portal. </summary>
+        [WirePath("test_data")]
         public string TestData { get; set; }
 
         /// <summary> The invocation URL. </summary>
+        [WirePath("invoke_url_template")]
         public string InvokeUrlTemplate { get; set; }
 
         /// <summary> The function language. </summary>
+        [WirePath("language")]
         public string Language { get; set; }
 
         /// <summary> Gets or sets a value indicating whether the function is disabled. </summary>
+        [WirePath("isDisabled")]
         public bool? IsDisabled { get; set; }
     }
 }

@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Routing rules in production experiments. </summary>
     internal partial class Experiments
@@ -33,6 +33,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> List of ramp-up rules. </summary>
+        [WirePath("rampUpRules")]
         public IList<RampUpRule> RampUpRules { get; }
     }
 }

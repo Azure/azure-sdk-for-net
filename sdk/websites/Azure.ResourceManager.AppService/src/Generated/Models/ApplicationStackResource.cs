@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> ARM resource for a ApplicationStack. </summary>
     public partial class ApplicationStackResource : ProxyOnlyResource
@@ -31,9 +32,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Core resource properties. </summary>
+        [WirePath("properties")]
         internal ApplicationStack Properties { get; }
 
         /// <summary> Application stack name. </summary>
+        [WirePath("properties.name")]
         public string Name
         {
             get
@@ -43,6 +46,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Application stack display name. </summary>
+        [WirePath("properties.display")]
         public string Display
         {
             get
@@ -52,6 +56,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Application stack dependency. </summary>
+        [WirePath("properties.dependency")]
         public string Dependency
         {
             get
@@ -61,6 +66,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> List of major versions available. </summary>
+        [WirePath("properties.majorVersions")]
         public IList<StackMajorVersion> MajorVersions
         {
             get
@@ -70,6 +76,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> List of frameworks associated with application stack. </summary>
+        [WirePath("properties.frameworks")]
         public IList<ApplicationStack> Frameworks
         {
             get
@@ -79,6 +86,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if this is the stack is deprecated; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("properties.isDeprecated")]
         public IList<ApplicationStack> IsDeprecated
         {
             get

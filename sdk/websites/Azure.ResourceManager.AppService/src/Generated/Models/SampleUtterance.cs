@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Sample utterance. </summary>
     public partial class SampleUtterance
@@ -37,12 +37,15 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Text attribute of sample utterance. </summary>
+        [WirePath("text")]
         public string Text { get; }
 
         /// <summary> Links attribute of sample utterance. </summary>
+        [WirePath("links")]
         public IList<string> Links { get; }
 
         /// <summary> Question id of sample utterance (for stackoverflow questions titles). </summary>
+        [WirePath("qid")]
         public string Qid { get; }
     }
 }

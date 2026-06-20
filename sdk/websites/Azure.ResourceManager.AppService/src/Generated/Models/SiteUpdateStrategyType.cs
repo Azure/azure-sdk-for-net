@@ -7,9 +7,9 @@
 
 using System;
 using System.ComponentModel;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Function app site update strategy type. Available options: Recreate, RollingUpdate. </summary>
     public readonly partial struct SiteUpdateStrategyType : IEquatable<SiteUpdateStrategyType>

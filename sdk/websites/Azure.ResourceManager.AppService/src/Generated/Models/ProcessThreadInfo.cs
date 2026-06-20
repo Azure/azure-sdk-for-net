@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Process Thread Information. </summary>
     public partial class ProcessThreadInfo : ProxyOnlyResource
@@ -31,9 +32,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> ProcessThreadInfo resource specific properties. </summary>
+        [WirePath("properties")]
         internal ProcessThreadInfoProperties Properties { get; }
 
         /// <summary> Site extension ID. </summary>
+        [WirePath("properties.identifier")]
         public int? Identifier
         {
             get
@@ -43,6 +46,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> HRef URI. </summary>
+        [WirePath("properties.href")]
         public string Href
         {
             get
@@ -52,6 +56,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Process URI. </summary>
+        [WirePath("properties.process")]
         public string Process
         {
             get
@@ -61,6 +66,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Start address. </summary>
+        [WirePath("properties.start_address")]
         public string StartAddress
         {
             get
@@ -70,6 +76,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Current thread priority. </summary>
+        [WirePath("properties.current_priority")]
         public int? CurrentPriority
         {
             get
@@ -79,6 +86,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Thread priority level. </summary>
+        [WirePath("properties.priority_level")]
         public string PriorityLevel
         {
             get
@@ -88,6 +96,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Base priority. </summary>
+        [WirePath("properties.base_priority")]
         public int? BasePriority
         {
             get
@@ -97,6 +106,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Start time. </summary>
+        [WirePath("properties.start_time")]
         public DateTimeOffset? StartOn
         {
             get
@@ -106,6 +116,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Total processor time. </summary>
+        [WirePath("properties.total_processor_time")]
         public string TotalProcessorTime
         {
             get
@@ -115,6 +126,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> User processor time. </summary>
+        [WirePath("properties.user_processor_time")]
         public string UserProcessorTime
         {
             get
@@ -124,6 +136,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Thread state. </summary>
+        [WirePath("properties.state")]
         public string State
         {
             get
@@ -133,6 +146,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Wait reason. </summary>
+        [WirePath("properties.wait_reason")]
         public string WaitReason
         {
             get

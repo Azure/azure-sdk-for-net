@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The IP Addresses and Ports that require inbound network access to and within the subnet of the App Service Environment. </summary>
     public partial class InboundEnvironmentEndpoint
@@ -29,7 +29,7 @@ namespace Microsoft.Web.Models
         /// <param name="endpoints"> The IP addresses that network traffic will originate from in cidr notation. </param>
         /// <param name="ports"> The ports that network traffic will arrive to the App Service Environment at. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InboundEnvironmentEndpoint(string description, IList<string> endpoints, IList<string> ports, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InboundEnvironmentEndpoint(string description, IReadOnlyList<string> endpoints, IReadOnlyList<string> ports, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             Endpoints = endpoints;
@@ -38,12 +38,15 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Short text describing the purpose of the network traffic. </summary>
+        [WirePath("description")]
         public string Description { get; }
 
         /// <summary> The IP addresses that network traffic will originate from in cidr notation. </summary>
-        public IList<string> Endpoints { get; }
+        [WirePath("endpoints")]
+        public IReadOnlyList<string> Endpoints { get; }
 
         /// <summary> The ports that network traffic will arrive to the App Service Environment at. </summary>
-        public IList<string> Ports { get; }
+        [WirePath("ports")]
+        public IReadOnlyList<string> Ports { get; }
     }
 }

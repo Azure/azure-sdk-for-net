@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Provisioning state of the Kubernetes Environment. </summary>
     public enum KubeEnvironmentProvisioningState

@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Function App stack runtimes. </summary>
     public partial class FunctionAppRuntimes
@@ -33,9 +34,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Linux-specific settings associated with the minor version. </summary>
+        [WirePath("linuxRuntimeSettings")]
         public FunctionAppRuntimeSettings LinuxRuntimeSettings { get; }
 
         /// <summary> Windows-specific settings associated with the minor version. </summary>
+        [WirePath("windowsRuntimeSettings")]
         public FunctionAppRuntimeSettings WindowsRuntimeSettings { get; }
     }
 }

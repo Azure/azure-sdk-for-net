@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The configuration settings of the Azure Active Directory login flow. </summary>
     public partial class AzureActiveDirectoryLogin
@@ -41,9 +41,11 @@ namespace Microsoft.Web.Models
         /// Login parameters to send to the OpenID Connect authorization endpoint when
         /// a user logs in. Each parameter must be in the form "key=value".
         /// </summary>
+        [WirePath("loginParameters")]
         public IList<string> LoginParameters { get; }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if the www-authenticate provider should be omitted from the request; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("disableWWWAuthenticate")]
         public bool? DisableWWWAuthenticate { get; set; }
     }
 }

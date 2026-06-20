@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
-using Microsoft.Web.Models;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary> The workflow run. </summary>
     public partial class WorkflowRunData : ResourceData
@@ -38,9 +38,11 @@ namespace Microsoft.Web
         }
 
         /// <summary> The workflow run properties. </summary>
+        [WirePath("properties")]
         internal WorkflowRunProperties Properties { get; }
 
         /// <summary> Gets the wait end time. </summary>
+        [WirePath("properties.waitEndTime")]
         public DateTimeOffset? WaitEndOn
         {
             get
@@ -50,6 +52,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Gets the start time. </summary>
+        [WirePath("properties.startTime")]
         public DateTimeOffset? StartOn
         {
             get
@@ -59,6 +62,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Gets the end time. </summary>
+        [WirePath("properties.endTime")]
         public DateTimeOffset? EndOn
         {
             get
@@ -68,6 +72,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Gets the status. </summary>
+        [WirePath("properties.status")]
         public WorkflowStatus? Status
         {
             get
@@ -77,6 +82,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Gets the code. </summary>
+        [WirePath("properties.code")]
         public string Code
         {
             get
@@ -86,6 +92,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Gets the error. </summary>
+        [WirePath("properties.error")]
         public BinaryData Error
         {
             get
@@ -95,6 +102,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Gets the correlation id. </summary>
+        [WirePath("properties.correlationId")]
         public string CorrelationId
         {
             get
@@ -104,6 +112,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Gets the reference to workflow version. </summary>
+        [WirePath("properties.workflow")]
         public ResourceReference Workflow
         {
             get
@@ -113,6 +122,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Gets the fired trigger. </summary>
+        [WirePath("properties.trigger")]
         public WorkflowRunTrigger Trigger
         {
             get
@@ -122,6 +132,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Gets the outputs. </summary>
+        [WirePath("properties.outputs")]
         public IReadOnlyDictionary<string, WorkflowOutputParameter> Outputs
         {
             get
@@ -131,6 +142,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Gets the response of the flow run. </summary>
+        [WirePath("properties.response")]
         public WorkflowRunTrigger Response
         {
             get
@@ -140,6 +152,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> The client tracking id. </summary>
+        [WirePath("properties.correlation.clientTrackingId")]
         public string CorrelationClientTrackingId
         {
             get

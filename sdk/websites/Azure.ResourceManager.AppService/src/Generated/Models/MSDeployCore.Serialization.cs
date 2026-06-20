@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> MSDeploy ARM PUT core information. </summary>
     public partial class MSDeployCore : IJsonModel<MSDeployCore>
@@ -40,7 +40,7 @@ namespace Microsoft.Web.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, MicrosoftWebContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(MSDeployCore)} does not support writing '{options.Format}' format.");
             }
@@ -77,7 +77,7 @@ namespace Microsoft.Web.Models
             if (Optional.IsDefined(PackageUri))
             {
                 writer.WritePropertyName("packageUri"u8);
-                writer.WriteStringValue(PackageUri);
+                writer.WriteStringValue(PackageUri.AbsoluteUri);
             }
             if (Optional.IsDefined(ConnectionString))
             {
@@ -92,7 +92,7 @@ namespace Microsoft.Web.Models
             if (Optional.IsDefined(SetParametersXmlFileUri))
             {
                 writer.WritePropertyName("setParametersXmlFileUri"u8);
-                writer.WriteStringValue(SetParametersXmlFileUri);
+                writer.WriteStringValue(SetParametersXmlFileUri.AbsoluteUri);
             }
             if (Optional.IsCollectionDefined(SetParameters))
             {
@@ -162,10 +162,10 @@ namespace Microsoft.Web.Models
             {
                 return null;
             }
-            string packageUri = default;
+            Uri packageUri = default;
             string connectionString = default;
             string dbType = default;
-            string setParametersXmlFileUri = default;
+            Uri setParametersXmlFileUri = default;
             IDictionary<string, string> setParameters = default;
             bool? skipAppData = default;
             bool? appOffline = default;
@@ -174,7 +174,11 @@ namespace Microsoft.Web.Models
             {
                 if (prop.NameEquals("packageUri"u8))
                 {
-                    packageUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    packageUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("connectionString"u8))
@@ -189,7 +193,11 @@ namespace Microsoft.Web.Models
                 }
                 if (prop.NameEquals("setParametersXmlFileUri"u8))
                 {
-                    setParametersXmlFileUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    setParametersXmlFileUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("setParameters"u8))

@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
-using Microsoft.Web.Models;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary> The workflow trigger history. </summary>
     public partial class WorkflowTriggerHistoryData : ResourceData
@@ -38,9 +38,11 @@ namespace Microsoft.Web
         }
 
         /// <summary> Gets the workflow trigger history properties. </summary>
+        [WirePath("properties")]
         internal WorkflowTriggerHistoryProperties Properties { get; }
 
         /// <summary> Gets the start time. </summary>
+        [WirePath("properties.startTime")]
         public DateTimeOffset? StartOn
         {
             get
@@ -50,6 +52,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Gets the end time. </summary>
+        [WirePath("properties.endTime")]
         public DateTimeOffset? EndOn
         {
             get
@@ -59,6 +62,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> The scheduled time. </summary>
+        [WirePath("properties.scheduledTime")]
         public DateTimeOffset? ScheduledOn
         {
             get
@@ -68,6 +72,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Gets the status. </summary>
+        [WirePath("properties.status")]
         public WorkflowStatus? Status
         {
             get
@@ -77,6 +82,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Gets the code. </summary>
+        [WirePath("properties.code")]
         public string Code
         {
             get
@@ -86,6 +92,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Gets the error. </summary>
+        [WirePath("properties.error")]
         public BinaryData Error
         {
             get
@@ -95,6 +102,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Gets the tracking id. </summary>
+        [WirePath("properties.trackingId")]
         public string TrackingId
         {
             get
@@ -104,6 +112,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Gets the link to input parameters. </summary>
+        [WirePath("properties.inputsLink")]
         public ContentLink InputsLink
         {
             get
@@ -113,6 +122,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Gets the link to output parameters. </summary>
+        [WirePath("properties.outputsLink")]
         public ContentLink OutputsLink
         {
             get
@@ -122,6 +132,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> The value indicating whether trigger was fired. </summary>
+        [WirePath("properties.fired")]
         public bool? Fired
         {
             get
@@ -131,6 +142,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Gets the reference to workflow run. </summary>
+        [WirePath("properties.run")]
         public ResourceReference Run
         {
             get
@@ -140,6 +152,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> The client tracking id. </summary>
+        [WirePath("properties.correlation.clientTrackingId")]
         public string CorrelationClientTrackingId
         {
             get

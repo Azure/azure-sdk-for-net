@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Metrics availability and retention. </summary>
-    public partial class ResourceMetricAvailability
+    internal partial class ResourceMetricAvailability
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -33,9 +34,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Time grain . </summary>
+        [WirePath("timeGrain")]
         public string TimeGrain { get; }
 
         /// <summary> Retention period for the current time grain. </summary>
+        [WirePath("retention")]
         public string Retention { get; }
     }
 }

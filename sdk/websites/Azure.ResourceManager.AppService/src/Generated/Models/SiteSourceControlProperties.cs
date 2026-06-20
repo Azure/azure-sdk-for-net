@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> SiteSourceControl resource specific properties. </summary>
     internal partial class SiteSourceControlProperties
@@ -43,24 +44,31 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Repository or source control URL. </summary>
+        [WirePath("repoUrl")]
         public string RepoUri { get; set; }
 
         /// <summary> Name of branch to use for deployment. </summary>
+        [WirePath("branch")]
         public string Branch { get; set; }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; to limit to manual integration; &lt;code&gt;false&lt;/code&gt; to enable continuous integration (which configures webhooks into online repos like GitHub). </summary>
+        [WirePath("isManualIntegration")]
         public bool? IsManualIntegration { get; set; }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if this is deployed via GitHub action. </summary>
+        [WirePath("isGitHubAction")]
         public bool? IsGitHubAction { get; set; }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; to enable deployment rollback; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("deploymentRollbackEnabled")]
         public bool? DeploymentRollbackEnabled { get; set; }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; for a Mercurial repository; &lt;code&gt;false&lt;/code&gt; for a Git repository. </summary>
+        [WirePath("isMercurial")]
         public bool? IsMercurial { get; set; }
 
         /// <summary> If GitHub Action is selected, than the associated configuration. </summary>
+        [WirePath("gitHubActionConfiguration")]
         public GitHubActionConfiguration GitHubActionConfiguration { get; set; }
     }
 }

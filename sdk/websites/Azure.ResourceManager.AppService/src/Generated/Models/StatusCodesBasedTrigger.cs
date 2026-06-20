@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Trigger based on status code. </summary>
     public partial class StatusCodesBasedTrigger
@@ -41,21 +42,27 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> HTTP status code. </summary>
+        [WirePath("status")]
         public int? Status { get; set; }
 
         /// <summary> Request Sub Status. </summary>
+        [WirePath("subStatus")]
         public int? SubStatus { get; set; }
 
         /// <summary> Win32 error code. </summary>
+        [WirePath("win32Status")]
         public int? Win32Status { get; set; }
 
         /// <summary> Request Count. </summary>
+        [WirePath("count")]
         public int? Count { get; set; }
 
         /// <summary> Time interval. </summary>
+        [WirePath("timeInterval")]
         public string TimeInterval { get; set; }
 
         /// <summary> Request Path. </summary>
+        [WirePath("path")]
         public string Path { get; set; }
     }
 }

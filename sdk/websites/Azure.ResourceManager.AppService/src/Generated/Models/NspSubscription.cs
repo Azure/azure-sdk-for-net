@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Network Security Perimeter Subscription. </summary>
     public partial class NspSubscription
@@ -31,6 +32,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Network Security Perimeter Subscription Id. </summary>
+        [WirePath("id")]
         public string Id { get; }
     }
 }

@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
-using Microsoft.Web.Models;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary> Slot Config names azure resource. </summary>
     public partial class SlotConfigNamesResourceData : ResourceData
@@ -40,12 +40,15 @@ namespace Microsoft.Web
         }
 
         /// <summary> Core resource properties. </summary>
+        [WirePath("properties")]
         internal SlotConfigNames Properties { get; set; }
 
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
 
         /// <summary> List of connection string names. </summary>
+        [WirePath("properties.connectionStringNames")]
         public IList<string> ConnectionStringNames
         {
             get
@@ -59,6 +62,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> List of application settings names. </summary>
+        [WirePath("properties.appSettingNames")]
         public IList<string> AppSettingNames
         {
             get
@@ -72,6 +76,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> List of external Azure storage account identifiers. </summary>
+        [WirePath("properties.azureStorageConfigNames")]
         public IList<string> AzureStorageConfigNames
         {
             get

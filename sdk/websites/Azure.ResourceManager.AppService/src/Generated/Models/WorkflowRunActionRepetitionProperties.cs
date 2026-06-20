@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The workflow run action repetition properties definition. </summary>
     internal partial class WorkflowRunActionRepetitionProperties : OperationResult
@@ -43,6 +43,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The repetition indexes. </summary>
+        [WirePath("repetitionIndexes")]
         public IList<RepetitionIndex> RepetitionIndexes { get; } = new ChangeTrackingList<RepetitionIndex>();
     }
 }

@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Response for a migration of app content request. </summary>
     public partial class StorageMigrationResponse : ProxyOnlyResource
@@ -31,9 +32,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> StorageMigrationResponse resource specific properties. </summary>
+        [WirePath("properties")]
         internal StorageMigrationResponseProperties Properties { get; }
 
         /// <summary> When server starts the migration process, it will return an operation ID identifying that particular migration operation. </summary>
+        [WirePath("properties.operationId")]
         public string OperationId
         {
             get

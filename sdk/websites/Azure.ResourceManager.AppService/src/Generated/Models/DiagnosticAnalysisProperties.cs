@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> DiagnosticAnalysis resource specific properties. </summary>
     internal partial class DiagnosticAnalysisProperties
@@ -43,18 +43,23 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Start time of the period. </summary>
+        [WirePath("startTime")]
         public DateTimeOffset? StartOn { get; }
 
         /// <summary> End time of the period. </summary>
+        [WirePath("endTime")]
         public DateTimeOffset? EndOn { get; }
 
         /// <summary> List of time periods. </summary>
+        [WirePath("abnormalTimePeriods")]
         public IList<AbnormalTimePeriod> AbnormalTimePeriods { get; } = new ChangeTrackingList<AbnormalTimePeriod>();
 
         /// <summary> Data by each detector. </summary>
+        [WirePath("payload")]
         public IList<AnalysisData> Payload { get; } = new ChangeTrackingList<AnalysisData>();
 
         /// <summary> Data by each detector for detectors that did not corelate. </summary>
+        [WirePath("nonCorrelatedDetectors")]
         public IList<DetectorDefinition> NonCorrelatedDetectors { get; } = new ChangeTrackingList<DetectorDefinition>();
     }
 }

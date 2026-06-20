@@ -7,8 +7,10 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Function App Stack. </summary>
     public partial class FunctionAppStack : ProxyOnlyResource
@@ -26,19 +28,22 @@ namespace Microsoft.Web.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="location"> Function App stack location. </param>
         /// <param name="properties"> FunctionAppStack resource specific properties. </param>
-        internal FunctionAppStack(string id, string name, string kind, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string location, FunctionAppStackProperties properties) : base(id, name, kind, @type, additionalBinaryDataProperties)
+        internal FunctionAppStack(string id, string name, string kind, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation? location, FunctionAppStackProperties properties) : base(id, name, kind, @type, additionalBinaryDataProperties)
         {
             Location = location;
             Properties = properties;
         }
 
         /// <summary> Function App stack location. </summary>
-        public string Location { get; }
+        [WirePath("location")]
+        public AzureLocation? Location { get; }
 
         /// <summary> FunctionAppStack resource specific properties. </summary>
+        [WirePath("properties")]
         internal FunctionAppStackProperties Properties { get; }
 
         /// <summary> Function App stack (display only). </summary>
+        [WirePath("properties.displayText")]
         public string DisplayText
         {
             get
@@ -48,6 +53,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Function App stack name. </summary>
+        [WirePath("properties.value")]
         public string Value
         {
             get
@@ -57,6 +63,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> List of major versions available. </summary>
+        [WirePath("properties.majorVersions")]
         public IReadOnlyList<FunctionAppMajorVersion> MajorVersions
         {
             get
@@ -66,6 +73,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Function App stack preferred OS. </summary>
+        [WirePath("properties.preferredOs")]
         public StackPreferredOs? PreferredOs
         {
             get

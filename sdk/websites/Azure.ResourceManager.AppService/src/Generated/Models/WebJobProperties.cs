@@ -8,9 +8,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> WebJob resource specific properties. </summary>
     internal partial class WebJobProperties
@@ -46,21 +46,27 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Run command. </summary>
+        [WirePath("run_command")]
         public string RunCommand { get; }
 
         /// <summary> Job URL. </summary>
+        [WirePath("url")]
         public string Uri { get; }
 
         /// <summary> Extra Info URL. </summary>
+        [WirePath("extra_info_url")]
         public string ExtraInfoUri { get; }
 
         /// <summary> Job type. </summary>
+        [WirePath("web_job_type")]
         public WebJobType? WebJobType { get; }
 
         /// <summary> Error information. </summary>
+        [WirePath("error")]
         public string Error { get; }
 
         /// <summary> Using SDK?. </summary>
+        [WirePath("using_sdk")]
         public bool? UsingSdk { get; }
 
         /// <summary>
@@ -89,6 +95,7 @@ namespace Microsoft.Web.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("settings")]
         public IDictionary<string, BinaryData> Settings { get; } = new ChangeTrackingDictionary<string, BinaryData>();
     }
 }

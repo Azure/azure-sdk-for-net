@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Virtual Network information contract. </summary>
     public partial class VnetInfo
@@ -45,24 +45,31 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The Virtual Network's resource ID. </summary>
+        [WirePath("vnetResourceId")]
         public string VnetResourceId { get; set; }
 
         /// <summary> The client certificate thumbprint. </summary>
+        [WirePath("certThumbprint")]
         public string CertThumbprint { get; }
 
         /// <summary> A certificate file (.cer) blob containing the public key of the private key used to authenticate a \nPoint-To-Site VPN connection. </summary>
+        [WirePath("certBlob")]
         public string CertBlob { get; set; }
 
         /// <summary> The routes that this Virtual Network connection uses. </summary>
+        [WirePath("routes")]
         public IReadOnlyList<VnetRoute> Routes { get; } = new ChangeTrackingList<VnetRoute>();
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if a resync is required; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("resyncRequired")]
         public bool? ResyncRequired { get; }
 
         /// <summary> DNS servers to be used by this Virtual Network. This should be a comma-separated list of IP addresses. </summary>
+        [WirePath("dnsServers")]
         public string DnsServers { get; set; }
 
         /// <summary> Flag that is used to denote if this is VNET injection. </summary>
+        [WirePath("isSwift")]
         public bool? IsSwift { get; set; }
     }
 }

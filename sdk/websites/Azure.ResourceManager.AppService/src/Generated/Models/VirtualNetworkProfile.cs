@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Specification for using a Virtual Network. </summary>
     public partial class VirtualNetworkProfile
@@ -43,15 +43,19 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Resource id of the Virtual Network. </summary>
+        [WirePath("id")]
         public string Id { get; set; }
 
         /// <summary> Name of the Virtual Network (read-only). </summary>
+        [WirePath("name")]
         public string Name { get; }
 
         /// <summary> Resource type of the Virtual Network (read-only). </summary>
+        [WirePath("type")]
         public string Type { get; }
 
         /// <summary> Subnet within the Virtual Network. </summary>
+        [WirePath("subnet")]
         public string Subnet { get; set; }
     }
 }

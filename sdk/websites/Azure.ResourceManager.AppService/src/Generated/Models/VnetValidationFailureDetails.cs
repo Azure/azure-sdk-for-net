@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> A class that describes the reason for a validation failure. </summary>
     public partial class VnetValidationFailureDetails : ProxyOnlyResource
@@ -31,9 +32,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> VnetValidationFailureDetails resource specific properties. </summary>
+        [WirePath("properties")]
         internal VnetValidationFailureDetailsProperties Properties { get; }
 
         /// <summary> Text describing the validation outcome. </summary>
+        [WirePath("properties.message")]
         public string Message
         {
             get
@@ -43,6 +46,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> A flag describing whether or not validation failed. </summary>
+        [WirePath("properties.failed")]
         public bool? Failed
         {
             get
@@ -52,6 +56,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> A list of tests that failed in the validation. </summary>
+        [WirePath("properties.failedTests")]
         public IList<VnetValidationTestFailure> FailedTests
         {
             get
@@ -61,6 +66,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> A list of warnings generated during validation. </summary>
+        [WirePath("properties.warnings")]
         public IList<VnetValidationTestFailure> Warnings
         {
             get

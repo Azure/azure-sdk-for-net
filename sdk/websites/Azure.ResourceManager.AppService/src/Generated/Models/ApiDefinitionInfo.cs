@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Information about the formal API definition for the app. </summary>
     internal partial class ApiDefinitionInfo
@@ -31,6 +32,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The URL of the API definition. </summary>
+        [WirePath("url")]
         public string Uri { get; set; }
     }
 }

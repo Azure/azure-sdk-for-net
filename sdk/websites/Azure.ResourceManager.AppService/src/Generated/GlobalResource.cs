@@ -13,10 +13,10 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Resources;
-using Microsoft.Web.Models;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A class representing a Global along with the instance operations that can be performed on it.
@@ -51,7 +51,7 @@ namespace Microsoft.Web
         internal GlobalResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string globalApiVersion);
-            _globalClientDiagnostics = new ClientDiagnostics("Microsoft.Web", ResourceType.Namespace, Diagnostics);
+            _globalClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
             _globalRestClient = new Global(_globalClientDiagnostics, Pipeline, Endpoint, globalApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
@@ -124,13 +124,13 @@ namespace Microsoft.Web
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = _globalRestClient.CreateGetDeletedWebAppRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
-                Azure.Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<DeletedSiteData> response = Azure.Response.FromValue(DeletedSiteData.FromResponse(result), result);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DeletedSiteData> response = Response.FromValue(DeletedSiteData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Azure.Response.FromValue(new GlobalResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new GlobalResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -172,13 +172,13 @@ namespace Microsoft.Web
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = _globalRestClient.CreateGetDeletedWebAppRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
-                Azure.Response result = Pipeline.ProcessMessage(message, context);
-                Response<DeletedSiteData> response = Azure.Response.FromValue(DeletedSiteData.FromResponse(result), result);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DeletedSiteData> response = Response.FromValue(DeletedSiteData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Azure.Response.FromValue(new GlobalResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new GlobalResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

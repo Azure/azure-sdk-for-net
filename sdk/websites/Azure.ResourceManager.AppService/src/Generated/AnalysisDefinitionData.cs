@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
-using Microsoft.Web.Models;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary> Definition of Analysis. </summary>
     public partial class AnalysisDefinitionData : ResourceData
@@ -40,12 +40,15 @@ namespace Microsoft.Web
         }
 
         /// <summary> AnalysisDefinition resource specific properties. </summary>
+        [WirePath("properties")]
         internal AnalysisDefinitionProperties Properties { get; }
 
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; }
 
         /// <summary> Description of the Analysis. </summary>
+        [WirePath("properties.description")]
         public string Description
         {
             get

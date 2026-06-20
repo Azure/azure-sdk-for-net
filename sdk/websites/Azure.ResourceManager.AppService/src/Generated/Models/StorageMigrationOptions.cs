@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Options for app content migration. </summary>
     public partial class StorageMigrationOptions : ProxyOnlyResource
@@ -31,9 +32,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> StorageMigrationOptions resource specific properties. </summary>
+        [WirePath("properties")]
         internal StorageMigrationOptionsProperties Properties { get; set; }
 
         /// <summary> AzureFiles connection string. </summary>
+        [WirePath("properties.azurefilesConnectionString")]
         public string AzurefilesConnectionString
         {
             get
@@ -43,6 +46,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> AzureFiles share. </summary>
+        [WirePath("properties.azurefilesShare")]
         public string AzurefilesShare
         {
             get
@@ -52,6 +56,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt;if the app should be switched over; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("properties.switchSiteAfterMigration")]
         public bool? SwitchSiteAfterMigration
         {
             get
@@ -69,6 +74,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if the app should be read only during copy operation; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("properties.blockWriteAccessToSite")]
         public bool? BlockWriteAccessToSite
         {
             get

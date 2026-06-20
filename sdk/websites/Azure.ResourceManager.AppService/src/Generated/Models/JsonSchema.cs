@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The JSON schema. </summary>
     public partial class JsonSchema
@@ -33,9 +34,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The JSON title. </summary>
+        [WirePath("title")]
         public string Title { get; }
 
         /// <summary> The JSON content. </summary>
+        [WirePath("content")]
         public string Content { get; }
     }
 }

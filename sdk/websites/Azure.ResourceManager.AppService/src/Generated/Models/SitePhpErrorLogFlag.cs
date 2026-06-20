@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Used for getting PHP error logging flag. </summary>
     public partial class SitePhpErrorLogFlag : ProxyOnlyResource
@@ -31,9 +32,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> SitePhpErrorLogFlag resource specific properties. </summary>
+        [WirePath("properties")]
         internal SitePhpErrorLogFlagProperties Properties { get; }
 
         /// <summary> Local log_errors setting. </summary>
+        [WirePath("properties.localLogErrors")]
         public string LocalLogErrors
         {
             get
@@ -43,6 +46,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Master log_errors setting. </summary>
+        [WirePath("properties.masterLogErrors")]
         public string MasterLogErrors
         {
             get
@@ -52,6 +56,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Local log_errors_max_len setting. </summary>
+        [WirePath("properties.localLogErrorsMaxLength")]
         public string LocalLogErrorsMaxLength
         {
             get
@@ -61,6 +66,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Master log_errors_max_len setting. </summary>
+        [WirePath("properties.masterLogErrorsMaxLength")]
         public string MasterLogErrorsMaxLength
         {
             get

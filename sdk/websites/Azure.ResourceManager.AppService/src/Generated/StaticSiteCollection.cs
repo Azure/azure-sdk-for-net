@@ -16,7 +16,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A class representing a collection of <see cref="StaticSiteResource"/> and their operations.
@@ -39,7 +39,7 @@ namespace Microsoft.Web
         internal StaticSiteCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             this.TryGetApiVersion(StaticSiteResource.ResourceType, out string staticSiteApiVersion);
-            _staticSitesClientDiagnostics = new ClientDiagnostics("Microsoft.Web", StaticSiteResource.ResourceType.Namespace, Diagnostics);
+            _staticSitesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", StaticSiteResource.ResourceType.Namespace, Diagnostics);
             _staticSitesRestClient = new StaticSites(_staticSitesClientDiagnostics, Pipeline, Endpoint, staticSiteApiVersion ?? "2026-03-15");
             StaticSiteCollection.ValidateResourceId(id);
         }
@@ -92,7 +92,7 @@ namespace Microsoft.Web
                 };
                 HttpMessage message = _staticSitesRestClient.CreateLinkBackendToBuildRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, linkedBackendName, StaticSiteLinkedBackendARMResourceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                WebArmOperation<StaticSiteResource> operation = new WebArmOperation<StaticSiteResource>(
+                AppServiceArmOperation<StaticSiteResource> operation = new AppServiceArmOperation<StaticSiteResource>(
                     new StaticSiteResourceOperationSource(Client),
                     _staticSitesClientDiagnostics,
                     Pipeline,
@@ -150,7 +150,7 @@ namespace Microsoft.Web
                 };
                 HttpMessage message = _staticSitesRestClient.CreateLinkBackendToBuildRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, linkedBackendName, StaticSiteLinkedBackendARMResourceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                WebArmOperation<StaticSiteResource> operation = new WebArmOperation<StaticSiteResource>(
+                AppServiceArmOperation<StaticSiteResource> operation = new AppServiceArmOperation<StaticSiteResource>(
                     new StaticSiteResourceOperationSource(Client),
                     _staticSitesClientDiagnostics,
                     Pipeline,

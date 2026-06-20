@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Describes the capabilities/features allowed for a specific SKU. </summary>
     public partial class Capability
@@ -35,12 +36,15 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Name of the SKU capability. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
 
         /// <summary> Value of the SKU capability. </summary>
+        [WirePath("value")]
         public string Value { get; set; }
 
         /// <summary> Reason of the SKU capability. </summary>
+        [WirePath("reason")]
         public string Reason { get; set; }
     }
 }

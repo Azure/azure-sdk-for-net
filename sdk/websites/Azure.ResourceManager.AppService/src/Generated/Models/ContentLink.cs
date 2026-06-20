@@ -8,8 +8,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The content link. </summary>
     public partial class ContentLink
@@ -40,15 +41,19 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The content link URI. </summary>
+        [WirePath("uri")]
         public string Uri { get; }
 
         /// <summary> The content version. </summary>
+        [WirePath("contentVersion")]
         public string ContentVersion { get; }
 
         /// <summary> The content size. </summary>
+        [WirePath("contentSize")]
         public long? ContentSize { get; }
 
         /// <summary> The content hash. </summary>
+        [WirePath("contentHash")]
         public ContentHash ContentHash { get; }
 
         /// <summary>
@@ -77,6 +82,7 @@ namespace Microsoft.Web.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("metadata")]
         public BinaryData Metadata { get; }
     }
 }

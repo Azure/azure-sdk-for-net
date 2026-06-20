@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The routes that specify the endpoints used for login and logout requests. </summary>
     internal partial class LoginRoutes
@@ -31,6 +32,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The endpoint at which a logout request should be made. </summary>
+        [WirePath("logoutEndpoint")]
         public string LogoutEndpoint { get; set; }
     }
 }

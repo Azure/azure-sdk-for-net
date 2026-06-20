@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Description of a SKU for a scalable resource. </summary>
     public partial class SkuDescription
@@ -48,27 +48,35 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Name of the resource SKU. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
 
         /// <summary> Service tier of the resource SKU. </summary>
+        [WirePath("tier")]
         public string Tier { get; set; }
 
         /// <summary> Size specifier of the resource SKU. </summary>
+        [WirePath("size")]
         public string Size { get; set; }
 
         /// <summary> Family code of the resource SKU. </summary>
+        [WirePath("family")]
         public string Family { get; set; }
 
         /// <summary> Current number of instances assigned to the resource. </summary>
+        [WirePath("capacity")]
         public int? Capacity { get; set; }
 
         /// <summary> Min, max, and default scale values of the SKU. </summary>
+        [WirePath("skuCapacity")]
         public SkuCapacity SkuCapacity { get; set; }
 
         /// <summary> Locations of the SKU. </summary>
+        [WirePath("locations")]
         public IList<string> Locations { get; }
 
         /// <summary> Capabilities of the SKU, e.g., is traffic manager enabled?. </summary>
+        [WirePath("capabilities")]
         public IList<Capability> Capabilities { get; }
     }
 }

@@ -7,8 +7,10 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Specifies the web app that snapshot contents will be retrieved from. </summary>
     public partial class SnapshotRecoverySource
@@ -29,7 +31,7 @@ namespace Microsoft.Web.Models
         /// /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slotName} for other slots.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SnapshotRecoverySource(string location, string id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SnapshotRecoverySource(AzureLocation? location, ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Location = location;
             Id = id;
@@ -37,13 +39,15 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Geographical location of the source web app, e.g. SouthEastAsia, SouthCentralUS. </summary>
-        public string Location { get; set; }
+        [WirePath("location")]
+        public AzureLocation? Location { get; set; }
 
         /// <summary>
         /// ARM resource ID of the source app.
         /// /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName} for production slots and
         /// /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slotName} for other slots.
         /// </summary>
-        public string Id { get; set; }
+        [WirePath("id")]
+        public ResourceIdentifier Id { get; set; }
     }
 }

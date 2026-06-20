@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> SwiftVirtualNetwork resource specific properties. </summary>
     internal partial class SwiftVirtualNetworkProperties
@@ -33,9 +34,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The Virtual Network subnet's resource ID. This is the subnet that this Web App will join. This subnet must have a delegation to Microsoft.Web/serverFarms defined first. </summary>
+        [WirePath("subnetResourceId")]
         public string SubnetResourceId { get; set; }
 
         /// <summary> A flag that specifies if the scale unit this Web App is on supports Swift integration. </summary>
+        [WirePath("swiftSupported")]
         public bool? SwiftSupported { get; set; }
     }
 }

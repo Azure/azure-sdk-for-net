@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The workflow run trigger. </summary>
     public partial class WorkflowRunTrigger : IJsonModel<WorkflowRunTrigger>
@@ -40,7 +40,7 @@ namespace Microsoft.Web.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, MicrosoftWebContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(WorkflowRunTrigger)} does not support writing '{options.Format}' format.");
             }
@@ -94,7 +94,7 @@ namespace Microsoft.Web.Models
             if (options.Format != "W" && Optional.IsDefined(InputsLink))
             {
                 writer.WritePropertyName("inputsLink"u8);
-                writer.WriteObjectValue(InputsLink, options);
+                writer.WriteObjectValue<Models.WebAppContentLink>(InputsLink, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Outputs))
             {
@@ -111,7 +111,7 @@ namespace Microsoft.Web.Models
             if (options.Format != "W" && Optional.IsDefined(OutputsLink))
             {
                 writer.WritePropertyName("outputsLink"u8);
-                writer.WriteObjectValue(OutputsLink, options);
+                writer.WriteObjectValue<Models.WebAppContentLink>(OutputsLink, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ScheduledOn))
             {
@@ -216,9 +216,9 @@ namespace Microsoft.Web.Models
             }
             string name = default;
             BinaryData inputs = default;
-            ContentLink inputsLink = default;
+            Models.WebAppContentLink inputsLink = default;
             BinaryData outputs = default;
-            ContentLink outputsLink = default;
+            Models.WebAppContentLink outputsLink = default;
             DateTimeOffset? scheduledOn = default;
             DateTimeOffset? startOn = default;
             DateTimeOffset? endOn = default;
@@ -251,7 +251,7 @@ namespace Microsoft.Web.Models
                     {
                         continue;
                     }
-                    inputsLink = ContentLink.DeserializeContentLink(prop.Value, options);
+                    inputsLink = Models.WebAppContentLink.DeserializeWebAppContentLink(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("outputs"u8))
@@ -269,7 +269,7 @@ namespace Microsoft.Web.Models
                     {
                         continue;
                     }
-                    outputsLink = ContentLink.DeserializeContentLink(prop.Value, options);
+                    outputsLink = Models.WebAppContentLink.DeserializeWebAppContentLink(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("scheduledTime"u8))

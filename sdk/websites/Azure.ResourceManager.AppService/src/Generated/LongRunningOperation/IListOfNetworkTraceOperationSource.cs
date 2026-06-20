@@ -11,9 +11,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Microsoft.Web.Models;
+using Azure.ResourceManager.AppService.Models;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary></summary>
     internal partial class IListOfNetworkTraceOperationSource : IOperationSource<IList<NetworkTrace>>
@@ -26,7 +26,7 @@ namespace Microsoft.Web
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        IList<NetworkTrace> IOperationSource<IList<NetworkTrace>>.CreateResult(Azure.Response response, CancellationToken cancellationToken)
+        IList<NetworkTrace> IOperationSource<IList<NetworkTrace>>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
             IList<NetworkTrace> value = default;
@@ -45,7 +45,7 @@ namespace Microsoft.Web
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<IList<NetworkTrace>> IOperationSource<IList<NetworkTrace>>.CreateResultAsync(Azure.Response response, CancellationToken cancellationToken)
+        async ValueTask<IList<NetworkTrace>> IOperationSource<IList<NetworkTrace>>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             IList<NetworkTrace> value = default;

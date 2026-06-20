@@ -12,7 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary></summary>
     internal partial class AppServiceEnvironmentResourceOperationSource : IOperationSource<AppServiceEnvironmentResource>

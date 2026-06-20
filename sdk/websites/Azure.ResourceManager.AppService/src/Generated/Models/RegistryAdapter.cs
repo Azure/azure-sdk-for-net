@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Server farm registry adapter configuration. </summary>
     public partial class RegistryAdapter
@@ -35,12 +36,15 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Registry key for the adapter. </summary>
+        [WirePath("registryKey")]
         public string RegistryKey { get; set; }
 
         /// <summary> Type of the registry adapter. </summary>
+        [WirePath("type")]
         public RegistryAdapterType? Type { get; set; }
 
         /// <summary> Key vault reference to the value that will be placed in the registry location. </summary>
+        [WirePath("keyVaultSecretReference")]
         public KeyVaultReferenceWithStatus KeyVaultSecretReference { get; set; }
     }
 }

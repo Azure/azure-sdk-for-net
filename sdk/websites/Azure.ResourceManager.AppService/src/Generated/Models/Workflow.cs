@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The workflow type. </summary>
     public partial class Workflow : WorkflowResource
@@ -34,12 +35,15 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The workflow properties. </summary>
+        [WirePath("properties")]
         internal WorkflowProperties Properties { get; set; }
 
         /// <summary> Managed service identity. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> Gets the provisioning state. </summary>
+        [WirePath("properties.provisioningState")]
         public WorkflowProvisioningState? ProvisioningState
         {
             get
@@ -49,6 +53,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Gets the created time. </summary>
+        [WirePath("properties.createdTime")]
         public DateTimeOffset? CreatedOn
         {
             get
@@ -58,6 +63,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Gets the changed time. </summary>
+        [WirePath("properties.changedTime")]
         public DateTimeOffset? ChangedOn
         {
             get
@@ -67,6 +73,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The state. </summary>
+        [WirePath("properties.state")]
         public WorkflowState? State
         {
             get
@@ -84,6 +91,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Gets the version. </summary>
+        [WirePath("properties.version")]
         public string Version
         {
             get
@@ -93,6 +101,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Gets the access endpoint. </summary>
+        [WirePath("properties.accessEndpoint")]
         public string AccessEndpoint
         {
             get
@@ -102,6 +111,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The endpoints configuration. </summary>
+        [WirePath("properties.endpointsConfiguration")]
         public FlowEndpointsConfiguration EndpointsConfiguration
         {
             get
@@ -119,6 +129,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The access control configuration. </summary>
+        [WirePath("properties.accessControl")]
         public FlowAccessControlConfiguration AccessControl
         {
             get
@@ -136,6 +147,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The sku. </summary>
+        [WirePath("properties.sku")]
         public WorkflowSku Sku
         {
             get
@@ -145,6 +157,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The integration account. </summary>
+        [WirePath("properties.integrationAccount")]
         public ResourceReference IntegrationAccount
         {
             get
@@ -162,6 +175,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The integration service environment. </summary>
+        [WirePath("properties.integrationServiceEnvironment")]
         public ResourceReference IntegrationServiceEnvironment
         {
             get
@@ -179,6 +193,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The definition. </summary>
+        [WirePath("properties.definition")]
         public BinaryData Definition
         {
             get
@@ -196,6 +211,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The parameters. </summary>
+        [WirePath("properties.parameters")]
         public IDictionary<string, WorkflowParameter> Parameters
         {
             get
@@ -209,7 +225,8 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The workflow kind. </summary>
-        public MicrosoftWebKind? Kind
+        [WirePath("properties.kind")]
+        public AppServiceKind? Kind
         {
             get
             {

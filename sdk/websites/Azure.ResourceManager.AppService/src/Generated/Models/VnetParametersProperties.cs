@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> VnetParameters resource specific properties. </summary>
     internal partial class VnetParametersProperties
@@ -37,15 +38,19 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The Resource Group of the VNET to be validated. </summary>
+        [WirePath("vnetResourceGroup")]
         public string VnetResourceGroup { get; set; }
 
         /// <summary> The name of the VNET to be validated. </summary>
+        [WirePath("vnetName")]
         public string VnetName { get; set; }
 
         /// <summary> The subnet name to be validated. </summary>
+        [WirePath("vnetSubnetName")]
         public string VnetSubnetName { get; set; }
 
         /// <summary> The ARM Resource ID of the subnet to validate. </summary>
+        [WirePath("subnetResourceId")]
         public string SubnetResourceId { get; set; }
     }
 }

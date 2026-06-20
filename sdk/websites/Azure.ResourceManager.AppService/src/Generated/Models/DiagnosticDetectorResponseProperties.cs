@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> DiagnosticDetectorResponse resource specific properties. </summary>
     internal partial class DiagnosticDetectorResponseProperties
@@ -49,30 +49,39 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Start time of the period. </summary>
+        [WirePath("startTime")]
         public DateTimeOffset? StartOn { get; }
 
         /// <summary> End time of the period. </summary>
+        [WirePath("endTime")]
         public DateTimeOffset? EndOn { get; }
 
         /// <summary> Flag representing Issue was detected. </summary>
+        [WirePath("issueDetected")]
         public bool? IssueDetected { get; }
 
         /// <summary> Detector's definition. </summary>
+        [WirePath("detectorDefinition")]
         public DetectorDefinition DetectorDefinition { get; }
 
         /// <summary> Metrics provided by the detector. </summary>
+        [WirePath("metrics")]
         public IList<DiagnosticMetricSet> Metrics { get; } = new ChangeTrackingList<DiagnosticMetricSet>();
 
         /// <summary> List of Correlated events found by the detector. </summary>
+        [WirePath("abnormalTimePeriods")]
         public IList<DetectorAbnormalTimePeriod> AbnormalTimePeriods { get; } = new ChangeTrackingList<DetectorAbnormalTimePeriod>();
 
         /// <summary> Additional Data that detector wants to send. </summary>
+        [WirePath("data")]
         public IList<IList<NameValuePair>> Data { get; } = new ChangeTrackingList<IList<NameValuePair>>();
 
         /// <summary> Meta Data. </summary>
+        [WirePath("responseMetaData")]
         internal ResponseMetaData ResponseMetaData { get; }
 
         /// <summary> Source of the Data. </summary>
+        [WirePath("responseMetaData.dataSource")]
         public DataSource DataSource
         {
             get

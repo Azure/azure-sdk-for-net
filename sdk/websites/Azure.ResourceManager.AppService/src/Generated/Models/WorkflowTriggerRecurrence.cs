@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The workflow trigger recurrence. </summary>
     public partial class WorkflowTriggerRecurrence
@@ -29,7 +30,7 @@ namespace Microsoft.Web.Models
         /// <param name="timeZone"> The time zone. </param>
         /// <param name="schedule"> The recurrence schedule. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WorkflowTriggerRecurrence(RecurrenceFrequency? frequency, int? interval, string startTime, string endTime, string timeZone, RecurrenceSchedule schedule, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WorkflowTriggerRecurrence(Models.WorkflowRecurrenceFrequency? frequency, int? interval, string startTime, string endTime, string timeZone, Models.WorkflowRecurrenceSchedule schedule, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Frequency = frequency;
             Interval = interval;
@@ -41,21 +42,27 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The frequency. </summary>
-        public RecurrenceFrequency? Frequency { get; }
+        [WirePath("frequency")]
+        public Models.WorkflowRecurrenceFrequency? Frequency { get; }
 
         /// <summary> The interval. </summary>
+        [WirePath("interval")]
         public int? Interval { get; }
 
         /// <summary> The start time. </summary>
+        [WirePath("startTime")]
         public string StartTime { get; }
 
         /// <summary> The end time. </summary>
+        [WirePath("endTime")]
         public string EndTime { get; }
 
         /// <summary> The time zone. </summary>
+        [WirePath("timeZone")]
         public string TimeZone { get; }
 
         /// <summary> The recurrence schedule. </summary>
-        public RecurrenceSchedule Schedule { get; }
+        [WirePath("schedule")]
+        public Models.WorkflowRecurrenceSchedule Schedule { get; }
     }
 }

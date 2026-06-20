@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
-using Microsoft.Web.Models;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary> The workflow version. </summary>
     public partial class WorkflowVersionData : TrackedResourceData
@@ -41,9 +41,11 @@ namespace Microsoft.Web
         }
 
         /// <summary> The workflow version properties. </summary>
+        [WirePath("properties")]
         internal WorkflowVersionProperties Properties { get; }
 
         /// <summary> The provisioning state. </summary>
+        [WirePath("properties.provisioningState")]
         public WorkflowProvisioningState? ProvisioningState
         {
             get
@@ -53,6 +55,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Gets the created time. </summary>
+        [WirePath("properties.createdTime")]
         public DateTimeOffset? CreatedOn
         {
             get
@@ -62,6 +65,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Gets the changed time. </summary>
+        [WirePath("properties.changedTime")]
         public DateTimeOffset? ChangedOn
         {
             get
@@ -71,6 +75,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> The state. </summary>
+        [WirePath("properties.state")]
         public WorkflowState? State
         {
             get
@@ -80,6 +85,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Gets the version. </summary>
+        [WirePath("properties.version")]
         public string Version
         {
             get
@@ -89,6 +95,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Gets the access endpoint. </summary>
+        [WirePath("properties.accessEndpoint")]
         public string AccessEndpoint
         {
             get
@@ -98,6 +105,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> The endpoints configuration. </summary>
+        [WirePath("properties.endpointsConfiguration")]
         public FlowEndpointsConfiguration EndpointsConfiguration
         {
             get
@@ -107,6 +115,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> The access control configuration. </summary>
+        [WirePath("properties.accessControl")]
         public FlowAccessControlConfiguration AccessControl
         {
             get
@@ -116,6 +125,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> The sku. </summary>
+        [WirePath("properties.sku")]
         public WorkflowSku Sku
         {
             get
@@ -125,6 +135,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> The integration account. </summary>
+        [WirePath("properties.integrationAccount")]
         public ResourceReference IntegrationAccount
         {
             get
@@ -134,6 +145,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> The definition. </summary>
+        [WirePath("properties.definition")]
         public BinaryData Definition
         {
             get
@@ -143,6 +155,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> The parameters. </summary>
+        [WirePath("properties.parameters")]
         public IDictionary<string, WorkflowParameter> Parameters
         {
             get

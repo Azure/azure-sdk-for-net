@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Definition of Detector. </summary>
     public partial class DetectorInfo
@@ -20,7 +20,7 @@ namespace Microsoft.Web.Models
         /// <summary> Initializes a new instance of <see cref="DetectorInfo"/>. </summary>
         internal DetectorInfo()
         {
-            SupportTopicList = new ChangeTrackingList<SupportTopic>();
+            SupportTopicList = new ChangeTrackingList<Models.DetectorSupportTopic>();
             AnalysisType = new ChangeTrackingList<string>();
         }
 
@@ -35,7 +35,7 @@ namespace Microsoft.Web.Models
         /// <param name="type"> Whether this detector is an Analysis Detector or not. </param>
         /// <param name="score"> Defines score of a detector to power ML based matching. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DetectorInfo(string id, string name, string description, string author, string category, IReadOnlyList<SupportTopic> supportTopicList, IReadOnlyList<string> analysisType, DetectorType? @type, float? score, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DetectorInfo(string id, string name, string description, string author, string category, IReadOnlyList<Models.DetectorSupportTopic> supportTopicList, IReadOnlyList<string> analysisType, DetectorType? @type, float? score, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
@@ -50,30 +50,39 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Id of detector. </summary>
+        [WirePath("id")]
         public string Id { get; }
 
         /// <summary> Name of detector. </summary>
+        [WirePath("name")]
         public string Name { get; }
 
         /// <summary> Short description of the detector and its purpose. </summary>
+        [WirePath("description")]
         public string Description { get; }
 
         /// <summary> Author of the detector. </summary>
+        [WirePath("author")]
         public string Author { get; }
 
         /// <summary> Problem category. This serves for organizing group for detectors. </summary>
+        [WirePath("category")]
         public string Category { get; }
 
         /// <summary> List of Support Topics for which this detector is enabled. </summary>
-        public IReadOnlyList<SupportTopic> SupportTopicList { get; }
+        [WirePath("supportTopicList")]
+        public IReadOnlyList<Models.DetectorSupportTopic> SupportTopicList { get; }
 
         /// <summary> Analysis Types for which this detector should apply to. </summary>
+        [WirePath("analysisType")]
         public IReadOnlyList<string> AnalysisType { get; }
 
         /// <summary> Whether this detector is an Analysis Detector or not. </summary>
+        [WirePath("type")]
         public DetectorType? Type { get; }
 
         /// <summary> Defines score of a detector to power ML based matching. </summary>
+        [WirePath("score")]
         public float? Score { get; }
     }
 }

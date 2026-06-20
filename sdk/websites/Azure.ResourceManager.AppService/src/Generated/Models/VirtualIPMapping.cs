@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Virtual IP mapping. </summary>
     public partial class VirtualIPMapping
@@ -39,18 +40,23 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Virtual IP address. </summary>
+        [WirePath("virtualIP")]
         public string VirtualIP { get; }
 
         /// <summary> Internal HTTP port. </summary>
+        [WirePath("internalHttpPort")]
         public int? InternalHttpPort { get; }
 
         /// <summary> Internal HTTPS port. </summary>
+        [WirePath("internalHttpsPort")]
         public int? InternalHttpsPort { get; }
 
         /// <summary> Is virtual IP mapping in use. </summary>
+        [WirePath("inUse")]
         public bool? InUse { get; }
 
         /// <summary> name of the service that virtual IP is assigned to. </summary>
+        [WirePath("serviceName")]
         public string ServiceName { get; }
     }
 }

@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Function App stack minor version. </summary>
     public partial class FunctionAppMinorVersion
@@ -35,12 +36,15 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Function App stack (display only). </summary>
+        [WirePath("displayText")]
         public string DisplayText { get; }
 
         /// <summary> Function App stack name. </summary>
+        [WirePath("value")]
         public string Value { get; }
 
         /// <summary> Settings associated with the minor version. </summary>
+        [WirePath("stackSettings")]
         public FunctionAppRuntimes StackSettings { get; }
     }
 }

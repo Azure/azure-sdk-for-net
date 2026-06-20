@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> String dictionary resource. </summary>
     public partial class StringDictionary : ProxyOnlyResource
@@ -33,6 +33,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Settings. </summary>
+        [WirePath("properties")]
         public IDictionary<string, string> Properties { get; }
     }
 }

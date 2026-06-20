@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Worker pool of an App Service Environment. </summary>
     internal partial class WorkerPool
@@ -41,18 +41,23 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Worker size ID for referencing this worker pool. </summary>
+        [WirePath("workerSizeId")]
         public int? WorkerSizeId { get; set; }
 
         /// <summary> Shared or dedicated app hosting. </summary>
+        [WirePath("computeMode")]
         public ComputeModeOptions? ComputeMode { get; set; }
 
         /// <summary> VM size of the worker pool instances. </summary>
+        [WirePath("workerSize")]
         public string WorkerSize { get; set; }
 
         /// <summary> Number of instances in the worker pool. </summary>
+        [WirePath("workerCount")]
         public int? WorkerCount { get; set; }
 
         /// <summary> Names of all instances in the worker pool (read only). </summary>
+        [WirePath("instanceNames")]
         public IReadOnlyList<string> InstanceNames { get; } = new ChangeTrackingList<string>();
     }
 }

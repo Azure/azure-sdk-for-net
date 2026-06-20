@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The workflow properties. </summary>
     internal partial class WorkflowProperties : IJsonModel<WorkflowProperties>
@@ -40,7 +40,7 @@ namespace Microsoft.Web.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, MicrosoftWebContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(WorkflowProperties)} does not support writing '{options.Format}' format.");
             }
@@ -212,7 +212,7 @@ namespace Microsoft.Web.Models
             ResourceReference integrationServiceEnvironment = default;
             BinaryData definition = default;
             IDictionary<string, WorkflowParameter> parameters = default;
-            MicrosoftWebKind? kind = default;
+            AppServiceKind? kind = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -336,7 +336,7 @@ namespace Microsoft.Web.Models
                     {
                         continue;
                     }
-                    kind = new MicrosoftWebKind(prop.Value.GetString());
+                    kind = new AppServiceKind(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

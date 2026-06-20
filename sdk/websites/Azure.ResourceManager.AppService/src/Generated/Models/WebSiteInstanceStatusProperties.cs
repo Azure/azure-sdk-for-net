@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> WebSiteInstanceStatus resource specific properties. </summary>
     internal partial class WebSiteInstanceStatusProperties
@@ -45,24 +45,31 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Gets the State. </summary>
+        [WirePath("state")]
         public SiteRuntimeState? State { get; }
 
         /// <summary> Link to the GetStatusApi in Kudu. </summary>
+        [WirePath("statusUrl")]
         public string StatusUri { get; }
 
         /// <summary> Link to the Diagnose and Solve Portal. </summary>
+        [WirePath("detectorUrl")]
         public string DetectorUri { get; }
 
         /// <summary> Link to the console to web app instance. </summary>
+        [WirePath("consoleUrl")]
         public string ConsoleUri { get; }
 
         /// <summary> Link to the console to web app instance. </summary>
+        [WirePath("healthCheckUrl")]
         public string HealthCheckUri { get; }
 
         /// <summary> Dictionary of &lt;ContainerInfo&gt;. </summary>
+        [WirePath("containers")]
         public IDictionary<string, ContainerInfo> Containers { get; } = new ChangeTrackingDictionary<string, ContainerInfo>();
 
         /// <summary> The physical zone that the instance is in. </summary>
+        [WirePath("physicalZone")]
         public string PhysicalZone { get; }
     }
 }

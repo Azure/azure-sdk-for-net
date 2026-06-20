@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> String list resource. </summary>
     public partial class StringList : ProxyOnlyResource
@@ -33,6 +33,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> List of string resources. </summary>
+        [WirePath("properties")]
         public IList<string> Properties { get; }
     }
 }

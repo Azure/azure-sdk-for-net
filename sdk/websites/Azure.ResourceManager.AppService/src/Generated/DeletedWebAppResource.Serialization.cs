@@ -9,7 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary></summary>
     public partial class DeletedWebAppResource : IJsonModel<DeletedSiteData>
@@ -27,11 +27,11 @@ namespace Microsoft.Web
         DeletedSiteData IJsonModel<DeletedSiteData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DeletedSiteData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DeletedSiteData>(Data, options, MicrosoftWebContext.Default);
+        BinaryData IPersistableModel<DeletedSiteData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DeletedSiteData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DeletedSiteData IPersistableModel<DeletedSiteData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DeletedSiteData>(data, options, MicrosoftWebContext.Default);
+        DeletedSiteData IPersistableModel<DeletedSiteData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DeletedSiteData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DeletedSiteData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);

@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Application logs to file system configuration. </summary>
     internal partial class FileSystemApplicationLogsConfig
@@ -31,6 +32,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Log level. </summary>
+        [WirePath("level")]
         public LogLevel? Level { get; set; }
     }
 }

@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
-using Microsoft.Web.Models;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary> A Kubernetes cluster specialized for web workloads by Azure App Service. </summary>
     public partial class KubeEnvironmentData : TrackedResourceData
@@ -45,15 +45,19 @@ namespace Microsoft.Web
         }
 
         /// <summary> KubeEnvironment resource specific properties. </summary>
+        [WirePath("properties")]
         internal KubeEnvironmentProperties Properties { get; set; }
 
         /// <summary> Extended Location. </summary>
+        [WirePath("extendedLocation")]
         public ExtendedLocation ExtendedLocation { get; set; }
 
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
 
         /// <summary> Provisioning state of the Kubernetes Environment. </summary>
+        [WirePath("properties.provisioningState")]
         public KubeEnvironmentProvisioningState? ProvisioningState
         {
             get
@@ -63,6 +67,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Any errors that occurred during deployment or deployment validation. </summary>
+        [WirePath("properties.deploymentErrors")]
         public string DeploymentErrors
         {
             get
@@ -72,6 +77,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Only visible within Vnet/Subnet. </summary>
+        [WirePath("properties.internalLoadBalancerEnabled")]
         public bool? InternalLoadBalancerEnabled
         {
             get
@@ -89,6 +95,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Default Domain Name for the cluster. </summary>
+        [WirePath("properties.defaultDomain")]
         public string DefaultDomain
         {
             get
@@ -98,6 +105,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Static IP of the KubeEnvironment. </summary>
+        [WirePath("properties.staticIp")]
         public string StaticIp
         {
             get
@@ -115,6 +123,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Type of Kubernetes Environment. Only supported for Container App Environments with value as Managed. </summary>
+        [WirePath("properties.environmentType")]
         public string EnvironmentType
         {
             get
@@ -136,6 +145,7 @@ namespace Microsoft.Web
         /// components types. Eg: Choosing between BuildService kind,
         /// FrontEnd Service ArtifactsStorageType etc.
         /// </summary>
+        [WirePath("properties.arcConfiguration")]
         public ArcConfiguration ArcConfiguration
         {
             get
@@ -157,6 +167,7 @@ namespace Microsoft.Web
         /// app logs to a destination. Currently only "log-analytics" is
         /// supported
         /// </summary>
+        [WirePath("properties.appLogsConfiguration")]
         public AppLogsConfiguration AppLogsConfiguration
         {
             get
@@ -174,6 +185,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Cluster configuration for Container Apps Environments to configure Dapr Instrumentation Key and VNET Configuration. </summary>
+        [WirePath("properties.containerAppsConfiguration")]
         public ContainerAppsConfiguration ContainerAppsConfiguration
         {
             get
@@ -191,6 +203,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Gets or sets the AksResourceID. </summary>
+        [WirePath("properties.aksResourceID")]
         public string AksResourceID
         {
             get

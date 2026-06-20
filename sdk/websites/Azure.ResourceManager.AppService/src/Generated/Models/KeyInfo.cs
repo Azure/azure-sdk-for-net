@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Function key info. </summary>
     public partial class KeyInfo
@@ -33,9 +34,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Key name. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
 
         /// <summary> Key value. </summary>
+        [WirePath("value")]
         public string Value { get; set; }
     }
 }

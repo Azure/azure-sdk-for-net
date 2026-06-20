@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
-using Microsoft.Web.Models;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary> Web Job Information. </summary>
     public partial class WebJobData : ResourceData
@@ -40,12 +40,15 @@ namespace Microsoft.Web
         }
 
         /// <summary> WebJob resource specific properties. </summary>
+        [WirePath("properties")]
         internal WebJobProperties Properties { get; }
 
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; }
 
         /// <summary> Run command. </summary>
+        [WirePath("properties.run_command")]
         public string RunCommand
         {
             get
@@ -55,6 +58,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Job URL. </summary>
+        [WirePath("properties.url")]
         public string Uri
         {
             get
@@ -64,6 +68,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Extra Info URL. </summary>
+        [WirePath("properties.extra_info_url")]
         public string ExtraInfoUri
         {
             get
@@ -73,6 +78,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Job type. </summary>
+        [WirePath("properties.web_job_type")]
         public WebJobType? WebJobType
         {
             get
@@ -82,6 +88,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Error information. </summary>
+        [WirePath("properties.error")]
         public string Error
         {
             get
@@ -91,6 +98,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Using SDK?. </summary>
+        [WirePath("properties.using_sdk")]
         public bool? UsingSdk
         {
             get
@@ -100,6 +108,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Job settings. </summary>
+        [WirePath("properties.settings")]
         public IDictionary<string, BinaryData> Settings
         {
             get

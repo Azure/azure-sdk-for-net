@@ -8,9 +8,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Application stack major version. </summary>
     public partial class StackMajorVersion
@@ -64,27 +64,35 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Application stack major version (display only). </summary>
+        [WirePath("displayVersion")]
         public string DisplayVersion { get; }
 
         /// <summary> Application stack major version (runtime only). </summary>
+        [WirePath("runtimeVersion")]
         public string RuntimeVersion { get; }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if this is the default major version; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("isDefault")]
         public bool? IsDefault { get; }
 
         /// <summary> Minor versions associated with the major version. </summary>
+        [WirePath("minorVersions")]
         public IList<StackMinorVersion> MinorVersions { get; }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if this supports Application Insights; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("applicationInsights")]
         public bool? ApplicationInsights { get; }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if this stack is in Preview, otherwise &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("isPreview")]
         public bool? IsPreview { get; }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if this stack has been deprecated, otherwise &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("isDeprecated")]
         public bool? IsDeprecated { get; }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if this stack should be hidden for new customers on portal, otherwise &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("isHidden")]
         public bool? IsHidden { get; }
 
         /// <summary>
@@ -116,6 +124,7 @@ namespace Microsoft.Web.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("appSettingsDictionary")]
         public IDictionary<string, BinaryData> AppSettingsDictionary { get; }
 
         /// <summary>
@@ -147,6 +156,7 @@ namespace Microsoft.Web.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("siteConfigPropertiesDictionary")]
         public IDictionary<string, BinaryData> SiteConfigPropertiesDictionary { get; }
     }
 }

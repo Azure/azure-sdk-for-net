@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Network Security Perimeter Profile Access Rule. </summary>
     public partial class NspProfileAccessRule
@@ -33,9 +34,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Name of the Network Security Perimeter Profile Access Rule. </summary>
+        [WirePath("name")]
         public string Name { get; }
 
         /// <summary> Name of the Network Security Perimeter Profile Access Rule. </summary>
+        [WirePath("properties")]
         public NspProfileAccessRuleProperties Properties { get; }
     }
 }

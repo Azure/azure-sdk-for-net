@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
-using Microsoft.Web.Models;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary> Publishing Credentials Policies parameters. </summary>
     public partial class CsmPublishingCredentialsPoliciesEntityData : ResourceData
@@ -40,12 +40,15 @@ namespace Microsoft.Web
         }
 
         /// <summary> CsmPublishingCredentialsPoliciesEntity resource specific properties. </summary>
+        [WirePath("properties")]
         internal CsmPublishingCredentialsPoliciesEntityProperties Properties { get; set; }
 
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; to allow access to a publishing method; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("properties.allow")]
         public bool? Allow
         {
             get

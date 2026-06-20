@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> StaticSiteUserProvidedFunctionApp resource specific properties. </summary>
     internal partial class StaticSiteUserProvidedFunctionAppProperties
@@ -35,12 +36,15 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The resource id of the function app registered with the static site. </summary>
+        [WirePath("functionAppResourceId")]
         public string FunctionAppResourceId { get; }
 
         /// <summary> The region of the function app registered with the static site. </summary>
+        [WirePath("functionAppRegion")]
         public string FunctionAppRegion { get; }
 
         /// <summary> The date and time on which the function app was registered with the static site. </summary>
+        [WirePath("createdOn")]
         public DateTimeOffset? CreatedOn { get; }
     }
 }

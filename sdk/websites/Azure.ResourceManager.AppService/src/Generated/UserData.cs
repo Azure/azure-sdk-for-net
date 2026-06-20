@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
-using Microsoft.Web.Models;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary> User credentials used for publishing activity. </summary>
     public partial class UserData : ResourceData
@@ -40,12 +40,15 @@ namespace Microsoft.Web
         }
 
         /// <summary> User resource specific properties. </summary>
+        [WirePath("properties")]
         internal UserProperties Properties { get; set; }
 
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
 
         /// <summary> Username used for publishing. </summary>
+        [WirePath("properties.publishingUserName")]
         public string PublishingUserName
         {
             get
@@ -63,6 +66,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Password used for publishing. </summary>
+        [WirePath("properties.publishingPassword")]
         public string PublishingPassword
         {
             get
@@ -80,6 +84,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Password hash used for publishing. </summary>
+        [WirePath("properties.publishingPasswordHash")]
         public string PublishingPasswordHash
         {
             get
@@ -97,6 +102,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Password hash salt used for publishing. </summary>
+        [WirePath("properties.publishingPasswordHashSalt")]
         public string PublishingPasswordHashSalt
         {
             get
@@ -114,6 +120,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Url of SCM site. </summary>
+        [WirePath("properties.scmUri")]
         public string ScmUri
         {
             get

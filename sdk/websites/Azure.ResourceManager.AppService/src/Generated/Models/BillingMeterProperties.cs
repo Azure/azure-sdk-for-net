@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> BillingMeter resource specific properties. </summary>
     internal partial class BillingMeterProperties
@@ -43,24 +44,31 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Meter GUID onboarded in Commerce. </summary>
+        [WirePath("meterId")]
         public string MeterId { get; }
 
         /// <summary> Azure Location of billable resource. </summary>
+        [WirePath("billingLocation")]
         public string BillingLocation { get; }
 
         /// <summary> Short Name from App Service Azure pricing Page. </summary>
+        [WirePath("shortName")]
         public string ShortName { get; }
 
         /// <summary> Friendly name of the meter. </summary>
+        [WirePath("friendlyName")]
         public string FriendlyName { get; }
 
         /// <summary> App Service ResourceType meter used for. </summary>
+        [WirePath("resourceType")]
         public string ResourceType { get; }
 
         /// <summary> App Service OS type meter used for. </summary>
+        [WirePath("osType")]
         public string OsType { get; }
 
         /// <summary> Meter Multiplier. </summary>
+        [WirePath("multiplier")]
         public double? Multiplier { get; }
     }
 }

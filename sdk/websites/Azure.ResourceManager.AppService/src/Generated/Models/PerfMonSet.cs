@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Metric information. </summary>
     public partial class PerfMonSet
@@ -30,7 +30,7 @@ namespace Microsoft.Web.Models
         /// <param name="timeGrain"> Presented time grain. </param>
         /// <param name="values"> Collection of workers that are active during this time. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PerfMonSet(string name, DateTimeOffset? startOn, DateTimeOffset? endOn, string timeGrain, IList<PerfMonSample> values, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PerfMonSet(string name, DateTimeOffset? startOn, DateTimeOffset? endOn, string timeGrain, IReadOnlyList<PerfMonSample> values, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             StartOn = startOn;
@@ -41,18 +41,23 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Unique key name of the counter. </summary>
+        [WirePath("name")]
         public string Name { get; }
 
         /// <summary> Start time of the period. </summary>
+        [WirePath("startTime")]
         public DateTimeOffset? StartOn { get; }
 
         /// <summary> End time of the period. </summary>
+        [WirePath("endTime")]
         public DateTimeOffset? EndOn { get; }
 
         /// <summary> Presented time grain. </summary>
+        [WirePath("timeGrain")]
         public string TimeGrain { get; }
 
         /// <summary> Collection of workers that are active during this time. </summary>
-        public IList<PerfMonSample> Values { get; }
+        [WirePath("values")]
+        public IReadOnlyList<PerfMonSample> Values { get; }
     }
 }

@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Error details for when validation fails. </summary>
     public partial class ValidateResponseError
@@ -33,9 +34,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Validation error code. </summary>
+        [WirePath("code")]
         public string Code { get; }
 
         /// <summary> Validation error message. </summary>
+        [WirePath("message")]
         public string Message { get; }
     }
 }

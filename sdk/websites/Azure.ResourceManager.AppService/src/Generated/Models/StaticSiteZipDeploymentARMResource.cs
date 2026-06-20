@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Static site zip deployment ARM resource. </summary>
     public partial class StaticSiteZipDeploymentARMResource : ProxyOnlyResource
@@ -31,10 +32,12 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Core resource properties. </summary>
+        [WirePath("properties")]
         internal StaticSiteZipDeployment Properties { get; set; }
 
         /// <summary> URL for the zipped app content. </summary>
-        public string AppZipUri
+        [WirePath("properties.appZipUrl")]
+        public Uri AppZipUri
         {
             get
             {
@@ -51,7 +54,8 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> URL for the zipped api content. </summary>
-        public string ApiZipUri
+        [WirePath("properties.apiZipUrl")]
+        public Uri ApiZipUri
         {
             get
             {
@@ -68,6 +72,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> A title to label the deployment. </summary>
+        [WirePath("properties.deploymentTitle")]
         public string DeploymentTitle
         {
             get
@@ -85,6 +90,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The provider submitting this deployment. </summary>
+        [WirePath("properties.provider")]
         public string Provider
         {
             get
@@ -102,6 +108,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The language of the api content, if it exists. </summary>
+        [WirePath("properties.functionLanguage")]
         public string FunctionLanguage
         {
             get

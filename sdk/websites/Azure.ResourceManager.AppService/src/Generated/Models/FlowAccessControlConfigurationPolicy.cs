@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The access control configuration policy. </summary>
     public partial class FlowAccessControlConfigurationPolicy
@@ -35,12 +35,15 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The allowed caller IP address ranges. </summary>
+        [WirePath("allowedCallerIpAddresses")]
         public IList<IpAddressRange> AllowedCallerIpAddresses { get; }
 
         /// <summary> The authentication policies for workflow. </summary>
+        [WirePath("openAuthenticationPolicies")]
         internal OpenAuthenticationAccessPolicies OpenAuthenticationPolicies { get; set; }
 
         /// <summary> Open authentication policies. </summary>
+        [WirePath("openAuthenticationPolicies.policies")]
         public IDictionary<string, OpenAuthenticationAccessPolicy> OpenAuthenticationPolicies
         {
             get

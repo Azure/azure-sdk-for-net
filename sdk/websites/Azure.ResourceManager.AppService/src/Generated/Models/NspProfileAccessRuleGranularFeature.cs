@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Network Security Perimeter Profile Access Rule Granular Feature. </summary>
     public partial class NspProfileAccessRuleGranularFeature
@@ -35,9 +35,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Resource Type of Granular Feature. </summary>
+        [WirePath("resourceType")]
         public string ResourceType { get; }
 
         /// <summary> Names of applied Granular Features. </summary>
+        [WirePath("features")]
         public IList<string> Features { get; }
     }
 }

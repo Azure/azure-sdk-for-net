@@ -8,9 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.Models;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Virtual Network route contract used to pass routing information for a Virtual Network. </summary>
     public partial class VnetRoute : ResourceData
@@ -39,12 +40,15 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> VnetRoute resource specific properties. </summary>
+        [WirePath("properties")]
         internal VnetRouteProperties Properties { get; set; }
 
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
 
         /// <summary> The starting address for this route. This may also include a CIDR notation, in which case the end address must not be specified. </summary>
+        [WirePath("properties.startAddress")]
         public string StartAddress
         {
             get
@@ -62,6 +66,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The ending address for this route. If the start address is specified in CIDR notation, this must be omitted. </summary>
+        [WirePath("properties.endAddress")]
         public string EndAddress
         {
             get
@@ -85,6 +90,7 @@ namespace Microsoft.Web.Models
         /// STATIC - Static route set on the app only
         /// These values will be used for syncing an app's routes with those from a Virtual Network.
         /// </summary>
+        [WirePath("properties.routeType")]
         public RouteType? RouteType
         {
             get

@@ -9,7 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary></summary>
     public partial class WorkflowTriggerResource : IJsonModel<WorkflowTriggerData>
@@ -27,11 +27,11 @@ namespace Microsoft.Web
         WorkflowTriggerData IJsonModel<WorkflowTriggerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<WorkflowTriggerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<WorkflowTriggerData>(Data, options, MicrosoftWebContext.Default);
+        BinaryData IPersistableModel<WorkflowTriggerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<WorkflowTriggerData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        WorkflowTriggerData IPersistableModel<WorkflowTriggerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WorkflowTriggerData>(data, options, MicrosoftWebContext.Default);
+        WorkflowTriggerData IPersistableModel<WorkflowTriggerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WorkflowTriggerData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<WorkflowTriggerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);

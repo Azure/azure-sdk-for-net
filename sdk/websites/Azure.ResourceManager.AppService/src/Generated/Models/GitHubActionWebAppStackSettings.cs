@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> GitHub Actions Web App stack settings. </summary>
     public partial class GitHubActionWebAppStackSettings
@@ -33,9 +34,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if GitHub Actions is supported for the stack; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("isSupported")]
         public bool? IsSupported { get; }
 
         /// <summary> The minor version that is supported for GitHub Actions. </summary>
+        [WirePath("supportedVersion")]
         public string SupportedVersion { get; }
     }
 }

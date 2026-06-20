@@ -8,8 +8,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Collection of Application Stacks. </summary>
     internal partial class ApplicationStackCollection
@@ -36,9 +37,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The ApplicationStackResource items on this page. </summary>
+        [WirePath("value")]
         public IList<ApplicationStackResource> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
+        [WirePath("nextLink")]
         public Uri NextLink { get; }
     }
 }

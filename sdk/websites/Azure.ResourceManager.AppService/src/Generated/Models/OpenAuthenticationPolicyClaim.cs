@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Open authentication policy claim. </summary>
     public partial class OpenAuthenticationPolicyClaim
@@ -33,9 +34,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The name of the claim. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
 
         /// <summary> The value of the claim. </summary>
+        [WirePath("value")]
         public string Value { get; set; }
     }
 }

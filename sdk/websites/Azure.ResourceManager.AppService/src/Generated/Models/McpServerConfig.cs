@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Configuration for an individual MCP server. </summary>
     public partial class McpServerConfig
@@ -41,18 +41,23 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The name of the MCP server. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
 
         /// <summary> The description of the MCP server. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
 
         /// <summary> Whether the MCP server is enabled. Defaults to true when not specified on creation. </summary>
+        [WirePath("enabled")]
         public bool? Enabled { get; set; }
 
         /// <summary> The endpoint path for the MCP server. </summary>
+        [WirePath("endpoint")]
         public string Endpoint { get; set; }
 
         /// <summary> The list of tools exposed by this MCP server. </summary>
+        [WirePath("toolList")]
         public IList<string> ToolList { get; }
     }
 }

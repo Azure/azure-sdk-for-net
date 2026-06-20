@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     internal enum SerializationFormat
     {

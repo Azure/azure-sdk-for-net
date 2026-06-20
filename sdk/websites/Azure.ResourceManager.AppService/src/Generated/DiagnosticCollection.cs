@@ -16,7 +16,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A class representing a collection of <see cref="DiagnosticResource"/> and their operations.
@@ -39,7 +39,7 @@ namespace Microsoft.Web
         internal DiagnosticCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             this.TryGetApiVersion(DiagnosticResource.ResourceType, out string diagnosticApiVersion);
-            _diagnosticsClientDiagnostics = new ClientDiagnostics("Microsoft.Web", DiagnosticResource.ResourceType.Namespace, Diagnostics);
+            _diagnosticsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", DiagnosticResource.ResourceType.Namespace, Diagnostics);
             _diagnosticsRestClient = new Diagnostics(_diagnosticsClientDiagnostics, Pipeline, Endpoint, diagnosticApiVersion ?? "2026-03-15");
             DiagnosticCollection.ValidateResourceId(id);
         }
@@ -71,7 +71,7 @@ namespace Microsoft.Web
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="detectorName"> Detector Name. </param>
+        /// <param name="detectorName"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -120,7 +120,7 @@ namespace Microsoft.Web
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="detectorName"> Detector Name. </param>
+        /// <param name="detectorName"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -241,7 +241,7 @@ namespace Microsoft.Web
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="detectorName"> Detector Name. </param>
+        /// <param name="detectorName"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -298,7 +298,7 @@ namespace Microsoft.Web
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="detectorName"> Detector Name. </param>
+        /// <param name="detectorName"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -355,7 +355,7 @@ namespace Microsoft.Web
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="detectorName"> Detector Name. </param>
+        /// <param name="detectorName"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -416,7 +416,7 @@ namespace Microsoft.Web
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="detectorName"> Detector Name. </param>
+        /// <param name="detectorName"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>

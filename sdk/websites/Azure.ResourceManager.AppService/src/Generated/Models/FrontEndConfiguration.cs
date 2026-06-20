@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The FrontEndConfiguration. </summary>
     internal partial class FrontEndConfiguration
@@ -31,6 +32,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Gets or sets the Kind. </summary>
+        [WirePath("kind")]
         public FrontEndServiceType? Kind { get; set; }
     }
 }

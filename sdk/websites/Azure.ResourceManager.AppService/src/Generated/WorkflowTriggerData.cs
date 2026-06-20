@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
-using Microsoft.Web.Models;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary> The workflow trigger. </summary>
     public partial class WorkflowTriggerData : ResourceData
@@ -38,9 +38,11 @@ namespace Microsoft.Web
         }
 
         /// <summary> The workflow trigger properties. </summary>
+        [WirePath("properties")]
         internal WorkflowTriggerProperties Properties { get; }
 
         /// <summary> Gets the provisioning state. </summary>
+        [WirePath("properties.provisioningState")]
         public WorkflowTriggerProvisioningState? ProvisioningState
         {
             get
@@ -50,6 +52,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Gets the created time. </summary>
+        [WirePath("properties.createdTime")]
         public DateTimeOffset? CreatedOn
         {
             get
@@ -59,6 +62,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Gets the changed time. </summary>
+        [WirePath("properties.changedTime")]
         public DateTimeOffset? ChangedOn
         {
             get
@@ -68,6 +72,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Gets the state. </summary>
+        [WirePath("properties.state")]
         public WorkflowState? State
         {
             get
@@ -77,6 +82,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Gets the status. </summary>
+        [WirePath("properties.status")]
         public WorkflowStatus? Status
         {
             get
@@ -86,6 +92,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Gets the last execution time. </summary>
+        [WirePath("properties.lastExecutionTime")]
         public DateTimeOffset? LastExecutionOn
         {
             get
@@ -95,6 +102,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Gets the next execution time. </summary>
+        [WirePath("properties.nextExecutionTime")]
         public DateTimeOffset? NextExecutionOn
         {
             get
@@ -104,6 +112,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Gets the workflow trigger recurrence. </summary>
+        [WirePath("properties.recurrence")]
         public WorkflowTriggerRecurrence Recurrence
         {
             get
@@ -113,6 +122,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Gets the reference to workflow. </summary>
+        [WirePath("properties.workflow")]
         public ResourceReference Workflow
         {
             get

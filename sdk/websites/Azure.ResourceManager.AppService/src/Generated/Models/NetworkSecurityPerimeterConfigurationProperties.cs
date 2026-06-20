@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Network Security Perimeter Configuration Properties. </summary>
     public partial class NetworkSecurityPerimeterConfigurationProperties
@@ -41,18 +41,23 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Reflects state of association persistence and configuration propagation to App Service Data Plane. </summary>
+        [WirePath("provisioningState")]
         public string ProvisioningState { get; }
 
         /// <summary> Reflects any misconfigurations and failures detected while provisioning the association or while processing configuration changes. </summary>
+        [WirePath("provisioningIssues")]
         public IList<NspProvisioningIssue> ProvisioningIssues { get; }
 
         /// <summary> Associated Network Security Perimeter resource. </summary>
+        [WirePath("networkSecurityPerimeter")]
         public NetworkSecurityPerimeter NetworkSecurityPerimeter { get; }
 
         /// <summary> Representation of Network Security Perimeter Association. </summary>
+        [WirePath("resourceAssociations")]
         public NspResourceAssociation ResourceAssociations { get; }
 
         /// <summary> Associated Network Security Perimeter Profile. </summary>
+        [WirePath("profile")]
         public NspProfile Profile { get; }
     }
 }

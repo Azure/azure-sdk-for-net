@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The configuration settings of the login flow, including the scopes that should be requested. </summary>
     internal partial class LoginScopes
@@ -33,6 +33,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> A list of the scopes that should be requested while authenticating. </summary>
+        [WirePath("scopes")]
         public IList<string> Scopes { get; }
     }
 }

@@ -9,7 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary></summary>
     public partial class UserResource : IJsonModel<UserData>
@@ -27,11 +27,11 @@ namespace Microsoft.Web
         UserData IJsonModel<UserData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<UserData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<UserData>(Data, options, MicrosoftWebContext.Default);
+        BinaryData IPersistableModel<UserData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<UserData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        UserData IPersistableModel<UserData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<UserData>(data, options, MicrosoftWebContext.Default);
+        UserData IPersistableModel<UserData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<UserData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<UserData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);

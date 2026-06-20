@@ -8,8 +8,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The workflow trigger history properties. </summary>
     internal partial class WorkflowTriggerHistoryProperties
@@ -54,18 +55,23 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Gets the start time. </summary>
+        [WirePath("startTime")]
         public DateTimeOffset? StartOn { get; }
 
         /// <summary> Gets the end time. </summary>
+        [WirePath("endTime")]
         public DateTimeOffset? EndOn { get; }
 
         /// <summary> The scheduled time. </summary>
+        [WirePath("scheduledTime")]
         public DateTimeOffset? ScheduledOn { get; }
 
         /// <summary> Gets the status. </summary>
+        [WirePath("status")]
         public WorkflowStatus? Status { get; }
 
         /// <summary> Gets the code. </summary>
+        [WirePath("code")]
         public string Code { get; }
 
         /// <summary>
@@ -94,27 +100,35 @@ namespace Microsoft.Web.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("error")]
         public BinaryData Error { get; }
 
         /// <summary> Gets the tracking id. </summary>
+        [WirePath("trackingId")]
         public string TrackingId { get; }
 
         /// <summary> The run correlation. </summary>
+        [WirePath("correlation")]
         internal Correlation Correlation { get; }
 
         /// <summary> Gets the link to input parameters. </summary>
+        [WirePath("inputsLink")]
         public ContentLink InputsLink { get; }
 
         /// <summary> Gets the link to output parameters. </summary>
+        [WirePath("outputsLink")]
         public ContentLink OutputsLink { get; }
 
         /// <summary> The value indicating whether trigger was fired. </summary>
+        [WirePath("fired")]
         public bool? Fired { get; }
 
         /// <summary> Gets the reference to workflow run. </summary>
+        [WirePath("run")]
         public ResourceReference Run { get; }
 
         /// <summary> The client tracking id. </summary>
+        [WirePath("correlation.clientTrackingId")]
         public string CorrelationClientTrackingId
         {
             get

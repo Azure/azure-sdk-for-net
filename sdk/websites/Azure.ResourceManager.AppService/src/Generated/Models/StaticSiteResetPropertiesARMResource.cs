@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Static Site Reset Properties ARM resource. </summary>
     public partial class StaticSiteResetPropertiesARMResource : ProxyOnlyResource
@@ -31,9 +32,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> StaticSiteResetPropertiesARMResource resource specific properties. </summary>
+        [WirePath("properties")]
         internal StaticSiteResetPropertiesARMResourceProperties Properties { get; set; }
 
         /// <summary> The token which proves admin privileges to the repository. </summary>
+        [WirePath("properties.repositoryToken")]
         public string RepositoryToken
         {
             get
@@ -51,6 +54,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Determines whether the repository should be updated with the new properties. </summary>
+        [WirePath("properties.shouldUpdateRepository")]
         public bool? ShouldUpdateRepository
         {
             get

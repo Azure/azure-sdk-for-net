@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
-using Microsoft.Web.Models;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary> App Service plan. </summary>
     public partial class AppServicePlanData : TrackedResourceData
@@ -49,21 +49,27 @@ namespace Microsoft.Web
         }
 
         /// <summary> AppServicePlan resource specific properties. </summary>
+        [WirePath("properties")]
         internal AppServicePlanProperties Properties { get; set; }
 
         /// <summary> Description of a SKU for a scalable resource. </summary>
+        [WirePath("sku")]
         public SkuDescription Sku { get; set; }
 
         /// <summary> Extended Location. </summary>
+        [WirePath("extendedLocation")]
         public ExtendedLocation ExtendedLocation { get; set; }
 
         /// <summary> Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
 
         /// <summary> Managed service identity. </summary>
+        [WirePath("identity")]
         public Models.ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> Target worker tier assigned to the App Service plan. </summary>
+        [WirePath("properties.workerTierName")]
         public string WorkerTierName
         {
             get
@@ -81,6 +87,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> App Service plan status. </summary>
+        [WirePath("properties.status")]
         public StatusOptions? Status
         {
             get
@@ -90,6 +97,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> App Service plan subscription. </summary>
+        [WirePath("properties.subscription")]
         public string Subscription
         {
             get
@@ -99,6 +107,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Specification for the App Service Environment to use for the App Service plan. </summary>
+        [WirePath("properties.hostingEnvironmentProfile")]
         public HostingEnvironmentProfile HostingEnvironmentProfile
         {
             get
@@ -116,6 +125,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Maximum number of instances that can be assigned to this App Service plan. </summary>
+        [WirePath("properties.maximumNumberOfWorkers")]
         public int? MaximumNumberOfWorkers
         {
             get
@@ -125,6 +135,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> The number of instances that are assigned to this App Service plan. </summary>
+        [WirePath("properties.numberOfWorkers")]
         public int? NumberOfWorkers
         {
             get
@@ -134,6 +145,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Geographical location for the App Service plan. </summary>
+        [WirePath("properties.geoRegion")]
         public string GeoRegion
         {
             get
@@ -146,6 +158,7 @@ namespace Microsoft.Web
         /// If &lt;code&gt;true&lt;/code&gt;, apps assigned to this App Service plan can be scaled independently.
         /// If &lt;code&gt;false&lt;/code&gt;, apps assigned to this App Service plan will scale to all instances of the plan.
         /// </summary>
+        [WirePath("properties.perSiteScaling")]
         public bool? PerSiteScaling
         {
             get
@@ -163,6 +176,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> ServerFarm supports ElasticScale. Apps in this plan will scale as if the ServerFarm was ElasticPremium sku. </summary>
+        [WirePath("properties.elasticScaleEnabled")]
         public bool? ElasticScaleEnabled
         {
             get
@@ -180,6 +194,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Maximum number of total workers allowed for this ElasticScaleEnabled App Service Plan. </summary>
+        [WirePath("properties.maximumElasticWorkerCount")]
         public int? MaximumElasticWorkerCount
         {
             get
@@ -197,6 +212,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Number of apps assigned to this App Service plan. </summary>
+        [WirePath("properties.numberOfSites")]
         public int? NumberOfSites
         {
             get
@@ -206,6 +222,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> If &lt;code&gt;true&lt;/code&gt;, this App Service Plan owns spot instances. </summary>
+        [WirePath("properties.isSpot")]
         public bool? IsSpot
         {
             get
@@ -223,6 +240,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> The time when the server farm expires. Valid only if it is a spot server farm. </summary>
+        [WirePath("properties.spotExpirationTime")]
         public DateTimeOffset? SpotExpirationOn
         {
             get
@@ -240,6 +258,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> The time when the server farm free offer expires. </summary>
+        [WirePath("properties.freeOfferExpirationTime")]
         public DateTimeOffset? FreeOfferExpirationOn
         {
             get
@@ -257,6 +276,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Resource group of the App Service plan. </summary>
+        [WirePath("properties.resourceGroup")]
         public string ResourceGroup
         {
             get
@@ -266,6 +286,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> If Linux app service plan &lt;code&gt;true&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt; otherwise. </summary>
+        [WirePath("properties.reserved")]
         public bool? Reserved
         {
             get
@@ -283,6 +304,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Obsolete: If Hyper-V container app service plan &lt;code&gt;true&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt; otherwise. </summary>
+        [WirePath("properties.isXenon")]
         public bool? IsXenon
         {
             get
@@ -300,6 +322,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> If Hyper-V container app service plan &lt;code&gt;true&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt; otherwise. </summary>
+        [WirePath("properties.hyperV")]
         public bool? HyperV
         {
             get
@@ -317,6 +340,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Scaling worker count. </summary>
+        [WirePath("properties.targetWorkerCount")]
         public int? TargetWorkerCount
         {
             get
@@ -334,6 +358,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Scaling worker size ID. </summary>
+        [WirePath("properties.targetWorkerSizeId")]
         public int? TargetWorkerSizeId
         {
             get
@@ -351,6 +376,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Provisioning state of the App Service Plan. </summary>
+        [WirePath("properties.provisioningState")]
         public ProvisioningState? ProvisioningState
         {
             get
@@ -360,6 +386,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Specification for the Kubernetes Environment to use for the App Service plan. </summary>
+        [WirePath("properties.kubeEnvironmentProfile")]
         public KubeEnvironmentProfile KubeEnvironmentProfile
         {
             get
@@ -380,6 +407,7 @@ namespace Microsoft.Web
         /// If &lt;code&gt;true&lt;/code&gt;, this App Service Plan will perform availability zone balancing.
         /// If &lt;code&gt;false&lt;/code&gt;, this App Service Plan will not perform availability zone balancing.
         /// </summary>
+        [WirePath("properties.zoneRedundant")]
         public bool? ZoneRedundant
         {
             get
@@ -400,6 +428,7 @@ namespace Microsoft.Web
         /// If &lt;code&gt;true&lt;/code&gt;, this App Service Plan will attempt to scale asynchronously if there are insufficient workers to scale synchronously.
         /// If &lt;code&gt;false&lt;/code&gt;, this App Service Plan will only attempt sync scaling.
         /// </summary>
+        [WirePath("properties.asyncScalingEnabled")]
         public bool? AsyncScalingEnabled
         {
             get
@@ -417,6 +446,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Identity to use by platform for various features and integrations using managed identity. </summary>
+        [WirePath("properties.planDefaultIdentity")]
         public DefaultIdentity PlanDefaultIdentity
         {
             get
@@ -434,6 +464,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Whether this server farm is in custom mode. </summary>
+        [WirePath("properties.isCustomMode")]
         public bool? IsCustomMode
         {
             get
@@ -451,6 +482,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Registry adapters associated with this App Service plan. </summary>
+        [WirePath("properties.registryAdapters")]
         public IList<RegistryAdapter> RegistryAdapters
         {
             get
@@ -464,6 +496,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Install scripts associated with this App Service plan. </summary>
+        [WirePath("properties.installScripts")]
         public IList<InstallScript> InstallScripts
         {
             get
@@ -477,6 +510,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Storage mounts associated with this App Service plan. </summary>
+        [WirePath("properties.storageMounts")]
         public IList<StorageMount> StorageMounts
         {
             get
@@ -493,6 +527,7 @@ namespace Microsoft.Web
         /// If &lt;code&gt;true&lt;/code&gt;, RDP access is enabled for this App Service plan. Only applicable for IsCustomMode ASPs.
         /// If &lt;code&gt;false&lt;/code&gt;, RDP access is disabled.
         /// </summary>
+        [WirePath("properties.rdpEnabled")]
         public bool? RdpEnabled
         {
             get
@@ -510,6 +545,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Azure Resource Manager ID of the Virtual network and subnet to be joined by Regional VNET Integration. This must be of the form /subscriptions/{subscriptionName}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{vnetName}/subnets/{subnetName}. </summary>
+        [WirePath("properties.network.virtualNetworkSubnetId")]
         public string VirtualNetworkSubnetId
         {
             get

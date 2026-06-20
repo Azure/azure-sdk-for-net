@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> StaticSiteCustomDomainRequestPropertiesARMResource resource specific properties. </summary>
     internal partial class StaticSiteCustomDomainRequestPropertiesARMResourceProperties
@@ -31,6 +32,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Validation method for adding a custom domain. </summary>
+        [WirePath("validationMethod")]
         public string ValidationMethod { get; set; }
     }
 }

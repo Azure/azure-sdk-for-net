@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The VolumeMount. </summary>
     public partial class VolumeMount
@@ -46,15 +46,19 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Sub path in the volume where volume is mounted from. </summary>
+        [WirePath("volumeSubPath")]
         public string VolumeSubPath { get; set; }
 
         /// <summary> Target path on the container where volume is mounted on. </summary>
+        [WirePath("containerMountPath")]
         public string ContainerMountPath { get; set; }
 
         /// <summary> Config Data to be mounted on the volume. </summary>
+        [WirePath("data")]
         public string Data { get; set; }
 
         /// <summary> Boolean to specify if the mount is read only on the container. </summary>
+        [WirePath("readOnly")]
         public bool? ReadOnly { get; set; }
     }
 }

@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary>
     /// The IIS handler mappings used to define which handler processes HTTP requests with certain extension.
@@ -38,12 +39,15 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Requests with this extension will be handled using the specified FastCGI application. </summary>
+        [WirePath("extension")]
         public string Extension { get; set; }
 
         /// <summary> The absolute path to the FastCGI application. </summary>
+        [WirePath("scriptProcessor")]
         public string ScriptProcessor { get; set; }
 
         /// <summary> Command-line arguments to be passed to the script processor. </summary>
+        [WirePath("arguments")]
         public string Arguments { get; set; }
     }
 }

@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Description of a restore request. </summary>
     public partial class RestoreRequest : ProxyOnlyResource
@@ -31,9 +32,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> RestoreRequest resource specific properties. </summary>
+        [WirePath("properties")]
         internal RestoreRequestProperties Properties { get; set; }
 
         /// <summary> SAS URL to the container. </summary>
+        [WirePath("properties.storageAccountUrl")]
         public string StorageAccountUri
         {
             get
@@ -51,6 +54,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Name of a blob which contains the backup. </summary>
+        [WirePath("properties.blobName")]
         public string BlobName
         {
             get
@@ -68,6 +72,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if the restore operation can overwrite target app; otherwise, &lt;code&gt;false&lt;/code&gt;. &lt;code&gt;true&lt;/code&gt; is needed if trying to restore over an existing app. </summary>
+        [WirePath("properties.overwrite")]
         public bool? Overwrite
         {
             get
@@ -88,6 +93,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Name of an app. </summary>
+        [WirePath("properties.siteName")]
         public string SiteName
         {
             get
@@ -105,6 +111,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Collection of databases which should be restored. This list has to match the list of databases included in the backup. </summary>
+        [WirePath("properties.databases")]
         public IList<DatabaseBackupSetting> Databases
         {
             get
@@ -118,6 +125,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Changes a logic when restoring an app with custom domains. &lt;code&gt;true&lt;/code&gt; to remove custom domains automatically. If &lt;code&gt;false&lt;/code&gt;, custom domains are added to \nthe app's object when it is being restored, but that might fail due to conflicts during the operation. </summary>
+        [WirePath("properties.ignoreConflictingHostNames")]
         public bool? IgnoreConflictingHostNames
         {
             get
@@ -135,6 +143,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Ignore the databases and only restore the site content. </summary>
+        [WirePath("properties.ignoreDatabases")]
         public bool? IgnoreDatabases
         {
             get
@@ -152,6 +161,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Specify app service plan that will own restored site. </summary>
+        [WirePath("properties.appServicePlan")]
         public string AppServicePlan
         {
             get
@@ -169,6 +179,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Operation type. </summary>
+        [WirePath("properties.operationType")]
         public BackupRestoreOperationType? OperationType
         {
             get
@@ -186,6 +197,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if SiteConfig.ConnectionStrings should be set in new app; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("properties.adjustConnectionStrings")]
         public bool? AdjustConnectionStrings
         {
             get
@@ -203,6 +215,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> App Service Environment name, if needed (only when restoring an app to an App Service Environment). </summary>
+        [WirePath("properties.hostingEnvironment")]
         public string HostingEnvironment
         {
             get

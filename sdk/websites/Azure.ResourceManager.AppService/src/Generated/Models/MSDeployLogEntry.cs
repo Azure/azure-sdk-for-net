@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> MSDeploy log entry. </summary>
     public partial class MSDeployLogEntry
@@ -35,12 +36,15 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Timestamp of log entry. </summary>
+        [WirePath("time")]
         public DateTimeOffset? Time { get; }
 
         /// <summary> Log entry type. </summary>
+        [WirePath("type")]
         public MSDeployLogEntryType? Type { get; }
 
         /// <summary> Log entry message. </summary>
+        [WirePath("message")]
         public string Message { get; }
     }
 }

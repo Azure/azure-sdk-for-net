@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Snapshot resource specific properties. </summary>
     internal partial class SnapshotProperties
@@ -31,6 +32,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The time the snapshot was taken. </summary>
+        [WirePath("time")]
         public string Time { get; }
     }
 }

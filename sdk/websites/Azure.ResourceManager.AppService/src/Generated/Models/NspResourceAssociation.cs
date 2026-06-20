@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Network Security Perimeter Resource Association. </summary>
     public partial class NspResourceAssociation
@@ -33,9 +34,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Network Security Perimeter Resource Association Name. </summary>
+        [WirePath("name")]
         public string Name { get; }
 
         /// <summary> Network Security Perimeter Association Access Mode (Learning/Enforced). </summary>
+        [WirePath("accessMode")]
         public string AccessMode { get; }
     }
 }

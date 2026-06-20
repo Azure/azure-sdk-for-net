@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> A class that describes a test that failed during NSG and UDR validation. </summary>
     public partial class VnetValidationTestFailure : ProxyOnlyResource
@@ -31,9 +32,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> VnetValidationTestFailure resource specific properties. </summary>
+        [WirePath("properties")]
         internal VnetValidationTestFailureProperties Properties { get; }
 
         /// <summary> The name of the test that failed. </summary>
+        [WirePath("properties.testName")]
         public string TestName
         {
             get
@@ -43,6 +46,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The details of what caused the failure, e.g. the blocking rule name, etc. </summary>
+        [WirePath("properties.details")]
         public string Details
         {
             get

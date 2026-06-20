@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
-using Microsoft.Web.Models;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary> Source control configuration for an app. </summary>
     public partial class SiteSourceControlData : ResourceData
@@ -40,12 +40,15 @@ namespace Microsoft.Web
         }
 
         /// <summary> SiteSourceControl resource specific properties. </summary>
+        [WirePath("properties")]
         internal SiteSourceControlProperties Properties { get; set; }
 
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
 
         /// <summary> Repository or source control URL. </summary>
+        [WirePath("properties.repoUrl")]
         public string RepoUri
         {
             get
@@ -63,6 +66,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Name of branch to use for deployment. </summary>
+        [WirePath("properties.branch")]
         public string Branch
         {
             get
@@ -80,6 +84,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; to limit to manual integration; &lt;code&gt;false&lt;/code&gt; to enable continuous integration (which configures webhooks into online repos like GitHub). </summary>
+        [WirePath("properties.isManualIntegration")]
         public bool? IsManualIntegration
         {
             get
@@ -97,6 +102,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if this is deployed via GitHub action. </summary>
+        [WirePath("properties.isGitHubAction")]
         public bool? IsGitHubAction
         {
             get
@@ -114,6 +120,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; to enable deployment rollback; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("properties.deploymentRollbackEnabled")]
         public bool? DeploymentRollbackEnabled
         {
             get
@@ -131,6 +138,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; for a Mercurial repository; &lt;code&gt;false&lt;/code&gt; for a Git repository. </summary>
+        [WirePath("properties.isMercurial")]
         public bool? IsMercurial
         {
             get
@@ -148,6 +156,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> If GitHub Action is selected, than the associated configuration. </summary>
+        [WirePath("properties.gitHubActionConfiguration")]
         public GitHubActionConfiguration GitHubActionConfiguration
         {
             get

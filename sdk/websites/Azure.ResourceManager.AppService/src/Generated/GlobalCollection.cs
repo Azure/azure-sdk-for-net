@@ -17,7 +17,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A class representing a collection of <see cref="GlobalResource"/> and their operations.
@@ -42,9 +42,9 @@ namespace Microsoft.Web
         internal GlobalCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(GlobalResource.ResourceType, out string globalApiVersion);
-            _globalClientDiagnostics = new ClientDiagnostics("Microsoft.Web", GlobalResource.ResourceType.Namespace, Diagnostics);
+            _globalClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", GlobalResource.ResourceType.Namespace, Diagnostics);
             _globalRestClient = new Global(_globalClientDiagnostics, Pipeline, Endpoint, globalApiVersion ?? "2026-03-15");
-            _deletedWebAppsClientDiagnostics = new ClientDiagnostics("Microsoft.Web", GlobalResource.ResourceType.Namespace, Diagnostics);
+            _deletedWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", GlobalResource.ResourceType.Namespace, Diagnostics);
             _deletedWebAppsRestClient = new DeletedWebApps(_deletedWebAppsClientDiagnostics, Pipeline, Endpoint, globalApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }

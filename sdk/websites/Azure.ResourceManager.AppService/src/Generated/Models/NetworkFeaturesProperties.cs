@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> NetworkFeatures resource specific properties. </summary>
     internal partial class NetworkFeaturesProperties
@@ -40,15 +40,19 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The Virtual Network name. </summary>
+        [WirePath("virtualNetworkName")]
         public string VirtualNetworkName { get; }
 
         /// <summary> The Virtual Network summary view. </summary>
+        [WirePath("virtualNetworkConnection")]
         public VnetInfo VirtualNetworkConnection { get; }
 
         /// <summary> The Hybrid Connections summary view. </summary>
+        [WirePath("hybridConnections")]
         public IReadOnlyList<RelayServiceConnectionEntityData> HybridConnections { get; } = new ChangeTrackingList<RelayServiceConnectionEntityData>();
 
         /// <summary> The Hybrid Connection V2 (Service Bus) view. </summary>
+        [WirePath("hybridConnectionsV2")]
         public IReadOnlyList<HybridConnectionData> HybridConnectionsV2 { get; } = new ChangeTrackingList<HybridConnectionData>();
     }
 }

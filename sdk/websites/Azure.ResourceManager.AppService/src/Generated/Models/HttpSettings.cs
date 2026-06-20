@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The configuration settings of the HTTP requests for authentication and authorization requests made against App Service Authentication/Authorization. </summary>
     public partial class HttpSettings
@@ -35,15 +36,19 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> &lt;code&gt;false&lt;/code&gt; if the authentication/authorization responses not having the HTTPS scheme are permissible; otherwise, &lt;code&gt;true&lt;/code&gt;. </summary>
+        [WirePath("requireHttps")]
         public bool? RequireHttps { get; set; }
 
         /// <summary> The configuration settings of the paths HTTP requests. </summary>
+        [WirePath("routes")]
         internal HttpSettingsRoutes Routes { get; set; }
 
         /// <summary> The configuration settings of a forward proxy used to make the requests. </summary>
+        [WirePath("forwardProxy")]
         public ForwardProxy ForwardProxy { get; set; }
 
         /// <summary> The prefix that should precede all the authentication/authorization paths. </summary>
+        [WirePath("routes.apiPrefix")]
         public string RoutesApiPrefix
         {
             get

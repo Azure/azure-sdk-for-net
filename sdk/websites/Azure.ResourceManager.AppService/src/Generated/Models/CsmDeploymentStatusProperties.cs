@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> CsmDeploymentStatus resource specific properties. </summary>
     internal partial class CsmDeploymentStatusProperties
@@ -46,24 +46,31 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Deployment operation id. </summary>
+        [WirePath("deploymentId")]
         public string DeploymentId { get; }
 
         /// <summary> Deployment build status. </summary>
+        [WirePath("status")]
         public DeploymentBuildStatus? Status { get; }
 
         /// <summary> Number of site instances currently being provisioned. </summary>
+        [WirePath("numberOfInstancesInProgress")]
         public int? NumberOfInstancesInProgress { get; }
 
         /// <summary> Number of site instances provisioned successfully. </summary>
+        [WirePath("numberOfInstancesSuccessful")]
         public int? NumberOfInstancesSuccessful { get; }
 
         /// <summary> Number of site instances failed to provision. </summary>
+        [WirePath("numberOfInstancesFailed")]
         public int? NumberOfInstancesFailed { get; }
 
         /// <summary> List of URLs pointing to logs for instances which failed to provision. </summary>
+        [WirePath("failedInstancesLogs")]
         public IList<string> FailedInstancesLogs { get; } = new ChangeTrackingList<string>();
 
         /// <summary> List of errors. </summary>
+        [WirePath("errors")]
         public IList<ErrorEntity> Errors { get; } = new ChangeTrackingList<ErrorEntity>();
     }
 }

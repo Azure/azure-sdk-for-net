@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Identifier resource specific properties. </summary>
     internal partial class IdentifierProperties
@@ -31,6 +32,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> String representation of the identity. </summary>
+        [WirePath("id")]
         public string Value { get; set; }
     }
 }

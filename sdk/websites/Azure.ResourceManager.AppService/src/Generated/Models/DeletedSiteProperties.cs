@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> DeletedSite resource specific properties. </summary>
     internal partial class DeletedSiteProperties
@@ -45,27 +46,35 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Numeric id for the deleted site. </summary>
+        [WirePath("deletedSiteId")]
         public int? DeletedSiteId { get; }
 
         /// <summary> Time in UTC when the app was deleted. </summary>
+        [WirePath("deletedTimestamp")]
         public string DeletedTimestamp { get; }
 
         /// <summary> Subscription containing the deleted site. </summary>
+        [WirePath("subscription")]
         public string Subscription { get; }
 
         /// <summary> ResourceGroup that contained the deleted site. </summary>
+        [WirePath("resourceGroup")]
         public string ResourceGroup { get; }
 
         /// <summary> Name of the deleted site. </summary>
+        [WirePath("deletedSiteName")]
         public string DeletedSiteName { get; }
 
         /// <summary> Slot of the deleted site. </summary>
+        [WirePath("slot")]
         public string Slot { get; }
 
         /// <summary> Kind of site that was deleted. </summary>
+        [WirePath("kind")]
         public string Kind { get; }
 
         /// <summary> Geo Region of the deleted site. </summary>
+        [WirePath("geoRegionName")]
         public string GeoRegionName { get; }
     }
 }

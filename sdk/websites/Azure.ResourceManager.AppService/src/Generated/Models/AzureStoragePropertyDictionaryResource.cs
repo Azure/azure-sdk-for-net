@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> AzureStorageInfo dictionary resource. </summary>
     public partial class AzureStoragePropertyDictionaryResource : ProxyOnlyResource
@@ -33,6 +33,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Azure storage accounts. </summary>
+        [WirePath("properties")]
         public IDictionary<string, AzureStorageInfoValue> Properties { get; }
     }
 }

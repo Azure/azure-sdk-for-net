@@ -8,9 +8,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The workflow run action properties. </summary>
     internal partial class WorkflowRunActionProperties
@@ -54,15 +54,19 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Gets the start time. </summary>
+        [WirePath("startTime")]
         public DateTimeOffset? StartOn { get; }
 
         /// <summary> Gets the end time. </summary>
+        [WirePath("endTime")]
         public DateTimeOffset? EndOn { get; }
 
         /// <summary> Gets the status. </summary>
+        [WirePath("status")]
         public WorkflowStatus? Status { get; }
 
         /// <summary> Gets the code. </summary>
+        [WirePath("code")]
         public string Code { get; }
 
         /// <summary>
@@ -91,18 +95,23 @@ namespace Microsoft.Web.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("error")]
         public BinaryData Error { get; }
 
         /// <summary> Gets the tracking id. </summary>
+        [WirePath("trackingId")]
         public string TrackingId { get; }
 
         /// <summary> The correlation properties. </summary>
+        [WirePath("correlation")]
         public RunActionCorrelation Correlation { get; }
 
         /// <summary> Gets the link to inputs. </summary>
+        [WirePath("inputsLink")]
         public ContentLink InputsLink { get; }
 
         /// <summary> Gets the link to outputs. </summary>
+        [WirePath("outputsLink")]
         public ContentLink OutputsLink { get; }
 
         /// <summary>
@@ -131,9 +140,11 @@ namespace Microsoft.Web.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("trackedProperties")]
         public BinaryData TrackedProperties { get; }
 
         /// <summary> Gets the retry histories. </summary>
+        [WirePath("retryHistory")]
         public IList<RetryHistory> RetryHistory { get; } = new ChangeTrackingList<RetryHistory>();
     }
 }

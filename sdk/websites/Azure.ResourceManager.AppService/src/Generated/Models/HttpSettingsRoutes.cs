@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The configuration settings of the paths HTTP requests. </summary>
     internal partial class HttpSettingsRoutes
@@ -31,6 +32,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The prefix that should precede all the authentication/authorization paths. </summary>
+        [WirePath("apiPrefix")]
         public string ApiPrefix { get; set; }
     }
 }

@@ -7,8 +7,10 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Represents the workflow health. </summary>
     public partial class WorkflowHealth
@@ -27,7 +29,7 @@ namespace Microsoft.Web.Models
         /// <param name="state"> Gets or sets the workflow health state. </param>
         /// <param name="error"> Gets or sets the workflow error. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WorkflowHealth(WorkflowHealthState state, ErrorEntity error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WorkflowHealth(WorkflowHealthState state, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             State = state;
             Error = error;
@@ -35,9 +37,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Gets or sets the workflow health state. </summary>
+        [WirePath("state")]
         public WorkflowHealthState State { get; }
 
         /// <summary> Gets or sets the workflow error. </summary>
-        public ErrorEntity Error { get; }
+        [WirePath("error")]
+        public ResponseError Error { get; }
     }
 }

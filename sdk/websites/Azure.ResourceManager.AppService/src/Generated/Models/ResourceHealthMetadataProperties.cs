@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> ResourceHealthMetadata resource specific properties. </summary>
     internal partial class ResourceHealthMetadataProperties
@@ -33,9 +34,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The category that the resource matches in the RHC Policy File. </summary>
+        [WirePath("category")]
         public string Category { get; }
 
         /// <summary> Is there a health signal for the resource. </summary>
+        [WirePath("signalAvailability")]
         public bool? SignalAvailability { get; }
     }
 }

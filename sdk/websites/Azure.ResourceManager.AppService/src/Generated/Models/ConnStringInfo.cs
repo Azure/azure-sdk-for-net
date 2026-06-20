@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Database connection string information. </summary>
     public partial class ConnStringInfo
@@ -35,12 +36,15 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Name of connection string. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
 
         /// <summary> Connection string value. </summary>
+        [WirePath("connectionString")]
         public string ConnectionString { get; set; }
 
         /// <summary> Type of database. </summary>
+        [WirePath("type")]
         public ConnectionStringType? Type { get; set; }
     }
 }

@@ -9,7 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary></summary>
     public partial class RequestHistoryResource : IJsonModel<RequestHistoryData>
@@ -27,11 +27,11 @@ namespace Microsoft.Web
         RequestHistoryData IJsonModel<RequestHistoryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RequestHistoryData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RequestHistoryData>(Data, options, MicrosoftWebContext.Default);
+        BinaryData IPersistableModel<RequestHistoryData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RequestHistoryData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RequestHistoryData IPersistableModel<RequestHistoryData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RequestHistoryData>(data, options, MicrosoftWebContext.Default);
+        RequestHistoryData IPersistableModel<RequestHistoryData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RequestHistoryData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<RequestHistoryData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);

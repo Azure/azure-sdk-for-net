@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
-using Microsoft.Web.Models;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary> Full view of network features for an app (presently VNET integration and Hybrid Connections). </summary>
     public partial class NetworkFeaturesData : ResourceData
@@ -40,12 +40,15 @@ namespace Microsoft.Web
         }
 
         /// <summary> NetworkFeatures resource specific properties. </summary>
+        [WirePath("properties")]
         internal NetworkFeaturesProperties Properties { get; }
 
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; }
 
         /// <summary> The Virtual Network name. </summary>
+        [WirePath("properties.virtualNetworkName")]
         public string VirtualNetworkName
         {
             get
@@ -55,6 +58,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> The Virtual Network summary view. </summary>
+        [WirePath("properties.virtualNetworkConnection")]
         public VnetInfo VirtualNetworkConnection
         {
             get
@@ -64,6 +68,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> The Hybrid Connections summary view. </summary>
+        [WirePath("properties.hybridConnections")]
         public IReadOnlyList<RelayServiceConnectionEntityData> HybridConnections
         {
             get
@@ -73,6 +78,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> The Hybrid Connection V2 (Service Bus) view. </summary>
+        [WirePath("properties.hybridConnectionsV2")]
         public IReadOnlyList<HybridConnectionData> HybridConnectionsV2
         {
             get

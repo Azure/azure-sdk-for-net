@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Request entity for previewing the Static Site workflow. </summary>
     public partial class StaticSitesWorkflowPreviewRequest : ProxyOnlyResource
@@ -31,9 +32,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> StaticSitesWorkflowPreviewRequest resource specific properties. </summary>
+        [WirePath("properties")]
         internal StaticSitesWorkflowPreviewRequestProperties Properties { get; set; }
 
         /// <summary> URL for the repository of the static site. </summary>
+        [WirePath("properties.repositoryUrl")]
         public string RepositoryUri
         {
             get
@@ -51,6 +54,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The target branch in the repository. </summary>
+        [WirePath("properties.branch")]
         public string Branch
         {
             get
@@ -68,6 +72,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Build properties to configure on the repository. </summary>
+        [WirePath("properties.buildProperties")]
         public StaticSiteBuildProperties BuildProperties
         {
             get

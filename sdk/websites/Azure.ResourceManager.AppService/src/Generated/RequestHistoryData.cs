@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
-using Microsoft.Web.Models;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary> The request history. </summary>
     public partial class RequestHistoryData : TrackedResourceData
@@ -41,6 +41,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> The request history properties. </summary>
+        [WirePath("properties")]
         public RequestHistoryProperties Properties { get; }
     }
 }

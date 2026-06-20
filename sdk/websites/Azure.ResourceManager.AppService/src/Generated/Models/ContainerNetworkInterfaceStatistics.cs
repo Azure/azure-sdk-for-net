@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The ContainerNetworkInterfaceStatistics. </summary>
     public partial class ContainerNetworkInterfaceStatistics
@@ -45,27 +46,35 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Gets the RxBytes. </summary>
+        [WirePath("rxBytes")]
         public long? RxBytes { get; }
 
         /// <summary> Gets the RxPackets. </summary>
+        [WirePath("rxPackets")]
         public long? RxPackets { get; }
 
         /// <summary> Gets the RxErrors. </summary>
+        [WirePath("rxErrors")]
         public long? RxErrors { get; }
 
         /// <summary> Gets the RxDropped. </summary>
+        [WirePath("rxDropped")]
         public long? RxDropped { get; }
 
         /// <summary> Gets the TxBytes. </summary>
+        [WirePath("txBytes")]
         public long? TxBytes { get; }
 
         /// <summary> Gets the TxPackets. </summary>
+        [WirePath("txPackets")]
         public long? TxPackets { get; }
 
         /// <summary> Gets the TxErrors. </summary>
+        [WirePath("txErrors")]
         public long? TxErrors { get; }
 
         /// <summary> Gets the TxDropped. </summary>
+        [WirePath("txDropped")]
         public long? TxDropped { get; }
     }
 }

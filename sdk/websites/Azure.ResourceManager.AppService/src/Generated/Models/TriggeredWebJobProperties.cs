@@ -8,9 +8,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> TriggeredWebJob resource specific properties. </summary>
     internal partial class TriggeredWebJobProperties
@@ -56,36 +56,47 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Latest job run information. </summary>
+        [WirePath("latest_run")]
         public TriggeredJobRun LatestRun { get; }
 
         /// <summary> History URL. </summary>
+        [WirePath("history_url")]
         public string HistoryUri { get; }
 
         /// <summary> Scheduler Logs URL. </summary>
+        [WirePath("scheduler_logs_url")]
         public string SchedulerLogsUri { get; }
 
         /// <summary> Run command. </summary>
+        [WirePath("run_command")]
         public string RunCommand { get; }
 
         /// <summary> Job URL. </summary>
+        [WirePath("url")]
         public string Uri { get; }
 
         /// <summary> Extra Info URL. </summary>
+        [WirePath("extra_info_url")]
         public string ExtraInfoUri { get; }
 
         /// <summary> Job type. </summary>
+        [WirePath("web_job_type")]
         public WebJobType? WebJobType { get; }
 
         /// <summary> Error information. </summary>
+        [WirePath("error")]
         public string Error { get; }
 
         /// <summary> Using SDK?. </summary>
+        [WirePath("using_sdk")]
         public bool? UsingSdk { get; }
 
         /// <summary> Property to allow or block all public traffic. Allowed Values: 'Enabled', 'Disabled' or an empty string. </summary>
+        [WirePath("publicNetworkAccess")]
         public string PublicNetworkAccess { get; }
 
         /// <summary> Checks if Customer provided storage account is required. </summary>
+        [WirePath("storageAccountRequired")]
         public bool? StorageAccountRequired { get; }
 
         /// <summary>
@@ -114,6 +125,7 @@ namespace Microsoft.Web.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("settings")]
         public IDictionary<string, BinaryData> Settings { get; } = new ChangeTrackingDictionary<string, BinaryData>();
     }
 }

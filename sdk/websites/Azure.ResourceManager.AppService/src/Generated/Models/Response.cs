@@ -8,8 +8,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> A response. </summary>
     public partial class Response
@@ -61,12 +62,15 @@ namespace Microsoft.Web.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("headers")]
         public BinaryData Headers { get; }
 
         /// <summary> The status code of the response. </summary>
+        [WirePath("statusCode")]
         public int? StatusCode { get; }
 
         /// <summary> Details on the location of the body content. </summary>
+        [WirePath("bodyLink")]
         public ContentLink BodyLink { get; }
     }
 }

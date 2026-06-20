@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Object to hold install script reference. </summary>
     public partial class InstallScriptSource
@@ -25,7 +26,7 @@ namespace Microsoft.Web.Models
         /// <param name="sourceUri"> Install script source URI where the install script file will be fetched from. </param>
         /// <param name="type"> Type of the install script. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InstallScriptSource(string sourceUri, InstallScriptType? @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InstallScriptSource(Uri sourceUri, InstallScriptType? @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SourceUri = sourceUri;
             Type = @type;
@@ -33,9 +34,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Install script source URI where the install script file will be fetched from. </summary>
-        public string SourceUri { get; set; }
+        [WirePath("sourceUri")]
+        public Uri SourceUri { get; set; }
 
         /// <summary> Type of the install script. </summary>
+        [WirePath("type")]
         public InstallScriptType? Type { get; set; }
     }
 }

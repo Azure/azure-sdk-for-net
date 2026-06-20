@@ -9,7 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary></summary>
     public partial class StaticSiteARMResource : IJsonModel<StaticSiteARMResourceData>
@@ -27,11 +27,11 @@ namespace Microsoft.Web
         StaticSiteARMResourceData IJsonModel<StaticSiteARMResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<StaticSiteARMResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<StaticSiteARMResourceData>(Data, options, MicrosoftWebContext.Default);
+        BinaryData IPersistableModel<StaticSiteARMResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<StaticSiteARMResourceData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        StaticSiteARMResourceData IPersistableModel<StaticSiteARMResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StaticSiteARMResourceData>(data, options, MicrosoftWebContext.Default);
+        StaticSiteARMResourceData IPersistableModel<StaticSiteARMResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StaticSiteARMResourceData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<StaticSiteARMResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);

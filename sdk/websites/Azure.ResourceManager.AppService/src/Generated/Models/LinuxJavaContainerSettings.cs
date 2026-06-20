@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Linux Java Container settings. </summary>
     public partial class LinuxJavaContainerSettings
@@ -45,27 +46,35 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Java 11 version (runtime only). </summary>
+        [WirePath("java11Runtime")]
         public string Java11Runtime { get; }
 
         /// <summary> Java 8 version (runtime only). </summary>
+        [WirePath("java8Runtime")]
         public string Java8Runtime { get; }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if the stack is in preview; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("isPreview")]
         public bool? IsPreview { get; }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if the stack is deprecated; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("isDeprecated")]
         public bool? IsDeprecated { get; }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if the stack should be hidden; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("isHidden")]
         public bool? IsHidden { get; }
 
         /// <summary> End-of-life date for the minor version. </summary>
+        [WirePath("endOfLifeDate")]
         public DateTimeOffset? EndOfLifeOn { get; }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if the stack version is auto-updated; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("isAutoUpdate")]
         public bool? IsAutoUpdate { get; }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if the minor version is early-access; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("isEarlyAccess")]
         public bool? IsEarlyAccess { get; }
     }
 }

@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The configuration settings of the GitHub provider. </summary>
     public partial class GitHub
@@ -35,15 +36,19 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> &lt;code&gt;false&lt;/code&gt; if the GitHub provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;. </summary>
+        [WirePath("enabled")]
         public bool? Enabled { get; set; }
 
         /// <summary> The configuration settings of the app registration for the GitHub provider. </summary>
+        [WirePath("registration")]
         public ClientRegistration Registration { get; set; }
 
         /// <summary> The configuration settings of the login flow. </summary>
+        [WirePath("login")]
         internal LoginScopes Login { get; set; }
 
         /// <summary> A list of the scopes that should be requested while authenticating. </summary>
+        [WirePath("login.scopes")]
         public IList<string> LoginScopes
         {
             get

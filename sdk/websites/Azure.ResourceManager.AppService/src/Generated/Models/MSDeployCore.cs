@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> MSDeploy ARM PUT core information. </summary>
     public partial class MSDeployCore
@@ -40,7 +40,7 @@ namespace Microsoft.Web.Models
         /// Setting is &lt;code&gt;false&lt;/code&gt; by default.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MSDeployCore(string packageUri, string connectionString, string dbType, string setParametersXmlFileUri, IDictionary<string, string> setParameters, bool? skipAppData, bool? appOffline, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MSDeployCore(Uri packageUri, string connectionString, string dbType, Uri setParametersXmlFileUri, IDictionary<string, string> setParameters, bool? skipAppData, bool? appOffline, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PackageUri = packageUri;
             ConnectionString = connectionString;
@@ -53,18 +53,23 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Package URI. </summary>
-        public string PackageUri { get; set; }
+        [WirePath("packageUri")]
+        public Uri PackageUri { get; set; }
 
         /// <summary> SQL Connection String. </summary>
+        [WirePath("connectionString")]
         public string ConnectionString { get; set; }
 
         /// <summary> Database Type. </summary>
+        [WirePath("dbType")]
         public string DbType { get; set; }
 
         /// <summary> URI of MSDeploy Parameters file. Must not be set if SetParameters is used. </summary>
-        public string SetParametersXmlFileUri { get; set; }
+        [WirePath("setParametersXmlFileUri")]
+        public Uri SetParametersXmlFileUri { get; set; }
 
         /// <summary> MSDeploy Parameters. Must not be set if SetParametersXmlFileUri is used. </summary>
+        [WirePath("setParameters")]
         public IDictionary<string, string> SetParameters { get; } = new ChangeTrackingDictionary<string, string>();
 
         /// <summary>
@@ -73,12 +78,14 @@ namespace Microsoft.Web.Models
         /// will not be deleted, and any App_Data directory in the source will be ignored.
         /// Setting is &lt;code&gt;false&lt;/code&gt; by default.
         /// </summary>
+        [WirePath("skipAppData")]
         public bool? SkipAppData { get; set; }
 
         /// <summary>
         /// Sets the AppOffline rule while the MSDeploy operation executes.
         /// Setting is &lt;code&gt;false&lt;/code&gt; by default.
         /// </summary>
+        [WirePath("appOffline")]
         public bool? AppOffline { get; set; }
     }
 }

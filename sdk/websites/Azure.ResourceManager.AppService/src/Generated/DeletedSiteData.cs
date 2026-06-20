@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
-using Microsoft.Web.Models;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary> A deleted app. </summary>
     public partial class DeletedSiteData : ResourceData
@@ -40,12 +40,15 @@ namespace Microsoft.Web
         }
 
         /// <summary> DeletedSite resource specific properties. </summary>
+        [WirePath("properties")]
         internal DeletedSiteProperties Properties { get; }
 
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; }
 
         /// <summary> Numeric id for the deleted site. </summary>
+        [WirePath("properties.deletedSiteId")]
         public int? DeletedSiteId
         {
             get
@@ -55,6 +58,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Time in UTC when the app was deleted. </summary>
+        [WirePath("properties.deletedTimestamp")]
         public string DeletedTimestamp
         {
             get
@@ -64,6 +68,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Subscription containing the deleted site. </summary>
+        [WirePath("properties.subscription")]
         public string Subscription
         {
             get
@@ -73,6 +78,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> ResourceGroup that contained the deleted site. </summary>
+        [WirePath("properties.resourceGroup")]
         public string ResourceGroup
         {
             get
@@ -82,6 +88,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Name of the deleted site. </summary>
+        [WirePath("properties.deletedSiteName")]
         public string DeletedSiteName
         {
             get
@@ -91,6 +98,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Slot of the deleted site. </summary>
+        [WirePath("properties.slot")]
         public string Slot
         {
             get
@@ -100,6 +108,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Kind of site that was deleted. </summary>
+        [WirePath("properties.kind")]
         public string Kind
         {
             get
@@ -109,6 +118,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Geo Region of the deleted site. </summary>
+        [WirePath("properties.geoRegionName")]
         public string GeoRegionName
         {
             get

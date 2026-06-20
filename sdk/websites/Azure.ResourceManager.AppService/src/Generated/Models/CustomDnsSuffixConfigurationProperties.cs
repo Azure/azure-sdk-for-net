@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> CustomDnsSuffixConfiguration resource specific properties. </summary>
     internal partial class CustomDnsSuffixConfigurationProperties
@@ -39,18 +40,23 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [WirePath("provisioningState")]
         public CustomDnsSuffixProvisioningState? ProvisioningState { get; }
 
         /// <summary> Gets the ProvisioningDetails. </summary>
+        [WirePath("provisioningDetails")]
         public string ProvisioningDetails { get; }
 
         /// <summary> The default custom domain suffix to use for all sites deployed on the ASE. </summary>
+        [WirePath("dnsSuffix")]
         public string DnsSuffix { get; set; }
 
         /// <summary> The URL referencing the Azure Key Vault certificate secret that should be used as the default SSL/TLS certificate for sites with the custom domain suffix. </summary>
+        [WirePath("certificateUrl")]
         public string CertificateUri { get; set; }
 
         /// <summary> The user-assigned identity to use for resolving the key vault certificate reference. If not specified, the system-assigned ASE identity will be used if available. </summary>
+        [WirePath("keyVaultReferenceIdentity")]
         public string KeyVaultReferenceIdentity { get; set; }
     }
 }

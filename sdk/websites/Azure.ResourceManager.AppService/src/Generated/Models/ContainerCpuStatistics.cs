@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The ContainerCpuStatistics. </summary>
     public partial class ContainerCpuStatistics
@@ -27,7 +28,7 @@ namespace Microsoft.Web.Models
         /// <param name="onlineCpuCount"></param>
         /// <param name="throttlingData"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerCpuStatistics(ContainerCpuUsage cpuUsage, long? systemCpuUsage, int? onlineCpuCount, ContainerThrottlingData throttlingData, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerCpuStatistics(ContainerCpuUsage cpuUsage, long? systemCpuUsage, int? onlineCpuCount, Models.ContainerThrottlingInfo throttlingData, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CpuUsage = cpuUsage;
             SystemCpuUsage = systemCpuUsage;
@@ -37,15 +38,19 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Gets the CpuUsage. </summary>
+        [WirePath("cpuUsage")]
         public ContainerCpuUsage CpuUsage { get; }
 
         /// <summary> Gets the SystemCpuUsage. </summary>
+        [WirePath("systemCpuUsage")]
         public long? SystemCpuUsage { get; }
 
         /// <summary> Gets the OnlineCpuCount. </summary>
+        [WirePath("onlineCpuCount")]
         public int? OnlineCpuCount { get; }
 
         /// <summary> Gets the ThrottlingData. </summary>
-        public ContainerThrottlingData ThrottlingData { get; }
+        [WirePath("throttlingData")]
+        public Models.ContainerThrottlingInfo ThrottlingData { get; }
     }
 }

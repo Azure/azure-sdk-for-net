@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> IP security restriction on an app. </summary>
     public partial class IpSecurityRestriction
@@ -75,33 +75,43 @@ namespace Microsoft.Web.Models
         /// CIDR notation such as ipv4/mask (leading bit match). For CIDR,
         /// SubnetMask property must not be specified.
         /// </summary>
+        [WirePath("ipAddress")]
         public string IpAddress { get; set; }
 
         /// <summary> Subnet mask for the range of IP addresses the restriction is valid for. </summary>
+        [WirePath("subnetMask")]
         public string SubnetMask { get; set; }
 
         /// <summary> Virtual network resource id. </summary>
+        [WirePath("vnetSubnetResourceId")]
         public string VnetSubnetResourceId { get; set; }
 
         /// <summary> (internal) Vnet traffic tag. </summary>
+        [WirePath("vnetTrafficTag")]
         public int? VnetTrafficTag { get; set; }
 
         /// <summary> (internal) Subnet traffic tag. </summary>
+        [WirePath("subnetTrafficTag")]
         public int? SubnetTrafficTag { get; set; }
 
         /// <summary> Allow or Deny access for this IP range. </summary>
+        [WirePath("action")]
         public string Action { get; set; }
 
         /// <summary> Defines what this IP filter will be used for. This is to support IP filtering on proxies. </summary>
+        [WirePath("tag")]
         public IpFilterTag? Tag { get; set; }
 
         /// <summary> Priority of IP restriction rule. </summary>
+        [WirePath("priority")]
         public int? Priority { get; set; }
 
         /// <summary> IP restriction rule name. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
 
         /// <summary> IP restriction rule description. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
 
         /// <summary>
@@ -117,6 +127,7 @@ namespace Microsoft.Web.Models
         /// X-Azure-FDID and X-FD-HealthProbe.
         /// The matching logic is exact match.
         /// </summary>
+        [WirePath("headers")]
         public IDictionary<string, IList<string>> Headers { get; }
     }
 }

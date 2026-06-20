@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Instructions for rendering the data. </summary>
     public partial class Rendering
@@ -35,12 +36,15 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Rendering Type. </summary>
+        [WirePath("type")]
         public RenderingType? Type { get; }
 
         /// <summary> Title of data. </summary>
+        [WirePath("title")]
         public string Title { get; }
 
         /// <summary> Description of the data that will help it be interpreted. </summary>
+        [WirePath("description")]
         public string Description { get; }
     }
 }

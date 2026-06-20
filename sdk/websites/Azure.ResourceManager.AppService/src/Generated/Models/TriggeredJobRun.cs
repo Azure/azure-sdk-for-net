@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Triggered Web Job Run Information. </summary>
     public partial class TriggeredJobRun
@@ -34,7 +35,7 @@ namespace Microsoft.Web.Models
         /// <param name="jobName"> Job name. </param>
         /// <param name="trigger"> Job trigger. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TriggeredJobRun(string webJobId, string webJobName, TriggeredWebJobStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, string duration, string outputUri, string errorUri, string uri, string jobName, string trigger, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TriggeredJobRun(string webJobId, string webJobName, TriggeredWebJobStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, TimeSpan? duration, Uri outputUri, Uri errorUri, Uri uri, string jobName, string trigger, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             WebJobId = webJobId;
             WebJobName = webJobName;
@@ -51,36 +52,47 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Job ID. </summary>
+        [WirePath("web_job_id")]
         public string WebJobId { get; }
 
         /// <summary> Job name. </summary>
+        [WirePath("web_job_name")]
         public string WebJobName { get; }
 
         /// <summary> Job status. </summary>
+        [WirePath("status")]
         public TriggeredWebJobStatus? Status { get; }
 
         /// <summary> Start time. </summary>
+        [WirePath("start_time")]
         public DateTimeOffset? StartOn { get; }
 
         /// <summary> End time. </summary>
+        [WirePath("end_time")]
         public DateTimeOffset? EndOn { get; }
 
         /// <summary> Job duration. </summary>
-        public string Duration { get; }
+        [WirePath("duration")]
+        public TimeSpan? Duration { get; }
 
         /// <summary> Output URL. </summary>
-        public string OutputUri { get; }
+        [WirePath("output_url")]
+        public Uri OutputUri { get; }
 
         /// <summary> Error URL. </summary>
-        public string ErrorUri { get; }
+        [WirePath("error_url")]
+        public Uri ErrorUri { get; }
 
         /// <summary> Job URL. </summary>
-        public string Uri { get; }
+        [WirePath("url")]
+        public Uri Uri { get; }
 
         /// <summary> Job name. </summary>
+        [WirePath("job_name")]
         public string JobName { get; }
 
         /// <summary> Job trigger. </summary>
+        [WirePath("trigger")]
         public string Trigger { get; }
     }
 }

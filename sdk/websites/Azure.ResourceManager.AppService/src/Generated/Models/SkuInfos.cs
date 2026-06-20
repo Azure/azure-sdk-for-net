@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Collection of SKU information. </summary>
     public partial class SkuInfos
@@ -35,9 +35,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Resource type that this SKU applies to. </summary>
+        [WirePath("resourceType")]
         public string ResourceType { get; }
 
         /// <summary> List of SKUs the subscription is able to use. </summary>
+        [WirePath("skus")]
         public IList<GlobalCsmSkuDescription> Skus { get; }
     }
 }

@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The ContainerInfo. </summary>
     public partial class ContainerInfo
@@ -45,27 +46,35 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Gets the CurrentTimeStamp. </summary>
+        [WirePath("currentTimeStamp")]
         public DateTimeOffset? CurrentTimeStamp { get; }
 
         /// <summary> Gets the PreviousTimeStamp. </summary>
+        [WirePath("previousTimeStamp")]
         public DateTimeOffset? PreviousTimeStamp { get; }
 
         /// <summary> Gets the CurrentCpuStats. </summary>
+        [WirePath("currentCpuStats")]
         public ContainerCpuStatistics CurrentCpuStats { get; }
 
         /// <summary> Gets the PreviousCpuStats. </summary>
+        [WirePath("previousCpuStats")]
         public ContainerCpuStatistics PreviousCpuStats { get; }
 
         /// <summary> Gets the MemoryStats. </summary>
+        [WirePath("memoryStats")]
         public ContainerMemoryStatistics MemoryStats { get; }
 
         /// <summary> Gets the Name. </summary>
+        [WirePath("name")]
         public string Name { get; }
 
         /// <summary> Gets the Id. </summary>
+        [WirePath("id")]
         public string Id { get; }
 
         /// <summary> Gets the Eth0. </summary>
+        [WirePath("eth0")]
         public ContainerNetworkInterfaceStatistics Eth0 { get; }
     }
 }

@@ -17,7 +17,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A class representing a collection of <see cref="KubeEnvironmentResource"/> and their operations.
@@ -40,7 +40,7 @@ namespace Microsoft.Web
         internal KubeEnvironmentCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(KubeEnvironmentResource.ResourceType, out string kubeEnvironmentApiVersion);
-            _kubeEnvironmentsClientDiagnostics = new ClientDiagnostics("Microsoft.Web", KubeEnvironmentResource.ResourceType.Namespace, Diagnostics);
+            _kubeEnvironmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", KubeEnvironmentResource.ResourceType.Namespace, Diagnostics);
             _kubeEnvironmentsRestClient = new KubeEnvironments(_kubeEnvironmentsClientDiagnostics, Pipeline, Endpoint, kubeEnvironmentApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
@@ -93,7 +93,7 @@ namespace Microsoft.Web
                 };
                 HttpMessage message = _kubeEnvironmentsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, KubeEnvironmentData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                WebArmOperation<KubeEnvironmentResource> operation = new WebArmOperation<KubeEnvironmentResource>(
+                AppServiceArmOperation<KubeEnvironmentResource> operation = new AppServiceArmOperation<KubeEnvironmentResource>(
                     new KubeEnvironmentResourceOperationSource(Client),
                     _kubeEnvironmentsClientDiagnostics,
                     Pipeline,
@@ -151,7 +151,7 @@ namespace Microsoft.Web
                 };
                 HttpMessage message = _kubeEnvironmentsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, KubeEnvironmentData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                WebArmOperation<KubeEnvironmentResource> operation = new WebArmOperation<KubeEnvironmentResource>(
+                AppServiceArmOperation<KubeEnvironmentResource> operation = new AppServiceArmOperation<KubeEnvironmentResource>(
                     new KubeEnvironmentResourceOperationSource(Client),
                     _kubeEnvironmentsClientDiagnostics,
                     Pipeline,

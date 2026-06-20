@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The configuration settings of the Azure Active Directory app registration. </summary>
     public partial class AzureActiveDirectoryRegistration
@@ -65,6 +66,7 @@ namespace Microsoft.Web.Models
         /// This URI is a case-sensitive identifier for the token issuer.
         /// More information on OpenID Connect Discovery: http://openid.net/specs/openid-connect-discovery-1_0.html
         /// </summary>
+        [WirePath("openIdIssuer")]
         public string OpenIdIssuer { get; set; }
 
         /// <summary>
@@ -73,27 +75,32 @@ namespace Microsoft.Web.Models
         /// other 3rd party OpenID Connect providers.
         /// More information on OpenID Connect: http://openid.net/specs/openid-connect-core-1_0.html
         /// </summary>
+        [WirePath("clientId")]
         public string ClientId { get; set; }
 
         /// <summary> The app setting name that contains the client secret of the relying party application. </summary>
+        [WirePath("clientSecretSettingName")]
         public string ClientSecretSettingName { get; set; }
 
         /// <summary>
         /// An alternative to the client secret, that is the thumbprint of a certificate used for signing purposes. This property acts as
         /// a replacement for the Client Secret. It is also optional.
         /// </summary>
+        [WirePath("clientSecretCertificateThumbprint")]
         public string ClientSecretCertificateThumbprint { get; set; }
 
         /// <summary>
         /// An alternative to the client secret thumbprint, that is the subject alternative name of a certificate used for signing purposes. This property acts as
         /// a replacement for the Client Secret Certificate Thumbprint. It is also optional.
         /// </summary>
+        [WirePath("clientSecretCertificateSubjectAlternativeName")]
         public string ClientSecretCertificateSubjectAlternativeName { get; set; }
 
         /// <summary>
         /// An alternative to the client secret thumbprint, that is the issuer of a certificate used for signing purposes. This property acts as
         /// a replacement for the Client Secret Certificate Thumbprint. It is also optional.
         /// </summary>
+        [WirePath("clientSecretCertificateIssuer")]
         public string ClientSecretCertificateIssuer { get; set; }
     }
 }

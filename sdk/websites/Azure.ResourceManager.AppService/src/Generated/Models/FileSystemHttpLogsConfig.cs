@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Http logs to file system configuration. </summary>
     public partial class FileSystemHttpLogsConfig
@@ -47,6 +48,7 @@ namespace Microsoft.Web.Models
         /// When reached old log files will be removed to make space for new ones.
         /// Value can range between 25 and 100.
         /// </summary>
+        [WirePath("retentionInMb")]
         public int? RetentionInMb { get; set; }
 
         /// <summary>
@@ -54,9 +56,11 @@ namespace Microsoft.Web.Models
         /// Remove files older than X days.
         /// 0 or lower means no retention.
         /// </summary>
+        [WirePath("retentionInDays")]
         public int? RetentionInDays { get; set; }
 
         /// <summary> True if configuration is enabled, false if it is disabled and null if configuration is not set. </summary>
+        [WirePath("enabled")]
         public bool? Enabled { get; set; }
     }
 }

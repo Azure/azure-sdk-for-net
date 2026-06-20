@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
-using Microsoft.Web.Models;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary> Container of a site. </summary>
     public partial class SiteContainerData : ResourceData
@@ -40,12 +40,15 @@ namespace Microsoft.Web
         }
 
         /// <summary> SiteContainer resource specific properties. </summary>
+        [WirePath("properties")]
         internal SiteContainerProperties Properties { get; set; }
 
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
 
         /// <summary> Image Name. </summary>
+        [WirePath("properties.image")]
         public string Image
         {
             get
@@ -63,6 +66,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Target Port. </summary>
+        [WirePath("properties.targetPort")]
         public string TargetPort
         {
             get
@@ -80,6 +84,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if the container is the main site container; &lt;code&gt;false&lt;/code&gt; otherwise. </summary>
+        [WirePath("properties.isMain")]
         public bool? IsMain
         {
             get
@@ -100,6 +105,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> StartUp Command. </summary>
+        [WirePath("properties.startUpCommand")]
         public string StartUpCommand
         {
             get
@@ -117,6 +123,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Auth Type. </summary>
+        [WirePath("properties.authType")]
         public AuthType? AuthType
         {
             get
@@ -134,6 +141,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> User Name. </summary>
+        [WirePath("properties.userName")]
         public string UserName
         {
             get
@@ -151,6 +159,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Password Secret. </summary>
+        [WirePath("properties.passwordSecret")]
         public string PasswordSecret
         {
             get
@@ -168,6 +177,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> UserManagedIdentity ClientId. </summary>
+        [WirePath("properties.userManagedIdentityClientId")]
         public string UserManagedIdentityClientId
         {
             get
@@ -185,6 +195,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Created Time. </summary>
+        [WirePath("properties.createdTime")]
         public DateTimeOffset? CreatedOn
         {
             get
@@ -194,6 +205,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Last Modified Time. </summary>
+        [WirePath("properties.lastModifiedTime")]
         public DateTimeOffset? LastModifiedOn
         {
             get
@@ -203,6 +215,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> List of volume mounts. </summary>
+        [WirePath("properties.volumeMounts")]
         public IList<VolumeMount> VolumeMounts
         {
             get
@@ -216,6 +229,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if all AppSettings and ConnectionStrings have to be passed to the container as environment variables; &lt;code&gt;false&lt;/code&gt; otherwise. </summary>
+        [WirePath("properties.inheritAppSettingsAndConnectionStrings")]
         public bool? InheritAppSettingsAndConnectionStrings
         {
             get
@@ -233,6 +247,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> List of environment variables. </summary>
+        [WirePath("properties.environmentVariables")]
         public IList<EnvironmentVariable> EnvironmentVariables
         {
             get

@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> SitePhpErrorLogFlag resource specific properties. </summary>
     internal partial class SitePhpErrorLogFlagProperties
@@ -37,15 +38,19 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Local log_errors setting. </summary>
+        [WirePath("localLogErrors")]
         public string LocalLogErrors { get; }
 
         /// <summary> Master log_errors setting. </summary>
+        [WirePath("masterLogErrors")]
         public string MasterLogErrors { get; }
 
         /// <summary> Local log_errors_max_len setting. </summary>
+        [WirePath("localLogErrorsMaxLength")]
         public string LocalLogErrorsMaxLength { get; }
 
         /// <summary> Master log_errors_max_len setting. </summary>
+        [WirePath("masterLogErrorsMaxLength")]
         public string MasterLogErrorsMaxLength { get; }
     }
 }

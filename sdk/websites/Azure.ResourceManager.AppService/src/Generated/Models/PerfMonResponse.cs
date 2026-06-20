@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Performance monitor API response. </summary>
     public partial class PerfMonResponse
@@ -35,12 +36,15 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The response code. </summary>
+        [WirePath("code")]
         public string Code { get; }
 
         /// <summary> The message. </summary>
+        [WirePath("message")]
         public string Message { get; }
 
         /// <summary> The performance monitor counters. </summary>
+        [WirePath("data")]
         public PerfMonSet Data { get; }
     }
 }

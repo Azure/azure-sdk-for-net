@@ -10,9 +10,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Microsoft.Web.Models;
+using Azure.ResourceManager.AppService.Models;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary></summary>
     internal partial class StorageMigrationResponseOperationSource : IOperationSource<StorageMigrationResponse>
@@ -25,7 +25,7 @@ namespace Microsoft.Web
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        StorageMigrationResponse IOperationSource<StorageMigrationResponse>.CreateResult(Azure.Response response, CancellationToken cancellationToken)
+        StorageMigrationResponse IOperationSource<StorageMigrationResponse>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
             return StorageMigrationResponse.DeserializeStorageMigrationResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
@@ -34,7 +34,7 @@ namespace Microsoft.Web
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<StorageMigrationResponse> IOperationSource<StorageMigrationResponse>.CreateResultAsync(Azure.Response response, CancellationToken cancellationToken)
+        async ValueTask<StorageMigrationResponse> IOperationSource<StorageMigrationResponse>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             return StorageMigrationResponse.DeserializeStorageMigrationResponse(document.RootElement, ModelSerializationExtensions.WireOptions);

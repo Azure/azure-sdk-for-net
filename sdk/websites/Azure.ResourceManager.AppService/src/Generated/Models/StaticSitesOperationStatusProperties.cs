@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Properties of a static sites asynchronous operation status. </summary>
     public partial class StaticSitesOperationStatusProperties
@@ -29,7 +29,7 @@ namespace Microsoft.Web.Models
         /// <param name="staticSiteProperties"> The generic properties of a staticSite. </param>
         /// <param name="error"> Error details for the asynchronous operation, if any. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StaticSitesOperationStatusProperties(string status, string startTime, string endTime, StaticSite staticSiteProperties, ErrorResponse error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StaticSitesOperationStatusProperties(string status, string startTime, string endTime, StaticSite staticSiteProperties, WorkflowErrorResponse error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             StartTime = startTime;
@@ -40,22 +40,28 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The current status of the asynchronous operation performed. For example, Running, Succeeded, Failed. </summary>
+        [WirePath("status")]
         public string Status { get; }
 
         /// <summary> The start time of the asynchronous operation. </summary>
+        [WirePath("startTime")]
         public string StartTime { get; }
 
         /// <summary> The end time of the asynchronous operation. </summary>
+        [WirePath("endTime")]
         public string EndTime { get; }
 
         /// <summary> The generic properties of a staticSite. </summary>
+        [WirePath("staticSiteProperties")]
         public StaticSite StaticSiteProperties { get; }
 
         /// <summary> Error details for the asynchronous operation, if any. </summary>
-        internal ErrorResponse Error { get; }
+        [WirePath("error")]
+        internal WorkflowErrorResponse Error { get; }
 
-        /// <summary> The error object. </summary>
-        public ResponseError Error
+        /// <summary> The error properties. </summary>
+        [WirePath("error.error")]
+        public ErrorProperties Error
         {
             get
             {

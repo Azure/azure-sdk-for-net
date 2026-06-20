@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The request history. </summary>
     public partial class RequestHistoryProperties
@@ -37,15 +38,19 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The time the request started. </summary>
+        [WirePath("startTime")]
         public DateTimeOffset? StartOn { get; }
 
         /// <summary> The time the request ended. </summary>
+        [WirePath("endTime")]
         public DateTimeOffset? EndOn { get; }
 
         /// <summary> The request. </summary>
+        [WirePath("request")]
         public Request Request { get; }
 
         /// <summary> The response. </summary>
+        [WirePath("response")]
         public Response Response { get; }
     }
 }

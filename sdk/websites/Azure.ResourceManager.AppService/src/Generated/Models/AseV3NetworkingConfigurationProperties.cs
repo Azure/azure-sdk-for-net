@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> AseV3NetworkingConfiguration resource specific properties. </summary>
     internal partial class AseV3NetworkingConfigurationProperties
@@ -50,27 +50,35 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Gets the WindowsOutboundIpAddresses. </summary>
+        [WirePath("windowsOutboundIpAddresses")]
         public IReadOnlyList<string> WindowsOutboundIpAddresses { get; } = new ChangeTrackingList<string>();
 
         /// <summary> Gets the LinuxOutboundIpAddresses. </summary>
+        [WirePath("linuxOutboundIpAddresses")]
         public IReadOnlyList<string> LinuxOutboundIpAddresses { get; } = new ChangeTrackingList<string>();
 
         /// <summary> Gets the ExternalInboundIpAddresses. </summary>
+        [WirePath("externalInboundIpAddresses")]
         public IReadOnlyList<string> ExternalInboundIpAddresses { get; } = new ChangeTrackingList<string>();
 
         /// <summary> Gets the InternalInboundIpAddresses. </summary>
+        [WirePath("internalInboundIpAddresses")]
         public IReadOnlyList<string> InternalInboundIpAddresses { get; } = new ChangeTrackingList<string>();
 
         /// <summary> Property to enable and disable new private endpoint connection creation on ASE. </summary>
+        [WirePath("allowNewPrivateEndpointConnections")]
         public bool? AllowNewPrivateEndpointConnections { get; set; }
 
         /// <summary> Property to enable and disable FTP on ASEV3. </summary>
+        [WirePath("ftpEnabled")]
         public bool? FtpEnabled { get; set; }
 
         /// <summary> Property to enable and disable Remote Debug on ASEV3. </summary>
+        [WirePath("remoteDebugEnabled")]
         public bool? RemoteDebugEnabled { get; set; }
 
         /// <summary> Customer provided Inbound IP Address. Only able to be set on Ase create. </summary>
+        [WirePath("inboundIpAddressOverride")]
         public string InboundIpAddressOverride { get; set; }
     }
 }

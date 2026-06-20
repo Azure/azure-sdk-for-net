@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> PremierAddOnOffer resource specific properties. </summary>
     internal partial class PremierAddOnOfferProperties
@@ -49,33 +50,43 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Premier add on SKU. </summary>
+        [WirePath("sku")]
         public string Sku { get; }
 
         /// <summary> Premier add on offer Product. </summary>
+        [WirePath("product")]
         public string Product { get; }
 
         /// <summary> Premier add on offer Vendor. </summary>
+        [WirePath("vendor")]
         public string Vendor { get; }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if promotion code is required; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("promoCodeRequired")]
         public bool? PromoCodeRequired { get; }
 
         /// <summary> Premier add on offer Quota. </summary>
+        [WirePath("quota")]
         public int? Quota { get; }
 
         /// <summary> App Service plans this offer is restricted to. </summary>
+        [WirePath("webHostingPlanRestrictions")]
         public AppServicePlanRestrictions? WebHostingPlanRestrictions { get; }
 
         /// <summary> Privacy policy URL. </summary>
+        [WirePath("privacyPolicyUrl")]
         public string PrivacyPolicyUri { get; }
 
         /// <summary> Legal terms URL. </summary>
+        [WirePath("legalTermsUrl")]
         public string LegalTermsUri { get; }
 
         /// <summary> Marketplace publisher. </summary>
+        [WirePath("marketplacePublisher")]
         public string MarketplacePublisher { get; }
 
         /// <summary> Marketplace offer. </summary>
+        [WirePath("marketplaceOffer")]
         public string MarketplaceOffer { get; }
     }
 }

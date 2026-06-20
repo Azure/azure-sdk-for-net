@@ -14,7 +14,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A class representing a collection of <see cref="RecommendationResource"/> and their operations.
@@ -37,7 +37,7 @@ namespace Microsoft.Web
         internal RecommendationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             this.TryGetApiVersion(RecommendationResource.ResourceType, out string recommendationApiVersion);
-            _recommendationsClientDiagnostics = new ClientDiagnostics("Microsoft.Web", RecommendationResource.ResourceType.Namespace, Diagnostics);
+            _recommendationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", RecommendationResource.ResourceType.Namespace, Diagnostics);
             _recommendationsRestClient = new Recommendations(_recommendationsClientDiagnostics, Pipeline, Endpoint, recommendationApiVersion ?? "2026-03-15");
             RecommendationCollection.ValidateResourceId(id);
         }

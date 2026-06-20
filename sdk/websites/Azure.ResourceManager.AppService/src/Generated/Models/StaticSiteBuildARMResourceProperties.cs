@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> StaticSiteBuildARMResource resource specific properties. </summary>
     internal partial class StaticSiteBuildARMResourceProperties
@@ -53,33 +53,43 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> An identifier for the static site build. </summary>
+        [WirePath("buildId")]
         public string BuildId { get; }
 
         /// <summary> The source branch. </summary>
+        [WirePath("sourceBranch")]
         public string SourceBranch { get; }
 
         /// <summary> The title of a pull request that a static site build is related to. </summary>
+        [WirePath("pullRequestTitle")]
         public string PullRequestTitle { get; }
 
         /// <summary> The hostname for a static site build. </summary>
+        [WirePath("hostname")]
         public string Hostname { get; }
 
         /// <summary> When this build was created. </summary>
+        [WirePath("createdTimeUtc")]
         public DateTimeOffset? CreatedTimeUtc { get; }
 
         /// <summary> When this build was updated. </summary>
+        [WirePath("lastUpdatedOn")]
         public DateTimeOffset? LastUpdatedOn { get; }
 
         /// <summary> The status of the static site build. </summary>
+        [WirePath("status")]
         public BuildStatus? Status { get; }
 
         /// <summary> User provided function apps registered with the static site build. </summary>
+        [WirePath("userProvidedFunctionApps")]
         public IReadOnlyList<StaticSiteUserProvidedFunctionApp> UserProvidedFunctionApps { get; } = new ChangeTrackingList<StaticSiteUserProvidedFunctionApp>();
 
         /// <summary> Backends linked to the static side build. </summary>
+        [WirePath("linkedBackends")]
         public IReadOnlyList<StaticSiteLinkedBackend> LinkedBackends { get; } = new ChangeTrackingList<StaticSiteLinkedBackend>();
 
         /// <summary> Database connections for the static site build. </summary>
+        [WirePath("databaseConnections")]
         public IReadOnlyList<DatabaseConnectionOverview> DatabaseConnections { get; } = new ChangeTrackingList<DatabaseConnectionOverview>();
     }
 }

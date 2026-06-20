@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Static Site Linked Backend ARM resource. </summary>
     public partial class StaticSiteLinkedBackend
@@ -37,15 +38,19 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The resource id of the backend linked to the static site. </summary>
+        [WirePath("backendResourceId")]
         public string BackendResourceId { get; }
 
         /// <summary> The region of the backend linked to the static site. </summary>
+        [WirePath("region")]
         public string Region { get; }
 
         /// <summary> The date and time on which the backend was linked to the static site. </summary>
+        [WirePath("createdOn")]
         public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> The provisioning state of the linking process. </summary>
+        [WirePath("provisioningState")]
         public string ProvisioningState { get; }
     }
 }

@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> HybridConnection resource specific properties. </summary>
     internal partial class HybridConnectionProperties
@@ -48,30 +49,38 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The name of the Service Bus namespace. </summary>
+        [WirePath("serviceBusNamespace")]
         public string ServiceBusNamespace { get; set; }
 
         /// <summary> The name of the Service Bus relay. </summary>
+        [WirePath("relayName")]
         public string RelayName { get; set; }
 
         /// <summary> The ARM URI to the Service Bus relay. </summary>
+        [WirePath("relayArmUri")]
         public string RelayArmUri { get; set; }
 
         /// <summary> The hostname of the endpoint. </summary>
+        [WirePath("hostname")]
         public string Hostname { get; set; }
 
         /// <summary> The port of the endpoint. </summary>
+        [WirePath("port")]
         public int? Port { get; set; }
 
         /// <summary> The name of the Service Bus key which has Send permissions. This is used to authenticate to Service Bus. </summary>
+        [WirePath("sendKeyName")]
         public string SendKeyName { get; set; }
 
         /// <summary>
         /// The value of the Service Bus key. This is used to authenticate to Service Bus. In ARM this key will not be returned
         /// normally, use the POST /listKeys API instead.
         /// </summary>
+        [WirePath("sendKeyValue")]
         public string SendKeyValue { get; set; }
 
         /// <summary> The suffix for the service bus endpoint. By default this is .servicebus.windows.net. </summary>
+        [WirePath("serviceBusSuffix")]
         public string ServiceBusSuffix { get; set; }
     }
 }

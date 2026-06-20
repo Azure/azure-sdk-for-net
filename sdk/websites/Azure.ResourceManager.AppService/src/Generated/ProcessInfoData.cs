@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
-using Microsoft.Web.Models;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary> Process Information. </summary>
     public partial class ProcessInfoData : ResourceData
@@ -40,12 +40,15 @@ namespace Microsoft.Web
         }
 
         /// <summary> ProcessInfo resource specific properties. </summary>
+        [WirePath("properties")]
         internal ProcessInfoProperties Properties { get; }
 
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; }
 
         /// <summary> ARM Identifier for deployment. </summary>
+        [WirePath("properties.identifier")]
         public int? Identifier
         {
             get
@@ -55,6 +58,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Deployment name. </summary>
+        [WirePath("properties.deployment_name")]
         public string DeploymentName
         {
             get
@@ -64,6 +68,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> HRef URI. </summary>
+        [WirePath("properties.href")]
         public string Href
         {
             get
@@ -73,6 +78,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Minidump URI. </summary>
+        [WirePath("properties.minidump")]
         public string Minidump
         {
             get
@@ -82,6 +88,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Is profile running?. </summary>
+        [WirePath("properties.is_profile_running")]
         public bool? IsProfileRunning
         {
             get
@@ -91,6 +98,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Is the IIS Profile running?. </summary>
+        [WirePath("properties.is_iis_profile_running")]
         public bool? IsIisProfileRunning
         {
             get
@@ -100,6 +108,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> IIS Profile timeout (seconds). </summary>
+        [WirePath("properties.iis_profile_timeout_in_seconds")]
         public double? IisProfileTimeoutInSeconds
         {
             get
@@ -109,6 +118,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Parent process. </summary>
+        [WirePath("properties.parent")]
         public string Parent
         {
             get
@@ -118,6 +128,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Child process list. </summary>
+        [WirePath("properties.children")]
         public IList<string> Children
         {
             get
@@ -127,6 +138,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Thread list. </summary>
+        [WirePath("properties.threads")]
         public IList<ProcessThreadInfo> Threads
         {
             get
@@ -136,6 +148,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> List of open files. </summary>
+        [WirePath("properties.open_file_handles")]
         public IList<string> OpenFileHandles
         {
             get
@@ -145,6 +158,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> List of modules. </summary>
+        [WirePath("properties.modules")]
         public IList<ProcessModuleInfoData> Modules
         {
             get
@@ -154,6 +168,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> File name of this process. </summary>
+        [WirePath("properties.file_name")]
         public string FileName
         {
             get
@@ -163,6 +178,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Command line. </summary>
+        [WirePath("properties.command_line")]
         public string CommandLine
         {
             get
@@ -172,6 +188,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> User name. </summary>
+        [WirePath("properties.user_name")]
         public string UserName
         {
             get
@@ -181,6 +198,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Handle count. </summary>
+        [WirePath("properties.handle_count")]
         public int? HandleCount
         {
             get
@@ -190,6 +208,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Module count. </summary>
+        [WirePath("properties.module_count")]
         public int? ModuleCount
         {
             get
@@ -199,6 +218,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Thread count. </summary>
+        [WirePath("properties.thread_count")]
         public int? ThreadCount
         {
             get
@@ -208,6 +228,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Start time. </summary>
+        [WirePath("properties.start_time")]
         public DateTimeOffset? StartOn
         {
             get
@@ -217,6 +238,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Total CPU time. </summary>
+        [WirePath("properties.total_cpu_time")]
         public string TotalCpuTime
         {
             get
@@ -226,6 +248,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> User CPU time. </summary>
+        [WirePath("properties.user_cpu_time")]
         public string UserCpuTime
         {
             get
@@ -235,6 +258,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Privileged CPU time. </summary>
+        [WirePath("properties.privileged_cpu_time")]
         public string PrivilegedCpuTime
         {
             get
@@ -244,6 +268,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Working set. </summary>
+        [WirePath("properties.working_set")]
         public long? WorkingSet
         {
             get
@@ -253,6 +278,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Peak working set. </summary>
+        [WirePath("properties.peak_working_set")]
         public long? PeakWorkingSet
         {
             get
@@ -262,6 +288,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Private memory size. </summary>
+        [WirePath("properties.private_memory")]
         public long? PrivateMemory
         {
             get
@@ -271,6 +298,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Virtual memory size. </summary>
+        [WirePath("properties.virtual_memory")]
         public long? VirtualMemory
         {
             get
@@ -280,6 +308,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Peak virtual memory usage. </summary>
+        [WirePath("properties.peak_virtual_memory")]
         public long? PeakVirtualMemory
         {
             get
@@ -289,6 +318,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Paged system memory. </summary>
+        [WirePath("properties.paged_system_memory")]
         public long? PagedSystemMemory
         {
             get
@@ -298,6 +328,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Non-paged system memory. </summary>
+        [WirePath("properties.non_paged_system_memory")]
         public long? NonPagedSystemMemory
         {
             get
@@ -307,6 +338,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Paged memory. </summary>
+        [WirePath("properties.paged_memory")]
         public long? PagedMemory
         {
             get
@@ -316,6 +348,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Peak paged memory. </summary>
+        [WirePath("properties.peak_paged_memory")]
         public long? PeakPagedMemory
         {
             get
@@ -325,6 +358,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Time stamp. </summary>
+        [WirePath("properties.time_stamp")]
         public DateTimeOffset? TimeStamp
         {
             get
@@ -334,6 +368,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> List of environment variables. </summary>
+        [WirePath("properties.environment_variables")]
         public IDictionary<string, string> EnvironmentVariables
         {
             get
@@ -343,6 +378,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Is this the SCM site?. </summary>
+        [WirePath("properties.is_scm_site")]
         public bool? IsScmSite
         {
             get
@@ -352,6 +388,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Is this a Web Job?. </summary>
+        [WirePath("properties.is_webjob")]
         public bool? IsWebjob
         {
             get
@@ -361,6 +398,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Description of process. </summary>
+        [WirePath("properties.description")]
         public string Description
         {
             get

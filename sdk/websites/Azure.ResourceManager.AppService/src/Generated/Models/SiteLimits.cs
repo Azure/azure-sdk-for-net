@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Metric limits set on an app. </summary>
     public partial class SiteLimits
@@ -35,12 +36,15 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Maximum allowed CPU usage percentage. </summary>
+        [WirePath("maxPercentageCpu")]
         public double? MaxPercentageCpu { get; set; }
 
         /// <summary> Maximum allowed memory usage in MB. </summary>
+        [WirePath("maxMemoryInMb")]
         public long? MaxMemoryInMb { get; set; }
 
         /// <summary> Maximum allowed disk size usage in MB. </summary>
+        [WirePath("maxDiskSizeInMb")]
         public long? MaxDiskSizeInMb { get; set; }
     }
 }

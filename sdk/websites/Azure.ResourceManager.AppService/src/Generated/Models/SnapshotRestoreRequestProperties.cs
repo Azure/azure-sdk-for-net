@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> SnapshotRestoreRequest resource specific properties. </summary>
     internal partial class SnapshotRestoreRequestProperties
@@ -49,27 +50,33 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Point in time in which the app restore should be done, formatted as a DateTime string. </summary>
+        [WirePath("snapshotTime")]
         public string SnapshotTime { get; set; }
 
         /// <summary>
         /// Optional. Specifies the web app that snapshot contents will be retrieved from.
         /// If empty, the targeted web app will be used as the source.
         /// </summary>
+        [WirePath("recoverySource")]
         public SnapshotRecoverySource RecoverySource { get; set; }
 
         /// <summary> If &lt;code&gt;true&lt;/code&gt; the restore operation can overwrite source app; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("overwrite")]
         public bool Overwrite { get; }
 
         /// <summary> If true, site configuration, in addition to content, will be reverted. </summary>
+        [WirePath("recoverConfiguration")]
         public bool? RecoverConfiguration { get; set; }
 
         /// <summary>
         /// If true, custom hostname conflicts will be ignored when recovering to a target web app.
         /// This setting is only necessary when RecoverConfiguration is enabled.
         /// </summary>
+        [WirePath("ignoreConflictingHostNames")]
         public bool? IgnoreConflictingHostNames { get; set; }
 
         /// <summary> If true, the snapshot is retrieved from DRSecondary endpoint. </summary>
+        [WirePath("useDRSecondary")]
         public bool? UseDRSecondary { get; set; }
     }
 }

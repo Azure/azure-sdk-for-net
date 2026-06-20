@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
-using Microsoft.Web.Models;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary> MSDeploy ARM response. </summary>
     public partial class MSDeployStatusData : ResourceData
@@ -40,12 +40,15 @@ namespace Microsoft.Web
         }
 
         /// <summary> MSDeployStatus resource specific properties. </summary>
+        [WirePath("properties")]
         internal MSDeployStatusProperties Properties { get; }
 
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; }
 
         /// <summary> Username of deployer. </summary>
+        [WirePath("properties.deployer")]
         public string Deployer
         {
             get
@@ -55,6 +58,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Provisioning state. </summary>
+        [WirePath("properties.provisioningState")]
         public MSDeployProvisioningState? ProvisioningState
         {
             get
@@ -64,6 +68,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Start time of deploy operation. </summary>
+        [WirePath("properties.startTime")]
         public DateTimeOffset? StartOn
         {
             get
@@ -73,6 +78,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> End time of deploy operation. </summary>
+        [WirePath("properties.endTime")]
         public DateTimeOffset? EndOn
         {
             get
@@ -82,6 +88,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Whether the deployment operation has completed. </summary>
+        [WirePath("properties.complete")]
         public bool? Complete
         {
             get

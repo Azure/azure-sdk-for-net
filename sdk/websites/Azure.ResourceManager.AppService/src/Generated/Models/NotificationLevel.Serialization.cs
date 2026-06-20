@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     internal static partial class NotificationLevelExtensions
     {

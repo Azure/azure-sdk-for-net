@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Http logs to azure blob storage configuration. </summary>
     public partial class AzureBlobStorageHttpLogsConfig
@@ -39,6 +40,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> SAS url to a azure blob container with read/write/list/delete permissions. </summary>
+        [WirePath("sasUrl")]
         public string SasUri { get; set; }
 
         /// <summary>
@@ -46,9 +48,11 @@ namespace Microsoft.Web.Models
         /// Remove blobs older than X days.
         /// 0 or lower means no retention.
         /// </summary>
+        [WirePath("retentionInDays")]
         public int? RetentionInDays { get; set; }
 
         /// <summary> True if configuration is enabled, false if it is disabled and null if configuration is not set. </summary>
+        [WirePath("enabled")]
         public bool? Enabled { get; set; }
     }
 }

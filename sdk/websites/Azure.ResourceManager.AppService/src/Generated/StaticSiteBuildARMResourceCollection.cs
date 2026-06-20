@@ -16,7 +16,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A class representing a collection of <see cref="StaticSiteBuildARMResource"/> and their operations.
@@ -39,7 +39,7 @@ namespace Microsoft.Web
         internal StaticSiteBuildARMResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(StaticSiteBuildARMResource.ResourceType, out string staticSiteBuildARMResourceApiVersion);
-            _staticSitesClientDiagnostics = new ClientDiagnostics("Microsoft.Web", StaticSiteBuildARMResource.ResourceType.Namespace, Diagnostics);
+            _staticSitesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", StaticSiteBuildARMResource.ResourceType.Namespace, Diagnostics);
             _staticSitesRestClient = new StaticSites(_staticSitesClientDiagnostics, Pipeline, Endpoint, staticSiteBuildARMResourceApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }

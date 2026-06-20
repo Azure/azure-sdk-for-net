@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Class representing Response from Diagnostic Detectors. </summary>
     public partial class DiagnosticDetectorResponse : ProxyOnlyResource
@@ -31,9 +32,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> DiagnosticDetectorResponse resource specific properties. </summary>
+        [WirePath("properties")]
         internal DiagnosticDetectorResponseProperties Properties { get; }
 
         /// <summary> Start time of the period. </summary>
+        [WirePath("properties.startTime")]
         public DateTimeOffset? StartOn
         {
             get
@@ -43,6 +46,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> End time of the period. </summary>
+        [WirePath("properties.endTime")]
         public DateTimeOffset? EndOn
         {
             get
@@ -52,6 +56,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Flag representing Issue was detected. </summary>
+        [WirePath("properties.issueDetected")]
         public bool? IssueDetected
         {
             get
@@ -61,6 +66,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Detector's definition. </summary>
+        [WirePath("properties.detectorDefinition")]
         public DetectorDefinition DetectorDefinition
         {
             get
@@ -70,6 +76,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Metrics provided by the detector. </summary>
+        [WirePath("properties.metrics")]
         public IList<DiagnosticMetricSet> Metrics
         {
             get
@@ -79,6 +86,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> List of Correlated events found by the detector. </summary>
+        [WirePath("properties.abnormalTimePeriods")]
         public IList<DetectorAbnormalTimePeriod> AbnormalTimePeriods
         {
             get
@@ -88,6 +96,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Additional Data that detector wants to send. </summary>
+        [WirePath("properties.data")]
         public IList<IList<NameValuePair>> Data
         {
             get
@@ -97,6 +106,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Source of the Data. </summary>
+        [WirePath("properties.responseMetaData.dataSource")]
         public DataSource DataSource
         {
             get

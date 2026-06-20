@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The retry history. </summary>
     public partial class RetryHistory
@@ -30,7 +30,7 @@ namespace Microsoft.Web.Models
         /// <param name="serviceRequestId"> Gets the service request Id. </param>
         /// <param name="error"> Gets the error response. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RetryHistory(DateTimeOffset? startOn, DateTimeOffset? endOn, string code, string clientRequestId, string serviceRequestId, ErrorResponse error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RetryHistory(DateTimeOffset? startOn, DateTimeOffset? endOn, string code, string clientRequestId, string serviceRequestId, WorkflowErrorResponse error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StartOn = startOn;
             EndOn = endOn;
@@ -42,25 +42,32 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Gets the start time. </summary>
+        [WirePath("startTime")]
         public DateTimeOffset? StartOn { get; }
 
         /// <summary> Gets the end time. </summary>
+        [WirePath("endTime")]
         public DateTimeOffset? EndOn { get; }
 
         /// <summary> Gets the status code. </summary>
+        [WirePath("code")]
         public string Code { get; }
 
         /// <summary> Gets the client request Id. </summary>
+        [WirePath("clientRequestId")]
         public string ClientRequestId { get; }
 
         /// <summary> Gets the service request Id. </summary>
+        [WirePath("serviceRequestId")]
         public string ServiceRequestId { get; }
 
         /// <summary> Gets the error response. </summary>
-        internal ErrorResponse Error { get; }
+        [WirePath("error")]
+        internal WorkflowErrorResponse Error { get; }
 
-        /// <summary> The error object. </summary>
-        public ResponseError Error
+        /// <summary> The error properties. </summary>
+        [WirePath("error.error")]
+        public ErrorProperties Error
         {
             get
             {

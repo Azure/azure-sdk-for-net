@@ -9,7 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary></summary>
     public partial class CertificateResource : IJsonModel<CertificateData>
@@ -27,11 +27,11 @@ namespace Microsoft.Web
         CertificateData IJsonModel<CertificateData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CertificateData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CertificateData>(Data, options, MicrosoftWebContext.Default);
+        BinaryData IPersistableModel<CertificateData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CertificateData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CertificateData IPersistableModel<CertificateData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CertificateData>(data, options, MicrosoftWebContext.Default);
+        CertificateData IPersistableModel<CertificateData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CertificateData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<CertificateData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);

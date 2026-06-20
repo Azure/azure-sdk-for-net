@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Object to hold key vault reference and the resolution status. </summary>
     public partial class KeyVaultReferenceWithStatus
@@ -25,7 +26,7 @@ namespace Microsoft.Web.Models
         /// <param name="secretUri"> Key vault secret URI. </param>
         /// <param name="referenceStatus"> Reference status of the key vault secret. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KeyVaultReferenceWithStatus(string secretUri, string referenceStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KeyVaultReferenceWithStatus(Uri secretUri, string referenceStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SecretUri = secretUri;
             ReferenceStatus = referenceStatus;
@@ -33,9 +34,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Key vault secret URI. </summary>
-        public string SecretUri { get; set; }
+        [WirePath("secretUri")]
+        public Uri SecretUri { get; set; }
 
         /// <summary> Reference status of the key vault secret. </summary>
+        [WirePath("referenceStatus")]
         public string ReferenceStatus { get; set; }
     }
 }

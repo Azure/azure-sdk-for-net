@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The access key regenerate action content. </summary>
     public partial class RegenerateActionParameter
@@ -31,6 +32,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The key type. </summary>
+        [WirePath("keyType")]
         public KeyType? KeyType { get; set; }
     }
 }

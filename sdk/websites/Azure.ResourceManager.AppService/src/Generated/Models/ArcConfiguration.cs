@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The ArcConfiguration. </summary>
     public partial class ArcConfiguration
@@ -30,7 +31,7 @@ namespace Microsoft.Web.Models
         /// <param name="frontEndServiceConfiguration"></param>
         /// <param name="kubeConfig"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ArcConfiguration(StorageType? artifactsStorageType, string artifactStorageClassName, string artifactStorageMountPath, string artifactStorageNodeName, string artifactStorageAccessMode, FrontEndConfiguration frontEndServiceConfiguration, string kubeConfig, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ArcConfiguration(Models.ArtifactStorageType? artifactsStorageType, string artifactStorageClassName, string artifactStorageMountPath, string artifactStorageNodeName, string artifactStorageAccessMode, FrontEndConfiguration frontEndServiceConfiguration, string kubeConfig, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ArtifactsStorageType = artifactsStorageType;
             ArtifactStorageClassName = artifactStorageClassName;
@@ -43,27 +44,35 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Gets or sets the ArtifactsStorageType. </summary>
-        public StorageType? ArtifactsStorageType { get; set; }
+        [WirePath("artifactsStorageType")]
+        public Models.ArtifactStorageType? ArtifactsStorageType { get; set; }
 
         /// <summary> Gets or sets the ArtifactStorageClassName. </summary>
+        [WirePath("artifactStorageClassName")]
         public string ArtifactStorageClassName { get; set; }
 
         /// <summary> Gets or sets the ArtifactStorageMountPath. </summary>
+        [WirePath("artifactStorageMountPath")]
         public string ArtifactStorageMountPath { get; set; }
 
         /// <summary> Gets or sets the ArtifactStorageNodeName. </summary>
+        [WirePath("artifactStorageNodeName")]
         public string ArtifactStorageNodeName { get; set; }
 
         /// <summary> Gets or sets the ArtifactStorageAccessMode. </summary>
+        [WirePath("artifactStorageAccessMode")]
         public string ArtifactStorageAccessMode { get; set; }
 
         /// <summary> Gets or sets the FrontEndServiceConfiguration. </summary>
+        [WirePath("frontEndServiceConfiguration")]
         internal FrontEndConfiguration FrontEndServiceConfiguration { get; set; }
 
         /// <summary> Gets or sets the KubeConfig. </summary>
+        [WirePath("kubeConfig")]
         public string KubeConfig { get; set; }
 
         /// <summary> Gets or sets the Kind. </summary>
+        [WirePath("frontEndServiceConfiguration.kind")]
         public FrontEndServiceType? FrontEndServiceKind
         {
             get

@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Result for utterances query. </summary>
     public partial class QueryUtterancesResult
@@ -33,9 +34,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> A sample utterance. </summary>
+        [WirePath("sampleUtterance")]
         public SampleUtterance SampleUtterance { get; }
 
         /// <summary> Score of a sample utterance. </summary>
+        [WirePath("score")]
         public float? Score { get; }
     }
 }

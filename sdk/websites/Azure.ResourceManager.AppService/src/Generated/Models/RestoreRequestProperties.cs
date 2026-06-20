@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> RestoreRequest resource specific properties. </summary>
     internal partial class RestoreRequestProperties
@@ -60,36 +60,47 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> SAS URL to the container. </summary>
+        [WirePath("storageAccountUrl")]
         public string StorageAccountUri { get; set; }
 
         /// <summary> Name of a blob which contains the backup. </summary>
+        [WirePath("blobName")]
         public string BlobName { get; set; }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if the restore operation can overwrite target app; otherwise, &lt;code&gt;false&lt;/code&gt;. &lt;code&gt;true&lt;/code&gt; is needed if trying to restore over an existing app. </summary>
+        [WirePath("overwrite")]
         public bool Overwrite { get; set; }
 
         /// <summary> Name of an app. </summary>
+        [WirePath("siteName")]
         public string SiteName { get; set; }
 
         /// <summary> Collection of databases which should be restored. This list has to match the list of databases included in the backup. </summary>
+        [WirePath("databases")]
         public IList<DatabaseBackupSetting> Databases { get; } = new ChangeTrackingList<DatabaseBackupSetting>();
 
         /// <summary> Changes a logic when restoring an app with custom domains. &lt;code&gt;true&lt;/code&gt; to remove custom domains automatically. If &lt;code&gt;false&lt;/code&gt;, custom domains are added to \nthe app's object when it is being restored, but that might fail due to conflicts during the operation. </summary>
+        [WirePath("ignoreConflictingHostNames")]
         public bool? IgnoreConflictingHostNames { get; set; }
 
         /// <summary> Ignore the databases and only restore the site content. </summary>
+        [WirePath("ignoreDatabases")]
         public bool? IgnoreDatabases { get; set; }
 
         /// <summary> Specify app service plan that will own restored site. </summary>
+        [WirePath("appServicePlan")]
         public string AppServicePlan { get; set; }
 
         /// <summary> Operation type. </summary>
+        [WirePath("operationType")]
         public BackupRestoreOperationType? OperationType { get; set; }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if SiteConfig.ConnectionStrings should be set in new app; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("adjustConnectionStrings")]
         public bool? AdjustConnectionStrings { get; set; }
 
         /// <summary> App Service Environment name, if needed (only when restoring an app to an App Service Environment). </summary>
+        [WirePath("hostingEnvironment")]
         public string HostingEnvironment { get; set; }
     }
 }

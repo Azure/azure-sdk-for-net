@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Class representing Diagnostic Metric. </summary>
     public partial class DiagnosticMetricSample
@@ -46,6 +47,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Time at which metric is measured. </summary>
+        [WirePath("timestamp")]
         public DateTimeOffset? Timestamp { get; }
 
         /// <summary>
@@ -54,18 +56,23 @@ namespace Microsoft.Web.Models
         /// i.e. CPU and Memory return RDWORKERNAME (LargeDed..._IN_0)
         /// where RDWORKERNAME is Machine name below and RoleInstance name in parenthesis
         /// </summary>
+        [WirePath("roleInstance")]
         public string RoleInstance { get; }
 
         /// <summary> Total value of the metric. If multiple measurements are made this will have sum of all. </summary>
+        [WirePath("total")]
         public double? Total { get; }
 
         /// <summary> Maximum of the metric sampled during the time period. </summary>
+        [WirePath("maximum")]
         public double? Maximum { get; }
 
         /// <summary> Minimum of the metric sampled during the time period. </summary>
+        [WirePath("minimum")]
         public double? Minimum { get; }
 
         /// <summary> Whether the values are aggregates across all workers or not. </summary>
+        [WirePath("isAggregated")]
         public bool? IsAggregated { get; }
     }
 }

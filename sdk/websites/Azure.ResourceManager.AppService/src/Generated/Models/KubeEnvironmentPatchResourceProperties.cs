@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> KubeEnvironmentPatchResource resource specific properties. </summary>
     internal partial class KubeEnvironmentPatchResourceProperties
@@ -55,18 +56,23 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Provisioning state of the Kubernetes Environment. </summary>
+        [WirePath("provisioningState")]
         public KubeEnvironmentProvisioningState? ProvisioningState { get; }
 
         /// <summary> Any errors that occurred during deployment or deployment validation. </summary>
+        [WirePath("deploymentErrors")]
         public string DeploymentErrors { get; }
 
         /// <summary> Only visible within Vnet/Subnet. </summary>
+        [WirePath("internalLoadBalancerEnabled")]
         public bool? InternalLoadBalancerEnabled { get; set; }
 
         /// <summary> Default Domain Name for the cluster. </summary>
+        [WirePath("defaultDomain")]
         public string DefaultDomain { get; }
 
         /// <summary> Static IP of the KubeEnvironment. </summary>
+        [WirePath("staticIp")]
         public string StaticIp { get; set; }
 
         /// <summary>
@@ -74,6 +80,7 @@ namespace Microsoft.Web.Models
         /// components types. Eg: Choosing between BuildService kind,
         /// FrontEnd Service ArtifactsStorageType etc.
         /// </summary>
+        [WirePath("arcConfiguration")]
         public ArcConfiguration ArcConfiguration { get; set; }
 
         /// <summary>
@@ -81,12 +88,15 @@ namespace Microsoft.Web.Models
         /// app logs to a destination. Currently only "log-analytics" is
         /// supported
         /// </summary>
+        [WirePath("appLogsConfiguration")]
         public AppLogsConfiguration AppLogsConfiguration { get; set; }
 
         /// <summary> Cluster configuration for Container Apps Environments to configure Dapr Instrumentation Key and VNET Configuration. </summary>
+        [WirePath("containerAppsConfiguration")]
         public ContainerAppsConfiguration ContainerAppsConfiguration { get; set; }
 
         /// <summary> Gets or sets the AksResourceID. </summary>
+        [WirePath("aksResourceID")]
         public string AksResourceID { get; set; }
     }
 }

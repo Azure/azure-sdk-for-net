@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> App Dapr configuration. </summary>
     public partial class DaprConfig
@@ -43,24 +44,31 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Boolean indicating if the Dapr side car is enabled. </summary>
+        [WirePath("enabled")]
         public bool? Enabled { get; set; }
 
         /// <summary> Dapr application identifier. </summary>
+        [WirePath("appId")]
         public string AppId { get; set; }
 
         /// <summary> Tells Dapr which port your application is listening on. </summary>
+        [WirePath("appPort")]
         public int? AppPort { get; set; }
 
         /// <summary> Dapr max size of http header read buffer in KB to handle when sending multi-KB headers. Default is 65KB. </summary>
+        [WirePath("httpReadBufferSize")]
         public int? HttpReadBufferSize { get; set; }
 
         /// <summary> Increasing max size of request body http servers parameter in MB to handle uploading of big files. Default is 4 MB. </summary>
+        [WirePath("httpMaxRequestSize")]
         public int? HttpMaxRequestSize { get; set; }
 
         /// <summary> Sets the log level for the Dapr sidecar. Allowed values are debug, info, warn, error. Default is info. </summary>
+        [WirePath("logLevel")]
         public DaprLogLevel? LogLevel { get; set; }
 
         /// <summary> Enables API logging for the Dapr sidecar. </summary>
+        [WirePath("enableApiLogging")]
         public bool? EnableApiLogging { get; set; }
     }
 }

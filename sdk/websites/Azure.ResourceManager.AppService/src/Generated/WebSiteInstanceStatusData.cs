@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
-using Microsoft.Web.Models;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
     public partial class WebSiteInstanceStatusData : ResourceData
@@ -40,12 +40,15 @@ namespace Microsoft.Web
         }
 
         /// <summary> WebSiteInstanceStatus resource specific properties. </summary>
+        [WirePath("properties")]
         internal WebSiteInstanceStatusProperties Properties { get; }
 
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; }
 
         /// <summary> Gets the State. </summary>
+        [WirePath("properties.state")]
         public SiteRuntimeState? State
         {
             get
@@ -55,6 +58,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Link to the GetStatusApi in Kudu. </summary>
+        [WirePath("properties.statusUrl")]
         public string StatusUri
         {
             get
@@ -64,6 +68,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Link to the Diagnose and Solve Portal. </summary>
+        [WirePath("properties.detectorUrl")]
         public string DetectorUri
         {
             get
@@ -73,6 +78,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Link to the console to web app instance. </summary>
+        [WirePath("properties.consoleUrl")]
         public string ConsoleUri
         {
             get
@@ -82,6 +88,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Link to the console to web app instance. </summary>
+        [WirePath("properties.healthCheckUrl")]
         public string HealthCheckUri
         {
             get
@@ -91,6 +98,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Dictionary of &lt;ContainerInfo&gt;. </summary>
+        [WirePath("properties.containers")]
         public IDictionary<string, ContainerInfo> Containers
         {
             get
@@ -100,6 +108,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> The physical zone that the instance is in. </summary>
+        [WirePath("properties.physicalZone")]
         public string PhysicalZone
         {
             get

@@ -8,9 +8,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The response of a WorkflowTrigger list operation. </summary>
     internal partial class WorkflowTriggerListResult
@@ -37,9 +37,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The WorkflowTrigger items on this page. </summary>
+        [WirePath("value")]
         public IList<WorkflowTriggerData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
+        [WirePath("nextLink")]
         public Uri NextLink { get; }
     }
 }

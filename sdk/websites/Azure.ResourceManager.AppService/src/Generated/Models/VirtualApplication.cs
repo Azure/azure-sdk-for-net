@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Virtual application in an app. </summary>
     public partial class VirtualApplication
@@ -39,15 +39,19 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Virtual path. </summary>
+        [WirePath("virtualPath")]
         public string VirtualPath { get; set; }
 
         /// <summary> Physical path. </summary>
+        [WirePath("physicalPath")]
         public string PhysicalPath { get; set; }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if preloading is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("preloadEnabled")]
         public bool? PreloadEnabled { get; set; }
 
         /// <summary> Virtual directories for virtual application. </summary>
+        [WirePath("virtualDirectories")]
         public IList<VirtualDirectory> VirtualDirectories { get; }
     }
 }

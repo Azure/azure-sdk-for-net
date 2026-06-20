@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> SlotDifference resource specific properties. </summary>
     internal partial class SlotDifferenceProperties
@@ -43,24 +44,31 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Level of the difference: Information, Warning or Error. </summary>
+        [WirePath("level")]
         public string Level { get; }
 
         /// <summary> The type of the setting: General, AppSetting or ConnectionString. </summary>
+        [WirePath("settingType")]
         public string SettingType { get; }
 
         /// <summary> Rule that describes how to process the setting difference during a slot swap. </summary>
+        [WirePath("diffRule")]
         public string DiffRule { get; }
 
         /// <summary> Name of the setting. </summary>
+        [WirePath("settingName")]
         public string SettingName { get; }
 
         /// <summary> Value of the setting in the current slot. </summary>
+        [WirePath("valueInCurrentSlot")]
         public string ValueInCurrentSlot { get; }
 
         /// <summary> Value of the setting in the target slot. </summary>
+        [WirePath("valueInTargetSlot")]
         public string ValueInTargetSlot { get; }
 
         /// <summary> Description of the setting difference. </summary>
+        [WirePath("description")]
         public string Description { get; }
     }
 }

@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> SiteLogsConfig resource specific properties. </summary>
     internal partial class SiteLogsConfigProperties
@@ -37,18 +38,23 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Application logs configuration. </summary>
+        [WirePath("applicationLogs")]
         public ApplicationLogsConfig ApplicationLogs { get; set; }
 
         /// <summary> HTTP logs configuration. </summary>
+        [WirePath("httpLogs")]
         public HttpLogsConfig HttpLogs { get; set; }
 
         /// <summary> Failed requests tracing configuration. </summary>
+        [WirePath("failedRequestsTracing")]
         internal EnabledConfig FailedRequestsTracing { get; set; }
 
         /// <summary> Detailed error messages configuration. </summary>
+        [WirePath("detailedErrorMessages")]
         internal EnabledConfig DetailedErrorMessages { get; set; }
 
         /// <summary> True if configuration is enabled, false if it is disabled and null if configuration is not set. </summary>
+        [WirePath("failedRequestsTracing.enabled")]
         public bool? FailedRequestsTracingEnabled
         {
             get
@@ -66,6 +72,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> True if configuration is enabled, false if it is disabled and null if configuration is not set. </summary>
+        [WirePath("detailedErrorMessages.enabled")]
         public bool? DetailedErrorMessagesEnabled
         {
             get

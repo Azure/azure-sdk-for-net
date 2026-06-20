@@ -8,9 +8,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Collection of public certificates. </summary>
     internal partial class PublicCertificateCollection
@@ -37,9 +37,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The PublicCertificate items on this page. </summary>
+        [WirePath("value")]
         public IList<PublicCertificateData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
+        [WirePath("nextLink")]
         public Uri NextLink { get; }
     }
 }

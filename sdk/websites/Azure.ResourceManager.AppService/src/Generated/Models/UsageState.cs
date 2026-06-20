@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> State indicating whether the app has exceeded its quota usage. Read-only. </summary>
     public enum UsageState

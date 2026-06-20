@@ -7,8 +7,10 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Information needed to create resources on an App Service Environment. </summary>
     public partial class HostingEnvironmentDeploymentInfo
@@ -25,7 +27,7 @@ namespace Microsoft.Web.Models
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="location"> Location of the App Service Environment. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HostingEnvironmentDeploymentInfo(string name, string location, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HostingEnvironmentDeploymentInfo(string name, AzureLocation? location, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Location = location;
@@ -33,9 +35,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Name of the App Service Environment. </summary>
+        [WirePath("name")]
         public string Name { get; }
 
         /// <summary> Location of the App Service Environment. </summary>
-        public string Location { get; }
+        [WirePath("location")]
+        public AzureLocation? Location { get; }
     }
 }

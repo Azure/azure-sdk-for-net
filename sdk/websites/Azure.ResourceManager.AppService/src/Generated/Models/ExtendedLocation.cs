@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Extended Location. </summary>
     public partial class ExtendedLocation
@@ -33,9 +34,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Name of extended location. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
 
         /// <summary> Type of extended location. </summary>
+        [WirePath("type")]
         public string Type { get; }
     }
 }

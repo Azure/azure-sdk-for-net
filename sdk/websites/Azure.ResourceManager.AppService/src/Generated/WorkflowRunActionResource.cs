@@ -13,9 +13,9 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Microsoft.Web.Models;
+using Azure.ResourceManager.AppService.Models;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A class representing a WorkflowRunAction along with the instance operations that can be performed on it.
@@ -50,7 +50,7 @@ namespace Microsoft.Web
         internal WorkflowRunActionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string workflowRunActionApiVersion);
-            _workflowRunActionsClientDiagnostics = new ClientDiagnostics("Microsoft.Web", ResourceType.Namespace, Diagnostics);
+            _workflowRunActionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
             _workflowRunActionsRestClient = new WorkflowRunActions(_workflowRunActionsClientDiagnostics, Pipeline, Endpoint, workflowRunActionApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
@@ -127,13 +127,13 @@ namespace Microsoft.Web
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = _workflowRunActionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
-                Azure.Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<WorkflowRunActionData> response = Azure.Response.FromValue(WorkflowRunActionData.FromResponse(result), result);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<WorkflowRunActionData> response = Response.FromValue(WorkflowRunActionData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Azure.Response.FromValue(new WorkflowRunActionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new WorkflowRunActionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -175,13 +175,13 @@ namespace Microsoft.Web
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = _workflowRunActionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
-                Azure.Response result = Pipeline.ProcessMessage(message, context);
-                Response<WorkflowRunActionData> response = Azure.Response.FromValue(WorkflowRunActionData.FromResponse(result), result);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<WorkflowRunActionData> response = Response.FromValue(WorkflowRunActionData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Azure.Response.FromValue(new WorkflowRunActionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new WorkflowRunActionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> SourceControl resource specific properties. </summary>
     internal partial class SourceControlProperties
@@ -37,15 +38,19 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> OAuth access token. </summary>
+        [WirePath("token")]
         public string Token { get; set; }
 
         /// <summary> OAuth access token secret. </summary>
+        [WirePath("tokenSecret")]
         public string TokenSecret { get; set; }
 
         /// <summary> OAuth refresh token. </summary>
+        [WirePath("refreshToken")]
         public string RefreshToken { get; set; }
 
         /// <summary> OAuth token expiration. </summary>
+        [WirePath("expirationTime")]
         public DateTimeOffset? ExpireOn { get; set; }
     }
 }

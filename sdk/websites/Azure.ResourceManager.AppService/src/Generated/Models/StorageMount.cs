@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Server farm storage mount configuration. </summary>
     public partial class StorageMount
@@ -39,18 +40,23 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Name of the storage mount. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
 
         /// <summary> Type of the storage mount. </summary>
+        [WirePath("type")]
         public StorageMountType? Type { get; set; }
 
         /// <summary> Source of the fileshare/storage. </summary>
+        [WirePath("source")]
         public string Source { get; set; }
 
         /// <summary> Path on worker where storage will be mounted. </summary>
+        [WirePath("destinationPath")]
         public string DestinationPath { get; set; }
 
         /// <summary> KV reference to the credentials to connect to the share. </summary>
+        [WirePath("credentialsKeyVaultReference")]
         public KeyVaultReferenceWithStatus CredentialsKeyVaultReference { get; set; }
     }
 }

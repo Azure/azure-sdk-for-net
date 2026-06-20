@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
-using Microsoft.Web.Models;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary> Remote Private Endpoint Connection ARM resource. </summary>
     public partial class RemotePrivateEndpointConnectionARMResourceData : ResourceData
@@ -40,12 +40,15 @@ namespace Microsoft.Web
         }
 
         /// <summary> RemotePrivateEndpointConnectionARMResource resource specific properties. </summary>
+        [WirePath("properties")]
         internal RemotePrivateEndpointConnectionARMResourceProperties Properties { get; set; }
 
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [WirePath("properties.provisioningState")]
         public string ProvisioningState
         {
             get
@@ -55,6 +58,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> The state of a private link connection. </summary>
+        [WirePath("properties.privateLinkServiceConnectionState")]
         public PrivateLinkConnectionState PrivateLinkServiceConnectionState
         {
             get
@@ -72,6 +76,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Private IPAddresses mapped to the remote private endpoint. </summary>
+        [WirePath("properties.ipAddresses")]
         public IList<string> IpAddresses
         {
             get
@@ -85,6 +90,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Gets the Id. </summary>
+        [WirePath("properties.privateEndpoint.id")]
         public string PrivateEndpointId
         {
             get

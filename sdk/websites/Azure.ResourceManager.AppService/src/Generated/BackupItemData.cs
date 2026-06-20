@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
-using Microsoft.Web.Models;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary> Backup description. </summary>
     public partial class BackupItemData : ResourceData
@@ -40,12 +40,15 @@ namespace Microsoft.Web
         }
 
         /// <summary> BackupItem resource specific properties. </summary>
+        [WirePath("properties")]
         internal BackupItemProperties Properties { get; }
 
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; }
 
         /// <summary> Id of the backup. </summary>
+        [WirePath("properties.id")]
         public int? BackupId
         {
             get
@@ -55,6 +58,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> SAS URL for the storage account container which contains this backup. </summary>
+        [WirePath("properties.storageAccountUrl")]
         public string StorageAccountUri
         {
             get
@@ -64,6 +68,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Name of the blob which contains data for this backup. </summary>
+        [WirePath("properties.blobName")]
         public string BlobName
         {
             get
@@ -73,6 +78,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Name of this backup. </summary>
+        [WirePath("properties.name")]
         public string Name
         {
             get
@@ -82,6 +88,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Backup status. </summary>
+        [WirePath("properties.status")]
         public BackupItemStatus? Status
         {
             get
@@ -91,6 +98,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Size of the backup in bytes. </summary>
+        [WirePath("properties.sizeInBytes")]
         public long? SizeInBytes
         {
             get
@@ -100,6 +108,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Timestamp of the backup creation. </summary>
+        [WirePath("properties.created")]
         public DateTimeOffset? Created
         {
             get
@@ -109,6 +118,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Details regarding this backup. Might contain an error message. </summary>
+        [WirePath("properties.log")]
         public string Log
         {
             get
@@ -118,6 +128,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> List of databases included in the backup. </summary>
+        [WirePath("properties.databases")]
         public IReadOnlyList<DatabaseBackupSetting> Databases
         {
             get
@@ -127,6 +138,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> True if this backup has been created due to a schedule being triggered. </summary>
+        [WirePath("properties.scheduled")]
         public bool? Scheduled
         {
             get
@@ -136,6 +148,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Timestamp of a last restore operation which used this backup. </summary>
+        [WirePath("properties.lastRestoreTimeStamp")]
         public DateTimeOffset? LastRestoreTimeStamp
         {
             get
@@ -145,6 +158,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Timestamp when this backup finished. </summary>
+        [WirePath("properties.finishedTimeStamp")]
         public DateTimeOffset? FinishedTimeStamp
         {
             get
@@ -154,6 +168,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Unique correlation identifier. Please use this along with the timestamp while communicating with Azure support. </summary>
+        [WirePath("properties.correlationId")]
         public string CorrelationId
         {
             get
@@ -163,6 +178,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Size of the original web app which has been backed up. </summary>
+        [WirePath("properties.websiteSizeInBytes")]
         public long? WebsiteSizeInBytes
         {
             get

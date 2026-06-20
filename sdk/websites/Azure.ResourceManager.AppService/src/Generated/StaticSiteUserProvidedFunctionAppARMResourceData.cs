@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
-using Microsoft.Web.Models;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary> Static Site User Provided Function App ARM resource. </summary>
     public partial class StaticSiteUserProvidedFunctionAppARMResourceData : ResourceData
@@ -40,12 +40,15 @@ namespace Microsoft.Web
         }
 
         /// <summary> StaticSiteUserProvidedFunctionAppARMResource resource specific properties. </summary>
+        [WirePath("properties")]
         internal StaticSiteUserProvidedFunctionAppARMResourceProperties Properties { get; set; }
 
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
 
         /// <summary> The resource id of the function app registered with the static site. </summary>
+        [WirePath("properties.functionAppResourceId")]
         public string FunctionAppResourceId
         {
             get
@@ -63,6 +66,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> The region of the function app registered with the static site. </summary>
+        [WirePath("properties.functionAppRegion")]
         public string FunctionAppRegion
         {
             get
@@ -80,6 +84,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> The date and time on which the function app was registered with the static site. </summary>
+        [WirePath("properties.createdOn")]
         public DateTimeOffset? CreatedOn
         {
             get

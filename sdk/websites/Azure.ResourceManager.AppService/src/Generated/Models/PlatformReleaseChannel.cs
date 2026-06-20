@@ -7,9 +7,9 @@
 
 using System;
 using System.ComponentModel;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The platform release channel for the site. </summary>
     public readonly partial struct PlatformReleaseChannel : IEquatable<PlatformReleaseChannel>

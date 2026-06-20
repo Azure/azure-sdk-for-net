@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> AuthenticationPolicy of type Open. </summary>
     internal partial class OpenAuthenticationAccessPolicies
@@ -33,6 +33,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Open authentication policies. </summary>
+        [WirePath("policies")]
         public IDictionary<string, OpenAuthenticationAccessPolicy> Policies { get; }
     }
 }

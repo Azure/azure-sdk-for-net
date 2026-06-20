@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The AppLogsConfiguration. </summary>
     public partial class AppLogsConfiguration
@@ -33,9 +34,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Gets or sets the Destination. </summary>
+        [WirePath("destination")]
         public string Destination { get; set; }
 
         /// <summary> Gets or sets the LogAnalyticsConfiguration. </summary>
+        [WirePath("logAnalyticsConfiguration")]
         public LogAnalyticsConfiguration LogAnalyticsConfiguration { get; set; }
     }
 }

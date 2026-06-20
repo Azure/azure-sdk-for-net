@@ -7,7 +7,7 @@
 
 using Azure;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     internal partial class ErrorResult<T> : Response<T>
     {

@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
-using Microsoft.Web.Models;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary> Process Module Information. </summary>
     public partial class ProcessModuleInfoData : ResourceData
@@ -40,12 +40,15 @@ namespace Microsoft.Web
         }
 
         /// <summary> ProcessModuleInfo resource specific properties. </summary>
+        [WirePath("properties")]
         internal ProcessModuleInfoProperties Properties { get; }
 
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; }
 
         /// <summary> Base address. Used as module identifier in ARM resource URI. </summary>
+        [WirePath("properties.base_address")]
         public string BaseAddress
         {
             get
@@ -55,6 +58,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> File name. </summary>
+        [WirePath("properties.file_name")]
         public string FileName
         {
             get
@@ -64,6 +68,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> HRef URI. </summary>
+        [WirePath("properties.href")]
         public string Href
         {
             get
@@ -73,6 +78,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> File path. </summary>
+        [WirePath("properties.file_path")]
         public string FilePath
         {
             get
@@ -82,6 +88,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Module memory size. </summary>
+        [WirePath("properties.module_memory_size")]
         public int? ModuleMemorySize
         {
             get
@@ -91,6 +98,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> File version. </summary>
+        [WirePath("properties.file_version")]
         public string FileVersion
         {
             get
@@ -100,6 +108,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> File description. </summary>
+        [WirePath("properties.file_description")]
         public string FileDescription
         {
             get
@@ -109,6 +118,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Product name. </summary>
+        [WirePath("properties.product")]
         public string Product
         {
             get
@@ -118,6 +128,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Product version. </summary>
+        [WirePath("properties.product_version")]
         public string ProductVersion
         {
             get
@@ -127,6 +138,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Is debug?. </summary>
+        [WirePath("properties.is_debug")]
         public bool? IsDebug
         {
             get
@@ -136,6 +148,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Module language (locale). </summary>
+        [WirePath("properties.language")]
         public string Language
         {
             get

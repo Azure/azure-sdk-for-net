@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Description of a backup schedule. Describes how often should be the backup performed and what should be the retention policy. </summary>
     public partial class BackupSchedule
@@ -49,21 +50,27 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> How often the backup should be executed (e.g. for weekly backup, this should be set to 7 and FrequencyUnit should be set to Day). </summary>
+        [WirePath("frequencyInterval")]
         public int FrequencyInterval { get; set; }
 
         /// <summary> The unit of time for how often the backup should be executed (e.g. for weekly backup, this should be set to Day and FrequencyInterval should be set to 7). </summary>
+        [WirePath("frequencyUnit")]
         public FrequencyUnit FrequencyUnit { get; set; }
 
         /// <summary> True if the retention policy should always keep at least one backup in the storage account, regardless how old it is; false otherwise. </summary>
+        [WirePath("keepAtLeastOneBackup")]
         public bool KeepAtLeastOneBackup { get; set; }
 
         /// <summary> After how many days backups should be deleted. </summary>
+        [WirePath("retentionPeriodInDays")]
         public int RetentionPeriodInDays { get; set; }
 
         /// <summary> When the schedule should start working. </summary>
+        [WirePath("startTime")]
         public DateTimeOffset? StartOn { get; set; }
 
         /// <summary> Last time when this schedule was triggered. </summary>
+        [WirePath("lastExecutionTime")]
         public DateTimeOffset? LastExecutionOn { get; }
     }
 }

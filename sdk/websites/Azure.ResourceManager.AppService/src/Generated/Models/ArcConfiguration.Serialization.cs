@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The ArcConfiguration. </summary>
     public partial class ArcConfiguration : IJsonModel<ArcConfiguration>
@@ -40,7 +40,7 @@ namespace Microsoft.Web.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, MicrosoftWebContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ArcConfiguration)} does not support writing '{options.Format}' format.");
             }
@@ -151,7 +151,7 @@ namespace Microsoft.Web.Models
             {
                 return null;
             }
-            StorageType? artifactsStorageType = default;
+            Models.ArtifactStorageType? artifactsStorageType = default;
             string artifactStorageClassName = default;
             string artifactStorageMountPath = default;
             string artifactStorageNodeName = default;
@@ -167,7 +167,7 @@ namespace Microsoft.Web.Models
                     {
                         continue;
                     }
-                    artifactsStorageType = prop.Value.GetString().ToStorageType();
+                    artifactsStorageType = prop.Value.GetString().ToArtifactStorageType();
                     continue;
                 }
                 if (prop.NameEquals("artifactStorageClassName"u8))

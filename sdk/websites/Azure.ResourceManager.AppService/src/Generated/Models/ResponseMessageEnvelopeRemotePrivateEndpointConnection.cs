@@ -7,9 +7,12 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure;
+using Azure.Core;
+using Azure.ResourceManager.AppService;
+using Azure.ResourceManager.Models;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Message envelope that contains the common Azure resource manager properties and the resource provider specific content. </summary>
     public partial class ResponseMessageEnvelopeRemotePrivateEndpointConnection
@@ -42,7 +45,7 @@ namespace Microsoft.Web.Models
         /// <param name="identity"> MSI resource. </param>
         /// <param name="zones"> Logical Availability Zones the service is hosted in. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResponseMessageEnvelopeRemotePrivateEndpointConnection(string id, string name, string @type, string location, IDictionary<string, string> tags, ArmPlan plan, RemotePrivateEndpointConnection properties, SkuDescription sku, string status, ErrorEntity error, ManagedServiceIdentity identity, IList<string> zones, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResponseMessageEnvelopeRemotePrivateEndpointConnection(string id, string name, string @type, AzureLocation? location, IReadOnlyDictionary<string, string> tags, Models.AppServiceArmPlan plan, RemotePrivateEndpointConnection properties, Models.AppServiceSkuDescription sku, string status, ResponseError error, ResourceManager.Models.ManagedServiceIdentity identity, IReadOnlyList<string> zones, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
@@ -64,39 +67,51 @@ namespace Microsoft.Web.Models
         /// value for GET requests only.
         /// For example: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupId}/providers/Microsoft.Web/sites/{sitename}
         /// </summary>
+        [WirePath("id")]
         public string Id { get; }
 
         /// <summary> Name of resource. </summary>
+        [WirePath("name")]
         public string Name { get; }
 
         /// <summary> Type of resource e.g "Microsoft.Web/sites". </summary>
+        [WirePath("type")]
         public string Type { get; }
 
         /// <summary> Geographical region resource belongs to e.g. SouthCentralUS, SouthEastAsia. </summary>
-        public string Location { get; }
+        [WirePath("location")]
+        public AzureLocation? Location { get; }
 
         /// <summary> Tags associated with resource. </summary>
-        public IDictionary<string, string> Tags { get; }
+        [WirePath("tags")]
+        public IReadOnlyDictionary<string, string> Tags { get; }
 
         /// <summary> Azure resource manager plan. </summary>
-        public ArmPlan Plan { get; }
+        [WirePath("plan")]
+        public Models.AppServiceArmPlan Plan { get; }
 
         /// <summary> Resource specific properties. </summary>
+        [WirePath("properties")]
         public RemotePrivateEndpointConnection Properties { get; }
 
         /// <summary> SKU description of the resource. </summary>
-        public SkuDescription Sku { get; }
+        [WirePath("sku")]
+        public Models.AppServiceSkuDescription Sku { get; }
 
         /// <summary> Azure-AsyncOperation Status info. </summary>
+        [WirePath("status")]
         public string Status { get; }
 
         /// <summary> Azure-AsyncOperation Error info. </summary>
-        public ErrorEntity Error { get; }
+        [WirePath("error")]
+        public ResponseError Error { get; }
 
         /// <summary> MSI resource. </summary>
-        public ManagedServiceIdentity Identity { get; }
+        [WirePath("identity")]
+        public ResourceManager.Models.ManagedServiceIdentity Identity { get; }
 
         /// <summary> Logical Availability Zones the service is hosted in. </summary>
-        public IList<string> Zones { get; }
+        [WirePath("zones")]
+        public IReadOnlyList<string> Zones { get; }
     }
 }

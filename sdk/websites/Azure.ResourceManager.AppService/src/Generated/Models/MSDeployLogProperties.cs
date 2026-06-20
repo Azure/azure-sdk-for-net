@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> MSDeployLog resource specific properties. </summary>
     internal partial class MSDeployLogProperties
@@ -33,6 +33,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> List of log entry messages. </summary>
+        [WirePath("entries")]
         public IReadOnlyList<MSDeployLogEntry> Entries { get; } = new ChangeTrackingList<MSDeployLogEntry>();
     }
 }

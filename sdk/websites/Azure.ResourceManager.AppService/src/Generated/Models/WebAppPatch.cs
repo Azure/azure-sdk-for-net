@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> ARM resource for a PremierAddOn. </summary>
     public partial class WebAppPatch : ProxyOnlyResource
@@ -31,6 +32,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> PremierAddOnPatchResource resource specific properties. </summary>
+        [WirePath("properties")]
         public PremierAddOnPatchResourceProperties Properties { get; set; }
     }
 }

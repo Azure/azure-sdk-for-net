@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
-using Microsoft.Web.Models;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary> Class representing Response from Detector. </summary>
     public partial class DetectorResponseData : ResourceData
@@ -40,12 +40,15 @@ namespace Microsoft.Web
         }
 
         /// <summary> DetectorResponse resource specific properties. </summary>
+        [WirePath("properties")]
         internal DetectorResponseProperties Properties { get; }
 
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; }
 
         /// <summary> metadata for the detector. </summary>
+        [WirePath("properties.metadata")]
         public DetectorInfo Metadata
         {
             get
@@ -55,6 +58,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Data Set. </summary>
+        [WirePath("properties.dataset")]
         public IList<DiagnosticData> Dataset
         {
             get
@@ -64,6 +68,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Indicates status of the most severe insight. </summary>
+        [WirePath("properties.status")]
         public Status Status
         {
             get
@@ -73,6 +78,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Additional configuration for different data providers to be used by the UI. </summary>
+        [WirePath("properties.dataProvidersMetadata")]
         public IList<DataProviderMetadata> DataProvidersMetadata
         {
             get
@@ -82,6 +88,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Suggested utterances where the detector can be applicable. </summary>
+        [WirePath("properties.suggestedUtterances")]
         public QueryUtterancesResults SuggestedUtterances
         {
             get

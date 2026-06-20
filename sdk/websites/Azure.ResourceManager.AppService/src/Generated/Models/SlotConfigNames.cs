@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary>
     /// Names for connection strings, application settings, and external Azure storage account configuration
@@ -43,12 +43,15 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> List of connection string names. </summary>
+        [WirePath("connectionStringNames")]
         public IList<string> ConnectionStringNames { get; } = new ChangeTrackingList<string>();
 
         /// <summary> List of application settings names. </summary>
+        [WirePath("appSettingNames")]
         public IList<string> AppSettingNames { get; } = new ChangeTrackingList<string>();
 
         /// <summary> List of external Azure storage account identifiers. </summary>
+        [WirePath("azureStorageConfigNames")]
         public IList<string> AzureStorageConfigNames { get; } = new ChangeTrackingList<string>();
     }
 }

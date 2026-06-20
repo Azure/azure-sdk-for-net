@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Description of a Virtual Network subnet that is useable for private site access. </summary>
     public partial class PrivateAccessSubnet
@@ -33,9 +34,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The name of the subnet. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
 
         /// <summary> The key (ID) of the subnet. </summary>
+        [WirePath("key")]
         public int? Key { get; set; }
     }
 }

@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Class representing Abnormal Time Period identified in diagnosis. </summary>
     public partial class AbnormalTimePeriod
@@ -21,7 +21,7 @@ namespace Microsoft.Web.Models
         internal AbnormalTimePeriod()
         {
             Events = new ChangeTrackingList<DetectorAbnormalTimePeriod>();
-            Solutions = new ChangeTrackingList<Solution>();
+            Solutions = new ChangeTrackingList<Models.DiagnosticSolution>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AbnormalTimePeriod"/>. </summary>
@@ -30,7 +30,7 @@ namespace Microsoft.Web.Models
         /// <param name="events"> List of Possible Cause of downtime. </param>
         /// <param name="solutions"> List of proposed solutions. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AbnormalTimePeriod(DateTimeOffset? startOn, DateTimeOffset? endOn, IList<DetectorAbnormalTimePeriod> events, IList<Solution> solutions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AbnormalTimePeriod(DateTimeOffset? startOn, DateTimeOffset? endOn, IList<DetectorAbnormalTimePeriod> events, IList<Models.DiagnosticSolution> solutions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StartOn = startOn;
             EndOn = endOn;
@@ -40,15 +40,19 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Start time of the downtime. </summary>
+        [WirePath("startTime")]
         public DateTimeOffset? StartOn { get; }
 
         /// <summary> End time of the downtime. </summary>
+        [WirePath("endTime")]
         public DateTimeOffset? EndOn { get; }
 
         /// <summary> List of Possible Cause of downtime. </summary>
+        [WirePath("events")]
         public IList<DetectorAbnormalTimePeriod> Events { get; }
 
         /// <summary> List of proposed solutions. </summary>
-        public IList<Solution> Solutions { get; }
+        [WirePath("solutions")]
+        public IList<Models.DiagnosticSolution> Solutions { get; }
     }
 }

@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> SiteContainer resource specific properties. </summary>
     internal partial class SiteContainerProperties
@@ -65,42 +65,55 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Image Name. </summary>
+        [WirePath("image")]
         public string Image { get; set; }
 
         /// <summary> Target Port. </summary>
+        [WirePath("targetPort")]
         public string TargetPort { get; set; }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if the container is the main site container; &lt;code&gt;false&lt;/code&gt; otherwise. </summary>
+        [WirePath("isMain")]
         public bool IsMain { get; set; }
 
         /// <summary> StartUp Command. </summary>
+        [WirePath("startUpCommand")]
         public string StartUpCommand { get; set; }
 
         /// <summary> Auth Type. </summary>
+        [WirePath("authType")]
         public AuthType? AuthType { get; set; }
 
         /// <summary> User Name. </summary>
+        [WirePath("userName")]
         public string UserName { get; set; }
 
         /// <summary> Password Secret. </summary>
+        [WirePath("passwordSecret")]
         public string PasswordSecret { get; set; }
 
         /// <summary> UserManagedIdentity ClientId. </summary>
+        [WirePath("userManagedIdentityClientId")]
         public string UserManagedIdentityClientId { get; set; }
 
         /// <summary> Created Time. </summary>
+        [WirePath("createdTime")]
         public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> Last Modified Time. </summary>
+        [WirePath("lastModifiedTime")]
         public DateTimeOffset? LastModifiedOn { get; }
 
         /// <summary> List of volume mounts. </summary>
+        [WirePath("volumeMounts")]
         public IList<VolumeMount> VolumeMounts { get; } = new ChangeTrackingList<VolumeMount>();
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if all AppSettings and ConnectionStrings have to be passed to the container as environment variables; &lt;code&gt;false&lt;/code&gt; otherwise. </summary>
+        [WirePath("inheritAppSettingsAndConnectionStrings")]
         public bool? InheritAppSettingsAndConnectionStrings { get; set; }
 
         /// <summary> List of environment variables. </summary>
+        [WirePath("environmentVariables")]
         public IList<EnvironmentVariable> EnvironmentVariables { get; } = new ChangeTrackingList<EnvironmentVariable>();
     }
 }

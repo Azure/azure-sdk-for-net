@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
-using Microsoft.Web.Models;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary> The source control OAuth token. </summary>
     public partial class SourceControlData : ResourceData
@@ -40,12 +40,15 @@ namespace Microsoft.Web
         }
 
         /// <summary> SourceControl resource specific properties. </summary>
+        [WirePath("properties")]
         internal SourceControlProperties Properties { get; set; }
 
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
 
         /// <summary> OAuth access token. </summary>
+        [WirePath("properties.token")]
         public string Token
         {
             get
@@ -63,6 +66,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> OAuth access token secret. </summary>
+        [WirePath("properties.tokenSecret")]
         public string TokenSecret
         {
             get
@@ -80,6 +84,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> OAuth refresh token. </summary>
+        [WirePath("properties.refreshToken")]
         public string RefreshToken
         {
             get
@@ -97,6 +102,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> OAuth token expiration. </summary>
+        [WirePath("properties.expirationTime")]
         public DateTimeOffset? ExpireOn
         {
             get

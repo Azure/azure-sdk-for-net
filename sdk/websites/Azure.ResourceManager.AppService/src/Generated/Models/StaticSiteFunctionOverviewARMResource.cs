@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Static Site Function Overview ARM resource. </summary>
     public partial class StaticSiteFunctionOverviewARMResource : ProxyOnlyResource
@@ -31,9 +32,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> StaticSiteFunctionOverviewARMResource resource specific properties. </summary>
+        [WirePath("properties")]
         internal StaticSiteFunctionOverviewARMResourceProperties Properties { get; }
 
         /// <summary> The name for the function. </summary>
+        [WirePath("properties.functionName")]
         public string FunctionName
         {
             get
@@ -43,6 +46,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The trigger type of the function. </summary>
+        [WirePath("properties.triggerType")]
         public TriggerTypes? TriggerType
         {
             get

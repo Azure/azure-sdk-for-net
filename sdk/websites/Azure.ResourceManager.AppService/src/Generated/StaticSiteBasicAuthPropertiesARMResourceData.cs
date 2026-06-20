@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
-using Microsoft.Web.Models;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary> Static site basic auth properties ARM resource. </summary>
     public partial class StaticSiteBasicAuthPropertiesARMResourceData : ResourceData
@@ -40,12 +40,15 @@ namespace Microsoft.Web
         }
 
         /// <summary> StaticSiteBasicAuthPropertiesARMResource resource specific properties. </summary>
+        [WirePath("properties")]
         internal StaticSiteBasicAuthPropertiesARMResourceProperties Properties { get; set; }
 
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
 
         /// <summary> The password for basic auth. </summary>
+        [WirePath("properties.password")]
         public string Password
         {
             get
@@ -63,6 +66,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Url to the secret in Key Vault. </summary>
+        [WirePath("properties.secretUrl")]
         public string SecretUri
         {
             get
@@ -80,6 +84,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> State indicating if basic auth is enabled and for what environments it is active. </summary>
+        [WirePath("properties.applicableEnvironmentsMode")]
         public string ApplicableEnvironmentsMode
         {
             get
@@ -97,6 +102,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> The list of enabled environments for Basic Auth if ApplicableEnvironmentsMode is set to SpecifiedEnvironments. </summary>
+        [WirePath("properties.environments")]
         public IList<string> Environments
         {
             get
@@ -110,6 +116,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> State indicating if basic auth has a secret and what type it is. </summary>
+        [WirePath("properties.secretState")]
         public string SecretState
         {
             get

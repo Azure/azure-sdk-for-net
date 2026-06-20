@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Static sites user roles invitation link resource. </summary>
     public partial class StaticSiteUserInvitationResponseResource : ProxyOnlyResource
@@ -31,9 +32,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> StaticSiteUserInvitationResponseResource resource specific properties. </summary>
+        [WirePath("properties")]
         internal StaticSiteUserInvitationResponseResourceProperties Properties { get; }
 
         /// <summary> The expiration time of the invitation. </summary>
+        [WirePath("properties.expiresOn")]
         public DateTimeOffset? ExpiresOn
         {
             get
@@ -43,6 +46,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The url for the invitation link. </summary>
+        [WirePath("properties.invitationUrl")]
         public string InvitationUri
         {
             get

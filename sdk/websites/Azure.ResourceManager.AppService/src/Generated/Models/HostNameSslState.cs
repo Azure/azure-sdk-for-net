@@ -7,8 +7,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> SSL-enabled hostname. </summary>
     public partial class HostNameSslState
@@ -29,7 +31,7 @@ namespace Microsoft.Web.Models
         /// <param name="toUpdate"> Set to &lt;code&gt;true&lt;/code&gt; to update existing hostname. </param>
         /// <param name="hostType"> Indicates whether the hostname is a standard or repository hostname. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HostNameSslState(string name, SslState? sslState, string virtualIP, string thumbprint, bool? toUpdate, HostType? hostType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HostNameSslState(string name, Models.HostNameBindingSslState? sslState, string virtualIP, BinaryData thumbprint, bool? toUpdate, Models.AppServiceHostType? hostType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             SslState = sslState;
@@ -41,21 +43,52 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Hostname. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
 
         /// <summary> SSL type. </summary>
-        public SslState? SslState { get; set; }
+        [WirePath("sslState")]
+        public Models.HostNameBindingSslState? SslState { get; set; }
 
         /// <summary> Virtual IP address assigned to the hostname if IP based SSL is enabled. </summary>
+        [WirePath("virtualIP")]
         public string VirtualIP { get; set; }
 
-        /// <summary> SSL certificate thumbprint. </summary>
-        public string Thumbprint { get; set; }
+        /// <summary>
+        /// SSL certificate thumbprint.
+        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
+        /// <description> Creates a payload of "foo". </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromString("\"foo\""). </term>
+        /// <description> Creates a payload of "foo". </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        [WirePath("thumbprint")]
+        public BinaryData Thumbprint { get; set; }
 
         /// <summary> Set to &lt;code&gt;true&lt;/code&gt; to update existing hostname. </summary>
+        [WirePath("toUpdate")]
         public bool? ToUpdate { get; set; }
 
         /// <summary> Indicates whether the hostname is a standard or repository hostname. </summary>
-        public HostType? HostType { get; set; }
+        [WirePath("hostType")]
+        public Models.AppServiceHostType? HostType { get; set; }
     }
 }

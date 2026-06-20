@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The authentication client credentials of the custom Open ID Connect provider. </summary>
     public partial class OpenIdConnectClientCredential
@@ -25,7 +26,7 @@ namespace Microsoft.Web.Models
         /// <param name="method"> The method that should be used to authenticate the user. </param>
         /// <param name="clientSecretSettingName"> The app setting that contains the client secret for the custom Open ID Connect provider. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OpenIdConnectClientCredential(OpenIdConnectClientCredentialMethod? @method, string clientSecretSettingName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OpenIdConnectClientCredential(Models.ClientCredentialMethod? @method, string clientSecretSettingName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Method = @method;
             ClientSecretSettingName = clientSecretSettingName;
@@ -33,9 +34,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The method that should be used to authenticate the user. </summary>
-        public OpenIdConnectClientCredentialMethod? Method { get; set; }
+        [WirePath("method")]
+        public Models.ClientCredentialMethod? Method { get; set; }
 
         /// <summary> The app setting that contains the client secret for the custom Open ID Connect provider. </summary>
+        [WirePath("clientSecretSettingName")]
         public string ClientSecretSettingName { get; set; }
     }
 }

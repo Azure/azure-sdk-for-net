@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
-using Microsoft.Web.Models;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary> Used for getting ResourceHealthCheck settings. </summary>
     public partial class ResourceHealthMetadataData : ResourceData
@@ -40,12 +40,15 @@ namespace Microsoft.Web
         }
 
         /// <summary> ResourceHealthMetadata resource specific properties. </summary>
+        [WirePath("properties")]
         internal ResourceHealthMetadataProperties Properties { get; }
 
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; }
 
         /// <summary> The category that the resource matches in the RHC Policy File. </summary>
+        [WirePath("properties.category")]
         public string Category
         {
             get
@@ -55,6 +58,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Is there a health signal for the resource. </summary>
+        [WirePath("properties.signalAvailability")]
         public bool? SignalAvailability
         {
             get

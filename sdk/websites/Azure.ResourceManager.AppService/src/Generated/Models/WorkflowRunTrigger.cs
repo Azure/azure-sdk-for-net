@@ -8,8 +8,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The workflow run trigger. </summary>
     public partial class WorkflowRunTrigger
@@ -38,7 +39,7 @@ namespace Microsoft.Web.Models
         /// <param name="error"> Gets the error. </param>
         /// <param name="trackedProperties"> Gets the tracked properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WorkflowRunTrigger(string name, BinaryData inputs, ContentLink inputsLink, BinaryData outputs, ContentLink outputsLink, DateTimeOffset? scheduledOn, DateTimeOffset? startOn, DateTimeOffset? endOn, string trackingId, Correlation correlation, string code, WorkflowStatus? status, BinaryData error, BinaryData trackedProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WorkflowRunTrigger(string name, BinaryData inputs, Models.WebAppContentLink inputsLink, BinaryData outputs, Models.WebAppContentLink outputsLink, DateTimeOffset? scheduledOn, DateTimeOffset? startOn, DateTimeOffset? endOn, string trackingId, Correlation correlation, string code, WorkflowStatus? status, BinaryData error, BinaryData trackedProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Inputs = inputs;
@@ -58,6 +59,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Gets the name. </summary>
+        [WirePath("name")]
         public string Name { get; }
 
         /// <summary>
@@ -86,10 +88,12 @@ namespace Microsoft.Web.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("inputs")]
         public BinaryData Inputs { get; }
 
         /// <summary> Gets the link to inputs. </summary>
-        public ContentLink InputsLink { get; }
+        [WirePath("inputsLink")]
+        public Models.WebAppContentLink InputsLink { get; }
 
         /// <summary>
         /// Gets the outputs.
@@ -117,30 +121,39 @@ namespace Microsoft.Web.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("outputs")]
         public BinaryData Outputs { get; }
 
         /// <summary> Gets the link to outputs. </summary>
-        public ContentLink OutputsLink { get; }
+        [WirePath("outputsLink")]
+        public Models.WebAppContentLink OutputsLink { get; }
 
         /// <summary> Gets the scheduled time. </summary>
+        [WirePath("scheduledTime")]
         public DateTimeOffset? ScheduledOn { get; }
 
         /// <summary> Gets the start time. </summary>
+        [WirePath("startTime")]
         public DateTimeOffset? StartOn { get; }
 
         /// <summary> Gets the end time. </summary>
+        [WirePath("endTime")]
         public DateTimeOffset? EndOn { get; }
 
         /// <summary> Gets the tracking id. </summary>
+        [WirePath("trackingId")]
         public string TrackingId { get; }
 
         /// <summary> The run correlation. </summary>
+        [WirePath("correlation")]
         internal Correlation Correlation { get; }
 
         /// <summary> Gets the code. </summary>
+        [WirePath("code")]
         public string Code { get; }
 
         /// <summary> Gets the status. </summary>
+        [WirePath("status")]
         public WorkflowStatus? Status { get; }
 
         /// <summary>
@@ -169,6 +182,7 @@ namespace Microsoft.Web.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("error")]
         public BinaryData Error { get; }
 
         /// <summary>
@@ -197,9 +211,11 @@ namespace Microsoft.Web.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("trackedProperties")]
         public BinaryData TrackedProperties { get; }
 
         /// <summary> The client tracking id. </summary>
+        [WirePath("correlation.clientTrackingId")]
         public string CorrelationClientTrackingId
         {
             get

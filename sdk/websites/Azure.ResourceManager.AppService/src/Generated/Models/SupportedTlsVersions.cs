@@ -7,9 +7,9 @@
 
 using System;
 using System.ComponentModel;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> MinTlsVersion: configures the minimum version of TLS required for SSL requests. </summary>
     public readonly partial struct SupportedTlsVersions : IEquatable<SupportedTlsVersions>

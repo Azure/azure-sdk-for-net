@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Diagnostics for an App Service Environment. </summary>
     public partial class HostingEnvironmentDiagnostics
@@ -33,9 +34,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Name/identifier of the diagnostics. </summary>
+        [WirePath("name")]
         public string Name { get; }
 
         /// <summary> Diagnostics output. </summary>
+        [WirePath("diagnosticsOutput")]
         public string DiagnosticsOutput { get; }
     }
 }

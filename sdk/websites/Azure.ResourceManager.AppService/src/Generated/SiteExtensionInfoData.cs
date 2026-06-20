@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
-using Microsoft.Web.Models;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary> Site Extension Information. </summary>
     public partial class SiteExtensionInfoData : ResourceData
@@ -40,12 +40,15 @@ namespace Microsoft.Web
         }
 
         /// <summary> SiteExtensionInfo resource specific properties. </summary>
+        [WirePath("properties")]
         internal SiteExtensionInfoProperties Properties { get; }
 
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; }
 
         /// <summary> Site extension ID. </summary>
+        [WirePath("properties.extension_id")]
         public string ExtensionId
         {
             get
@@ -55,6 +58,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Gets the Title. </summary>
+        [WirePath("properties.title")]
         public string Title
         {
             get
@@ -64,6 +68,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Site extension type. </summary>
+        [WirePath("properties.extension_type")]
         public SiteExtensionType? ExtensionType
         {
             get
@@ -73,6 +78,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Summary description. </summary>
+        [WirePath("properties.summary")]
         public string Summary
         {
             get
@@ -82,6 +88,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Detailed description. </summary>
+        [WirePath("properties.description")]
         public string Description
         {
             get
@@ -91,6 +98,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Version information. </summary>
+        [WirePath("properties.version")]
         public string Version
         {
             get
@@ -100,6 +108,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Extension URL. </summary>
+        [WirePath("properties.extension_url")]
         public string ExtensionUri
         {
             get
@@ -109,6 +118,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Project URL. </summary>
+        [WirePath("properties.project_url")]
         public string ProjectUri
         {
             get
@@ -118,6 +128,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Icon URL. </summary>
+        [WirePath("properties.icon_url")]
         public string IconUri
         {
             get
@@ -127,6 +138,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> License URL. </summary>
+        [WirePath("properties.license_url")]
         public string LicenseUri
         {
             get
@@ -136,6 +148,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Feed URL. </summary>
+        [WirePath("properties.feed_url")]
         public string FeedUri
         {
             get
@@ -145,6 +158,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> List of authors. </summary>
+        [WirePath("properties.authors")]
         public IList<string> Authors
         {
             get
@@ -154,6 +168,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Installer command line parameters. </summary>
+        [WirePath("properties.installer_command_line_params")]
         public string InstallerCommandLineParams
         {
             get
@@ -163,6 +178,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Published timestamp. </summary>
+        [WirePath("properties.published_date_time")]
         public DateTimeOffset? PublishedOn
         {
             get
@@ -172,6 +188,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Count of downloads. </summary>
+        [WirePath("properties.download_count")]
         public int? DownloadCount
         {
             get
@@ -181,6 +198,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if the local version is the latest version; &lt;code&gt;false&lt;/code&gt; otherwise. </summary>
+        [WirePath("properties.local_is_latest_version")]
         public bool? LocalIsLatestVersion
         {
             get
@@ -190,6 +208,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Local path. </summary>
+        [WirePath("properties.local_path")]
         public string LocalPath
         {
             get
@@ -199,6 +218,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Installed timestamp. </summary>
+        [WirePath("properties.installed_date_time")]
         public DateTimeOffset? InstalledOn
         {
             get
@@ -208,6 +228,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Provisioning state. </summary>
+        [WirePath("properties.provisioningState")]
         public string ProvisioningState
         {
             get
@@ -217,6 +238,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Site Extension comment. </summary>
+        [WirePath("properties.comment")]
         public string Comment
         {
             get

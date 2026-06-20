@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Function app site update strategy configuration for deployments and site config updates. </summary>
     internal partial class FunctionsSiteUpdateStrategy
@@ -31,6 +32,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Function app site update strategy type. Available options: Recreate, RollingUpdate. </summary>
+        [WirePath("type")]
         public SiteUpdateStrategyType? Type { get; set; }
     }
 }

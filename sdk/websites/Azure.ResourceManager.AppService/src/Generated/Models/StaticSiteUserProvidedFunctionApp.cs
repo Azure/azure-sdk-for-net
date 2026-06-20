@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> A static site user provided function. </summary>
     public partial class StaticSiteUserProvidedFunctionApp : ProxyOnlyResource
@@ -31,9 +32,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> StaticSiteUserProvidedFunctionApp resource specific properties. </summary>
+        [WirePath("properties")]
         internal StaticSiteUserProvidedFunctionAppProperties Properties { get; }
 
         /// <summary> The resource id of the function app registered with the static site. </summary>
+        [WirePath("properties.functionAppResourceId")]
         public string FunctionAppResourceId
         {
             get
@@ -43,6 +46,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The region of the function app registered with the static site. </summary>
+        [WirePath("properties.functionAppRegion")]
         public string FunctionAppRegion
         {
             get
@@ -52,6 +56,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The date and time on which the function app was registered with the static site. </summary>
+        [WirePath("properties.createdOn")]
         public DateTimeOffset? CreatedOn
         {
             get

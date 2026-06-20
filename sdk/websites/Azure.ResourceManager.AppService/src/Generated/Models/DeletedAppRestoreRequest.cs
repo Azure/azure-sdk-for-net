@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Details about restoring a deleted app. </summary>
     public partial class DeletedAppRestoreRequest : ProxyOnlyResource
@@ -31,12 +32,14 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> DeletedAppRestoreRequest resource specific properties. </summary>
+        [WirePath("properties")]
         internal DeletedAppRestoreRequestProperties Properties { get; set; }
 
         /// <summary>
         /// ARM resource ID of the deleted app. Example:
         /// /subscriptions/{subId}/providers/Microsoft.Web/deletedSites/{deletedSiteId}
         /// </summary>
+        [WirePath("properties.deletedSiteId")]
         public string DeletedSiteId
         {
             get
@@ -54,6 +57,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> If true, deleted site configuration, in addition to content, will be restored. </summary>
+        [WirePath("properties.recoverConfiguration")]
         public bool? RecoverConfiguration
         {
             get
@@ -74,6 +78,7 @@ namespace Microsoft.Web.Models
         /// Point in time to restore the deleted app from, formatted as a DateTime string.
         /// If unspecified, default value is the time that the app was deleted.
         /// </summary>
+        [WirePath("properties.snapshotTime")]
         public string SnapshotTime
         {
             get
@@ -91,6 +96,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> If true, the snapshot is retrieved from DRSecondary endpoint. </summary>
+        [WirePath("properties.useDRSecondary")]
         public bool? UseDRSecondary
         {
             get

@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> A wrapper for an ARM resource id. </summary>
     internal partial class ArmIdWrapper
@@ -31,6 +32,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Gets the Id. </summary>
+        [WirePath("id")]
         public string Id { get; }
     }
 }

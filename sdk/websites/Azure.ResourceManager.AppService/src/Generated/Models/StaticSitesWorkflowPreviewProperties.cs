@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> StaticSitesWorkflowPreview resource specific properties. </summary>
     internal partial class StaticSitesWorkflowPreviewProperties
@@ -33,9 +34,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The path for the workflow file to be generated. </summary>
+        [WirePath("path")]
         public string Path { get; }
 
         /// <summary> The contents for the workflow file to be generated. </summary>
+        [WirePath("contents")]
         public string Contents { get; }
     }
 }

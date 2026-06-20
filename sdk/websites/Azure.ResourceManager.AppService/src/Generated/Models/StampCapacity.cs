@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Stamp capacity information. </summary>
     public partial class StampCapacity
@@ -42,7 +43,7 @@ namespace Microsoft.Web.Models
         /// <param name="siteMode"> Shared or Dedicated. </param>
         /// <param name="isLinux"> Is this a linux stamp capacity. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StampCapacity(string name, long? availableCapacity, long? totalCapacity, string unit, ComputeModeOptions? computeMode, WorkerSizeOptions? workerSize, int? workerSizeId, bool? excludeFromCapacityAllocation, bool? isApplicableForAllComputeModes, string siteMode, bool? isLinux, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StampCapacity(string name, long? availableCapacity, long? totalCapacity, string unit, Models.ComputeModeOption? computeMode, Models.WorkerSizeOption? workerSize, int? workerSizeId, bool? excludeFromCapacityAllocation, bool? isApplicableForAllComputeModes, string siteMode, bool? isLinux, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             AvailableCapacity = availableCapacity;
@@ -59,22 +60,28 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Name of the stamp. </summary>
+        [WirePath("name")]
         public string Name { get; }
 
         /// <summary> Available capacity (# of machines, bytes of storage etc...). </summary>
+        [WirePath("availableCapacity")]
         public long? AvailableCapacity { get; }
 
         /// <summary> Total capacity (# of machines, bytes of storage etc...). </summary>
+        [WirePath("totalCapacity")]
         public long? TotalCapacity { get; }
 
         /// <summary> Name of the unit. </summary>
+        [WirePath("unit")]
         public string Unit { get; }
 
         /// <summary> Shared/dedicated workers. </summary>
-        public ComputeModeOptions? ComputeMode { get; }
+        [WirePath("computeMode")]
+        public Models.ComputeModeOption? ComputeMode { get; }
 
         /// <summary> Size of the machines. </summary>
-        public WorkerSizeOptions? WorkerSize { get; }
+        [WirePath("workerSize")]
+        public Models.WorkerSizeOption? WorkerSize { get; }
 
         /// <summary>
         /// Size ID of machines:
@@ -82,21 +89,26 @@ namespace Microsoft.Web.Models
         /// 1 - Medium
         /// 2 - Large
         /// </summary>
+        [WirePath("workerSizeId")]
         public int? WorkerSizeId { get; }
 
         /// <summary>
         /// If &lt;code&gt;true&lt;/code&gt;, it includes basic apps.
         /// Basic apps are not used for capacity allocation.
         /// </summary>
+        [WirePath("excludeFromCapacityAllocation")]
         public bool? ExcludeFromCapacityAllocation { get; }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if capacity is applicable for all apps; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("isApplicableForAllComputeModes")]
         public bool? IsApplicableForAllComputeModes { get; }
 
         /// <summary> Shared or Dedicated. </summary>
+        [WirePath("siteMode")]
         public string SiteMode { get; }
 
         /// <summary> Is this a linux stamp capacity. </summary>
+        [WirePath("isLinux")]
         public bool? IsLinux { get; }
     }
 }

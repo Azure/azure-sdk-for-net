@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Static Site User ARM resource. </summary>
     public partial class StaticSiteUserARMResource : ProxyOnlyResource
@@ -31,9 +32,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> StaticSiteUserARMResource resource specific properties. </summary>
+        [WirePath("properties")]
         internal StaticSiteUserARMResourceProperties Properties { get; set; }
 
         /// <summary> The identity provider for the static site user. </summary>
+        [WirePath("properties.provider")]
         public string Provider
         {
             get
@@ -43,6 +46,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The user id for the static site user. </summary>
+        [WirePath("properties.userId")]
         public string UserId
         {
             get
@@ -52,6 +56,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The display name for the static site user. </summary>
+        [WirePath("properties.displayName")]
         public string DisplayName
         {
             get
@@ -61,6 +66,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The roles for the static site user, in free-form string format. </summary>
+        [WirePath("properties.roles")]
         public string Roles
         {
             get

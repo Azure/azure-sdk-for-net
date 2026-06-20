@@ -7,9 +7,9 @@
 
 using System;
 using System.ComponentModel;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Open authentication policy provider type. </summary>
     public readonly partial struct OpenAuthenticationProviderType : IEquatable<OpenAuthenticationProviderType>

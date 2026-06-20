@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The configuration settings of the storage of the tokens if a file system is used. </summary>
     internal partial class FileSystemTokenStore
@@ -31,6 +32,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The directory in which the tokens will be stored. </summary>
+        [WirePath("directory")]
         public string Directory { get; set; }
     }
 }

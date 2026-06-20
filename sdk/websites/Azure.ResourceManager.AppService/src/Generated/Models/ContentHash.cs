@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The content hash. </summary>
     public partial class ContentHash
@@ -33,9 +34,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The algorithm of the content hash. </summary>
+        [WirePath("algorithm")]
         public string Algorithm { get; }
 
         /// <summary> The value of the content hash. </summary>
+        [WirePath("value")]
         public string Value { get; }
     }
 }

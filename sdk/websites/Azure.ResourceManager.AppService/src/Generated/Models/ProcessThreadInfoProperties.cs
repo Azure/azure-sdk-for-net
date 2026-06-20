@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> ProcessThreadInfo resource specific properties. </summary>
     internal partial class ProcessThreadInfoProperties
@@ -53,39 +54,51 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Site extension ID. </summary>
+        [WirePath("identifier")]
         public int? Identifier { get; }
 
         /// <summary> HRef URI. </summary>
+        [WirePath("href")]
         public string Href { get; }
 
         /// <summary> Process URI. </summary>
+        [WirePath("process")]
         public string Process { get; }
 
         /// <summary> Start address. </summary>
+        [WirePath("start_address")]
         public string StartAddress { get; }
 
         /// <summary> Current thread priority. </summary>
+        [WirePath("current_priority")]
         public int? CurrentPriority { get; }
 
         /// <summary> Thread priority level. </summary>
+        [WirePath("priority_level")]
         public string PriorityLevel { get; }
 
         /// <summary> Base priority. </summary>
+        [WirePath("base_priority")]
         public int? BasePriority { get; }
 
         /// <summary> Start time. </summary>
+        [WirePath("start_time")]
         public DateTimeOffset? StartOn { get; }
 
         /// <summary> Total processor time. </summary>
+        [WirePath("total_processor_time")]
         public string TotalProcessorTime { get; }
 
         /// <summary> User processor time. </summary>
+        [WirePath("user_processor_time")]
         public string UserProcessorTime { get; }
 
         /// <summary> Thread state. </summary>
+        [WirePath("state")]
         public string State { get; }
 
         /// <summary> Wait reason. </summary>
+        [WirePath("wait_reason")]
         public string WaitReason { get; }
     }
 }

@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> RecommendationRule resource specific properties. </summary>
     internal partial class RecommendationRuleProperties
@@ -60,45 +60,58 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Unique name of the rule. </summary>
+        [WirePath("recommendationName")]
         public string RecommendationName { get; }
 
         /// <summary> UI friendly name of the rule. </summary>
+        [WirePath("displayName")]
         public string DisplayName { get; }
 
         /// <summary> Localized name of the rule (Good for UI). </summary>
+        [WirePath("message")]
         public string Message { get; }
 
         /// <summary>
         /// Recommendation ID of an associated recommendation object tied to the rule, if exists.
         /// If such an object doesn't exist, it is set to null.
         /// </summary>
+        [WirePath("recommendationId")]
         public string RecommendationId { get; }
 
         /// <summary> Localized detailed description of the rule. </summary>
+        [WirePath("description")]
         public string Description { get; }
 
         /// <summary> Name of action that is recommended by this rule in string. </summary>
+        [WirePath("actionName")]
         public string ActionName { get; }
 
         /// <summary> Level of impact indicating how critical this rule is. </summary>
+        [WirePath("level")]
         public NotificationLevel? Level { get; }
 
         /// <summary> List of available channels that this rule applies. </summary>
+        [WirePath("channels")]
         public Channels? Channels { get; }
 
         /// <summary> The list of category tags that this recommendation rule belongs to. </summary>
+        [WirePath("categoryTags")]
         public IReadOnlyList<string> CategoryTags { get; } = new ChangeTrackingList<string>();
 
         /// <summary> True if this is associated with a dynamically added rule. </summary>
+        [WirePath("isDynamic")]
         public bool? IsDynamic { get; }
 
         /// <summary> Extension name of the portal if exists. Applicable to dynamic rule only. </summary>
+        [WirePath("extensionName")]
         public string ExtensionName { get; }
 
         /// <summary> Deep link to a blade on the portal. Applicable to dynamic rule only. </summary>
+        [WirePath("bladeName")]
         public string BladeName { get; }
 
         /// <summary> Forward link to an external document associated with the rule. Applicable to dynamic rule only. </summary>
+        [WirePath("forwardLink")]
         public string ForwardLink { get; }
     }
 }

@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> HybridConnectionKey resource specific properties. </summary>
     internal partial class HybridConnectionKeyProperties
@@ -33,9 +34,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The name of the send key. </summary>
+        [WirePath("sendKeyName")]
         public string SendKeyName { get; }
 
         /// <summary> The value of the send key. </summary>
+        [WirePath("sendKeyValue")]
         public string SendKeyValue { get; }
     }
 }

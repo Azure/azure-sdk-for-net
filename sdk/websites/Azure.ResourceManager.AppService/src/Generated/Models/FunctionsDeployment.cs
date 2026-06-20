@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Configuration section for the function app deployment. </summary>
     internal partial class FunctionsDeployment
@@ -31,6 +32,7 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Storage for deployed package used by the function app. </summary>
+        [WirePath("storage")]
         public FunctionsDeploymentStorage Storage { get; set; }
     }
 }

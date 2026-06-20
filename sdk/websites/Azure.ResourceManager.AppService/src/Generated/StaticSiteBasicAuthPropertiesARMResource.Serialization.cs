@@ -9,7 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary></summary>
     public partial class StaticSiteBasicAuthPropertiesARMResource : IJsonModel<StaticSiteBasicAuthPropertiesARMResourceData>
@@ -27,11 +27,11 @@ namespace Microsoft.Web
         StaticSiteBasicAuthPropertiesARMResourceData IJsonModel<StaticSiteBasicAuthPropertiesARMResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<StaticSiteBasicAuthPropertiesARMResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<StaticSiteBasicAuthPropertiesARMResourceData>(Data, options, MicrosoftWebContext.Default);
+        BinaryData IPersistableModel<StaticSiteBasicAuthPropertiesARMResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<StaticSiteBasicAuthPropertiesARMResourceData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        StaticSiteBasicAuthPropertiesARMResourceData IPersistableModel<StaticSiteBasicAuthPropertiesARMResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StaticSiteBasicAuthPropertiesARMResourceData>(data, options, MicrosoftWebContext.Default);
+        StaticSiteBasicAuthPropertiesARMResourceData IPersistableModel<StaticSiteBasicAuthPropertiesARMResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StaticSiteBasicAuthPropertiesARMResourceData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<StaticSiteBasicAuthPropertiesARMResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);

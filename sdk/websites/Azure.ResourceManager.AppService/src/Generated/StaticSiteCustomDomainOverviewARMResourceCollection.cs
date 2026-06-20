@@ -15,9 +15,9 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Microsoft.Web.Models;
+using Azure.ResourceManager.AppService.Models;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A class representing a collection of <see cref="StaticSiteCustomDomainOverviewARMResource"/> and their operations.
@@ -40,7 +40,7 @@ namespace Microsoft.Web
         internal StaticSiteCustomDomainOverviewARMResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(StaticSiteCustomDomainOverviewARMResource.ResourceType, out string staticSiteCustomDomainOverviewARMResourceApiVersion);
-            _staticSitesClientDiagnostics = new ClientDiagnostics("Microsoft.Web", StaticSiteCustomDomainOverviewARMResource.ResourceType.Namespace, Diagnostics);
+            _staticSitesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", StaticSiteCustomDomainOverviewARMResource.ResourceType.Namespace, Diagnostics);
             _staticSitesRestClient = new StaticSites(_staticSitesClientDiagnostics, Pipeline, Endpoint, staticSiteCustomDomainOverviewARMResourceApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
@@ -92,8 +92,8 @@ namespace Microsoft.Web
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = _staticSitesRestClient.CreateCreateOrUpdateStaticSiteCustomDomainRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, domainName, StaticSiteCustomDomainRequestPropertiesARMResource.ToRequestContent(staticSiteCustomDomainRequestPropertiesEnvelope), context);
-                Azure.Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                WebArmOperation<StaticSiteCustomDomainOverviewARMResource> operation = new WebArmOperation<StaticSiteCustomDomainOverviewARMResource>(
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                AppServiceArmOperation<StaticSiteCustomDomainOverviewARMResource> operation = new AppServiceArmOperation<StaticSiteCustomDomainOverviewARMResource>(
                     new StaticSiteCustomDomainOverviewARMResourceOperationSource(Client),
                     _staticSitesClientDiagnostics,
                     Pipeline,
@@ -150,8 +150,8 @@ namespace Microsoft.Web
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = _staticSitesRestClient.CreateCreateOrUpdateStaticSiteCustomDomainRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, domainName, StaticSiteCustomDomainRequestPropertiesARMResource.ToRequestContent(staticSiteCustomDomainRequestPropertiesEnvelope), context);
-                Azure.Response response = Pipeline.ProcessMessage(message, context);
-                WebArmOperation<StaticSiteCustomDomainOverviewARMResource> operation = new WebArmOperation<StaticSiteCustomDomainOverviewARMResource>(
+                Response response = Pipeline.ProcessMessage(message, context);
+                AppServiceArmOperation<StaticSiteCustomDomainOverviewARMResource> operation = new AppServiceArmOperation<StaticSiteCustomDomainOverviewARMResource>(
                     new StaticSiteCustomDomainOverviewARMResourceOperationSource(Client),
                     _staticSitesClientDiagnostics,
                     Pipeline,
@@ -205,13 +205,13 @@ namespace Microsoft.Web
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = _staticSitesRestClient.CreateGetStaticSiteCustomDomainRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, domainName, context);
-                Azure.Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<StaticSiteCustomDomainOverviewARMResourceData> response = Azure.Response.FromValue(StaticSiteCustomDomainOverviewARMResourceData.FromResponse(result), result);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<StaticSiteCustomDomainOverviewARMResourceData> response = Response.FromValue(StaticSiteCustomDomainOverviewARMResourceData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Azure.Response.FromValue(new StaticSiteCustomDomainOverviewARMResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new StaticSiteCustomDomainOverviewARMResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -254,13 +254,13 @@ namespace Microsoft.Web
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = _staticSitesRestClient.CreateGetStaticSiteCustomDomainRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, domainName, context);
-                Azure.Response result = Pipeline.ProcessMessage(message, context);
-                Response<StaticSiteCustomDomainOverviewARMResourceData> response = Azure.Response.FromValue(StaticSiteCustomDomainOverviewARMResourceData.FromResponse(result), result);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<StaticSiteCustomDomainOverviewARMResourceData> response = Response.FromValue(StaticSiteCustomDomainOverviewARMResourceData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Azure.Response.FromValue(new StaticSiteCustomDomainOverviewARMResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new StaticSiteCustomDomainOverviewARMResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -372,20 +372,20 @@ namespace Microsoft.Web
                 };
                 HttpMessage message = _staticSitesRestClient.CreateGetStaticSiteCustomDomainRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, domainName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Azure.Response result = message.Response;
+                Response result = message.Response;
                 Response<StaticSiteCustomDomainOverviewARMResourceData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Azure.Response.FromValue(StaticSiteCustomDomainOverviewARMResourceData.FromResponse(result), result);
+                        response = Response.FromValue(StaticSiteCustomDomainOverviewARMResourceData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Azure.Response.FromValue((StaticSiteCustomDomainOverviewARMResourceData)null, result);
+                        response = Response.FromValue((StaticSiteCustomDomainOverviewARMResourceData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
-                return Azure.Response.FromValue(response.Value != null, response.GetRawResponse());
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -429,20 +429,20 @@ namespace Microsoft.Web
                 };
                 HttpMessage message = _staticSitesRestClient.CreateGetStaticSiteCustomDomainRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, domainName, context);
                 Pipeline.Send(message, context.CancellationToken);
-                Azure.Response result = message.Response;
+                Response result = message.Response;
                 Response<StaticSiteCustomDomainOverviewARMResourceData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Azure.Response.FromValue(StaticSiteCustomDomainOverviewARMResourceData.FromResponse(result), result);
+                        response = Response.FromValue(StaticSiteCustomDomainOverviewARMResourceData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Azure.Response.FromValue((StaticSiteCustomDomainOverviewARMResourceData)null, result);
+                        response = Response.FromValue((StaticSiteCustomDomainOverviewARMResourceData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
-                return Azure.Response.FromValue(response.Value != null, response.GetRawResponse());
+                return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -486,15 +486,15 @@ namespace Microsoft.Web
                 };
                 HttpMessage message = _staticSitesRestClient.CreateGetStaticSiteCustomDomainRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, domainName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
-                Azure.Response result = message.Response;
+                Response result = message.Response;
                 Response<StaticSiteCustomDomainOverviewARMResourceData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Azure.Response.FromValue(StaticSiteCustomDomainOverviewARMResourceData.FromResponse(result), result);
+                        response = Response.FromValue(StaticSiteCustomDomainOverviewARMResourceData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Azure.Response.FromValue((StaticSiteCustomDomainOverviewARMResourceData)null, result);
+                        response = Response.FromValue((StaticSiteCustomDomainOverviewARMResourceData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -503,7 +503,7 @@ namespace Microsoft.Web
                 {
                     return new NoValueResponse<StaticSiteCustomDomainOverviewARMResource>(response.GetRawResponse());
                 }
-                return Azure.Response.FromValue(new StaticSiteCustomDomainOverviewARMResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new StaticSiteCustomDomainOverviewARMResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -547,15 +547,15 @@ namespace Microsoft.Web
                 };
                 HttpMessage message = _staticSitesRestClient.CreateGetStaticSiteCustomDomainRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, domainName, context);
                 Pipeline.Send(message, context.CancellationToken);
-                Azure.Response result = message.Response;
+                Response result = message.Response;
                 Response<StaticSiteCustomDomainOverviewARMResourceData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Azure.Response.FromValue(StaticSiteCustomDomainOverviewARMResourceData.FromResponse(result), result);
+                        response = Response.FromValue(StaticSiteCustomDomainOverviewARMResourceData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Azure.Response.FromValue((StaticSiteCustomDomainOverviewARMResourceData)null, result);
+                        response = Response.FromValue((StaticSiteCustomDomainOverviewARMResourceData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -564,7 +564,7 @@ namespace Microsoft.Web
                 {
                     return new NoValueResponse<StaticSiteCustomDomainOverviewARMResource>(response.GetRawResponse());
                 }
-                return Azure.Response.FromValue(new StaticSiteCustomDomainOverviewARMResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new StaticSiteCustomDomainOverviewARMResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Network Security Perimeter Profile. </summary>
     public partial class NspProfile
@@ -42,18 +42,23 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Name of the Network Security Perimeter Profile. </summary>
+        [WirePath("name")]
         public string Name { get; }
 
         /// <summary> Access Rules Version for the Network Security Perimeter Profile. </summary>
+        [WirePath("accessRulesVersion")]
         public string AccessRulesVersion { get; }
 
         /// <summary> Access Rules for the Network Security Perimeter Profile. </summary>
+        [WirePath("accessRules")]
         public IList<NspProfileAccessRule> AccessRules { get; }
 
         /// <summary> Diagnostic Settings Version for the Network Security Perimeter Profile. </summary>
+        [WirePath("diagnosticSettingsVersion")]
         public string DiagnosticSettingsVersion { get; }
 
         /// <summary> Enabled Log Categories for the Network Security Perimeter Profile. </summary>
+        [WirePath("enabledLogCategories")]
         public IList<string> EnabledLogCategories { get; }
     }
 }

@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
-using Microsoft.Web.Models;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary> The workflow run action repetition definition. </summary>
     public partial class WorkflowRunActionRepetitionDefinitionData : TrackedResourceData
@@ -43,9 +43,11 @@ namespace Microsoft.Web
         }
 
         /// <summary> The workflow run action repetition properties definition. </summary>
+        [WirePath("properties")]
         internal WorkflowRunActionRepetitionProperties Properties { get; }
 
         /// <summary> The start time of the workflow scope repetition. </summary>
+        [WirePath("properties.startTime")]
         public DateTimeOffset? StartOn
         {
             get
@@ -55,6 +57,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> The end time of the workflow scope repetition. </summary>
+        [WirePath("properties.endTime")]
         public DateTimeOffset? EndOn
         {
             get
@@ -64,6 +67,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> The correlation properties. </summary>
+        [WirePath("properties.correlation")]
         public RunActionCorrelation Correlation
         {
             get
@@ -73,6 +77,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> The status of the workflow scope repetition. </summary>
+        [WirePath("properties.status")]
         public WorkflowStatus? Status
         {
             get
@@ -82,6 +87,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> The workflow scope repetition code. </summary>
+        [WirePath("properties.code")]
         public string Code
         {
             get
@@ -91,6 +97,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Anything. </summary>
+        [WirePath("properties.error")]
         public BinaryData Error
         {
             get
@@ -100,6 +107,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Gets the tracking id. </summary>
+        [WirePath("properties.trackingId")]
         public string TrackingId
         {
             get
@@ -109,6 +117,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Gets the inputs. </summary>
+        [WirePath("properties.inputs")]
         public BinaryData Inputs
         {
             get
@@ -118,6 +127,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Gets the link to inputs. </summary>
+        [WirePath("properties.inputsLink")]
         public ContentLink InputsLink
         {
             get
@@ -127,6 +137,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Gets the outputs. </summary>
+        [WirePath("properties.outputs")]
         public BinaryData Outputs
         {
             get
@@ -136,6 +147,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Gets the link to outputs. </summary>
+        [WirePath("properties.outputsLink")]
         public ContentLink OutputsLink
         {
             get
@@ -145,6 +157,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Gets the tracked properties. </summary>
+        [WirePath("properties.trackedProperties")]
         public BinaryData TrackedProperties
         {
             get
@@ -154,6 +167,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Gets the retry histories. </summary>
+        [WirePath("properties.retryHistory")]
         public IList<RetryHistory> RetryHistory
         {
             get
@@ -163,6 +177,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Gets the IterationCount. </summary>
+        [WirePath("properties.iterationCount")]
         public int? IterationCount
         {
             get
@@ -172,6 +187,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> The repetition indexes. </summary>
+        [WirePath("properties.repetitionIndexes")]
         public IList<RepetitionIndex> RepetitionIndexes
         {
             get

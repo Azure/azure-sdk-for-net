@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Additional configuration for a data providers. </summary>
     public partial class DataProviderMetadata : IJsonModel<DataProviderMetadata>
@@ -40,7 +40,7 @@ namespace Microsoft.Web.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, MicrosoftWebContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DataProviderMetadata)} does not support writing '{options.Format}' format.");
             }
@@ -83,9 +83,9 @@ namespace Microsoft.Web.Models
             {
                 writer.WritePropertyName("propertyBag"u8);
                 writer.WriteStartArray();
-                foreach (KeyValuePairStringObject item in PropertyBag)
+                foreach (Models.DataProviderKeyValuePair item in PropertyBag)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<Models.DataProviderKeyValuePair>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -132,7 +132,7 @@ namespace Microsoft.Web.Models
                 return null;
             }
             string providerName = default;
-            IReadOnlyList<KeyValuePairStringObject> propertyBag = default;
+            IReadOnlyList<Models.DataProviderKeyValuePair> propertyBag = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -147,10 +147,10 @@ namespace Microsoft.Web.Models
                     {
                         continue;
                     }
-                    List<KeyValuePairStringObject> array = new List<KeyValuePairStringObject>();
+                    List<Models.DataProviderKeyValuePair> array = new List<Models.DataProviderKeyValuePair>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(KeyValuePairStringObject.DeserializeKeyValuePairStringObject(item, options));
+                        array.Add(Models.DataProviderKeyValuePair.DeserializeDataProviderKeyValuePair(item, options));
                     }
                     propertyBag = array;
                     continue;
@@ -160,7 +160,7 @@ namespace Microsoft.Web.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DataProviderMetadata(providerName, propertyBag ?? new ChangeTrackingList<KeyValuePairStringObject>(), additionalBinaryDataProperties);
+            return new DataProviderMetadata(providerName, propertyBag ?? new ChangeTrackingList<Models.DataProviderKeyValuePair>(), additionalBinaryDataProperties);
         }
     }
 }

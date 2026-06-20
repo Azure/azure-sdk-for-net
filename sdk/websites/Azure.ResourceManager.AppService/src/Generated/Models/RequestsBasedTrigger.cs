@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Trigger based on total requests. </summary>
     public partial class RequestsBasedTrigger
@@ -33,9 +34,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Request Count. </summary>
+        [WirePath("count")]
         public int? Count { get; set; }
 
         /// <summary> Time interval. </summary>
+        [WirePath("timeInterval")]
         public string TimeInterval { get; set; }
     }
 }

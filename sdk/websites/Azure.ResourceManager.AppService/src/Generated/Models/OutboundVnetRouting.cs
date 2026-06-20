@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Outbound traffic options over virtual network. </summary>
     public partial class OutboundVnetRouting
@@ -41,21 +42,27 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Enables all other routing options defined in OutboundVnetRouting if this setting is set to true. </summary>
+        [WirePath("allTraffic")]
         public bool? AllTraffic { get; set; }
 
         /// <summary> This causes all outbound traffic to have Virtual Network Security Groups and User Defined Routes applied. Previously called VnetRouteAllEnabled. </summary>
+        [WirePath("applicationTraffic")]
         public bool? ApplicationTraffic { get; set; }
 
         /// <summary> Enables accessing content over virtual network. Previously called VnetContentShareEnabled. </summary>
+        [WirePath("contentShareTraffic")]
         public bool? ContentShareTraffic { get; set; }
 
         /// <summary> Enables pulling image over Virtual Network. Previously called VnetImagePullEnabled. </summary>
+        [WirePath("imagePullTraffic")]
         public bool? ImagePullTraffic { get; set; }
 
         /// <summary> Enables Backup and Restore operations over virtual network. Previously called VnetBackupRestoreEnabled. </summary>
+        [WirePath("backupRestoreTraffic")]
         public bool? BackupRestoreTraffic { get; set; }
 
         /// <summary> Enables Managed Identity operations over virtual network. </summary>
+        [WirePath("managedIdentityTraffic")]
         public bool? ManagedIdentityTraffic { get; set; }
     }
 }

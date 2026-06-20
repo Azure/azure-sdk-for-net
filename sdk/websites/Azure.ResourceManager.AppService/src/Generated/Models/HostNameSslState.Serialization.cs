@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> SSL-enabled hostname. </summary>
     public partial class HostNameSslState : IJsonModel<HostNameSslState>
@@ -40,7 +40,7 @@ namespace Microsoft.Web.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, MicrosoftWebContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(HostNameSslState)} does not support writing '{options.Format}' format.");
             }
@@ -92,7 +92,14 @@ namespace Microsoft.Web.Models
             if (Optional.IsDefined(Thumbprint))
             {
                 writer.WritePropertyName("thumbprint"u8);
-                writer.WriteStringValue(Thumbprint);
+#if NET6_0_OR_GREATER
+                writer.WriteRawValue(Thumbprint);
+#else
+                using (JsonDocument document = JsonDocument.Parse(Thumbprint))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(ToUpdate))
             {
@@ -147,11 +154,11 @@ namespace Microsoft.Web.Models
                 return null;
             }
             string name = default;
-            SslState? sslState = default;
+            Models.HostNameBindingSslState? sslState = default;
             string virtualIP = default;
-            string thumbprint = default;
+            BinaryData thumbprint = default;
             bool? toUpdate = default;
-            HostType? hostType = default;
+            Models.AppServiceHostType? hostType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -166,7 +173,7 @@ namespace Microsoft.Web.Models
                     {
                         continue;
                     }
-                    sslState = prop.Value.GetString().ToSslState();
+                    sslState = prop.Value.GetString().ToHostNameBindingSslState();
                     continue;
                 }
                 if (prop.NameEquals("virtualIP"u8))
@@ -176,7 +183,11 @@ namespace Microsoft.Web.Models
                 }
                 if (prop.NameEquals("thumbprint"u8))
                 {
-                    thumbprint = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    thumbprint = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("toUpdate"u8))
@@ -194,7 +205,7 @@ namespace Microsoft.Web.Models
                     {
                         continue;
                     }
-                    hostType = prop.Value.GetString().ToHostType();
+                    hostType = prop.Value.GetString().ToAppServiceHostType();
                     continue;
                 }
                 if (options.Format != "W")

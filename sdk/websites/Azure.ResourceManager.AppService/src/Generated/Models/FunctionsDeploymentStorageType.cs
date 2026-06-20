@@ -7,9 +7,9 @@
 
 using System;
 using System.ComponentModel;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Property to select Azure Storage type. Available options: blobContainer. </summary>
     public readonly partial struct FunctionsDeploymentStorageType : IEquatable<FunctionsDeploymentStorageType>

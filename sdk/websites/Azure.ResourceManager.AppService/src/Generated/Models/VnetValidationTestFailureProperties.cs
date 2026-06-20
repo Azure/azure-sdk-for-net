@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> VnetValidationTestFailure resource specific properties. </summary>
     internal partial class VnetValidationTestFailureProperties
@@ -33,9 +34,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The name of the test that failed. </summary>
+        [WirePath("testName")]
         public string TestName { get; }
 
         /// <summary> The details of what caused the failure, e.g. the blocking rule name, etc. </summary>
+        [WirePath("details")]
         public string Details { get; }
     }
 }

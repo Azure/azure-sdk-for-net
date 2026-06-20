@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> StaticSiteResetPropertiesARMResource resource specific properties. </summary>
     internal partial class StaticSiteResetPropertiesARMResourceProperties
@@ -33,9 +34,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> The token which proves admin privileges to the repository. </summary>
+        [WirePath("repositoryToken")]
         public string RepositoryToken { get; set; }
 
         /// <summary> Determines whether the repository should be updated with the new properties. </summary>
+        [WirePath("shouldUpdateRepository")]
         public bool? ShouldUpdateRepository { get; set; }
     }
 }

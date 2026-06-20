@@ -8,8 +8,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Wrapper for a collection of private link resources. </summary>
     public partial class PrivateLinkResourcesWrapper
@@ -19,7 +20,7 @@ namespace Microsoft.Web.Models
 
         /// <summary> Initializes a new instance of <see cref="PrivateLinkResourcesWrapper"/>. </summary>
         /// <param name="value"></param>
-        internal PrivateLinkResourcesWrapper(IEnumerable<MicrosoftWebPrivateLinkResource> value)
+        internal PrivateLinkResourcesWrapper(IEnumerable<AppServicePrivateLinkResource> value)
         {
             Value = value.ToList();
         }
@@ -27,13 +28,14 @@ namespace Microsoft.Web.Models
         /// <summary> Initializes a new instance of <see cref="PrivateLinkResourcesWrapper"/>. </summary>
         /// <param name="value"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateLinkResourcesWrapper(IList<MicrosoftWebPrivateLinkResource> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PrivateLinkResourcesWrapper(IList<AppServicePrivateLinkResource> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Gets the Value. </summary>
-        public IList<MicrosoftWebPrivateLinkResource> Value { get; }
+        [WirePath("value")]
+        public IList<AppServicePrivateLinkResource> Value { get; }
     }
 }

@@ -9,7 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary></summary>
     public partial class AddressResponseResource : IJsonModel<AddressResponseData>
@@ -27,11 +27,11 @@ namespace Microsoft.Web
         AddressResponseData IJsonModel<AddressResponseData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AddressResponseData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AddressResponseData>(Data, options, MicrosoftWebContext.Default);
+        BinaryData IPersistableModel<AddressResponseData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AddressResponseData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AddressResponseData IPersistableModel<AddressResponseData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AddressResponseData>(data, options, MicrosoftWebContext.Default);
+        AddressResponseData IPersistableModel<AddressResponseData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AddressResponseData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AddressResponseData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);

@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The EnvironmentVariable. </summary>
     public partial class EnvironmentVariable
@@ -42,9 +42,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Environment variable name. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
 
         /// <summary> The value of this environment variable must be the name of an AppSetting. The actual value of the environment variable in container will be retrieved from the specified AppSetting at runtime. If the AppSetting is not found, the value will be set to an empty string in the container at runtime. </summary>
+        [WirePath("value")]
         public string Value { get; set; }
     }
 }

@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The SiteDnsConfig. </summary>
     public partial class SiteDnsConfig
@@ -43,21 +43,27 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> List of custom DNS servers to be used by an app for lookups. Maximum 5 dns servers can be set. </summary>
+        [WirePath("dnsServers")]
         public IList<string> DnsServers { get; }
 
         /// <summary> Alternate DNS server to be used by apps. This property replicates the WEBSITE_DNS_ALT_SERVER app setting. </summary>
+        [WirePath("dnsAltServer")]
         public string DnsAltServer { get; set; }
 
         /// <summary> Timeout for a single dns lookup in seconds. Allowed range: 1-30. Default is 3. </summary>
+        [WirePath("dnsRetryAttemptTimeout")]
         public int? DnsRetryAttemptTimeout { get; set; }
 
         /// <summary> Total number of retries for dns lookup. Allowed range: 1-5. Default is 3. </summary>
+        [WirePath("dnsRetryAttemptCount")]
         public int? DnsRetryAttemptCount { get; set; }
 
         /// <summary> Custom time for DNS to be cached in seconds. Allowed range: 0-60. Default is 30 seconds. 0 means caching disabled. </summary>
+        [WirePath("dnsMaxCacheTimeout")]
         public int? DnsMaxCacheTimeout { get; set; }
 
         /// <summary> Indicates that sites using Virtual network custom DNS servers are still sorting the list of DNS servers. Read-Only. </summary>
+        [WirePath("dnsLegacySortOrder")]
         public bool? DnsLegacySortOrder { get; }
     }
 }

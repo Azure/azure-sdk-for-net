@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> MSDeploy ARM PUT information properties. </summary>
     public partial class MSDeployProperties : MSDeployCore
@@ -38,12 +38,13 @@ namespace Microsoft.Web.Models
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="addOnPackages"> List of Add-On packages. Add-On packages implicitly enable the Do Not Delete MSDeploy rule. </param>
-        internal MSDeployProperties(string packageUri, string connectionString, string dbType, string setParametersXmlFileUri, IDictionary<string, string> setParameters, bool? skipAppData, bool? appOffline, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<MSDeployCore> addOnPackages) : base(packageUri, connectionString, dbType, setParametersXmlFileUri, setParameters, skipAppData, appOffline, additionalBinaryDataProperties)
+        internal MSDeployProperties(Uri packageUri, string connectionString, string dbType, Uri setParametersXmlFileUri, IDictionary<string, string> setParameters, bool? skipAppData, bool? appOffline, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<MSDeployCore> addOnPackages) : base(packageUri, connectionString, dbType, setParametersXmlFileUri, setParameters, skipAppData, appOffline, additionalBinaryDataProperties)
         {
             AddOnPackages = addOnPackages;
         }
 
         /// <summary> List of Add-On packages. Add-On packages implicitly enable the Do Not Delete MSDeploy rule. </summary>
+        [WirePath("addOnPackages")]
         public IList<MSDeployCore> AddOnPackages { get; } = new ChangeTrackingList<MSDeployCore>();
     }
 }

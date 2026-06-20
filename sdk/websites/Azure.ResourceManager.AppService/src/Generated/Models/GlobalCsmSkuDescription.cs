@@ -7,9 +7,10 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.Core;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> A Global SKU Description. </summary>
     public partial class GlobalCsmSkuDescription
@@ -20,8 +21,8 @@ namespace Microsoft.Web.Models
         /// <summary> Initializes a new instance of <see cref="GlobalCsmSkuDescription"/>. </summary>
         internal GlobalCsmSkuDescription()
         {
-            Locations = new ChangeTrackingList<string>();
-            Capabilities = new ChangeTrackingList<Capability>();
+            Locations = new ChangeTrackingList<AzureLocation>();
+            Capabilities = new ChangeTrackingList<Models.AppServiceSkuCapability>();
         }
 
         /// <summary> Initializes a new instance of <see cref="GlobalCsmSkuDescription"/>. </summary>
@@ -33,7 +34,7 @@ namespace Microsoft.Web.Models
         /// <param name="locations"> Locations of the SKU. </param>
         /// <param name="capabilities"> Capabilities of the SKU, e.g., is traffic manager enabled?. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GlobalCsmSkuDescription(string name, string tier, string size, string family, SkuCapacity capacity, IList<string> locations, IList<Capability> capabilities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GlobalCsmSkuDescription(string name, string tier, string size, string family, Models.AppServiceSkuCapacity capacity, IReadOnlyList<AzureLocation> locations, IReadOnlyList<Models.AppServiceSkuCapability> capabilities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Tier = tier;
@@ -46,24 +47,31 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Name of the resource SKU. </summary>
+        [WirePath("name")]
         public string Name { get; }
 
         /// <summary> Service Tier of the resource SKU. </summary>
+        [WirePath("tier")]
         public string Tier { get; }
 
         /// <summary> Size specifier of the resource SKU. </summary>
+        [WirePath("size")]
         public string Size { get; }
 
         /// <summary> Family code of the resource SKU. </summary>
+        [WirePath("family")]
         public string Family { get; }
 
         /// <summary> Min, max, and default scale values of the SKU. </summary>
-        public SkuCapacity Capacity { get; }
+        [WirePath("capacity")]
+        public Models.AppServiceSkuCapacity Capacity { get; }
 
         /// <summary> Locations of the SKU. </summary>
-        public IList<string> Locations { get; }
+        [WirePath("locations")]
+        public IReadOnlyList<AzureLocation> Locations { get; }
 
         /// <summary> Capabilities of the SKU, e.g., is traffic manager enabled?. </summary>
-        public IList<Capability> Capabilities { get; }
+        [WirePath("capabilities")]
+        public IReadOnlyList<Models.AppServiceSkuCapability> Capabilities { get; }
     }
 }

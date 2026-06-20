@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> App Insights Web App stack settings. </summary>
     public partial class AppInsightsWebAppStackSettings
@@ -33,9 +34,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if remote Application Insights is supported for the stack; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("isSupported")]
         public bool? IsSupported { get; }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if Application Insights is disabled by default for the stack; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("isDefaultOff")]
         public bool? IsDefaultOff { get; }
     }
 }

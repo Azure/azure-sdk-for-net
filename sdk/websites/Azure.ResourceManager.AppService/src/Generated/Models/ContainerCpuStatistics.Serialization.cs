@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The ContainerCpuStatistics. </summary>
     public partial class ContainerCpuStatistics : IJsonModel<ContainerCpuStatistics>
@@ -40,7 +40,7 @@ namespace Microsoft.Web.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, MicrosoftWebContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ContainerCpuStatistics)} does not support writing '{options.Format}' format.");
             }
@@ -92,7 +92,7 @@ namespace Microsoft.Web.Models
             if (Optional.IsDefined(ThrottlingData))
             {
                 writer.WritePropertyName("throttlingData"u8);
-                writer.WriteObjectValue(ThrottlingData, options);
+                writer.WriteObjectValue<Models.ContainerThrottlingInfo>(ThrottlingData, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -139,7 +139,7 @@ namespace Microsoft.Web.Models
             ContainerCpuUsage cpuUsage = default;
             long? systemCpuUsage = default;
             int? onlineCpuCount = default;
-            ContainerThrottlingData throttlingData = default;
+            Models.ContainerThrottlingInfo throttlingData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -176,7 +176,7 @@ namespace Microsoft.Web.Models
                     {
                         continue;
                     }
-                    throttlingData = ContainerThrottlingData.DeserializeContainerThrottlingData(prop.Value, options);
+                    throttlingData = Models.ContainerThrottlingInfo.DeserializeContainerThrottlingInfo(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

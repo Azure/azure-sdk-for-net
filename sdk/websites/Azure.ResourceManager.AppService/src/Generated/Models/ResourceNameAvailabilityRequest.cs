@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Resource name availability request content. </summary>
     public partial class ResourceNameAvailabilityRequest
@@ -45,15 +45,19 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Resource name to verify. </summary>
+        [WirePath("name")]
         public string Name { get; }
 
         /// <summary> Resource type used for verification. </summary>
+        [WirePath("type")]
         public CheckNameResourceTypes Type { get; }
 
         /// <summary> Is fully qualified domain name. </summary>
+        [WirePath("isFqdn")]
         public bool? IsFqdn { get; set; }
 
         /// <summary> Azure Resource Manager ID of the customer's selected Container Apps Environment on which to host the Function app. This must be of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.App/managedEnvironments/{managedEnvironmentName}. </summary>
+        [WirePath("environmentId")]
         public string EnvironmentId { get; set; }
     }
 }

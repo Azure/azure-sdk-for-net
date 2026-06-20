@@ -10,9 +10,9 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Function secrets. </summary>
     public partial class FunctionSecrets : IJsonModel<FunctionSecrets>
@@ -41,7 +41,7 @@ namespace Microsoft.Web.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, MicrosoftWebContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(FunctionSecrets)} does not support writing '{options.Format}' format.");
             }
@@ -90,7 +90,7 @@ namespace Microsoft.Web.Models
             if (Optional.IsDefined(TriggerUri))
             {
                 writer.WritePropertyName("trigger_url"u8);
-                writer.WriteStringValue(TriggerUri);
+                writer.WriteStringValue(TriggerUri.AbsoluteUri);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -135,7 +135,7 @@ namespace Microsoft.Web.Models
                 return null;
             }
             string key = default;
-            string triggerUri = default;
+            Uri triggerUri = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -146,7 +146,11 @@ namespace Microsoft.Web.Models
                 }
                 if (prop.NameEquals("trigger_url"u8))
                 {
-                    triggerUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    triggerUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (options.Format != "W")

@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
-using Microsoft.Web.Models;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary> Function information. </summary>
     public partial class FunctionEnvelopeData : ResourceData
@@ -40,12 +40,15 @@ namespace Microsoft.Web
         }
 
         /// <summary> FunctionEnvelope resource specific properties. </summary>
+        [WirePath("properties")]
         internal FunctionEnvelopeProperties Properties { get; set; }
 
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
 
         /// <summary> Function App ID. </summary>
+        [WirePath("properties.function_app_id")]
         public string FunctionAppId
         {
             get
@@ -63,6 +66,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Script root path URI. </summary>
+        [WirePath("properties.script_root_path_href")]
         public string ScriptRootPathHref
         {
             get
@@ -80,6 +84,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Script URI. </summary>
+        [WirePath("properties.script_href")]
         public string ScriptHref
         {
             get
@@ -97,6 +102,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Config URI. </summary>
+        [WirePath("properties.config_href")]
         public string ConfigHref
         {
             get
@@ -114,6 +120,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Test data URI. </summary>
+        [WirePath("properties.test_data_href")]
         public string TestDataHref
         {
             get
@@ -131,6 +138,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Secrets file URI. </summary>
+        [WirePath("properties.secrets_file_href")]
         public string SecretsFileHref
         {
             get
@@ -148,6 +156,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Function URI. </summary>
+        [WirePath("properties.href")]
         public string Href
         {
             get
@@ -165,6 +174,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Config information. </summary>
+        [WirePath("properties.config")]
         public BinaryData Config
         {
             get
@@ -182,6 +192,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> File list. </summary>
+        [WirePath("properties.files")]
         public IDictionary<string, string> Files
         {
             get
@@ -195,6 +206,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Test data used when testing via the Azure Portal. </summary>
+        [WirePath("properties.test_data")]
         public string TestData
         {
             get
@@ -212,6 +224,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> The invocation URL. </summary>
+        [WirePath("properties.invoke_url_template")]
         public string InvokeUrlTemplate
         {
             get
@@ -229,6 +242,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> The function language. </summary>
+        [WirePath("properties.language")]
         public string Language
         {
             get
@@ -246,6 +260,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Gets or sets a value indicating whether the function is disabled. </summary>
+        [WirePath("properties.isDisabled")]
         public bool? IsDisabled
         {
             get

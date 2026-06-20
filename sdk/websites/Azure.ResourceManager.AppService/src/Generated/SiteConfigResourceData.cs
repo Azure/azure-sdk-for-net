@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
-using Microsoft.Web.Models;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary> Web app configuration ARM resource. </summary>
     public partial class SiteConfigResourceData : ResourceData
@@ -40,12 +40,15 @@ namespace Microsoft.Web
         }
 
         /// <summary> Core resource properties. </summary>
+        [WirePath("properties")]
         internal SiteConfig Properties { get; set; }
 
         /// <summary> Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
 
         /// <summary> Number of workers. </summary>
+        [WirePath("properties.numberOfWorkers")]
         public int? NumberOfWorkers
         {
             get
@@ -63,6 +66,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Default documents. </summary>
+        [WirePath("properties.defaultDocuments")]
         public IList<string> DefaultDocuments
         {
             get
@@ -76,6 +80,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> .NET Framework version. </summary>
+        [WirePath("properties.netFrameworkVersion")]
         public string NetFrameworkVersion
         {
             get
@@ -93,6 +98,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Version of PHP. </summary>
+        [WirePath("properties.phpVersion")]
         public string PhpVersion
         {
             get
@@ -110,6 +116,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Version of Python. </summary>
+        [WirePath("properties.pythonVersion")]
         public string PythonVersion
         {
             get
@@ -127,6 +134,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Version of Node.js. </summary>
+        [WirePath("properties.nodeVersion")]
         public string NodeVersion
         {
             get
@@ -144,6 +152,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Version of PowerShell. </summary>
+        [WirePath("properties.powerShellVersion")]
         public string PowerShellVersion
         {
             get
@@ -161,6 +170,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Linux App Framework and version. </summary>
+        [WirePath("properties.linuxFxVersion")]
         public string LinuxFxVersion
         {
             get
@@ -178,6 +188,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Xenon App Framework and version. </summary>
+        [WirePath("properties.windowsFxVersion")]
         public string WindowsFxVersion
         {
             get
@@ -195,6 +206,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if request tracing is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("properties.requestTracingEnabled")]
         public bool? RequestTracingEnabled
         {
             get
@@ -212,6 +224,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Request tracing expiration time. </summary>
+        [WirePath("properties.requestTracingExpirationTime")]
         public DateTimeOffset? RequestTracingExpirationOn
         {
             get
@@ -229,6 +242,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if remote debugging is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("properties.remoteDebuggingEnabled")]
         public bool? RemoteDebuggingEnabled
         {
             get
@@ -246,6 +260,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Remote debugging version. </summary>
+        [WirePath("properties.remoteDebuggingVersion")]
         public string RemoteDebuggingVersion
         {
             get
@@ -263,6 +278,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if HTTP logging is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("properties.httpLoggingEnabled")]
         public bool? HttpLoggingEnabled
         {
             get
@@ -280,6 +296,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Flag to use Managed Identity Creds for ACR pull. </summary>
+        [WirePath("properties.acrUseManagedIdentityCreds")]
         public bool? AcrUseManagedIdentityCreds
         {
             get
@@ -297,6 +314,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> If using user managed identity, the user managed identity ClientId. </summary>
+        [WirePath("properties.acrUserManagedIdentityID")]
         public string AcrUserManagedIdentityID
         {
             get
@@ -314,6 +332,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> HTTP logs directory size limit. </summary>
+        [WirePath("properties.logsDirectorySizeLimit")]
         public int? LogsDirectorySizeLimit
         {
             get
@@ -331,6 +350,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if detailed error logging is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("properties.detailedErrorLoggingEnabled")]
         public bool? DetailedErrorLoggingEnabled
         {
             get
@@ -348,6 +368,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Publishing user name. </summary>
+        [WirePath("properties.publishingUsername")]
         public string PublishingUsername
         {
             get
@@ -365,6 +386,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Application settings. This property is not returned in response to normal create and read requests since it may contain sensitive information. </summary>
+        [WirePath("properties.appSettings")]
         public IList<NameValuePair> AppSettings
         {
             get
@@ -378,6 +400,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Application metadata. This property cannot be retrieved, since it may contain secrets. </summary>
+        [WirePath("properties.metadata")]
         public IList<NameValuePair> Metadata
         {
             get
@@ -391,6 +414,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Connection strings. This property is not returned in response to normal create and read requests since it may contain sensitive information. </summary>
+        [WirePath("properties.connectionStrings")]
         public IList<ConnStringInfo> ConnectionStrings
         {
             get
@@ -404,6 +428,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Site MachineKey. </summary>
+        [WirePath("properties.machineKey")]
         public SiteMachineKey MachineKey
         {
             get
@@ -413,6 +438,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Handler mappings. </summary>
+        [WirePath("properties.handlerMappings")]
         public IList<HandlerMapping> HandlerMappings
         {
             get
@@ -426,6 +452,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Document root. </summary>
+        [WirePath("properties.documentRoot")]
         public string DocumentRoot
         {
             get
@@ -443,6 +470,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> SCM type. </summary>
+        [WirePath("properties.scmType")]
         public ScmType? ScmType
         {
             get
@@ -460,6 +488,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; to use 32-bit worker process; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("properties.use32BitWorkerProcess")]
         public bool? Use32BitWorkerProcess
         {
             get
@@ -477,6 +506,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if WebSocket is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("properties.webSocketsEnabled")]
         public bool? WebSocketsEnabled
         {
             get
@@ -494,6 +524,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if Always On is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("properties.alwaysOn")]
         public bool? AlwaysOn
         {
             get
@@ -511,6 +542,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Java version. </summary>
+        [WirePath("properties.javaVersion")]
         public string JavaVersion
         {
             get
@@ -528,6 +560,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Java container. </summary>
+        [WirePath("properties.javaContainer")]
         public string JavaContainer
         {
             get
@@ -545,6 +578,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Java container version. </summary>
+        [WirePath("properties.javaContainerVersion")]
         public string JavaContainerVersion
         {
             get
@@ -562,6 +596,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> App command line to launch. </summary>
+        [WirePath("properties.appCommandLine")]
         public string AppCommandLine
         {
             get
@@ -579,6 +614,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Managed pipeline mode. </summary>
+        [WirePath("properties.managedPipelineMode")]
         public ManagedPipelineMode? ManagedPipelineMode
         {
             get
@@ -596,6 +632,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Virtual applications. </summary>
+        [WirePath("properties.virtualApplications")]
         public IList<VirtualApplication> VirtualApplications
         {
             get
@@ -609,6 +646,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Site load balancing. </summary>
+        [WirePath("properties.loadBalancing")]
         public SiteLoadBalancing? LoadBalancing
         {
             get
@@ -626,6 +664,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Site limits. </summary>
+        [WirePath("properties.limits")]
         public SiteLimits Limits
         {
             get
@@ -643,6 +682,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if Auto Heal is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("properties.autoHealEnabled")]
         public bool? AutoHealEnabled
         {
             get
@@ -660,6 +700,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Auto Heal rules. </summary>
+        [WirePath("properties.autoHealRules")]
         public AutoHealRules AutoHealRules
         {
             get
@@ -677,6 +718,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Tracing options. </summary>
+        [WirePath("properties.tracingOptions")]
         public string TracingOptions
         {
             get
@@ -694,6 +736,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Virtual Network name. </summary>
+        [WirePath("properties.vnetName")]
         public string VnetName
         {
             get
@@ -711,6 +754,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Virtual Network Route All enabled. This causes all outbound traffic to have Virtual Network Security Groups and User Defined Routes applied. </summary>
+        [WirePath("properties.vnetRouteAllEnabled")]
         public bool? VnetRouteAllEnabled
         {
             get
@@ -728,6 +772,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> The number of private ports assigned to this app. These will be assigned dynamically on runtime. </summary>
+        [WirePath("properties.vnetPrivatePortsCount")]
         public int? VnetPrivatePortsCount
         {
             get
@@ -745,6 +790,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Cross-Origin Resource Sharing (CORS) settings. </summary>
+        [WirePath("properties.cors")]
         public CorsSettings Cors
         {
             get
@@ -762,6 +808,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Push endpoint settings. </summary>
+        [WirePath("properties.push")]
         public PushSettings Push
         {
             get
@@ -779,6 +826,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Auto-swap slot name. </summary>
+        [WirePath("properties.autoSwapSlotName")]
         public string AutoSwapSlotName
         {
             get
@@ -796,6 +844,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; to enable local MySQL; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("properties.localMySqlEnabled")]
         public bool? LocalMySqlEnabled
         {
             get
@@ -813,6 +862,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Managed Service Identity Id. </summary>
+        [WirePath("properties.managedServiceIdentityId")]
         public int? ManagedServiceIdentityId
         {
             get
@@ -830,6 +880,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Explicit Managed Service Identity Id. </summary>
+        [WirePath("properties.xManagedServiceIdentityId")]
         public int? XManagedServiceIdentityId
         {
             get
@@ -847,6 +898,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Identity to use for Key Vault Reference authentication. </summary>
+        [WirePath("properties.keyVaultReferenceIdentity")]
         public string KeyVaultReferenceIdentity
         {
             get
@@ -864,6 +916,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> IP security restrictions for main. </summary>
+        [WirePath("properties.ipSecurityRestrictions")]
         public IList<IpSecurityRestriction> IpSecurityRestrictions
         {
             get
@@ -877,6 +930,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Default action for main access restriction if no rules are matched. </summary>
+        [WirePath("properties.ipSecurityRestrictionsDefaultAction")]
         public DefaultAction? IpSecurityRestrictionsDefaultAction
         {
             get
@@ -894,6 +948,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> IP security restrictions for scm. </summary>
+        [WirePath("properties.scmIpSecurityRestrictions")]
         public IList<IpSecurityRestriction> ScmIpSecurityRestrictions
         {
             get
@@ -907,6 +962,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Default action for scm access restriction if no rules are matched. </summary>
+        [WirePath("properties.scmIpSecurityRestrictionsDefaultAction")]
         public DefaultAction? ScmIpSecurityRestrictionsDefaultAction
         {
             get
@@ -924,6 +980,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> IP security restrictions for scm to use main. </summary>
+        [WirePath("properties.scmIpSecurityRestrictionsUseMain")]
         public bool? ScmIpSecurityRestrictionsUseMain
         {
             get
@@ -941,6 +998,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Http20Enabled: configures a web site to allow clients to connect over http2.0. </summary>
+        [WirePath("properties.http20Enabled")]
         public bool? Http20Enabled
         {
             get
@@ -958,6 +1016,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Http20ProxyFlag: Configures a website to allow http2.0 to pass be proxied all the way to the app. 0 = disabled, 1 = pass through all http2 traffic, 2 = pass through gRPC only. </summary>
+        [WirePath("properties.http20ProxyFlag")]
         public int? Http20ProxyFlag
         {
             get
@@ -975,6 +1034,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> MinTlsVersion: configures the minimum version of TLS required for SSL requests. </summary>
+        [WirePath("properties.minTlsVersion")]
         public SupportedTlsVersions? MinTlsVersion
         {
             get
@@ -992,6 +1052,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> The minimum strength TLS cipher suite allowed for an application. </summary>
+        [WirePath("properties.minTlsCipherSuite")]
         public TlsCipherSuites? MinTlsCipherSuite
         {
             get
@@ -1009,6 +1070,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> ScmMinTlsVersion: configures the minimum version of TLS required for SSL requests for SCM site. </summary>
+        [WirePath("properties.scmMinTlsVersion")]
         public SupportedTlsVersions? ScmMinTlsVersion
         {
             get
@@ -1026,6 +1088,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> State of FTP / FTPS service. </summary>
+        [WirePath("properties.ftpsState")]
         public FtpsState? FtpsState
         {
             get
@@ -1046,6 +1109,7 @@ namespace Microsoft.Web
         /// Number of preWarmed instances.
         /// This setting only applies to the Consumption and Elastic Plans
         /// </summary>
+        [WirePath("properties.preWarmedInstanceCount")]
         public int? PreWarmedInstanceCount
         {
             get
@@ -1066,6 +1130,7 @@ namespace Microsoft.Web
         /// Maximum number of workers that a site can scale out to.
         /// This setting only applies to the Consumption and Elastic Premium Plans
         /// </summary>
+        [WirePath("properties.functionAppScaleLimit")]
         public int? FunctionAppScaleLimit
         {
             get
@@ -1086,6 +1151,7 @@ namespace Microsoft.Web
         /// Maximum number of workers that a site can scale out to.
         /// This setting only applies to apps in plans where ElasticScaleEnabled is &lt;code&gt;true&lt;/code&gt;
         /// </summary>
+        [WirePath("properties.elasticWebAppScaleLimit")]
         public int? ElasticWebAppScaleLimit
         {
             get
@@ -1103,6 +1169,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Health check path. </summary>
+        [WirePath("properties.healthCheckPath")]
         public string HealthCheckPath
         {
             get
@@ -1124,6 +1191,7 @@ namespace Microsoft.Web
         /// the ScaleController will not monitor event sources directly, but will instead call to the
         /// runtime to get scale status.
         /// </summary>
+        [WirePath("properties.functionsRuntimeScaleMonitoringEnabled")]
         public bool? FunctionsRuntimeScaleMonitoringEnabled
         {
             get
@@ -1141,6 +1209,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Sets the time zone a site uses for generating timestamps. Compatible with Linux and Windows App Service. Setting the WEBSITE_TIME_ZONE app setting takes precedence over this config. For Linux, expects tz database values https://www.iana.org/time-zones (for a quick reference see https://en.wikipedia.org/wiki/List_of_tz_database_time_zones). For Windows, expects one of the time zones listed under HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Time Zones. </summary>
+        [WirePath("properties.websiteTimeZone")]
         public string WebsiteTimeZone
         {
             get
@@ -1161,6 +1230,7 @@ namespace Microsoft.Web
         /// Number of minimum instance count for a site
         /// This setting only applies to the Elastic Plans
         /// </summary>
+        [WirePath("properties.minimumElasticInstanceCount")]
         public int? MinimumElasticInstanceCount
         {
             get
@@ -1178,6 +1248,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> List of Azure Storage Accounts. </summary>
+        [WirePath("properties.azureStorageAccounts")]
         public IDictionary<string, AzureStorageInfoValue> AzureStorageAccounts
         {
             get
@@ -1191,6 +1262,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> Property to allow or block all public traffic. </summary>
+        [WirePath("properties.publicNetworkAccess")]
         public string PublicNetworkAccess
         {
             get
@@ -1208,6 +1280,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> List of ramp-up rules. </summary>
+        [WirePath("properties.experiments.rampUpRules")]
         public IList<RampUpRule> ExperimentsRampUpRules
         {
             get
@@ -1221,6 +1294,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> The URL of the API definition. </summary>
+        [WirePath("properties.apiDefinition.url")]
         public string ApiDefinitionUri
         {
             get
@@ -1238,6 +1312,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> APIM-Api Identifier. </summary>
+        [WirePath("properties.apiManagementConfig.id")]
         public string ApiManagementConfigId
         {
             get

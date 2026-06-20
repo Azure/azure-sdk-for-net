@@ -7,9 +7,9 @@
 
 using System;
 using System.ComponentModel;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Whether an upgrade is available for this App Service Environment. </summary>
     public readonly partial struct UpgradeAvailability : IEquatable<UpgradeAvailability>

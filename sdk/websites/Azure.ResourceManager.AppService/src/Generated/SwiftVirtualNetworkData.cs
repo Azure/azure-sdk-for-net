@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
-using Microsoft.Web.Models;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary> Swift Virtual Network Contract. This is used to enable the new Swift way of doing virtual network integration. </summary>
     public partial class SwiftVirtualNetworkData : ResourceData
@@ -40,12 +40,15 @@ namespace Microsoft.Web
         }
 
         /// <summary> SwiftVirtualNetwork resource specific properties. </summary>
+        [WirePath("properties")]
         internal SwiftVirtualNetworkProperties Properties { get; set; }
 
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
 
         /// <summary> The Virtual Network subnet's resource ID. This is the subnet that this Web App will join. This subnet must have a delegation to Microsoft.Web/serverFarms defined first. </summary>
+        [WirePath("properties.subnetResourceId")]
         public string SubnetResourceId
         {
             get
@@ -63,6 +66,7 @@ namespace Microsoft.Web
         }
 
         /// <summary> A flag that specifies if the scale unit this Web App is on supports Swift integration. </summary>
+        [WirePath("properties.swiftSupported")]
         public bool? SwiftSupported
         {
             get

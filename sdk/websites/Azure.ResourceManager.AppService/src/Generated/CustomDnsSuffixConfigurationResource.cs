@@ -14,7 +14,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 
-namespace Microsoft.Web
+namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A class representing a CustomDnsSuffixConfiguration along with the instance operations that can be performed on it.
@@ -49,7 +49,7 @@ namespace Microsoft.Web
         internal CustomDnsSuffixConfigurationResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string customDnsSuffixConfigurationApiVersion);
-            _appServiceEnvironmentsClientDiagnostics = new ClientDiagnostics("Microsoft.Web", ResourceType.Namespace, Diagnostics);
+            _appServiceEnvironmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
             _appServiceEnvironmentsRestClient = new AppServiceEnvironments(_appServiceEnvironmentsClientDiagnostics, Pipeline, Endpoint, customDnsSuffixConfigurationApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
@@ -132,7 +132,7 @@ namespace Microsoft.Web
                 Response<CustomDnsSuffixConfigurationData> response = Response.FromValue(CustomDnsSuffixConfigurationData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                WebArmOperation<CustomDnsSuffixConfigurationResource> operation = new WebArmOperation<CustomDnsSuffixConfigurationResource>(Response.FromValue(new CustomDnsSuffixConfigurationResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                AppServiceArmOperation<CustomDnsSuffixConfigurationResource> operation = new AppServiceArmOperation<CustomDnsSuffixConfigurationResource>(Response.FromValue(new CustomDnsSuffixConfigurationResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -188,7 +188,7 @@ namespace Microsoft.Web
                 Response<CustomDnsSuffixConfigurationData> response = Response.FromValue(CustomDnsSuffixConfigurationData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                WebArmOperation<CustomDnsSuffixConfigurationResource> operation = new WebArmOperation<CustomDnsSuffixConfigurationResource>(Response.FromValue(new CustomDnsSuffixConfigurationResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                AppServiceArmOperation<CustomDnsSuffixConfigurationResource> operation = new AppServiceArmOperation<CustomDnsSuffixConfigurationResource>(Response.FromValue(new CustomDnsSuffixConfigurationResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);
@@ -336,7 +336,7 @@ namespace Microsoft.Web
                 Response<BinaryData> response = Response.FromValue(result.Content, result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                WebArmOperation<BinaryData> operation = new WebArmOperation<BinaryData>(response, rehydrationToken);
+                AppServiceArmOperation<BinaryData> operation = new AppServiceArmOperation<BinaryData>(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -388,7 +388,7 @@ namespace Microsoft.Web
                 Response<BinaryData> response = Response.FromValue(result.Content, result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                WebArmOperation<BinaryData> operation = new WebArmOperation<BinaryData>(response, rehydrationToken);
+                AppServiceArmOperation<BinaryData> operation = new AppServiceArmOperation<BinaryData>(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);

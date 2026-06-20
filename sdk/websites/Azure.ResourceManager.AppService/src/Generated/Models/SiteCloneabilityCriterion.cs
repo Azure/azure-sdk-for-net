@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> An app cloneability criterion. </summary>
     public partial class SiteCloneabilityCriterion
@@ -33,9 +34,11 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Name of criterion. </summary>
+        [WirePath("name")]
         public string Name { get; }
 
         /// <summary> Description of criterion. </summary>
+        [WirePath("description")]
         public string Description { get; }
     }
 }

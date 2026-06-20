@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> CustomHostnameSites resource specific properties. </summary>
     internal partial class CustomHostnameSitesProperties
@@ -37,12 +37,15 @@ namespace Microsoft.Web.Models
         }
 
         /// <summary> Gets the CustomHostname. </summary>
+        [WirePath("customHostname")]
         public string CustomHostname { get; }
 
         /// <summary> Gets the Region. </summary>
+        [WirePath("region")]
         public string Region { get; }
 
         /// <summary> Gets the SiteResourceIds. </summary>
+        [WirePath("siteResourceIds")]
         public IList<IdentifierData> SiteResourceIds { get; } = new ChangeTrackingList<IdentifierData>();
     }
 }

@@ -7,9 +7,9 @@
 
 using System;
 using System.ComponentModel;
-using Microsoft.Web;
+using Azure.ResourceManager.AppService;
 
-namespace Microsoft.Web.Models
+namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> State indicating the status of the enterprise grade CDN serving traffic to the static web app. </summary>
     public readonly partial struct EnterpriseGradeCdnStatus : IEquatable<EnterpriseGradeCdnStatus>
