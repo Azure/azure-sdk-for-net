@@ -9,72 +9,61 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> Gateway key regeneration request contract properties. </summary>
-    public partial class GatewayKeyRegenerateContent : IJsonModel<GatewayKeyRegenerateContent>
+    /// <summary> HTTP header and it's value. </summary>
+    public partial class HttpHeaderConfiguration : IJsonModel<HttpHeaderConfiguration>
     {
-        /// <summary> Initializes a new instance of <see cref="GatewayKeyRegenerateContent"/> for deserialization. </summary>
-        internal GatewayKeyRegenerateContent()
+        /// <summary> Initializes a new instance of <see cref="HttpHeaderConfiguration"/> for deserialization. </summary>
+        internal HttpHeaderConfiguration()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual GatewayKeyRegenerateContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual HttpHeaderConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GatewayKeyRegenerateContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HttpHeaderConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeGatewayKeyRegenerateContent(document.RootElement, options);
+                        return DeserializeHttpHeaderConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GatewayKeyRegenerateContent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HttpHeaderConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GatewayKeyRegenerateContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HttpHeaderConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerApiManagementContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(GatewayKeyRegenerateContent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HttpHeaderConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<GatewayKeyRegenerateContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<HttpHeaderConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        GatewayKeyRegenerateContent IPersistableModel<GatewayKeyRegenerateContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        HttpHeaderConfiguration IPersistableModel<HttpHeaderConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<GatewayKeyRegenerateContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="gatewayKeyRegenerateContent"> The <see cref="GatewayKeyRegenerateContent"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(GatewayKeyRegenerateContent gatewayKeyRegenerateContent)
-        {
-            if (gatewayKeyRegenerateContent == null)
-            {
-                return null;
-            }
-            return RequestContent.Create(gatewayKeyRegenerateContent, ModelSerializationExtensions.WireOptions);
-        }
+        string IPersistableModel<HttpHeaderConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<GatewayKeyRegenerateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<HttpHeaderConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -85,13 +74,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GatewayKeyRegenerateContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HttpHeaderConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GatewayKeyRegenerateContent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(HttpHeaderConfiguration)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("keyType"u8);
-            writer.WriteStringValue(KeyType.ToSerialString());
+            writer.WritePropertyName("name"u8);
+            writer.WriteStringValue(Name);
+            writer.WritePropertyName("value"u8);
+            writer.WriteStringValue(Value);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -111,36 +102,42 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        GatewayKeyRegenerateContent IJsonModel<GatewayKeyRegenerateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        HttpHeaderConfiguration IJsonModel<HttpHeaderConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual GatewayKeyRegenerateContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual HttpHeaderConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GatewayKeyRegenerateContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HttpHeaderConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GatewayKeyRegenerateContent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(HttpHeaderConfiguration)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeGatewayKeyRegenerateContent(document.RootElement, options);
+            return DeserializeHttpHeaderConfiguration(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static GatewayKeyRegenerateContent DeserializeGatewayKeyRegenerateContent(JsonElement element, ModelReaderWriterOptions options)
+        internal static HttpHeaderConfiguration DeserializeHttpHeaderConfiguration(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Models.GatewayRegenerateKeyType keyType = default;
+            string name = default;
+            string value = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("keyType"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    keyType = prop.Value.GetString().ToGatewayRegenerateKeyType();
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("value"u8))
+                {
+                    value = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -148,7 +145,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new GatewayKeyRegenerateContent(keyType, additionalBinaryDataProperties);
+            return new HttpHeaderConfiguration(name, value, additionalBinaryDataProperties);
         }
     }
 }

@@ -565,6 +565,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
             return new ConnectivityCheckRequestHttpConfiguration(@method, (validStatusCodes ?? new ChangeTrackingList<long>()).ToList(), (headers ?? new ChangeTrackingList<HttpHeaderConfiguration>()).ToList(), default);
         }
 
+        /// <param name="name"> Header name. </param>
+        /// <param name="value"> Header value. </param>
+        /// <returns> A new <see cref="Models.HttpHeaderConfiguration"/> instance for mocking. </returns>
+        public static HttpHeaderConfiguration HttpHeaderConfiguration(string name = default, string value = default)
+        {
+            return new HttpHeaderConfiguration(name, value, default);
+        }
+
         /// <param name="hops"> List of hops between the source and the destination. </param>
         /// <param name="connectionStatus"> The connection status. </param>
         /// <param name="avgLatencyInMs"> Average latency in milliseconds. </param>
@@ -3766,7 +3774,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <param name="keyType"> The Key being regenerated. </param>
         /// <returns> A new <see cref="Models.GatewayKeyRegenerateContent"/> instance for mocking. </returns>
-        public static GatewayKeyRegenerateContent GatewayKeyRegenerateContent(GatewayRegenerateKeyType keyType = default)
+        public static GatewayKeyRegenerateContent GatewayKeyRegenerateContent(Models.GatewayRegenerateKeyType keyType = default)
         {
             return new GatewayKeyRegenerateContent(keyType, default);
         }

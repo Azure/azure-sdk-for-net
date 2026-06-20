@@ -352,6 +352,7 @@ namespace Azure.ResourceManager.ApiManagement
     [ModelReaderWriterBuildable(typeof(GroupCreateParametersProperties))]
     [ModelReaderWriterBuildable(typeof(GroupUpdateParametersProperties))]
     [ModelReaderWriterBuildable(typeof(HostnameConfiguration))]
+    [ModelReaderWriterBuildable(typeof(HttpHeaderConfiguration))]
     [ModelReaderWriterBuildable(typeof(HttpMessageDiagnostic))]
     [ModelReaderWriterBuildable(typeof(IdentityProviderBaseParameters))]
     [ModelReaderWriterBuildable(typeof(IdentityProviderContractProperties))]

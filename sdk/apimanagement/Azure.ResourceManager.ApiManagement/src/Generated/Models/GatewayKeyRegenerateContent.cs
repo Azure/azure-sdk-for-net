@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Initializes a new instance of <see cref="GatewayKeyRegenerateContent"/>. </summary>
         /// <param name="keyType"> The Key being regenerated. </param>
-        public GatewayKeyRegenerateContent(GatewayRegenerateKeyType keyType)
+        public GatewayKeyRegenerateContent(Models.GatewayRegenerateKeyType keyType)
         {
             KeyType = keyType;
         }
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of <see cref="GatewayKeyRegenerateContent"/>. </summary>
         /// <param name="keyType"> The Key being regenerated. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GatewayKeyRegenerateContent(GatewayRegenerateKeyType keyType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GatewayKeyRegenerateContent(Models.GatewayRegenerateKeyType keyType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             KeyType = keyType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -35,6 +35,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> The Key being regenerated. </summary>
         [WirePath("keyType")]
-        public GatewayRegenerateKeyType KeyType { get; }
+        public Models.GatewayRegenerateKeyType KeyType { get; }
     }
 }
