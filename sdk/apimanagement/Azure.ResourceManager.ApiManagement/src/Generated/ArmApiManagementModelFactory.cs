@@ -2075,7 +2075,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="sku"> SKU properties of the API Management gateway. </param>
         /// <param name="eTag"> ETag of the resource. </param>
         /// <returns> A new <see cref="ApiManagement.ApiGatewayData"/> instance for mocking. </returns>
-        public static ApiGatewayData ApiGatewayData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string provisioningState = default, string targetProvisioningState = default, DateTimeOffset? createdAtUtc = default, VirtualNetworkType? virtualNetworkType = default, string frontendDefaultHostname = default, string backendSubnetId = default, string configurationApiHostname = default, ApiManagementGatewaySkuProperties sku = default, ETag? eTag = default)
+        public static ApiGatewayData ApiGatewayData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string provisioningState = default, string targetProvisioningState = default, DateTimeOffset? createdAtUtc = default, VirtualNetworkType? virtualNetworkType = default, string frontendDefaultHostname = default, ResourceIdentifier backendSubnetId = default, string configurationApiHostname = default, ApiManagementGatewaySkuProperties sku = default, ETag? eTag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -2123,7 +2123,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="eTag"> ETag of the resource. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.ApiGatewayPatch"/> instance for mocking. </returns>
-        public static ApiGatewayPatch ApiGatewayPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string provisioningState = default, string targetProvisioningState = default, DateTimeOffset? createdAtUtc = default, VirtualNetworkType? virtualNetworkType = default, string frontendDefaultHostname = default, string backendSubnetId = default, string configurationApiHostname = default, ApiManagementGatewaySkuPropertiesForPatch sku = default, ETag? eTag = default, IDictionary<string, string> tags = default)
+        public static ApiGatewayPatch ApiGatewayPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string provisioningState = default, string targetProvisioningState = default, DateTimeOffset? createdAtUtc = default, VirtualNetworkType? virtualNetworkType = default, string frontendDefaultHostname = default, ResourceIdentifier backendSubnetId = default, string configurationApiHostname = default, ApiManagementGatewaySkuPropertiesForPatch sku = default, ETag? eTag = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -5006,12 +5006,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                provisioningState is null && targetProvisioningState is null && createdAtUtc is null && frontendDefaultHostname is null && configurationApiHostname is null && virtualNetworkType is null ? default : new ApiManagementGatewayProperties(
+                provisioningState is null && targetProvisioningState is null && createdAtUtc is null && frontendDefaultHostname is null && subnetId is null && configurationApiHostname is null && virtualNetworkType is null ? default : new ApiManagementGatewayProperties(
                     provisioningState,
                     targetProvisioningState,
                     createdAtUtc,
                     new FrontendConfiguration(frontendDefaultHostname, default),
-                    default,
+                    new BackendConfiguration(new BackendSubnetConfiguration(subnetId, default), default),
                     new GatewayConfigurationApi(configurationApiHostname, default),
                     virtualNetworkType,
                     default),
@@ -5044,12 +5044,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 name,
                 resourceType,
                 systemData,
-                provisioningState is null && targetProvisioningState is null && createdAtUtc is null && frontendDefaultHostname is null && configurationApiHostname is null && virtualNetworkType is null ? default : new ApiManagementGatewayUpdateProperties(
+                provisioningState is null && targetProvisioningState is null && createdAtUtc is null && frontendDefaultHostname is null && subnetId is null && configurationApiHostname is null && virtualNetworkType is null ? default : new ApiManagementGatewayUpdateProperties(
                     provisioningState,
                     targetProvisioningState,
                     createdAtUtc,
                     new FrontendConfiguration(frontendDefaultHostname, default),
-                    default,
+                    new BackendConfiguration(new BackendSubnetConfiguration(subnetId, default), default),
                     new GatewayConfigurationApi(configurationApiHostname, default),
                     virtualNetworkType,
                     default),

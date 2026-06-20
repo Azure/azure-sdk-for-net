@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
@@ -37,11 +38,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> The ARM ID of the subnet in which the backend systems are hosted. </summary>
         [WirePath("subnet.id")]
-        public string SubnetId
+        public ResourceIdentifier SubnetId
         {
             get
             {
-                return Subnet is null ? default : Subnet.Id;
+                return Subnet is null ? default : Subnet.SubnetId;
             }
             set
             {
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     Subnet = new BackendSubnetConfiguration();
                 }
-                Subnet.Id = value;
+                Subnet.SubnetId = value;
             }
         }
     }

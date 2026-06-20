@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
@@ -23,16 +24,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="BackendSubnetConfiguration"/>. </summary>
-        /// <param name="id"> The ARM ID of the subnet in which the backend systems are hosted. </param>
+        /// <param name="subnetId"> The ARM ID of the subnet in which the backend systems are hosted. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BackendSubnetConfiguration(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BackendSubnetConfiguration(ResourceIdentifier subnetId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Id = id;
+            SubnetId = subnetId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The ARM ID of the subnet in which the backend systems are hosted. </summary>
         [WirePath("id")]
-        public string Id { get; set; }
+        public ResourceIdentifier SubnetId { get; set; }
     }
 }

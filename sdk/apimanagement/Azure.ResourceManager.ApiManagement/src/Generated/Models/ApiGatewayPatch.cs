@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> The ARM ID of the subnet in which the backend systems are hosted. </summary>
         [WirePath("properties.backend.subnet.id")]
-        public string BackendSubnetId
+        public ResourceIdentifier BackendSubnetId
         {
             get
             {
