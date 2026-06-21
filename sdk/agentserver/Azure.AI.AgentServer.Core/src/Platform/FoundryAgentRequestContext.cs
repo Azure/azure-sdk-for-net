@@ -99,7 +99,7 @@ public sealed class FoundryAgentRequestContext
     {
         if (CallId is not null)
         {
-            yield return new KeyValuePair<string, string>(Core.PlatformHeaders.FoundryCallId, CallId);
+            yield return new KeyValuePair<string, string>(Azure.AI.AgentServer.Core.PlatformHeaders.FoundryCallId, CallId);
         }
     }
 }
