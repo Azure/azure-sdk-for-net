@@ -5,6 +5,7 @@
 ### Features Added
 - Container protocol version `2.0.0` support: added the platform identity header constants `PlatformHeaders.UserId` (`x-agent-user-id`) and `PlatformHeaders.FoundryCallId` (`x-agent-foundry-call-id`).
 - Added `FoundryEnvironment.AgentId` exposing the agent's stable GUID from the `FOUNDRY_AGENT_ID` environment variable.
+- Added the request-scoped `FoundryAgentRequestContext` (`AsyncLocal`-backed, never-null `Current`) that captures the inbound `x-agent-foundry-call-id` / `x-agent-user-id` via an SDK middleware, and `FoundryCallIdHandler` (a `DelegatingHandler`) that echoes **only** the call ID on outbound Foundry-bound `HttpClient` calls (`x-agent-user-id` is never echoed). The .NET analogue of the Python SDK's `get_request_context()`.
 
 ### Breaking Changes
 - Renamed `IsolationContext` to `PlatformContext`. Its members are now `UserIdKey` (from `x-agent-user-id`) and `CallId` (from `x-agent-foundry-call-id`), replacing `UserIsolationKey` / `ChatIsolationKey`.

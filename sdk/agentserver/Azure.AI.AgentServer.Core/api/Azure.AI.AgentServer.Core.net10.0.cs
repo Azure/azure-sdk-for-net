@@ -36,6 +36,23 @@ namespace Azure.AI.AgentServer.Core
         public string? AdditionalServerIdentity { get { throw null; } set { } }
         public System.TimeSpan ShutdownTimeout { get { throw null; } set { } }
     }
+    public sealed partial class FoundryAgentRequestContext
+    {
+        public FoundryAgentRequestContext() { }
+        public string? CallId { get { throw null; } set { } }
+        public static Azure.AI.AgentServer.Core.FoundryAgentRequestContext Current { get { throw null; } }
+        public static Azure.AI.AgentServer.Core.FoundryAgentRequestContext Empty { get { throw null; } }
+        public string? SessionId { get { throw null; } set { } }
+        public string? UserId { get { throw null; } set { } }
+        public System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, string>> PlatformHeaders() { throw null; }
+    }
+    public sealed partial class FoundryCallIdHandler : System.Net.Http.DelegatingHandler
+    {
+        public FoundryCallIdHandler() { }
+        public FoundryCallIdHandler(System.Net.Http.HttpMessageHandler innerHandler) { }
+        protected override System.Net.Http.HttpResponseMessage Send(System.Net.Http.HttpRequestMessage request, System.Threading.CancellationToken cancellationToken) { throw null; }
+        protected override System.Threading.Tasks.Task<System.Net.Http.HttpResponseMessage> SendAsync(System.Net.Http.HttpRequestMessage request, System.Threading.CancellationToken cancellationToken) { throw null; }
+    }
     public static partial class FoundryEnvironment
     {
         public static string? AgentBlueprintClientId { get { throw null; } }
