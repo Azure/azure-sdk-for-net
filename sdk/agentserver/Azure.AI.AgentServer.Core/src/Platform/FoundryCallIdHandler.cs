@@ -67,8 +67,12 @@ public sealed class FoundryCallIdHandler : DelegatingHandler
     private static void Stamp(HttpRequestMessage request)
     {
         var callId = FoundryAgentRequestContext.Current.CallId;
-        if (callId is not null && !request.Headers.Contains(PlatformHeaders.FoundryCallId))
+        if (callId is not null)
         {
+            // Always overwrite so a stale/static value on DefaultRequestHeaders cannot
+            // shadow the current request's call id. When no ambient call id is present
+            // (null), this block is skipped and any existing header remains unchanged.
+            request.Headers.Remove(PlatformHeaders.FoundryCallId);
             request.Headers.TryAddWithoutValidation(PlatformHeaders.FoundryCallId, callId);
         }
     }
