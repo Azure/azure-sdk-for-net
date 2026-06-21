@@ -137,6 +137,56 @@ The session ID honours `FOUNDRY_AGENT_SESSION_ID` (matching the HTTP `POST /invo
 
 You can familiarise yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Invocations/samples).
 
+### Multi-user session (per-request call ID)
+
+On container protocol `2.0.0` a single agent session can serve **multiple users**. Forwarding the per-request `x-agent-foundry-call-id` on outbound toolbox calls lets the tool server resolve *which* user made this request and act on their behalf. (`x-agent-user-id` is never forwarded; the tool resolves the user from the call ID server-side. Use `context.PlatformContext.UserIdKey` only for the container's own per-user state.)
+
+Register `FoundryCallIdHandler` on the Foundry `HttpClient` so the current request's call ID is echoed on every outbound call:
+
+```C# Snippet:Invocations_ReadMe_MultiUser_Startup
+// Any HttpClient with FoundryCallIdHandler echoes the CURRENT request's
+// x-agent-foundry-call-id — never bake one call's ID into static headers.
+builder.Services.AddHttpClient("foundry", c => c.BaseAddress = new Uri(projectEndpoint))
+    .AddHttpMessageHandler<FoundryCallIdHandler>();
+```
+
+```C# Snippet:Invocations_ReadMe_MultiUser
+// One agent session can serve many users. Forwarding the per-request call ID on the
+// outbound toolbox call lets the tool server resolve which user made this request and
+// act on their behalf. x-agent-user-id is never forwarded; use
+// context.PlatformContext.UserIdKey only for the container's own per-user state.
+public class MultiUserHandler : InvocationHandler
+{
+    private readonly IHttpClientFactory _httpClientFactory;
+
+    public MultiUserHandler(IHttpClientFactory httpClientFactory) =>
+        _httpClientFactory = httpClientFactory;
+
+    public override async Task HandleAsync(
+        HttpRequest request, HttpResponse response,
+        InvocationContext context, CancellationToken cancellationToken)
+    {
+        _ = context.PlatformContext.UserIdKey; // container's own per-user state
+
+        // The "foundry" client (registered with FoundryCallIdHandler) echoes this
+        // request's x-agent-foundry-call-id, so the toolbox acts for THIS user.
+        var foundry = _httpClientFactory.CreateClient("foundry");
+        using var toolResponse = await foundry.PostAsJsonAsync(
+            "/toolboxes/github/mcp",
+            new
+            {
+                jsonrpc = "2.0",
+                method = "tools/call",
+                @params = new { name = "list_my_assigned_issues", arguments = new { } },
+            },
+            cancellationToken);
+
+        await response.WriteAsync(
+            await toolResponse.Content.ReadAsStringAsync(cancellationToken), cancellationToken);
+    }
+}
+```
+
 ## Troubleshooting
 
 ### Common errors

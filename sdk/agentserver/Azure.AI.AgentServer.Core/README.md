@@ -123,6 +123,23 @@ Platform errors also include `x-platform-error-detail` with diagnostic context (
 
 Reads Azure AI Foundry platform variables (`FOUNDRY_*`, `PORT`, `SSE_KEEPALIVE_INTERVAL`) to resolve agent identity, listening port, and connection strings. Also detects `OTEL_EXPORTER_OTLP_ENDPOINT` and `APPLICATIONINSIGHTS_CONNECTION_STRING` for telemetry configuration. Useful when your agent server runs as a hosted agent in AI Foundry.
 
+### FoundryAgentRequestContext
+
+On container protocol `2.0.0` a single agent session can serve **multiple users**. Each request carries `x-agent-user-id` (the user — partition state by it) and an opaque `x-agent-foundry-call-id` (the per-request caller identity). Read both via `FoundryAgentRequestContext.Current`. Register `FoundryCallIdHandler` on any `HttpClient` that calls Foundry services so the call ID is echoed automatically on every outbound request — **only** the call ID is echoed (`x-agent-user-id` is never forwarded). Forwarding the call ID lets a tool server resolve which user made the request and act on their behalf.
+
+```csharp
+using Azure.AI.AgentServer.Core;
+
+// Any HttpClient with FoundryCallIdHandler echoes the CURRENT request's
+// x-agent-foundry-call-id — never bake one call's ID into static DefaultRequestHeaders.
+builder.Services.AddHttpClient("foundry", c => c.BaseAddress = new Uri(projectEndpoint))
+    .AddHttpMessageHandler<FoundryCallIdHandler>();
+
+// Anywhere during the request:
+string? userId = FoundryAgentRequestContext.Current.UserId;   // for the container's own per-user state
+string? callId = FoundryAgentRequestContext.Current.CallId;   // per-request caller identity
+```
+
 ### Telemetry
 
 OpenTelemetry is configured automatically via the `Microsoft.OpenTelemetry` distro. The Responses and Invocations protocols use dedicated activity source names (`Azure.AI.AgentServer.Responses` and `Azure.AI.AgentServer.Invocations`) for distributed tracing. Azure Monitor export is enabled when `APPLICATIONINSIGHTS_CONNECTION_STRING` is set, and OTLP export is enabled when `OTEL_EXPORTER_OTLP_ENDPOINT` is set.
