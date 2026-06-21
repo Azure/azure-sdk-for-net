@@ -14,16 +14,16 @@ public class PlatformContextFromRequestTests
     {
         var httpContext = new DefaultHttpContext();
         httpContext.Request.Headers[PlatformHeaders.UserId] = "user-key-abc";
-        httpContext.Request.Headers[PlatformHeaders.FoundryCallId] = "chat-key-xyz";
+        httpContext.Request.Headers[PlatformHeaders.FoundryCallId] = "call-id-xyz";
 
         var result = PlatformContext.FromRequest(httpContext.Request);
 
         Assert.That(result.UserIdKey, Is.EqualTo("user-key-abc"));
-        Assert.That(result.CallId, Is.EqualTo("chat-key-xyz"));
+        Assert.That(result.CallId, Is.EqualTo("call-id-xyz"));
     }
 
     [Test]
-    public void FromRequest_OnlyUserHeader_ReturnsChatAsNull()
+    public void FromRequest_OnlyUserHeader_ReturnsCallIdAsNull()
     {
         var httpContext = new DefaultHttpContext();
         httpContext.Request.Headers[PlatformHeaders.UserId] = "user-only";
@@ -35,15 +35,15 @@ public class PlatformContextFromRequestTests
     }
 
     [Test]
-    public void FromRequest_OnlyChatHeader_ReturnsUserAsNull()
+    public void FromRequest_OnlyCallIdHeader_ReturnsUserAsNull()
     {
         var httpContext = new DefaultHttpContext();
-        httpContext.Request.Headers[PlatformHeaders.FoundryCallId] = "chat-only";
+        httpContext.Request.Headers[PlatformHeaders.FoundryCallId] = "call-id-only";
 
         var result = PlatformContext.FromRequest(httpContext.Request);
 
         Assert.That(result.UserIdKey, Is.Null);
-        Assert.That(result.CallId, Is.EqualTo("chat-only"));
+        Assert.That(result.CallId, Is.EqualTo("call-id-only"));
     }
 
     [Test]
@@ -86,13 +86,13 @@ public class PlatformContextFromRequestTests
         var httpContext = new DefaultHttpContext();
         httpContext.Request.Headers.Append(PlatformHeaders.UserId, "first-user");
         httpContext.Request.Headers.Append(PlatformHeaders.UserId, "second-user");
-        httpContext.Request.Headers.Append(PlatformHeaders.FoundryCallId, "first-chat");
-        httpContext.Request.Headers.Append(PlatformHeaders.FoundryCallId, "second-chat");
+        httpContext.Request.Headers.Append(PlatformHeaders.FoundryCallId, "first-call");
+        httpContext.Request.Headers.Append(PlatformHeaders.FoundryCallId, "second-call");
 
         var result = PlatformContext.FromRequest(httpContext.Request);
 
         Assert.That(result.UserIdKey, Is.EqualTo("first-user"));
-        Assert.That(result.CallId, Is.EqualTo("first-chat"));
+        Assert.That(result.CallId, Is.EqualTo("first-call"));
     }
 
     [Test]
@@ -100,18 +100,18 @@ public class PlatformContextFromRequestTests
     {
         var httpContext = new DefaultHttpContext();
         httpContext.Request.Headers[PlatformHeaders.UserId] = "  user-key  ";
-        httpContext.Request.Headers[PlatformHeaders.FoundryCallId] = " chat-key ";
+        httpContext.Request.Headers[PlatformHeaders.FoundryCallId] = " call-id ";
 
         var result = PlatformContext.FromRequest(httpContext.Request);
 
         Assert.That(result.UserIdKey, Is.EqualTo("user-key"));
-        Assert.That(result.CallId, Is.EqualTo("chat-key"));
+        Assert.That(result.CallId, Is.EqualTo("call-id"));
     }
 
     [Test]
-    public void FromRequest_EqualKeysInOneToOneChat_BothPopulated()
+    public void FromRequest_EqualKeysInOneToOneSession_BothPopulated()
     {
-        // In a 1:1 user↔agent chat the two keys are equal.
+        // In a 1:1 user↔agent session the user id and call id can be equal.
         var httpContext = new DefaultHttpContext();
         httpContext.Request.Headers[PlatformHeaders.UserId] = "same-key";
         httpContext.Request.Headers[PlatformHeaders.FoundryCallId] = "same-key";

@@ -281,7 +281,7 @@ public class MultiUserHandler : ResponseHandler
                     {
                         jsonrpc = "2.0",
                         method = "tools/call",
-                        @params = new { name = "list_my_assigned_issues", arguments = new { } },
+                        @params = new { name = "list_my_assigned_issues", arguments = new { filter = query } },
                     },
                     ct);
 

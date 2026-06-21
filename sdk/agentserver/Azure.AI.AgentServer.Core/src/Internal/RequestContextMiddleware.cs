@@ -17,14 +17,23 @@ internal sealed class RequestContextMiddleware : IMiddleware
     /// <inheritdoc />
     public async Task InvokeAsync(HttpContext context, RequestDelegate next)
     {
-        FoundryAgentRequestContext.Set(new FoundryAgentRequestContext
+        FoundryAgentRequestContext? previous = FoundryAgentRequestContext.Exchange(new FoundryAgentRequestContext
         {
             CallId = NormalizeHeader(context.Request.Headers[PlatformHeaders.FoundryCallId]),
             UserId = NormalizeHeader(context.Request.Headers[PlatformHeaders.UserId]),
             SessionId = FoundryEnvironment.SessionId,
         });
 
-        await next(context);
+        try
+        {
+            await next(context);
+        }
+        finally
+        {
+            // Restore the prior context so a completed request's call id/user id
+            // cannot leak into work that runs afterwards on the same execution context.
+            FoundryAgentRequestContext.Exchange(previous);
+        }
     }
 
     private static string? NormalizeHeader(Microsoft.Extensions.Primitives.StringValues values)

@@ -74,6 +74,22 @@ public sealed class FoundryAgentRequestContext
     internal static void Set(FoundryAgentRequestContext context) => CurrentContext.Value = context;
 
     /// <summary>
+    /// Atomically binds <paramref name="context"/> as the current request context
+    /// and returns the previously bound context (or <see langword="null"/>). Used by
+    /// the request-context middleware to restore the prior value in a <c>finally</c>
+    /// block so a completed request's call id/user id cannot leak into work that runs
+    /// afterwards on the same execution context (e.g. nested pipelines).
+    /// </summary>
+    /// <param name="context">The context to bind, or <see langword="null"/> to clear.</param>
+    /// <returns>The previously bound context, or <see langword="null"/> if none.</returns>
+    internal static FoundryAgentRequestContext? Exchange(FoundryAgentRequestContext? context)
+    {
+        FoundryAgentRequestContext? previous = CurrentContext.Value;
+        CurrentContext.Value = context;
+        return previous;
+    }
+
+    /// <summary>
     /// Builds the platform identity headers to echo on outbound Foundry-bound
     /// calls. Only <c>x-agent-foundry-call-id</c> is included; <c>x-agent-user-id</c>
     /// is never echoed. Mirrors the Python SDK's <c>FoundryAgentRequestContext.platform_headers()</c>.

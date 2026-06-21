@@ -201,7 +201,7 @@ internal sealed class ResponseEndpointHandler
         var clientHeaders = ExtractClientHeaders(httpContext.Request);
         var queryParameters = ExtractQueryParameters(httpContext.Request);
 
-        // Record the creation-time session ID and chat platformContext key on the execution
+        // Record the creation-time session ID and user ID key on the execution
         // so subsequent GET/Cancel/Delete can emit x-agent-session-id even before
         // the handler yields response.created (when execution.Response is still null).
         execution.AgentSessionId = request.AgentSessionId;
@@ -336,7 +336,7 @@ internal sealed class ResponseEndpointHandler
             // Apply B2 guards: SSE replay requires background + streaming + store.
             if (_tracker.TryGet(responseId, out var execution) && execution is not null)
             {
-                // Chat platformContext enforcement for in-flight responses
+                // User-key enforcement for in-flight responses
                 execution.EnforceUserIsolation(platformContext);
 
                 // Store resolved session ID for the response header filter.
@@ -451,7 +451,7 @@ internal sealed class ResponseEndpointHandler
         // responses are evicted by FinalizeExecutionAsync and served from the provider.
         if (_tracker.TryGet(responseId, out var execution) && execution is not null)
         {
-            // Chat platformContext enforcement for in-flight responses
+            // User-key enforcement for in-flight responses
             execution.EnforceUserIsolation(platformContext);
 
             // Store resolved session ID for the response header filter (error paths).

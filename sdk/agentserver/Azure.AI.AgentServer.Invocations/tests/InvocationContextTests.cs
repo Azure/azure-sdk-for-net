@@ -18,7 +18,7 @@ public class InvocationContextTests
     {
         var headers = new Dictionary<string, string> { ["x-client-foo"] = "bar" };
         var queryParams = new Dictionary<string, StringValues> { ["key"] = "value" };
-        var isolation = new PlatformContext("user-1", "chat-2");
+        var isolation = new PlatformContext("user-1", "call-2");
 
         var context = new InvocationContext("inv-1", "sess-2", headers, queryParams, isolation);
 

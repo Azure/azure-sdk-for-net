@@ -152,7 +152,7 @@ internal sealed class ResponseOrchestrator
     /// Encapsulates all guard logic: store check, background check, completion check.
     /// </summary>
     /// <param name="responseId">The response ID to look up.</param>
-    /// <param name="platformContext">The platform platformContext context. Use <see cref="PlatformContext.Empty"/> when not applicable.</param>
+    /// <param name="platformContext">The platform identity context. Use <see cref="PlatformContext.Empty"/> when not applicable.</param>
     /// <returns>The Response snapshot.</returns>
     /// <exception cref="ResourceNotFoundException">If the response cannot be retrieved.</exception>
     public async Task<Models.ResponseObject> GetAsync(string responseId, PlatformContext platformContext)
@@ -160,7 +160,7 @@ internal sealed class ResponseOrchestrator
         // If the response is in-flight, apply in-flight guards and return a snapshot.
         if (_tracker.TryGet(responseId, out var execution) && execution is not null)
         {
-            // Chat platformContext enforcement for in-flight responses
+            // User-key enforcement for in-flight responses
             execution.EnforceUserIsolation(platformContext);
 
             // Guard: store=false responses are not retrievable (B14)
@@ -205,7 +205,7 @@ internal sealed class ResponseOrchestrator
     /// idempotency, winddown wait, output clearing.
     /// </summary>
     /// <param name="responseId">The response ID to cancel.</param>
-    /// <param name="platformContext">The platform platformContext context. Use <see cref="PlatformContext.Empty"/> when not applicable.</param>
+    /// <param name="platformContext">The platform identity context. Use <see cref="PlatformContext.Empty"/> when not applicable.</param>
     /// <returns>The cancelled Response snapshot.</returns>
     /// <exception cref="ResourceNotFoundException">If the response is not found.</exception>
     /// <exception cref="BadRequestException">If the response cannot be cancelled.</exception>
@@ -236,7 +236,7 @@ internal sealed class ResponseOrchestrator
             };
         }
 
-        // Chat platformContext enforcement for in-flight responses
+        // User-key enforcement for in-flight responses
         execution.EnforceUserIsolation(platformContext);
 
         // B1/B16: non-background in-flight responses are not findable via Cancel.
