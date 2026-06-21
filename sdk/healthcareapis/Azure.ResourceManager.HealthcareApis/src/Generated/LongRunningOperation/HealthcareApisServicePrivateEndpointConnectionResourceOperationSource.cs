@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.HealthcareApis
 {
     /// <summary></summary>
-    internal partial class HealthcareApisServicePrivateEndpointConnectionOperationSource : IOperationSource<HealthcareApisServicePrivateEndpointConnectionResource>
+    internal partial class HealthcareApisServicePrivateEndpointConnectionResourceOperationSource : IOperationSource<HealthcareApisServicePrivateEndpointConnectionResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal HealthcareApisServicePrivateEndpointConnectionOperationSource(ArmClient client)
+        internal HealthcareApisServicePrivateEndpointConnectionResourceOperationSource(ArmClient client)
         {
             _client = client;
         }

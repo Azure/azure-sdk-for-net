@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.HealthcareApis
 {
     /// <summary></summary>
-    internal partial class HealthcareApisIotFhirDestinationOperationSource : IOperationSource<HealthcareApisIotFhirDestinationResource>
+    internal partial class DicomServiceResourceOperationSource : IOperationSource<DicomServiceResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal HealthcareApisIotFhirDestinationOperationSource(ArmClient client)
+        internal DicomServiceResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        HealthcareApisIotFhirDestinationResource IOperationSource<HealthcareApisIotFhirDestinationResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        DicomServiceResource IOperationSource<DicomServiceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            HealthcareApisIotFhirDestinationData data = HealthcareApisIotFhirDestinationData.DeserializeHealthcareApisIotFhirDestinationData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new HealthcareApisIotFhirDestinationResource(_client, data);
+            DicomServiceData data = DicomServiceData.DeserializeDicomServiceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new DicomServiceResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<HealthcareApisIotFhirDestinationResource> IOperationSource<HealthcareApisIotFhirDestinationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DicomServiceResource> IOperationSource<DicomServiceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            HealthcareApisIotFhirDestinationData data = HealthcareApisIotFhirDestinationData.DeserializeHealthcareApisIotFhirDestinationData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new HealthcareApisIotFhirDestinationResource(_client, data);
+            DicomServiceData data = DicomServiceData.DeserializeDicomServiceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new DicomServiceResource(_client, data);
         }
     }
 }

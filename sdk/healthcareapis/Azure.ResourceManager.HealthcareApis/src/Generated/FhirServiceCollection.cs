@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 HttpMessage message = _fhirServicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, fhirServiceName, FhirServiceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HealthcareApisArmOperation<FhirServiceResource> operation = new HealthcareApisArmOperation<FhirServiceResource>(
-                    new FhirServiceOperationSource(Client),
+                    new FhirServiceResourceOperationSource(Client),
                     _fhirServicesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 HttpMessage message = _fhirServicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, fhirServiceName, FhirServiceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HealthcareApisArmOperation<FhirServiceResource> operation = new HealthcareApisArmOperation<FhirServiceResource>(
-                    new FhirServiceOperationSource(Client),
+                    new FhirServiceResourceOperationSource(Client),
                     _fhirServicesClientDiagnostics,
                     Pipeline,
                     message.Request,

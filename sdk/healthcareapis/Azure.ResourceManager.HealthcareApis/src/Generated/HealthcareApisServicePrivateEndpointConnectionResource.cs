@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 HttpMessage message = _healthcareApisServicePrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, HealthcareApisPrivateEndpointConnectionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HealthcareApisArmOperation<HealthcareApisServicePrivateEndpointConnectionResource> operation = new HealthcareApisArmOperation<HealthcareApisServicePrivateEndpointConnectionResource>(
-                    new HealthcareApisServicePrivateEndpointConnectionOperationSource(Client),
+                    new HealthcareApisServicePrivateEndpointConnectionResourceOperationSource(Client),
                     _healthcareApisServicePrivateEndpointConnectionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 HttpMessage message = _healthcareApisServicePrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, HealthcareApisPrivateEndpointConnectionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HealthcareApisArmOperation<HealthcareApisServicePrivateEndpointConnectionResource> operation = new HealthcareApisArmOperation<HealthcareApisServicePrivateEndpointConnectionResource>(
-                    new HealthcareApisServicePrivateEndpointConnectionOperationSource(Client),
+                    new HealthcareApisServicePrivateEndpointConnectionResourceOperationSource(Client),
                     _healthcareApisServicePrivateEndpointConnectionsClientDiagnostics,
                     Pipeline,
                     message.Request,

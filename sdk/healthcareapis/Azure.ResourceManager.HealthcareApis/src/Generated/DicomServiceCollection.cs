@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 HttpMessage message = _dicomServicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dicomServiceName, DicomServiceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HealthcareApisArmOperation<DicomServiceResource> operation = new HealthcareApisArmOperation<DicomServiceResource>(
-                    new DicomServiceOperationSource(Client),
+                    new DicomServiceResourceOperationSource(Client),
                     _dicomServicesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 HttpMessage message = _dicomServicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dicomServiceName, DicomServiceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HealthcareApisArmOperation<DicomServiceResource> operation = new HealthcareApisArmOperation<DicomServiceResource>(
-                    new DicomServiceOperationSource(Client),
+                    new DicomServiceResourceOperationSource(Client),
                     _dicomServicesClientDiagnostics,
                     Pipeline,
                     message.Request,

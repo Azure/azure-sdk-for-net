@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.HealthcareApis
 {
     /// <summary></summary>
-    internal partial class HealthcareApisServiceOperationSource : IOperationSource<HealthcareApisServiceResource>
+    internal partial class HealthcareApisIotFhirDestinationResourceOperationSource : IOperationSource<HealthcareApisIotFhirDestinationResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal HealthcareApisServiceOperationSource(ArmClient client)
+        internal HealthcareApisIotFhirDestinationResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        HealthcareApisServiceResource IOperationSource<HealthcareApisServiceResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        HealthcareApisIotFhirDestinationResource IOperationSource<HealthcareApisIotFhirDestinationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            HealthcareApisServiceData data = HealthcareApisServiceData.DeserializeHealthcareApisServiceData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new HealthcareApisServiceResource(_client, data);
+            HealthcareApisIotFhirDestinationData data = HealthcareApisIotFhirDestinationData.DeserializeHealthcareApisIotFhirDestinationData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new HealthcareApisIotFhirDestinationResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<HealthcareApisServiceResource> IOperationSource<HealthcareApisServiceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<HealthcareApisIotFhirDestinationResource> IOperationSource<HealthcareApisIotFhirDestinationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            HealthcareApisServiceData data = HealthcareApisServiceData.DeserializeHealthcareApisServiceData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new HealthcareApisServiceResource(_client, data);
+            HealthcareApisIotFhirDestinationData data = HealthcareApisIotFhirDestinationData.DeserializeHealthcareApisIotFhirDestinationData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new HealthcareApisIotFhirDestinationResource(_client, data);
         }
     }
 }

@@ -36,16 +36,16 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> IoT FHIR Destination settings. </param>
         /// <param name="eTag"> An etag associated with the resource, used for optimistic concurrency when editing it. </param>
         /// <param name="location"> The resource location. </param>
-        internal HealthcareApisIotFhirDestinationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, HealthcareApisIotFhirDestinationProperties properties, ETag? eTag, AzureLocation? location) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal HealthcareApisIotFhirDestinationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, HealthcareApisIotFhirDestinationProperties properties, ETag? eTag, AzureLocation? location, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             ETag = eTag;
             Location = location;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> IoT FHIR Destination settings. </summary>

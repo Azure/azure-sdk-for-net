@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 HttpMessage message = _iotConnectorFhirDestinationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, fhirDestinationName, HealthcareApisIotFhirDestinationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HealthcareApisArmOperation<HealthcareApisIotFhirDestinationResource> operation = new HealthcareApisArmOperation<HealthcareApisIotFhirDestinationResource>(
-                    new HealthcareApisIotFhirDestinationOperationSource(Client),
+                    new HealthcareApisIotFhirDestinationResourceOperationSource(Client),
                     _iotConnectorFhirDestinationClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 HttpMessage message = _iotConnectorFhirDestinationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, fhirDestinationName, HealthcareApisIotFhirDestinationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HealthcareApisArmOperation<HealthcareApisIotFhirDestinationResource> operation = new HealthcareApisArmOperation<HealthcareApisIotFhirDestinationResource>(
-                    new HealthcareApisIotFhirDestinationOperationSource(Client),
+                    new HealthcareApisIotFhirDestinationResourceOperationSource(Client),
                     _iotConnectorFhirDestinationClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 HttpMessage message = _servicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, HealthcareApisServiceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HealthcareApisArmOperation<HealthcareApisServiceResource> operation = new HealthcareApisArmOperation<HealthcareApisServiceResource>(
-                    new HealthcareApisServiceOperationSource(Client),
+                    new HealthcareApisServiceResourceOperationSource(Client),
                     _servicesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 HttpMessage message = _servicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, HealthcareApisServiceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HealthcareApisArmOperation<HealthcareApisServiceResource> operation = new HealthcareApisArmOperation<HealthcareApisServiceResource>(
-                    new HealthcareApisServiceOperationSource(Client),
+                    new HealthcareApisServiceResourceOperationSource(Client),
                     _servicesClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.HealthcareApis
 {
     /// <summary></summary>
-    internal partial class FhirServiceOperationSource : IOperationSource<FhirServiceResource>
+    internal partial class FhirServiceResourceOperationSource : IOperationSource<FhirServiceResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal FhirServiceOperationSource(ArmClient client)
+        internal FhirServiceResourceOperationSource(ArmClient client)
         {
             _client = client;
         }

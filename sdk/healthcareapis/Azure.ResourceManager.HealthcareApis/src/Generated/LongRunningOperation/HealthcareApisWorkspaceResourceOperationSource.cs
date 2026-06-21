@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.HealthcareApis
 {
     /// <summary></summary>
-    internal partial class HealthcareApisIotConnectorOperationSource : IOperationSource<HealthcareApisIotConnectorResource>
+    internal partial class HealthcareApisWorkspaceResourceOperationSource : IOperationSource<HealthcareApisWorkspaceResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal HealthcareApisIotConnectorOperationSource(ArmClient client)
+        internal HealthcareApisWorkspaceResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        HealthcareApisIotConnectorResource IOperationSource<HealthcareApisIotConnectorResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        HealthcareApisWorkspaceResource IOperationSource<HealthcareApisWorkspaceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            HealthcareApisIotConnectorData data = HealthcareApisIotConnectorData.DeserializeHealthcareApisIotConnectorData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new HealthcareApisIotConnectorResource(_client, data);
+            HealthcareApisWorkspaceData data = HealthcareApisWorkspaceData.DeserializeHealthcareApisWorkspaceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new HealthcareApisWorkspaceResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<HealthcareApisIotConnectorResource> IOperationSource<HealthcareApisIotConnectorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<HealthcareApisWorkspaceResource> IOperationSource<HealthcareApisWorkspaceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            HealthcareApisIotConnectorData data = HealthcareApisIotConnectorData.DeserializeHealthcareApisIotConnectorData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new HealthcareApisIotConnectorResource(_client, data);
+            HealthcareApisWorkspaceData data = HealthcareApisWorkspaceData.DeserializeHealthcareApisWorkspaceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new HealthcareApisWorkspaceResource(_client, data);
         }
     }
 }
