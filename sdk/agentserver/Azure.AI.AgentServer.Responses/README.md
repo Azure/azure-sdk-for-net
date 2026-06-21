@@ -213,7 +213,7 @@ Every response includes an `x-request-id` header (set by Core's `RequestIdMiddle
 
 All error responses (4xx/5xx) include the `x-platform-error-source` header classifying the error origin as `user`, `platform`, or `upstream`. See the [Core README](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Core#error-source-classification) for the full classification table.
 
-### Chat isolation and session ID
+### Platform context headers and session ID
 
 When the platform injects `x-agent-user-id` and `x-agent-foundry-call-id` request headers, the library reads them into the platform context and forwards the per-request call ID to the storage provider so that responses resolve the correct caller context server-side. The resolved session ID is returned on every response via the `x-agent-session-id` header.
 
