@@ -1,23 +1,14 @@
----
-page_type: sample
-languages:
-- csharp
-products:
-- azure
-- ai
-name: Azure.AI.AgentServer.Optimization.Configuration samples for .NET
-description: TravelAgent sample showing DI / IConfiguration integration for optimization config loading.
----
-
 # Azure.AI.AgentServer.Optimization.Configuration Samples
 
-## What's here
+## Sample list
 
 | Sample | Description |
 |---|---|
-| [`TravelAgent/`](TravelAgent/) | The same Travel Agent as the [procedural sample](../Azure.AI.AgentServer.Optimization/samples/TravelAgent/), but wired through `AddOptimizationConfigSource()` and `GetOptimizationOptions()` — the DI integration provided by this Configuration package. |
+| [Sample 1: Getting Started](Sample1_GettingStarted.md) | Register the optimization config source with `IConfigurationBuilder`, bind options with DI, and consume them in an ASP.NET host. |
 
-## See also
+## End-to-end runnable samples
 
-- [Procedural sample](../../Azure.AI.AgentServer.Optimization/samples/TravelAgent/) — calls `OptimizationOptionsLoader.LoadAsync()` directly, no DI required.
-- [Configuration package README](../README.md) — API reference for `AddOptimizationConfigSource` and `GetOptimizationOptions`.
+| Sample | Description |
+|---|---|
+| [DI TravelAgent](https://github.com/Azure/azure-sdk-for-net/tree/main/samples/agentserver/travel-agent-optimization-di) | Uses `AddOptimizationConfigSource()` with `IConfiguration`. |
+| [Procedural TravelAgent](https://github.com/Azure/azure-sdk-for-net/tree/main/samples/agentserver/travel-agent-optimization-procedural) | Calls `OptimizationOptionsLoader.LoadAsync()` directly. |

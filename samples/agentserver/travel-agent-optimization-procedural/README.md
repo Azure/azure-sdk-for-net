@@ -1,17 +1,15 @@
-# TravelAgent sample
+# TravelAgent sample — Procedural
 
 A minimal but realistic Foundry [hosted agent][foundry-hosted] built with the
 [Microsoft Agent Framework][maf]. It plans budget-friendly trips, calling three
 tools (`SearchFlights`, `GetHotelPrices`, `GetRandomDestination`) and returning
 a structured itinerary.
 
-The sample is wired end-to-end with
-[`Azure.AI.AgentServer.Optimization.Configuration`][cfg] so you can:
+This sample uses `OptimizationOptionsLoader.LoadAsync()` directly (procedural
+style). For a DI/`IConfiguration` approach, see the
+[travel-agent-optimization-di](../travel-agent-optimization-di/) sample.
 
-1. Run it locally as a normal ASP.NET app.
-2. Containerize and deploy it as a Foundry hosted agent with `azd up`.
-3. Optimize the agent's system instructions with `azd ai agent optimize` and
-   serve any candidate by flipping a single env var.
+This sample is deployable and optimizable end-to-end:
 
 ## File map
 
@@ -22,8 +20,7 @@ The sample is wired end-to-end with
 | `Program.cs` | ASP.NET host. Loads `OptimizationOptions` (from a local `.agent_configs/<candidate>/` directory selected by `OPTIMIZATION_CANDIDATE_ID`), wires up an Agent Framework `ChatClientAgent` with the loaded instructions + tools, and exposes the `/responses` endpoint via `TravelHandler`. |
 | `TravelTools.cs` | The three tools the agent can call. Static methods decorated as Agent Framework tools — pure deterministic stubs, easy to swap for real APIs. |
 | `TravelHandler.cs` | Maps incoming `/responses` requests to the agent and shapes the output. |
-| `Azure.AI.AgentServer.Optimization.Configuration.Samples.csproj` | Multi-targets `net8.0` and `net10.0`. References the sibling configuration package via `ProjectReference`. |
-| `Properties/launchSettings.json` | Local dev profile — runs on port 8088. |
+| `Azure.AI.AgentServer.Optimization.Samples.csproj` | Multi-targets `net8.0` and `net10.0`. |
 
 ### Agent definition
 
@@ -104,9 +101,7 @@ needs to be set (the loader uses the local directory, Priority 3).
 > `agent.name` in `eval.yaml`.** If they diverge you'll get
 > `instruction is required for optimization`. Both ship as `travel-agent-sample`.
 
-See the parent [`samples/README.md`](../README.md) for broader context.
-For DI integration with `IConfiguration`, see the
-[Configuration package sample](../../Azure.AI.AgentServer.Optimization.Configuration/samples/TravelAgent/).
+See the [DI sample](../travel-agent-optimization-di/) for `IConfiguration` integration.
 
 [foundry-hosted]: https://learn.microsoft.com/azure/ai-foundry/agents/concepts/hosted-agents
 [maf]: https://learn.microsoft.com/dotnet/ai/microsoft-agent-framework

@@ -1,8 +1,0 @@
-directory: specification/ai-foundry/data-plane/Foundry/src/agents-optimization
-commit: 370d6721f84ea9293008f572fb894b51dd291d9e
-repo: Azure/azure-rest-api-specs
-emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-emitter-package.json
-additionalDirectories:
-    - specification/ai-foundry/data-plane/Foundry/src/common
-    - specification/ai-foundry/data-plane/Foundry/src/openai-evaluations
-    - specification/ai-foundry/data-plane/Foundry/src
