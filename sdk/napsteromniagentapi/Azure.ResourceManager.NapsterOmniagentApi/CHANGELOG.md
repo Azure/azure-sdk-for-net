@@ -9,9 +9,3 @@
 - Operations: Create, Read, Update, Delete, List organizations.
 - SaaS linking: Link and retrieve linked SaaS resources.
 - SaaS activation: Activate and validate SaaS resources.
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
