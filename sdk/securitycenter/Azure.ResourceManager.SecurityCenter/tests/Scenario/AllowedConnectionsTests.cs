@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         }
 
         [RecordedTest]
-        [Ignore("Needs re-recording because the migrated API now only exposes the subscription-level list operation.")]
+        [Category("Manually")]
         public async Task Get()
         {
             var list = await DefaultSubscription.GetAllowedConnectionsAsync().ToEnumerableAsync();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         }
 
         [RecordedTest]
-        [Ignore("Needs re-recording because the migrated API now only exposes the subscription-level list operation.")]
+        [Category("Manually")]
         public async Task GetAll()
         {
             var list = await DefaultSubscription.GetAllowedConnectionsAsync().ToEnumerableAsync();
