@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 throw new FormatException($"The model {nameof(IotHubTestRouteResultDetails)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(CompilationErrors))
+            if (Optional.IsCollectionDefined(CompilationErrors))
             {
                 writer.WritePropertyName("compilationErrors"u8);
                 writer.WriteStartArray();
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            IReadOnlyList<RouteCompilationError> compilationErrors = default;
+            IList<RouteCompilationError> compilationErrors = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

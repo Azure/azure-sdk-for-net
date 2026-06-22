@@ -37,14 +37,5 @@ namespace Azure.ResourceManager.IotHub.Models
 
         /// <summary> Detailed result of testing route. </summary>
         internal IotHubTestRouteResultDetails Details { get; }
-
-        /// <summary> JSON-serialized list of route compilation errors. </summary>
-        public IReadOnlyList<RouteCompilationError> DetailsCompilationErrors
-        {
-            get
-            {
-                return Details is null ? default : Details.CompilationErrors;
-            }
-        }
     }
 }

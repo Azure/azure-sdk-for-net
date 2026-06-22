@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.IotHub
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Devices/IotHubs/", false);
+            uri.AppendPath("/providers/Microsoft.Devices/iotHubs/", false);
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/privateLinkResources/", false);
             uri.AppendPath(groupId, true);
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.IotHub
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Devices/IotHubs/", false);
+            uri.AppendPath("/providers/Microsoft.Devices/iotHubs/", false);
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/privateLinkResources", false);
             if (_apiVersion != null)

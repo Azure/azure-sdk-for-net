@@ -26,13 +26,13 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <summary> Initializes a new instance of <see cref="IotHubTestRouteResultDetails"/>. </summary>
         /// <param name="compilationErrors"> JSON-serialized list of route compilation errors. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IotHubTestRouteResultDetails(IReadOnlyList<RouteCompilationError> compilationErrors, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IotHubTestRouteResultDetails(IList<RouteCompilationError> compilationErrors, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CompilationErrors = compilationErrors;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> JSON-serialized list of route compilation errors. </summary>
-        public IReadOnlyList<RouteCompilationError> CompilationErrors { get; }
+        public IList<RouteCompilationError> CompilationErrors { get; }
     }
 }

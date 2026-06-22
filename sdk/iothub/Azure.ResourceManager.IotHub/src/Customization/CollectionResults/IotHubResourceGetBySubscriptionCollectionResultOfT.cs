@@ -10,7 +10,13 @@ namespace Azure.ResourceManager.IotHub
 {
     internal partial class IotHubResourceGetBySubscriptionCollectionResultOfT
     {
-        // Generator workaround: allow relative continuation tokens when resuming next-link paging.
+        // Customization justification:
+        // Some IoT Hub list responses return relative nextLink values. The generated collection result
+        // path expects a continuation token that can be converted back into a URI when callers resume
+        // paging through AsPages. Accepting both relative and absolute tokens preserves the service
+        // contract and prevents paging from failing after the first page. This is intentionally scoped to
+        // the subscription-level IoT Hub collection result until the generator can handle relative
+        // nextLink values consistently.
         public override IEnumerable<Page<IotHubDescriptionData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = string.IsNullOrEmpty(continuationToken) ? null : new Uri(continuationToken, UriKind.RelativeOrAbsolute);

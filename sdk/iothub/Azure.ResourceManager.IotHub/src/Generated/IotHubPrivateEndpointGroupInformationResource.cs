@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.IotHub
         private readonly PrivateLinkResources _privateLinkResourcesRestClient;
         private readonly IotHubPrivateEndpointGroupInformationData _data;
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Devices/IotHubs/privateLinkResources";
+        public static readonly ResourceType ResourceType = "Microsoft.Devices/iotHubs/privateLinkResources";
 
         /// <summary> Initializes a new instance of IotHubPrivateEndpointGroupInformationResource for mocking. </summary>
         protected IotHubPrivateEndpointGroupInformationResource()
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="groupId"> The groupId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName, string groupId)
         {
-            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/privateLinkResources/{groupId}";
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/iotHubs/{resourceName}/privateLinkResources/{groupId}";
             return new ResourceIdentifier(resourceId);
         }
 
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.IotHub
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/privateLinkResources/{groupId}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/iotHubs/{resourceName}/privateLinkResources/{groupId}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.IotHub
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/privateLinkResources/{groupId}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/iotHubs/{resourceName}/privateLinkResources/{groupId}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>

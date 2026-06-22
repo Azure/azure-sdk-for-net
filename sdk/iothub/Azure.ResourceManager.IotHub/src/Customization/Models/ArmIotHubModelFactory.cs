@@ -7,7 +7,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    // Compatibility overloads preserve previous GA model factory signatures while delegating to generated overloads.
+    // Customization justification:
+    // The TypeSpec-generated model factory follows the new generated model shape. This overload preserves
+    // the previous GA factory signature for IotHubProperties so tests and customer code that construct
+    // model instances for mocking do not need to change when moving to the migrated package. The
+    // implementation delegates to the generated overload so there is a single construction path and the
+    // compatibility shim does not duplicate initialization logic.
     public static partial class ArmIotHubModelFactory
     {
         /// <summary> Initializes a new instance of IotHubProperties. </summary>
