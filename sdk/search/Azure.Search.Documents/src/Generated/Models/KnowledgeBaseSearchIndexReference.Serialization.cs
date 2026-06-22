@@ -85,6 +85,11 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 writer.WritePropertyName("docKey"u8);
                 writer.WriteStringValue(DocKey);
             }
+            if (Optional.IsDefined(SearchSensitivityLabelInfo))
+            {
+                writer.WritePropertyName("searchSensitivityLabelInfo"u8);
+                writer.WriteObjectValue(SearchSensitivityLabelInfo, options);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -119,6 +124,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             float? rerankerScore = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string docKey = default;
+            PurviewSensitivityLabelInfo searchSensitivityLabelInfo = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -171,6 +177,15 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                     docKey = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("searchSensitivityLabelInfo"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    searchSensitivityLabelInfo = PurviewSensitivityLabelInfo.DeserializePurviewSensitivityLabelInfo(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -183,7 +198,8 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 sourceData ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 rerankerScore,
                 additionalBinaryDataProperties,
-                docKey);
+                docKey,
+                searchSensitivityLabelInfo);
         }
     }
 }

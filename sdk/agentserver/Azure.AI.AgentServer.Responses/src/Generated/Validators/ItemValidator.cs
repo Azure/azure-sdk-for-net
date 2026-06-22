@@ -104,6 +104,8 @@ internal static partial class ItemValidator
         "reasoning" => ItemReasoningItemValidator.Validate(element),
         "shell_call" => FunctionShellCallItemParamValidator.Validate(element),
         "shell_call_output" => FunctionShellCallOutputItemParamValidator.Validate(element),
+        "tool_search_call" => ToolSearchCallItemParamValidator.Validate(element),
+        "tool_search_output" => ToolSearchOutputItemParamValidator.Validate(element),
         "web_search_call" => ItemWebSearchToolCallValidator.Validate(element),
         _ => ValidationResult.Success,  // Unknown type — forward compatible
     };

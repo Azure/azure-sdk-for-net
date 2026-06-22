@@ -30,7 +30,6 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> MACC properties. </param>
@@ -40,9 +39,9 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <param name="identity"> Managed service identity (system assigned and/or user assigned identities). </param>
         /// <param name="sku"> The resource model definition representing SKU. </param>
         /// <param name="plan"> Plan for the resource. </param>
-        internal MaccData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, MaccModelProperties properties, string managedBy, string kind, string eTag, ManagedServiceIdentity identity, BillingBenefitsSku sku, BillingBenefitsPlan plan) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MaccData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MaccModelProperties properties, string managedBy, string kind, string eTag, ManagedServiceIdentity identity, BillingBenefitsSku sku, BillingBenefitsPlan plan, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             ManagedBy = managedBy;
             Kind = kind;
@@ -50,6 +49,7 @@ namespace Azure.ResourceManager.BillingBenefits
             Identity = identity;
             Sku = sku;
             Plan = plan;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> MACC properties. </summary>
@@ -95,24 +95,27 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     Properties = new MaccModelProperties();
                 }
-                Properties.Status = value.Value;
+                Properties.Status = value;
             }
         }
 
         /// <summary> Represents type of the object being operated on. Possible values are primary or contributor. </summary>
-        public MaccEntityType EntityType
+        public MaccEntityType? MaccEntityType
         {
             get
             {
-                return Properties is null ? default : Properties.EntityType;
+                return Properties is null ? default : Properties.MaccEntityType;
             }
             set
             {
-                if (Properties is null)
+                if (value.HasValue)
                 {
-                    Properties = new MaccModelProperties();
+                    if (Properties is null)
+                    {
+                        Properties = new MaccModelProperties();
+                    }
+                    Properties.MaccEntityType = value.Value;
                 }
-                Properties.EntityType = value;
             }
         }
 
@@ -197,7 +200,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     Properties = new MaccModelProperties();
                 }
-                Properties.StartOn = value.Value;
+                Properties.StartOn = value;
             }
         }
 
@@ -214,7 +217,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     Properties = new MaccModelProperties();
                 }
-                Properties.EndOn = value.Value;
+                Properties.EndOn = value;
             }
         }
 
@@ -248,7 +251,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     Properties = new MaccModelProperties();
                 }
-                Properties.AutomaticShortfall = value.Value;
+                Properties.AutomaticShortfall = value;
             }
         }
 
@@ -329,7 +332,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     Properties = new MaccModelProperties();
                 }
-                Properties.IsAllowContributors = value.Value;
+                Properties.IsAllowContributors = value;
             }
         }
 

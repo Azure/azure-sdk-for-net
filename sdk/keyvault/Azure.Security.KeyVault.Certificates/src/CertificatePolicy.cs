@@ -27,6 +27,7 @@ namespace Azure.Security.KeyVault.Certificates
         private const string LifetimeActionsPropertyName = "lifetime_actions";
         private const string IssuerPropertyName = "issuer";
         private const string AttributesPropertyName = "attributes";
+        private const string PlatformManagedPropertyName = "platformManaged";
         private const string ContentTypePropertyName = "contentType";
         private const string SubjectPropertyName = "subject";
         private const string SansPropertyName = "sans";
@@ -45,6 +46,7 @@ namespace Azure.Security.KeyVault.Certificates
         private static readonly JsonEncodedText s_lifetimeActionsPropertyNameBytes = JsonEncodedText.Encode(LifetimeActionsPropertyName);
         private static readonly JsonEncodedText s_issuerPropertyNameBytes = JsonEncodedText.Encode(IssuerPropertyName);
         private static readonly JsonEncodedText s_attributesPropertyNameBytes = JsonEncodedText.Encode(AttributesPropertyName);
+        private static readonly JsonEncodedText s_platformManagedPropertyNameBytes = JsonEncodedText.Encode(PlatformManagedPropertyName);
         private static readonly JsonEncodedText s_keyPropsPropertyNameBytes = JsonEncodedText.Encode(KeyPropsPropertyName);
         private static readonly JsonEncodedText s_secretPropsPropertyNameBytes = JsonEncodedText.Encode(SecretPropsPropertyName);
         private static readonly JsonEncodedText s_x509PropsPropertyNameBytes = JsonEncodedText.Encode(X509PropsPropertyName);
@@ -265,6 +267,16 @@ namespace Azure.Security.KeyVault.Certificates
         /// </summary>
         public IList<LifetimeAction> LifetimeActions { get; } = new List<LifetimeAction>();
 
+        /// <summary>
+        /// Gets or sets the configuration that enables the platform to manage the certificate on behalf of the user.
+        /// This feature is currently intended for internal use only.
+        /// </summary>
+        /// <remarks>
+        /// Experimental, Azure Key Vault internal usage only. Any calls using this property will fail and it is not
+        /// recommended to be used at this point.
+        /// </remarks>
+        public PlatformManaged PlatformManaged { get; set; }
+
         void IJsonDeserializable.ReadProperties(JsonElement json)
         {
             foreach (JsonProperty prop in json.EnumerateObject())
@@ -296,6 +308,12 @@ namespace Azure.Security.KeyVault.Certificates
                         {
                             LifetimeActions.Add(LifetimeAction.FromJsonObject(actionElem));
                         }
+                        break;
+
+                    case PlatformManagedPropertyName:
+                        PlatformManaged = prop.Value.ValueKind == JsonValueKind.Null
+                            ? null
+                            : Certificates.PlatformManaged.FromJsonObject(prop.Value);
                         break;
                 }
             }
@@ -369,6 +387,15 @@ namespace Azure.Security.KeyVault.Certificates
                 }
 
                 json.WriteEndArray();
+            }
+
+            if (PlatformManaged != null)
+            {
+                json.WriteStartObject(s_platformManagedPropertyNameBytes);
+
+                PlatformManaged.WriteProperties(json);
+
+                json.WriteEndObject();
             }
         }
 

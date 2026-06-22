@@ -30,14 +30,14 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Alert properties. </param>
         /// <param name="eTag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
-        internal CostManagementAlertData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AlertProperties properties, ETag? eTag) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CostManagementAlertData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AlertProperties properties, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             ETag = eTag;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Alert properties. </summary>
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     Properties = new AlertProperties();
                 }
-                Properties.Source = value.Value;
+                Properties.Source = value;
             }
         }
 
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     Properties = new AlertProperties();
                 }
-                Properties.Status = value.Value;
+                Properties.Status = value;
             }
         }
 
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     Properties = new AlertProperties();
                 }
-                Properties.CreatedOn = value.Value;
+                Properties.CreatedOn = value;
             }
         }
 
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     Properties = new AlertProperties();
                 }
-                Properties.CloseOn = value.Value;
+                Properties.CloseOn = value;
             }
         }
 
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     Properties = new AlertProperties();
                 }
-                Properties.ModifiedOn = value.Value;
+                Properties.ModifiedOn = value;
             }
         }
 
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     Properties = new AlertProperties();
                 }
-                Properties.StatusModifiedOn = value.Value;
+                Properties.StatusModifiedOn = value;
             }
         }
     }

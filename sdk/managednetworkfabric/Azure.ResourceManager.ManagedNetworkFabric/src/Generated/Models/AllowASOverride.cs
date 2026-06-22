@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     public readonly partial struct AllowASOverride : IEquatable<AllowASOverride>
     {
         private readonly string _value;
+        /// <summary> AllowASOverride-Enable. </summary>
+        private const string EnableValue = "Enable";
+        /// <summary> AllowASOverride-Disable. </summary>
+        private const string DisableValue = "Disable";
 
         /// <summary> Initializes a new instance of <see cref="AllowASOverride"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AllowASOverride(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string EnableValue = "Enable";
-        private const string DisableValue = "Disable";
-
-        /// <summary> Enable. </summary>
+        /// <summary> AllowASOverride-Enable. </summary>
         public static AllowASOverride Enable { get; } = new AllowASOverride(EnableValue);
-        /// <summary> Disable. </summary>
+
+        /// <summary> AllowASOverride-Disable. </summary>
         public static AllowASOverride Disable { get; } = new AllowASOverride(DisableValue);
+
         /// <summary> Determines if two <see cref="AllowASOverride"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AllowASOverride left, AllowASOverride right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AllowASOverride"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AllowASOverride left, AllowASOverride right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AllowASOverride"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AllowASOverride"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AllowASOverride(string value) => new AllowASOverride(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AllowASOverride"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AllowASOverride?(string value) => value == null ? null : new AllowASOverride(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AllowASOverride other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AllowASOverride other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

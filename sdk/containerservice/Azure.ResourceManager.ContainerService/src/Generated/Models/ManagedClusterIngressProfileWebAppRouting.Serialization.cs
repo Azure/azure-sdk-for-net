@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsDefined(GatewayAPIImplementations))
+            if (Optional.IsDefined(GatewayApiImplementations))
             {
                 writer.WritePropertyName("gatewayAPIImplementations"u8);
-                writer.WriteObjectValue(GatewayAPIImplementations, options);
+                writer.WriteObjectValue(GatewayApiImplementations, options);
             }
             if (Optional.IsCollectionDefined(DnsZoneResourceIds))
             {
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 return null;
             }
             bool? isEnabled = default;
-            ManagedClusterWebAppRoutingGatewayAPIImplementations gatewayAPIImplementations = default;
+            ManagedClusterWebAppRoutingGatewayApiImplementations gatewayApiImplementations = default;
             IList<ResourceIdentifier> dnsZoneResourceIds = default;
             ManagedClusterIngressProfileNginx nginx = default;
             ContainerServiceUserAssignedIdentity identity = default;
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    gatewayAPIImplementations = ManagedClusterWebAppRoutingGatewayAPIImplementations.DeserializeManagedClusterWebAppRoutingGatewayAPIImplementations(prop.Value, options);
+                    gatewayApiImplementations = ManagedClusterWebAppRoutingGatewayApiImplementations.DeserializeManagedClusterWebAppRoutingGatewayApiImplementations(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("dnsZoneResourceIds"u8))
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
             return new ManagedClusterIngressProfileWebAppRouting(
                 isEnabled,
-                gatewayAPIImplementations,
+                gatewayApiImplementations,
                 dnsZoneResourceIds ?? new ChangeTrackingList<ResourceIdentifier>(),
                 nginx,
                 identity,

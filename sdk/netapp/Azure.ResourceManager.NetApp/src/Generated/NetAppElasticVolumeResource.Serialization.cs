@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.NetApp
 {
+    /// <summary></summary>
     public partial class NetAppElasticVolumeResource : IJsonModel<NetAppElasticVolumeData>
     {
-        private static NetAppElasticVolumeData s_dataDeserializationInstance;
-        private static NetAppElasticVolumeData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<NetAppElasticVolumeData> s_dataDeserializationInstance;
 
+        private static IJsonModel<NetAppElasticVolumeData> DataDeserializationInstance => s_dataDeserializationInstance ??= new NetAppElasticVolumeData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NetAppElasticVolumeData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetAppElasticVolumeData>)Data).Write(writer, options);
 
-        NetAppElasticVolumeData IJsonModel<NetAppElasticVolumeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetAppElasticVolumeData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NetAppElasticVolumeData IJsonModel<NetAppElasticVolumeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<NetAppElasticVolumeData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetAppElasticVolumeData>(Data, options, AzureResourceManagerNetAppContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         NetAppElasticVolumeData IPersistableModel<NetAppElasticVolumeData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetAppElasticVolumeData>(data, options, AzureResourceManagerNetAppContext.Default);
 
-        string IPersistableModel<NetAppElasticVolumeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetAppElasticVolumeData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<NetAppElasticVolumeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

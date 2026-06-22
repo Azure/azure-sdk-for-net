@@ -7,6 +7,7 @@ using OpenAI.VectorStores;
 
 namespace Azure.AI.Extensions.OpenAI;
 
+/// <summary> Provides vector store operations for an Azure AI project through the OpenAI vector store API. </summary>
 public partial class ProjectVectorStoresClient : VectorStoreClient
 {
     internal ProjectVectorStoresClient(ClientPipeline pipeline, OpenAIClientOptions options)
@@ -14,6 +15,7 @@ public partial class ProjectVectorStoresClient : VectorStoreClient
     {
     }
 
+    /// <summary> Initializes a new instance of <see cref="ProjectVectorStoresClient"/> for mocking. </summary>
     protected ProjectVectorStoresClient()
     { }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.HybridNetwork;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
@@ -14,44 +15,63 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     public readonly partial struct NfviType : IEquatable<NfviType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="NfviType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public NfviType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string UnknownValue = "Unknown";
         private const string AzureArcKubernetesValue = "AzureArcKubernetes";
         private const string AzureCoreValue = "AzureCore";
         private const string AzureOperatorNexusValue = "AzureOperatorNexus";
 
-        /// <summary> Unknown. </summary>
+        /// <summary> Initializes a new instance of <see cref="NfviType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public NfviType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Unknown. </summary>
         public static NfviType Unknown { get; } = new NfviType(UnknownValue);
-        /// <summary> AzureArcKubernetes. </summary>
+
+        /// <summary> Gets the AzureArcKubernetes. </summary>
         public static NfviType AzureArcKubernetes { get; } = new NfviType(AzureArcKubernetesValue);
-        /// <summary> AzureCore. </summary>
+
+        /// <summary> Gets the AzureCore. </summary>
         public static NfviType AzureCore { get; } = new NfviType(AzureCoreValue);
-        /// <summary> AzureOperatorNexus. </summary>
+
+        /// <summary> Gets the AzureOperatorNexus. </summary>
         public static NfviType AzureOperatorNexus { get; } = new NfviType(AzureOperatorNexusValue);
+
         /// <summary> Determines if two <see cref="NfviType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NfviType left, NfviType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NfviType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NfviType left, NfviType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NfviType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NfviType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NfviType(string value) => new NfviType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NfviType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NfviType?(string value) => value == null ? null : new NfviType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NfviType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NfviType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

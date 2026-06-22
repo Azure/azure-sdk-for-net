@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 HttpMessage message = _localRulestacksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, localRulestackName, LocalRulestackData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NgfwArmOperation<LocalRulestackResource> operation = new NgfwArmOperation<LocalRulestackResource>(
-                    new LocalRulestackOperationSource(Client),
+                    new LocalRulestackResourceOperationSource(Client),
                     _localRulestacksClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 HttpMessage message = _localRulestacksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, localRulestackName, LocalRulestackData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NgfwArmOperation<LocalRulestackResource> operation = new NgfwArmOperation<LocalRulestackResource>(
-                    new LocalRulestackOperationSource(Client),
+                    new LocalRulestackResourceOperationSource(Client),
                     _localRulestacksClientDiagnostics,
                     Pipeline,
                     message.Request,

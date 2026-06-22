@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Avs
                 HttpMessage message = _iscsiPathsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, IscsiPathData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AvsArmOperation<IscsiPathResource> operation = new AvsArmOperation<IscsiPathResource>(
-                    new IscsiPathOperationSource(Client),
+                    new IscsiPathResourceOperationSource(Client),
                     _iscsiPathsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Avs
                 HttpMessage message = _iscsiPathsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, IscsiPathData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AvsArmOperation<IscsiPathResource> operation = new AvsArmOperation<IscsiPathResource>(
-                    new IscsiPathOperationSource(Client),
+                    new IscsiPathResourceOperationSource(Client),
                     _iscsiPathsClientDiagnostics,
                     Pipeline,
                     message.Request,

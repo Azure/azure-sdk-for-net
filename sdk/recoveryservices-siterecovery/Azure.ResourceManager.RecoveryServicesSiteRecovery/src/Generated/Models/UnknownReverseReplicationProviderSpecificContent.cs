@@ -10,19 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Unknown version of ReverseReplicationProviderSpecificInput. </summary>
     internal partial class UnknownReverseReplicationProviderSpecificContent : ReverseReplicationProviderSpecificContent
     {
         /// <summary> Initializes a new instance of <see cref="UnknownReverseReplicationProviderSpecificContent"/>. </summary>
         /// <param name="instanceType"> The class type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownReverseReplicationProviderSpecificContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(instanceType, serializedAdditionalRawData)
-        {
-            InstanceType = instanceType ?? "Unknown";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownReverseReplicationProviderSpecificContent"/> for deserialization. </summary>
-        internal UnknownReverseReplicationProviderSpecificContent()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownReverseReplicationProviderSpecificContent(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(instanceType ?? "unknown", additionalBinaryDataProperties)
         {
         }
     }

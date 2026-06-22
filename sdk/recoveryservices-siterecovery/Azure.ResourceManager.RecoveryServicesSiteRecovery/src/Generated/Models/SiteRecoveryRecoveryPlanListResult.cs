@@ -7,64 +7,39 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Recovery plan collection details. </summary>
     internal partial class SiteRecoveryRecoveryPlanListResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SiteRecoveryRecoveryPlanListResult"/>. </summary>
-        internal SiteRecoveryRecoveryPlanListResult()
+        /// <param name="value"> The RecoveryPlan items on this page. </param>
+        internal SiteRecoveryRecoveryPlanListResult(IEnumerable<SiteRecoveryRecoveryPlanData> value)
         {
-            Value = new ChangeTrackingList<SiteRecoveryRecoveryPlanData>();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="SiteRecoveryRecoveryPlanListResult"/>. </summary>
-        /// <param name="value"> The list of recovery plans. </param>
-        /// <param name="nextLink"> The value of next link. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SiteRecoveryRecoveryPlanListResult(IReadOnlyList<SiteRecoveryRecoveryPlanData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="value"> The RecoveryPlan items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryRecoveryPlanListResult(IList<SiteRecoveryRecoveryPlanData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The list of recovery plans. </summary>
-        public IReadOnlyList<SiteRecoveryRecoveryPlanData> Value { get; }
-        /// <summary> The value of next link. </summary>
-        public string NextLink { get; }
+        /// <summary> The RecoveryPlan items on this page. </summary>
+        public IList<SiteRecoveryRecoveryPlanData> Value { get; }
+
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

@@ -30,16 +30,16 @@ namespace Azure.ResourceManager.DomainRegistration.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> DomainPatchResource resource specific properties. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="tags"> Resource tags. </param>
-        internal AppServiceDomainPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, DomainPatchResourceProperties properties, string kind, IDictionary<string, string> tags) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AppServiceDomainPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DomainPatchResourceProperties properties, string kind, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             Kind = kind;
             Tags = tags;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> DomainPatchResource resource specific properties. </summary>
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DomainRegistration.Models
                 {
                     Properties = new DomainPatchResourceProperties();
                 }
-                Properties.IsDomainPrivacyEnabled = value.Value;
+                Properties.IsDomainPrivacyEnabled = value;
             }
         }
 
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.DomainRegistration.Models
                 {
                     Properties = new DomainPatchResourceProperties();
                 }
-                Properties.IsAutoRenew = value.Value;
+                Properties.IsAutoRenew = value;
             }
         }
 
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.DomainRegistration.Models
                 {
                     Properties = new DomainPatchResourceProperties();
                 }
-                Properties.DnsType = value.Value;
+                Properties.DnsType = value;
             }
         }
 
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.DomainRegistration.Models
                 {
                     Properties = new DomainPatchResourceProperties();
                 }
-                Properties.TargetDnsType = value.Value;
+                Properties.TargetDnsType = value;
             }
         }
 

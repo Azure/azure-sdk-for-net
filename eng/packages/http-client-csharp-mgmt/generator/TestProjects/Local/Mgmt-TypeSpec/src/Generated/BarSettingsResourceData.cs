@@ -50,7 +50,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="stringArray"></param>
         /// <param name="property"></param>
@@ -58,9 +57,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="flattenedNestedProperty"></param>
         /// <param name="optionalFlattenProperty"></param>
         /// <param name="discriminatorProperty"></param>
-        internal BarSettingsResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, BarSettingsProperties properties, IList<string> stringArray, BarQuotaProperties @property, BarQuotaProperties anotherProperty, BarNestedQuotaProperties flattenedNestedProperty, OptionalFlattenPropertyType optionalFlattenProperty, LimitJsonObject discriminatorProperty) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BarSettingsResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BarSettingsProperties properties, IList<string> stringArray, BarQuotaProperties @property, BarQuotaProperties anotherProperty, BarNestedQuotaProperties flattenedNestedProperty, OptionalFlattenPropertyType optionalFlattenProperty, LimitJsonObject discriminatorProperty, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             StringArray = stringArray;
             Property = @property;
@@ -68,6 +67,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             FlattenedNestedProperty = flattenedNestedProperty;
             OptionalFlattenProperty = optionalFlattenProperty;
             DiscriminatorProperty = discriminatorProperty;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
@@ -150,7 +150,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     FlattenedNestedProperty = new BarNestedQuotaProperties();
                 }
-                FlattenedNestedProperty.InnerProp1 = value.Value;
+                FlattenedNestedProperty.InnerProp1 = value;
             }
         }
 

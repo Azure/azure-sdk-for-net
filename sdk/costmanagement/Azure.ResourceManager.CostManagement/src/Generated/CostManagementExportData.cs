@@ -30,18 +30,18 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The properties of the export. </param>
         /// <param name="identity"> The managed identity associated with Export. </param>
         /// <param name="location"> The location of the Export's managed identity. Only required when utilizing managed identity. </param>
         /// <param name="eTag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
-        internal CostManagementExportData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ExportProperties properties, ManagedServiceIdentity identity, string location, ETag? eTag) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CostManagementExportData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ExportProperties properties, ManagedServiceIdentity identity, string location, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             Identity = identity;
             Location = location;
             ETag = eTag;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The properties of the export. </summary>
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     Properties = new ExportProperties();
                 }
-                Properties.Format = value.Value;
+                Properties.Format = value;
             }
         }
 
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     Properties = new ExportProperties();
                 }
-                Properties.PartitionData = value.Value;
+                Properties.PartitionData = value;
             }
         }
 
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     Properties = new ExportProperties();
                 }
-                Properties.DataOverwriteBehavior = value.Value;
+                Properties.DataOverwriteBehavior = value;
             }
         }
 
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     Properties = new ExportProperties();
                 }
-                Properties.CompressionMode = value.Value;
+                Properties.CompressionMode = value;
             }
         }
 

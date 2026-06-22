@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Quota
                 HttpMessage message = _groupQuotasEnforcementStatusesRestClient.CreateCreateOrUpdateRequest(Id.Parent.Name, Id.Name, resourceProviderName, location, GroupQuotasEnforcementStatusData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 QuotaArmOperation<GroupQuotasEnforcementStatusResource> operation = new QuotaArmOperation<GroupQuotasEnforcementStatusResource>(
-                    new GroupQuotasEnforcementStatusOperationSource(Client),
+                    new GroupQuotasEnforcementStatusResourceOperationSource(Client),
                     _groupQuotasEnforcementStatusesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Quota
                 HttpMessage message = _groupQuotasEnforcementStatusesRestClient.CreateCreateOrUpdateRequest(Id.Parent.Name, Id.Name, resourceProviderName, location, GroupQuotasEnforcementStatusData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 QuotaArmOperation<GroupQuotasEnforcementStatusResource> operation = new QuotaArmOperation<GroupQuotasEnforcementStatusResource>(
-                    new GroupQuotasEnforcementStatusOperationSource(Client),
+                    new GroupQuotasEnforcementStatusResourceOperationSource(Client),
                     _groupQuotasEnforcementStatusesClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -79,6 +79,17 @@ namespace Azure.Generator.Management
             [];
 
         /// <inheritdoc/>
+        protected override Type? CreateFrameworkType(string fullyQualifiedTypeName)
+        {
+            if (KnownManagementTypes.TryGetFrameworkType(fullyQualifiedTypeName, out var frameworkType))
+            {
+                return frameworkType;
+            }
+
+            return base.CreateFrameworkType(fullyQualifiedTypeName);
+        }
+
+        /// <inheritdoc/>
         protected override ClientProvider? CreateClientCore(InputClient inputClient)
         {
             return base.CreateClientCore(inputClient);
@@ -96,6 +107,10 @@ namespace Azure.Generator.Management
                 if (KnownManagementTypes.TryGetSystemType(model.CrossLanguageDefinitionId, out var systemType))
                 {
                     return systemType;
+                }
+                if (ManagementClientGenerator.Instance.InputLibrary.IsResourceModel(model))
+                {
+                    return CreateModel(model)?.Type;
                 }
             }
 
@@ -117,29 +132,27 @@ namespace Azure.Generator.Management
             // First check for standard ARM types that map to system types
             if (KnownManagementTypes.TryGetInheritableSystemType(model.CrossLanguageDefinitionId, out var replacedType))
             {
-                return InheritableSystemObjectModelProvider.CreateSystemBase(replacedType.FrameworkType, model);
+                return new SystemObjectModelProvider(replacedType, model);
             }
             if (KnownManagementTypes.TryGetSystemType(model.CrossLanguageDefinitionId, out _))
             {
                 return null;
             }
 
-            // For models whose base is an inheritable system type (e.g., TrackedResource → TrackedResourceData),
-            // use a derived InheritableSystemObjectModelProvider which overrides BuildBaseType() to return the
-            // correct framework CSharpType. The default ModelProvider.BuildBaseType() returns
-            // BaseModelProvider.Type, which produces a non-framework CSharpType that gets eagerly cached.
-            if (model.BaseModel is { } baseModel &&
-                KnownManagementTypes.TryGetInheritableSystemType(baseModel.CrossLanguageDefinitionId, out var inheritableType))
-            {
-                CreateModel(baseModel);
-                return InheritableSystemObjectModelProvider.CreateDerived(model, inheritableType);
-            }
-
             // For custom Azure resource models (root, intermediate, and resource data models),
             // let the base implementation create regular ModelProviders.
             // This preserves the full custom resource hierarchy without replacing intermediate
             // models with system types (e.g., TrafficResource → TrafficProxyResource → TrafficEndpointData).
-            return base.CreateModelCore(model);
+            // For the leaf resource data model itself, use ResourceDataModelProvider so that
+            // BuildName returns the "Data"-suffixed name from the very first Type access. Otherwise
+            // a user's resource-client customization partial matching the original input model name
+            // would pollute CustomCodeView.BaseType (captured into the immutable CSharpType._baseType),
+            // and a later visitor-driven rename could not undo it.
+            if (ManagementClientGenerator.Instance.InputLibrary.IsResourceModel(model))
+            {
+                return new ResourceDataModelProvider(model);
+            }
+            return new ManagementModelProvider(model);
         }
 
         /// <inheritdoc/>

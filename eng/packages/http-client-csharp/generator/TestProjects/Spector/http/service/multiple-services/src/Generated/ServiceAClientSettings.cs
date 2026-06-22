@@ -21,7 +21,7 @@ namespace Service.MultipleServices.ServiceA
             set => throw null;
         }
 
-        public ServiceMultipleServicesServiceAClientOptions Options
+        public ServiceAClientOptions Options
         {
             get => throw null;
             set => throw null;

@@ -89,10 +89,10 @@ namespace Azure.Compute.Batch
                 writer.WritePropertyName("typeHandlerVersion"u8);
                 writer.WriteStringValue(TypeHandlerVersion);
             }
-            if (Optional.IsDefined(ShouldAutoUpgradeMinorVersion))
+            if (Optional.IsDefined(IsMinorVersionAutoUpgradeEnabled))
             {
                 writer.WritePropertyName("autoUpgradeMinorVersion"u8);
-                writer.WriteBooleanValue(ShouldAutoUpgradeMinorVersion.Value);
+                writer.WriteBooleanValue(IsMinorVersionAutoUpgradeEnabled.Value);
             }
             if (Optional.IsDefined(IsAutomaticUpgradeEnabled))
             {
@@ -192,7 +192,7 @@ namespace Azure.Compute.Batch
             string publisher = default;
             string @type = default;
             string typeHandlerVersion = default;
-            bool? shouldAutoUpgradeMinorVersion = default;
+            bool? isMinorVersionAutoUpgradeEnabled = default;
             bool? isAutomaticUpgradeEnabled = default;
             IDictionary<string, string> settings = default;
             IDictionary<string, string> protectedSettings = default;
@@ -226,7 +226,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    shouldAutoUpgradeMinorVersion = prop.Value.GetBoolean();
+                    isMinorVersionAutoUpgradeEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("enableAutomaticUpgrade"u8))
@@ -311,7 +311,7 @@ namespace Azure.Compute.Batch
                 publisher,
                 @type,
                 typeHandlerVersion,
-                shouldAutoUpgradeMinorVersion,
+                isMinorVersionAutoUpgradeEnabled,
                 isAutomaticUpgradeEnabled,
                 settings ?? new ChangeTrackingDictionary<string, string>(),
                 protectedSettings ?? new ChangeTrackingDictionary<string, string>(),

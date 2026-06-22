@@ -6,7 +6,9 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Azure;
 
@@ -273,6 +275,17 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 status,
                 errors.ToList(),
                 additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Collection of files containing project assets that need to be imported. </summary>
+        /// <param name="files"> Collection of files where the fileName is required. </param>
+        /// <returns> A new <see cref="Authoring.ImportFiles"/> instance for mocking. </returns>
+        [Experimental("SCME0004")]
+        public static ImportFiles ImportFiles(IEnumerable<FileBinaryContent> files = default)
+        {
+            files ??= new ChangeTrackingList<FileBinaryContent>();
+
+            return new ImportFiles(files.ToList());
         }
 
         /// <summary> Job state represents the job metadata and any errors. </summary>

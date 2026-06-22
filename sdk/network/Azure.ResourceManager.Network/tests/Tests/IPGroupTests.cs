@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network.Tests
         [OneTimeTearDown]
         public async Task GlobalTearDown()
         {
-            await _resourceGroup.DeleteAsync(WaitUntil.Completed);
+            await _resourceGroup.DeleteAsync(WaitUntil.Completed, null, System.Threading.CancellationToken.None);
         }
 
         [SetUp]
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Network.Tests
             if (await _resourceGroup.GetIPGroups().ExistsAsync(_iPGroupName))
             {
                 var ipGroup = await _resourceGroup.GetIPGroups().GetAsync(_iPGroupName);
-                await ipGroup.Value.DeleteAsync(WaitUntil.Completed);
+                await ipGroup.Value.DeleteAsync(WaitUntil.Completed, System.Threading.CancellationToken.None);
             }
         }
 
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Network.Tests
             var container = _resourceGroup.GetIPGroups();
             var data = new IPGroupData();
             data.Location = AzureLocation.WestUS2;
-            var ipGroup = await container.CreateOrUpdateAsync(WaitUntil.Completed, ipGroupName, data);
+            var ipGroup = await container.CreateOrUpdateAsync(WaitUntil.Completed, ipGroupName, data, System.Threading.CancellationToken.None);
             return ipGroup;
         }
 
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Network.Tests
         public async Task Delete()
         {
             var ipGroup = await CreateIpGroup(_iPGroupName);
-            await ipGroup.Value.DeleteAsync(WaitUntil.Completed);
+            await ipGroup.Value.DeleteAsync(WaitUntil.Completed, System.Threading.CancellationToken.None);
             var ipGroupList = await _resourceGroup.GetIPGroups().GetAllAsync().ToEnumerableAsync();
             Assert.IsEmpty(ipGroupList);
         }

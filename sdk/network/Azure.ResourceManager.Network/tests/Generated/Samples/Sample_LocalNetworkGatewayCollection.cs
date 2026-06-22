@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network.Samples
                 Fqdn = "site1.contoso.com",
                 Location = new AzureLocation("Central US"),
             };
-            ArmOperation<LocalNetworkGatewayResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, localNetworkGatewayName, data);
+            ArmOperation<LocalNetworkGatewayResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, localNetworkGatewayName, data, cancellationToken: System.Threading.CancellationToken.None);
             LocalNetworkGatewayResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

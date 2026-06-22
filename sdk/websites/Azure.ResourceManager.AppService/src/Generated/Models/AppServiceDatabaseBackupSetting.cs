@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Database backup settings. </summary>
+    /// <summary>
+    /// Database backup settings.
+    /// Serialized Name: DatabaseBackupSetting
+    /// </summary>
     public partial class AppServiceDatabaseBackupSetting
     {
         /// <summary>
@@ -46,20 +49,30 @@ namespace Azure.ResourceManager.AppService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AppServiceDatabaseBackupSetting"/>. </summary>
-        /// <param name="databaseType"> Database type (e.g. SqlAzure / MySql). </param>
+        /// <param name="databaseType">
+        /// Database type (e.g. SqlAzure / MySql).
+        /// Serialized Name: DatabaseBackupSetting.databaseType
+        /// </param>
         public AppServiceDatabaseBackupSetting(AppServiceDatabaseType databaseType)
         {
             DatabaseType = databaseType;
         }
 
         /// <summary> Initializes a new instance of <see cref="AppServiceDatabaseBackupSetting"/>. </summary>
-        /// <param name="databaseType"> Database type (e.g. SqlAzure / MySql). </param>
-        /// <param name="name"></param>
+        /// <param name="databaseType">
+        /// Database type (e.g. SqlAzure / MySql).
+        /// Serialized Name: DatabaseBackupSetting.databaseType
+        /// </param>
+        /// <param name="name"> Serialized Name: DatabaseBackupSetting.name. </param>
         /// <param name="connectionStringName">
         /// Contains a connection string name that is linked to the SiteConfig.ConnectionStrings.
         /// This is used during restore with overwrite connection strings options.
+        /// Serialized Name: DatabaseBackupSetting.connectionStringName
         /// </param>
-        /// <param name="connectionString"> Contains a connection string to a database which is being backed up or restored. If the restore should happen to a new database, the database name inside is the new one. </param>
+        /// <param name="connectionString">
+        /// Contains a connection string to a database which is being backed up or restored. If the restore should happen to a new database, the database name inside is the new one.
+        /// Serialized Name: DatabaseBackupSetting.connectionString
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AppServiceDatabaseBackupSetting(AppServiceDatabaseType databaseType, string name, string connectionStringName, string connectionString, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -75,19 +88,26 @@ namespace Azure.ResourceManager.AppService.Models
         {
         }
 
-        /// <summary> Database type (e.g. SqlAzure / MySql). </summary>
+        /// <summary>
+        /// Database type (e.g. SqlAzure / MySql).
+        /// Serialized Name: DatabaseBackupSetting.databaseType
+        /// </summary>
         [WirePath("databaseType")]
         public AppServiceDatabaseType DatabaseType { get; set; }
-        /// <summary> Gets or sets the name. </summary>
+        /// <summary> Serialized Name: DatabaseBackupSetting.name. </summary>
         [WirePath("name")]
         public string Name { get; set; }
         /// <summary>
         /// Contains a connection string name that is linked to the SiteConfig.ConnectionStrings.
         /// This is used during restore with overwrite connection strings options.
+        /// Serialized Name: DatabaseBackupSetting.connectionStringName
         /// </summary>
         [WirePath("connectionStringName")]
         public string ConnectionStringName { get; set; }
-        /// <summary> Contains a connection string to a database which is being backed up or restored. If the restore should happen to a new database, the database name inside is the new one. </summary>
+        /// <summary>
+        /// Contains a connection string to a database which is being backed up or restored. If the restore should happen to a new database, the database name inside is the new one.
+        /// Serialized Name: DatabaseBackupSetting.connectionString
+        /// </summary>
         [WirePath("connectionString")]
         public string ConnectionString { get; set; }
     }

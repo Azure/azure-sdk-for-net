@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct ExceptionEntryMatchVariable : IEquatable<ExceptionEntryMatchVariable>
     {
         private readonly string _value;
+        /// <summary> RequestURI. </summary>
+        private const string RequestURIValue = "RequestURI";
+        /// <summary> RemoteAddr. </summary>
+        private const string RemoteAddrValue = "RemoteAddr";
+        /// <summary> RequestHeader. </summary>
+        private const string RequestHeaderValue = "RequestHeader";
 
         /// <summary> Initializes a new instance of <see cref="ExceptionEntryMatchVariable"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ExceptionEntryMatchVariable(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string RequestUriValue = "RequestURI";
-        private const string RemoteAddrValue = "RemoteAddr";
-        private const string RequestHeaderValue = "RequestHeader";
-
         /// <summary> RequestURI. </summary>
-        public static ExceptionEntryMatchVariable RequestUri { get; } = new ExceptionEntryMatchVariable(RequestUriValue);
+        public static ExceptionEntryMatchVariable RequestURI { get; } = new ExceptionEntryMatchVariable(RequestURIValue);
+
         /// <summary> RemoteAddr. </summary>
         public static ExceptionEntryMatchVariable RemoteAddr { get; } = new ExceptionEntryMatchVariable(RemoteAddrValue);
+
         /// <summary> RequestHeader. </summary>
         public static ExceptionEntryMatchVariable RequestHeader { get; } = new ExceptionEntryMatchVariable(RequestHeaderValue);
+
         /// <summary> Determines if two <see cref="ExceptionEntryMatchVariable"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ExceptionEntryMatchVariable left, ExceptionEntryMatchVariable right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ExceptionEntryMatchVariable"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ExceptionEntryMatchVariable left, ExceptionEntryMatchVariable right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ExceptionEntryMatchVariable"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ExceptionEntryMatchVariable"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ExceptionEntryMatchVariable(string value) => new ExceptionEntryMatchVariable(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ExceptionEntryMatchVariable"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ExceptionEntryMatchVariable?(string value) => value == null ? null : new ExceptionEntryMatchVariable(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ExceptionEntryMatchVariable other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ExceptionEntryMatchVariable other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

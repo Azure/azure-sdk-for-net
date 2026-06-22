@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             TryGetApiVersion(ResourceType, out string backupResourceVaultConfigApiVersion);
             _backupResourceVaultConfigsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesBackup", ResourceType.Namespace, Diagnostics);
-            _backupResourceVaultConfigsRestClient = new BackupResourceVaultConfigs(_backupResourceVaultConfigsClientDiagnostics, Pipeline, Endpoint, backupResourceVaultConfigApiVersion ?? "2026-01-01-preview");
+            _backupResourceVaultConfigsRestClient = new BackupResourceVaultConfigs(_backupResourceVaultConfigsClientDiagnostics, Pipeline, Endpoint, backupResourceVaultConfigApiVersion ?? "2026-01-31-preview");
             ValidateResourceId(id);
         }
 
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-01-31-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-01-31-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-01-31-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-01-31-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-01-31-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-01-31-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 else
                 {
                     BackupResourceVaultConfigData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    BackupResourceVaultConfigData patch = new BackupResourceVaultConfigData();
+                    BackupResourceVaultConfigData patch = new BackupResourceVaultConfigData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 else
                 {
                     BackupResourceVaultConfigData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    BackupResourceVaultConfigData patch = new BackupResourceVaultConfigData();
+                    BackupResourceVaultConfigData patch = new BackupResourceVaultConfigData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -534,7 +534,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 else
                 {
                     BackupResourceVaultConfigData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    BackupResourceVaultConfigData patch = new BackupResourceVaultConfigData();
+                    BackupResourceVaultConfigData patch = new BackupResourceVaultConfigData(current.Location);
                     patch.Tags.ReplaceWith(tags);
                     Response<BackupResourceVaultConfigResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -577,7 +577,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 else
                 {
                     BackupResourceVaultConfigData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    BackupResourceVaultConfigData patch = new BackupResourceVaultConfigData();
+                    BackupResourceVaultConfigData patch = new BackupResourceVaultConfigData(current.Location);
                     patch.Tags.ReplaceWith(tags);
                     Response<BackupResourceVaultConfigResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -619,7 +619,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 else
                 {
                     BackupResourceVaultConfigData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    BackupResourceVaultConfigData patch = new BackupResourceVaultConfigData();
+                    BackupResourceVaultConfigData patch = new BackupResourceVaultConfigData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -665,7 +665,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 else
                 {
                     BackupResourceVaultConfigData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    BackupResourceVaultConfigData patch = new BackupResourceVaultConfigData();
+                    BackupResourceVaultConfigData patch = new BackupResourceVaultConfigData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

@@ -228,7 +228,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 HttpMessage message = _clustersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ClusterData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 TestsArmOperation<ClusterResource> operation = new TestsArmOperation<ClusterResource>(
-                    new ClusterOperationSource(Client),
+                    new ClusterResourceOperationSource(Client),
                     _clustersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 HttpMessage message = _clustersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ClusterData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 TestsArmOperation<ClusterResource> operation = new TestsArmOperation<ClusterResource>(
-                    new ClusterOperationSource(Client),
+                    new ClusterResourceOperationSource(Client),
                     _clustersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -449,7 +449,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 else
                 {
                     ClusterData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    ClusterData patch = new ClusterData();
+                    ClusterData patch = new ClusterData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -497,7 +497,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 else
                 {
                     ClusterData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    ClusterData patch = new ClusterData();
+                    ClusterData patch = new ClusterData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -544,7 +544,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 else
                 {
                     ClusterData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    ClusterData patch = new ClusterData();
+                    ClusterData patch = new ClusterData(current.Location);
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<ClusterResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -587,7 +587,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 else
                 {
                     ClusterData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    ClusterData patch = new ClusterData();
+                    ClusterData patch = new ClusterData(current.Location);
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<ClusterResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -629,7 +629,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 else
                 {
                     ClusterData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    ClusterData patch = new ClusterData();
+                    ClusterData patch = new ClusterData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -675,7 +675,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 else
                 {
                     ClusterData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    ClusterData patch = new ClusterData();
+                    ClusterData patch = new ClusterData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

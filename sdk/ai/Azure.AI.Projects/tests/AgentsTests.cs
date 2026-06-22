@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
@@ -570,13 +569,9 @@ public class AgentsTests : AgentsTestBase
     public async Task TestMemoryStoreCRUD()
     {
         AIProjectClient projectClient = GetTestProjectClient();
-        try
-        {
-            var _ = await projectClient.MemoryStores.DeleteMemoryStoreAsync(name: "test-memory-store");
-        }
-        catch { }
+        await DeleteMemoryStoreMayBe(projectClient, MEMORY_STORE_NAME);
         // Create
-        MemoryStore store = await projectClient.MemoryStores.CreateMemoryStoreAsync("test-memory-store", new MemoryStoreDefaultDefinition(TestEnvironment.MEMORY_STORE_CHAT_MODEL_DEPLOYMENT_NAME, TestEnvironment.MEMORY_STORE_EMBEDDING_MODEL_DEPLOYMENT_NAME));
+        MemoryStore store = await projectClient.MemoryStores.CreateMemoryStoreAsync(MEMORY_STORE_NAME, new MemoryStoreDefaultDefinition(TestEnvironment.MEMORY_STORE_CHAT_MODEL_DEPLOYMENT_NAME, TestEnvironment.MEMORY_STORE_EMBEDDING_MODEL_DEPLOYMENT_NAME));
         // Read
         MemoryStore result = await projectClient.MemoryStores.GetMemoryStoreAsync(store.Name);
         Assert.That(store.Id, Is.EqualTo(result.Id));
@@ -611,17 +606,132 @@ public class AgentsTests : AgentsTestBase
     }
 
     [RecordedTest]
+    public async Task TestMemoryStorePagination()
+    {
+        AIProjectClient projectClient = GetTestProjectClient();
+        // Create items
+        for (int i = 0; i < PAGE_SIZE + 1; i++)
+        {
+            await projectClient.MemoryStores.CreateMemoryStoreAsync(
+                name: $"{MEMORY_STORE_NAME}-{i}",
+                definition: new MemoryStoreDefaultDefinition(TestEnvironment.MEMORY_STORE_CHAT_MODEL_DEPLOYMENT_NAME, TestEnvironment.MEMORY_STORE_EMBEDDING_MODEL_DEPLOYMENT_NAME)
+            );
+        }
+        List<MemoryStore> records = await projectClient.MemoryStores.GetMemoryStoresAsync(limit: PAGE_SIZE, order: "asc").Where(x=>x.Name.StartsWith(MEMORY_STORE_NAME)).ToListAsync();
+        Assert.That(records.Count, Is.EqualTo(PAGE_SIZE + 1));
+        // Go forward.
+        List<MemoryStore> forward = await projectClient.MemoryStores.GetMemoryStoresAsync(order: "asc", after: records[0].Id, limit: PAGE_SIZE).Where(x => x.Name.StartsWith(MEMORY_STORE_NAME)).ToListAsync();
+        Assert.That(forward.Count, Is.EqualTo(records.Count - 1));
+        Assert.That(forward[0].Id, Is.EqualTo(records[1].Id));
+        Assert.That(forward[forward.Count - 1].Id, Is.EqualTo(records[records.Count - 1].Id));
+        //// Two limits:
+        forward = await projectClient.MemoryStores.GetMemoryStoresAsync(order: "asc", after: records[0].Id, before: records[3].Id, limit: PAGE_SIZE).Where(x => x.Name.StartsWith(MEMORY_STORE_NAME)).ToListAsync();
+        Assert.That(forward.Count, Is.EqualTo(2));
+        Assert.That(forward[0].Id, Is.EqualTo(records[1].Id));
+        Assert.That(forward[1].Id, Is.EqualTo(records[2].Id));
+        // Go backwards.
+        List<MemoryStore> backwards = await projectClient.MemoryStores.GetMemoryStoresAsync(order: "desc", before: records[0].Id, limit: PAGE_SIZE).Where(x => x.Name.StartsWith(MEMORY_STORE_NAME)).ToListAsync();
+        Assert.That(backwards.Count, Is.EqualTo(records.Count - 1));
+        Assert.That(backwards[0].Id, Is.EqualTo(records[records.Count - 1].Id));
+        Assert.That(backwards[backwards.Count - 1].Id, Is.EqualTo(records[1].Id));
+        // Two limits.
+        backwards = await projectClient.MemoryStores.GetMemoryStoresAsync(order: "desc", after: records[records.Count - 1].Id, before: records[records.Count - 4].Id, limit: PAGE_SIZE).Where(x => x.Name.StartsWith(MEMORY_STORE_NAME)).ToListAsync();
+        Assert.That(backwards.Count, Is.EqualTo(2));
+        Assert.That(backwards[0].Id, Is.EqualTo(records[records.Count - 2].Id));
+        Assert.That(backwards[1].Id, Is.EqualTo(records[records.Count - 3].Id));
+    }
+
+    [RecordedTest]
+    public async Task TestMemoryStoreItemCRUD()
+    {
+        AIProjectClient projectClient = GetTestProjectClient();
+        await DeleteMemoryStoreMayBe(projectClient, MEMORY_STORE_NAME);
+        MemoryStore store = await projectClient.MemoryStores.CreateMemoryStoreAsync(MEMORY_STORE_NAME, new MemoryStoreDefaultDefinition(TestEnvironment.MEMORY_STORE_CHAT_MODEL_DEPLOYMENT_NAME, TestEnvironment.MEMORY_STORE_EMBEDDING_MODEL_DEPLOYMENT_NAME));
+        // Create
+        MemoryItem customerData = await projectClient.MemoryStores.CreateMemoryAsync(name: store.Name, scope: MEMORY_STORE_SCOPE, content: "The orange lover.", kind: MemoryItemKind.UserProfile);
+        MemoryItem orangeSKU = await projectClient.MemoryStores.CreateMemoryAsync(name: store.Name, scope: MEMORY_STORE_SCOPE, content: "Orange SKU is 658954.", kind: MemoryItemKind.ChatSummary);
+        MemoryItem other = await projectClient.MemoryStores.CreateMemoryAsync(name: store.Name, scope: "Out_of_scope", content: "Orange SKU is 658954.", kind: MemoryItemKind.ChatSummary);
+        Assert.That(customerData.Content, Is.EqualTo("The orange lover."));
+        // Read
+        MemoryItem item = await projectClient.MemoryStores.GetMemoryAsync(name: store.Name, memoryId: customerData.MemoryId);
+        Assert.That(item.MemoryId, Is.EqualTo(customerData.MemoryId));
+        Assert.That(item.Content, Is.EqualTo(customerData.Content));
+        Assert.That(item.Scope, Is.EqualTo(MEMORY_STORE_SCOPE));
+        // List
+        HashSet<string> itemIds = [.. await projectClient.MemoryStores.GetMemoriesAsync(name: store.Name, scope: MEMORY_STORE_SCOPE).Select(x => x.MemoryId).ToListAsync()];
+        Assert.That(itemIds, Has.Count.EqualTo(2));
+        Assert.That(itemIds, Does.Contain(customerData.MemoryId));
+        Assert.That(itemIds, Does.Contain(orangeSKU.MemoryId));
+        // Update
+        string newContent = "Some other description.";
+        item = await projectClient.MemoryStores.UpdateMemoryAsync(name: store.Name, memoryId: customerData.MemoryId, content: newContent);
+        Assert.That(item.Content, Is.EqualTo(newContent));
+        item = await projectClient.MemoryStores.GetMemoryAsync(name: store.Name, memoryId: customerData.MemoryId);
+        Assert.That(item.MemoryId, Is.EqualTo(customerData.MemoryId));
+        Assert.That(item.Content, Is.EqualTo(newContent));
+        Assert.That(item.Scope, Is.EqualTo(MEMORY_STORE_SCOPE));
+        // Delete
+        DeleteMemoryResponse delResult = await projectClient.MemoryStores.DeleteMemoryAsync(name: store.Name, memoryId: customerData.MemoryId);
+        Assert.That(delResult.Deleted, Is.True);
+        Assert.That(
+            (await projectClient.MemoryStores.GetMemoriesAsync(name: store.Name, scope: MEMORY_STORE_SCOPE).ToEnumerableAsync())
+                .Select(x => x.MemoryId)
+                .Any(x => x == customerData.MemoryId),
+            Is.False,
+            $"The {customerData.MemoryId} was unexpectedly found in the list of memory stores after being deleted."
+        );
+    }
+
+    [RecordedTest]
+    public async Task TestMemoryStoreItemPagination()
+    {
+        AIProjectClient projectClient = GetTestProjectClient();
+        await DeleteMemoryStoreMayBe(projectClient, MEMORY_STORE_NAME);
+        MemoryStore store = await projectClient.MemoryStores.CreateMemoryStoreAsync(MEMORY_STORE_NAME, new MemoryStoreDefaultDefinition(TestEnvironment.MEMORY_STORE_CHAT_MODEL_DEPLOYMENT_NAME, TestEnvironment.MEMORY_STORE_EMBEDDING_MODEL_DEPLOYMENT_NAME));
+        // Create items
+        for (int i = 0; i < PAGE_SIZE + 1; i++)
+        {
+            await projectClient.MemoryStores.CreateMemoryAsync(
+                name: store.Name,
+                content: $"Memory Item #{PAGE_SIZE - i}",
+                scope: MEMORY_STORE_SCOPE,
+                kind: MemoryItemKind.ChatSummary
+            );
+        }
+        List<MemoryItem> records = await projectClient.MemoryStores.GetMemoriesAsync(name: store.Name, scope: MEMORY_STORE_SCOPE, limit: PAGE_SIZE, order: "asc").ToListAsync();
+        Assert.That(records.Count, Is.EqualTo(PAGE_SIZE + 1));
+        // Go forward.
+        List<MemoryItem> forward = await projectClient.MemoryStores.GetMemoriesAsync(name: store.Name, scope: MEMORY_STORE_SCOPE, order: "asc", after: records[0].MemoryId, limit: PAGE_SIZE).ToListAsync();
+        Assert.That(forward.Count, Is.EqualTo(records.Count - 1));
+        Assert.That(forward[0].MemoryId, Is.EqualTo(records[1].MemoryId));
+        Assert.That(forward[forward.Count - 1].MemoryId, Is.EqualTo(records[records.Count - 1].MemoryId));
+        //// Two limits:
+        forward = await projectClient.MemoryStores.GetMemoriesAsync(name: store.Name, scope: MEMORY_STORE_SCOPE, order: "asc", after: records[0].MemoryId, before: records[3].MemoryId, limit: PAGE_SIZE).ToListAsync();
+        Assert.That(forward.Count, Is.EqualTo(2));
+        Assert.That(forward[0].MemoryId, Is.EqualTo(records[1].MemoryId));
+        Assert.That(forward[1].MemoryId, Is.EqualTo(records[2].MemoryId));
+        // Go backwards.
+        List<MemoryItem> backwards = await projectClient.MemoryStores.GetMemoriesAsync(name: store.Name, scope: MEMORY_STORE_SCOPE, order: "desc", before: records[0].MemoryId, limit: PAGE_SIZE).ToListAsync();
+        Assert.That(backwards.Count, Is.EqualTo(records.Count - 1));
+        Assert.That(backwards[0].MemoryId, Is.EqualTo(records[records.Count - 1].MemoryId));
+        Assert.That(backwards[backwards.Count - 1].MemoryId, Is.EqualTo(records[1].MemoryId));
+        // Two limits.
+        backwards = await projectClient.MemoryStores.GetMemoriesAsync(name: store.Name, scope: MEMORY_STORE_SCOPE, order: "desc", after: records[records.Count - 1].MemoryId, before: records[records.Count - 4].MemoryId, limit: PAGE_SIZE).ToListAsync();
+        Assert.That(backwards.Count, Is.EqualTo(2));
+        Assert.That(backwards[0].MemoryId, Is.EqualTo(records[records.Count - 2].MemoryId));
+        Assert.That(backwards[1].MemoryId, Is.EqualTo(records[records.Count - 3].MemoryId));
+    }
+
+    [RecordedTest]
     public async Task TestMemorySearch()
     {
         AIProjectClient projectClient = GetTestProjectClient();
-        try
+        await DeleteMemoryStoreMayBe(projectClient, MEMORY_STORE_NAME);
+        MemoryStoreDefaultDefinition memoryDefinitions = new(TestEnvironment.MEMORY_STORE_CHAT_MODEL_DEPLOYMENT_NAME, TestEnvironment.MEMORY_STORE_EMBEDDING_MODEL_DEPLOYMENT_NAME)
         {
-            await projectClient.MemoryStores.DeleteMemoryStoreAsync(name: "test-memory-store");
-        }
-        catch { }
-        MemoryStoreDefaultDefinition memoryDefinitions = new(TestEnvironment.MEMORY_STORE_CHAT_MODEL_DEPLOYMENT_NAME, TestEnvironment.MEMORY_STORE_EMBEDDING_MODEL_DEPLOYMENT_NAME);
-        memoryDefinitions.Options = new(true, true);
-        MemoryStore store = await projectClient.MemoryStores.CreateMemoryStoreAsync(name: "test-memory-store", definition: memoryDefinitions, description: "Test memory store.");
+            Options = new(true, true)
+        };
+        MemoryStore store = await projectClient.MemoryStores.CreateMemoryStoreAsync(name: MEMORY_STORE_NAME, definition: memoryDefinitions, description: "Test memory store.");
         // Create an empty scope and make sure we cannot find anything.
         string scope = MEMORY_STORE_SCOPE;
         MemorySearchOptions opts = new(scope)
@@ -702,9 +812,11 @@ public class AgentsTests : AgentsTestBase
     [TestCase(ToolType.Sharepoint)]
     [TestCase(ToolType.BrowserAutomation)]
     [TestCase(ToolType.MicrosoftFabric)]
+    [TestCase(ToolType.FabricIQ)]
     [TestCase(ToolType.A2A)]
     [TestCase(ToolType.A2ASpecialConnection)]
     [TestCase(ToolType.AzureFunction)]
+    [TestCase(ToolType.WorkIQTool)]
     public async Task TestTool(ToolType toolType)
     {
         Dictionary<string, string> headers = [];
@@ -802,9 +914,11 @@ public class AgentsTests : AgentsTestBase
     [TestCase(ToolType.Sharepoint)]
     [TestCase(ToolType.BrowserAutomation)]
     [TestCase(ToolType.MicrosoftFabric)]
+    [TestCase(ToolType.FabricIQ)]
     [TestCase(ToolType.A2A)]
     [TestCase(ToolType.A2ASpecialConnection)]
     [TestCase(ToolType.AzureFunction)]
+    [TestCase(ToolType.WorkIQTool)]
     public async Task TestToolStreaming(ToolType toolType)
     {
         AIProjectClient projectClient = GetTestProjectClient();
@@ -942,6 +1056,7 @@ public class AgentsTests : AgentsTestBase
     [TestCase(ToolType.FunctionCall)]
     [TestCase(ToolType.MCP)]
     [TestCase(ToolType.MCPConnection)]
+    [TestCase(ToolType.MCPToolbox)]
     public async Task TestInterativeTools(ToolType toolType)
     {
         AIProjectClient projectClient = GetTestProjectClient();
@@ -985,9 +1100,9 @@ public class AgentsTests : AgentsTestBase
                     funcionCalled = true;
                     functionWasCalled = true;
                 }
-                else if ((toolType == ToolType.MCP || toolType == ToolType.MCPConnection) && responseItem is McpToolCallApprovalRequestItem mcpToolCall)
+                else if ((toolType == ToolType.MCP || toolType == ToolType.MCPConnection || toolType == ToolType.MCPToolbox) && responseItem is McpToolCallApprovalRequestItem mcpToolCall)
                 {
-                    Assert.That(mcpToolCall.ServerLabel, Is.EqualTo("api-specs"));
+                    Assert.That(mcpToolCall.ServerLabel, Is.EqualTo(toolType == ToolType.MCPToolbox? "search-tool" : "api-specs"));
                     responseOptions.InputItems.Add(ResponseItem.CreateMcpApprovalResponseItem(approvalRequestId: mcpToolCall.Id, approved: true));
                     funcionCalled = true;
                     functionWasCalled = true;
@@ -1435,7 +1550,7 @@ public class AgentsTests : AgentsTestBase
             memory: "2Gi"
         )
         {
-            Image = TestEnvironment.AGENT_DOCKER_IMAGE,
+            ContainerConfiguration = new(TestEnvironment.AGENT_DOCKER_IMAGE),
             EnvironmentVariables = {
                 { "AZURE_OPENAI_ENDPOINT", $"https://{accountId}.cognitiveservices.azure.com/" },
                 { "AZURE_OPENAI_CHAT_DEPLOYMENT_NAME", TestEnvironment.FOUNDRY_MODEL_NAME },
@@ -1453,7 +1568,10 @@ public class AgentsTests : AgentsTestBase
     }
 
     [RecordedTest]
-    public async Task TestHostedAgentEndpoint()
+    [TestCase(true, false)]
+    [TestCase(true, true)]
+    [TestCase(false, false)]
+    public async Task TestHostedAgentEndpoint(bool useNewClient, bool useGetMethod)
     {
         AIProjectClient projectClient = GetTestProjectClient();
         Uri uriEndpoint = new(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT);
@@ -1463,7 +1581,7 @@ public class AgentsTests : AgentsTestBase
             memory: "1Gi"
         )
         {
-            Image = TestEnvironment.AGENT_DOCKER_IMAGE,
+            ContainerConfiguration = new(TestEnvironment.AGENT_DOCKER_IMAGE),
         };
         ProjectsAgentVersionCreationOptions creationOptions = new(agentDefinition);
         creationOptions.Metadata["enableVnextExperience"] = "true";
@@ -1476,7 +1594,7 @@ public class AgentsTests : AgentsTestBase
             agentVersion = await projectClient.AgentAdministrationClient.GetAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         }
         Assert.That(agentVersion.Status, Is.EqualTo(AgentVersionStatus.Active));
-        AgentEndpoint config = new()
+        AgentEndpointConfiguration config = new()
         {
             VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100)]),
             Protocols = { AgentEndpointProtocol.Responses }
@@ -1492,8 +1610,29 @@ public class AgentsTests : AgentsTestBase
             apiVersion: "v1"
         );
         responsesOptions.AgentName = agentVersion.Name;
-        ProjectOpenAIClient openAIClient = CreateProxyFromClient(new ProjectOpenAIClient(uriEndpoint, GetTestTokenProvider(), responsesOptions));
-        ProjectResponsesClient responseClient = openAIClient.GetProjectResponsesClient();
+        ProjectResponsesClient responseClient;
+        if (useNewClient)
+        {
+            ProjectOpenAIClient openAIClient = CreateProxyFromClient(new ProjectOpenAIClient(uriEndpoint, GetTestTokenProvider(), responsesOptions));
+            if (useGetMethod)
+            {
+                // We have to create options one more time as once the pipeline is created, it
+                // becomes frozen.
+                responsesOptions = CreateTestProjectOpenAIClientOptions(
+                    apiVersion: "v1"
+                );
+                responsesOptions.AgentName = agentVersion.Name;
+                responseClient = CreateProxyFromClient(openAIClient.GetProjectResponsesClientForAgentEndpoint(patchedRecord.Name, options: responsesOptions));
+            }
+            else
+            {
+                responseClient = openAIClient.GetProjectResponsesClient();
+            }
+        }
+        else
+        {
+            responseClient = CreateProxyFromClient(projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(patchedRecord.Name, options: responsesOptions));
+        }
         ResponseResult response = await responseClient.CreateResponseAsync("Hello, tell me a joke.");
         Assert.That(response.GetOutputText(), Is.Not.Empty);
     }
@@ -1672,4 +1811,13 @@ public class AgentsTests : AgentsTestBase
             - kind: EndConversation
               id: end_conversation
         """;
+
+    private static async Task DeleteMemoryStoreMayBe(AIProjectClient projectClient, string name)
+    {
+        try
+        {
+            var _ = await projectClient.MemoryStores.DeleteMemoryStoreAsync(name: name);
+        }
+        catch { }
+    }
 }

@@ -30,16 +30,16 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Properties of a project. </param>
         /// <param name="identity"> Managed identity properties. </param>
-        internal DevCenterProjectData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, ProjectProperties properties, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DevCenterProjectData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ProjectProperties properties, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             Identity = identity;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Properties of a project. </summary>
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     Properties = new ProjectProperties();
                 }
-                Properties.MaxDevBoxesPerUser = value.Value;
+                Properties.MaxDevBoxesPerUser = value;
             }
         }
 
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     Properties = new ProjectProperties();
                 }
-                Properties.AzureAiServicesMode = value.Value;
+                Properties.AzureAiServicesMode = value;
             }
         }
 
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     Properties = new ProjectProperties();
                 }
-                Properties.WorkspaceStorageMode = value.Value;
+                Properties.WorkspaceStorageMode = value;
             }
         }
 

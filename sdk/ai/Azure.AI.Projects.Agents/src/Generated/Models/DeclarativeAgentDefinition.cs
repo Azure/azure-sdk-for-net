@@ -21,14 +21,14 @@ namespace Azure.AI.Projects.Agents
         /// <param name="instructions"> A system (or developer) message inserted into the model's context. </param>
         /// <param name="temperature">
         /// What sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic.
-        /// We generally recommend altering this or `top_p` but not both.
+        /// We generally recommend altering this or `top_p` but not both. Defaults to `1`.
         /// </param>
         /// <param name="topP">
         /// An alternative to sampling with temperature, called nucleus sampling,
         /// where the model considers the results of the tokens with top_p probability
         /// mass. So 0.1 means only the tokens comprising the top 10% probability mass
-        /// are considered.
-        /// We generally recommend altering this or `temperature` but not both.
+        /// are considered. We generally recommend altering this or `temperature` but not both.
+        /// Defaults to `1`.
         /// </param>
         /// <param name="reasoningOptions"></param>
         /// <param name="tools">
@@ -62,7 +62,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary>
         /// What sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic.
-        /// We generally recommend altering this or `top_p` but not both.
+        /// We generally recommend altering this or `top_p` but not both. Defaults to `1`.
         /// </summary>
         public float? Temperature { get; set; }
 
@@ -70,8 +70,8 @@ namespace Azure.AI.Projects.Agents
         /// An alternative to sampling with temperature, called nucleus sampling,
         /// where the model considers the results of the tokens with top_p probability
         /// mass. So 0.1 means only the tokens comprising the top 10% probability mass
-        /// are considered.
-        /// We generally recommend altering this or `temperature` but not both.
+        /// are considered. We generally recommend altering this or `temperature` but not both.
+        /// Defaults to `1`.
         /// </summary>
         public float? TopP { get; set; }
 

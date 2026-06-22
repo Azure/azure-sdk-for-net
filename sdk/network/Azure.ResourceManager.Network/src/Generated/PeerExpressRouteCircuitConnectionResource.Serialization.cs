@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Network
 {
+    /// <summary></summary>
     public partial class PeerExpressRouteCircuitConnectionResource : IJsonModel<PeerExpressRouteCircuitConnectionData>
     {
-        private static PeerExpressRouteCircuitConnectionData s_dataDeserializationInstance;
-        private static PeerExpressRouteCircuitConnectionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<PeerExpressRouteCircuitConnectionData> s_dataDeserializationInstance;
 
+        private static IJsonModel<PeerExpressRouteCircuitConnectionData> DataDeserializationInstance => s_dataDeserializationInstance ??= new PeerExpressRouteCircuitConnectionData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PeerExpressRouteCircuitConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PeerExpressRouteCircuitConnectionData>)Data).Write(writer, options);
 
-        PeerExpressRouteCircuitConnectionData IJsonModel<PeerExpressRouteCircuitConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PeerExpressRouteCircuitConnectionData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PeerExpressRouteCircuitConnectionData IJsonModel<PeerExpressRouteCircuitConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<PeerExpressRouteCircuitConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PeerExpressRouteCircuitConnectionData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         PeerExpressRouteCircuitConnectionData IPersistableModel<PeerExpressRouteCircuitConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PeerExpressRouteCircuitConnectionData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<PeerExpressRouteCircuitConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PeerExpressRouteCircuitConnectionData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<PeerExpressRouteCircuitConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

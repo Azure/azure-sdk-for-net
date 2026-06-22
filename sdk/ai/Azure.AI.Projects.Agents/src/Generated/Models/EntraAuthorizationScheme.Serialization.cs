@@ -12,11 +12,6 @@ namespace Azure.AI.Projects.Agents
     /// <summary> The EntraAuthorizationScheme. </summary>
     public partial class EntraAuthorizationScheme : AgentEndpointAuthorizationScheme, IJsonModel<EntraAuthorizationScheme>
     {
-        /// <summary> Initializes a new instance of <see cref="EntraAuthorizationScheme"/> for deserialization. </summary>
-        internal EntraAuthorizationScheme()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override AgentEndpointAuthorizationScheme PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -76,8 +71,11 @@ namespace Azure.AI.Projects.Agents
                 throw new FormatException($"The model {nameof(EntraAuthorizationScheme)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("isolation_key_source"u8);
-            writer.WriteObjectValue(IsolationKeySource, options);
+            if (Optional.IsDefined(IsolationKeySource))
+            {
+                writer.WritePropertyName("isolation_key_source"u8);
+                writer.WriteObjectValue(IsolationKeySource, options);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -117,6 +115,10 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("isolation_key_source"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     isolationKeySource = IsolationKeySource.DeserializeIsolationKeySource(prop.Value, options);
                     continue;
                 }

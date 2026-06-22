@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Sphere
                 HttpMessage message = _catalogsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, catalogName, SphereCatalogData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SphereArmOperation<SphereCatalogResource> operation = new SphereArmOperation<SphereCatalogResource>(
-                    new SphereCatalogOperationSource(Client),
+                    new SphereCatalogResourceOperationSource(Client),
                     _catalogsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Sphere
                 HttpMessage message = _catalogsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, catalogName, SphereCatalogData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SphereArmOperation<SphereCatalogResource> operation = new SphereArmOperation<SphereCatalogResource>(
-                    new SphereCatalogOperationSource(Client),
+                    new SphereCatalogResourceOperationSource(Client),
                     _catalogsClientDiagnostics,
                     Pipeline,
                     message.Request,

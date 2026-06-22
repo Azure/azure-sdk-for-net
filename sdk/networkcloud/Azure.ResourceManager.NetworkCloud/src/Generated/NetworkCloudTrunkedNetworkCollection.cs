@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 HttpMessage message = _trunkedNetworksRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, trunkedNetworkName, NetworkCloudTrunkedNetworkData.ToRequestContent(data), matchConditions, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkCloudArmOperation<NetworkCloudTrunkedNetworkResource> operation = new NetworkCloudArmOperation<NetworkCloudTrunkedNetworkResource>(
-                    new NetworkCloudTrunkedNetworkOperationSource(Client),
+                    new NetworkCloudTrunkedNetworkResourceOperationSource(Client),
                     _trunkedNetworksClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 HttpMessage message = _trunkedNetworksRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, trunkedNetworkName, NetworkCloudTrunkedNetworkData.ToRequestContent(data), matchConditions, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkCloudArmOperation<NetworkCloudTrunkedNetworkResource> operation = new NetworkCloudArmOperation<NetworkCloudTrunkedNetworkResource>(
-                    new NetworkCloudTrunkedNetworkOperationSource(Client),
+                    new NetworkCloudTrunkedNetworkResourceOperationSource(Client),
                     _trunkedNetworksClientDiagnostics,
                     Pipeline,
                     message.Request,

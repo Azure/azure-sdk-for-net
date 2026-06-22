@@ -1,0 +1,82 @@
+name: azsdk-common-apiview-feedback-resolution-eval
+description: Evaluation suite for the azsdk-common-apiview-feedback-resolution skill
+type: capability
+
+environment: azsdk-mcp-mock
+
+tags:
+  area: azsdk-common-apiview-feedback-resolution
+  type: ci-gate
+
+config:
+  runs: 1
+  timeout: "90s"
+  model: claude-opus-4.6
+  executor: copilot-sdk
+
+scoring:
+  threshold: 0.8
+
+stimuli:
+  - name: apiview-basic-001
+    prompt: "My Python SDK PR has APIView comments that I need to address. Can you help me retrieve and resolve them?"
+    graders:
+      - type: tool-calls
+        config:
+          required:
+            - name: azure-sdk-mcp-azsdk_apiview_get_comments
+
+  - name: apiview-edge-001
+    prompt: "An APIView reviewer says I need to rename 'ComputeProvisioningState' to 'ProvisioningState' in my SDK. Use the SDK customization tools to apply this rename."
+    graders:
+      - type: output-not-contains
+        config:
+          substring: "cannot help"
+
+  - name: apiview-no-feedback-001
+    prompt: "Check if there are any APIView comments on my .NET SDK PR that I need to address before release."
+    graders:
+      - type: output-contains
+        config:
+          substring: "APIView"
+
+  - name: apiview-negative-001
+    prompt: "I need to create a new TypeSpec project for my Azure Storage service."
+    graders:
+      - type: tool-calls
+        config:
+          disallowed:
+            - name: azure-sdk-mcp-azsdk_apiview_get_comments
+      - type: output-not-contains
+        config:
+          substring: "APIView"
+
+  - name: basic-trigger
+    prompt: "I have APIView comments on my SDK PR that need to be resolved. Can you help?"
+    graders:
+      - type: output-contains
+        config:
+          substring: "APIView"
+
+  - name: anti-trigger
+    prompt: "How do I set up a new Azure Storage account?"
+    graders:
+      - type: output-not-contains
+        config:
+          substring: "APIView"
+      - type: output-not-contains
+        config:
+          substring: "API review"
+      - type: output-not-contains
+        config:
+          substring: "apiview.dev"
+      - type: output-not-contains
+        config:
+          substring: "apiviewstagingtest.com"
+
+  - name: url-trigger
+    prompt: "I have review comments on my SDK PR from this page: https://spa.apiview.dev/review/abc123?activeApiRevisionId=def456 — can you help me resolve them?"
+    graders:
+      - type: output-contains
+        config:
+          substring: "apiview"

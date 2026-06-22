@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Detailed properties for ScalingPlanPooledSchedule. </param>
-        internal ScalingPlanPooledScheduleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ScalingPlanPooledScheduleProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ScalingPlanPooledScheduleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ScalingPlanPooledScheduleProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Detailed properties for ScalingPlanPooledSchedule. </summary>
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     Properties = new ScalingPlanPooledScheduleProperties();
                 }
-                Properties.ScalingMethod = value.Value;
+                Properties.ScalingMethod = value;
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     Properties = new ScalingPlanPooledScheduleProperties();
                 }
-                Properties.RampUpLoadBalancingAlgorithm = value.Value;
+                Properties.RampUpLoadBalancingAlgorithm = value;
             }
         }
 
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     Properties = new ScalingPlanPooledScheduleProperties();
                 }
-                Properties.RampUpMinimumHostsPct = value.Value;
+                Properties.RampUpMinimumHostsPct = value;
             }
         }
 
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     Properties = new ScalingPlanPooledScheduleProperties();
                 }
-                Properties.RampUpCapacityThresholdPct = value.Value;
+                Properties.RampUpCapacityThresholdPct = value;
             }
         }
 
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     Properties = new ScalingPlanPooledScheduleProperties();
                 }
-                Properties.PeakLoadBalancingAlgorithm = value.Value;
+                Properties.PeakLoadBalancingAlgorithm = value;
             }
         }
 
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     Properties = new ScalingPlanPooledScheduleProperties();
                 }
-                Properties.RampDownLoadBalancingAlgorithm = value.Value;
+                Properties.RampDownLoadBalancingAlgorithm = value;
             }
         }
 
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     Properties = new ScalingPlanPooledScheduleProperties();
                 }
-                Properties.RampDownMinimumHostsPct = value.Value;
+                Properties.RampDownMinimumHostsPct = value;
             }
         }
 
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     Properties = new ScalingPlanPooledScheduleProperties();
                 }
-                Properties.RampDownCapacityThresholdPct = value.Value;
+                Properties.RampDownCapacityThresholdPct = value;
             }
         }
 
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     Properties = new ScalingPlanPooledScheduleProperties();
                 }
-                Properties.RampDownForceLogoffUsers = value.Value;
+                Properties.RampDownForceLogoffUsers = value;
             }
         }
 
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     Properties = new ScalingPlanPooledScheduleProperties();
                 }
-                Properties.RampDownStopHostsWhen = value.Value;
+                Properties.RampDownStopHostsWhen = value;
             }
         }
 
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     Properties = new ScalingPlanPooledScheduleProperties();
                 }
-                Properties.RampDownWaitTimeMinutes = value.Value;
+                Properties.RampDownWaitTimeMinutes = value;
             }
         }
 
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     Properties = new ScalingPlanPooledScheduleProperties();
                 }
-                Properties.OffPeakLoadBalancingAlgorithm = value.Value;
+                Properties.OffPeakLoadBalancingAlgorithm = value;
             }
         }
     }

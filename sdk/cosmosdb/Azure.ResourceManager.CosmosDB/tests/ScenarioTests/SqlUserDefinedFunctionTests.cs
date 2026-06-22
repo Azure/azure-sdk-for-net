@@ -71,7 +71,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             }
         }
 
-        [Test]
         [RecordedTest]
         public async Task SqlUserDefinedFunctionCreateAndUpdate()
         {
@@ -105,7 +104,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             VerifySqlUserDefinedFunctions(userDefinedFunction, userDefinedFunction2);
         }
 
-        [Test]
         [RecordedTest]
         public async Task SqlUserDefinedFunctionList()
         {
@@ -118,7 +116,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             VerifySqlUserDefinedFunctions(userDefinedFunctions[0], userDefinedFunction);
         }
 
-        [Test]
         [RecordedTest]
         public async Task SqlUserDefinedFunctionDelete()
         {

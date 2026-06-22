@@ -29,31 +29,34 @@ namespace Azure.ResourceManager.ArtifactSigning
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        internal ArtifactSigningCertificateProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, CertificateProfileProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ArtifactSigningCertificateProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CertificateProfileProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
         internal CertificateProfileProperties Properties { get; set; }
 
         /// <summary> Profile type of the certificate. </summary>
-        public CertificateProfileType ProfileType
+        public CertificateProfileType? CertificateProfileType
         {
             get
             {
-                return Properties is null ? default : Properties.ProfileType;
+                return Properties is null ? default : Properties.CertificateProfileType;
             }
             set
             {
-                if (Properties is null)
+                if (value.HasValue)
                 {
-                    Properties = new CertificateProfileProperties();
+                    if (Properties is null)
+                    {
+                        Properties = new CertificateProfileProperties();
+                    }
+                    Properties.CertificateProfileType = value.Value;
                 }
-                Properties.ProfileType = value;
             }
         }
 
@@ -70,7 +73,7 @@ namespace Azure.ResourceManager.ArtifactSigning
                 {
                     Properties = new CertificateProfileProperties();
                 }
-                Properties.IncludeStreetAddress = value.Value;
+                Properties.IncludeStreetAddress = value;
             }
         }
 
@@ -87,7 +90,7 @@ namespace Azure.ResourceManager.ArtifactSigning
                 {
                     Properties = new CertificateProfileProperties();
                 }
-                Properties.IncludeCity = value.Value;
+                Properties.IncludeCity = value;
             }
         }
 
@@ -104,7 +107,7 @@ namespace Azure.ResourceManager.ArtifactSigning
                 {
                     Properties = new CertificateProfileProperties();
                 }
-                Properties.IncludeState = value.Value;
+                Properties.IncludeState = value;
             }
         }
 
@@ -121,7 +124,7 @@ namespace Azure.ResourceManager.ArtifactSigning
                 {
                     Properties = new CertificateProfileProperties();
                 }
-                Properties.IncludeCountry = value.Value;
+                Properties.IncludeCountry = value;
             }
         }
 
@@ -138,7 +141,7 @@ namespace Azure.ResourceManager.ArtifactSigning
                 {
                     Properties = new CertificateProfileProperties();
                 }
-                Properties.IncludePostalCode = value.Value;
+                Properties.IncludePostalCode = value;
             }
         }
 

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public readonly partial struct HealthErrorCustomerResolvability : IEquatable<HealthErrorCustomerResolvability>
     {
         private readonly string _value;
+        /// <summary> Allowed. </summary>
+        private const string AllowedValue = "Allowed";
+        /// <summary> NotAllowed. </summary>
+        private const string NotAllowedValue = "NotAllowed";
 
         /// <summary> Initializes a new instance of <see cref="HealthErrorCustomerResolvability"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public HealthErrorCustomerResolvability(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AllowedValue = "Allowed";
-        private const string NotAllowedValue = "NotAllowed";
+            _value = value;
+        }
 
         /// <summary> Allowed. </summary>
         public static HealthErrorCustomerResolvability Allowed { get; } = new HealthErrorCustomerResolvability(AllowedValue);
+
         /// <summary> NotAllowed. </summary>
         public static HealthErrorCustomerResolvability NotAllowed { get; } = new HealthErrorCustomerResolvability(NotAllowedValue);
+
         /// <summary> Determines if two <see cref="HealthErrorCustomerResolvability"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(HealthErrorCustomerResolvability left, HealthErrorCustomerResolvability right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="HealthErrorCustomerResolvability"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(HealthErrorCustomerResolvability left, HealthErrorCustomerResolvability right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="HealthErrorCustomerResolvability"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="HealthErrorCustomerResolvability"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator HealthErrorCustomerResolvability(string value) => new HealthErrorCustomerResolvability(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="HealthErrorCustomerResolvability"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator HealthErrorCustomerResolvability?(string value) => value == null ? null : new HealthErrorCustomerResolvability(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is HealthErrorCustomerResolvability other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(HealthErrorCustomerResolvability other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

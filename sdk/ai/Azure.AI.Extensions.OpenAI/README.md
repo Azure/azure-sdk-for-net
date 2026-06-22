@@ -52,6 +52,7 @@ Develop Agents using the Azure AI Foundry platform, leveraging an extensive ecos
     - [Add a data agent to the Fabric](#add-a-data-agent-to-the-fabric)
     - [Create a Fabric connection in Microsoft Foundry](#create-a-fabric-connection-in-microsoft-foundry)
     - [Using Microsoft Fabric tool](#using-microsoft-fabric-tool)
+  - [Fabric IQ preview tool](#fabric-iq-tool)
   - [A2APreviewTool](#a2atool)
     - [Create a connection to A2A agent](#create-a-connection-to-a2a-agent)
       - [Classic Microsoft Foundry](#classic-microsoft-foundry)
@@ -59,6 +60,7 @@ Develop Agents using the Azure AI Foundry platform, leveraging an extensive ecos
     - [Using A2A Tool](#using-a2a-tool)
   - [Memory search tool](#memory-search-tool)
   - [Azure Function tool](#azure-function-tool)
+  - [Work IQ preview tool](#work-iq-preview-tool)
 - [Tracing](#tracing)
   - [Enabling GenAI Tracing](#enabling-genai-tracing)
   - [Tracing to Azure Monitor](#tracing-to-azure-monitor)
@@ -501,7 +503,7 @@ private static HostedAgentDefinition GetAgentDefinition(string dockerImage)
         memory: "1Gi"
     )
     {
-        Image = dockerImage,
+        ContainerConfiguration = new(dockerImage)
     };
     return agentDefinition;
 }
@@ -516,7 +518,7 @@ HostedAgentDefinition agentDefinition = GetAgentDefinition(
 ProjectsAgentVersionCreationOptions creationOptions = new(agentDefinition);
 creationOptions.Metadata["enableVnextExperience"] = "true";
 ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
-    agentName: "myHostedAgent",
+    agentName: "myHostedAgent1",
     options: creationOptions);
 ```
 
@@ -537,7 +539,7 @@ if (agentVersion.Status != AgentVersionStatus.Active)
 Configure an Agent endpoint for Responses protocol.
 
 ```C# Snippet:Sample_CreateTheEndpoint_HostedAgent_Sync
-AgentEndpoint config = new()
+AgentEndpointConfiguration config = new()
 {
     VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100)]),
     Protocols = { AgentEndpointProtocol.Responses }
@@ -552,17 +554,10 @@ ProjectsAgentRecord patchedRecord = projectClient.AgentAdministrationClient.Patc
 Console.WriteLine($"The Agent {patchedRecord.Name} was patched.");
 ```
 
-In this scenario we cannot use the `ProjectOpenAIClient` from `projectClient.ProjectOpenAIClient`
-property as we need to access customized endpoint, for the Agent, we have created.
-We set its name in `ProjectOpenAIClientOptions`.
+To use the `ProjectResponsesClient` with the endpoint, we need to get it using `GetProjectResponsesClientForAgentEndpoint` method.
 
 ```C# Snippet:Sample_GetResponseFromAgentEndpoint_HostedAgent_Async
-ProjectOpenAIClientOptions responsesOptions = new()
-{
-    AgentName = agentVersion.Name
-};
-ProjectOpenAIClient openAIClient = new(uriEndpoint, credential, responsesOptions);
-ProjectResponsesClient responseClient = openAIClient.GetProjectResponsesClient();
+ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(agentVersion.Name);
 ResponseResult response = await responseClient.CreateResponseAsync("Hello, tell me a joke.");
 Console.WriteLine(response.GetOutputText());
 ```
@@ -1683,6 +1678,27 @@ ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClien
     options: new(agentDefinition));
 ```
 
+### Fabric IQ preview tool<a id="fabric-iq-tool"></a>
+
+Fabric IQ is a layer above Microsoft Fabric. It orders and optimizes the data retrieval process. The Fabric IQ preview tool
+allows you to use These capabilities to get the data context for an Agent. To use it, please create the
+the Fabric IQ connection in Microsoft Foundry and use `FabricIQPreviewTool` in the Agent constructor:
+
+```C# Snippet:Sample_CreateAgent_FabricIQ_Async
+FabricIQPreviewTool fabricIQTool = new(projectConnectionId: fabricIQProjectConnectionId)
+{
+    RequireApproval = BinaryData.FromObjectAsJson("never"),
+};
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
+{
+    Instructions = "Use the available Fabric IQ tools to answer questions and perform tasks.",
+    Tools = { fabricIQTool },
+};
+ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
+    agentName: "myFabricIQAgent",
+    options: new(agentDefinition));
+```
+
 ### A2APreviewTool (preview)<a id="a2atool"></a>
 
 The [A2A or Agent2Agent](https://a2a-protocol.org/latest/) protocol is designed to enable seamless communication between agents. In the scenario below we assume that we have the application endpoint, which complies  with A2A; the authentication is happening through header `x-api-key` value.
@@ -1907,6 +1923,24 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         + $"'{storageQueueUri}/azure-function-tool-output'. Always responds with "
         + "\"Foo says\" and then the response from the tool.",
     Tools = { GetFunctionTool(storageQueueUri) },
+};
+ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
+    agentName: "myAgent",
+    options: new(agentDefinition));
+```
+
+### Work IQ preview tool
+
+Work IQ preview tool allows Agent to access data from [Microsoft 365 Copilot](https://learn.microsoft.com/microsoft-agent-365/tooling-servers-overview).
+To create the Agent, capable of returning the responses grounded by these data, create the `WorkIQPreviewTool` using the ID of connection to Work IQ Teams
+as shown below.
+
+```C# Snippet:Sample_CreateAgent_WorkIQ_Async
+AIProjectConnection workIQConnection = await projectClient.Connections.GetConnectionAsync(workIQConnectionName);
+DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
+{
+    Instructions = "You are a helpful assistant that can access Microsoft 365 data through WorkIQ. Use the WorkIQ tool to search and retrieve information from emails, calendar events, Teams messages, and other Microsoft 365 content to assist users with their questions.",
+    Tools = { new WorkIQPreviewTool(workIQConnection.Id), }
 };
 ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
     agentName: "myAgent",

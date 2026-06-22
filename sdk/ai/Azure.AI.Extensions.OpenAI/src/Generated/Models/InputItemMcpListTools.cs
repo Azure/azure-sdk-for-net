@@ -44,10 +44,10 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> The unique ID of the list. </summary>
-        public string Id { get; }
+        public string Id { get; set; }
 
         /// <summary> The label of the MCP server. </summary>
-        public string ServerLabel { get; }
+        public string ServerLabel { get; set; }
 
         /// <summary> The tools available on the server. </summary>
         public IList<InternalMCPListToolsTool> Tools { get; }
