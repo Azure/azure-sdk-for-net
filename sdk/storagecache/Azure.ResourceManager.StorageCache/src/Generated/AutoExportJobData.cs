@@ -82,15 +82,6 @@ namespace Azure.ResourceManager.StorageCache
             }
         }
 
-        /// <summary> The operational state of auto export. InProgress indicates the export is running.  Disabling indicates the user has requested to disable the export but the disabling is still in progress. Disabled indicates auto export has been disabled.  DisableFailed indicates the disabling has failed.  Failed means the export was unable to continue, due to a fatal error. </summary>
-        public AutoExportStatusType? State
-        {
-            get
-            {
-                return Properties is null ? default : Properties.State;
-            }
-        }
-
         /// <summary> Server-defined status code for auto export job. </summary>
         public string StatusCode
         {
