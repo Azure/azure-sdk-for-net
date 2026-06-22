@@ -793,6 +793,70 @@ namespace Azure.Generator.Management.Tests.Common
             return (parentClient, childClient, [parentModel, childModel, childPageModel]);
         }
 
+        public static (InputClient InputClient, IReadOnlyList<InputModelType> InputModels) ClientWithExtensionScopedResourceList()
+        {
+            const string TestClientName = "TestClient";
+            var eventModel = InputFactory.Model("EventData",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json,
+                properties:
+                [
+                    InputFactory.Property("id", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("type", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("name", InputPrimitiveType.String, isReadOnly: true),
+                ],
+                decorators: []);
+            var pageModel = InputFactory.Model("EventListResult",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json,
+                properties:
+                [
+                    InputFactory.Property("value", InputFactory.Array(eventModel)),
+                    InputFactory.Property("nextLink", InputPrimitiveType.Url),
+                ]);
+
+            var uuidType = new InputPrimitiveType(InputPrimitiveTypeKind.String, "uuid", "Azure.Core.uuid");
+            var subscriptionIdOpParam = InputFactory.PathParameter("subscriptionId", uuidType, isRequired: true);
+            var eventNameOpParam = InputFactory.PathParameter("eventName", InputPrimitiveType.String, isRequired: true);
+            var resourceUriOpParam = InputFactory.PathParameter("resourceUri", InputPrimitiveType.String, isRequired: true);
+            var filterOpParam = InputFactory.QueryParameter("filter", InputPrimitiveType.String, serializedName: "$filter");
+
+            var eventResourceId = "/subscriptions/{subscriptionId}/providers/Microsoft.Tests/events/{eventName}";
+            var getEventOp = InputFactory.Operation("getEvent", parameters: [subscriptionIdOpParam, eventNameOpParam], responses: [InputFactory.OperationResponse([200], eventModel)], path: eventResourceId);
+            var listBySingleResourcePath = "/{resourceUri}/providers/Microsoft.Tests/events";
+            var listBySingleResourceOp = InputFactory.Operation("listBySingleResource", parameters: [resourceUriOpParam, filterOpParam], responses: [InputFactory.OperationResponse([200], pageModel)], path: listBySingleResourcePath);
+
+            var subscriptionIdParam = InputFactory.MethodParameter("subscriptionId", uuidType, location: InputRequestLocation.Path);
+            var eventNameParam = InputFactory.MethodParameter("eventName", InputPrimitiveType.String, location: InputRequestLocation.Path, isRequired: true);
+            var resourceUriParam = InputFactory.MethodParameter("resourceUri", InputPrimitiveType.String, location: InputRequestLocation.Path, isRequired: true);
+            var filterParam = InputFactory.MethodParameter("filter", InputPrimitiveType.String, location: InputRequestLocation.Query, serializedName: "$filter");
+
+            var getEventMethod = InputFactory.BasicServiceMethod("getEvent", getEventOp, parameters: [eventNameParam, subscriptionIdParam], crossLanguageDefinitionId: "Microsoft.Tests.Events.get");
+            var listBySingleResourceMethod = InputFactory.PagingServiceMethod(
+                "getEventsBySingleResource",
+                listBySingleResourceOp,
+                parameters: [resourceUriParam, filterParam],
+                pagingMetadata: InputFactory.NextLinkPagingMetadata("value", "nextLink", InputResponseLocation.Body));
+
+            var armProviderDecorator = BuildArmProviderSchema(
+                eventModel,
+                [
+                    new ResourceMethod(ResourceOperationKind.Read, getEventMethod, new RequestPathPattern(getEventOp.Path), new ArmScopeInfo(ResourceScope.Subscription, new RequestPathPattern(eventResourceId), "Microsoft.Resources/subscriptions"), null!),
+                    new ResourceMethod(ResourceOperationKind.List, listBySingleResourceMethod, new RequestPathPattern(listBySingleResourcePath), new ArmScopeInfo(ResourceScope.Extension, new RequestPathPattern("/{resourceUri}"), null), null!),
+                ],
+                new RequestPathPattern(eventResourceId),
+                "Microsoft.Tests/events",
+                null,
+                ResourceScope.Subscription,
+                "Event");
+
+            var client = InputFactory.Client(
+                TestClientName,
+                methods: [getEventMethod, listBySingleResourceMethod],
+                decorators: [armProviderDecorator],
+                crossLanguageDefinitionId: $"Test.{TestClientName}");
+
+            return (client, [eventModel, pageModel]);
+        }
+
         /// <summary>
         /// Two-client fixture used to reproduce https://github.com/Azure/azure-sdk-for-net/issues/59242.
         /// MainClient contains the CRUD methods that go on the collection (Read/Create) and the
