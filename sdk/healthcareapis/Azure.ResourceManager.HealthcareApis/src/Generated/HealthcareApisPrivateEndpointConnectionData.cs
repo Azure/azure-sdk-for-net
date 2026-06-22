@@ -38,6 +38,41 @@ namespace Azure.ResourceManager.HealthcareApis
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        public PrivateEndpointConnectionProperties Properties { get; set; }
+        internal PrivateEndpointConnectionProperties Properties { get; set; }
+
+        /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
+        public HealthcareApisPrivateLinkServiceConnectionState ConnectionState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConnectionState;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PrivateEndpointConnectionProperties();
+                }
+                Properties.ConnectionState = value;
+            }
+        }
+
+        /// <summary> The provisioning state of the private endpoint connection resource. </summary>
+        public HealthcareApisPrivateEndpointConnectionProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> The resource identifier of the private endpoint. </summary>
+        public ResourceIdentifier PrivateEndpointId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateEndpointId;
+            }
+        }
     }
 }

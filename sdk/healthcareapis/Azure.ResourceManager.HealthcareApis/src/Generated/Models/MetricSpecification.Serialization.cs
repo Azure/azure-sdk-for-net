@@ -134,10 +134,10 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(FillGapWithZero))
+            if (Optional.IsDefined(IsFillGapWithZero))
             {
                 writer.WritePropertyName("fillGapWithZero"u8);
-                writer.WriteBooleanValue(FillGapWithZero.Value);
+                writer.WriteBooleanValue(IsFillGapWithZero.Value);
             }
             if (Optional.IsDefined(MetricFilterPattern))
             {
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             string aggregationType = default;
             IList<string> supportedAggregationTypes = default;
             IList<string> supportedTimeGrainTypes = default;
-            bool? fillGapWithZero = default;
+            bool? isFillGapWithZero = default;
             string metricFilterPattern = default;
             IList<MetricDimension> dimensions = default;
             bool? isInternal = default;
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     {
                         continue;
                     }
-                    fillGapWithZero = prop.Value.GetBoolean();
+                    isFillGapWithZero = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("metricFilterPattern"u8))
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 aggregationType,
                 supportedAggregationTypes ?? new ChangeTrackingList<string>(),
                 supportedTimeGrainTypes ?? new ChangeTrackingList<string>(),
-                fillGapWithZero,
+                isFillGapWithZero,
                 metricFilterPattern,
                 dimensions ?? new ChangeTrackingList<MetricDimension>(),
                 isInternal,

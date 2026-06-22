@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(ToBeExportedForShoebox))
+            if (Optional.IsDefined(IsExportedForShoebox))
             {
                 writer.WritePropertyName("toBeExportedForShoebox"u8);
-                writer.WriteBooleanValue(ToBeExportedForShoebox.Value);
+                writer.WriteBooleanValue(IsExportedForShoebox.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             }
             string name = default;
             string displayName = default;
-            bool? toBeExportedForShoebox = default;
+            bool? isExportedForShoebox = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     {
                         continue;
                     }
-                    toBeExportedForShoebox = prop.Value.GetBoolean();
+                    isExportedForShoebox = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MetricDimension(name, displayName, toBeExportedForShoebox, additionalBinaryDataProperties);
+            return new MetricDimension(name, displayName, isExportedForShoebox, additionalBinaryDataProperties);
         }
     }
 }

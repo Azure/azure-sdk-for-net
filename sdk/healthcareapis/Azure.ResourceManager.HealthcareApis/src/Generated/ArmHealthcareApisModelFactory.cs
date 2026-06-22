@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         /// <param name="aggregationType"> Only provide one value for this field. Valid values: Average, Minimum, Maximum, Total, Count. </param>
         /// <param name="supportedAggregationTypes"> Supported aggregation types. </param>
         /// <param name="supportedTimeGrainTypes"> Supported time grain types. </param>
-        /// <param name="fillGapWithZero"> Optional. If set to true, then zero will be returned for time duration where no metric is emitted/published. </param>
+        /// <param name="isFillGapWithZero"> Optional. If set to true, then zero will be returned for time duration where no metric is emitted/published. </param>
         /// <param name="metricFilterPattern"> Pattern for the filter of the metric. </param>
         /// <param name="dimensions"> Dimensions of the metric. </param>
         /// <param name="isInternal"> Whether the metric is internal. </param>
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         /// <param name="enableRegionalMdmAccount"> Whether regional MDM account enabled. </param>
         /// <param name="resourceIdDimensionNameOverride"> The resource Id dimension name override. </param>
         /// <returns> A new <see cref="Models.MetricSpecification"/> instance for mocking. </returns>
-        public static MetricSpecification MetricSpecification(string name = default, string displayName = default, string displayDescription = default, string unit = default, string category = default, string aggregationType = default, IEnumerable<string> supportedAggregationTypes = default, IEnumerable<string> supportedTimeGrainTypes = default, bool? fillGapWithZero = default, string metricFilterPattern = default, IEnumerable<MetricDimension> dimensions = default, bool? isInternal = default, string sourceMdmAccount = default, string sourceMdmNamespace = default, bool? enableRegionalMdmAccount = default, string resourceIdDimensionNameOverride = default)
+        public static MetricSpecification MetricSpecification(string name = default, string displayName = default, string displayDescription = default, string unit = default, string category = default, string aggregationType = default, IEnumerable<string> supportedAggregationTypes = default, IEnumerable<string> supportedTimeGrainTypes = default, bool? isFillGapWithZero = default, string metricFilterPattern = default, IEnumerable<MetricDimension> dimensions = default, bool? isInternal = default, string sourceMdmAccount = default, string sourceMdmNamespace = default, bool? enableRegionalMdmAccount = default, string resourceIdDimensionNameOverride = default)
         {
             supportedAggregationTypes ??= new ChangeTrackingList<string>();
             supportedTimeGrainTypes ??= new ChangeTrackingList<string>();
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 aggregationType,
                 (supportedAggregationTypes ?? new ChangeTrackingList<string>()).ToList(),
                 (supportedTimeGrainTypes ?? new ChangeTrackingList<string>()).ToList(),
-                fillGapWithZero,
+                isFillGapWithZero,
                 metricFilterPattern,
                 (dimensions ?? new ChangeTrackingList<MetricDimension>()).ToList(),
                 isInternal,
@@ -114,37 +114,30 @@ namespace Azure.ResourceManager.HealthcareApis.Models
 
         /// <param name="name"> Name of the dimension. </param>
         /// <param name="displayName"> Localized friendly display name of the dimension. </param>
-        /// <param name="toBeExportedForShoebox"> Whether this dimension should be included for the Shoebox export scenario. </param>
+        /// <param name="isExportedForShoebox"> Whether this dimension should be included for the Shoebox export scenario. </param>
         /// <returns> A new <see cref="Models.MetricDimension"/> instance for mocking. </returns>
-        public static MetricDimension MetricDimension(string name = default, string displayName = default, bool? toBeExportedForShoebox = default)
+        public static MetricDimension MetricDimension(string name = default, string displayName = default, bool? isExportedForShoebox = default)
         {
-            return new MetricDimension(name, displayName, toBeExportedForShoebox, default);
+            return new MetricDimension(name, displayName, isExportedForShoebox, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
+        /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
+        /// <param name="privateEndpointId"> The resource identifier of the private endpoint. </param>
         /// <returns> A new <see cref="HealthcareApis.HealthcareApisPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static HealthcareApisPrivateEndpointConnectionData HealthcareApisPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PrivateEndpointConnectionProperties properties = default)
+        public static HealthcareApisPrivateEndpointConnectionData HealthcareApisPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HealthcareApisPrivateLinkServiceConnectionState connectionState = default, HealthcareApisPrivateEndpointConnectionProvisioningState? provisioningState = default, ResourceIdentifier privateEndpointId = default)
         {
             return new HealthcareApisPrivateEndpointConnectionData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                properties,
+                privateEndpointId is null && connectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default),
                 default);
-        }
-
-        /// <param name="privateEndpointId"> The resource identifier of the private endpoint. </param>
-        /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
-        /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
-        /// <returns> A new <see cref="Models.PrivateEndpointConnectionProperties"/> instance for mocking. </returns>
-        public static PrivateEndpointConnectionProperties PrivateEndpointConnectionProperties(ResourceIdentifier privateEndpointId = default, HealthcareApisPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default, HealthcareApisPrivateEndpointConnectionProvisioningState? provisioningState = default)
-        {
-            return new PrivateEndpointConnectionProperties(privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), privateLinkServiceConnectionState, provisioningState, default);
         }
 
         /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
@@ -802,7 +795,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 name,
                 resourceType,
                 systemData,
-                privateEndpointId is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(new PrivateEndpoint(privateEndpointId, default), default, provisioningState, default),
+                privateEndpointId is null && connectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default),
                 default);
         }
 

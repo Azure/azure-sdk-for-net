@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         /// <param name="aggregationType"> Only provide one value for this field. Valid values: Average, Minimum, Maximum, Total, Count. </param>
         /// <param name="supportedAggregationTypes"> Supported aggregation types. </param>
         /// <param name="supportedTimeGrainTypes"> Supported time grain types. </param>
-        /// <param name="fillGapWithZero"> Optional. If set to true, then zero will be returned for time duration where no metric is emitted/published. </param>
+        /// <param name="isFillGapWithZero"> Optional. If set to true, then zero will be returned for time duration where no metric is emitted/published. </param>
         /// <param name="metricFilterPattern"> Pattern for the filter of the metric. </param>
         /// <param name="dimensions"> Dimensions of the metric. </param>
         /// <param name="isInternal"> Whether the metric is internal. </param>
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         /// <param name="enableRegionalMdmAccount"> Whether regional MDM account enabled. </param>
         /// <param name="resourceIdDimensionNameOverride"> The resource Id dimension name override. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MetricSpecification(string name, string displayName, string displayDescription, string unit, string category, string aggregationType, IList<string> supportedAggregationTypes, IList<string> supportedTimeGrainTypes, bool? fillGapWithZero, string metricFilterPattern, IList<MetricDimension> dimensions, bool? isInternal, string sourceMdmAccount, string sourceMdmNamespace, bool? enableRegionalMdmAccount, string resourceIdDimensionNameOverride, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MetricSpecification(string name, string displayName, string displayDescription, string unit, string category, string aggregationType, IList<string> supportedAggregationTypes, IList<string> supportedTimeGrainTypes, bool? isFillGapWithZero, string metricFilterPattern, IList<MetricDimension> dimensions, bool? isInternal, string sourceMdmAccount, string sourceMdmNamespace, bool? enableRegionalMdmAccount, string resourceIdDimensionNameOverride, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             DisplayName = displayName;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             AggregationType = aggregationType;
             SupportedAggregationTypes = supportedAggregationTypes;
             SupportedTimeGrainTypes = supportedTimeGrainTypes;
-            FillGapWithZero = fillGapWithZero;
+            IsFillGapWithZero = isFillGapWithZero;
             MetricFilterPattern = metricFilterPattern;
             Dimensions = dimensions;
             IsInternal = isInternal;
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         public IList<string> SupportedTimeGrainTypes { get; }
 
         /// <summary> Optional. If set to true, then zero will be returned for time duration where no metric is emitted/published. </summary>
-        public bool? FillGapWithZero { get; }
+        public bool? IsFillGapWithZero { get; }
 
         /// <summary> Pattern for the filter of the metric. </summary>
         public string MetricFilterPattern { get; }

@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         /// <summary> Initializes a new instance of <see cref="MetricDimension"/>. </summary>
         /// <param name="name"> Name of the dimension. </param>
         /// <param name="displayName"> Localized friendly display name of the dimension. </param>
-        /// <param name="toBeExportedForShoebox"> Whether this dimension should be included for the Shoebox export scenario. </param>
+        /// <param name="isExportedForShoebox"> Whether this dimension should be included for the Shoebox export scenario. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MetricDimension(string name, string displayName, bool? toBeExportedForShoebox, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MetricDimension(string name, string displayName, bool? isExportedForShoebox, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             DisplayName = displayName;
-            ToBeExportedForShoebox = toBeExportedForShoebox;
+            IsExportedForShoebox = isExportedForShoebox;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -41,6 +41,6 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         public string DisplayName { get; }
 
         /// <summary> Whether this dimension should be included for the Shoebox export scenario. </summary>
-        public bool? ToBeExportedForShoebox { get; }
+        public bool? IsExportedForShoebox { get; }
     }
 }

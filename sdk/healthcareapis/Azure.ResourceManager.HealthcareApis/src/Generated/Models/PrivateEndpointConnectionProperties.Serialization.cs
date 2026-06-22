@@ -14,7 +14,7 @@ using Azure.ResourceManager.HealthcareApis;
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
     /// <summary> Properties of the private endpoint connection. </summary>
-    public partial class PrivateEndpointConnectionProperties : IJsonModel<PrivateEndpointConnectionProperties>
+    internal partial class PrivateEndpointConnectionProperties : IJsonModel<PrivateEndpointConnectionProperties>
     {
         /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnectionProperties"/> for deserialization. </summary>
         internal PrivateEndpointConnectionProperties()
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 writer.WriteObjectValue(PrivateEndpoint, options);
             }
             writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-            writer.WriteObjectValue(PrivateLinkServiceConnectionState, options);
+            writer.WriteObjectValue(ConnectionState, options);
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 return null;
             }
             PrivateEndpoint privateEndpoint = default;
-            HealthcareApisPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
+            HealthcareApisPrivateLinkServiceConnectionState connectionState = default;
             HealthcareApisPrivateEndpointConnectionProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 }
                 if (prop.NameEquals("privateLinkServiceConnectionState"u8))
                 {
-                    privateLinkServiceConnectionState = HealthcareApisPrivateLinkServiceConnectionState.DeserializeHealthcareApisPrivateLinkServiceConnectionState(prop.Value, options);
+                    connectionState = HealthcareApisPrivateLinkServiceConnectionState.DeserializeHealthcareApisPrivateLinkServiceConnectionState(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PrivateEndpointConnectionProperties(privateEndpoint, privateLinkServiceConnectionState, provisioningState, additionalBinaryDataProperties);
+            return new PrivateEndpointConnectionProperties(privateEndpoint, connectionState, provisioningState, additionalBinaryDataProperties);
         }
     }
 }
