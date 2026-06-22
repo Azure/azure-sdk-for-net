@@ -20,6 +20,7 @@ $testProjectsLocalDir = Join-Path $mgmtPackageRoot 'generator' 'TestProjects' 'L
 
 # Each entry: FilterName, FolderName, EntryTspFile, CsprojName
 $testProjects = @(
+    @{ FilterName = "Mgmt-CustomBaseRepro"; Folder = "Mgmt-CustomBaseRepro"; EntryTsp = "main.tsp"; Csproj = "Azure.Generator.MgmtCustomBaseRepro.Tests.csproj" },
     @{ FilterName = "Mgmt-TypeSpec"; Folder = "Mgmt-TypeSpec"; EntryTsp = "main.tsp"; Csproj = "Azure.Generator.MgmtTypeSpec.Tests.csproj" },
     @{ FilterName = "Mgmt-TypeSpec-MultiService"; Folder = "Mgmt-TypeSpec-MultiService"; EntryTsp = "client.tsp"; Csproj = "Azure.Generator.MgmtTypeSpec.MultiService.Tests.csproj" }
 )

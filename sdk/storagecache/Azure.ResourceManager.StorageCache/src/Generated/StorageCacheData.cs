@@ -15,31 +15,29 @@ using Azure.ResourceManager.StorageCache.Models;
 namespace Azure.ResourceManager.StorageCache
 {
     /// <summary> A cache instance. Follows Azure Resource Manager standards: https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/resource-api-reference.md. </summary>
-    public partial class StorageCacheData : TrackedResourceData
+    public partial class StorageCacheData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="StorageCacheData"/>. </summary>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        public StorageCacheData(AzureLocation location) : base(location)
+        public StorageCacheData()
         {
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="StorageCacheData"/>. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Properties of the cache. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> Region name string. </param>
         /// <param name="identity"> The identity of the cache, if configured. </param>
         /// <param name="sku"> SKU for the cache. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StorageCacheData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CacheProperties properties, ManagedServiceIdentity identity, StorageCacheSkuInfo sku, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal StorageCacheData(CacheProperties properties, IDictionary<string, string> tags, string location, ManagedServiceIdentity identity, StorageCacheSkuInfo sku, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
+            Tags = tags;
+            Location = location;
             Identity = identity;
             Sku = sku;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -47,6 +45,12 @@ namespace Azure.ResourceManager.StorageCache
 
         /// <summary> Properties of the cache. </summary>
         internal CacheProperties Properties { get; set; }
+
+        /// <summary> Resource tags. </summary>
+        public IDictionary<string, string> Tags { get; }
+
+        /// <summary> Region name string. </summary>
+        public string Location { get; set; }
 
         /// <summary> The identity of the cache, if configured. </summary>
         public ManagedServiceIdentity Identity { get; set; }
