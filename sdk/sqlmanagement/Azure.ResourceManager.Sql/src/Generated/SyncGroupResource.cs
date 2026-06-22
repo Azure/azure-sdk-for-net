@@ -600,7 +600,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="startTime"/> or <paramref name="endTime"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="startTime"/> or <paramref name="endTime"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="SyncGroupLogProperties"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SyncGroupLogProperties> GetLogsAsync(string startTime, string endTime, SyncGroupsType @type, string continuationToken = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SyncGroupLogProperties> GetLogsAsync(string startTime, string endTime, SyncGroupLogType @type, string continuationToken = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(startTime, nameof(startTime));
             Argument.AssertNotNullOrEmpty(endTime, nameof(endTime));
@@ -653,7 +653,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="startTime"/> or <paramref name="endTime"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="startTime"/> or <paramref name="endTime"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="SyncGroupLogProperties"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SyncGroupLogProperties> GetLogs(string startTime, string endTime, SyncGroupsType @type, string continuationToken = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<SyncGroupLogProperties> GetLogs(string startTime, string endTime, SyncGroupLogType @type, string continuationToken = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(startTime, nameof(startTime));
             Argument.AssertNotNullOrEmpty(endTime, nameof(endTime));

@@ -103,11 +103,11 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Status of FQDN of managed instance DTC. Toggling this setting might trigger a restart of the managed instance. </summary>
         [WirePath("properties.fqdnEnabled")]
-        public bool? FqdnEnabled
+        public bool? IsFqdnEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.FqdnEnabled;
+                return Properties is null ? default : Properties.IsFqdnEnabled;
             }
             set
             {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     Properties = new ManagedInstanceDtcProperties();
                 }
-                Properties.FqdnEnabled = value;
+                Properties.IsFqdnEnabled = value;
             }
         }
 

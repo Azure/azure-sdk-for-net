@@ -104,10 +104,10 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("dtcHostNameDnsSuffix"u8);
                 writer.WriteStringValue(DtcHostNameDnsSuffix);
             }
-            if (Optional.IsDefined(FqdnEnabled))
+            if (Optional.IsDefined(IsFqdnEnabled))
             {
                 writer.WritePropertyName("fqdnEnabled"u8);
-                writer.WriteBooleanValue(FqdnEnabled.Value);
+                writer.WriteBooleanValue(IsFqdnEnabled.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Sql.Models
             ManagedInstanceDtcSecuritySettings securitySettings = default;
             IList<string> externalDnsSuffixSearchList = default;
             string dtcHostNameDnsSuffix = default;
-            bool? fqdnEnabled = default;
+            bool? isFqdnEnabled = default;
             JobExecutionProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    fqdnEnabled = prop.Value.GetBoolean();
+                    isFqdnEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.Sql.Models
                 securitySettings,
                 externalDnsSuffixSearchList ?? new ChangeTrackingList<string>(),
                 dtcHostNameDnsSuffix,
-                fqdnEnabled,
+                isFqdnEnabled,
                 provisioningState,
                 additionalBinaryDataProperties);
         }

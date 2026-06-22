@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        internal HttpMessage CreateCreateRequest(Guid subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, RequestContext context)
+        internal HttpMessage CreateStartJobExecutionRequest(Guid subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

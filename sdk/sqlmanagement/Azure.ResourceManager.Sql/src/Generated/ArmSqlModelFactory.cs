@@ -3644,22 +3644,22 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="securitySettings"> Security settings of managed instance DTC. </param>
         /// <param name="externalDnsSuffixSearchList"> External dns suffix search list of managed instance DTC. </param>
         /// <param name="dtcHostNameDnsSuffix"> Host name dns suffix of managed instance DTC. </param>
-        /// <param name="fqdnEnabled"> Status of FQDN of managed instance DTC. Toggling this setting might trigger a restart of the managed instance. </param>
+        /// <param name="isFqdnEnabled"> Status of FQDN of managed instance DTC. Toggling this setting might trigger a restart of the managed instance. </param>
         /// <param name="provisioningState"> Provisioning state of managed instance DTC. </param>
         /// <returns> A new <see cref="Sql.ManagedInstanceDtcData"/> instance for mocking. </returns>
-        public static ManagedInstanceDtcData ManagedInstanceDtcData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, bool? dtcEnabled = default, ManagedInstanceDtcSecuritySettings securitySettings = default, IEnumerable<string> externalDnsSuffixSearchList = default, string dtcHostNameDnsSuffix = default, bool? fqdnEnabled = default, JobExecutionProvisioningState? provisioningState = default)
+        public static ManagedInstanceDtcData ManagedInstanceDtcData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, bool? dtcEnabled = default, ManagedInstanceDtcSecuritySettings securitySettings = default, IEnumerable<string> externalDnsSuffixSearchList = default, string dtcHostNameDnsSuffix = default, bool? isFqdnEnabled = default, JobExecutionProvisioningState? provisioningState = default)
         {
             return new ManagedInstanceDtcData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                dtcEnabled is null && securitySettings is null && externalDnsSuffixSearchList is null && dtcHostNameDnsSuffix is null && fqdnEnabled is null && provisioningState is null ? default : new ManagedInstanceDtcProperties(
+                dtcEnabled is null && securitySettings is null && externalDnsSuffixSearchList is null && dtcHostNameDnsSuffix is null && isFqdnEnabled is null && provisioningState is null ? default : new ManagedInstanceDtcProperties(
                     dtcEnabled,
                     securitySettings,
                     (externalDnsSuffixSearchList ?? new ChangeTrackingList<string>()).ToList(),
                     dtcHostNameDnsSuffix,
-                    fqdnEnabled,
+                    isFqdnEnabled,
                     provisioningState,
                     default),
                 default);

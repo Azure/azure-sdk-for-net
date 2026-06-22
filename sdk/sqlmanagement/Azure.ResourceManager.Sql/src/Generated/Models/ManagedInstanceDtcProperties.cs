@@ -28,16 +28,16 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="securitySettings"> Security settings of managed instance DTC. </param>
         /// <param name="externalDnsSuffixSearchList"> External dns suffix search list of managed instance DTC. </param>
         /// <param name="dtcHostNameDnsSuffix"> Host name dns suffix of managed instance DTC. </param>
-        /// <param name="fqdnEnabled"> Status of FQDN of managed instance DTC. Toggling this setting might trigger a restart of the managed instance. </param>
+        /// <param name="isFqdnEnabled"> Status of FQDN of managed instance DTC. Toggling this setting might trigger a restart of the managed instance. </param>
         /// <param name="provisioningState"> Provisioning state of managed instance DTC. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedInstanceDtcProperties(bool? dtcEnabled, ManagedInstanceDtcSecuritySettings securitySettings, IList<string> externalDnsSuffixSearchList, string dtcHostNameDnsSuffix, bool? fqdnEnabled, JobExecutionProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedInstanceDtcProperties(bool? dtcEnabled, ManagedInstanceDtcSecuritySettings securitySettings, IList<string> externalDnsSuffixSearchList, string dtcHostNameDnsSuffix, bool? isFqdnEnabled, JobExecutionProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DtcEnabled = dtcEnabled;
             SecuritySettings = securitySettings;
             ExternalDnsSuffixSearchList = externalDnsSuffixSearchList;
             DtcHostNameDnsSuffix = dtcHostNameDnsSuffix;
-            FqdnEnabled = fqdnEnabled;
+            IsFqdnEnabled = isFqdnEnabled;
             ProvisioningState = provisioningState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Status of FQDN of managed instance DTC. Toggling this setting might trigger a restart of the managed instance. </summary>
         [WirePath("fqdnEnabled")]
-        public bool? FqdnEnabled { get; set; }
+        public bool? IsFqdnEnabled { get; set; }
 
         /// <summary> Provisioning state of managed instance DTC. </summary>
         [WirePath("provisioningState")]

@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Sql.Samples
             SqlServerJobResource sqlServerJob = client.GetSqlServerJobResource(sqlServerJobResourceId);
 
             // invoke the operation
-            ArmOperation<SqlServerJobExecutionData> lro = await sqlServerJob.CreateAsync(WaitUntil.Completed);
+            ArmOperation<SqlServerJobExecutionData> lro = await sqlServerJob.StartJobExecutionAsync(WaitUntil.Completed);
             SqlServerJobExecutionData resourceData = lro.Value;
 
             // for demo we just print out the id
