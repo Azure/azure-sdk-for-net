@@ -790,5 +790,15 @@ namespace Azure.ResourceManager.Sql.Models
                 Properties.EncryptionProtectorAutoRotation = value;
             }
         }
+
+        /// <summary> Specifies the provisioning state for this resource. </summary>
+        [WirePath("properties.provisioningState")]
+        public string ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }

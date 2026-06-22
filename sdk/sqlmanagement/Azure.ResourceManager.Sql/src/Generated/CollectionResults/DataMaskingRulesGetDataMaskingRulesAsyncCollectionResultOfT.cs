@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.Sql
         private readonly string _serverName;
         private readonly string _databaseName;
         private readonly string _dataMaskingPolicyName;
+        private readonly long? _skip;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
@@ -33,9 +34,10 @@ namespace Azure.ResourceManager.Sql
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="databaseName"> The name of the database. </param>
         /// <param name="dataMaskingPolicyName"> The name of the database for which the data masking policy applies. </param>
+        /// <param name="skip"> The number of elements in the collection to skip. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public DataMaskingRulesGetDataMaskingRulesAsyncCollectionResultOfT(DataMaskingRules client, Guid subscriptionId, string resourceGroupName, string serverName, string databaseName, string dataMaskingPolicyName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public DataMaskingRulesGetDataMaskingRulesAsyncCollectionResultOfT(DataMaskingRules client, Guid subscriptionId, string resourceGroupName, string serverName, string databaseName, string dataMaskingPolicyName, long? skip, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -43,6 +45,7 @@ namespace Azure.ResourceManager.Sql
             _serverName = serverName;
             _databaseName = databaseName;
             _dataMaskingPolicyName = dataMaskingPolicyName;
+            _skip = skip;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
@@ -76,7 +79,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetDataMaskingRulesRequest(nextLink, _subscriptionId, _resourceGroupName, _serverName, _databaseName, _dataMaskingPolicyName, _context) : _client.CreateGetDataMaskingRulesRequest(_subscriptionId, _resourceGroupName, _serverName, _databaseName, _dataMaskingPolicyName, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetDataMaskingRulesRequest(nextLink, _subscriptionId, _resourceGroupName, _serverName, _databaseName, _dataMaskingPolicyName, _skip, _context) : _client.CreateGetDataMaskingRulesRequest(_subscriptionId, _resourceGroupName, _serverName, _databaseName, _dataMaskingPolicyName, _skip, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

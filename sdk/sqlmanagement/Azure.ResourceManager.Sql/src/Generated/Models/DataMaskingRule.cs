@@ -65,11 +65,11 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> The rule state. Used to delete a rule. To delete an existing rule, specify the schemaName, tableName, columnName, maskingFunction, and specify ruleState as disabled. However, if the rule doesn't already exist, the rule will be created with ruleState set to enabled, regardless of the provided value of ruleState. </summary>
         [WirePath("properties.ruleState")]
-        public DataMaskingRuleState? RuleState
+        public SqlDataMaskingRuleState? DataMaskingRuleState
         {
             get
             {
-                return Properties is null ? default : Properties.RuleState;
+                return Properties is null ? default : Properties.DataMaskingRuleState;
             }
             set
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Sql.Models
                 {
                     Properties = new DataMaskingRuleProperties();
                 }
-                Properties.RuleState = value;
+                Properties.DataMaskingRuleState = value;
             }
         }
 
@@ -155,11 +155,11 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> The masking function that is used for the data masking rule. </summary>
         [WirePath("properties.maskingFunction")]
-        public DataMaskingFunction? MaskingFunction
+        public SqlDataMaskingFunction? DataMaskingFunction
         {
             get
             {
-                return Properties is null ? default : Properties.MaskingFunction;
+                return Properties is null ? default : Properties.DataMaskingFunction;
             }
             set
             {
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         Properties = new DataMaskingRuleProperties();
                     }
-                    Properties.MaskingFunction = value.Value;
+                    Properties.DataMaskingFunction = value.Value;
                 }
             }
         }

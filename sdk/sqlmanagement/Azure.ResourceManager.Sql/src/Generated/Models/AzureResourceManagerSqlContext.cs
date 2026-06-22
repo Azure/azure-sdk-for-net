@@ -85,6 +85,8 @@ namespace Azure.ResourceManager.Sql
     [ModelReaderWriterBuildable(typeof(DataMaskingRule))]
     [ModelReaderWriterBuildable(typeof(DataMaskingRuleListResult))]
     [ModelReaderWriterBuildable(typeof(DataMaskingRuleProperties))]
+    [ModelReaderWriterBuildable(typeof(DataSyncParticipantIdentity))]
+    [ModelReaderWriterBuildable(typeof(DataSyncParticipantUserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(DataWarehouseUserActivitiesListResult))]
     [ModelReaderWriterBuildable(typeof(DataWarehouseUserActivitiesProperties))]
     [ModelReaderWriterBuildable(typeof(DataWarehouseUserActivityData))]

@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="schemaName"> The schema name on which the data masking rule is applied. </param>
         /// <param name="tableName"> The table name on which the data masking rule is applied. </param>
         /// <param name="columnName"> The column name on which the data masking rule is applied. </param>
-        /// <param name="maskingFunction"> The masking function that is used for the data masking rule. </param>
+        /// <param name="dataMaskingFunction"> The masking function that is used for the data masking rule. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="schemaName"/>, <paramref name="tableName"/> or <paramref name="columnName"/> is null. </exception>
-        public DataMaskingRuleProperties(string schemaName, string tableName, string columnName, DataMaskingFunction maskingFunction)
+        public DataMaskingRuleProperties(string schemaName, string tableName, string columnName, SqlDataMaskingFunction dataMaskingFunction)
         {
             Argument.AssertNotNull(schemaName, nameof(schemaName));
             Argument.AssertNotNull(tableName, nameof(tableName));
@@ -32,32 +32,32 @@ namespace Azure.ResourceManager.Sql.Models
             SchemaName = schemaName;
             TableName = tableName;
             ColumnName = columnName;
-            MaskingFunction = maskingFunction;
+            DataMaskingFunction = dataMaskingFunction;
         }
 
         /// <summary> Initializes a new instance of <see cref="DataMaskingRuleProperties"/>. </summary>
         /// <param name="ruleId"> The rule Id. </param>
-        /// <param name="ruleState"> The rule state. Used to delete a rule. To delete an existing rule, specify the schemaName, tableName, columnName, maskingFunction, and specify ruleState as disabled. However, if the rule doesn't already exist, the rule will be created with ruleState set to enabled, regardless of the provided value of ruleState. </param>
+        /// <param name="dataMaskingRuleState"> The rule state. Used to delete a rule. To delete an existing rule, specify the schemaName, tableName, columnName, maskingFunction, and specify ruleState as disabled. However, if the rule doesn't already exist, the rule will be created with ruleState set to enabled, regardless of the provided value of ruleState. </param>
         /// <param name="schemaName"> The schema name on which the data masking rule is applied. </param>
         /// <param name="tableName"> The table name on which the data masking rule is applied. </param>
         /// <param name="columnName"> The column name on which the data masking rule is applied. </param>
         /// <param name="aliasName"> The alias name. This is a legacy parameter and is no longer used. </param>
-        /// <param name="maskingFunction"> The masking function that is used for the data masking rule. </param>
+        /// <param name="dataMaskingFunction"> The masking function that is used for the data masking rule. </param>
         /// <param name="numberFrom"> The numberFrom property of the masking rule. Required if maskingFunction is set to Number, otherwise this parameter will be ignored. </param>
         /// <param name="numberTo"> The numberTo property of the data masking rule. Required if maskingFunction is set to Number, otherwise this parameter will be ignored. </param>
         /// <param name="prefixSize"> If maskingFunction is set to Text, the number of characters to show unmasked in the beginning of the string. Otherwise, this parameter will be ignored. </param>
         /// <param name="suffixSize"> If maskingFunction is set to Text, the number of characters to show unmasked at the end of the string. Otherwise, this parameter will be ignored. </param>
         /// <param name="replacementString"> If maskingFunction is set to Text, the character to use for masking the unexposed part of the string. Otherwise, this parameter will be ignored. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataMaskingRuleProperties(string ruleId, DataMaskingRuleState? ruleState, string schemaName, string tableName, string columnName, string aliasName, DataMaskingFunction maskingFunction, string numberFrom, string numberTo, string prefixSize, string suffixSize, string replacementString, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataMaskingRuleProperties(string ruleId, SqlDataMaskingRuleState? dataMaskingRuleState, string schemaName, string tableName, string columnName, string aliasName, SqlDataMaskingFunction dataMaskingFunction, string numberFrom, string numberTo, string prefixSize, string suffixSize, string replacementString, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RuleId = ruleId;
-            RuleState = ruleState;
+            DataMaskingRuleState = dataMaskingRuleState;
             SchemaName = schemaName;
             TableName = tableName;
             ColumnName = columnName;
             AliasName = aliasName;
-            MaskingFunction = maskingFunction;
+            DataMaskingFunction = dataMaskingFunction;
             NumberFrom = numberFrom;
             NumberTo = numberTo;
             PrefixSize = prefixSize;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> The rule state. Used to delete a rule. To delete an existing rule, specify the schemaName, tableName, columnName, maskingFunction, and specify ruleState as disabled. However, if the rule doesn't already exist, the rule will be created with ruleState set to enabled, regardless of the provided value of ruleState. </summary>
         [WirePath("ruleState")]
-        public DataMaskingRuleState? RuleState { get; set; }
+        public SqlDataMaskingRuleState? DataMaskingRuleState { get; set; }
 
         /// <summary> The schema name on which the data masking rule is applied. </summary>
         [WirePath("schemaName")]
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> The masking function that is used for the data masking rule. </summary>
         [WirePath("maskingFunction")]
-        public DataMaskingFunction MaskingFunction { get; set; }
+        public SqlDataMaskingFunction DataMaskingFunction { get; set; }
 
         /// <summary> The numberFrom property of the masking rule. Required if maskingFunction is set to Number, otherwise this parameter will be ignored. </summary>
         [WirePath("numberFrom")]

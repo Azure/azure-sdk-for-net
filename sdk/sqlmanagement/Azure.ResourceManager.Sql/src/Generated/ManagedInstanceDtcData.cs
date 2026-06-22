@@ -101,6 +101,24 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
+        /// <summary> Status of FQDN of managed instance DTC. Toggling this setting might trigger a restart of the managed instance. </summary>
+        [WirePath("properties.fqdnEnabled")]
+        public bool? FqdnEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FqdnEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedInstanceDtcProperties();
+                }
+                Properties.FqdnEnabled = value;
+            }
+        }
+
         /// <summary> Provisioning state of managed instance DTC. </summary>
         [WirePath("properties.provisioningState")]
         public JobExecutionProvisioningState? ProvisioningState

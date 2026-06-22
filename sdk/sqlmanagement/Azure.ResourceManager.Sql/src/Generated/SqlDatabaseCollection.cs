@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Sql
         {
             TryGetApiVersion(SqlDatabaseResource.ResourceType, out string sqlDatabaseApiVersion);
             _databasesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SqlDatabaseResource.ResourceType.Namespace, Diagnostics);
-            _databasesRestClient = new Databases(_databasesClientDiagnostics, Pipeline, Endpoint, sqlDatabaseApiVersion ?? "2025-01-01");
+            _databasesRestClient = new Databases(_databasesClientDiagnostics, Pipeline, Endpoint, sqlDatabaseApiVersion ?? "2025-02-01-preview");
             ValidateResourceId(id);
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -285,14 +285,17 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="skipToken"></param>
+        /// <param name="top"> The number of elements to return from the collection. </param>
+        /// <param name="skip"> The number of elements in the collection to skip. </param>
+        /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
+        /// <param name="orderby"> How the results should be ordered. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SqlDatabaseResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SqlDatabaseResource> GetAllAsync(string skipToken = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SqlDatabaseResource> GetAllAsync(long? top = default, long? skip = default, string filter = default, string @orderby = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -303,7 +306,10 @@ namespace Azure.ResourceManager.Sql
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
-                skipToken,
+                top,
+                skip,
+                filter,
+                @orderby,
                 context,
                 "SqlDatabaseCollection.GetAll"), data => new SqlDatabaseResource(Client, data));
         }
@@ -321,14 +327,17 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="skipToken"></param>
+        /// <param name="top"> The number of elements to return from the collection. </param>
+        /// <param name="skip"> The number of elements in the collection to skip. </param>
+        /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
+        /// <param name="orderby"> How the results should be ordered. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SqlDatabaseResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SqlDatabaseResource> GetAll(string skipToken = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<SqlDatabaseResource> GetAll(long? top = default, long? skip = default, string filter = default, string @orderby = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -339,7 +348,10 @@ namespace Azure.ResourceManager.Sql
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
-                skipToken,
+                top,
+                skip,
+                filter,
+                @orderby,
                 context,
                 "SqlDatabaseCollection.GetAll"), data => new SqlDatabaseResource(Client, data));
         }
@@ -357,7 +369,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -416,7 +428,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -475,7 +487,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -538,7 +550,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

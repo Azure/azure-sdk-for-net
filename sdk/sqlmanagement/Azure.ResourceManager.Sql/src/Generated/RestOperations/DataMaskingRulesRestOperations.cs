@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetDataMaskingRulesRequest(Guid subscriptionId, string resourceGroupName, string serverName, string databaseName, string dataMaskingPolicyName, RequestContext context)
+        internal HttpMessage CreateGetDataMaskingRulesRequest(Guid subscriptionId, string resourceGroupName, string serverName, string databaseName, string dataMaskingPolicyName, long? skip, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -60,6 +60,10 @@ namespace Azure.ResourceManager.Sql
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
+            if (skip != null)
+            {
+                uri.AppendQuery("$skip", TypeFormatters.ConvertToString(skip), true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -68,7 +72,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        internal HttpMessage CreateNextGetDataMaskingRulesRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string serverName, string databaseName, string dataMaskingPolicyName, RequestContext context)
+        internal HttpMessage CreateNextGetDataMaskingRulesRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string serverName, string databaseName, string dataMaskingPolicyName, long? skip, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

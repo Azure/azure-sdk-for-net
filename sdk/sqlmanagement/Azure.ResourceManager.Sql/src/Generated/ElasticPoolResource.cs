@@ -57,11 +57,11 @@ namespace Azure.ResourceManager.Sql
         {
             TryGetApiVersion(ResourceType, out string elasticPoolApiVersion);
             _elasticPoolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
-            _elasticPoolsRestClient = new ElasticPools(_elasticPoolsClientDiagnostics, Pipeline, Endpoint, elasticPoolApiVersion ?? "2025-01-01");
+            _elasticPoolsRestClient = new ElasticPools(_elasticPoolsClientDiagnostics, Pipeline, Endpoint, elasticPoolApiVersion ?? "2025-02-01-preview");
             _elasticPoolOperationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
-            _elasticPoolOperationsRestClient = new ElasticPoolOperations(_elasticPoolOperationsClientDiagnostics, Pipeline, Endpoint, elasticPoolApiVersion ?? "2025-01-01");
+            _elasticPoolOperationsRestClient = new ElasticPoolOperations(_elasticPoolOperationsClientDiagnostics, Pipeline, Endpoint, elasticPoolApiVersion ?? "2025-02-01-preview");
             _databasesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
-            _databasesRestClient = new Databases(_databasesClientDiagnostics, Pipeline, Endpoint, elasticPoolApiVersion ?? "2025-01-01");
+            _databasesRestClient = new Databases(_databasesClientDiagnostics, Pipeline, Endpoint, elasticPoolApiVersion ?? "2025-02-01-preview");
             ValidateResourceId(id);
         }
 
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -515,7 +515,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -554,7 +554,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -593,7 +593,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -642,7 +642,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -691,7 +691,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -730,7 +730,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

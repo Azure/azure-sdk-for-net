@@ -104,6 +104,11 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("dtcHostNameDnsSuffix"u8);
                 writer.WriteStringValue(DtcHostNameDnsSuffix);
             }
+            if (Optional.IsDefined(FqdnEnabled))
+            {
+                writer.WritePropertyName("fqdnEnabled"u8);
+                writer.WriteBooleanValue(FqdnEnabled.Value);
+            }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -155,6 +160,7 @@ namespace Azure.ResourceManager.Sql.Models
             ManagedInstanceDtcSecuritySettings securitySettings = default;
             IList<string> externalDnsSuffixSearchList = default;
             string dtcHostNameDnsSuffix = default;
+            bool? fqdnEnabled = default;
             JobExecutionProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -203,6 +209,15 @@ namespace Azure.ResourceManager.Sql.Models
                     dtcHostNameDnsSuffix = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("fqdnEnabled"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    fqdnEnabled = prop.Value.GetBoolean();
+                    continue;
+                }
                 if (prop.NameEquals("provisioningState"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -222,6 +237,7 @@ namespace Azure.ResourceManager.Sql.Models
                 securitySettings,
                 externalDnsSuffixSearchList ?? new ChangeTrackingList<string>(),
                 dtcHostNameDnsSuffix,
+                fqdnEnabled,
                 provisioningState,
                 additionalBinaryDataProperties);
         }

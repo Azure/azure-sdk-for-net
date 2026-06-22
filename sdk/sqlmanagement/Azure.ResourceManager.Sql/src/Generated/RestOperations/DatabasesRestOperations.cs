@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        internal HttpMessage CreateGetByServerRequest(Guid subscriptionId, string resourceGroupName, string serverName, string skipToken, RequestContext context)
+        internal HttpMessage CreateGetByServerRequest(Guid subscriptionId, string resourceGroupName, string serverName, long? top, long? skip, string filter, string @orderby, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -163,9 +163,21 @@ namespace Azure.ResourceManager.Sql
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (skipToken != null)
+            if (top != null)
             {
-                uri.AppendQuery("$skipToken", skipToken, true);
+                uri.AppendQuery("$top", TypeFormatters.ConvertToString(top), true);
+            }
+            if (skip != null)
+            {
+                uri.AppendQuery("$skip", TypeFormatters.ConvertToString(skip), true);
+            }
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (@orderby != null)
+            {
+                uri.AppendQuery("$orderby", @orderby, true);
             }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
@@ -175,7 +187,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        internal HttpMessage CreateNextGetByServerRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string serverName, string skipToken, RequestContext context)
+        internal HttpMessage CreateNextGetByServerRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string serverName, long? top, long? skip, string filter, string @orderby, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

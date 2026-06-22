@@ -223,6 +223,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// </param>
         /// <param name="availabilityZone"> Specifies the availability zone the database is pinned to. </param>
         /// <param name="encryptionProtectorAutoRotation"> The flag to enable or disable auto rotation of database encryption protector AKV key. </param>
+        /// <param name="provisioningState"> Specifies the provisioning state for this resource. </param>
         /// <param name="sku">
         /// The database SKU.
         /// The list of SKUs may vary by region and support offer. To determine the SKUs (including the SKU name, tier/edition, family, and capacity) that are available to your subscription in an Azure region, use the `Capabilities_ListByLocation` REST API or one of the following commands:
@@ -237,7 +238,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="managedBy"> Resource that manages the database. </param>
         /// <param name="identity"> The Azure Active Directory identity of the database. </param>
         /// <returns> A new <see cref="Sql.SqlDatabaseData"/> instance for mocking. </returns>
-        public static SqlDatabaseData SqlDatabaseData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, SqlDatabaseCreateMode? createMode = default, string collation = default, long? maxSizeBytes = default, SampleSchemaName? sampleName = default, ResourceIdentifier elasticPoolId = default, ResourceIdentifier sourceDatabaseId = default, SqlDatabaseStatus? status = default, Guid? databaseId = default, DateTimeOffset? createdOn = default, string currentServiceObjectiveName = default, string requestedServiceObjectiveName = default, AzureLocation? defaultSecondaryLocation = default, ResourceIdentifier failoverGroupId = default, DateTimeOffset? restorePointInTime = default, DateTimeOffset? sourceDatabaseDeletedOn = default, ResourceIdentifier recoveryServicesRecoveryPointId = default, ResourceIdentifier longTermRetentionBackupResourceId = default, ResourceIdentifier recoverableDatabaseId = default, ResourceIdentifier restorableDroppedDatabaseId = default, CatalogCollationType? catalogCollation = default, bool? isZoneRedundant = default, DatabaseLicenseType? licenseType = default, long? maxLogSizeBytes = default, DateTimeOffset? earliestRestoreOn = default, DatabaseReadScale? readScale = default, int? highAvailabilityReplicaCount = default, SecondaryType? secondaryType = default, SqlSku currentSku = default, int? autoPauseDelay = default, SqlBackupStorageRedundancy? currentBackupStorageRedundancy = default, SqlBackupStorageRedundancy? requestedBackupStorageRedundancy = default, double? minCapacity = default, DateTimeOffset? pausedOn = default, DateTimeOffset? resumedOn = default, ResourceIdentifier maintenanceConfigurationId = default, bool? isLedgerOn = default, bool? isInfraEncryptionEnabled = default, Guid? federatedClientId = default, IDictionary<string, SqlDatabaseKey> keys = default, string encryptionProtector = default, SqlAlwaysEncryptedEnclaveType? preferredEnclaveType = default, bool? useFreeLimit = default, FreeLimitExhaustionBehavior? freeLimitExhaustionBehavior = default, ResourceIdentifier sourceResourceId = default, bool? manualCutover = default, bool? performCutover = default, SqlAvailabilityZoneType? availabilityZone = default, bool? encryptionProtectorAutoRotation = default, SqlSku sku = default, string kind = default, string managedBy = default, DatabaseIdentity identity = default)
+        public static SqlDatabaseData SqlDatabaseData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, SqlDatabaseCreateMode? createMode = default, string collation = default, long? maxSizeBytes = default, SampleSchemaName? sampleName = default, ResourceIdentifier elasticPoolId = default, ResourceIdentifier sourceDatabaseId = default, SqlDatabaseStatus? status = default, Guid? databaseId = default, DateTimeOffset? createdOn = default, string currentServiceObjectiveName = default, string requestedServiceObjectiveName = default, AzureLocation? defaultSecondaryLocation = default, ResourceIdentifier failoverGroupId = default, DateTimeOffset? restorePointInTime = default, DateTimeOffset? sourceDatabaseDeletedOn = default, ResourceIdentifier recoveryServicesRecoveryPointId = default, ResourceIdentifier longTermRetentionBackupResourceId = default, ResourceIdentifier recoverableDatabaseId = default, ResourceIdentifier restorableDroppedDatabaseId = default, CatalogCollationType? catalogCollation = default, bool? isZoneRedundant = default, DatabaseLicenseType? licenseType = default, long? maxLogSizeBytes = default, DateTimeOffset? earliestRestoreOn = default, DatabaseReadScale? readScale = default, int? highAvailabilityReplicaCount = default, SecondaryType? secondaryType = default, SqlSku currentSku = default, int? autoPauseDelay = default, SqlBackupStorageRedundancy? currentBackupStorageRedundancy = default, SqlBackupStorageRedundancy? requestedBackupStorageRedundancy = default, double? minCapacity = default, DateTimeOffset? pausedOn = default, DateTimeOffset? resumedOn = default, ResourceIdentifier maintenanceConfigurationId = default, bool? isLedgerOn = default, bool? isInfraEncryptionEnabled = default, Guid? federatedClientId = default, IDictionary<string, SqlDatabaseKey> keys = default, string encryptionProtector = default, SqlAlwaysEncryptedEnclaveType? preferredEnclaveType = default, bool? useFreeLimit = default, FreeLimitExhaustionBehavior? freeLimitExhaustionBehavior = default, ResourceIdentifier sourceResourceId = default, bool? manualCutover = default, bool? performCutover = default, SqlAvailabilityZoneType? availabilityZone = default, bool? encryptionProtectorAutoRotation = default, string provisioningState = default, SqlSku sku = default, string kind = default, string managedBy = default, DatabaseIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -248,7 +249,7 @@ namespace Azure.ResourceManager.Sql.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                createMode is null && collation is null && maxSizeBytes is null && sampleName is null && elasticPoolId is null && sourceDatabaseId is null && status is null && databaseId is null && createdOn is null && currentServiceObjectiveName is null && requestedServiceObjectiveName is null && defaultSecondaryLocation is null && failoverGroupId is null && restorePointInTime is null && sourceDatabaseDeletedOn is null && recoveryServicesRecoveryPointId is null && longTermRetentionBackupResourceId is null && recoverableDatabaseId is null && restorableDroppedDatabaseId is null && catalogCollation is null && isZoneRedundant is null && licenseType is null && maxLogSizeBytes is null && earliestRestoreOn is null && readScale is null && highAvailabilityReplicaCount is null && secondaryType is null && currentSku is null && autoPauseDelay is null && currentBackupStorageRedundancy is null && requestedBackupStorageRedundancy is null && minCapacity is null && pausedOn is null && resumedOn is null && maintenanceConfigurationId is null && isLedgerOn is null && isInfraEncryptionEnabled is null && federatedClientId is null && keys is null && encryptionProtector is null && preferredEnclaveType is null && useFreeLimit is null && freeLimitExhaustionBehavior is null && sourceResourceId is null && manualCutover is null && performCutover is null && availabilityZone is null && encryptionProtectorAutoRotation is null ? default : new DatabaseProperties(
+                createMode is null && collation is null && maxSizeBytes is null && sampleName is null && elasticPoolId is null && sourceDatabaseId is null && status is null && databaseId is null && createdOn is null && currentServiceObjectiveName is null && requestedServiceObjectiveName is null && defaultSecondaryLocation is null && failoverGroupId is null && restorePointInTime is null && sourceDatabaseDeletedOn is null && recoveryServicesRecoveryPointId is null && longTermRetentionBackupResourceId is null && recoverableDatabaseId is null && restorableDroppedDatabaseId is null && catalogCollation is null && isZoneRedundant is null && licenseType is null && maxLogSizeBytes is null && earliestRestoreOn is null && readScale is null && highAvailabilityReplicaCount is null && secondaryType is null && currentSku is null && autoPauseDelay is null && currentBackupStorageRedundancy is null && requestedBackupStorageRedundancy is null && minCapacity is null && pausedOn is null && resumedOn is null && maintenanceConfigurationId is null && isLedgerOn is null && isInfraEncryptionEnabled is null && federatedClientId is null && keys is null && encryptionProtector is null && preferredEnclaveType is null && useFreeLimit is null && freeLimitExhaustionBehavior is null && sourceResourceId is null && manualCutover is null && performCutover is null && availabilityZone is null && encryptionProtectorAutoRotation is null && provisioningState is null ? default : new DatabaseProperties(
                     createMode,
                     collation,
                     maxSizeBytes,
@@ -297,6 +298,7 @@ namespace Azure.ResourceManager.Sql.Models
                     performCutover,
                     availabilityZone,
                     encryptionProtectorAutoRotation,
+                    provisioningState,
                     default),
                 sku,
                 kind,
@@ -422,13 +424,14 @@ namespace Azure.ResourceManager.Sql.Models
         /// When performCutover is specified, the scaling operation will trigger cutover and perform role-change to Hyperscale database.
         /// </param>
         /// <param name="encryptionProtectorAutoRotation"> The flag to enable or disable auto rotation of database encryption protector AKV key. </param>
+        /// <param name="provisioningState"> Specifies the provisioning state for this resource. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.SqlDatabasePatch"/> instance for mocking. </returns>
-        public static SqlDatabasePatch SqlDatabasePatch(SqlSku sku = default, DatabaseIdentity identity = default, SqlDatabaseCreateMode? createMode = default, string collation = default, long? maxSizeBytes = default, SampleSchemaName? sampleName = default, ResourceIdentifier elasticPoolId = default, ResourceIdentifier sourceDatabaseId = default, SqlDatabaseStatus? status = default, Guid? databaseId = default, DateTimeOffset? createdOn = default, string currentServiceObjectiveName = default, string requestedServiceObjectiveName = default, AzureLocation? defaultSecondaryLocation = default, ResourceIdentifier failoverGroupId = default, DateTimeOffset? restorePointInTime = default, DateTimeOffset? sourceDatabaseDeletedOn = default, ResourceIdentifier recoveryServicesRecoveryPointId = default, ResourceIdentifier longTermRetentionBackupResourceId = default, ResourceIdentifier recoverableDatabaseId = default, ResourceIdentifier restorableDroppedDatabaseId = default, CatalogCollationType? catalogCollation = default, bool? isZoneRedundant = default, DatabaseLicenseType? licenseType = default, long? maxLogSizeBytes = default, DateTimeOffset? earliestRestoreOn = default, DatabaseReadScale? readScale = default, int? highAvailabilityReplicaCount = default, SecondaryType? secondaryType = default, SqlSku currentSku = default, int? autoPauseDelay = default, SqlBackupStorageRedundancy? currentBackupStorageRedundancy = default, SqlBackupStorageRedundancy? requestedBackupStorageRedundancy = default, double? minCapacity = default, DateTimeOffset? pausedOn = default, DateTimeOffset? resumedOn = default, ResourceIdentifier maintenanceConfigurationId = default, bool? isLedgerOn = default, bool? isInfraEncryptionEnabled = default, Guid? federatedClientId = default, IDictionary<string, SqlDatabaseKey> keys = default, string encryptionProtector = default, SqlAlwaysEncryptedEnclaveType? preferredEnclaveType = default, bool? useFreeLimit = default, FreeLimitExhaustionBehavior? freeLimitExhaustionBehavior = default, bool? manualCutover = default, bool? performCutover = default, bool? encryptionProtectorAutoRotation = default, IDictionary<string, string> tags = default)
+        public static SqlDatabasePatch SqlDatabasePatch(SqlSku sku = default, DatabaseIdentity identity = default, SqlDatabaseCreateMode? createMode = default, string collation = default, long? maxSizeBytes = default, SampleSchemaName? sampleName = default, ResourceIdentifier elasticPoolId = default, ResourceIdentifier sourceDatabaseId = default, SqlDatabaseStatus? status = default, Guid? databaseId = default, DateTimeOffset? createdOn = default, string currentServiceObjectiveName = default, string requestedServiceObjectiveName = default, AzureLocation? defaultSecondaryLocation = default, ResourceIdentifier failoverGroupId = default, DateTimeOffset? restorePointInTime = default, DateTimeOffset? sourceDatabaseDeletedOn = default, ResourceIdentifier recoveryServicesRecoveryPointId = default, ResourceIdentifier longTermRetentionBackupResourceId = default, ResourceIdentifier recoverableDatabaseId = default, ResourceIdentifier restorableDroppedDatabaseId = default, CatalogCollationType? catalogCollation = default, bool? isZoneRedundant = default, DatabaseLicenseType? licenseType = default, long? maxLogSizeBytes = default, DateTimeOffset? earliestRestoreOn = default, DatabaseReadScale? readScale = default, int? highAvailabilityReplicaCount = default, SecondaryType? secondaryType = default, SqlSku currentSku = default, int? autoPauseDelay = default, SqlBackupStorageRedundancy? currentBackupStorageRedundancy = default, SqlBackupStorageRedundancy? requestedBackupStorageRedundancy = default, double? minCapacity = default, DateTimeOffset? pausedOn = default, DateTimeOffset? resumedOn = default, ResourceIdentifier maintenanceConfigurationId = default, bool? isLedgerOn = default, bool? isInfraEncryptionEnabled = default, Guid? federatedClientId = default, IDictionary<string, SqlDatabaseKey> keys = default, string encryptionProtector = default, SqlAlwaysEncryptedEnclaveType? preferredEnclaveType = default, bool? useFreeLimit = default, FreeLimitExhaustionBehavior? freeLimitExhaustionBehavior = default, bool? manualCutover = default, bool? performCutover = default, bool? encryptionProtectorAutoRotation = default, string provisioningState = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new SqlDatabasePatch(sku, identity, createMode is null && collation is null && maxSizeBytes is null && sampleName is null && elasticPoolId is null && sourceDatabaseId is null && status is null && databaseId is null && createdOn is null && currentServiceObjectiveName is null && requestedServiceObjectiveName is null && defaultSecondaryLocation is null && failoverGroupId is null && restorePointInTime is null && sourceDatabaseDeletedOn is null && recoveryServicesRecoveryPointId is null && longTermRetentionBackupResourceId is null && recoverableDatabaseId is null && restorableDroppedDatabaseId is null && catalogCollation is null && isZoneRedundant is null && licenseType is null && maxLogSizeBytes is null && earliestRestoreOn is null && readScale is null && highAvailabilityReplicaCount is null && secondaryType is null && currentSku is null && autoPauseDelay is null && currentBackupStorageRedundancy is null && requestedBackupStorageRedundancy is null && minCapacity is null && pausedOn is null && resumedOn is null && maintenanceConfigurationId is null && isLedgerOn is null && isInfraEncryptionEnabled is null && federatedClientId is null && keys is null && encryptionProtector is null && preferredEnclaveType is null && useFreeLimit is null && freeLimitExhaustionBehavior is null && manualCutover is null && performCutover is null && encryptionProtectorAutoRotation is null ? default : new DatabaseUpdateProperties(
+            return new SqlDatabasePatch(sku, identity, createMode is null && collation is null && maxSizeBytes is null && sampleName is null && elasticPoolId is null && sourceDatabaseId is null && status is null && databaseId is null && createdOn is null && currentServiceObjectiveName is null && requestedServiceObjectiveName is null && defaultSecondaryLocation is null && failoverGroupId is null && restorePointInTime is null && sourceDatabaseDeletedOn is null && recoveryServicesRecoveryPointId is null && longTermRetentionBackupResourceId is null && recoverableDatabaseId is null && restorableDroppedDatabaseId is null && catalogCollation is null && isZoneRedundant is null && licenseType is null && maxLogSizeBytes is null && earliestRestoreOn is null && readScale is null && highAvailabilityReplicaCount is null && secondaryType is null && currentSku is null && autoPauseDelay is null && currentBackupStorageRedundancy is null && requestedBackupStorageRedundancy is null && minCapacity is null && pausedOn is null && resumedOn is null && maintenanceConfigurationId is null && isLedgerOn is null && isInfraEncryptionEnabled is null && federatedClientId is null && keys is null && encryptionProtector is null && preferredEnclaveType is null && useFreeLimit is null && freeLimitExhaustionBehavior is null && manualCutover is null && performCutover is null && encryptionProtectorAutoRotation is null && provisioningState is null ? default : new DatabaseUpdateProperties(
                 createMode,
                 collation,
                 maxSizeBytes,
@@ -475,6 +478,7 @@ namespace Azure.ResourceManager.Sql.Models
                 manualCutover,
                 performCutover,
                 encryptionProtectorAutoRotation,
+                provisioningState,
                 default), tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
@@ -2689,6 +2693,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="autoPauseDelay"> Time in minutes after which elastic pool is automatically paused. A value of -1 means that automatic pause is disabled. </param>
         /// <param name="preferredEnclaveType"> Type of enclave requested on the elastic pool. </param>
         /// <param name="availabilityZone"> Specifies the availability zone the pool's primary replica is pinned to. </param>
+        /// <param name="currentSku"> The name and tier of the current SKU. </param>
         /// <param name="sku">
         /// The elastic pool SKU.
         /// The list of SKUs may vary by region and support offer. To determine the SKUs (including the SKU name, tier/edition, family, and capacity) that are available to your subscription in an Azure region, use the `Capabilities_ListByLocation` REST API or the following command:
@@ -2698,7 +2703,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// </param>
         /// <param name="kind"> Kind of elastic pool. This is metadata used for the Azure portal experience. </param>
         /// <returns> A new <see cref="Sql.ElasticPoolData"/> instance for mocking. </returns>
-        public static ElasticPoolData ElasticPoolData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ElasticPoolState? state = default, DateTimeOffset? createdOn = default, long? maxSizeBytes = default, double? minCapacity = default, ElasticPoolPerDatabaseSettings perDatabaseSettings = default, bool? isZoneRedundant = default, ElasticPoolLicenseType? licenseType = default, ResourceIdentifier maintenanceConfigurationId = default, int? highAvailabilityReplicaCount = default, int? autoPauseDelay = default, SqlAlwaysEncryptedEnclaveType? preferredEnclaveType = default, SqlAvailabilityZoneType? availabilityZone = default, SqlSku sku = default, string kind = default)
+        public static ElasticPoolData ElasticPoolData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ElasticPoolState? state = default, DateTimeOffset? createdOn = default, long? maxSizeBytes = default, double? minCapacity = default, ElasticPoolPerDatabaseSettings perDatabaseSettings = default, bool? isZoneRedundant = default, ElasticPoolLicenseType? licenseType = default, ResourceIdentifier maintenanceConfigurationId = default, int? highAvailabilityReplicaCount = default, int? autoPauseDelay = default, SqlAlwaysEncryptedEnclaveType? preferredEnclaveType = default, SqlAvailabilityZoneType? availabilityZone = default, SqlSku currentSku = default, SqlSku sku = default, string kind = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -2709,7 +2714,7 @@ namespace Azure.ResourceManager.Sql.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                state is null && createdOn is null && maxSizeBytes is null && minCapacity is null && perDatabaseSettings is null && isZoneRedundant is null && licenseType is null && maintenanceConfigurationId is null && highAvailabilityReplicaCount is null && autoPauseDelay is null && preferredEnclaveType is null && availabilityZone is null ? default : new ElasticPoolProperties(
+                state is null && createdOn is null && maxSizeBytes is null && minCapacity is null && perDatabaseSettings is null && isZoneRedundant is null && licenseType is null && maintenanceConfigurationId is null && highAvailabilityReplicaCount is null && autoPauseDelay is null && preferredEnclaveType is null && availabilityZone is null && currentSku is null ? default : new ElasticPoolProperties(
                     state,
                     createdOn,
                     maxSizeBytes,
@@ -2722,6 +2727,7 @@ namespace Azure.ResourceManager.Sql.Models
                     autoPauseDelay,
                     preferredEnclaveType,
                     availabilityZone,
+                    currentSku,
                     default),
                 sku,
                 kind,
@@ -2748,13 +2754,14 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="autoPauseDelay"> Time in minutes after which elastic pool is automatically paused. A value of -1 means that automatic pause is disabled. </param>
         /// <param name="preferredEnclaveType"> Type of enclave requested on the elastic pool. </param>
         /// <param name="availabilityZone"> Specifies the availability zone the pool's primary replica is pinned to. </param>
+        /// <param name="currentSku"> The name and tier of the current SKU. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.ElasticPoolPatch"/> instance for mocking. </returns>
-        public static ElasticPoolPatch ElasticPoolPatch(SqlSku sku = default, long? maxSizeBytes = default, double? minCapacity = default, ElasticPoolPerDatabaseSettings perDatabaseSettings = default, bool? isZoneRedundant = default, ElasticPoolLicenseType? licenseType = default, ResourceIdentifier maintenanceConfigurationId = default, int? highAvailabilityReplicaCount = default, int? autoPauseDelay = default, SqlAlwaysEncryptedEnclaveType? preferredEnclaveType = default, SqlAvailabilityZoneType? availabilityZone = default, IDictionary<string, string> tags = default)
+        public static ElasticPoolPatch ElasticPoolPatch(SqlSku sku = default, long? maxSizeBytes = default, double? minCapacity = default, ElasticPoolPerDatabaseSettings perDatabaseSettings = default, bool? isZoneRedundant = default, ElasticPoolLicenseType? licenseType = default, ResourceIdentifier maintenanceConfigurationId = default, int? highAvailabilityReplicaCount = default, int? autoPauseDelay = default, SqlAlwaysEncryptedEnclaveType? preferredEnclaveType = default, SqlAvailabilityZoneType? availabilityZone = default, SqlSku currentSku = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ElasticPoolPatch(sku, maxSizeBytes is null && minCapacity is null && perDatabaseSettings is null && isZoneRedundant is null && licenseType is null && maintenanceConfigurationId is null && highAvailabilityReplicaCount is null && autoPauseDelay is null && preferredEnclaveType is null && availabilityZone is null ? default : new ElasticPoolUpdateProperties(
+            return new ElasticPoolPatch(sku, maxSizeBytes is null && minCapacity is null && perDatabaseSettings is null && isZoneRedundant is null && licenseType is null && maintenanceConfigurationId is null && highAvailabilityReplicaCount is null && autoPauseDelay is null && preferredEnclaveType is null && availabilityZone is null && currentSku is null ? default : new ElasticPoolUpdateProperties(
                 maxSizeBytes,
                 minCapacity,
                 perDatabaseSettings,
@@ -2765,6 +2772,7 @@ namespace Azure.ResourceManager.Sql.Models
                 autoPauseDelay,
                 preferredEnclaveType,
                 availabilityZone,
+                currentSku,
                 default), tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
@@ -3636,20 +3644,22 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="securitySettings"> Security settings of managed instance DTC. </param>
         /// <param name="externalDnsSuffixSearchList"> External dns suffix search list of managed instance DTC. </param>
         /// <param name="dtcHostNameDnsSuffix"> Host name dns suffix of managed instance DTC. </param>
+        /// <param name="fqdnEnabled"> Status of FQDN of managed instance DTC. Toggling this setting might trigger a restart of the managed instance. </param>
         /// <param name="provisioningState"> Provisioning state of managed instance DTC. </param>
         /// <returns> A new <see cref="Sql.ManagedInstanceDtcData"/> instance for mocking. </returns>
-        public static ManagedInstanceDtcData ManagedInstanceDtcData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, bool? dtcEnabled = default, ManagedInstanceDtcSecuritySettings securitySettings = default, IEnumerable<string> externalDnsSuffixSearchList = default, string dtcHostNameDnsSuffix = default, JobExecutionProvisioningState? provisioningState = default)
+        public static ManagedInstanceDtcData ManagedInstanceDtcData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, bool? dtcEnabled = default, ManagedInstanceDtcSecuritySettings securitySettings = default, IEnumerable<string> externalDnsSuffixSearchList = default, string dtcHostNameDnsSuffix = default, bool? fqdnEnabled = default, JobExecutionProvisioningState? provisioningState = default)
         {
             return new ManagedInstanceDtcData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                dtcEnabled is null && securitySettings is null && externalDnsSuffixSearchList is null && dtcHostNameDnsSuffix is null && provisioningState is null ? default : new ManagedInstanceDtcProperties(
+                dtcEnabled is null && securitySettings is null && externalDnsSuffixSearchList is null && dtcHostNameDnsSuffix is null && fqdnEnabled is null && provisioningState is null ? default : new ManagedInstanceDtcProperties(
                     dtcEnabled,
                     securitySettings,
                     (externalDnsSuffixSearchList ?? new ChangeTrackingList<string>()).ToList(),
                     dtcHostNameDnsSuffix,
+                    fqdnEnabled,
                     provisioningState,
                     default),
                 default);
@@ -4663,8 +4673,9 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="usePrivateLinkConnection"> If use private link connection is enabled. </param>
         /// <param name="privateEndpointName"> Private endpoint name of the sync group if use private link connection is enabled. </param>
         /// <param name="sku"> The name and capacity of the SKU. </param>
+        /// <param name="identity"> Sync group authentication information. </param>
         /// <returns> A new <see cref="Sql.SyncGroupData"/> instance for mocking. </returns>
-        public static SyncGroupData SyncGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, int? interval = default, DateTimeOffset? lastSyncOn = default, SyncConflictResolutionPolicy? conflictResolutionPolicy = default, ResourceIdentifier syncDatabaseId = default, string hubDatabaseUserName = default, string hubDatabasePassword = default, SyncGroupState? syncState = default, SyncGroupSchema schema = default, bool? isConflictLoggingEnabled = default, int? conflictLoggingRetentionInDays = default, bool? usePrivateLinkConnection = default, string privateEndpointName = default, SqlSku sku = default)
+        public static SyncGroupData SyncGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, int? interval = default, DateTimeOffset? lastSyncOn = default, SyncConflictResolutionPolicy? conflictResolutionPolicy = default, ResourceIdentifier syncDatabaseId = default, string hubDatabaseUserName = default, string hubDatabasePassword = default, SyncGroupState? syncState = default, SyncGroupSchema schema = default, bool? isConflictLoggingEnabled = default, int? conflictLoggingRetentionInDays = default, bool? usePrivateLinkConnection = default, string privateEndpointName = default, SqlSku sku = default, DataSyncParticipantIdentity identity = default)
         {
             return new SyncGroupData(
                 id,
@@ -4686,6 +4697,7 @@ namespace Azure.ResourceManager.Sql.Models
                     privateEndpointName,
                     default),
                 sku,
+                identity,
                 default);
         }
 
@@ -4716,6 +4728,25 @@ namespace Azure.ResourceManager.Sql.Models
         public static SyncGroupSchemaTableColumn SyncGroupSchemaTableColumn(string quotedName = default, string dataSize = default, string dataType = default)
         {
             return new SyncGroupSchemaTableColumn(quotedName, dataSize, dataType, default);
+        }
+
+        /// <param name="type"> The Datasync identity type. </param>
+        /// <param name="tenantId"> The DataSync participant identity tenant id. </param>
+        /// <param name="userAssignedIdentities"> The resource ids of the user assigned identities to use. </param>
+        /// <returns> A new <see cref="Models.DataSyncParticipantIdentity"/> instance for mocking. </returns>
+        public static DataSyncParticipantIdentity DataSyncParticipantIdentity(DataSyncParticipantIdentityType @type = default, Guid? tenantId = default, IDictionary<string, DataSyncParticipantUserAssignedIdentity> userAssignedIdentities = default)
+        {
+            userAssignedIdentities ??= new ChangeTrackingDictionary<string, DataSyncParticipantUserAssignedIdentity>();
+
+            return new DataSyncParticipantIdentity(@type, tenantId, userAssignedIdentities ?? new ChangeTrackingDictionary<string, DataSyncParticipantUserAssignedIdentity>(), default);
+        }
+
+        /// <param name="principalId"> The Azure Active Directory principal id. </param>
+        /// <param name="clientId"> The Azure Active Directory client id. </param>
+        /// <returns> A new <see cref="Models.DataSyncParticipantUserAssignedIdentity"/> instance for mocking. </returns>
+        public static DataSyncParticipantUserAssignedIdentity DataSyncParticipantUserAssignedIdentity(Guid? principalId = default, Guid? clientId = default)
+        {
+            return new DataSyncParticipantUserAssignedIdentity(principalId, clientId, default);
         }
 
         /// <param name="tables"> List of tables in the database full schema. </param>
@@ -4803,8 +4834,9 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="password"> Password of the member database in the sync member. </param>
         /// <param name="syncDirection"> Sync direction of the sync member. </param>
         /// <param name="syncState"> Sync state of the sync member. </param>
+        /// <param name="identity"> Sync member authentication information. </param>
         /// <returns> A new <see cref="Sql.SyncMemberData"/> instance for mocking. </returns>
-        public static SyncMemberData SyncMemberData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SyncMemberDbType? databaseType = default, ResourceIdentifier syncAgentId = default, Guid? sqlServerDatabaseId = default, ResourceIdentifier syncMemberAzureDatabaseResourceId = default, bool? usePrivateLinkConnection = default, string privateEndpointName = default, string serverName = default, string databaseName = default, string userName = default, string password = default, SyncDirection? syncDirection = default, SyncMemberState? syncState = default)
+        public static SyncMemberData SyncMemberData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SyncMemberDbType? databaseType = default, ResourceIdentifier syncAgentId = default, Guid? sqlServerDatabaseId = default, ResourceIdentifier syncMemberAzureDatabaseResourceId = default, bool? usePrivateLinkConnection = default, string privateEndpointName = default, string serverName = default, string databaseName = default, string userName = default, string password = default, SyncDirection? syncDirection = default, SyncMemberState? syncState = default, DataSyncParticipantIdentity identity = default)
         {
             return new SyncMemberData(
                 id,
@@ -4825,6 +4857,7 @@ namespace Azure.ResourceManager.Sql.Models
                     syncDirection,
                     syncState,
                     default),
+                identity,
                 default);
         }
 
@@ -5277,19 +5310,19 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="location"> The location of the data masking rule. </param>
         /// <param name="kind"> The kind of Data Masking Rule. Metadata, used for Azure portal. </param>
         /// <param name="ruleId"> The rule Id. </param>
-        /// <param name="ruleState"> The rule state. Used to delete a rule. To delete an existing rule, specify the schemaName, tableName, columnName, maskingFunction, and specify ruleState as disabled. However, if the rule doesn't already exist, the rule will be created with ruleState set to enabled, regardless of the provided value of ruleState. </param>
+        /// <param name="dataMaskingRuleState"> The rule state. Used to delete a rule. To delete an existing rule, specify the schemaName, tableName, columnName, maskingFunction, and specify ruleState as disabled. However, if the rule doesn't already exist, the rule will be created with ruleState set to enabled, regardless of the provided value of ruleState. </param>
         /// <param name="schemaName"> The schema name on which the data masking rule is applied. </param>
         /// <param name="tableName"> The table name on which the data masking rule is applied. </param>
         /// <param name="columnName"> The column name on which the data masking rule is applied. </param>
         /// <param name="aliasName"> The alias name. This is a legacy parameter and is no longer used. </param>
-        /// <param name="maskingFunction"> The masking function that is used for the data masking rule. </param>
+        /// <param name="dataMaskingFunction"> The masking function that is used for the data masking rule. </param>
         /// <param name="numberFrom"> The numberFrom property of the masking rule. Required if maskingFunction is set to Number, otherwise this parameter will be ignored. </param>
         /// <param name="numberTo"> The numberTo property of the data masking rule. Required if maskingFunction is set to Number, otherwise this parameter will be ignored. </param>
         /// <param name="prefixSize"> If maskingFunction is set to Text, the number of characters to show unmasked in the beginning of the string. Otherwise, this parameter will be ignored. </param>
         /// <param name="suffixSize"> If maskingFunction is set to Text, the number of characters to show unmasked at the end of the string. Otherwise, this parameter will be ignored. </param>
         /// <param name="replacementString"> If maskingFunction is set to Text, the character to use for masking the unexposed part of the string. Otherwise, this parameter will be ignored. </param>
         /// <returns> A new <see cref="Models.DataMaskingRule"/> instance for mocking. </returns>
-        public static DataMaskingRule DataMaskingRule(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation? location = default, string kind = default, string ruleId = default, DataMaskingRuleState? ruleState = default, string schemaName = default, string tableName = default, string columnName = default, string aliasName = default, DataMaskingFunction? maskingFunction = default, string numberFrom = default, string numberTo = default, string prefixSize = default, string suffixSize = default, string replacementString = default)
+        public static DataMaskingRule DataMaskingRule(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation? location = default, string kind = default, string ruleId = default, SqlDataMaskingRuleState? dataMaskingRuleState = default, string schemaName = default, string tableName = default, string columnName = default, string aliasName = default, SqlDataMaskingFunction? dataMaskingFunction = default, string numberFrom = default, string numberTo = default, string prefixSize = default, string suffixSize = default, string replacementString = default)
         {
             return new DataMaskingRule(
                 id,
@@ -5298,14 +5331,14 @@ namespace Azure.ResourceManager.Sql.Models
                 systemData,
                 location,
                 kind,
-                ruleId is null && ruleState is null && schemaName is null && tableName is null && columnName is null && aliasName is null && maskingFunction is null && numberFrom is null && numberTo is null && prefixSize is null && suffixSize is null && replacementString is null ? default : new DataMaskingRuleProperties(
+                ruleId is null && dataMaskingRuleState is null && schemaName is null && tableName is null && columnName is null && aliasName is null && dataMaskingFunction is null && numberFrom is null && numberTo is null && prefixSize is null && suffixSize is null && replacementString is null ? default : new DataMaskingRuleProperties(
                     ruleId,
-                    ruleState,
+                    dataMaskingRuleState,
                     schemaName,
                     tableName,
                     columnName,
                     aliasName,
-                    maskingFunction.GetValueOrDefault(),
+                    dataMaskingFunction.GetValueOrDefault(),
                     numberFrom,
                     numberTo,
                     prefixSize,
@@ -6934,6 +6967,7 @@ namespace Azure.ResourceManager.Sql.Models
                     performCutover,
                     availabilityZone,
                     encryptionProtectorAutoRotation,
+                    default,
                     default),
                 sku,
                 kind,
@@ -7083,6 +7117,7 @@ namespace Azure.ResourceManager.Sql.Models
                 manualCutover,
                 performCutover,
                 encryptionProtectorAutoRotation,
+                default,
                 default), tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
@@ -7152,6 +7187,53 @@ namespace Azure.ResourceManager.Sql.Models
                 default);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.DataMaskingRule"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="location"> The location of the data masking rule. </param>
+        /// <param name="kind"> The kind of Data Masking Rule. Metadata, used for Azure portal. </param>
+        /// <param name="ruleId"> The rule Id. </param>
+        /// <param name="ruleState"> The rule state. Used to delete a rule. To delete an existing rule, specify the schemaName, tableName, columnName, maskingFunction, and specify ruleState as disabled. However, if the rule doesn't already exist, the rule will be created with ruleState set to enabled, regardless of the provided value of ruleState. </param>
+        /// <param name="schemaName"> The schema name on which the data masking rule is applied. </param>
+        /// <param name="tableName"> The table name on which the data masking rule is applied. </param>
+        /// <param name="columnName"> The column name on which the data masking rule is applied. </param>
+        /// <param name="aliasName"> The alias name. This is a legacy parameter and is no longer used. </param>
+        /// <param name="maskingFunction"> The masking function that is used for the data masking rule. </param>
+        /// <param name="numberFrom"> The numberFrom property of the masking rule. Required if maskingFunction is set to Number, otherwise this parameter will be ignored. </param>
+        /// <param name="numberTo"> The numberTo property of the data masking rule. Required if maskingFunction is set to Number, otherwise this parameter will be ignored. </param>
+        /// <param name="prefixSize"> If maskingFunction is set to Text, the number of characters to show unmasked in the beginning of the string. Otherwise, this parameter will be ignored. </param>
+        /// <param name="suffixSize"> If maskingFunction is set to Text, the number of characters to show unmasked at the end of the string. Otherwise, this parameter will be ignored. </param>
+        /// <param name="replacementString"> If maskingFunction is set to Text, the character to use for masking the unexposed part of the string. Otherwise, this parameter will be ignored. </param>
+        /// <returns> A new <see cref="Models.DataMaskingRule"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DataMaskingRule DataMaskingRule(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation? location = default, string kind = default, string ruleId = default, DataMaskingRuleState? ruleState = default, string schemaName = default, string tableName = default, string columnName = default, string aliasName = default, DataMaskingFunction? maskingFunction = default, string numberFrom = default, string numberTo = default, string prefixSize = default, string suffixSize = default, string replacementString = default)
+        {
+            return new DataMaskingRule(
+                id,
+                name,
+                resourceType,
+                systemData,
+                location,
+                kind,
+                ruleId is null && schemaName is null && tableName is null && columnName is null && aliasName is null && numberFrom is null && numberTo is null && prefixSize is null && suffixSize is null && replacementString is null ? default : new DataMaskingRuleProperties(
+                    ruleId,
+                    default,
+                    schemaName,
+                    tableName,
+                    columnName,
+                    aliasName,
+                    default,
+                    numberFrom,
+                    numberTo,
+                    prefixSize,
+                    suffixSize,
+                    replacementString,
+                    default),
+                default);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Sql.ElasticPoolData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -7205,6 +7287,7 @@ namespace Azure.ResourceManager.Sql.Models
                     autoPauseDelay,
                     preferredEnclaveType,
                     availabilityZone,
+                    default,
                     default),
                 sku,
                 kind,
@@ -7571,6 +7654,36 @@ namespace Azure.ResourceManager.Sql.Models
                 resourceType,
                 systemData,
                 op is null && schema is null && table is null && column is null ? default : new RecommendedSensitivityLabelUpdateProperties(op.GetValueOrDefault(), schema, table, column, default),
+                default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Sql.ManagedInstanceDtcData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="dtcEnabled"> Active status of managed instance DTC. </param>
+        /// <param name="securitySettings"> Security settings of managed instance DTC. </param>
+        /// <param name="externalDnsSuffixSearchList"> External dns suffix search list of managed instance DTC. </param>
+        /// <param name="dtcHostNameDnsSuffix"> Host name dns suffix of managed instance DTC. </param>
+        /// <param name="provisioningState"> Provisioning state of managed instance DTC. </param>
+        /// <returns> A new <see cref="Sql.ManagedInstanceDtcData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ManagedInstanceDtcData ManagedInstanceDtcData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, bool? dtcEnabled = default, ManagedInstanceDtcSecuritySettings securitySettings = default, IEnumerable<string> externalDnsSuffixSearchList = default, string dtcHostNameDnsSuffix = default, JobExecutionProvisioningState? provisioningState = default)
+        {
+            return new ManagedInstanceDtcData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                dtcEnabled is null && securitySettings is null && externalDnsSuffixSearchList is null && dtcHostNameDnsSuffix is null && provisioningState is null ? default : new ManagedInstanceDtcProperties(
+                    dtcEnabled,
+                    securitySettings,
+                    (externalDnsSuffixSearchList ?? new ChangeTrackingList<string>()).ToList(),
+                    dtcHostNameDnsSuffix,
+                    default,
+                    provisioningState,
+                    default),
                 default);
         }
 
@@ -8219,6 +8332,51 @@ namespace Azure.ResourceManager.Sql.Models
                     privateEndpointName,
                     default),
                 sku,
+                default,
+                default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Sql.SyncMemberData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="databaseType"> Database type of the sync member. </param>
+        /// <param name="syncAgentId"> ARM resource id of the sync agent in the sync member. </param>
+        /// <param name="sqlServerDatabaseId"> SQL Server database id of the sync member. </param>
+        /// <param name="syncMemberAzureDatabaseResourceId"> ARM resource id of the sync member logical database, for sync members in Azure. </param>
+        /// <param name="usePrivateLinkConnection"> Whether to use private link connection. </param>
+        /// <param name="privateEndpointName"> Private endpoint name of the sync member if use private link connection is enabled, for sync members in Azure. </param>
+        /// <param name="serverName"> Server name of the member database in the sync member. </param>
+        /// <param name="databaseName"> Database name of the member database in the sync member. </param>
+        /// <param name="userName"> User name of the member database in the sync member. </param>
+        /// <param name="password"> Password of the member database in the sync member. </param>
+        /// <param name="syncDirection"> Sync direction of the sync member. </param>
+        /// <param name="syncState"> Sync state of the sync member. </param>
+        /// <returns> A new <see cref="Sql.SyncMemberData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SyncMemberData SyncMemberData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SyncMemberDbType? databaseType = default, ResourceIdentifier syncAgentId = default, Guid? sqlServerDatabaseId = default, ResourceIdentifier syncMemberAzureDatabaseResourceId = default, bool? usePrivateLinkConnection = default, string privateEndpointName = default, string serverName = default, string databaseName = default, string userName = default, string password = default, SyncDirection? syncDirection = default, SyncMemberState? syncState = default)
+        {
+            return new SyncMemberData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                databaseType is null && syncAgentId is null && sqlServerDatabaseId is null && syncMemberAzureDatabaseResourceId is null && usePrivateLinkConnection is null && privateEndpointName is null && serverName is null && databaseName is null && userName is null && password is null && syncDirection is null && syncState is null ? default : new SyncMemberProperties(
+                    databaseType,
+                    syncAgentId,
+                    sqlServerDatabaseId,
+                    syncMemberAzureDatabaseResourceId,
+                    usePrivateLinkConnection,
+                    privateEndpointName,
+                    serverName,
+                    databaseName,
+                    userName,
+                    password,
+                    syncDirection,
+                    syncState,
+                    default),
+                default,
                 default);
         }
 

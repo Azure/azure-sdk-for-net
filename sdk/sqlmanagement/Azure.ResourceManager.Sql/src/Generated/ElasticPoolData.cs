@@ -267,5 +267,15 @@ namespace Azure.ResourceManager.Sql
                 Properties.AvailabilityZone = value;
             }
         }
+
+        /// <summary> The name and tier of the current SKU. </summary>
+        [WirePath("properties.currentSku")]
+        public SqlSku CurrentSku
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CurrentSku;
+            }
+        }
     }
 }

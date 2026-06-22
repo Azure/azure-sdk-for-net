@@ -53,9 +53,9 @@ namespace Azure.ResourceManager.Sql
         {
             TryGetApiVersion(ResourceType, out string dataMaskingPolicyApiVersion);
             _dataMaskingPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
-            _dataMaskingPoliciesRestClient = new DataMaskingPolicies(_dataMaskingPoliciesClientDiagnostics, Pipeline, Endpoint, dataMaskingPolicyApiVersion ?? "2025-01-01");
+            _dataMaskingPoliciesRestClient = new DataMaskingPolicies(_dataMaskingPoliciesClientDiagnostics, Pipeline, Endpoint, dataMaskingPolicyApiVersion ?? "2025-02-01-preview");
             _dataMaskingRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
-            _dataMaskingRulesRestClient = new DataMaskingRules(_dataMaskingRulesClientDiagnostics, Pipeline, Endpoint, dataMaskingPolicyApiVersion ?? "2025-01-01");
+            _dataMaskingRulesRestClient = new DataMaskingRules(_dataMaskingRulesClientDiagnostics, Pipeline, Endpoint, dataMaskingPolicyApiVersion ?? "2025-02-01-preview");
             ValidateResourceId(id);
         }
 
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -324,9 +324,10 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="skip"> The number of elements in the collection to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DataMaskingRule"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DataMaskingRule> GetDataMaskingRulesAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DataMaskingRule> GetDataMaskingRulesAsync(long? skip = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -339,6 +340,7 @@ namespace Azure.ResourceManager.Sql
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,
                 Id.Name,
+                skip,
                 context,
                 "DataMaskingPolicyResource.GetDataMaskingRules");
         }
@@ -356,7 +358,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -364,9 +366,10 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="skip"> The number of elements in the collection to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DataMaskingRule"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DataMaskingRule> GetDataMaskingRules(CancellationToken cancellationToken = default)
+        public virtual Pageable<DataMaskingRule> GetDataMaskingRules(long? skip = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -379,6 +382,7 @@ namespace Azure.ResourceManager.Sql
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,
                 Id.Name,
+                skip,
                 context,
                 "DataMaskingPolicyResource.GetDataMaskingRules");
         }
@@ -396,7 +400,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -452,7 +456,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-01-01. </description>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

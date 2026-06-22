@@ -34,8 +34,9 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="autoPauseDelay"> Time in minutes after which elastic pool is automatically paused. A value of -1 means that automatic pause is disabled. </param>
         /// <param name="preferredEnclaveType"> Type of enclave requested on the elastic pool. </param>
         /// <param name="availabilityZone"> Specifies the availability zone the pool's primary replica is pinned to. </param>
+        /// <param name="currentSku"> The name and tier of the current SKU. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ElasticPoolUpdateProperties(long? maxSizeBytes, double? minCapacity, ElasticPoolPerDatabaseSettings perDatabaseSettings, bool? isZoneRedundant, ElasticPoolLicenseType? licenseType, ResourceIdentifier maintenanceConfigurationId, int? highAvailabilityReplicaCount, int? autoPauseDelay, SqlAlwaysEncryptedEnclaveType? preferredEnclaveType, SqlAvailabilityZoneType? availabilityZone, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ElasticPoolUpdateProperties(long? maxSizeBytes, double? minCapacity, ElasticPoolPerDatabaseSettings perDatabaseSettings, bool? isZoneRedundant, ElasticPoolLicenseType? licenseType, ResourceIdentifier maintenanceConfigurationId, int? highAvailabilityReplicaCount, int? autoPauseDelay, SqlAlwaysEncryptedEnclaveType? preferredEnclaveType, SqlAvailabilityZoneType? availabilityZone, SqlSku currentSku, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MaxSizeBytes = maxSizeBytes;
             MinCapacity = minCapacity;
@@ -47,6 +48,7 @@ namespace Azure.ResourceManager.Sql.Models
             AutoPauseDelay = autoPauseDelay;
             PreferredEnclaveType = preferredEnclaveType;
             AvailabilityZone = availabilityZone;
+            CurrentSku = currentSku;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -89,5 +91,9 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Specifies the availability zone the pool's primary replica is pinned to. </summary>
         [WirePath("availabilityZone")]
         public SqlAvailabilityZoneType? AvailabilityZone { get; set; }
+
+        /// <summary> The name and tier of the current SKU. </summary>
+        [WirePath("currentSku")]
+        public SqlSku CurrentSku { get; }
     }
 }

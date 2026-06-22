@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(RuleId);
             }
-            if (Optional.IsDefined(RuleState))
+            if (Optional.IsDefined(DataMaskingRuleState))
             {
                 writer.WritePropertyName("ruleState"u8);
-                writer.WriteStringValue(RuleState.Value.ToSerialString());
+                writer.WriteStringValue(DataMaskingRuleState.Value.ToString());
             }
             writer.WritePropertyName("schemaName"u8);
             writer.WriteStringValue(SchemaName);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStringValue(AliasName);
             }
             writer.WritePropertyName("maskingFunction"u8);
-            writer.WriteStringValue(MaskingFunction.ToSerialString());
+            writer.WriteStringValue(DataMaskingFunction.ToString());
             if (Optional.IsDefined(NumberFrom))
             {
                 writer.WritePropertyName("numberFrom"u8);
@@ -170,12 +170,12 @@ namespace Azure.ResourceManager.Sql.Models
                 return null;
             }
             string ruleId = default;
-            DataMaskingRuleState? ruleState = default;
+            SqlDataMaskingRuleState? dataMaskingRuleState = default;
             string schemaName = default;
             string tableName = default;
             string columnName = default;
             string aliasName = default;
-            DataMaskingFunction maskingFunction = default;
+            SqlDataMaskingFunction dataMaskingFunction = default;
             string numberFrom = default;
             string numberTo = default;
             string prefixSize = default;
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    ruleState = prop.Value.GetString().ToDataMaskingRuleState();
+                    dataMaskingRuleState = new SqlDataMaskingRuleState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("schemaName"u8))
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (prop.NameEquals("maskingFunction"u8))
                 {
-                    maskingFunction = prop.Value.GetString().ToDataMaskingFunction();
+                    dataMaskingFunction = new SqlDataMaskingFunction(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("numberFrom"u8))
@@ -255,12 +255,12 @@ namespace Azure.ResourceManager.Sql.Models
             }
             return new DataMaskingRuleProperties(
                 ruleId,
-                ruleState,
+                dataMaskingRuleState,
                 schemaName,
                 tableName,
                 columnName,
                 aliasName,
-                maskingFunction,
+                dataMaskingFunction,
                 numberFrom,
                 numberTo,
                 prefixSize,

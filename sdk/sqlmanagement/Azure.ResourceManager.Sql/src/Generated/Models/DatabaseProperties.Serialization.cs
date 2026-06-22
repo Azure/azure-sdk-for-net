@@ -321,6 +321,11 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("encryptionProtectorAutoRotation"u8);
                 writer.WriteBooleanValue(EncryptionProtectorAutoRotation.Value);
             }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -411,6 +416,7 @@ namespace Azure.ResourceManager.Sql.Models
             bool? performCutover = default;
             SqlAvailabilityZoneType? availabilityZone = default;
             bool? encryptionProtectorAutoRotation = default;
+            string provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -835,6 +841,11 @@ namespace Azure.ResourceManager.Sql.Models
                     encryptionProtectorAutoRotation = prop.Value.GetBoolean();
                     continue;
                 }
+                if (prop.NameEquals("provisioningState"u8))
+                {
+                    provisioningState = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -889,6 +900,7 @@ namespace Azure.ResourceManager.Sql.Models
                 performCutover,
                 availabilityZone,
                 encryptionProtectorAutoRotation,
+                provisioningState,
                 additionalBinaryDataProperties);
         }
     }

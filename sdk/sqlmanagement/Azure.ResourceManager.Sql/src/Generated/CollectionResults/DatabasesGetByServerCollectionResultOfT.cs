@@ -20,7 +20,10 @@ namespace Azure.ResourceManager.Sql
         private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _serverName;
-        private readonly string _skipToken;
+        private readonly long? _top;
+        private readonly long? _skip;
+        private readonly string _filter;
+        private readonly string _orderby;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
@@ -29,16 +32,22 @@ namespace Azure.ResourceManager.Sql
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serverName"> The name of the server. </param>
-        /// <param name="skipToken"></param>
+        /// <param name="top"> The number of elements to return from the collection. </param>
+        /// <param name="skip"> The number of elements in the collection to skip. </param>
+        /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
+        /// <param name="orderby"> How the results should be ordered. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public DatabasesGetByServerCollectionResultOfT(Databases client, Guid subscriptionId, string resourceGroupName, string serverName, string skipToken, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public DatabasesGetByServerCollectionResultOfT(Databases client, Guid subscriptionId, string resourceGroupName, string serverName, long? top, long? skip, string filter, string @orderby, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
             _serverName = serverName;
-            _skipToken = skipToken;
+            _top = top;
+            _skip = skip;
+            _filter = filter;
+            _orderby = @orderby;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
@@ -72,7 +81,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetByServerRequest(nextLink, _subscriptionId, _resourceGroupName, _serverName, _skipToken, _context) : _client.CreateGetByServerRequest(_subscriptionId, _resourceGroupName, _serverName, _skipToken, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetByServerRequest(nextLink, _subscriptionId, _resourceGroupName, _serverName, _top, _skip, _filter, _orderby, _context) : _client.CreateGetByServerRequest(_subscriptionId, _resourceGroupName, _serverName, _top, _skip, _filter, _orderby, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

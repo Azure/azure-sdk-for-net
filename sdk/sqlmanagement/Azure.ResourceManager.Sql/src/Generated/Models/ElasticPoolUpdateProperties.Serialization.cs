@@ -125,6 +125,11 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("availabilityZone"u8);
                 writer.WriteStringValue(AvailabilityZone.Value.ToString());
             }
+            if (options.Format != "W" && Optional.IsDefined(CurrentSku))
+            {
+                writer.WritePropertyName("currentSku"u8);
+                writer.WriteObjectValue(CurrentSku, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -177,6 +182,7 @@ namespace Azure.ResourceManager.Sql.Models
             int? autoPauseDelay = default;
             SqlAlwaysEncryptedEnclaveType? preferredEnclaveType = default;
             SqlAvailabilityZoneType? availabilityZone = default;
+            SqlSku currentSku = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -270,6 +276,15 @@ namespace Azure.ResourceManager.Sql.Models
                     availabilityZone = new SqlAvailabilityZoneType(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("currentSku"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    currentSku = SqlSku.DeserializeSqlSku(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -286,6 +301,7 @@ namespace Azure.ResourceManager.Sql.Models
                 autoPauseDelay,
                 preferredEnclaveType,
                 availabilityZone,
+                currentSku,
                 additionalBinaryDataProperties);
         }
     }

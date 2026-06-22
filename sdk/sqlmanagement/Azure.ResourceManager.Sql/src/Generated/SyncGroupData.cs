@@ -31,11 +31,13 @@ namespace Azure.ResourceManager.Sql
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> Resource properties. </param>
         /// <param name="sku"> The name and capacity of the SKU. </param>
+        /// <param name="identity"> Sync group authentication information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SyncGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SyncGroupProperties properties, SqlSku sku, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal SyncGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SyncGroupProperties properties, SqlSku sku, DataSyncParticipantIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Sku = sku;
+            Identity = identity;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -46,6 +48,10 @@ namespace Azure.ResourceManager.Sql
         /// <summary> The name and capacity of the SKU. </summary>
         [WirePath("sku")]
         public SqlSku Sku { get; set; }
+
+        /// <summary> Sync group authentication information. </summary>
+        [WirePath("identity")]
+        public DataSyncParticipantIdentity Identity { get; set; }
 
         /// <summary> Sync interval of the sync group. </summary>
         [WirePath("properties.interval")]

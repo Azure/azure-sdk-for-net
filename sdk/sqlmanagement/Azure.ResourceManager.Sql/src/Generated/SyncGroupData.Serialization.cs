@@ -106,6 +106,11 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku, options);
             }
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                writer.WriteObjectValue(Identity, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -154,6 +159,7 @@ namespace Azure.ResourceManager.Sql
             SystemData systemData = default;
             SyncGroupProperties properties = default;
             SqlSku sku = default;
+            DataSyncParticipantIdentity identity = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -207,6 +213,15 @@ namespace Azure.ResourceManager.Sql
                     sku = SqlSku.DeserializeSqlSku(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("identity"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = DataSyncParticipantIdentity.DeserializeDataSyncParticipantIdentity(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -219,6 +234,7 @@ namespace Azure.ResourceManager.Sql
                 systemData,
                 properties,
                 sku,
+                identity,
                 additionalBinaryDataProperties);
         }
     }
