@@ -14,51 +14,51 @@ using Azure.ResourceManager.Hci.Vm;
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
     /// <summary> HardwareProfile - Specifies the hardware settings for the virtual machine instance. </summary>
-    public partial class HciVmInstanceHardwareProfileUpdate : IJsonModel<HciVmInstanceHardwareProfileUpdate>
+    public partial class HciVmInstanceHardwareProfilePatch : IJsonModel<HciVmInstanceHardwareProfilePatch>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual HciVmInstanceHardwareProfileUpdate PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual HciVmInstanceHardwareProfilePatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HciVmInstanceHardwareProfileUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HciVmInstanceHardwareProfilePatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeHciVmInstanceHardwareProfileUpdate(document.RootElement, options);
+                        return DeserializeHciVmInstanceHardwareProfilePatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HciVmInstanceHardwareProfileUpdate)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HciVmInstanceHardwareProfilePatch)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HciVmInstanceHardwareProfileUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HciVmInstanceHardwareProfilePatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerHciVmContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(HciVmInstanceHardwareProfileUpdate)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HciVmInstanceHardwareProfilePatch)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<HciVmInstanceHardwareProfileUpdate>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<HciVmInstanceHardwareProfilePatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HciVmInstanceHardwareProfileUpdate IPersistableModel<HciVmInstanceHardwareProfileUpdate>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        HciVmInstanceHardwareProfilePatch IPersistableModel<HciVmInstanceHardwareProfilePatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<HciVmInstanceHardwareProfileUpdate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<HciVmInstanceHardwareProfilePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<HciVmInstanceHardwareProfileUpdate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<HciVmInstanceHardwareProfilePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HciVmInstanceHardwareProfileUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HciVmInstanceHardwareProfilePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HciVmInstanceHardwareProfileUpdate)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(HciVmInstanceHardwareProfilePatch)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(VmSize))
             {
@@ -118,24 +118,24 @@ namespace Azure.ResourceManager.Hci.Vm.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HciVmInstanceHardwareProfileUpdate IJsonModel<HciVmInstanceHardwareProfileUpdate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        HciVmInstanceHardwareProfilePatch IJsonModel<HciVmInstanceHardwareProfilePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual HciVmInstanceHardwareProfileUpdate JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual HciVmInstanceHardwareProfilePatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HciVmInstanceHardwareProfileUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HciVmInstanceHardwareProfilePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HciVmInstanceHardwareProfileUpdate)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(HciVmInstanceHardwareProfilePatch)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeHciVmInstanceHardwareProfileUpdate(document.RootElement, options);
+            return DeserializeHciVmInstanceHardwareProfilePatch(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static HciVmInstanceHardwareProfileUpdate DeserializeHciVmInstanceHardwareProfileUpdate(JsonElement element, ModelReaderWriterOptions options)
+        internal static HciVmInstanceHardwareProfilePatch DeserializeHciVmInstanceHardwareProfilePatch(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new HciVmInstanceHardwareProfileUpdate(vmSize, processors, memoryInMB, virtualMachineGPUs ?? new ChangeTrackingList<HciVmInstanceHardwareProfileGpuConfiguration>(), additionalBinaryDataProperties);
+            return new HciVmInstanceHardwareProfilePatch(vmSize, processors, memoryInMB, virtualMachineGPUs ?? new ChangeTrackingList<HciVmInstanceHardwareProfileGpuConfiguration>(), additionalBinaryDataProperties);
         }
     }
 }

@@ -12,24 +12,24 @@ using Azure.ResourceManager.Hci.Vm;
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
     /// <summary> HardwareProfile - Specifies the hardware settings for the virtual machine instance. </summary>
-    public partial class HciVmInstanceHardwareProfileUpdate
+    public partial class HciVmInstanceHardwareProfilePatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="HciVmInstanceHardwareProfileUpdate"/>. </summary>
-        public HciVmInstanceHardwareProfileUpdate()
+        /// <summary> Initializes a new instance of <see cref="HciVmInstanceHardwareProfilePatch"/>. </summary>
+        public HciVmInstanceHardwareProfilePatch()
         {
             VirtualMachineGPUs = new ChangeTrackingList<HciVmInstanceHardwareProfileGpuConfiguration>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="HciVmInstanceHardwareProfileUpdate"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HciVmInstanceHardwareProfilePatch"/>. </summary>
         /// <param name="vmSize"> VM Size Enum. </param>
         /// <param name="processors"> number of processors for the virtual machine instance. </param>
         /// <param name="memoryInMB"> RAM in MB for the virtual machine instance. </param>
         /// <param name="virtualMachineGPUs"> virtualMachineGPUs - updated list of GPUs on the virtual machine instance. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HciVmInstanceHardwareProfileUpdate(HciVmSize? vmSize, int? processors, long? memoryInMB, IList<HciVmInstanceHardwareProfileGpuConfiguration> virtualMachineGPUs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HciVmInstanceHardwareProfilePatch(HciVmSize? vmSize, int? processors, long? memoryInMB, IList<HciVmInstanceHardwareProfileGpuConfiguration> virtualMachineGPUs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VmSize = vmSize;
             Processors = processors;
