@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct ServiceProviderProvisioningState : IEquatable<ServiceProviderProvisioningState>
     {
         private readonly string _value;
+        /// <summary> NotProvisioned. </summary>
+        private const string NotProvisionedValue = "NotProvisioned";
+        /// <summary> Provisioning. </summary>
+        private const string ProvisioningValue = "Provisioning";
+        /// <summary> Provisioned. </summary>
+        private const string ProvisionedValue = "Provisioned";
+        /// <summary> Deprovisioning. </summary>
+        private const string DeprovisioningValue = "Deprovisioning";
 
         /// <summary> Initializes a new instance of <see cref="ServiceProviderProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ServiceProviderProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NotProvisionedValue = "NotProvisioned";
-        private const string ProvisioningValue = "Provisioning";
-        private const string ProvisionedValue = "Provisioned";
-        private const string DeprovisioningValue = "Deprovisioning";
+            _value = value;
+        }
 
         /// <summary> NotProvisioned. </summary>
         public static ServiceProviderProvisioningState NotProvisioned { get; } = new ServiceProviderProvisioningState(NotProvisionedValue);
+
         /// <summary> Provisioning. </summary>
         public static ServiceProviderProvisioningState Provisioning { get; } = new ServiceProviderProvisioningState(ProvisioningValue);
+
         /// <summary> Provisioned. </summary>
         public static ServiceProviderProvisioningState Provisioned { get; } = new ServiceProviderProvisioningState(ProvisionedValue);
+
         /// <summary> Deprovisioning. </summary>
         public static ServiceProviderProvisioningState Deprovisioning { get; } = new ServiceProviderProvisioningState(DeprovisioningValue);
+
         /// <summary> Determines if two <see cref="ServiceProviderProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ServiceProviderProvisioningState left, ServiceProviderProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ServiceProviderProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ServiceProviderProvisioningState left, ServiceProviderProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ServiceProviderProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ServiceProviderProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ServiceProviderProvisioningState(string value) => new ServiceProviderProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ServiceProviderProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ServiceProviderProvisioningState?(string value) => value == null ? null : new ServiceProviderProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ServiceProviderProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ServiceProviderProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

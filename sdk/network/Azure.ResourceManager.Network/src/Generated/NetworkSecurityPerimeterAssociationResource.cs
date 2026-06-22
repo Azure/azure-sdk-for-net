@@ -6,46 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary>
-    /// A Class representing a NetworkSecurityPerimeterAssociation along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetworkSecurityPerimeterAssociationResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetNetworkSecurityPerimeterAssociationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="NetworkSecurityPerimeterResource"/> using the GetNetworkSecurityPerimeterAssociation method.
+    /// A class representing a NetworkSecurityPerimeterAssociation along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetworkSecurityPerimeterAssociationResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="NetworkSecurityPerimeterResource"/> using the GetNetworkSecurityPerimeterAssociations method.
     /// </summary>
     public partial class NetworkSecurityPerimeterAssociationResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="NetworkSecurityPerimeterAssociationResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="networkSecurityPerimeterName"> The networkSecurityPerimeterName. </param>
-        /// <param name="associationName"> The associationName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string networkSecurityPerimeterName, string associationName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityPerimeters/{networkSecurityPerimeterName}/resourceAssociations/{associationName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _networkSecurityPerimeterAssociationClientDiagnostics;
-        private readonly NetworkSecurityPerimeterAssociationsRestOperations _networkSecurityPerimeterAssociationRestClient;
+        private readonly ClientDiagnostics _networkSecurityPerimeterAssociationsClientDiagnostics;
+        private readonly NetworkSecurityPerimeterAssociations _networkSecurityPerimeterAssociationsRestClient;
         private readonly NetworkSecurityPerimeterAssociationData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Network/networkSecurityPerimeters/resourceAssociations";
 
-        /// <summary> Initializes a new instance of the <see cref="NetworkSecurityPerimeterAssociationResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of NetworkSecurityPerimeterAssociationResource for mocking. </summary>
         protected NetworkSecurityPerimeterAssociationResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="NetworkSecurityPerimeterAssociationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterAssociationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal NetworkSecurityPerimeterAssociationResource(ArmClient client, NetworkSecurityPerimeterAssociationData data) : this(client, data.Id)
@@ -54,71 +43,93 @@ namespace Azure.ResourceManager.Network
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="NetworkSecurityPerimeterAssociationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterAssociationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NetworkSecurityPerimeterAssociationResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _networkSecurityPerimeterAssociationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string networkSecurityPerimeterAssociationApiVersion);
-            _networkSecurityPerimeterAssociationRestClient = new NetworkSecurityPerimeterAssociationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, networkSecurityPerimeterAssociationApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _networkSecurityPerimeterAssociationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
+            _networkSecurityPerimeterAssociationsRestClient = new NetworkSecurityPerimeterAssociations(_networkSecurityPerimeterAssociationsClientDiagnostics, Pipeline, Endpoint, networkSecurityPerimeterAssociationApiVersion ?? "2025-07-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual NetworkSecurityPerimeterAssociationData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="networkSecurityPerimeterName"> The networkSecurityPerimeterName. </param>
+        /// <param name="associationName"> The associationName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string networkSecurityPerimeterName, string associationName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityPerimeters/{networkSecurityPerimeterName}/resourceAssociations/{associationName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets the specified NSP association by name.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityPerimeters/{networkSecurityPerimeterName}/resourceAssociations/{associationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityPerimeters/{networkSecurityPerimeterName}/resourceAssociations/{associationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkSecurityPerimeterAssociations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NspAssociations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkSecurityPerimeterAssociationResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkSecurityPerimeterAssociationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<NetworkSecurityPerimeterAssociationResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _networkSecurityPerimeterAssociationClientDiagnostics.CreateScope("NetworkSecurityPerimeterAssociationResource.Get");
+            using DiagnosticScope scope = _networkSecurityPerimeterAssociationsClientDiagnostics.CreateScope("NetworkSecurityPerimeterAssociationResource.Get");
             scope.Start();
             try
             {
-                var response = await _networkSecurityPerimeterAssociationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkSecurityPerimeterAssociationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<NetworkSecurityPerimeterAssociationData> response = Response.FromValue(NetworkSecurityPerimeterAssociationData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkSecurityPerimeterAssociationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -132,33 +143,41 @@ namespace Azure.ResourceManager.Network
         /// Gets the specified NSP association by name.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityPerimeters/{networkSecurityPerimeterName}/resourceAssociations/{associationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityPerimeters/{networkSecurityPerimeterName}/resourceAssociations/{associationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkSecurityPerimeterAssociations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NspAssociations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkSecurityPerimeterAssociationResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkSecurityPerimeterAssociationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<NetworkSecurityPerimeterAssociationResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _networkSecurityPerimeterAssociationClientDiagnostics.CreateScope("NetworkSecurityPerimeterAssociationResource.Get");
+            using DiagnosticScope scope = _networkSecurityPerimeterAssociationsClientDiagnostics.CreateScope("NetworkSecurityPerimeterAssociationResource.Get");
             scope.Start();
             try
             {
-                var response = _networkSecurityPerimeterAssociationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkSecurityPerimeterAssociationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<NetworkSecurityPerimeterAssociationData> response = Response.FromValue(NetworkSecurityPerimeterAssociationData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkSecurityPerimeterAssociationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -172,20 +191,20 @@ namespace Azure.ResourceManager.Network
         /// Deletes an NSP association resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityPerimeters/{networkSecurityPerimeterName}/resourceAssociations/{associationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityPerimeters/{networkSecurityPerimeterName}/resourceAssociations/{associationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkSecurityPerimeterAssociations_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> NspAssociations_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkSecurityPerimeterAssociationResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkSecurityPerimeterAssociationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -193,14 +212,21 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _networkSecurityPerimeterAssociationClientDiagnostics.CreateScope("NetworkSecurityPerimeterAssociationResource.Delete");
+            using DiagnosticScope scope = _networkSecurityPerimeterAssociationsClientDiagnostics.CreateScope("NetworkSecurityPerimeterAssociationResource.Delete");
             scope.Start();
             try
             {
-                var response = await _networkSecurityPerimeterAssociationRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation(_networkSecurityPerimeterAssociationClientDiagnostics, Pipeline, _networkSecurityPerimeterAssociationRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkSecurityPerimeterAssociationsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                NetworkArmOperation operation = new NetworkArmOperation(_networkSecurityPerimeterAssociationsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -214,20 +240,20 @@ namespace Azure.ResourceManager.Network
         /// Deletes an NSP association resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityPerimeters/{networkSecurityPerimeterName}/resourceAssociations/{associationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityPerimeters/{networkSecurityPerimeterName}/resourceAssociations/{associationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkSecurityPerimeterAssociations_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> NspAssociations_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkSecurityPerimeterAssociationResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkSecurityPerimeterAssociationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -235,14 +261,21 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _networkSecurityPerimeterAssociationClientDiagnostics.CreateScope("NetworkSecurityPerimeterAssociationResource.Delete");
+            using DiagnosticScope scope = _networkSecurityPerimeterAssociationsClientDiagnostics.CreateScope("NetworkSecurityPerimeterAssociationResource.Delete");
             scope.Start();
             try
             {
-                var response = _networkSecurityPerimeterAssociationRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new NetworkArmOperation(_networkSecurityPerimeterAssociationClientDiagnostics, Pipeline, _networkSecurityPerimeterAssociationRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkSecurityPerimeterAssociationsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                NetworkArmOperation operation = new NetworkArmOperation(_networkSecurityPerimeterAssociationsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -253,23 +286,127 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Creates or updates a NSP resource association.
+        /// Reconcile NSP association
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityPerimeters/{networkSecurityPerimeterName}/resourceAssociations/{associationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityPerimeters/{networkSecurityPerimeterName}/resourceAssociations/{associationName}/reconcile. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkSecurityPerimeterAssociations_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> NspAssociations_Reconcile. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkSecurityPerimeterAssociationResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkSecurityPerimeterAssociationResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="parameters"> Parameters for NSP association reconcile. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public virtual async Task<Response<BinaryData>> ReconcileAsync(BinaryData parameters, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(parameters, nameof(parameters));
+
+            using DiagnosticScope scope = _networkSecurityPerimeterAssociationsClientDiagnostics.CreateScope("NetworkSecurityPerimeterAssociationResource.Reconcile");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkSecurityPerimeterAssociationsRestClient.CreateReconcileRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RequestContent.Create(parameters), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<BinaryData> response = Response.FromValue(result.Content, result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Reconcile NSP association
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityPerimeters/{networkSecurityPerimeterName}/resourceAssociations/{associationName}/reconcile. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NspAssociations_Reconcile. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkSecurityPerimeterAssociationResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="parameters"> Parameters for NSP association reconcile. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public virtual Response<BinaryData> Reconcile(BinaryData parameters, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(parameters, nameof(parameters));
+
+            using DiagnosticScope scope = _networkSecurityPerimeterAssociationsClientDiagnostics.CreateScope("NetworkSecurityPerimeterAssociationResource.Reconcile");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkSecurityPerimeterAssociationsRestClient.CreateReconcileRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RequestContent.Create(parameters), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<BinaryData> response = Response.FromValue(result.Content, result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update a NetworkSecurityPerimeterAssociation.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityPerimeters/{networkSecurityPerimeterName}/resourceAssociations/{associationName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NspAssociations_CreateOrUpdate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkSecurityPerimeterAssociationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -281,14 +418,27 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _networkSecurityPerimeterAssociationClientDiagnostics.CreateScope("NetworkSecurityPerimeterAssociationResource.Update");
+            using DiagnosticScope scope = _networkSecurityPerimeterAssociationsClientDiagnostics.CreateScope("NetworkSecurityPerimeterAssociationResource.Update");
             scope.Start();
             try
             {
-                var response = await _networkSecurityPerimeterAssociationRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<NetworkSecurityPerimeterAssociationResource>(new NetworkSecurityPerimeterAssociationOperationSource(Client), _networkSecurityPerimeterAssociationClientDiagnostics, Pipeline, _networkSecurityPerimeterAssociationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkSecurityPerimeterAssociationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, NetworkSecurityPerimeterAssociationData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                NetworkArmOperation<NetworkSecurityPerimeterAssociationResource> operation = new NetworkArmOperation<NetworkSecurityPerimeterAssociationResource>(
+                    new NetworkSecurityPerimeterAssociationResourceOperationSource(Client),
+                    _networkSecurityPerimeterAssociationsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -299,23 +449,23 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Creates or updates a NSP resource association.
+        /// Update a NetworkSecurityPerimeterAssociation.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityPerimeters/{networkSecurityPerimeterName}/resourceAssociations/{associationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityPerimeters/{networkSecurityPerimeterName}/resourceAssociations/{associationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkSecurityPerimeterAssociations_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> NspAssociations_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkSecurityPerimeterAssociationResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkSecurityPerimeterAssociationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -327,14 +477,27 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _networkSecurityPerimeterAssociationClientDiagnostics.CreateScope("NetworkSecurityPerimeterAssociationResource.Update");
+            using DiagnosticScope scope = _networkSecurityPerimeterAssociationsClientDiagnostics.CreateScope("NetworkSecurityPerimeterAssociationResource.Update");
             scope.Start();
             try
             {
-                var response = _networkSecurityPerimeterAssociationRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new NetworkArmOperation<NetworkSecurityPerimeterAssociationResource>(new NetworkSecurityPerimeterAssociationOperationSource(Client), _networkSecurityPerimeterAssociationClientDiagnostics, Pipeline, _networkSecurityPerimeterAssociationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkSecurityPerimeterAssociationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, NetworkSecurityPerimeterAssociationData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                NetworkArmOperation<NetworkSecurityPerimeterAssociationResource> operation = new NetworkArmOperation<NetworkSecurityPerimeterAssociationResource>(
+                    new NetworkSecurityPerimeterAssociationResourceOperationSource(Client),
+                    _networkSecurityPerimeterAssociationsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)

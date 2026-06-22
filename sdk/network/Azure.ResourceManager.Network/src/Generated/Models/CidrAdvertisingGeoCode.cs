@@ -6,67 +6,33 @@
 #nullable disable
 
 using System;
-using System.ComponentModel;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The Geo for CIDR advertising. Should be an Geo code. </summary>
     public readonly partial struct CidrAdvertisingGeoCode : IEquatable<CidrAdvertisingGeoCode>
     {
-        private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="CidrAdvertisingGeoCode"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public CidrAdvertisingGeoCode(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
+        /// <summary> GLOBAL. </summary>
         private const string GlobalValue = "GLOBAL";
+        /// <summary> AFRI. </summary>
         private const string AfriValue = "AFRI";
+        /// <summary> APAC. </summary>
         private const string ApacValue = "APAC";
+        /// <summary> EURO. </summary>
         private const string EuroValue = "EURO";
+        /// <summary> LATAM. </summary>
         private const string LatamValue = "LATAM";
+        /// <summary> NAM. </summary>
         private const string NamValue = "NAM";
+        /// <summary> ME. </summary>
         private const string MEValue = "ME";
+        /// <summary> OCEANIA. </summary>
         private const string OceaniaValue = "OCEANIA";
+        /// <summary> AQ. </summary>
         private const string AQValue = "AQ";
 
-        /// <summary> GLOBAL. </summary>
-        public static CidrAdvertisingGeoCode Global { get; } = new CidrAdvertisingGeoCode(GlobalValue);
-        /// <summary> AFRI. </summary>
-        public static CidrAdvertisingGeoCode Afri { get; } = new CidrAdvertisingGeoCode(AfriValue);
-        /// <summary> APAC. </summary>
-        public static CidrAdvertisingGeoCode Apac { get; } = new CidrAdvertisingGeoCode(ApacValue);
-        /// <summary> EURO. </summary>
-        public static CidrAdvertisingGeoCode Euro { get; } = new CidrAdvertisingGeoCode(EuroValue);
-        /// <summary> LATAM. </summary>
-        public static CidrAdvertisingGeoCode Latam { get; } = new CidrAdvertisingGeoCode(LatamValue);
-        /// <summary> NAM. </summary>
-        public static CidrAdvertisingGeoCode Nam { get; } = new CidrAdvertisingGeoCode(NamValue);
-        /// <summary> ME. </summary>
-        public static CidrAdvertisingGeoCode ME { get; } = new CidrAdvertisingGeoCode(MEValue);
-        /// <summary> OCEANIA. </summary>
-        public static CidrAdvertisingGeoCode Oceania { get; } = new CidrAdvertisingGeoCode(OceaniaValue);
-        /// <summary> AQ. </summary>
-        public static CidrAdvertisingGeoCode AQ { get; } = new CidrAdvertisingGeoCode(AQValue);
-        /// <summary> Determines if two <see cref="CidrAdvertisingGeoCode"/> values are the same. </summary>
-        public static bool operator ==(CidrAdvertisingGeoCode left, CidrAdvertisingGeoCode right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="CidrAdvertisingGeoCode"/> values are not the same. </summary>
-        public static bool operator !=(CidrAdvertisingGeoCode left, CidrAdvertisingGeoCode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CidrAdvertisingGeoCode"/>. </summary>
-        public static implicit operator CidrAdvertisingGeoCode(string value) => new CidrAdvertisingGeoCode(value);
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is CidrAdvertisingGeoCode other && Equals(other);
-        /// <inheritdoc />
-        public bool Equals(CidrAdvertisingGeoCode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
-        public override string ToString() => _value;
+        /// <summary> Converts a string to a <see cref="CidrAdvertisingGeoCode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CidrAdvertisingGeoCode?(string value) => value == null ? null : new CidrAdvertisingGeoCode(value);
     }
 }

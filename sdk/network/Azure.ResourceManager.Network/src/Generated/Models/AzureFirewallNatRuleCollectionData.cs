@@ -7,7 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -17,54 +19,87 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="AzureFirewallNatRuleCollectionData"/>. </summary>
         public AzureFirewallNatRuleCollectionData()
         {
-            Rules = new ChangeTrackingList<AzureFirewallNatRule>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureFirewallNatRuleCollectionData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="priority"> Priority of the NAT rule collection resource. </param>
-        /// <param name="action"> The action type of a NAT rule collection. </param>
-        /// <param name="rules"> Collection of rules used by a NAT rule collection. </param>
-        /// <param name="provisioningState"> The provisioning state of the NAT rule collection resource. </param>
-        internal AzureFirewallNatRuleCollectionData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, int? priority, AzureFirewallNatRCAction action, IList<AzureFirewallNatRule> rules, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="properties"> Properties of the azure firewall NAT rule collection. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        internal AzureFirewallNatRuleCollectionData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, AzureFirewallNatRuleCollectionProperties properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, @type)
         {
-            ETag = etag;
-            Priority = priority;
-            Action = action;
-            Rules = rules;
-            ProvisioningState = provisioningState;
+            Properties = properties;
+            ETag = eTag;
         }
+
+        /// <summary> Properties of the azure firewall NAT rule collection. </summary>
+        [WirePath("properties")]
+        internal AzureFirewallNatRuleCollectionProperties Properties { get; set; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }
+
         /// <summary> Priority of the NAT rule collection resource. </summary>
         [WirePath("properties.priority")]
-        public int? Priority { get; set; }
-        /// <summary> The action type of a NAT rule collection. </summary>
-        internal AzureFirewallNatRCAction Action { get; set; }
-        /// <summary> The type of action. </summary>
-        [WirePath("properties.action.type")]
-        public AzureFirewallNatRCActionType? ActionType
+        public int? Priority
         {
-            get => Action is null ? default : Action.ActionType;
+            get
+            {
+                return Properties is null ? default : Properties.Priority;
+            }
             set
             {
-                if (Action is null)
-                    Action = new AzureFirewallNatRCAction();
-                Action.ActionType = value;
+                if (Properties is null)
+                {
+                    Properties = new AzureFirewallNatRuleCollectionProperties();
+                }
+                Properties.Priority = value;
             }
         }
 
         /// <summary> Collection of rules used by a NAT rule collection. </summary>
         [WirePath("properties.rules")]
-        public IList<AzureFirewallNatRule> Rules { get; }
+        public IList<AzureFirewallNatRule> Rules
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new AzureFirewallNatRuleCollectionProperties();
+                }
+                return Properties.Rules;
+            }
+        }
+
         /// <summary> The provisioning state of the NAT rule collection resource. </summary>
         [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> The type of action. </summary>
+        [WirePath("properties.action.type")]
+        public AzureFirewallNatRCActionType? ActionType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ActionType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AzureFirewallNatRuleCollectionProperties();
+                }
+                Properties.ActionType = value;
+            }
+        }
     }
 }

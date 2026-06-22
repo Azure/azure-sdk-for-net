@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.Compute.Models
     public readonly partial struct GalleryReplicationMode : IEquatable<GalleryReplicationMode>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="GalleryReplicationMode"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public GalleryReplicationMode(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string FullValue = "Full";
         private const string ShallowValue = "Shallow";
 
-        /// <summary> Full. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryReplicationMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public GalleryReplicationMode(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Full. </summary>
         public static GalleryReplicationMode Full { get; } = new GalleryReplicationMode(FullValue);
-        /// <summary> Shallow. </summary>
+
+        /// <summary> Gets the Shallow. </summary>
         public static GalleryReplicationMode Shallow { get; } = new GalleryReplicationMode(ShallowValue);
+
         /// <summary> Determines if two <see cref="GalleryReplicationMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(GalleryReplicationMode left, GalleryReplicationMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="GalleryReplicationMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(GalleryReplicationMode left, GalleryReplicationMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="GalleryReplicationMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="GalleryReplicationMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator GalleryReplicationMode(string value) => new GalleryReplicationMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="GalleryReplicationMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator GalleryReplicationMode?(string value) => value == null ? null : new GalleryReplicationMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is GalleryReplicationMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(GalleryReplicationMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

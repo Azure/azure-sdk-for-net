@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Network
 {
+    /// <summary></summary>
     public partial class NetworkWatcherResource : IJsonModel<NetworkWatcherData>
     {
-        private static NetworkWatcherData s_dataDeserializationInstance;
-        private static NetworkWatcherData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<NetworkWatcherData> s_dataDeserializationInstance;
 
+        private static IJsonModel<NetworkWatcherData> DataDeserializationInstance => s_dataDeserializationInstance ??= new NetworkWatcherData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NetworkWatcherData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetworkWatcherData>)Data).Write(writer, options);
 
-        NetworkWatcherData IJsonModel<NetworkWatcherData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkWatcherData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NetworkWatcherData IJsonModel<NetworkWatcherData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<NetworkWatcherData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkWatcherData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         NetworkWatcherData IPersistableModel<NetworkWatcherData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkWatcherData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<NetworkWatcherData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkWatcherData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<NetworkWatcherData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

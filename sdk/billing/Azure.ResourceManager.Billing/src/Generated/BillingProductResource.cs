@@ -7,45 +7,37 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Billing.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Billing
 {
     /// <summary>
-    /// A Class representing a BillingProduct along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BillingProductResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetBillingProductResource method.
-    /// Otherwise you can get one from its parent resource <see cref="BillingAccountResource"/> using the GetBillingProduct method.
+    /// A class representing a BillingProduct along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BillingProductResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="BillingAccountResource"/> using the GetBillingProducts method.
     /// </summary>
     public partial class BillingProductResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="BillingProductResource"/> instance. </summary>
-        /// <param name="billingAccountName"> The billingAccountName. </param>
-        /// <param name="productName"> The productName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string billingAccountName, string productName)
-        {
-            var resourceId = $"/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/products/{productName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _billingProductProductsClientDiagnostics;
-        private readonly ProductsRestOperations _billingProductProductsRestClient;
+        private readonly ClientDiagnostics _productsClientDiagnostics;
+        private readonly Products _productsRestClient;
         private readonly BillingProductData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Billing/billingAccounts/products";
 
-        /// <summary> Initializes a new instance of the <see cref="BillingProductResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of BillingProductResource for mocking. </summary>
         protected BillingProductResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="BillingProductResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingProductResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal BillingProductResource(ArmClient client, BillingProductData data) : this(client, data.Id)
@@ -54,71 +46,91 @@ namespace Azure.ResourceManager.Billing
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="BillingProductResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingProductResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal BillingProductResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _billingProductProductsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string billingProductProductsApiVersion);
-            _billingProductProductsRestClient = new ProductsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, billingProductProductsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string billingProductApiVersion);
+            _productsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
+            _productsRestClient = new Products(_productsClientDiagnostics, Pipeline, Endpoint, billingProductApiVersion ?? "2024-04-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual BillingProductData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="billingAccountName"> The billingAccountName. </param>
+        /// <param name="productName"> The productName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string billingAccountName, string productName)
+        {
+            string resourceId = $"/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/products/{productName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets a product by ID. The operation is supported only for billing accounts with agreement type Microsoft Customer Agreement.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/products/{productName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/products/{productName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Products_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Products_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingProductResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingProductResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<BillingProductResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _billingProductProductsClientDiagnostics.CreateScope("BillingProductResource.Get");
+            using DiagnosticScope scope = _productsClientDiagnostics.CreateScope("BillingProductResource.Get");
             scope.Start();
             try
             {
-                var response = await _billingProductProductsRestClient.GetAsync(Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _productsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<BillingProductData> response = Response.FromValue(BillingProductData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new BillingProductResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -132,33 +144,41 @@ namespace Azure.ResourceManager.Billing
         /// Gets a product by ID. The operation is supported only for billing accounts with agreement type Microsoft Customer Agreement.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/products/{productName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/products/{productName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Products_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Products_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingProductResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingProductResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<BillingProductResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _billingProductProductsClientDiagnostics.CreateScope("BillingProductResource.Get");
+            using DiagnosticScope scope = _productsClientDiagnostics.CreateScope("BillingProductResource.Get");
             scope.Start();
             try
             {
-                var response = _billingProductProductsRestClient.Get(Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _productsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<BillingProductData> response = Response.FromValue(BillingProductData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new BillingProductResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -172,20 +192,20 @@ namespace Azure.ResourceManager.Billing
         /// Updates the properties of a Product. Currently, auto renew can be updated. The operation is supported only for billing accounts with agreement type Microsoft Customer Agreement.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/products/{productName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/products/{productName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Products_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> Products_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingProductResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingProductResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -196,11 +216,21 @@ namespace Azure.ResourceManager.Billing
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _billingProductProductsClientDiagnostics.CreateScope("BillingProductResource.Update");
+            using DiagnosticScope scope = _productsClientDiagnostics.CreateScope("BillingProductResource.Update");
             scope.Start();
             try
             {
-                var response = await _billingProductProductsRestClient.UpdateAsync(Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _productsRestClient.CreateUpdateRequest(Id.Parent.Name, Id.Name, BillingProductPatch.ToRequestContent(patch), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<BillingProductData> response = Response.FromValue(BillingProductData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new BillingProductResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -214,20 +244,20 @@ namespace Azure.ResourceManager.Billing
         /// Updates the properties of a Product. Currently, auto renew can be updated. The operation is supported only for billing accounts with agreement type Microsoft Customer Agreement.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/products/{productName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/products/{productName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Products_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> Products_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingProductResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingProductResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -238,11 +268,21 @@ namespace Azure.ResourceManager.Billing
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _billingProductProductsClientDiagnostics.CreateScope("BillingProductResource.Update");
+            using DiagnosticScope scope = _productsClientDiagnostics.CreateScope("BillingProductResource.Update");
             scope.Start();
             try
             {
-                var response = _billingProductProductsRestClient.Update(Id.Parent.Name, Id.Name, patch, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _productsRestClient.CreateUpdateRequest(Id.Parent.Name, Id.Name, BillingProductPatch.ToRequestContent(patch), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<BillingProductData> response = Response.FromValue(BillingProductData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new BillingProductResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -256,20 +296,20 @@ namespace Azure.ResourceManager.Billing
         /// Moves a product's charges to a new invoice section. The new invoice section must belong to the same billing profile as the existing invoice section. This operation is supported only for products that are purchased with a recurring charge and for billing accounts with agreement type Microsoft Customer Agreement.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/products/{productName}/move</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/products/{productName}/move. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Products_Move</description>
+        /// <term> Operation Id. </term>
+        /// <description> Products_Move. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingProductResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingProductResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -281,14 +321,27 @@ namespace Azure.ResourceManager.Billing
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _billingProductProductsClientDiagnostics.CreateScope("BillingProductResource.Move");
+            using DiagnosticScope scope = _productsClientDiagnostics.CreateScope("BillingProductResource.Move");
             scope.Start();
             try
             {
-                var response = await _billingProductProductsRestClient.MoveAsync(Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new BillingArmOperation<BillingProductResource>(new BillingProductOperationSource(Client), _billingProductProductsClientDiagnostics, Pipeline, _billingProductProductsRestClient.CreateMoveRequest(Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _productsRestClient.CreateMoveRequest(Id.Parent.Name, Id.Name, MoveProductContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                BillingArmOperation<BillingProductResource> operation = new BillingArmOperation<BillingProductResource>(
+                    new BillingProductResourceOperationSource(Client),
+                    _productsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -302,20 +355,20 @@ namespace Azure.ResourceManager.Billing
         /// Moves a product's charges to a new invoice section. The new invoice section must belong to the same billing profile as the existing invoice section. This operation is supported only for products that are purchased with a recurring charge and for billing accounts with agreement type Microsoft Customer Agreement.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/products/{productName}/move</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/products/{productName}/move. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Products_Move</description>
+        /// <term> Operation Id. </term>
+        /// <description> Products_Move. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingProductResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingProductResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -327,14 +380,27 @@ namespace Azure.ResourceManager.Billing
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _billingProductProductsClientDiagnostics.CreateScope("BillingProductResource.Move");
+            using DiagnosticScope scope = _productsClientDiagnostics.CreateScope("BillingProductResource.Move");
             scope.Start();
             try
             {
-                var response = _billingProductProductsRestClient.Move(Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new BillingArmOperation<BillingProductResource>(new BillingProductOperationSource(Client), _billingProductProductsClientDiagnostics, Pipeline, _billingProductProductsRestClient.CreateMoveRequest(Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _productsRestClient.CreateMoveRequest(Id.Parent.Name, Id.Name, MoveProductContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                BillingArmOperation<BillingProductResource> operation = new BillingArmOperation<BillingProductResource>(
+                    new BillingProductResourceOperationSource(Client),
+                    _productsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -348,20 +414,20 @@ namespace Azure.ResourceManager.Billing
         /// Validates if a product's charges can be moved to a new invoice section. This operation is supported only for products that are purchased with a recurring charge and for billing accounts with agreement type Microsoft Customer Agreement.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/products/{productName}/validateMoveEligibility</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/products/{productName}/validateMoveEligibility. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Products_ValidateMoveEligibility</description>
+        /// <term> Operation Id. </term>
+        /// <description> Products_ValidateMoveEligibility. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingProductResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingProductResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -372,11 +438,21 @@ namespace Azure.ResourceManager.Billing
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _billingProductProductsClientDiagnostics.CreateScope("BillingProductResource.ValidateMoveEligibility");
+            using DiagnosticScope scope = _productsClientDiagnostics.CreateScope("BillingProductResource.ValidateMoveEligibility");
             scope.Start();
             try
             {
-                var response = await _billingProductProductsRestClient.ValidateMoveEligibilityAsync(Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _productsRestClient.CreateValidateMoveEligibilityRequest(Id.Parent.Name, Id.Name, MoveProductContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<MoveProductEligibilityResult> response = Response.FromValue(MoveProductEligibilityResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -390,20 +466,20 @@ namespace Azure.ResourceManager.Billing
         /// Validates if a product's charges can be moved to a new invoice section. This operation is supported only for products that are purchased with a recurring charge and for billing accounts with agreement type Microsoft Customer Agreement.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/products/{productName}/validateMoveEligibility</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/products/{productName}/validateMoveEligibility. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Products_ValidateMoveEligibility</description>
+        /// <term> Operation Id. </term>
+        /// <description> Products_ValidateMoveEligibility. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingProductResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingProductResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -414,11 +490,21 @@ namespace Azure.ResourceManager.Billing
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _billingProductProductsClientDiagnostics.CreateScope("BillingProductResource.ValidateMoveEligibility");
+            using DiagnosticScope scope = _productsClientDiagnostics.CreateScope("BillingProductResource.ValidateMoveEligibility");
             scope.Start();
             try
             {
-                var response = _billingProductProductsRestClient.ValidateMoveEligibility(Id.Parent.Name, Id.Name, content, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _productsRestClient.CreateValidateMoveEligibilityRequest(Id.Parent.Name, Id.Name, MoveProductContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<MoveProductEligibilityResult> response = Response.FromValue(MoveProductEligibilityResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -428,27 +514,7 @@ namespace Azure.ResourceManager.Billing
             }
         }
 
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/products/{productName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Products_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingProductResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -458,29 +524,35 @@ namespace Azure.ResourceManager.Billing
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _billingProductProductsClientDiagnostics.CreateScope("BillingProductResource.AddTag");
+            using DiagnosticScope scope = _productsClientDiagnostics.CreateScope("BillingProductResource.AddTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _billingProductProductsRestClient.GetAsync(Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new BillingProductResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _productsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<BillingProductData> response = Response.FromValue(BillingProductData.FromResponse(result), result);
+                    return Response.FromValue(new BillingProductResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new BillingProductPatch();
-                    foreach (var tag in current.Tags)
+                    BillingProductData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    BillingProductPatch patch = new BillingProductPatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    Response<BillingProductResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -490,27 +562,7 @@ namespace Azure.ResourceManager.Billing
             }
         }
 
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/products/{productName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Products_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingProductResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -520,29 +572,35 @@ namespace Azure.ResourceManager.Billing
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _billingProductProductsClientDiagnostics.CreateScope("BillingProductResource.AddTag");
+            using DiagnosticScope scope = _productsClientDiagnostics.CreateScope("BillingProductResource.AddTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _billingProductProductsRestClient.Get(Id.Parent.Name, Id.Name, cancellationToken);
-                    return Response.FromValue(new BillingProductResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _productsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<BillingProductData> response = Response.FromValue(BillingProductData.FromResponse(result), result);
+                    return Response.FromValue(new BillingProductResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new BillingProductPatch();
-                    foreach (var tag in current.Tags)
+                    BillingProductData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    BillingProductPatch patch = new BillingProductPatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    Response<BillingProductResource> result = Update(patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -552,54 +610,40 @@ namespace Azure.ResourceManager.Billing
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/products/{productName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Products_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingProductResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<BillingProductResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _billingProductProductsClientDiagnostics.CreateScope("BillingProductResource.SetTags");
+            using DiagnosticScope scope = _productsClientDiagnostics.CreateScope("BillingProductResource.SetTags");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _billingProductProductsRestClient.GetAsync(Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new BillingProductResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _productsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<BillingProductData> response = Response.FromValue(BillingProductData.FromResponse(result), result);
+                    return Response.FromValue(new BillingProductResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new BillingProductPatch();
+                    BillingProductData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    BillingProductPatch patch = new BillingProductPatch();
                     patch.Tags.ReplaceWith(tags);
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    Response<BillingProductResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -609,54 +653,40 @@ namespace Azure.ResourceManager.Billing
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/products/{productName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Products_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingProductResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<BillingProductResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _billingProductProductsClientDiagnostics.CreateScope("BillingProductResource.SetTags");
+            using DiagnosticScope scope = _productsClientDiagnostics.CreateScope("BillingProductResource.SetTags");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _billingProductProductsRestClient.Get(Id.Parent.Name, Id.Name, cancellationToken);
-                    return Response.FromValue(new BillingProductResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _productsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<BillingProductData> response = Response.FromValue(BillingProductData.FromResponse(result), result);
+                    return Response.FromValue(new BillingProductResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new BillingProductPatch();
+                    BillingProductData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    BillingProductPatch patch = new BillingProductPatch();
                     patch.Tags.ReplaceWith(tags);
-                    var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    Response<BillingProductResource> result = Update(patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -666,27 +696,7 @@ namespace Azure.ResourceManager.Billing
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/products/{productName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Products_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingProductResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -694,29 +704,35 @@ namespace Azure.ResourceManager.Billing
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _billingProductProductsClientDiagnostics.CreateScope("BillingProductResource.RemoveTag");
+            using DiagnosticScope scope = _productsClientDiagnostics.CreateScope("BillingProductResource.RemoveTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _billingProductProductsRestClient.GetAsync(Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new BillingProductResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _productsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<BillingProductData> response = Response.FromValue(BillingProductData.FromResponse(result), result);
+                    return Response.FromValue(new BillingProductResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new BillingProductPatch();
-                    foreach (var tag in current.Tags)
+                    BillingProductData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    BillingProductPatch patch = new BillingProductPatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    Response<BillingProductResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -726,27 +742,7 @@ namespace Azure.ResourceManager.Billing
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/products/{productName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Products_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingProductResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -754,29 +750,35 @@ namespace Azure.ResourceManager.Billing
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _billingProductProductsClientDiagnostics.CreateScope("BillingProductResource.RemoveTag");
+            using DiagnosticScope scope = _productsClientDiagnostics.CreateScope("BillingProductResource.RemoveTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _billingProductProductsRestClient.Get(Id.Parent.Name, Id.Name, cancellationToken);
-                    return Response.FromValue(new BillingProductResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _productsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<BillingProductData> response = Response.FromValue(BillingProductData.FromResponse(result), result);
+                    return Response.FromValue(new BillingProductResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new BillingProductPatch();
-                    foreach (var tag in current.Tags)
+                    BillingProductData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    BillingProductPatch patch = new BillingProductPatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    Response<BillingProductResource> result = Update(patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)

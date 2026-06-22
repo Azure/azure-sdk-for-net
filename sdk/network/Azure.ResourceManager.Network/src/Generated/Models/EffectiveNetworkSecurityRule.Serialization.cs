@@ -8,17 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class EffectiveNetworkSecurityRule : IUtf8JsonSerializable, IJsonModel<EffectiveNetworkSecurityRule>
+    /// <summary> Effective network security rules. </summary>
+    public partial class EffectiveNetworkSecurityRule : IJsonModel<EffectiveNetworkSecurityRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EffectiveNetworkSecurityRule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual EffectiveNetworkSecurityRule PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<EffectiveNetworkSecurityRule>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeEffectiveNetworkSecurityRule(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(EffectiveNetworkSecurityRule)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<EffectiveNetworkSecurityRule>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(EffectiveNetworkSecurityRule)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<EffectiveNetworkSecurityRule>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        EffectiveNetworkSecurityRule IPersistableModel<EffectiveNetworkSecurityRule>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<EffectiveNetworkSecurityRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<EffectiveNetworkSecurityRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,12 +69,11 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EffectiveNetworkSecurityRule>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EffectiveNetworkSecurityRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(EffectiveNetworkSecurityRule)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
@@ -60,8 +98,13 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("sourcePortRanges"u8);
                 writer.WriteStartArray();
-                foreach (var item in SourcePortRanges)
+                foreach (string item in SourcePortRanges)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -70,8 +113,13 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("destinationPortRanges"u8);
                 writer.WriteStartArray();
-                foreach (var item in DestinationPortRanges)
+                foreach (string item in DestinationPortRanges)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -90,8 +138,13 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("sourceAddressPrefixes"u8);
                 writer.WriteStartArray();
-                foreach (var item in SourceAddressPrefixes)
+                foreach (string item in SourceAddressPrefixes)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -100,8 +153,13 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("destinationAddressPrefixes"u8);
                 writer.WriteStartArray();
-                foreach (var item in DestinationAddressPrefixes)
+                foreach (string item in DestinationAddressPrefixes)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -110,8 +168,13 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("expandedSourceAddressPrefix"u8);
                 writer.WriteStartArray();
-                foreach (var item in ExpandedSourceAddressPrefix)
+                foreach (string item in ExpandedSourceAddressPrefix)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -120,8 +183,13 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("expandedDestinationAddressPrefix"u8);
                 writer.WriteStartArray();
-                foreach (var item in ExpandedDestinationAddressPrefix)
+                foreach (string item in ExpandedDestinationAddressPrefix)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -141,15 +209,15 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("direction"u8);
                 writer.WriteStringValue(Direction.Value.ToString());
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -158,22 +226,27 @@ namespace Azure.ResourceManager.Network.Models
             }
         }
 
-        EffectiveNetworkSecurityRule IJsonModel<EffectiveNetworkSecurityRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        EffectiveNetworkSecurityRule IJsonModel<EffectiveNetworkSecurityRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual EffectiveNetworkSecurityRule JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EffectiveNetworkSecurityRule>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EffectiveNetworkSecurityRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(EffectiveNetworkSecurityRule)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeEffectiveNetworkSecurityRule(document.RootElement, options);
         }
 
-        internal static EffectiveNetworkSecurityRule DeserializeEffectiveNetworkSecurityRule(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static EffectiveNetworkSecurityRule DeserializeEffectiveNetworkSecurityRule(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -193,161 +266,201 @@ namespace Azure.ResourceManager.Network.Models
             SecurityRuleAccess? access = default;
             int? priority = default;
             SecurityRuleDirection? direction = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("name"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    name = property.Value.GetString();
+                    name = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("protocol"u8))
+                if (prop.NameEquals("protocol"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    protocol = new EffectiveSecurityRuleProtocol(property.Value.GetString());
+                    protocol = new EffectiveSecurityRuleProtocol(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("sourcePortRange"u8))
+                if (prop.NameEquals("sourcePortRange"u8))
                 {
-                    sourcePortRange = property.Value.GetString();
+                    sourcePortRange = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("destinationPortRange"u8))
+                if (prop.NameEquals("destinationPortRange"u8))
                 {
-                    destinationPortRange = property.Value.GetString();
+                    destinationPortRange = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sourcePortRanges"u8))
+                if (prop.NameEquals("sourcePortRanges"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     sourcePortRanges = array;
                     continue;
                 }
-                if (property.NameEquals("destinationPortRanges"u8))
+                if (prop.NameEquals("destinationPortRanges"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     destinationPortRanges = array;
                     continue;
                 }
-                if (property.NameEquals("sourceAddressPrefix"u8))
+                if (prop.NameEquals("sourceAddressPrefix"u8))
                 {
-                    sourceAddressPrefix = property.Value.GetString();
+                    sourceAddressPrefix = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("destinationAddressPrefix"u8))
+                if (prop.NameEquals("destinationAddressPrefix"u8))
                 {
-                    destinationAddressPrefix = property.Value.GetString();
+                    destinationAddressPrefix = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sourceAddressPrefixes"u8))
+                if (prop.NameEquals("sourceAddressPrefixes"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     sourceAddressPrefixes = array;
                     continue;
                 }
-                if (property.NameEquals("destinationAddressPrefixes"u8))
+                if (prop.NameEquals("destinationAddressPrefixes"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     destinationAddressPrefixes = array;
                     continue;
                 }
-                if (property.NameEquals("expandedSourceAddressPrefix"u8))
+                if (prop.NameEquals("expandedSourceAddressPrefix"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     expandedSourceAddressPrefix = array;
                     continue;
                 }
-                if (property.NameEquals("expandedDestinationAddressPrefix"u8))
+                if (prop.NameEquals("expandedDestinationAddressPrefix"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     expandedDestinationAddressPrefix = array;
                     continue;
                 }
-                if (property.NameEquals("access"u8))
+                if (prop.NameEquals("access"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    access = new SecurityRuleAccess(property.Value.GetString());
+                    access = new SecurityRuleAccess(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("priority"u8))
+                if (prop.NameEquals("priority"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    priority = property.Value.GetInt32();
+                    priority = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("direction"u8))
+                if (prop.NameEquals("direction"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    direction = new SecurityRuleDirection(property.Value.GetString());
+                    direction = new SecurityRuleDirection(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new EffectiveNetworkSecurityRule(
                 name,
                 protocol,
@@ -364,446 +477,7 @@ namespace Azure.ResourceManager.Network.Models
                 access,
                 priority,
                 direction,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  name: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Name))
-                {
-                    builder.Append("  name: ");
-                    if (Name.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Name}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Name}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Protocol), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  protocol: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Protocol))
-                {
-                    builder.Append("  protocol: ");
-                    builder.AppendLine($"'{Protocol.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SourcePortRange), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  sourcePortRange: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SourcePortRange))
-                {
-                    builder.Append("  sourcePortRange: ");
-                    if (SourcePortRange.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{SourcePortRange}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{SourcePortRange}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DestinationPortRange), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  destinationPortRange: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(DestinationPortRange))
-                {
-                    builder.Append("  destinationPortRange: ");
-                    if (DestinationPortRange.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{DestinationPortRange}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{DestinationPortRange}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SourcePortRanges), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  sourcePortRanges: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(SourcePortRanges))
-                {
-                    if (SourcePortRanges.Any())
-                    {
-                        builder.Append("  sourcePortRanges: ");
-                        builder.AppendLine("[");
-                        foreach (var item in SourcePortRanges)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("    '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"    '{item}'");
-                            }
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DestinationPortRanges), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  destinationPortRanges: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(DestinationPortRanges))
-                {
-                    if (DestinationPortRanges.Any())
-                    {
-                        builder.Append("  destinationPortRanges: ");
-                        builder.AppendLine("[");
-                        foreach (var item in DestinationPortRanges)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("    '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"    '{item}'");
-                            }
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SourceAddressPrefix), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  sourceAddressPrefix: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SourceAddressPrefix))
-                {
-                    builder.Append("  sourceAddressPrefix: ");
-                    if (SourceAddressPrefix.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{SourceAddressPrefix}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{SourceAddressPrefix}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DestinationAddressPrefix), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  destinationAddressPrefix: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(DestinationAddressPrefix))
-                {
-                    builder.Append("  destinationAddressPrefix: ");
-                    if (DestinationAddressPrefix.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{DestinationAddressPrefix}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{DestinationAddressPrefix}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SourceAddressPrefixes), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  sourceAddressPrefixes: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(SourceAddressPrefixes))
-                {
-                    if (SourceAddressPrefixes.Any())
-                    {
-                        builder.Append("  sourceAddressPrefixes: ");
-                        builder.AppendLine("[");
-                        foreach (var item in SourceAddressPrefixes)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("    '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"    '{item}'");
-                            }
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DestinationAddressPrefixes), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  destinationAddressPrefixes: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(DestinationAddressPrefixes))
-                {
-                    if (DestinationAddressPrefixes.Any())
-                    {
-                        builder.Append("  destinationAddressPrefixes: ");
-                        builder.AppendLine("[");
-                        foreach (var item in DestinationAddressPrefixes)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("    '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"    '{item}'");
-                            }
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExpandedSourceAddressPrefix), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  expandedSourceAddressPrefix: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(ExpandedSourceAddressPrefix))
-                {
-                    if (ExpandedSourceAddressPrefix.Any())
-                    {
-                        builder.Append("  expandedSourceAddressPrefix: ");
-                        builder.AppendLine("[");
-                        foreach (var item in ExpandedSourceAddressPrefix)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("    '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"    '{item}'");
-                            }
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExpandedDestinationAddressPrefix), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  expandedDestinationAddressPrefix: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(ExpandedDestinationAddressPrefix))
-                {
-                    if (ExpandedDestinationAddressPrefix.Any())
-                    {
-                        builder.Append("  expandedDestinationAddressPrefix: ");
-                        builder.AppendLine("[");
-                        foreach (var item in ExpandedDestinationAddressPrefix)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("    '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"    '{item}'");
-                            }
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Access), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  access: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Access))
-                {
-                    builder.Append("  access: ");
-                    builder.AppendLine($"'{Access.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Priority), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  priority: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Priority))
-                {
-                    builder.Append("  priority: ");
-                    builder.AppendLine($"{Priority.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Direction), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  direction: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Direction))
-                {
-                    builder.Append("  direction: ");
-                    builder.AppendLine($"'{Direction.Value.ToString()}'");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<EffectiveNetworkSecurityRule>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<EffectiveNetworkSecurityRule>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(EffectiveNetworkSecurityRule)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        EffectiveNetworkSecurityRule IPersistableModel<EffectiveNetworkSecurityRule>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<EffectiveNetworkSecurityRule>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeEffectiveNetworkSecurityRule(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(EffectiveNetworkSecurityRule)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<EffectiveNetworkSecurityRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

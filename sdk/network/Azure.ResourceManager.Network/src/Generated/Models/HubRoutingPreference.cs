@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct HubRoutingPreference : IEquatable<HubRoutingPreference>
     {
         private readonly string _value;
+        /// <summary> ExpressRoute. </summary>
+        private const string ExpressRouteValue = "ExpressRoute";
+        /// <summary> VpnGateway. </summary>
+        private const string VpnGatewayValue = "VpnGateway";
+        /// <summary> ASPath. </summary>
+        private const string ASPathValue = "ASPath";
 
         /// <summary> Initializes a new instance of <see cref="HubRoutingPreference"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public HubRoutingPreference(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ExpressRouteValue = "ExpressRoute";
-        private const string VpnGatewayValue = "VpnGateway";
-        private const string ASPathValue = "ASPath";
+            _value = value;
+        }
 
         /// <summary> ExpressRoute. </summary>
         public static HubRoutingPreference ExpressRoute { get; } = new HubRoutingPreference(ExpressRouteValue);
+
         /// <summary> VpnGateway. </summary>
         public static HubRoutingPreference VpnGateway { get; } = new HubRoutingPreference(VpnGatewayValue);
+
         /// <summary> ASPath. </summary>
         public static HubRoutingPreference ASPath { get; } = new HubRoutingPreference(ASPathValue);
+
         /// <summary> Determines if two <see cref="HubRoutingPreference"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(HubRoutingPreference left, HubRoutingPreference right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="HubRoutingPreference"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(HubRoutingPreference left, HubRoutingPreference right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="HubRoutingPreference"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="HubRoutingPreference"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator HubRoutingPreference(string value) => new HubRoutingPreference(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="HubRoutingPreference"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator HubRoutingPreference?(string value) => value == null ? null : new HubRoutingPreference(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is HubRoutingPreference other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(HubRoutingPreference other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

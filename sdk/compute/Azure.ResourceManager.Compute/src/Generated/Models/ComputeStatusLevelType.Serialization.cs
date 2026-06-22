@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Compute.Models
 {
     internal static partial class ComputeStatusLevelTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ComputeStatusLevelType value) => value switch
         {
             ComputeStatusLevelType.Info => "Info",
@@ -19,11 +20,21 @@ namespace Azure.ResourceManager.Compute.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ComputeStatusLevelType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static ComputeStatusLevelType ToComputeStatusLevelType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Info")) return ComputeStatusLevelType.Info;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Warning")) return ComputeStatusLevelType.Warning;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Error")) return ComputeStatusLevelType.Error;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Info"))
+            {
+                return ComputeStatusLevelType.Info;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Warning"))
+            {
+                return ComputeStatusLevelType.Warning;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Error"))
+            {
+                return ComputeStatusLevelType.Error;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ComputeStatusLevelType value.");
         }
     }

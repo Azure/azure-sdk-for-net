@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.HybridNetwork;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     public readonly partial struct PodEventType : IEquatable<PodEventType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="PodEventType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public PodEventType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string NormalValue = "Normal";
         private const string WarningValue = "Warning";
 
-        /// <summary> Normal. </summary>
+        /// <summary> Initializes a new instance of <see cref="PodEventType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public PodEventType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Normal. </summary>
         public static PodEventType Normal { get; } = new PodEventType(NormalValue);
-        /// <summary> Warning. </summary>
+
+        /// <summary> Gets the Warning. </summary>
         public static PodEventType Warning { get; } = new PodEventType(WarningValue);
+
         /// <summary> Determines if two <see cref="PodEventType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PodEventType left, PodEventType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PodEventType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PodEventType left, PodEventType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PodEventType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PodEventType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PodEventType(string value) => new PodEventType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PodEventType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PodEventType?(string value) => value == null ? null : new PodEventType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PodEventType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PodEventType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

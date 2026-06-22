@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network.Samples
             InboundNatRuleResource inboundNatRule = client.GetInboundNatRuleResource(inboundNatRuleResourceId);
 
             // invoke the operation
-            await inboundNatRule.DeleteAsync(WaitUntil.Completed);
+            await inboundNatRule.DeleteAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Network.Samples
                 EnableFloatingIP = false,
                 EnableTcpReset = false,
             };
-            ArmOperation<InboundNatRuleResource> lro = await inboundNatRule.UpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<InboundNatRuleResource> lro = await inboundNatRule.UpdateAsync(WaitUntil.Completed, data, cancellationToken: System.Threading.CancellationToken.None);
             InboundNatRuleResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

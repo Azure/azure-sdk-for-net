@@ -10,6 +10,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.CosmosDB.Tests
 {
+    [Ignore("Blocked by Azure.ResourceManager.Network MPG migration playback mismatch; see https://github.com/Azure/azure-sdk-for-net/issues/59918.")]
     public class PrivateEndpointConnectionTests : CosmosDBManagementClientBase
     {
         private ResourceIdentifier _databaseAccountIdentifier;
