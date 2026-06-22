@@ -61,17 +61,17 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             TryGetApiVersion(ResourceType, out string sessionHostManagementApiVersion);
             _sessionHostManagementsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ResourceType.Namespace, Diagnostics);
-            _sessionHostManagementsRestClient = new SessionHostManagements(_sessionHostManagementsClientDiagnostics, Pipeline, Endpoint, sessionHostManagementApiVersion ?? "2026-01-01-preview");
+            _sessionHostManagementsRestClient = new SessionHostManagements(_sessionHostManagementsClientDiagnostics, Pipeline, Endpoint, sessionHostManagementApiVersion ?? "2026-03-01-preview");
             _controlSessionHostProvisioningClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ResourceType.Namespace, Diagnostics);
-            _controlSessionHostProvisioningRestClient = new ControlSessionHostProvisioning(_controlSessionHostProvisioningClientDiagnostics, Pipeline, Endpoint, sessionHostManagementApiVersion ?? "2026-01-01-preview");
+            _controlSessionHostProvisioningRestClient = new ControlSessionHostProvisioning(_controlSessionHostProvisioningClientDiagnostics, Pipeline, Endpoint, sessionHostManagementApiVersion ?? "2026-03-01-preview");
             _controlSessionHostUpdateClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ResourceType.Namespace, Diagnostics);
-            _controlSessionHostUpdateRestClient = new ControlSessionHostUpdate(_controlSessionHostUpdateClientDiagnostics, Pipeline, Endpoint, sessionHostManagementApiVersion ?? "2026-01-01-preview");
+            _controlSessionHostUpdateRestClient = new ControlSessionHostUpdate(_controlSessionHostUpdateClientDiagnostics, Pipeline, Endpoint, sessionHostManagementApiVersion ?? "2026-03-01-preview");
             _initiateSessionHostUpdateClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ResourceType.Namespace, Diagnostics);
-            _initiateSessionHostUpdateRestClient = new InitiateSessionHostUpdate(_initiateSessionHostUpdateClientDiagnostics, Pipeline, Endpoint, sessionHostManagementApiVersion ?? "2026-01-01-preview");
+            _initiateSessionHostUpdateRestClient = new InitiateSessionHostUpdate(_initiateSessionHostUpdateClientDiagnostics, Pipeline, Endpoint, sessionHostManagementApiVersion ?? "2026-03-01-preview");
             _sessionHostManagementProvisioningStatusesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ResourceType.Namespace, Diagnostics);
-            _sessionHostManagementProvisioningStatusesRestClient = new SessionHostManagementProvisioningStatuses(_sessionHostManagementProvisioningStatusesClientDiagnostics, Pipeline, Endpoint, sessionHostManagementApiVersion ?? "2026-01-01-preview");
+            _sessionHostManagementProvisioningStatusesRestClient = new SessionHostManagementProvisioningStatuses(_sessionHostManagementProvisioningStatusesClientDiagnostics, Pipeline, Endpoint, sessionHostManagementApiVersion ?? "2026-03-01-preview");
             _sessionHostManagementUpdateStatusesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ResourceType.Namespace, Diagnostics);
-            _sessionHostManagementUpdateStatusesRestClient = new SessionHostManagementUpdateStatuses(_sessionHostManagementUpdateStatusesClientDiagnostics, Pipeline, Endpoint, sessionHostManagementApiVersion ?? "2026-01-01-preview");
+            _sessionHostManagementUpdateStatusesRestClient = new SessionHostManagementUpdateStatuses(_sessionHostManagementUpdateStatusesClientDiagnostics, Pipeline, Endpoint, sessionHostManagementApiVersion ?? "2026-03-01-preview");
             ValidateResourceId(id);
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -536,7 +536,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -589,7 +589,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -642,7 +642,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -686,7 +686,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -730,7 +730,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -778,7 +778,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -826,7 +826,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -874,7 +874,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01-preview. </description>
+        /// <description> 2026-03-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

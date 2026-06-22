@@ -479,6 +479,24 @@ namespace Azure.ResourceManager.Hci
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="EdgeMachineUpdateResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableHciArmClient.GetEdgeMachineUpdateResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="EdgeMachineUpdateResource"/> object. </returns>
+        public static EdgeMachineUpdateResource GetEdgeMachineUpdateResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableHciArmClient(client).GetEdgeMachineUpdateResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="ClusterJobResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
@@ -512,6 +530,150 @@ namespace Azure.ResourceManager.Hci
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableHciArmClient(client).GetDevicePoolResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="EdgeMachineGpuResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableHciArmClient.GetEdgeMachineGpuResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="EdgeMachineGpuResource"/> object. </returns>
+        public static EdgeMachineGpuResource GetEdgeMachineGpuResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableHciArmClient(client).GetEdgeMachineGpuResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="EdgeMachineGpuJobResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableHciArmClient.GetEdgeMachineGpuJobResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="EdgeMachineGpuJobResource"/> object. </returns>
+        public static EdgeMachineGpuJobResource GetEdgeMachineGpuJobResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableHciArmClient(client).GetEdgeMachineGpuJobResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="EdgeMachineNetworkAdapterResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableHciArmClient.GetEdgeMachineNetworkAdapterResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="EdgeMachineNetworkAdapterResource"/> object. </returns>
+        public static EdgeMachineNetworkAdapterResource GetEdgeMachineNetworkAdapterResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableHciArmClient(client).GetEdgeMachineNetworkAdapterResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="EdgeMachineNetworkAdapterJobResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableHciArmClient.GetEdgeMachineNetworkAdapterJobResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="EdgeMachineNetworkAdapterJobResource"/> object. </returns>
+        public static EdgeMachineNetworkAdapterJobResource GetEdgeMachineNetworkAdapterJobResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableHciArmClient(client).GetEdgeMachineNetworkAdapterJobResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="EdgeMachineDiskResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableHciArmClient.GetEdgeMachineDiskResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="EdgeMachineDiskResource"/> object. </returns>
+        public static EdgeMachineDiskResource GetEdgeMachineDiskResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableHciArmClient(client).GetEdgeMachineDiskResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="EdgeMachineVolumeResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableHciArmClient.GetEdgeMachineVolumeResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="EdgeMachineVolumeResource"/> object. </returns>
+        public static EdgeMachineVolumeResource GetEdgeMachineVolumeResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableHciArmClient(client).GetEdgeMachineVolumeResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="EdgeMachineDiskJobResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableHciArmClient.GetEdgeMachineDiskJobResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="EdgeMachineDiskJobResource"/> object. </returns>
+        public static EdgeMachineDiskJobResource GetEdgeMachineDiskJobResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableHciArmClient(client).GetEdgeMachineDiskJobResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="EdgeMachineDiskPrivilegedJobResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableHciArmClient.GetEdgeMachineDiskPrivilegedJobResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="EdgeMachineDiskPrivilegedJobResource"/> object. </returns>
+        public static EdgeMachineDiskPrivilegedJobResource GetEdgeMachineDiskPrivilegedJobResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableHciArmClient(client).GetEdgeMachineDiskPrivilegedJobResource(id);
         }
 
         /// <summary>
