@@ -1,8 +1,20 @@
+---
+page_type: sample
+languages:
+- csharp
+products:
+- azure
+- azure-ai-services
+urlFragment: agentserver-optimization-di
+name: Optimization-ready Hosted Agent with DI (IConfiguration)
+description: A Foundry-hosted travel agent using Azure.AI.AgentServer.Optimization.Configuration to load optimized instructions through IConfiguration DI integration.
+---
+
 # TravelAgent sample (DI / IConfiguration)
 
 A minimal but realistic Foundry [hosted agent][foundry-hosted] built with the
 [Microsoft Agent Framework][maf] — identical to the
-[procedural sample](../travel-agent-optimization-procedural/)
+[procedural sample](https://github.com/Azure/azure-sdk-for-net/tree/main/samples/agentserver/travel-agent-optimization-procedural)
 except it loads optimization config through `IConfiguration` DI integration.
 
 ## Key difference
@@ -19,7 +31,7 @@ builder.Configuration.AddOptimizationConfigSource();
 OptimizationOptions config = builder.Configuration.GetOptimizationOptions();
 ```
 
-Compare with the [procedural sample](../travel-agent-optimization-procedural/Program.cs),
+Compare with the [procedural sample](https://github.com/Azure/azure-sdk-for-net/tree/main/samples/agentserver/travel-agent-optimization-procedural/Program.cs),
 which calls `OptimizationOptionsLoader.LoadAsync()` directly.
 
 ## When to use which
@@ -49,7 +61,7 @@ Then `POST http://localhost:8088/responses` with
 ## Deploy & optimize
 
 Deployment and optimization workflows are identical to the procedural sample —
-see the [procedural sample README](../travel-agent-optimization-procedural/README.md)
+see the [procedural sample README](https://github.com/Azure/azure-sdk-for-net/tree/main/samples/agentserver/travel-agent-optimization-procedural/README.md)
 for `azd up`, `azd ai agent optimize`, and the full file map.
 
 [foundry-hosted]: https://learn.microsoft.com/azure/ai-foundry/agents/concepts/hosted-agents

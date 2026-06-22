@@ -1,3 +1,15 @@
+---
+page_type: sample
+languages:
+- csharp
+products:
+- azure
+- azure-ai-services
+urlFragment: agentserver-optimization-procedural
+name: Optimization-ready Hosted Agent (Procedural)
+description: A Foundry-hosted travel agent using Azure.AI.AgentServer.Optimization to load optimized instructions via the procedural OptimizationOptionsLoader.LoadAsync() API.
+---
+
 # TravelAgent sample — Procedural
 
 A minimal but realistic Foundry [hosted agent][foundry-hosted] built with the
@@ -7,7 +19,7 @@ a structured itinerary.
 
 This sample uses `OptimizationOptionsLoader.LoadAsync()` directly (procedural
 style). For a DI/`IConfiguration` approach, see the
-[travel-agent-optimization-di](../travel-agent-optimization-di/) sample.
+[travel-agent-optimization-di](https://github.com/Azure/azure-sdk-for-net/tree/main/samples/agentserver/travel-agent-optimization-di) sample.
 
 This sample is deployable and optimizable end-to-end:
 
@@ -101,7 +113,7 @@ needs to be set (the loader uses the local directory, Priority 3).
 > `agent.name` in `eval.yaml`.** If they diverge you'll get
 > `instruction is required for optimization`. Both ship as `travel-agent-sample`.
 
-See the [DI sample](../travel-agent-optimization-di/) for `IConfiguration` integration.
+See the [DI sample](https://github.com/Azure/azure-sdk-for-net/tree/main/samples/agentserver/travel-agent-optimization-di) for `IConfiguration` integration.
 
 [foundry-hosted]: https://learn.microsoft.com/azure/ai-foundry/agents/concepts/hosted-agents
 [maf]: https://learn.microsoft.com/dotnet/ai/microsoft-agent-framework
