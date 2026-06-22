@@ -72,14 +72,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="customBaseTypeResourceName"> The name of the CustomBaseTypeResource. </param>
-        /// <param name="data"> Resource create parameters. </param>
+        /// <param name="resource"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="customBaseTypeResourceName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="customBaseTypeResourceName"/> or <paramref name="resource"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="customBaseTypeResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<CustomBaseTypeResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string customBaseTypeResourceName, CustomBaseTypeResourceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<CustomBaseTypeResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string customBaseTypeResourceName, CustomBaseTypeResourceCustomData resource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(customBaseTypeResourceName, nameof(customBaseTypeResourceName));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(resource, nameof(resource));
 
             using DiagnosticScope scope = _customBaseTypeResourcesClientDiagnostics.CreateScope("CustomBaseTypeResourceCollection.CreateOrUpdate");
             scope.Start();
@@ -89,7 +89,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _customBaseTypeResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, customBaseTypeResourceName, CustomBaseTypeResourceData.ToRequestContent(data), context);
+                HttpMessage message = _customBaseTypeResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, customBaseTypeResourceName, CustomBaseTypeResourceCustomData.ToRequestContent(resource), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 TestsArmOperation<CustomBaseTypeResource> operation = new TestsArmOperation<CustomBaseTypeResource>(
                     new CustomBaseTypeResourceOperationSource(Client),
@@ -131,14 +131,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="customBaseTypeResourceName"> The name of the CustomBaseTypeResource. </param>
-        /// <param name="data"> Resource create parameters. </param>
+        /// <param name="resource"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="customBaseTypeResourceName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="customBaseTypeResourceName"/> or <paramref name="resource"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="customBaseTypeResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<CustomBaseTypeResource> CreateOrUpdate(WaitUntil waitUntil, string customBaseTypeResourceName, CustomBaseTypeResourceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<CustomBaseTypeResource> CreateOrUpdate(WaitUntil waitUntil, string customBaseTypeResourceName, CustomBaseTypeResourceCustomData resource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(customBaseTypeResourceName, nameof(customBaseTypeResourceName));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(resource, nameof(resource));
 
             using DiagnosticScope scope = _customBaseTypeResourcesClientDiagnostics.CreateScope("CustomBaseTypeResourceCollection.CreateOrUpdate");
             scope.Start();
@@ -148,7 +148,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _customBaseTypeResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, customBaseTypeResourceName, CustomBaseTypeResourceData.ToRequestContent(data), context);
+                HttpMessage message = _customBaseTypeResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, customBaseTypeResourceName, CustomBaseTypeResourceCustomData.ToRequestContent(resource), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 TestsArmOperation<CustomBaseTypeResource> operation = new TestsArmOperation<CustomBaseTypeResource>(
                     new CustomBaseTypeResourceOperationSource(Client),
@@ -206,7 +206,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 };
                 HttpMessage message = _customBaseTypeResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, customBaseTypeResourceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<CustomBaseTypeResourceData> response = Response.FromValue(CustomBaseTypeResourceData.FromResponse(result), result);
+                Response<CustomBaseTypeResourceCustomData> response = Response.FromValue(CustomBaseTypeResourceCustomData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -255,7 +255,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 };
                 HttpMessage message = _customBaseTypeResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, customBaseTypeResourceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<CustomBaseTypeResourceData> response = Response.FromValue(CustomBaseTypeResourceData.FromResponse(result), result);
+                Response<CustomBaseTypeResourceCustomData> response = Response.FromValue(CustomBaseTypeResourceCustomData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -305,14 +305,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 HttpMessage message = _customBaseTypeResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, customBaseTypeResourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<CustomBaseTypeResourceData> response = default;
+                Response<CustomBaseTypeResourceCustomData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(CustomBaseTypeResourceData.FromResponse(result), result);
+                        response = Response.FromValue(CustomBaseTypeResourceCustomData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((CustomBaseTypeResourceData)null, result);
+                        response = Response.FromValue((CustomBaseTypeResourceCustomData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -362,14 +362,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 HttpMessage message = _customBaseTypeResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, customBaseTypeResourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<CustomBaseTypeResourceData> response = default;
+                Response<CustomBaseTypeResourceCustomData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(CustomBaseTypeResourceData.FromResponse(result), result);
+                        response = Response.FromValue(CustomBaseTypeResourceCustomData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((CustomBaseTypeResourceData)null, result);
+                        response = Response.FromValue((CustomBaseTypeResourceCustomData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -419,14 +419,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 HttpMessage message = _customBaseTypeResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, customBaseTypeResourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<CustomBaseTypeResourceData> response = default;
+                Response<CustomBaseTypeResourceCustomData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(CustomBaseTypeResourceData.FromResponse(result), result);
+                        response = Response.FromValue(CustomBaseTypeResourceCustomData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((CustomBaseTypeResourceData)null, result);
+                        response = Response.FromValue((CustomBaseTypeResourceCustomData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -480,14 +480,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 HttpMessage message = _customBaseTypeResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, customBaseTypeResourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<CustomBaseTypeResourceData> response = default;
+                Response<CustomBaseTypeResourceCustomData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(CustomBaseTypeResourceData.FromResponse(result), result);
+                        response = Response.FromValue(CustomBaseTypeResourceCustomData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((CustomBaseTypeResourceData)null, result);
+                        response = Response.FromValue((CustomBaseTypeResourceCustomData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);

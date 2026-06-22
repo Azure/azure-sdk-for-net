@@ -474,7 +474,8 @@ namespace Azure.Storage.Sas
                 Permissions = originalQueueSasBuilder.Permissions,
                 IPRange = originalQueueSasBuilder.IPRange,
                 Identifier = originalQueueSasBuilder.Identifier,
-                QueueName = originalQueueSasBuilder.QueueName
+                QueueName = originalQueueSasBuilder.QueueName,
+                DelegatedUserObjectId = originalQueueSasBuilder.DelegatedUserObjectId
             };
     }
 }

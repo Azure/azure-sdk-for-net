@@ -7,63 +7,101 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary>
-    /// A class representing the VirtualNetworkAppliance data model.
-    /// A virtual network appliance in a resource group.
-    /// </summary>
+    /// <summary> A virtual network appliance in a resource group. </summary>
     public partial class VirtualNetworkApplianceData : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkApplianceData"/>. </summary>
         public VirtualNetworkApplianceData()
         {
-            IPConfigurations = new ChangeTrackingList<VirtualNetworkApplianceIPConfiguration>();
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkApplianceData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="type"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="bandwidthInGbps"> Bandwidth of the VirtualNetworkAppliance resource in Gbps. </param>
-        /// <param name="ipConfigurations"> A list of IPConfigurations of the virtual network appliance. </param>
-        /// <param name="provisioningState"> The provisioning state of the virtual network appliance resource. </param>
-        /// <param name="resourceGuid"> The resource GUID property of the virtual network appliance resource. </param>
-        /// <param name="subnet"> The reference to the subnet resource. </param>
-        internal VirtualNetworkApplianceData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, string bandwidthInGbps, IReadOnlyList<VirtualNetworkApplianceIPConfiguration> ipConfigurations, NetworkProvisioningState? provisioningState, Guid? resourceGuid, SubnetData subnet) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties of the virtual network appliance. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        internal VirtualNetworkApplianceData(ResourceIdentifier id, string name, string @type, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, VirtualNetworkAppliancePropertiesFormat properties, ETag? eTag) : base(id, name, @type, location, tags, additionalBinaryDataProperties)
         {
-            ETag = etag;
-            BandwidthInGbps = bandwidthInGbps;
-            IPConfigurations = ipConfigurations;
-            ProvisioningState = provisioningState;
-            ResourceGuid = resourceGuid;
-            Subnet = subnet;
+            Properties = properties;
+            ETag = eTag;
         }
+
+        /// <summary> Properties of the virtual network appliance. </summary>
+        [WirePath("properties")]
+        internal VirtualNetworkAppliancePropertiesFormat Properties { get; set; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }
-        /// <summary> Bandwidth of the VirtualNetworkAppliance resource in Gbps. </summary>
-        [WirePath("properties.bandwidthInGbps")]
-        public string BandwidthInGbps { get; set; }
+
         /// <summary> A list of IPConfigurations of the virtual network appliance. </summary>
         [WirePath("properties.ipConfigurations")]
-        public IReadOnlyList<VirtualNetworkApplianceIPConfiguration> IPConfigurations { get; }
+        public IReadOnlyList<VirtualNetworkApplianceIPConfiguration> IpConfigurations
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualNetworkAppliancePropertiesFormat();
+                }
+                return Properties.IpConfigurations;
+            }
+        }
+
+        /// <summary> Whether the specific virtual network appliance is IPv4 or Dual Stack. Default is IPv4. </summary>
+        [WirePath("properties.privateIPAddressVersion")]
+        public VirtualNetworkApplianceIpVersionType? PrivateIPAddressVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateIPAddressVersion;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualNetworkAppliancePropertiesFormat();
+                }
+                Properties.PrivateIPAddressVersion = value;
+            }
+        }
+
         /// <summary> The provisioning state of the virtual network appliance resource. </summary>
         [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
-        /// <summary> The resource GUID property of the virtual network appliance resource. </summary>
-        [WirePath("properties.resourceGuid")]
-        public Guid? ResourceGuid { get; }
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> The reference to the subnet resource. </summary>
         [WirePath("properties.subnet")]
-        public SubnetData Subnet { get; set; }
+        public SubnetData Subnet
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Subnet;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualNetworkAppliancePropertiesFormat();
+                }
+                Properties.Subnet = value;
+            }
+        }
     }
 }

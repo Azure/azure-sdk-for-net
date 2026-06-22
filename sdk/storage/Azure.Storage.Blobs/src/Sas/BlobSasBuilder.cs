@@ -702,7 +702,14 @@ namespace Azure.Storage.Sas
                 ContentType = originalBlobSasBuilder.ContentType,
                 PreauthorizedAgentObjectId = originalBlobSasBuilder.PreauthorizedAgentObjectId,
                 CorrelationId = originalBlobSasBuilder.CorrelationId,
-                EncryptionScope = originalBlobSasBuilder.EncryptionScope
+                EncryptionScope = originalBlobSasBuilder.EncryptionScope,
+                DelegatedUserObjectId = originalBlobSasBuilder.DelegatedUserObjectId,
+                RequestHeaders = originalBlobSasBuilder.RequestHeaders == null
+                    ? null
+                    : new Dictionary<string, string>(originalBlobSasBuilder.RequestHeaders),
+                RequestQueryParameters = originalBlobSasBuilder.RequestQueryParameters == null
+                    ? null
+                    : new Dictionary<string, string>(originalBlobSasBuilder.RequestQueryParameters)
             };
     }
 }

@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.HybridNetwork
 {
-    internal class PublisherOperationSource : IOperationSource<PublisherResource>
+    /// <summary></summary>
+    internal partial class PublisherOperationSource : IOperationSource<PublisherResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal PublisherOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         PublisherResource IOperationSource<PublisherResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<PublisherData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHybridNetworkContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            PublisherData data = PublisherData.DeserializePublisherData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new PublisherResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<PublisherResource> IOperationSource<PublisherResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<PublisherData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHybridNetworkContext.Default);
-            return await Task.FromResult(new PublisherResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            PublisherData data = PublisherData.DeserializePublisherData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new PublisherResource(_client, data);
         }
     }
 }

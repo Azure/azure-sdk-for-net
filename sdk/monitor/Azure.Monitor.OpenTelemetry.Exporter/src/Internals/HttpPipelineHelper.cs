@@ -375,6 +375,30 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 networkSdkStatsManager.TrackPartialSuccessAccepted(httpMessage.Request.Uri.Host, acceptedCount);
             }
 
+            // Per the Network SDKStats spec, rejected envelopes within a 206 response are
+            // classified per-envelope: retryable status codes increment Retry_Count, and
+            // non-retryable status codes increment Exception_Count.
+            if (networkSdkStatsManager != null && trackResponse.Errors != null)
+            {
+                var partialHost = httpMessage.Request.Uri.Host;
+                foreach (var error in trackResponse.Errors)
+                {
+                    if (error?.StatusCode is not int envelopeStatusCode)
+                    {
+                        continue;
+                    }
+
+                    if (NetworkSdkStatsHelper.IsRetryable(envelopeStatusCode))
+                    {
+                        networkSdkStatsManager.TrackRetry(partialHost, envelopeStatusCode);
+                    }
+                    else
+                    {
+                        networkSdkStatsManager.TrackException(partialHost, exceptionType: envelopeStatusCode.ToString(System.Globalization.CultureInfo.InvariantCulture));
+                    }
+                }
+            }
+
             var (partialContent, successCounter, retryCounter, droppedCounter) = ProcessPartialSuccessWithCounting(trackResponse, httpMessage.Request.Content, telemetrySchemaTypeCounter);
 
             if (successCounter != null)

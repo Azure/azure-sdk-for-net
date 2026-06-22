@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct LoadBalancingTransportProtocol : IEquatable<LoadBalancingTransportProtocol>
     {
         private readonly string _value;
+        /// <summary> Udp. </summary>
+        private const string UdpValue = "Udp";
+        /// <summary> Tcp. </summary>
+        private const string TcpValue = "Tcp";
+        /// <summary> All. </summary>
+        private const string AllValue = "All";
+        /// <summary> Quic. </summary>
+        private const string QuicValue = "Quic";
 
         /// <summary> Initializes a new instance of <see cref="LoadBalancingTransportProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public LoadBalancingTransportProtocol(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string UdpValue = "Udp";
-        private const string TcpValue = "Tcp";
-        private const string AllValue = "All";
-        private const string QuicValue = "Quic";
+            _value = value;
+        }
 
         /// <summary> Udp. </summary>
         public static LoadBalancingTransportProtocol Udp { get; } = new LoadBalancingTransportProtocol(UdpValue);
+
         /// <summary> Tcp. </summary>
         public static LoadBalancingTransportProtocol Tcp { get; } = new LoadBalancingTransportProtocol(TcpValue);
+
         /// <summary> All. </summary>
         public static LoadBalancingTransportProtocol All { get; } = new LoadBalancingTransportProtocol(AllValue);
+
         /// <summary> Quic. </summary>
         public static LoadBalancingTransportProtocol Quic { get; } = new LoadBalancingTransportProtocol(QuicValue);
+
         /// <summary> Determines if two <see cref="LoadBalancingTransportProtocol"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(LoadBalancingTransportProtocol left, LoadBalancingTransportProtocol right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="LoadBalancingTransportProtocol"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(LoadBalancingTransportProtocol left, LoadBalancingTransportProtocol right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="LoadBalancingTransportProtocol"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="LoadBalancingTransportProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator LoadBalancingTransportProtocol(string value) => new LoadBalancingTransportProtocol(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="LoadBalancingTransportProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator LoadBalancingTransportProtocol?(string value) => value == null ? null : new LoadBalancingTransportProtocol(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is LoadBalancingTransportProtocol other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(LoadBalancingTransportProtocol other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

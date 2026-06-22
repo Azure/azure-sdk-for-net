@@ -50,11 +50,9 @@ Subnet = new SubnetData
 {
 Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/vnetlb/subnets/subnetlb"),
 },
-Name = "fe-lb",
 }},
                 BackendAddressPools = {new BackendAddressPoolData
 {
-Name = "be-lb",
 }},
                 LoadBalancingRules = {new LoadBalancingRuleData
 {
@@ -69,7 +67,6 @@ IdleTimeoutInMinutes = 15,
 EnableFloatingIP = true,
 EnableTcpReset = false,
 },
-Name = "rulelb",
 }},
                 Probes = {new ProbeData
 {
@@ -79,7 +76,6 @@ IntervalInSeconds = 15,
 NumberOfProbes = 2,
 ProbeThreshold = 1,
 RequestPath = "healthcheck.aspx",
-Name = "probe-lb",
 }},
                 InboundNatRules = {new InboundNatRuleData
 {
@@ -90,13 +86,12 @@ BackendPort = 3389,
 IdleTimeoutInMinutes = 15,
 EnableFloatingIP = true,
 EnableTcpReset = false,
-Name = "in-nat-rule",
 }},
                 InboundNatPools = { },
                 Scope = LoadBalancerScope.Public,
                 Location = new AzureLocation("eastus"),
             };
-            ArmOperation<LoadBalancerResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, loadBalancerName, data);
+            ArmOperation<LoadBalancerResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, loadBalancerName, data, cancellationToken: System.Threading.CancellationToken.None);
             LoadBalancerResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -134,7 +129,6 @@ Name = "in-nat-rule",
             {
                 Sku = new LoadBalancerSku
                 {
-                    Name = LoadBalancerSkuName.Standard,
                 },
                 FrontendIPConfigurations = {new FrontendIPConfigurationData
 {
@@ -143,11 +137,9 @@ Subnet = new SubnetData
 {
 Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/vnetlb/subnets/subnetlb"),
 },
-Name = "fe-lb",
 }},
                 BackendAddressPools = {new BackendAddressPoolData
 {
-Name = "be-lb",
 }},
                 LoadBalancingRules = {new LoadBalancingRuleData
 {
@@ -161,7 +153,6 @@ BackendPort = 80,
 IdleTimeoutInMinutes = 15,
 EnableFloatingIP = true,
 },
-Name = "rulelb",
 }},
                 Probes = {new ProbeData
 {
@@ -171,7 +162,6 @@ IntervalInSeconds = 15,
 NumberOfProbes = 2,
 ProbeThreshold = 1,
 RequestPath = "healthcheck.aspx",
-Name = "probe-lb",
 }},
                 InboundNatRules = {new InboundNatRuleData
 {
@@ -181,13 +171,12 @@ FrontendPort = 3389,
 BackendPort = 3389,
 IdleTimeoutInMinutes = 15,
 EnableFloatingIP = true,
-Name = "in-nat-rule",
 }},
                 InboundNatPools = { },
                 OutboundRules = { },
                 Location = new AzureLocation("eastus"),
             };
-            ArmOperation<LoadBalancerResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, loadBalancerName, data);
+            ArmOperation<LoadBalancerResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, loadBalancerName, data, cancellationToken: System.Threading.CancellationToken.None);
             LoadBalancerResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -225,7 +214,6 @@ Name = "in-nat-rule",
             {
                 Sku = new LoadBalancerSku
                 {
-                    Name = LoadBalancerSkuName.Standard,
                 },
                 FrontendIPConfigurations = {new FrontendIPConfigurationData
 {
@@ -234,11 +222,9 @@ Subnet = new SubnetData
 Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/vnetlb/subnets/subnetlb"),
 },
 GatewayLoadBalancerId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/loadBalancers/lb/frontendIPConfigurations/fe-lb-provider"),
-Name = "fe-lb",
 }},
                 BackendAddressPools = {new BackendAddressPoolData
 {
-Name = "be-lb",
 }},
                 LoadBalancingRules = {new LoadBalancingRuleData
 {
@@ -252,7 +238,6 @@ BackendPort = 80,
 IdleTimeoutInMinutes = 15,
 EnableFloatingIP = true,
 },
-Name = "rulelb",
 }},
                 Probes = {new ProbeData
 {
@@ -262,7 +247,6 @@ IntervalInSeconds = 15,
 NumberOfProbes = 2,
 ProbeThreshold = 1,
 RequestPath = "healthcheck.aspx",
-Name = "probe-lb",
 }},
                 InboundNatRules = {new InboundNatRuleData
 {
@@ -272,13 +256,12 @@ FrontendPort = 3389,
 BackendPort = 3389,
 IdleTimeoutInMinutes = 15,
 EnableFloatingIP = true,
-Name = "in-nat-rule",
 }},
                 InboundNatPools = { },
                 OutboundRules = { },
                 Location = new AzureLocation("eastus"),
             };
-            ArmOperation<LoadBalancerResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, loadBalancerName, data);
+            ArmOperation<LoadBalancerResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, loadBalancerName, data, cancellationToken: System.Threading.CancellationToken.None);
             LoadBalancerResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -316,7 +299,6 @@ Name = "in-nat-rule",
             {
                 Sku = new LoadBalancerSku
                 {
-                    Name = LoadBalancerSkuName.Gateway,
                 },
                 FrontendIPConfigurations = {new FrontendIPConfigurationData
 {
@@ -324,7 +306,6 @@ Subnet = new SubnetData
 {
 Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/vnetlb/subnets/subnetlb"),
 },
-Name = "fe-lb",
 }},
                 BackendAddressPools = {new BackendAddressPoolData
 {
@@ -341,7 +322,6 @@ Identifier = 901,
 Protocol = GatewayLoadBalancerTunnelProtocol.Vxlan,
 InterfaceType = GatewayLoadBalancerTunnelInterfaceType.Internal,
 }},
-Name = "be-lb",
 }},
                 LoadBalancingRules = {new LoadBalancingRuleData
 {
@@ -358,7 +338,6 @@ BackendPort = 0,
 IdleTimeoutInMinutes = 15,
 EnableFloatingIP = true,
 },
-Name = "rulelb",
 }},
                 Probes = {new ProbeData
 {
@@ -368,13 +347,12 @@ IntervalInSeconds = 15,
 NumberOfProbes = 2,
 ProbeThreshold = 1,
 RequestPath = "healthcheck.aspx",
-Name = "probe-lb",
 }},
                 InboundNatPools = { },
                 OutboundRules = { },
                 Location = new AzureLocation("eastus"),
             };
-            ArmOperation<LoadBalancerResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, loadBalancerName, data);
+            ArmOperation<LoadBalancerResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, loadBalancerName, data, cancellationToken: System.Threading.CancellationToken.None);
             LoadBalancerResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -412,7 +390,6 @@ Name = "probe-lb",
             {
                 Sku = new LoadBalancerSku
                 {
-                    Name = LoadBalancerSkuName.Gateway,
                 },
                 FrontendIPConfigurations = {new FrontendIPConfigurationData
 {
@@ -420,14 +397,11 @@ Subnet = new SubnetData
 {
 Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/vnetlb/subnets/subnetlb"),
 },
-Name = "fe-lb",
 }},
                 BackendAddressPools = {new BackendAddressPoolData
 {
-Name = "be-lb1",
 }, new BackendAddressPoolData
 {
-Name = "be-lb2",
 }},
                 LoadBalancingRules = {new LoadBalancingRuleData
 {
@@ -447,7 +421,6 @@ BackendPort = 0,
 IdleTimeoutInMinutes = 15,
 EnableFloatingIP = true,
 },
-Name = "rulelb",
 }},
                 Probes = {new ProbeData
 {
@@ -457,13 +430,12 @@ IntervalInSeconds = 15,
 NumberOfProbes = 2,
 ProbeThreshold = 1,
 RequestPath = "healthcheck.aspx",
-Name = "probe-lb",
 }},
                 InboundNatPools = { },
                 OutboundRules = { },
                 Location = new AzureLocation("eastus"),
             };
-            ArmOperation<LoadBalancerResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, loadBalancerName, data);
+            ArmOperation<LoadBalancerResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, loadBalancerName, data, cancellationToken: System.Threading.CancellationToken.None);
             LoadBalancerResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -501,7 +473,6 @@ Name = "probe-lb",
             {
                 Sku = new LoadBalancerSku
                 {
-                    Name = LoadBalancerSkuName.Standard,
                     Tier = LoadBalancerSkuTier.Global,
                 },
                 FrontendIPConfigurations = {new FrontendIPConfigurationData
@@ -510,16 +481,13 @@ Subnet = new SubnetData
 {
 Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/vnetlb/subnets/subnetlb"),
 },
-Name = "fe-lb",
 }},
                 BackendAddressPools = {new BackendAddressPoolData
 {
 LoadBalancerBackendAddresses = {new LoadBalancerBackendAddress
 {
-Name = "regional-lb1-address",
 LoadBalancerFrontendIPConfigurationId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/regional-lb-rg1/providers/Microsoft.Network/loadBalancers/regional-lb/frontendIPConfigurations/fe-rlb"),
 }},
-Name = "be-lb",
 }},
                 LoadBalancingRules = {new LoadBalancingRuleData
 {
@@ -533,7 +501,6 @@ BackendPort = 80,
 IdleTimeoutInMinutes = 15,
 EnableFloatingIP = false,
 },
-Name = "rulelb",
 }},
                 Probes = {new ProbeData
 {
@@ -543,11 +510,10 @@ IntervalInSeconds = 15,
 NumberOfProbes = 2,
 ProbeThreshold = 1,
 RequestPath = "healthcheck.aspx",
-Name = "probe-lb",
 }},
                 Location = new AzureLocation("eastus"),
             };
-            ArmOperation<LoadBalancerResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, loadBalancerName, data);
+            ArmOperation<LoadBalancerResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, loadBalancerName, data, cancellationToken: System.Threading.CancellationToken.None);
             LoadBalancerResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -585,7 +551,6 @@ Name = "probe-lb",
             {
                 Sku = new LoadBalancerSku
                 {
-                    Name = LoadBalancerSkuName.Standard,
                 },
                 FrontendIPConfigurations = {new FrontendIPConfigurationData
 {
@@ -593,11 +558,9 @@ Subnet = new SubnetData
 {
 Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/vnetlb/subnets/subnetlb"),
 },
-Name = "fe-lb",
 }},
                 BackendAddressPools = {new BackendAddressPoolData
 {
-Name = "be-lb",
 }},
                 LoadBalancingRules = {new LoadBalancingRuleData
 {
@@ -611,7 +574,6 @@ BackendPort = 80,
 IdleTimeoutInMinutes = 15,
 EnableFloatingIP = true,
 },
-Name = "rulelb",
 }},
                 Probes = {new ProbeData
 {
@@ -621,7 +583,6 @@ IntervalInSeconds = 15,
 NumberOfProbes = 2,
 ProbeThreshold = 1,
 RequestPath = "healthcheck.aspx",
-Name = "probe-lb",
 }},
                 InboundNatRules = {new InboundNatRuleData
 {
@@ -631,13 +592,12 @@ FrontendPort = 3389,
 BackendPort = 3389,
 IdleTimeoutInMinutes = 15,
 EnableFloatingIP = true,
-Name = "in-nat-rule",
 }},
                 InboundNatPools = { },
                 OutboundRules = { },
                 Location = new AzureLocation("eastus"),
             };
-            ArmOperation<LoadBalancerResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, loadBalancerName, data);
+            ArmOperation<LoadBalancerResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, loadBalancerName, data, cancellationToken: System.Threading.CancellationToken.None);
             LoadBalancerResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -675,7 +635,6 @@ Name = "in-nat-rule",
             {
                 Sku = new LoadBalancerSku
                 {
-                    Name = LoadBalancerSkuName.Standard,
                 },
                 FrontendIPConfigurations = {new FrontendIPConfigurationData
 {
@@ -683,13 +642,11 @@ Subnet = new SubnetData
 {
 Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/vnetlb/subnets/subnetlb"),
 },
-Name = "fe-lb",
 }},
                 BackendAddressPools = {new BackendAddressPoolData
 {
 VirtualNetworkId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/vnetlb"),
 SyncMode = BackendAddressSyncMode.Automatic,
-Name = "be-lb",
 }},
                 LoadBalancingRules = {new LoadBalancingRuleData
 {
@@ -703,7 +660,6 @@ BackendPort = 80,
 IdleTimeoutInMinutes = 15,
 EnableFloatingIP = true,
 },
-Name = "rulelb",
 }},
                 Probes = {new ProbeData
 {
@@ -713,7 +669,6 @@ IntervalInSeconds = 15,
 NumberOfProbes = 2,
 ProbeThreshold = 1,
 RequestPath = "healthcheck.aspx",
-Name = "probe-lb",
 }},
                 InboundNatRules = {new InboundNatRuleData
 {
@@ -723,13 +678,12 @@ FrontendPort = 3389,
 BackendPort = 3389,
 IdleTimeoutInMinutes = 15,
 EnableFloatingIP = true,
-Name = "in-nat-rule",
 }},
                 InboundNatPools = { },
                 OutboundRules = { },
                 Location = new AzureLocation("eastus"),
             };
-            ArmOperation<LoadBalancerResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, loadBalancerName, data);
+            ArmOperation<LoadBalancerResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, loadBalancerName, data, cancellationToken: System.Threading.CancellationToken.None);
             LoadBalancerResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -767,7 +721,6 @@ Name = "in-nat-rule",
             {
                 Sku = new LoadBalancerSku
                 {
-                    Name = LoadBalancerSkuName.Standard,
                 },
                 FrontendIPConfigurations = {new FrontendIPConfigurationData
 {
@@ -778,7 +731,6 @@ Subnet = new SubnetData
 Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/lbvnet/subnets/lbsubnet"),
 },
 Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/loadBalancers/lb/frontendIPConfigurations/test"),
-Name = "test",
 }},
                 BackendAddressPools = { },
                 LoadBalancingRules = { },
@@ -794,12 +746,11 @@ EnableFloatingIP = true,
 EnableTcpReset = true,
 },
 Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/loadBalancers/lb/inboundNatPools/test"),
-Name = "test",
 }},
                 OutboundRules = { },
                 Location = new AzureLocation("eastus"),
             };
-            ArmOperation<LoadBalancerResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, loadBalancerName, data);
+            ArmOperation<LoadBalancerResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, loadBalancerName, data, cancellationToken: System.Threading.CancellationToken.None);
             LoadBalancerResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -837,7 +788,6 @@ Name = "test",
             {
                 Sku = new LoadBalancerSku
                 {
-                    Name = LoadBalancerSkuName.Standard,
                 },
                 FrontendIPConfigurations = {new FrontendIPConfigurationData
 {
@@ -845,11 +795,9 @@ PublicIPAddress = new PublicIPAddressData
 {
 Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/publicIPAddresses/pip"),
 },
-Name = "fe-lb",
 }},
                 BackendAddressPools = {new BackendAddressPoolData
 {
-Name = "be-lb",
 }},
                 LoadBalancingRules = {new LoadBalancingRuleData
 {
@@ -864,7 +812,6 @@ IdleTimeoutInMinutes = 15,
 EnableFloatingIP = true,
 DisableOutboundSnat = true,
 },
-Name = "rulelb",
 }},
                 Probes = {new ProbeData
 {
@@ -874,7 +821,6 @@ IntervalInSeconds = 15,
 NumberOfProbes = 2,
 ProbeThreshold = 1,
 RequestPath = "healthcheck.aspx",
-Name = "probe-lb",
 }},
                 InboundNatRules = {new InboundNatRuleData
 {
@@ -884,7 +830,6 @@ FrontendPort = 3389,
 BackendPort = 3389,
 IdleTimeoutInMinutes = 15,
 EnableFloatingIP = true,
-Name = "in-nat-rule",
 }},
                 InboundNatPools = { },
                 OutboundRules = {new OutboundRuleData
@@ -895,11 +840,10 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/M
 }},
 BackendAddressPoolId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/loadBalancers/lb/backendAddressPools/be-lb"),
 Protocol = LoadBalancerOutboundRuleProtocol.All,
-Name = "rule1",
 }},
                 Location = new AzureLocation("eastus"),
             };
-            ArmOperation<LoadBalancerResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, loadBalancerName, data);
+            ArmOperation<LoadBalancerResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, loadBalancerName, data, cancellationToken: System.Threading.CancellationToken.None);
             LoadBalancerResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

@@ -4,6 +4,7 @@
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Core.TestFramework.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.TestFramework;
@@ -18,15 +19,31 @@ namespace Azure.ResourceManager.Compute.Tests
         protected SubscriptionResource DefaultSubscription { get; private set; }
         public ComputeTestBase(bool isAsync) : base(isAsync)
         {
+            IgnoreAcceptHeader();
         }
 
         public ComputeTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
         {
+            IgnoreAcceptHeader();
         }
 
         protected ComputeTestBase(bool isAsync, ResourceType resourceType, string apiVersion, RecordedTestMode? mode = null)
             : base(isAsync, resourceType, apiVersion, mode)
         {
+            IgnoreAcceptHeader();
+        }
+
+        private void IgnoreAcceptHeader()
+        {
+            // The migrated generator no longer emits Accept consistently for all management operations.
+            // Ignore it so playback matching focuses on semantic request changes.
+            LegacyExcludedHeaders.Add("Accept");
+
+            UriRegexSanitizers.Add(
+                new UriRegexSanitizer("/resourceGroups/")
+                {
+                    Value = "/resourcegroups/"
+                });
         }
 
         [SetUp]

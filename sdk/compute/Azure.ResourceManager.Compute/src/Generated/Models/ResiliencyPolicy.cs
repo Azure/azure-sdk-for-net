@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes an resiliency policy - AutomaticZoneRebalancingPolicy, ResilientVMCreationPolicy, ResilientVMDeletionPolicy and OperationRecoverySettings (version &gt; 2025-11-01). </summary>
     public partial class ResiliencyPolicy
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ResiliencyPolicy"/>. </summary>
         public ResiliencyPolicy()
@@ -56,50 +27,64 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="automaticZoneRebalancingPolicy"> The configuration parameters used while performing automatic AZ balancing. </param>
         /// <param name="zoneAllocationPolicy"> The configuration parameters used while performing zone allocation. </param>
         /// <param name="operationRecoverySettings"> The configuration parameters used for operation recovery settings. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResiliencyPolicy(ResilientVmCreationPolicy resilientVmCreationPolicy, ResilientVmDeletionPolicy resilientVmDeletionPolicy, AutomaticZoneRebalancingPolicy automaticZoneRebalancingPolicy, ZoneAllocationPolicy zoneAllocationPolicy, OperationRecoverySettings operationRecoverySettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ResiliencyPolicy(ResilientVMCreationPolicy resilientVmCreationPolicy, ResilientVMDeletionPolicy resilientVmDeletionPolicy, AutomaticZoneRebalancingPolicy automaticZoneRebalancingPolicy, ZoneAllocationPolicy zoneAllocationPolicy, OperationRecoverySettings operationRecoverySettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResilientVmCreationPolicy = resilientVmCreationPolicy;
             ResilientVmDeletionPolicy = resilientVmDeletionPolicy;
             AutomaticZoneRebalancingPolicy = automaticZoneRebalancingPolicy;
             ZoneAllocationPolicy = zoneAllocationPolicy;
             OperationRecoverySettings = operationRecoverySettings;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The configuration parameters used while performing resilient VM creation. </summary>
-        internal ResilientVmCreationPolicy ResilientVmCreationPolicy { get; set; }
+        internal ResilientVMCreationPolicy ResilientVmCreationPolicy { get; set; }
+
+        /// <summary> The configuration parameters used while performing resilient VM deletion. </summary>
+        internal ResilientVMDeletionPolicy ResilientVmDeletionPolicy { get; set; }
+
+        /// <summary> The configuration parameters used while performing automatic AZ balancing. </summary>
+        public AutomaticZoneRebalancingPolicy AutomaticZoneRebalancingPolicy { get; set; }
+
+        /// <summary> The configuration parameters used while performing zone allocation. </summary>
+        public ZoneAllocationPolicy ZoneAllocationPolicy { get; set; }
+
+        /// <summary> The configuration parameters used for operation recovery settings. </summary>
+        public OperationRecoverySettings OperationRecoverySettings { get; set; }
+
         /// <summary> Specifies whether resilient VM creation should be enabled on the virtual machine scale set. The default value is false. </summary>
         public bool? ResilientVmCreationPolicyEnabled
         {
-            get => ResilientVmCreationPolicy is null ? default : ResilientVmCreationPolicy.Enabled;
+            get
+            {
+                return ResilientVmCreationPolicy is null ? default : ResilientVmCreationPolicy.Enabled;
+            }
             set
             {
                 if (ResilientVmCreationPolicy is null)
-                    ResilientVmCreationPolicy = new ResilientVmCreationPolicy();
+                {
+                    ResilientVmCreationPolicy = new ResilientVMCreationPolicy();
+                }
                 ResilientVmCreationPolicy.Enabled = value;
             }
         }
 
-        /// <summary> The configuration parameters used while performing resilient VM deletion. </summary>
-        internal ResilientVmDeletionPolicy ResilientVmDeletionPolicy { get; set; }
         /// <summary> Specifies whether resilient VM deletion should be enabled on the virtual machine scale set. The default value is false. </summary>
         public bool? ResilientVmDeletionPolicyEnabled
         {
-            get => ResilientVmDeletionPolicy is null ? default : ResilientVmDeletionPolicy.Enabled;
+            get
+            {
+                return ResilientVmDeletionPolicy is null ? default : ResilientVmDeletionPolicy.Enabled;
+            }
             set
             {
                 if (ResilientVmDeletionPolicy is null)
-                    ResilientVmDeletionPolicy = new ResilientVmDeletionPolicy();
+                {
+                    ResilientVmDeletionPolicy = new ResilientVMDeletionPolicy();
+                }
                 ResilientVmDeletionPolicy.Enabled = value;
             }
         }
-
-        /// <summary> The configuration parameters used while performing automatic AZ balancing. </summary>
-        public AutomaticZoneRebalancingPolicy AutomaticZoneRebalancingPolicy { get; set; }
-        /// <summary> The configuration parameters used while performing zone allocation. </summary>
-        public ZoneAllocationPolicy ZoneAllocationPolicy { get; set; }
-        /// <summary> The configuration parameters used for operation recovery settings. </summary>
-        public OperationRecoverySettings OperationRecoverySettings { get; set; }
     }
 }

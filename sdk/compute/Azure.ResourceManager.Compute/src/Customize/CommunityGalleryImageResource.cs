@@ -9,7 +9,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Pipeline;
+using Azure.ResourceManager.Compute.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Compute
 {
@@ -33,8 +34,6 @@ namespace Azure.ResourceManager.Compute
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _communityGalleryImageClientDiagnostics;
-        private readonly CommunityGalleryImagesRestOperations _communityGalleryImageRestClient;
         private readonly CommunityGalleryImageData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -59,9 +58,6 @@ namespace Azure.ResourceManager.Compute
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal CommunityGalleryImageResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _communityGalleryImageClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string communityGalleryImageApiVersion);
-            _communityGalleryImageRestClient = new CommunityGalleryImagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, communityGalleryImageApiVersion);
 #if DEBUG
             ValidateResourceId(Id);
 #endif
@@ -87,6 +83,8 @@ namespace Azure.ResourceManager.Compute
             if (id.ResourceType != ResourceType)
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
+
+        private SubscriptionResource GetSubscriptionResource() => Client.GetSubscriptionResource(SubscriptionResource.CreateResourceIdentifier(Id.SubscriptionId));
 
         /// <summary> Gets a collection of CommunityGalleryImageVersionResources in the CommunityGalleryImage. </summary>
         /// <returns> An object representing collection of CommunityGalleryImageVersionResources and their operations over a CommunityGalleryImageVersionResource. </returns>
@@ -179,23 +177,12 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
         public virtual async Task<Response<CommunityGalleryImageResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _communityGalleryImageClientDiagnostics.CreateScope("CommunityGalleryImageResource.Get");
-            scope.Start();
-            try
-            {
-                var response = await _communityGalleryImageRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Parent.Name), Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    throw new RequestFailedException(response.GetRawResponse());
-                response.Value.Id = CreateResourceIdentifier(Id.SubscriptionId, new AzureLocation(Id.Parent.Parent.Name), Id.Parent.Name, Id.Name);
-                return Response.FromValue(new CommunityGalleryImageResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            var response = await GetSubscriptionResource().GetCommunityGalleryImageAsync(new AzureLocation(Id.Parent.Parent.Name), Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+            response.Value.Id = CreateResourceIdentifier(Id.SubscriptionId, new AzureLocation(Id.Parent.Parent.Name), Id.Parent.Name, Id.Name);
+            return Response.FromValue(new CommunityGalleryImageResource(Client, response.Value), response.GetRawResponse());
         }
 
         /// <summary>
@@ -220,23 +207,12 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
         public virtual Response<CommunityGalleryImageResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _communityGalleryImageClientDiagnostics.CreateScope("CommunityGalleryImageResource.Get");
-            scope.Start();
-            try
-            {
-                var response = _communityGalleryImageRestClient.Get(Id.SubscriptionId, new AzureLocation(Id.Parent.Parent.Name), Id.Parent.Name, Id.Name, cancellationToken);
-                if (response.Value == null)
-                    throw new RequestFailedException(response.GetRawResponse());
-                response.Value.Id = CreateResourceIdentifier(Id.SubscriptionId, new AzureLocation(Id.Parent.Parent.Name), Id.Parent.Name, Id.Name);
-                return Response.FromValue(new CommunityGalleryImageResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            var response = GetSubscriptionResource().GetCommunityGalleryImage(new AzureLocation(Id.Parent.Parent.Name), Id.Parent.Name, Id.Name, cancellationToken);
+            response.Value.Id = CreateResourceIdentifier(Id.SubscriptionId, new AzureLocation(Id.Parent.Parent.Name), Id.Parent.Name, Id.Name);
+            return Response.FromValue(new CommunityGalleryImageResource(Client, response.Value), response.GetRawResponse());
         }
     }
 }
