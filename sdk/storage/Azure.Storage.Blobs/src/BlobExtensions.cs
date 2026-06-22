@@ -644,6 +644,7 @@ namespace Azure.Storage.Blobs
                 ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                 LastModified = response.Headers.LastModified.GetValueOrDefault(),
                 ContentHash = response.Headers.ContentMD5,
+                ContentCrc64 = response.Headers.XMsContentCrc64,
                 VersionId = response.Headers.VersionId,
                 EncryptionKeySha256 = response.Headers.EncryptionKeySha256,
                 EncryptionScope = response.Headers.EncryptionScope,
