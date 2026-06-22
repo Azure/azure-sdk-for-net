@@ -34,9 +34,6 @@ public class OptimizationOptions
     /// <summary>Environment variable name for the resolver API endpoint (Priority 1).</summary>
     public const string EnvironmentVariableResolveEndpoint = "OPTIMIZATION_RESOLVE_ENDPOINT";
 
-    /// <summary>Environment variable name for the optimization job ID (required for resolver API).</summary>
-    public const string EnvironmentVariableJobId = "OPTIMIZATION_JOB_ID";
-
     /// <summary>Environment variable name for the local baseline directory (Priority 3).</summary>
     public const string EnvironmentVariableLocalDirectory = "OPTIMIZATION_LOCAL_DIR";
 

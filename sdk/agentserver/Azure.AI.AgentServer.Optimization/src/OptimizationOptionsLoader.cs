@@ -18,11 +18,6 @@ namespace Azure.AI.AgentServer.Optimization;
 /// <item><description><b>Local baseline directory</b> — <c>OPTIMIZATION_LOCAL_DIR/baseline/</c> exists on disk.</description></item>
 /// <item><description>When none of the above match, returns <c>null</c>.</description></item>
 /// </list>
-/// <para>
-/// Multi-agent hosts can scope env-var lookups per agent by passing
-/// <see cref="LoadOptions.AgentKey"/>: the loader prefers
-/// <c>OPTIMIZATION_&lt;VAR&gt;__&lt;CANONICAL_KEY&gt;</c> over the un-suffixed variant.
-/// </para>
 /// </remarks>
 public static class OptimizationOptionsLoader
 {
@@ -64,16 +59,15 @@ public static class OptimizationOptionsLoader
 
         string candidateId = ResolveEnvVar(OptimizationOptions.EnvironmentVariableCandidateId, canonicalKey, allowUnsuffixedFallback);
         string endpoint = ResolveEnvVar(OptimizationOptions.EnvironmentVariableResolveEndpoint, canonicalKey, allowUnsuffixedFallback)?.TrimEnd('/');
-        string jobId = ResolveEnvVar(OptimizationOptions.EnvironmentVariableJobId, canonicalKey, allowUnsuffixedFallback);
 
         // ── Priority 1: Resolver API ────────────────────────────────
-        if (!string.IsNullOrEmpty(candidateId) && !string.IsNullOrEmpty(endpoint) && !string.IsNullOrEmpty(jobId))
+        if (!string.IsNullOrEmpty(candidateId) && !string.IsNullOrEmpty(endpoint))
         {
             using var linked = CreateResolverCancellation(cancellationToken, options.ResolverTimeout ?? s_defaultResolverTimeout);
             try
             {
                 var resolved = await CandidateResolver.ResolveAsync(
-                    jobId, candidateId, endpoint, options.TokenProvider, linked.Token).ConfigureAwait(false);
+                    candidateId, endpoint, options.TokenProvider, linked.Token).ConfigureAwait(false);
 
                 if (resolved.HasValue)
                 {
