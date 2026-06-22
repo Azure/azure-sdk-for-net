@@ -43,6 +43,8 @@ parameters:
 variables:
   - template: /eng/pipelines/templates/variables/image.yml
   - template: /eng/pipelines/templates/variables/globals.yml
+  - name: NPM_CONFIG_REPLACE_REGISTRY_HOST
+    value: never
 
 extends:
   template: /eng/common/pipelines/templates/archetype-typespec-emitter.yml
