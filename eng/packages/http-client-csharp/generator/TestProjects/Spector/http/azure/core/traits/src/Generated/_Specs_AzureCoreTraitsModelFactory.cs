@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure;
+using Azure.Core.Foundations;
 
 namespace Specs.Azure.Core.Traits
 {

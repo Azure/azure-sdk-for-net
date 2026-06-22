@@ -14,6 +14,7 @@ namespace Azure.AI.Translation.Text
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(DetectedLanguage))]
+    [ModelReaderWriterBuildable(typeof(ErrorDetails))]
     [ModelReaderWriterBuildable(typeof(GetSupportedLanguagesResult))]
     [ModelReaderWriterBuildable(typeof(InputTextItem))]
     [ModelReaderWriterBuildable(typeof(LanguageScript))]

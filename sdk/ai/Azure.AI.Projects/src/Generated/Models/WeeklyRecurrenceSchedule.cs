@@ -15,7 +15,7 @@ namespace Azure.AI.Projects.Evaluation
         /// <summary> Initializes a new instance of <see cref="WeeklyRecurrenceSchedule"/>. </summary>
         /// <param name="daysOfWeek"> Days of the week for the recurrence schedule. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="daysOfWeek"/> is null. </exception>
-        public WeeklyRecurrenceSchedule(IEnumerable<DayOfWeek> daysOfWeek) : base(RecurrenceType.Weekly)
+        public WeeklyRecurrenceSchedule(IEnumerable<System.DayOfWeek> daysOfWeek) : base(RecurrenceType.Weekly)
         {
             Argument.AssertNotNull(daysOfWeek, nameof(daysOfWeek));
 
@@ -26,12 +26,12 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="type"> Recurrence type for the recurrence schedule. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="daysOfWeek"> Days of the week for the recurrence schedule. </param>
-        internal WeeklyRecurrenceSchedule(RecurrenceType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<DayOfWeek> daysOfWeek) : base(@type, additionalBinaryDataProperties)
+        internal WeeklyRecurrenceSchedule(RecurrenceType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<System.DayOfWeek> daysOfWeek) : base(@type, additionalBinaryDataProperties)
         {
             DaysOfWeek = daysOfWeek;
         }
 
         /// <summary> Days of the week for the recurrence schedule. </summary>
-        public IList<DayOfWeek> DaysOfWeek { get; }
+        public IList<System.DayOfWeek> DaysOfWeek { get; }
     }
 }

@@ -1403,9 +1403,9 @@ namespace Azure.AI.Projects
         /// <summary> Weekly recurrence schedule. </summary>
         /// <param name="daysOfWeek"> Days of the week for the recurrence schedule. </param>
         /// <returns> A new <see cref="Evaluation.WeeklyRecurrenceSchedule"/> instance for mocking. </returns>
-        public static WeeklyRecurrenceSchedule WeeklyRecurrenceSchedule(IEnumerable<DayOfWeek> daysOfWeek = default)
+        public static WeeklyRecurrenceSchedule WeeklyRecurrenceSchedule(IEnumerable<System.DayOfWeek> daysOfWeek = default)
         {
-            daysOfWeek ??= new ChangeTrackingList<DayOfWeek>();
+            daysOfWeek ??= new ChangeTrackingList<System.DayOfWeek>();
 
             return new WeeklyRecurrenceSchedule(RecurrenceType.Weekly, additionalBinaryDataProperties: null, daysOfWeek.ToList());
         }

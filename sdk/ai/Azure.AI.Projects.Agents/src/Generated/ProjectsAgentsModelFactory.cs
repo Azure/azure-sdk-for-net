@@ -10,6 +10,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using OpenAI;
 using OpenAI.Responses;
+using TypeSpec.Http;
 
 namespace Azure.AI.Projects.Agents
 {

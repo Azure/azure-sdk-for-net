@@ -18,6 +18,8 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
     [ModelReaderWriterBuildable(typeof(AnswersOptions))]
     [ModelReaderWriterBuildable(typeof(AnswerSpan))]
     [ModelReaderWriterBuildable(typeof(AnswersResult))]
+    [ModelReaderWriterBuildable(typeof(Error))]
+    [ModelReaderWriterBuildable(typeof(InnerErrorModel))]
     [ModelReaderWriterBuildable(typeof(KnowledgeBaseAnswer))]
     [ModelReaderWriterBuildable(typeof(KnowledgeBaseAnswerContext))]
     [ModelReaderWriterBuildable(typeof(KnowledgeBaseAnswerDialog))]

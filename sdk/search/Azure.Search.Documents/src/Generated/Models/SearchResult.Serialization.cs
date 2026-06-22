@@ -13,7 +13,7 @@ using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Models
 {
-    internal partial class SearchResult : IJsonModel<SearchResult>
+    public partial class SearchResult : IJsonModel<SearchResult>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

@@ -84,6 +84,8 @@ namespace Azure.Search.Documents
     [ModelReaderWriterBuildable(typeof(EmbeddingColumnMapping))]
     [ModelReaderWriterBuildable(typeof(EntityLinkingSkill))]
     [ModelReaderWriterBuildable(typeof(EntityRecognitionSkill))]
+    [ModelReaderWriterBuildable(typeof(ErrorAdditionalInfo))]
+    [ModelReaderWriterBuildable(typeof(ErrorDetail))]
     [ModelReaderWriterBuildable(typeof(ExhaustiveKnnAlgorithmConfiguration))]
     [ModelReaderWriterBuildable(typeof(ExhaustiveKnnParameters))]
     [ModelReaderWriterBuildable(typeof(FabricDataAgentKnowledgeSource))]
