@@ -10,6 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
+    /// <summary> The status of the auto export. </summary>
     internal partial class AutoExportJobPropertiesStatus
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -56,6 +57,9 @@ namespace Azure.ResourceManager.StorageCache.Models
             LastCompletionTimeUTC = lastCompletionTimeUTC;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> The operational state of auto export. InProgress indicates the export is running.  Disabling indicates the user has requested to disable the export but the disabling is still in progress. Disabled indicates auto export has been disabled.  DisableFailed indicates the disabling has failed.  Failed means the export was unable to continue, due to a fatal error. </summary>
+        public AutoExportStatusType? State { get; }
 
         /// <summary> Server-defined status code for auto export job. </summary>
         public string StatusCode { get; }

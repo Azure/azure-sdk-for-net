@@ -15,6 +15,7 @@ using Azure.ResourceManager.StorageCache;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
+    /// <summary> Properties of the cache. </summary>
     internal partial class CacheProperties : IJsonModel<CacheProperties>
     {
         /// <param name="data"> The data to parse. </param>
@@ -229,7 +230,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             StorageCacheSecuritySettings securitySettings = default;
             StorageCacheDirectorySettings directoryServicesSettings = default;
             IList<string> zones = default;
-            IReadOnlyList<PrimingJob> primingJobs = default;
+            IList<PrimingJob> primingJobs = default;
             IReadOnlyList<StorageTargetSpaceAllocation> spaceAllocation = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())

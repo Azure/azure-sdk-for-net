@@ -209,6 +209,19 @@ namespace Azure.ResourceManager.StorageCache
             }
         }
 
+        /// <summary> Specifies the priming jobs defined in the cache. </summary>
+        public IList<PrimingJob> PrimingJobs
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new CacheProperties();
+                }
+                return Properties.PrimingJobs;
+            }
+        }
+
         /// <summary> Specifies the space allocation percentage for each storage target in the cache. </summary>
         public IReadOnlyList<StorageTargetSpaceAllocation> SpaceAllocation
         {

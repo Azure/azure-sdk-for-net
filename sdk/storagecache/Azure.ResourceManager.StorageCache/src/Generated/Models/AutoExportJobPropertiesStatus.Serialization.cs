@@ -13,6 +13,7 @@ using Azure.ResourceManager.StorageCache;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
+    /// <summary> The status of the auto export. </summary>
     internal partial class AutoExportJobPropertiesStatus : IJsonModel<AutoExportJobPropertiesStatus>
     {
         /// <param name="data"> The data to parse. </param>

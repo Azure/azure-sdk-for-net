@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.StorageCache
         public System.DateTimeOffset? LastStartedTimeUTC { get { throw null; } }
         public System.DateTimeOffset? LastSuccessfulIterationCompletionTimeUTC { get { throw null; } }
         public Azure.ResourceManager.StorageCache.Models.AutoExportJobProvisioningStateType? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.StorageCache.Models.AutoExportStatusType? State { get { throw null; } set { } }
+        public Azure.ResourceManager.StorageCache.Models.AutoExportStatusType? State { get { throw null; } }
         public string StatusCode { get { throw null; } }
         public string StatusMessage { get { throw null; } }
         public long? TotalFilesExported { get { throw null; } }
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.StorageCache
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<System.Net.IPAddress> MountAddresses { get { throw null; } }
         public Azure.ResourceManager.StorageCache.Models.StorageCacheNetworkSettings NetworkSettings { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.StorageCache.Models.PrimingJob> PrimingJobs { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.StorageCache.Models.PrimingJob> PrimingJobs { get { throw null; } }
         public Azure.ResourceManager.StorageCache.Models.StorageCacheProvisioningStateType? ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.StorageCache.Models.NfsAccessPolicy> SecurityAccessPolicies { get { throw null; } }
         public string SkuName { get { throw null; } set { } }

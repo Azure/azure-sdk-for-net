@@ -11,6 +11,7 @@ using Azure.ResourceManager.StorageCache;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
+    /// <summary> Properties of the auto export job. </summary>
     internal partial class AutoExportJobProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -45,6 +46,18 @@ namespace Azure.ResourceManager.StorageCache.Models
 
         /// <summary> An array of blob paths/prefixes that get auto exported to the cluster namespace. It has '/' as the default value. Number of maximum allowed paths for now is 1. </summary>
         public IList<string> AutoExportPrefixes { get; } = new ChangeTrackingList<string>();
+
+        /// <summary> The status of the auto export. </summary>
+        internal AutoExportJobPropertiesStatus Status { get; }
+
+        /// <summary> The operational state of auto export. InProgress indicates the export is running.  Disabling indicates the user has requested to disable the export but the disabling is still in progress. Disabled indicates auto export has been disabled.  DisableFailed indicates the disabling has failed.  Failed means the export was unable to continue, due to a fatal error. </summary>
+        public AutoExportStatusType? State
+        {
+            get
+            {
+                return Status is null ? default : Status.State;
+            }
+        }
 
         /// <summary> Server-defined status code for auto export job. </summary>
         public string StatusCode

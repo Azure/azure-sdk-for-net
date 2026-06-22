@@ -13,6 +13,7 @@ using Azure.ResourceManager.StorageCache;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
+    /// <summary> Properties of the cache. </summary>
     internal partial class CacheProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <param name="primingJobs"> Specifies the priming jobs defined in the cache. </param>
         /// <param name="spaceAllocation"> Specifies the space allocation percentage for each storage target in the cache. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CacheProperties(int? cacheSizeGB, StorageCacheHealth health, IReadOnlyList<IPAddress> mountAddresses, StorageCacheProvisioningStateType? provisioningState, ResourceIdentifier subnet, StorageCacheUpgradeStatus upgradeStatus, StorageCacheUpgradeSettings upgradeSettings, StorageCacheNetworkSettings networkSettings, StorageCacheEncryptionSettings encryptionSettings, StorageCacheSecuritySettings securitySettings, StorageCacheDirectorySettings directoryServicesSettings, IList<string> zones, IReadOnlyList<PrimingJob> primingJobs, IReadOnlyList<StorageTargetSpaceAllocation> spaceAllocation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CacheProperties(int? cacheSizeGB, StorageCacheHealth health, IReadOnlyList<IPAddress> mountAddresses, StorageCacheProvisioningStateType? provisioningState, ResourceIdentifier subnet, StorageCacheUpgradeStatus upgradeStatus, StorageCacheUpgradeSettings upgradeSettings, StorageCacheNetworkSettings networkSettings, StorageCacheEncryptionSettings encryptionSettings, StorageCacheSecuritySettings securitySettings, StorageCacheDirectorySettings directoryServicesSettings, IList<string> zones, IList<PrimingJob> primingJobs, IReadOnlyList<StorageTargetSpaceAllocation> spaceAllocation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CacheSizeGB = cacheSizeGB;
             Health = health;
@@ -97,6 +98,9 @@ namespace Azure.ResourceManager.StorageCache.Models
 
         /// <summary> Availability zones for resources. This field should only contain a single element in the array. </summary>
         public IList<string> Zones { get; } = new ChangeTrackingList<string>();
+
+        /// <summary> Specifies the priming jobs defined in the cache. </summary>
+        public IList<PrimingJob> PrimingJobs { get; } = new ChangeTrackingList<PrimingJob>();
 
         /// <summary> Specifies the space allocation percentage for each storage target in the cache. </summary>
         public IReadOnlyList<StorageTargetSpaceAllocation> SpaceAllocation { get; } = new ChangeTrackingList<StorageTargetSpaceAllocation>();

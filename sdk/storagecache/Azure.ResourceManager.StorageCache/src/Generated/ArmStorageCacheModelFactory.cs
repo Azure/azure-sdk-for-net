@@ -45,6 +45,61 @@ namespace Azure.ResourceManager.StorageCache.Models
             return new RequiredAmlFileSystemSubnetsSize(filesystemSubnetSize, default);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="cacheSizeGB"> The size of this Cache, in GB. </param>
+        /// <param name="health"> Health of the cache. </param>
+        /// <param name="mountAddresses"> Array of IPv4 addresses that can be used by clients mounting this cache. </param>
+        /// <param name="provisioningState"> ARM provisioning state, see https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/Addendum.md#provisioningstate-property. </param>
+        /// <param name="subnet"> Subnet used for the cache. </param>
+        /// <param name="upgradeStatus"> Upgrade status of the cache. </param>
+        /// <param name="upgradeSettings"> Upgrade settings of the cache. </param>
+        /// <param name="networkSettings"> Specifies network settings of the cache. </param>
+        /// <param name="encryptionSettings"> Specifies encryption settings of the cache. </param>
+        /// <param name="directoryServicesSettings"> Specifies Directory Services settings of the cache. </param>
+        /// <param name="zones"> Availability zones for resources. This field should only contain a single element in the array. </param>
+        /// <param name="primingJobs"> Specifies the priming jobs defined in the cache. </param>
+        /// <param name="spaceAllocation"> Specifies the space allocation percentage for each storage target in the cache. </param>
+        /// <param name="securityAccessPolicies"> NFS access policies defined for this cache. </param>
+        /// <param name="identity"> The identity of the cache, if configured. </param>
+        /// <param name="skuName"> SKU name for this cache. </param>
+        /// <returns> A new <see cref="StorageCache.StorageCacheData"/> instance for mocking. </returns>
+        public static StorageCacheData StorageCacheData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, int? cacheSizeGB = default, StorageCacheHealth health = default, IEnumerable<IPAddress> mountAddresses = default, StorageCacheProvisioningStateType? provisioningState = default, ResourceIdentifier subnet = default, StorageCacheUpgradeStatus upgradeStatus = default, StorageCacheUpgradeSettings upgradeSettings = default, StorageCacheNetworkSettings networkSettings = default, StorageCacheEncryptionSettings encryptionSettings = default, StorageCacheDirectorySettings directoryServicesSettings = default, IEnumerable<string> zones = default, IEnumerable<PrimingJob> primingJobs = default, IEnumerable<StorageTargetSpaceAllocation> spaceAllocation = default, IEnumerable<NfsAccessPolicy> securityAccessPolicies = default, ManagedServiceIdentity identity = default, string skuName = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new StorageCacheData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                cacheSizeGB is null && health is null && mountAddresses is null && provisioningState is null && subnet is null && upgradeStatus is null && upgradeSettings is null && networkSettings is null && encryptionSettings is null && securityAccessPolicies is null && directoryServicesSettings is null && zones is null && primingJobs is null && spaceAllocation is null ? default : new CacheProperties(
+                    cacheSizeGB,
+                    health,
+                    (mountAddresses ?? new ChangeTrackingList<IPAddress>()).ToList(),
+                    provisioningState,
+                    subnet,
+                    upgradeStatus,
+                    upgradeSettings,
+                    networkSettings,
+                    encryptionSettings,
+                    new StorageCacheSecuritySettings((securityAccessPolicies ?? new ChangeTrackingList<NfsAccessPolicy>()).ToList(), default),
+                    directoryServicesSettings,
+                    (zones ?? new ChangeTrackingList<string>()).ToList(),
+                    (primingJobs ?? new ChangeTrackingList<PrimingJob>()).ToList(),
+                    (spaceAllocation ?? new ChangeTrackingList<StorageTargetSpaceAllocation>()).ToList(),
+                    default),
+                identity,
+                skuName is null ? default : new StorageCacheSkuInfo(skuName, default),
+                default);
+        }
+
         /// <param name="state"> List of cache health states. Down is when the cluster is not responding.  Degraded is when its functioning but has some alerts. Transitioning when it is creating or deleting. Unknown will be returned in old api versions when a new value is added in future versions. WaitingForKey is when the create is waiting for the system assigned identity to be given access to the encryption key in the encryption settings. </param>
         /// <param name="statusDescription"> Describes explanation of state. </param>
         /// <param name="conditions"> Outstanding conditions that need to be investigated and resolved. </param>
@@ -520,6 +575,62 @@ namespace Azure.ResourceManager.StorageCache.Models
             return new AmlFileSystemArchiveContent(filesystemPath, default);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="provisioningState"> ARM provisioning state. </param>
+        /// <param name="adminStatus"> The administrative status of the auto export job. Possible values: 'Enable', 'Disable'. Passing in a value of 'Disable' will disable the current active auto export job. By default it is set to 'Enable'. </param>
+        /// <param name="autoExportPrefixes"> An array of blob paths/prefixes that get auto exported to the cluster namespace. It has '/' as the default value. Number of maximum allowed paths for now is 1. </param>
+        /// <param name="state"> The operational state of auto export. InProgress indicates the export is running.  Disabling indicates the user has requested to disable the export but the disabling is still in progress. Disabled indicates auto export has been disabled.  DisableFailed indicates the disabling has failed.  Failed means the export was unable to continue, due to a fatal error. </param>
+        /// <param name="statusCode"> Server-defined status code for auto export job. </param>
+        /// <param name="statusMessage"> Server-defined status message for auto export job. </param>
+        /// <param name="totalFilesExported"> Total files exported since the start of the export. This is accumulative, some files may be counted repeatedly. </param>
+        /// <param name="totalMiBExported"> Total data (in MiB) exported since the start of the export. This is accumulative, some files may be counted repeatedly. </param>
+        /// <param name="totalFilesFailed"> Total files failed to be export since the last successfully completed iteration. This is accumulative, some files may be counted repeatedly. </param>
+        /// <param name="exportIterationCount"> Number of iterations completed since the start of the export. </param>
+        /// <param name="lastSuccessfulIterationCompletionTimeUTC"> Time (in UTC) of the last successfully completed export iteration. Look at logging container for details. </param>
+        /// <param name="currentIterationFilesDiscovered"> Files discovered for export in current iteration. It may increase while more export items are found. </param>
+        /// <param name="currentIterationMiBDiscovered"> Data (in MiB) discovered for export in current iteration. It may increase while more export items are found. </param>
+        /// <param name="currentIterationFilesExported"> Files that have been exported in current iteration. </param>
+        /// <param name="currentIterationMiBExported"> Data (in MiB) that have been exported in current iteration. </param>
+        /// <param name="currentIterationFilesFailed"> Files failed to export in current iteration. </param>
+        /// <param name="lastStartedTimeUTC"> The time (in UTC) the latest auto export job started. </param>
+        /// <param name="lastCompletionTimeUTC"> The time (in UTC) of the last completed auto export job. </param>
+        /// <returns> A new <see cref="StorageCache.AutoExportJobData"/> instance for mocking. </returns>
+        public static AutoExportJobData AutoExportJobData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, AutoExportJobProvisioningStateType? provisioningState = default, AutoExportJobAdminStatus? adminStatus = default, IEnumerable<string> autoExportPrefixes = default, AutoExportStatusType? state = default, string statusCode = default, string statusMessage = default, long? totalFilesExported = default, long? totalMiBExported = default, long? totalFilesFailed = default, int? exportIterationCount = default, DateTimeOffset? lastSuccessfulIterationCompletionTimeUTC = default, long? currentIterationFilesDiscovered = default, long? currentIterationMiBDiscovered = default, long? currentIterationFilesExported = default, long? currentIterationMiBExported = default, long? currentIterationFilesFailed = default, DateTimeOffset? lastStartedTimeUTC = default, DateTimeOffset? lastCompletionTimeUTC = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new AutoExportJobData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                provisioningState is null && adminStatus is null && autoExportPrefixes is null && state is null && statusCode is null && statusMessage is null && totalFilesExported is null && totalMiBExported is null && totalFilesFailed is null && exportIterationCount is null && lastSuccessfulIterationCompletionTimeUTC is null && currentIterationFilesDiscovered is null && currentIterationMiBDiscovered is null && currentIterationFilesExported is null && currentIterationMiBExported is null && currentIterationFilesFailed is null && lastStartedTimeUTC is null && lastCompletionTimeUTC is null ? default : new AutoExportJobProperties(provisioningState, adminStatus, (autoExportPrefixes ?? new ChangeTrackingList<string>()).ToList(), new AutoExportJobPropertiesStatus(
+                    state,
+                    statusCode,
+                    statusMessage,
+                    totalFilesExported,
+                    totalMiBExported,
+                    totalFilesFailed,
+                    exportIterationCount,
+                    lastSuccessfulIterationCompletionTimeUTC,
+                    currentIterationFilesDiscovered,
+                    currentIterationMiBDiscovered,
+                    currentIterationFilesExported,
+                    currentIterationMiBExported,
+                    currentIterationFilesFailed,
+                    lastStartedTimeUTC,
+                    lastCompletionTimeUTC,
+                    default), default),
+                default);
+        }
+
         /// <param name="tags"> Resource tags. </param>
         /// <param name="adminStatus"> The administrative status of the auto export job. Possible values: 'Enable', 'Disable'. Passing in a value of 'Disable' will disable the current active auto export job. By default it is set to 'Enable'. </param>
         /// <returns> A new <see cref="Models.AutoExportJobPatch"/> instance for mocking. </returns>
@@ -930,62 +1041,6 @@ namespace Azure.ResourceManager.StorageCache.Models
                 identity,
                 skuName is null ? default : new StorageCacheSkuName(skuName, default),
                 (zones ?? new ChangeTrackingList<string>()).ToList(),
-                default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="StorageCache.AutoExportJobData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="provisioningState"> ARM provisioning state. </param>
-        /// <param name="adminStatus"> The administrative status of the auto export job. Possible values: 'Enable', 'Disable'. Passing in a value of 'Disable' will disable the current active auto export job. By default it is set to 'Enable'. </param>
-        /// <param name="autoExportPrefixes"> An array of blob paths/prefixes that get auto exported to the cluster namespace. It has '/' as the default value. Number of maximum allowed paths for now is 1. </param>
-        /// <param name="state"> The operational state of auto export. InProgress indicates the export is running.  Disabling indicates the user has requested to disable the export but the disabling is still in progress. Disabled indicates auto export has been disabled.  DisableFailed indicates the disabling has failed.  Failed means the export was unable to continue, due to a fatal error. </param>
-        /// <param name="statusCode"> Server-defined status code for auto export job. </param>
-        /// <param name="statusMessage"> Server-defined status message for auto export job. </param>
-        /// <param name="totalFilesExported"> Total files exported since the start of the export. This is accumulative, some files may be counted repeatedly. </param>
-        /// <param name="totalMiBExported"> Total data (in MiB) exported since the start of the export. This is accumulative, some files may be counted repeatedly. </param>
-        /// <param name="totalFilesFailed"> Total files failed to be export since the last successfully completed iteration. This is accumulative, some files may be counted repeatedly. </param>
-        /// <param name="exportIterationCount"> Number of iterations completed since the start of the export. </param>
-        /// <param name="lastSuccessfulIterationCompletionTimeUTC"> Time (in UTC) of the last successfully completed export iteration. Look at logging container for details. </param>
-        /// <param name="currentIterationFilesDiscovered"> Files discovered for export in current iteration. It may increase while more export items are found. </param>
-        /// <param name="currentIterationMiBDiscovered"> Data (in MiB) discovered for export in current iteration. It may increase while more export items are found. </param>
-        /// <param name="currentIterationFilesExported"> Files that have been exported in current iteration. </param>
-        /// <param name="currentIterationMiBExported"> Data (in MiB) that have been exported in current iteration. </param>
-        /// <param name="currentIterationFilesFailed"> Files failed to export in current iteration. </param>
-        /// <param name="lastStartedTimeUTC"> The time (in UTC) the latest auto export job started. </param>
-        /// <param name="lastCompletionTimeUTC"> The time (in UTC) of the last completed auto export job. </param>
-        /// <returns> A new <see cref="StorageCache.AutoExportJobData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AutoExportJobData AutoExportJobData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, AutoExportJobProvisioningStateType? provisioningState = default, AutoExportJobAdminStatus? adminStatus = default, IEnumerable<string> autoExportPrefixes = default, AutoExportStatusType? state = default, string statusCode = default, string statusMessage = default, long? totalFilesExported = default, long? totalMiBExported = default, long? totalFilesFailed = default, int? exportIterationCount = default, DateTimeOffset? lastSuccessfulIterationCompletionTimeUTC = default, long? currentIterationFilesDiscovered = default, long? currentIterationMiBDiscovered = default, long? currentIterationFilesExported = default, long? currentIterationMiBExported = default, long? currentIterationFilesFailed = default, DateTimeOffset? lastStartedTimeUTC = default, DateTimeOffset? lastCompletionTimeUTC = default)
-        {
-            return new AutoExportJobData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                provisioningState is null && adminStatus is null && autoExportPrefixes is null && state is null && statusCode is null && statusMessage is null && totalFilesExported is null && totalMiBExported is null && totalFilesFailed is null && exportIterationCount is null && lastSuccessfulIterationCompletionTimeUTC is null && currentIterationFilesDiscovered is null && currentIterationMiBDiscovered is null && currentIterationFilesExported is null && currentIterationMiBExported is null && currentIterationFilesFailed is null && lastStartedTimeUTC is null && lastCompletionTimeUTC is null ? default : new AutoExportJobProperties(provisioningState, adminStatus, (autoExportPrefixes ?? new ChangeTrackingList<string>()).ToList(), new AutoExportJobPropertiesStatus(
-                    state,
-                    statusCode,
-                    statusMessage,
-                    totalFilesExported,
-                    totalMiBExported,
-                    totalFilesFailed,
-                    exportIterationCount,
-                    lastSuccessfulIterationCompletionTimeUTC,
-                    currentIterationFilesDiscovered,
-                    currentIterationMiBDiscovered,
-                    currentIterationFilesExported,
-                    currentIterationMiBExported,
-                    currentIterationFilesFailed,
-                    lastStartedTimeUTC,
-                    lastCompletionTimeUTC,
-                    default), default),
                 default);
         }
 
