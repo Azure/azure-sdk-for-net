@@ -1,6 +1,6 @@
 # Azure SDK for .NET Libraries Inventory
 
-> **Auto-generated** by `Library_Inventory` on 2026-06-17 18:21:57 UTC.
+> **Auto-generated** by `Library_Inventory` on 2026-06-18 10:41:11 UTC.
 > Run that script to refresh this file.
 
 ## Table of Contents
@@ -18,8 +18,8 @@
 
 - Total libraries: 411
 - Management Plane (MPG): 239
-  - Autorest/Swagger: 68
-  - New Emitter (TypeSpec): 171
+  - Autorest/Swagger: 62
+  - New Emitter (TypeSpec): 177
   - Old TypeSpec: 0
 - Data Plane (DPG): 129
   - Autorest/Swagger: 35
@@ -134,7 +134,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 35
 
 Libraries that provide resource management APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 171 / 171 (100%)
+**Migration Status**: 177 / 177 (100%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
@@ -155,6 +155,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | azurestackhci | Azure.ResourceManager.Hci | ✅ |
 | azurestackhci | Azure.ResourceManager.Hci.Vm | ✅ |
 | batch | Azure.ResourceManager.Batch | ✅ |
+| billing | Azure.ResourceManager.Billing | ✅ |
 | billingbenefits | Azure.ResourceManager.BillingBenefits | ✅ |
 | botservice | Azure.ResourceManager.BotService | ✅ |
 | carbon | Azure.ResourceManager.CarbonOptimization | ✅ |
@@ -164,6 +165,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | cloudhealth | Azure.ResourceManager.CloudHealth | ✅ |
 | cognitiveservices | Azure.ResourceManager.CognitiveServices | ✅ |
 | communication | Azure.ResourceManager.Communication | ✅ |
+| compute | Azure.ResourceManager.Compute | ✅ |
 | computebulkactions | Azure.ResourceManager.ComputeBulkActions | ✅ |
 | computefleet | Azure.ResourceManager.ComputeFleet | ✅ |
 | computelimit | Azure.ResourceManager.ComputeLimit | ✅ |
@@ -197,6 +199,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | devopsinfrastructure | Azure.ResourceManager.DevOpsInfrastructure | ✅ |
 | devtestlabs | Azure.ResourceManager.DevTestLabs | ✅ |
 | disconnectedoperations | Azure.ResourceManager.DisconnectedOperations | ✅ |
+| dns | Azure.ResourceManager.Dns | ✅ |
 | dnsresolver | Azure.ResourceManager.DnsResolver | ✅ |
 | domainregistration | Azure.ResourceManager.DomainRegistration | ✅ |
 | durabletask | Azure.ResourceManager.DurableTask | ✅ |
@@ -222,6 +225,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | hybridcompute | Azure.ResourceManager.HybridCompute | ✅ |
 | hybridconnectivity | Azure.ResourceManager.HybridConnectivity | ✅ |
 | hybridkubernetes | Azure.ResourceManager.Kubernetes | ✅ |
+| hybridnetwork | Azure.ResourceManager.HybridNetwork | ✅ |
 | impactreporting | Azure.ResourceManager.ImpactReporting | ✅ |
 | informaticadatamanagement | Azure.ResourceManager.InformaticaDataManagement | ✅ |
 | iotoperations | Azure.ResourceManager.IotOperations | ✅ |
@@ -243,6 +247,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | monitorpipelinegroups | Azure.ResourceManager.Monitor.PipelineGroups | ✅ |
 | mysql | Azure.ResourceManager.MySql | ✅ |
 | netapp | Azure.ResourceManager.NetApp | ✅ |
+| network | Azure.ResourceManager.Network | ✅ |
 | networkcloud | Azure.ResourceManager.NetworkCloud | ✅ |
 | networkfunction | Azure.ResourceManager.NetworkFunction | ✅ |
 | newrelicobservability | Azure.ResourceManager.NewRelicObservability | ✅ |
@@ -256,6 +261,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | pineconevectordb | Azure.ResourceManager.PineconeVectorDB | ✅ |
 | planetarycomputer | Azure.ResourceManager.PlanetaryComputer | ✅ |
 | playwright | Azure.ResourceManager.Playwright | ✅ |
+| policyinsights | Azure.ResourceManager.PolicyInsights | ✅ |
 | portalservices | Azure.ResourceManager.PortalServicesCopilot | ✅ |
 | postgresql | Azure.ResourceManager.PostgreSql | ✅ |
 | powerbidedicated | Azure.ResourceManager.PowerBIDedicated | ✅ |
@@ -313,7 +319,7 @@ Libraries that provide resource management APIs for Azure services and have been
 
 ## Management Plane Libraries (MPG) - Still on Swagger
 
-Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 68
+Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 62
 
 | Service | Library |
 | ------- | ------- |
@@ -326,10 +332,8 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 68
 | authorization | Azure.ResourceManager.Authorization |
 | automanage | Azure.ResourceManager.Automanage |
 | automation | Azure.ResourceManager.Automation |
-| billing | Azure.ResourceManager.Billing |
 | blueprint | Azure.ResourceManager.Blueprint |
 | changeanalysis | Azure.ResourceManager.ChangeAnalysis |
-| compute | Azure.ResourceManager.Compute |
 | connectedvmwarevsphere | Azure.ResourceManager.ConnectedVMwarevSphere |
 | customer-insights | Azure.ResourceManager.CustomerInsights |
 | datafactory | Azure.ResourceManager.DataFactory |
@@ -340,13 +344,11 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 68
 | deviceupdate | Azure.ResourceManager.DeviceUpdate |
 | devspaces | Azure.ResourceManager.DevSpaces |
 | digitaltwins | Azure.ResourceManager.DigitalTwins |
-| dns | Azure.ResourceManager.Dns |
 | eventgrid | Azure.ResourceManager.EventGrid |
 | fluidrelay | Azure.ResourceManager.FluidRelay |
 | graphservices | Azure.ResourceManager.GraphServices |
 | healthcareapis | Azure.ResourceManager.HealthcareApis |
 | hybridaks | Azure.ResourceManager.HybridContainerService |
-| hybridnetwork | Azure.ResourceManager.HybridNetwork |
 | iot | Azure.ResourceManager.IotFirmwareDefense |
 | iotcentral | Azure.ResourceManager.IotCentral |
 | iothub | Azure.ResourceManager.IotHub |
@@ -363,10 +365,8 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 68
 | migrationassessment | Azure.ResourceManager.Migration.Assessment |
 | migrationdiscoverysap | Azure.ResourceManager.MigrationDiscoverySap |
 | monitor | Azure.ResourceManager.Monitor |
-| network | Azure.ResourceManager.Network |
 | openenergyplatform | Azure.ResourceManager.EnergyServices |
 | orbital | Azure.ResourceManager.Orbital |
-| policyinsights | Azure.ResourceManager.PolicyInsights |
 | privatedns | Azure.ResourceManager.PrivateDns |
 | resourcehealth | Azure.ResourceManager.ResourceHealth |
 | resourcemanager | Azure.ResourceManager |
@@ -402,14 +402,14 @@ Libraries that provide infrastructure-as-code capabilities for Azure services. T
 | cdn | Azure.Provisioning.Cdn | Azure.ResourceManager.Cdn ✅ | Reflection |
 | cognitiveservices | Azure.Provisioning.CognitiveServices | Azure.ResourceManager.CognitiveServices ✅ | Reflection |
 | communication | Azure.Provisioning.Communication | Azure.ResourceManager.Communication ✅ | Reflection |
-| compute | Azure.Provisioning.Compute | Azure.ResourceManager.Compute | Reflection |
+| compute | Azure.Provisioning.Compute | Azure.ResourceManager.Compute ✅ | Reflection |
 | containerapps | Azure.Provisioning.AppContainers | Azure.ResourceManager.AppContainers ✅ | Reflection |
 | containerinstance | Azure.Provisioning.ContainerInstance | Azure.ResourceManager.ContainerInstance ✅ | TypeSpec ✅ |
 | containerregistry | Azure.Provisioning.ContainerRegistry | Azure.ResourceManager.ContainerRegistry ✅ | Reflection |
 | containerservice | Azure.Provisioning.ContainerService | Azure.ResourceManager.ContainerService ✅ | TypeSpec ✅ |
 | cosmosdb | Azure.Provisioning.CosmosDB | Azure.ResourceManager.CosmosDB ✅ | Reflection |
 | datafactory | Azure.Provisioning.DataFactory | Azure.ResourceManager.DataFactory | Reflection |
-| dns | Azure.Provisioning.Dns | Azure.ResourceManager.Dns | None |
+| dns | Azure.Provisioning.Dns | Azure.ResourceManager.Dns ✅ | None |
 | eventgrid | Azure.Provisioning.EventGrid | Azure.ResourceManager.EventGrid | Reflection |
 | eventhub | Azure.Provisioning.EventHubs | Azure.ResourceManager.EventHubs ✅ | Reflection |
 | frontdoor | Azure.Provisioning.FrontDoor | Azure.ResourceManager.FrontDoor ✅ | Reflection |

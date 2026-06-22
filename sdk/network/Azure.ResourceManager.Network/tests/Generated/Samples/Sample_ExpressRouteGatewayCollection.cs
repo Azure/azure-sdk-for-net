@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network.Samples
                 AllowNonVirtualWanTraffic = false,
                 Location = new AzureLocation("westus"),
             };
-            ArmOperation<ExpressRouteGatewayResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, expressRouteGatewayName, data);
+            ArmOperation<ExpressRouteGatewayResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, expressRouteGatewayName, data, cancellationToken: System.Threading.CancellationToken.None);
             ExpressRouteGatewayResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Network.Samples
             ExpressRouteGatewayCollection collection = resourceGroupResource.GetExpressRouteGateways();
 
             // invoke the operation and iterate over the result
-            await foreach (ExpressRouteGatewayResource item in collection.GetAllAsync())
+            await foreach (ExpressRouteGatewayResource item in collection.GetAllAsync(System.Threading.CancellationToken.None))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance

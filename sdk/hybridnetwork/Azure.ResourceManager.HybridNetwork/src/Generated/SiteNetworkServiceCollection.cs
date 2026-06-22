@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.HybridNetwork
@@ -25,51 +26,49 @@ namespace Azure.ResourceManager.HybridNetwork
     /// </summary>
     public partial class SiteNetworkServiceCollection : ArmCollection, IEnumerable<SiteNetworkServiceResource>, IAsyncEnumerable<SiteNetworkServiceResource>
     {
-        private readonly ClientDiagnostics _siteNetworkServiceClientDiagnostics;
-        private readonly SiteNetworkServicesRestOperations _siteNetworkServiceRestClient;
+        private readonly ClientDiagnostics _siteNetworkServicesClientDiagnostics;
+        private readonly SiteNetworkServices _siteNetworkServicesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="SiteNetworkServiceCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of SiteNetworkServiceCollection for mocking. </summary>
         protected SiteNetworkServiceCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SiteNetworkServiceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteNetworkServiceCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SiteNetworkServiceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _siteNetworkServiceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridNetwork", SiteNetworkServiceResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(SiteNetworkServiceResource.ResourceType, out string siteNetworkServiceApiVersion);
-            _siteNetworkServiceRestClient = new SiteNetworkServicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, siteNetworkServiceApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _siteNetworkServicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridNetwork", SiteNetworkServiceResource.ResourceType.Namespace, Diagnostics);
+            _siteNetworkServicesRestClient = new SiteNetworkServices(_siteNetworkServicesClientDiagnostics, Pipeline, Endpoint, siteNetworkServiceApiVersion ?? "2025-03-30");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Creates or updates a network site.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/siteNetworkServices/{siteNetworkServiceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/siteNetworkServices/{siteNetworkServiceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SiteNetworkServices_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> SiteNetworkServices_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteNetworkServiceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,21 +76,34 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <param name="siteNetworkServiceName"> The name of the site network service. </param>
         /// <param name="data"> Parameters supplied to the create or update site network service operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="siteNetworkServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="siteNetworkServiceName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="siteNetworkServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<SiteNetworkServiceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string siteNetworkServiceName, SiteNetworkServiceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(siteNetworkServiceName, nameof(siteNetworkServiceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _siteNetworkServiceClientDiagnostics.CreateScope("SiteNetworkServiceCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _siteNetworkServicesClientDiagnostics.CreateScope("SiteNetworkServiceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _siteNetworkServiceRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, siteNetworkServiceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new HybridNetworkArmOperation<SiteNetworkServiceResource>(new SiteNetworkServiceOperationSource(Client), _siteNetworkServiceClientDiagnostics, Pipeline, _siteNetworkServiceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, siteNetworkServiceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _siteNetworkServicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, siteNetworkServiceName, SiteNetworkServiceData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                HybridNetworkArmOperation<SiteNetworkServiceResource> operation = new HybridNetworkArmOperation<SiteNetworkServiceResource>(
+                    new SiteNetworkServiceOperationSource(Client),
+                    _siteNetworkServicesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -105,20 +117,16 @@ namespace Azure.ResourceManager.HybridNetwork
         /// Creates or updates a network site.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/siteNetworkServices/{siteNetworkServiceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/siteNetworkServices/{siteNetworkServiceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SiteNetworkServices_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> SiteNetworkServices_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteNetworkServiceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,21 +134,34 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <param name="siteNetworkServiceName"> The name of the site network service. </param>
         /// <param name="data"> Parameters supplied to the create or update site network service operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="siteNetworkServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="siteNetworkServiceName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="siteNetworkServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<SiteNetworkServiceResource> CreateOrUpdate(WaitUntil waitUntil, string siteNetworkServiceName, SiteNetworkServiceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(siteNetworkServiceName, nameof(siteNetworkServiceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _siteNetworkServiceClientDiagnostics.CreateScope("SiteNetworkServiceCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _siteNetworkServicesClientDiagnostics.CreateScope("SiteNetworkServiceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _siteNetworkServiceRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, siteNetworkServiceName, data, cancellationToken);
-                var operation = new HybridNetworkArmOperation<SiteNetworkServiceResource>(new SiteNetworkServiceOperationSource(Client), _siteNetworkServiceClientDiagnostics, Pipeline, _siteNetworkServiceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, siteNetworkServiceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _siteNetworkServicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, siteNetworkServiceName, SiteNetworkServiceData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                HybridNetworkArmOperation<SiteNetworkServiceResource> operation = new HybridNetworkArmOperation<SiteNetworkServiceResource>(
+                    new SiteNetworkServiceOperationSource(Client),
+                    _siteNetworkServicesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -154,38 +175,42 @@ namespace Azure.ResourceManager.HybridNetwork
         /// Gets information about the specified site network service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/siteNetworkServices/{siteNetworkServiceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/siteNetworkServices/{siteNetworkServiceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SiteNetworkServices_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SiteNetworkServices_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteNetworkServiceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="siteNetworkServiceName"> The name of the site network service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="siteNetworkServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="siteNetworkServiceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="siteNetworkServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<SiteNetworkServiceResource>> GetAsync(string siteNetworkServiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(siteNetworkServiceName, nameof(siteNetworkServiceName));
 
-            using var scope = _siteNetworkServiceClientDiagnostics.CreateScope("SiteNetworkServiceCollection.Get");
+            using DiagnosticScope scope = _siteNetworkServicesClientDiagnostics.CreateScope("SiteNetworkServiceCollection.Get");
             scope.Start();
             try
             {
-                var response = await _siteNetworkServiceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, siteNetworkServiceName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _siteNetworkServicesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, siteNetworkServiceName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SiteNetworkServiceData> response = Response.FromValue(SiteNetworkServiceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SiteNetworkServiceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -199,38 +224,42 @@ namespace Azure.ResourceManager.HybridNetwork
         /// Gets information about the specified site network service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/siteNetworkServices/{siteNetworkServiceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/siteNetworkServices/{siteNetworkServiceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SiteNetworkServices_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SiteNetworkServices_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteNetworkServiceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="siteNetworkServiceName"> The name of the site network service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="siteNetworkServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="siteNetworkServiceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="siteNetworkServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<SiteNetworkServiceResource> Get(string siteNetworkServiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(siteNetworkServiceName, nameof(siteNetworkServiceName));
 
-            using var scope = _siteNetworkServiceClientDiagnostics.CreateScope("SiteNetworkServiceCollection.Get");
+            using DiagnosticScope scope = _siteNetworkServicesClientDiagnostics.CreateScope("SiteNetworkServiceCollection.Get");
             scope.Start();
             try
             {
-                var response = _siteNetworkServiceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, siteNetworkServiceName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _siteNetworkServicesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, siteNetworkServiceName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SiteNetworkServiceData> response = Response.FromValue(SiteNetworkServiceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SiteNetworkServiceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -244,50 +273,44 @@ namespace Azure.ResourceManager.HybridNetwork
         /// Lists all site network services.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/siteNetworkServices</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/siteNetworkServices. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SiteNetworkServices_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> SiteNetworkServices_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteNetworkServiceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SiteNetworkServiceResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SiteNetworkServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SiteNetworkServiceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _siteNetworkServiceRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteNetworkServiceRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SiteNetworkServiceResource(Client, SiteNetworkServiceData.DeserializeSiteNetworkServiceData(e)), _siteNetworkServiceClientDiagnostics, Pipeline, "SiteNetworkServiceCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<SiteNetworkServiceData, SiteNetworkServiceResource>(new SiteNetworkServicesGetByResourceGroupAsyncCollectionResultOfT(_siteNetworkServicesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "SiteNetworkServiceCollection.GetAll"), data => new SiteNetworkServiceResource(Client, data));
         }
 
         /// <summary>
         /// Lists all site network services.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/siteNetworkServices</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/siteNetworkServices. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SiteNetworkServices_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> SiteNetworkServices_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteNetworkServiceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -295,45 +318,61 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <returns> A collection of <see cref="SiteNetworkServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SiteNetworkServiceResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _siteNetworkServiceRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteNetworkServiceRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SiteNetworkServiceResource(Client, SiteNetworkServiceData.DeserializeSiteNetworkServiceData(e)), _siteNetworkServiceClientDiagnostics, Pipeline, "SiteNetworkServiceCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<SiteNetworkServiceData, SiteNetworkServiceResource>(new SiteNetworkServicesGetByResourceGroupCollectionResultOfT(_siteNetworkServicesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "SiteNetworkServiceCollection.GetAll"), data => new SiteNetworkServiceResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/siteNetworkServices/{siteNetworkServiceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/siteNetworkServices/{siteNetworkServiceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SiteNetworkServices_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SiteNetworkServices_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteNetworkServiceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="siteNetworkServiceName"> The name of the site network service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="siteNetworkServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="siteNetworkServiceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="siteNetworkServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string siteNetworkServiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(siteNetworkServiceName, nameof(siteNetworkServiceName));
 
-            using var scope = _siteNetworkServiceClientDiagnostics.CreateScope("SiteNetworkServiceCollection.Exists");
+            using DiagnosticScope scope = _siteNetworkServicesClientDiagnostics.CreateScope("SiteNetworkServiceCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _siteNetworkServiceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, siteNetworkServiceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _siteNetworkServicesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, siteNetworkServiceName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SiteNetworkServiceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SiteNetworkServiceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SiteNetworkServiceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -347,36 +386,50 @@ namespace Azure.ResourceManager.HybridNetwork
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/siteNetworkServices/{siteNetworkServiceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/siteNetworkServices/{siteNetworkServiceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SiteNetworkServices_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SiteNetworkServices_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteNetworkServiceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="siteNetworkServiceName"> The name of the site network service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="siteNetworkServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="siteNetworkServiceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="siteNetworkServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string siteNetworkServiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(siteNetworkServiceName, nameof(siteNetworkServiceName));
 
-            using var scope = _siteNetworkServiceClientDiagnostics.CreateScope("SiteNetworkServiceCollection.Exists");
+            using DiagnosticScope scope = _siteNetworkServicesClientDiagnostics.CreateScope("SiteNetworkServiceCollection.Exists");
             scope.Start();
             try
             {
-                var response = _siteNetworkServiceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, siteNetworkServiceName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _siteNetworkServicesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, siteNetworkServiceName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SiteNetworkServiceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SiteNetworkServiceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SiteNetworkServiceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -390,38 +443,54 @@ namespace Azure.ResourceManager.HybridNetwork
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/siteNetworkServices/{siteNetworkServiceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/siteNetworkServices/{siteNetworkServiceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SiteNetworkServices_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SiteNetworkServices_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteNetworkServiceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="siteNetworkServiceName"> The name of the site network service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="siteNetworkServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="siteNetworkServiceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="siteNetworkServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<SiteNetworkServiceResource>> GetIfExistsAsync(string siteNetworkServiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(siteNetworkServiceName, nameof(siteNetworkServiceName));
 
-            using var scope = _siteNetworkServiceClientDiagnostics.CreateScope("SiteNetworkServiceCollection.GetIfExists");
+            using DiagnosticScope scope = _siteNetworkServicesClientDiagnostics.CreateScope("SiteNetworkServiceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _siteNetworkServiceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, siteNetworkServiceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _siteNetworkServicesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, siteNetworkServiceName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SiteNetworkServiceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SiteNetworkServiceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SiteNetworkServiceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SiteNetworkServiceResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SiteNetworkServiceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -435,38 +504,54 @@ namespace Azure.ResourceManager.HybridNetwork
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/siteNetworkServices/{siteNetworkServiceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/siteNetworkServices/{siteNetworkServiceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SiteNetworkServices_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SiteNetworkServices_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteNetworkServiceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="siteNetworkServiceName"> The name of the site network service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="siteNetworkServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="siteNetworkServiceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="siteNetworkServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<SiteNetworkServiceResource> GetIfExists(string siteNetworkServiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(siteNetworkServiceName, nameof(siteNetworkServiceName));
 
-            using var scope = _siteNetworkServiceClientDiagnostics.CreateScope("SiteNetworkServiceCollection.GetIfExists");
+            using DiagnosticScope scope = _siteNetworkServicesClientDiagnostics.CreateScope("SiteNetworkServiceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _siteNetworkServiceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, siteNetworkServiceName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _siteNetworkServicesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, siteNetworkServiceName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SiteNetworkServiceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SiteNetworkServiceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SiteNetworkServiceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SiteNetworkServiceResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SiteNetworkServiceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -486,6 +571,7 @@ namespace Azure.ResourceManager.HybridNetwork
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<SiteNetworkServiceResource> IAsyncEnumerable<SiteNetworkServiceResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

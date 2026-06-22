@@ -8,23 +8,36 @@
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class ApplicationGatewayBackendHealthOperationSource : IOperationSource<ApplicationGatewayBackendHealth>
+    /// <summary></summary>
+    internal partial class ApplicationGatewayBackendHealthOperationSource : IOperationSource<ApplicationGatewayBackendHealth>
     {
-        ApplicationGatewayBackendHealth IOperationSource<ApplicationGatewayBackendHealth>.CreateResult(Response response, CancellationToken cancellationToken)
+        /// <summary></summary>
+        internal ApplicationGatewayBackendHealthOperationSource()
         {
-            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            return ApplicationGatewayBackendHealth.DeserializeApplicationGatewayBackendHealth(document.RootElement);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        ApplicationGatewayBackendHealth IOperationSource<ApplicationGatewayBackendHealth>.CreateResult(Response response, CancellationToken cancellationToken)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            return ApplicationGatewayBackendHealth.DeserializeApplicationGatewayBackendHealth(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<ApplicationGatewayBackendHealth> IOperationSource<ApplicationGatewayBackendHealth>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            return ApplicationGatewayBackendHealth.DeserializeApplicationGatewayBackendHealth(document.RootElement);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            return ApplicationGatewayBackendHealth.DeserializeApplicationGatewayBackendHealth(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

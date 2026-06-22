@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The RouteSourceDetails. </summary>
     public partial class RouteSourceDetails
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RouteSourceDetails"/>. </summary>
         internal RouteSourceDetails()
@@ -54,21 +26,23 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="circuit"> Express Route Circuit identifier. </param>
         /// <param name="pri"> Flag to indicate if the route learned from the primary device is active or passive. </param>
         /// <param name="sec"> Flag to indicate if the route learned from the secondary device is active or passive. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RouteSourceDetails(string circuit, string pri, string sec, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal RouteSourceDetails(string circuit, string pri, string sec, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Circuit = circuit;
             Pri = pri;
             Sec = sec;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Express Route Circuit identifier. </summary>
         [WirePath("circuit")]
         public string Circuit { get; }
+
         /// <summary> Flag to indicate if the route learned from the primary device is active or passive. </summary>
         [WirePath("pri")]
         public string Pri { get; }
+
         /// <summary> Flag to indicate if the route learned from the secondary device is active or passive. </summary>
         [WirePath("sec")]
         public string Sec { get; }

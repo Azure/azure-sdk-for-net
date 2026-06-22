@@ -7,8 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -16,82 +16,191 @@ namespace Azure.ResourceManager.Network.Models
     public partial class NetworkAdminRule : BaseAdminRuleData
     {
         /// <summary> Initializes a new instance of <see cref="NetworkAdminRule"/>. </summary>
-        public NetworkAdminRule()
+        public NetworkAdminRule() : base(AdminRuleKind.Custom)
         {
-            Sources = new ChangeTrackingList<AddressPrefixItem>();
-            Destinations = new ChangeTrackingList<AddressPrefixItem>();
-            SourcePortRanges = new ChangeTrackingList<string>();
-            DestinationPortRanges = new ChangeTrackingList<string>();
-            Kind = AdminRuleKind.Custom;
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkAdminRule"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="name"> The name of the rule. </param>
+        /// <param name="systemData"> The system metadata related to this resource. </param>
         /// <param name="kind"> Whether the rule is custom or default. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="description"> A description for this rule. Restricted to 140 chars. </param>
-        /// <param name="protocol"> Network protocol this rule applies to. </param>
-        /// <param name="sources"> The CIDR or source IP ranges. </param>
-        /// <param name="destinations"> The destination address prefixes. CIDR or destination IP ranges. </param>
-        /// <param name="sourcePortRanges"> The source port ranges. </param>
-        /// <param name="destinationPortRanges"> The destination port ranges. </param>
-        /// <param name="access"> Indicates the access allowed for this particular rule. </param>
-        /// <param name="priority"> The priority of the rule. The value can be between 1 and 4096. The priority number must be unique for each rule in the collection. The lower the priority number, the higher the priority of the rule. </param>
-        /// <param name="direction"> Indicates if the traffic matched against the rule in inbound or outbound. </param>
-        /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        /// <param name="resourceGuid"> Unique identifier for this resource. </param>
-        internal NetworkAdminRule(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AdminRuleKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, string description, SecurityConfigurationRuleProtocol? protocol, IList<AddressPrefixItem> sources, IList<AddressPrefixItem> destinations, IList<string> sourcePortRanges, IList<string> destinationPortRanges, SecurityConfigurationRuleAccess? access, int? priority, SecurityConfigurationRuleDirection? direction, NetworkProvisioningState? provisioningState, Guid? resourceGuid) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Indicates the properties of the security admin rule. </param>
+        internal NetworkAdminRule(string name, SystemData systemData, AdminRuleKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, AdminPropertiesFormat properties) : base(name, systemData, kind, additionalBinaryDataProperties)
         {
-            Description = description;
-            Protocol = protocol;
-            Sources = sources;
-            Destinations = destinations;
-            SourcePortRanges = sourcePortRanges;
-            DestinationPortRanges = destinationPortRanges;
-            Access = access;
-            Priority = priority;
-            Direction = direction;
-            ProvisioningState = provisioningState;
-            ResourceGuid = resourceGuid;
-            Kind = kind;
+            Properties = properties;
         }
+
+        /// <summary> Indicates the properties of the security admin rule. </summary>
+        [WirePath("properties")]
+        internal AdminPropertiesFormat Properties { get; set; }
 
         /// <summary> A description for this rule. Restricted to 140 chars. </summary>
         [WirePath("properties.description")]
-        public string Description { get; set; }
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AdminPropertiesFormat();
+                }
+                Properties.Description = value;
+            }
+        }
+
         /// <summary> Network protocol this rule applies to. </summary>
         [WirePath("properties.protocol")]
-        public SecurityConfigurationRuleProtocol? Protocol { get; set; }
+        public SecurityConfigurationRuleProtocol? Protocol
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Protocol;
+            }
+            set
+            {
+                if (value.HasValue)
+                {
+                    if (Properties is null)
+                    {
+                        Properties = new AdminPropertiesFormat();
+                    }
+                    Properties.Protocol = value.Value;
+                }
+            }
+        }
+
         /// <summary> The CIDR or source IP ranges. </summary>
         [WirePath("properties.sources")]
-        public IList<AddressPrefixItem> Sources { get; }
+        public IList<AddressPrefixItem> Sources
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new AdminPropertiesFormat();
+                }
+                return Properties.Sources;
+            }
+        }
+
         /// <summary> The destination address prefixes. CIDR or destination IP ranges. </summary>
         [WirePath("properties.destinations")]
-        public IList<AddressPrefixItem> Destinations { get; }
+        public IList<AddressPrefixItem> Destinations
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new AdminPropertiesFormat();
+                }
+                return Properties.Destinations;
+            }
+        }
+
         /// <summary> The source port ranges. </summary>
         [WirePath("properties.sourcePortRanges")]
-        public IList<string> SourcePortRanges { get; }
+        public IList<string> SourcePortRanges
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new AdminPropertiesFormat();
+                }
+                return Properties.SourcePortRanges;
+            }
+        }
+
         /// <summary> The destination port ranges. </summary>
         [WirePath("properties.destinationPortRanges")]
-        public IList<string> DestinationPortRanges { get; }
+        public IList<string> DestinationPortRanges
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new AdminPropertiesFormat();
+                }
+                return Properties.DestinationPortRanges;
+            }
+        }
+
         /// <summary> Indicates the access allowed for this particular rule. </summary>
         [WirePath("properties.access")]
-        public SecurityConfigurationRuleAccess? Access { get; set; }
+        public SecurityConfigurationRuleAccess? Access
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Access;
+            }
+            set
+            {
+                if (value.HasValue)
+                {
+                    if (Properties is null)
+                    {
+                        Properties = new AdminPropertiesFormat();
+                    }
+                    Properties.Access = value.Value;
+                }
+            }
+        }
+
         /// <summary> The priority of the rule. The value can be between 1 and 4096. The priority number must be unique for each rule in the collection. The lower the priority number, the higher the priority of the rule. </summary>
         [WirePath("properties.priority")]
-        public int? Priority { get; set; }
+        public int? Priority
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Priority;
+            }
+            set
+            {
+                if (value.HasValue)
+                {
+                    if (Properties is null)
+                    {
+                        Properties = new AdminPropertiesFormat();
+                    }
+                    Properties.Priority = value.Value;
+                }
+            }
+        }
+
         /// <summary> Indicates if the traffic matched against the rule in inbound or outbound. </summary>
         [WirePath("properties.direction")]
-        public SecurityConfigurationRuleDirection? Direction { get; set; }
+        public SecurityConfigurationRuleDirection? Direction
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Direction;
+            }
+            set
+            {
+                if (value.HasValue)
+                {
+                    if (Properties is null)
+                    {
+                        Properties = new AdminPropertiesFormat();
+                    }
+                    Properties.Direction = value.Value;
+                }
+            }
+        }
+
         /// <summary> The provisioning state of the resource. </summary>
         [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
-        /// <summary> Unique identifier for this resource. </summary>
-        [WirePath("properties.resourceGuid")]
-        public Guid? ResourceGuid { get; }
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }
