@@ -4,8 +4,6 @@ Microsoft Azure Compute provides the infrastructure to host apps. Tap in to comp
 
 This library supports managing Microsoft Azure Compute resources.
 
-If you are upgrading from `Azure.ResourceManager.Compute` 1.14.x or an earlier stable version, see the [migration guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/compute/Azure.ResourceManager.Compute/MigrationGuide.md) for guidance on API shape changes introduced by the TypeSpec-generated stable release.
-
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
     - Support MSAL.NET, Azure.Identity is out of box for supporting MSAL.NET.

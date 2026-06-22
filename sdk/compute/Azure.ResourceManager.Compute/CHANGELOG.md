@@ -9,12 +9,124 @@
 
 ### Breaking Changes
 
-- A number of legacy compatibility members are now marked obsolete and hidden from IntelliSense. Many of these members are preserved only for binary/source compatibility and should be replaced with the newer generated properties. See the [migration guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/compute/Azure.ResourceManager.Compute/MigrationGuide.md) for details and examples.
+- A number of legacy compatibility members are now marked obsolete and hidden from IntelliSense. Many of these members are preserved only for binary/source compatibility and should be replaced with the newer generated properties. See the migration guide below for details and examples.
 - Cloud Services (classic) APIs are no longer supported by the generated Compute client. Existing CloudService-related types and methods are obsolete and preserved only for compatibility.
 
-### Other Changes
+### Migration Guide
 
-- Added a [migration guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/compute/Azure.ResourceManager.Compute/MigrationGuide.md) for customers upgrading from `1.14.x` or earlier stable versions to this TypeSpec-generated release.
+Version 1.15.0 is the first stable release of `Azure.ResourceManager.Compute` generated from Compute TypeSpec definitions. The package name, namespace, authentication model, and ARM resource pattern remain the same, but the generated API surface is more directly aligned with the service model. To preserve compatibility, many previously shipped members are still present but are marked `[Obsolete]` and hidden from IntelliSense with `[EditorBrowsable(EditorBrowsableState.Never)]`.
+
+Recommended upgrade steps:
+
+1. Upgrade your package reference to `Azure.ResourceManager.Compute` 1.15.0.
+2. Build your solution and address compiler warnings for obsolete members.
+3. Replace obsolete compatibility members with the newer generated properties listed below.
+4. Run tests that create or update VM, VM scale set, capacity reservation, restore point, gallery, or networking-related Compute models.
+5. Remove dependencies on Cloud Services (classic) APIs from this package. These APIs are obsolete and no longer supported by the generated Compute client.
+
+#### Prefer generated nested model properties
+
+Some older root-level convenience properties are now compatibility shims over properties that live on generated nested models. Prefer the generated nested model property when writing new code.
+
+For example, code that reads VMSS VM network interface configurations through `VirtualMachineScaleSetVmData.NetworkInterfaceConfigurations` should move to the generated property path:
+
+```C#
+IList<VirtualMachineScaleSetNetworkConfiguration> configurations =
+    vmssVm.Data.Properties.NetworkProfileConfiguration.NetworkInterfaceConfigurations;
+```
+
+The root-level compatibility property remains available where required by previous public API shape, but new code should prefer the generated model path.
+
+#### Prefer Compute-specific resource reference models
+
+The TypeSpec-generated Compute surface uses Compute-specific reference models such as `ComputeWriteableSubResourceData` and `ComputeSubResourceData` instead of some older `Azure.ResourceManager.Resources.Models.WritableSubResource` and `SubResource` properties.
+
+This affects several obsolete compatibility properties. The older properties are present only to preserve compatibility and are not wired to service serialization. Use the replacement properties instead.
+
+| Old member | Replacement |
+| --- | --- |
+| `AvailabilitySetData.VirtualMachines` | `AvailabilitySetData.VirtualMachineResources` |
+| `AvailabilitySetPatch.VirtualMachines` | `AvailabilitySetPatch.VirtualMachineResources` |
+| `CapacityReservationGroupData.CapacityReservations` | `CapacityReservationGroupData.CapacityReservationResources` |
+| `CapacityReservationGroupData.VirtualMachinesAssociated` | `CapacityReservationGroupData.AssociatedVirtualMachineResources` |
+| `CapacityReservationGroupData.SharingSubscriptionIds` | `CapacityReservationGroupData.SharingSubscriptionResources` |
+| `CapacityReservationGroupPatch.CapacityReservations` | `CapacityReservationGroupPatch.CapacityReservationResources` |
+| `CapacityReservationGroupPatch.VirtualMachinesAssociated` | `CapacityReservationGroupPatch.AssociatedVirtualMachineResources` |
+| `CapacityReservationGroupPatch.SharingSubscriptionIds` | `CapacityReservationGroupPatch.SharingSubscriptionResources` |
+| `RestorePointData.ExcludeDisks` | `RestorePointData.ExcludedDisks` |
+| `VirtualMachineNetworkInterfaceIPConfiguration.ApplicationGatewayBackendAddressPools` | `VirtualMachineNetworkInterfaceIPConfiguration.ApplicationGatewayBackendAddressPoolResources` |
+| `VirtualMachineNetworkInterfaceIPConfiguration.ApplicationSecurityGroups` | `VirtualMachineNetworkInterfaceIPConfiguration.ApplicationSecurityGroupResources` |
+| `VirtualMachineNetworkInterfaceIPConfiguration.LoadBalancerBackendAddressPools` | `VirtualMachineNetworkInterfaceIPConfiguration.LoadBalancerBackendAddressPoolResources` |
+| `VirtualMachineScaleSetIPConfiguration.ApplicationGatewayBackendAddressPools` | `VirtualMachineScaleSetIPConfiguration.ApplicationGatewayBackendAddressPoolResources` |
+| `VirtualMachineScaleSetIPConfiguration.ApplicationSecurityGroups` | `VirtualMachineScaleSetIPConfiguration.ApplicationSecurityGroupResources` |
+| `VirtualMachineScaleSetIPConfiguration.LoadBalancerBackendAddressPools` | `VirtualMachineScaleSetIPConfiguration.LoadBalancerBackendAddressPoolResources` |
+| `VirtualMachineScaleSetIPConfiguration.LoadBalancerInboundNatPools` | `VirtualMachineScaleSetIPConfiguration.LoadBalancerInboundNatPoolResources` |
+| `VirtualMachineScaleSetUpdateIPConfiguration.ApplicationGatewayBackendAddressPools` | `VirtualMachineScaleSetUpdateIPConfiguration.ApplicationGatewayBackendAddressPoolResources` |
+| `VirtualMachineScaleSetUpdateIPConfiguration.ApplicationSecurityGroups` | `VirtualMachineScaleSetUpdateIPConfiguration.ApplicationSecurityGroupResources` |
+| `VirtualMachineScaleSetUpdateIPConfiguration.LoadBalancerBackendAddressPools` | `VirtualMachineScaleSetUpdateIPConfiguration.LoadBalancerBackendAddressPoolResources` |
+| `VirtualMachineScaleSetUpdateIPConfiguration.LoadBalancerInboundNatPools` | `VirtualMachineScaleSetUpdateIPConfiguration.LoadBalancerInboundNatPoolResources` |
+
+Example: capacity reservation group references:
+
+```C#
+// Before
+foreach (SubResource reservation in capacityReservationGroup.Data.CapacityReservations)
+{
+    Console.WriteLine(reservation.Id);
+}
+
+// After
+foreach (ComputeSubResourceData reservation in capacityReservationGroup.Data.CapacityReservationResources)
+{
+    Console.WriteLine(reservation.Id);
+}
+```
+
+Example: VM scale set IP configuration backend pools:
+
+```C#
+// Before
+ipConfiguration.ApplicationGatewayBackendAddressPools.Add(
+    new WritableSubResource { Id = applicationGatewayBackendPoolId });
+
+// After
+ipConfiguration.ApplicationGatewayBackendAddressPoolResources.Add(
+    new ComputeWriteableSubResourceData(applicationGatewayBackendPoolId));
+```
+
+#### Renamed compatibility members
+
+Some older names are retained as obsolete aliases while the generated name should be used in new code.
+
+| Old member | Replacement |
+| --- | --- |
+| `CommunityGalleryInfo.PublisherUri` | `CommunityGalleryInfo.PublisherUriString` |
+| `GalleryImageVersionPatch.Restore` | `GalleryImageVersionPatch.IsRestoreEnabled` |
+
+#### Cloud Services APIs
+
+Cloud Services (classic) operations are no longer supported by the generated Compute client. CloudService-related types, extension methods, resource methods, and model factory helpers are obsolete and are preserved only for compatibility with existing source and binaries.
+
+Affected API areas include:
+
+- `CloudServiceResource`, `CloudServiceData`, and `CloudServiceCollection`.
+- Cloud Service role, role instance, OS family, and OS version resource types.
+- Cloud Service extension and network/profile model types.
+- `ComputeExtensions` and `MockableCompute*` methods that return or list Cloud Service resources.
+- `ArmComputeModelFactory` helpers for Cloud Service model types.
+
+If your application still depends on Cloud Services (classic) management APIs, keep using a previous package version while planning migration away from those APIs.
+
+#### Model factory changes
+
+`ArmComputeModelFactory` follows the generated TypeSpec model shape. If you use factory methods for tests, update arguments to match replacement properties when a compatibility property has been deprecated.
+
+Prefer factory overloads and parameters using:
+
+- `CapacityReservationResources` instead of `CapacityReservations`.
+- `AssociatedVirtualMachineResources` instead of `VirtualMachinesAssociated`.
+- `SharingSubscriptionResources` instead of `SharingSubscriptionIds`.
+- `ApplicationGatewayBackendAddressPoolResources`, `ApplicationSecurityGroupResources`, `LoadBalancerBackendAddressPoolResources`, and `LoadBalancerInboundNatPoolResources` instead of the older common-resource list properties.
 
 ## 1.15.0-beta.1 (2026-04-24)
 
