@@ -1,6 +1,28 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.3.0-beta.1 (Unreleased)
+
+### Features Added
+
+- Upgraded the Managed Network Fabric management plane API version to `2025-07-15`.
+- Added support for newly introduced service capabilities and operation result models from the `2025-07-15` API.
+
+### Breaking Changes
+
+- Updated model and operation signatures to align with the `2025-07-15` service contract.
+- Some operation result types changed from shared/common post-action result shapes to operation-specific result models.
+
+### Bugs Fixed
+
+- Fixed type naming inconsistencies and acronym casing issues in the generated public surface.
+- Corrected operation naming regressions to preserve previously shipped method names where applicable.
+
+### Other Changes
+
+- Migrated the library to the TypeSpec management-plane generator.
+- Added compatibility customizations and regenerated code/api listings to mitigate breaking changes introduced by the API version upgrade.
+
+## 1.2.0 (2026-05-26)
 
 ### Features Added
 
@@ -9,6 +31,13 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.3 (2026-04-27)
+
+### Other Changes
+
+- Upgraded dependent `Azure.Core` to 1.54.0.
+- Upgraded dependent `Azure.ResourceManager` to 1.14.0.
 
 ## 1.1.2 (2025-03-11)
 

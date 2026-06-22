@@ -29,19 +29,19 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="sku"> Properties of sku resource. </param>
         /// <param name="identity"> Properties of BYOK Identity description. </param>
-        internal EventHubsNamespaceData(ResourceIdentifier id, string name, ResourceType resourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation location, EHNamespaceProperties properties, IDictionary<string, string> tags, SystemData systemData, EventHubsSku sku, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal EventHubsNamespaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, EHNamespaceProperties properties, EventHubsSku sku, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             Sku = sku;
             Identity = identity;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     Properties = new EHNamespaceProperties();
                 }
-                Properties.MinimumTlsVersion = value.Value;
+                Properties.MinimumTlsVersion = value;
             }
         }
 
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     Properties = new EHNamespaceProperties();
                 }
-                Properties.IsAutoInflateEnabled = value.Value;
+                Properties.IsAutoInflateEnabled = value;
             }
         }
 
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     Properties = new EHNamespaceProperties();
                 }
-                Properties.PublicNetworkAccess = value.Value;
+                Properties.PublicNetworkAccess = value;
             }
         }
 
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     Properties = new EHNamespaceProperties();
                 }
-                Properties.MaximumThroughputUnits = value.Value;
+                Properties.MaximumThroughputUnits = value;
             }
         }
 
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     Properties = new EHNamespaceProperties();
                 }
-                Properties.KafkaEnabled = value.Value;
+                Properties.KafkaEnabled = value;
             }
         }
 
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     Properties = new EHNamespaceProperties();
                 }
-                Properties.ZoneRedundant = value.Value;
+                Properties.ZoneRedundant = value;
             }
         }
 
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     Properties = new EHNamespaceProperties();
                 }
-                Properties.DisableLocalAuth = value.Value;
+                Properties.DisableLocalAuth = value;
             }
         }
 

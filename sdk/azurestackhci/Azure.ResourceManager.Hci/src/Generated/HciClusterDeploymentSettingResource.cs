@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.Hci
                 HttpMessage message = _deploymentSettingsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, HciClusterDeploymentSettingData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HciArmOperation<HciClusterDeploymentSettingResource> operation = new HciArmOperation<HciClusterDeploymentSettingResource>(
-                    new HciClusterDeploymentSettingOperationSource(Client),
+                    new HciClusterDeploymentSettingResourceOperationSource(Client),
                     _deploymentSettingsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.Hci
                 HttpMessage message = _deploymentSettingsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, HciClusterDeploymentSettingData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HciArmOperation<HciClusterDeploymentSettingResource> operation = new HciArmOperation<HciClusterDeploymentSettingResource>(
-                    new HciClusterDeploymentSettingOperationSource(Client),
+                    new HciClusterDeploymentSettingResourceOperationSource(Client),
                     _deploymentSettingsClientDiagnostics,
                     Pipeline,
                     message.Request,

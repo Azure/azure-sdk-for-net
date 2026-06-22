@@ -54,16 +54,16 @@ namespace Azure.Communication.Sms.Tests
                 .Setup(callExpression)
                 .ReturnsAsync((string from, IEnumerable<string> to, CancellationToken token) =>
                 {
-                    Assert.AreEqual(expectedFrom, from);
-                    Assert.AreEqual(expectedTo, to);
-                    Assert.AreEqual(cancellationToken, token);
+                    Assert.That(from, Is.EqualTo(expectedFrom));
+                    Assert.That(to, Is.EqualTo(expectedTo));
+                    Assert.That(token, Is.EqualTo(cancellationToken));
                     return expectedResponse = new Mock<Response<IReadOnlyList<OptOutResponseItem>>>().Object;
                 });
 
             Response<IReadOnlyList<OptOutResponseItem>> actualResponse = await mockClient.Object.CheckAsync(expectedFrom, expectedTo, cancellationToken);
 
             mockClient.Verify(callExpression, Times.Once());
-            Assert.AreEqual(expectedResponse, actualResponse);
+            Assert.That(actualResponse, Is.EqualTo(expectedResponse));
         }
 
         [TestCaseSource(nameof(TestData))]
@@ -78,16 +78,16 @@ namespace Azure.Communication.Sms.Tests
                 .Setup(callExpression)
                 .Returns((string from, IEnumerable<string> to, CancellationToken token) =>
                 {
-                    Assert.AreEqual(expectedFrom, from);
-                    Assert.AreEqual(expectedTo, to);
-                    Assert.AreEqual(cancellationToken, token);
+                    Assert.That(from, Is.EqualTo(expectedFrom));
+                    Assert.That(to, Is.EqualTo(expectedTo));
+                    Assert.That(token, Is.EqualTo(cancellationToken));
                     return expectedResponse = new Mock<Response<IReadOnlyList<OptOutResponseItem>>>().Object;
                 });
 
             Response<IReadOnlyList<OptOutResponseItem>> actualResponse = mockClient.Object.Check(expectedFrom, expectedTo, cancellationToken);
 
             mockClient.Verify(callExpression, Times.Once());
-            Assert.AreEqual(expectedResponse, actualResponse);
+            Assert.That(actualResponse, Is.EqualTo(expectedResponse));
         }
 
         [TestCaseSource(nameof(TestData))]
@@ -102,16 +102,16 @@ namespace Azure.Communication.Sms.Tests
                 .Setup(callExpression)
                 .ReturnsAsync((string from, IEnumerable<string> to, CancellationToken token) =>
                 {
-                    Assert.AreEqual(expectedFrom, from);
-                    Assert.AreEqual(expectedTo, to);
-                    Assert.AreEqual(cancellationToken, token);
+                    Assert.That(from, Is.EqualTo(expectedFrom));
+                    Assert.That(to, Is.EqualTo(expectedTo));
+                    Assert.That(token, Is.EqualTo(cancellationToken));
                     return expectedResponse = new Mock<Response<IReadOnlyList<OptOutAddResponseItem>>>().Object;
                 });
 
             Response<IReadOnlyList<OptOutAddResponseItem>> actualResponse = await mockClient.Object.AddAsync(expectedFrom, expectedTo, cancellationToken);
 
             mockClient.Verify(callExpression, Times.Once());
-            Assert.AreEqual(expectedResponse, actualResponse);
+            Assert.That(actualResponse, Is.EqualTo(expectedResponse));
         }
 
         [TestCaseSource(nameof(TestData))]
@@ -126,16 +126,16 @@ namespace Azure.Communication.Sms.Tests
                 .Setup(callExpression)
                 .Returns((string from, IEnumerable<string> to, CancellationToken token) =>
                 {
-                    Assert.AreEqual(expectedFrom, from);
-                    Assert.AreEqual(expectedTo, to);
-                    Assert.AreEqual(cancellationToken, token);
+                    Assert.That(from, Is.EqualTo(expectedFrom));
+                    Assert.That(to, Is.EqualTo(expectedTo));
+                    Assert.That(token, Is.EqualTo(cancellationToken));
                     return expectedResponse = new Mock<Response<IReadOnlyList<OptOutAddResponseItem>>>().Object;
                 });
 
             Response<IReadOnlyList<OptOutAddResponseItem>> actualResponse = mockClient.Object.Add(expectedFrom, expectedTo, cancellationToken);
 
             mockClient.Verify(callExpression, Times.Once());
-            Assert.AreEqual(expectedResponse, actualResponse);
+            Assert.That(actualResponse, Is.EqualTo(expectedResponse));
         }
 
         [TestCaseSource(nameof(TestData))]
@@ -150,16 +150,16 @@ namespace Azure.Communication.Sms.Tests
                 .Setup(callExpression)
                 .ReturnsAsync((string from, IEnumerable<string> to, CancellationToken token) =>
                 {
-                    Assert.AreEqual(expectedFrom, from);
-                    Assert.AreEqual(expectedTo, to);
-                    Assert.AreEqual(cancellationToken, token);
+                    Assert.That(from, Is.EqualTo(expectedFrom));
+                    Assert.That(to, Is.EqualTo(expectedTo));
+                    Assert.That(token, Is.EqualTo(cancellationToken));
                     return expectedResponse = new Mock<Response<IReadOnlyList<OptOutRemoveResponseItem>>>().Object;
                 });
 
             Response<IReadOnlyList<OptOutRemoveResponseItem>> actualResponse = await mockClient.Object.RemoveAsync(expectedFrom, expectedTo, cancellationToken);
 
             mockClient.Verify(callExpression, Times.Once());
-            Assert.AreEqual(expectedResponse, actualResponse);
+            Assert.That(actualResponse, Is.EqualTo(expectedResponse));
         }
 
         [TestCaseSource(nameof(TestData))]
@@ -174,16 +174,16 @@ namespace Azure.Communication.Sms.Tests
                 .Setup(callExpression)
                 .Returns((string from, IEnumerable<string> to, CancellationToken token) =>
                 {
-                    Assert.AreEqual(expectedFrom, from);
-                    Assert.AreEqual(expectedTo, to);
-                    Assert.AreEqual(cancellationToken, token);
+                    Assert.That(from, Is.EqualTo(expectedFrom));
+                    Assert.That(to, Is.EqualTo(expectedTo));
+                    Assert.That(token, Is.EqualTo(cancellationToken));
                     return expectedResponse = new Mock<Response<IReadOnlyList<OptOutRemoveResponseItem>>>().Object;
                 });
 
             Response<IReadOnlyList<OptOutRemoveResponseItem>> actualResponse = mockClient.Object.Remove(expectedFrom, expectedTo, cancellationToken);
 
             mockClient.Verify(callExpression, Times.Once());
-            Assert.AreEqual(expectedResponse, actualResponse);
+            Assert.That(actualResponse, Is.EqualTo(expectedResponse));
         }
 
         private static IEnumerable<object> TestData()

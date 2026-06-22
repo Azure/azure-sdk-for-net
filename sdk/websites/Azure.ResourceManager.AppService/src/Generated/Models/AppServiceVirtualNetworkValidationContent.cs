@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The required set of inputs to validate a VNET. </summary>
+    /// <summary>
+    /// The required set of inputs to validate a VNET
+    /// Serialized Name: VnetParameters
+    /// </summary>
     public partial class AppServiceVirtualNetworkValidationContent : ResourceData
     {
         /// <summary>
@@ -57,11 +60,26 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="vnetResourceGroup"> The Resource Group of the VNET to be validated. </param>
-        /// <param name="vnetName"> The name of the VNET to be validated. </param>
-        /// <param name="vnetSubnetName"> The subnet name to be validated. </param>
-        /// <param name="subnetResourceId"> The ARM Resource ID of the subnet to validate. </param>
-        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="vnetResourceGroup">
+        /// The Resource Group of the VNET to be validated
+        /// Serialized Name: VnetParameters.properties.vnetResourceGroup
+        /// </param>
+        /// <param name="vnetName">
+        /// The name of the VNET to be validated
+        /// Serialized Name: VnetParameters.properties.vnetName
+        /// </param>
+        /// <param name="vnetSubnetName">
+        /// The subnet name to be validated
+        /// Serialized Name: VnetParameters.properties.vnetSubnetName
+        /// </param>
+        /// <param name="subnetResourceId">
+        /// The ARM Resource ID of the subnet to validate
+        /// Serialized Name: VnetParameters.properties.subnetResourceId
+        /// </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AppServiceVirtualNetworkValidationContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string vnetResourceGroup, string vnetName, string vnetSubnetName, ResourceIdentifier subnetResourceId, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -73,19 +91,34 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The Resource Group of the VNET to be validated. </summary>
+        /// <summary>
+        /// The Resource Group of the VNET to be validated
+        /// Serialized Name: VnetParameters.properties.vnetResourceGroup
+        /// </summary>
         [WirePath("properties.vnetResourceGroup")]
         public string VnetResourceGroup { get; set; }
-        /// <summary> The name of the VNET to be validated. </summary>
+        /// <summary>
+        /// The name of the VNET to be validated
+        /// Serialized Name: VnetParameters.properties.vnetName
+        /// </summary>
         [WirePath("properties.vnetName")]
         public string VnetName { get; set; }
-        /// <summary> The subnet name to be validated. </summary>
+        /// <summary>
+        /// The subnet name to be validated
+        /// Serialized Name: VnetParameters.properties.vnetSubnetName
+        /// </summary>
         [WirePath("properties.vnetSubnetName")]
         public string VnetSubnetName { get; set; }
-        /// <summary> The ARM Resource ID of the subnet to validate. </summary>
+        /// <summary>
+        /// The ARM Resource ID of the subnet to validate
+        /// Serialized Name: VnetParameters.properties.subnetResourceId
+        /// </summary>
         [WirePath("properties.subnetResourceId")]
         public ResourceIdentifier SubnetResourceId { get; set; }
-        /// <summary> Kind of resource. </summary>
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
     }

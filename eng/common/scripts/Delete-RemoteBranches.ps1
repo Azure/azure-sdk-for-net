@@ -6,7 +6,8 @@ param(
   $CentralRepoId,
   # We start from the sync PRs, use the branch name to get the PR number of central repo. E.g. sync-eng/common-(<branchName>)-(<PrNumber>). Have group name on PR number.
   # For sync-eng/common work, we use regex as "^sync-eng/common.*-(?<PrNumber>\d+).*$".
-  # For sync-.github work, we use regex as "^sync-.github.*-(?<PrNumber>\d+).*$".
+  # For sync-.github and sync-.github-skills work, we use regex as
+  # "^sync-\.github.*-(?<PrNumber>\d+).*$".
   $BranchRegex,
   # When set, directly delete this exact branch name without querying all branches.
   # This is a fast path that avoids the expensive GraphQL branch listing and rate limit

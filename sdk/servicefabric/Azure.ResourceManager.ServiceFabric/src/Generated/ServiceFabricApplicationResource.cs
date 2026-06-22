@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 HttpMessage message = _applicationsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ServiceFabricApplicationPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ServiceFabricArmOperation<ServiceFabricApplicationResource> operation = new ServiceFabricArmOperation<ServiceFabricApplicationResource>(
-                    new ServiceFabricApplicationOperationSource(Client),
+                    new ServiceFabricApplicationResourceOperationSource(Client),
                     _applicationsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 HttpMessage message = _applicationsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ServiceFabricApplicationPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ServiceFabricArmOperation<ServiceFabricApplicationResource> operation = new ServiceFabricArmOperation<ServiceFabricApplicationResource>(
-                    new ServiceFabricApplicationOperationSource(Client),
+                    new ServiceFabricApplicationResourceOperationSource(Client),
                     _applicationsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 else
                 {
                     ServiceFabricApplicationData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    ServiceFabricApplicationPatch patch = new ServiceFabricApplicationPatch();
+                    ServiceFabricApplicationPatch patch = new ServiceFabricApplicationPatch(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 else
                 {
                     ServiceFabricApplicationData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    ServiceFabricApplicationPatch patch = new ServiceFabricApplicationPatch();
+                    ServiceFabricApplicationPatch patch = new ServiceFabricApplicationPatch(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 else
                 {
                     ServiceFabricApplicationData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    ServiceFabricApplicationPatch patch = new ServiceFabricApplicationPatch();
+                    ServiceFabricApplicationPatch patch = new ServiceFabricApplicationPatch(current.Location);
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<ServiceFabricApplicationResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -575,7 +575,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 else
                 {
                     ServiceFabricApplicationData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    ServiceFabricApplicationPatch patch = new ServiceFabricApplicationPatch();
+                    ServiceFabricApplicationPatch patch = new ServiceFabricApplicationPatch(current.Location);
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<ServiceFabricApplicationResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -617,7 +617,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 else
                 {
                     ServiceFabricApplicationData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    ServiceFabricApplicationPatch patch = new ServiceFabricApplicationPatch();
+                    ServiceFabricApplicationPatch patch = new ServiceFabricApplicationPatch(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -663,7 +663,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 else
                 {
                     ServiceFabricApplicationData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    ServiceFabricApplicationPatch patch = new ServiceFabricApplicationPatch();
+                    ServiceFabricApplicationPatch patch = new ServiceFabricApplicationPatch(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

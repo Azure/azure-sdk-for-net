@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.Cdn.Models
     public readonly partial struct QueryStringOperator : IEquatable<QueryStringOperator>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="QueryStringOperator"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public QueryStringOperator(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string AnyValue = "Any";
         private const string EqualValue = "Equal";
         private const string ContainsValue = "Contains";
@@ -33,43 +26,76 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string GreaterThanOrEqualValue = "GreaterThanOrEqual";
         private const string RegExValue = "RegEx";
 
-        /// <summary> Any. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryStringOperator"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public QueryStringOperator(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Any. </summary>
         public static QueryStringOperator Any { get; } = new QueryStringOperator(AnyValue);
-        /// <summary> Equal. </summary>
+
+        /// <summary> Gets the Equal. </summary>
         public static QueryStringOperator Equal { get; } = new QueryStringOperator(EqualValue);
-        /// <summary> Contains. </summary>
+
+        /// <summary> Gets the Contains. </summary>
         public static QueryStringOperator Contains { get; } = new QueryStringOperator(ContainsValue);
-        /// <summary> BeginsWith. </summary>
+
+        /// <summary> Gets the BeginsWith. </summary>
         public static QueryStringOperator BeginsWith { get; } = new QueryStringOperator(BeginsWithValue);
-        /// <summary> EndsWith. </summary>
+
+        /// <summary> Gets the EndsWith. </summary>
         public static QueryStringOperator EndsWith { get; } = new QueryStringOperator(EndsWithValue);
-        /// <summary> LessThan. </summary>
+
+        /// <summary> Gets the LessThan. </summary>
         public static QueryStringOperator LessThan { get; } = new QueryStringOperator(LessThanValue);
-        /// <summary> LessThanOrEqual. </summary>
+
+        /// <summary> Gets the LessThanOrEqual. </summary>
         public static QueryStringOperator LessThanOrEqual { get; } = new QueryStringOperator(LessThanOrEqualValue);
-        /// <summary> GreaterThan. </summary>
+
+        /// <summary> Gets the GreaterThan. </summary>
         public static QueryStringOperator GreaterThan { get; } = new QueryStringOperator(GreaterThanValue);
-        /// <summary> GreaterThanOrEqual. </summary>
+
+        /// <summary> Gets the GreaterThanOrEqual. </summary>
         public static QueryStringOperator GreaterThanOrEqual { get; } = new QueryStringOperator(GreaterThanOrEqualValue);
-        /// <summary> RegEx. </summary>
+
+        /// <summary> Gets the RegEx. </summary>
         public static QueryStringOperator RegEx { get; } = new QueryStringOperator(RegExValue);
+
         /// <summary> Determines if two <see cref="QueryStringOperator"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(QueryStringOperator left, QueryStringOperator right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="QueryStringOperator"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(QueryStringOperator left, QueryStringOperator right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="QueryStringOperator"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="QueryStringOperator"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator QueryStringOperator(string value) => new QueryStringOperator(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="QueryStringOperator"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator QueryStringOperator?(string value) => value == null ? null : new QueryStringOperator(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is QueryStringOperator other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(QueryStringOperator other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

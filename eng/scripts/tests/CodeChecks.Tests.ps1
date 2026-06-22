@@ -1,3 +1,4 @@
+#Requires -Version 7.0
 <#
 .SYNOPSIS
     Unit tests for the SkipDiffValidation functionality in CodeChecks.ps1.
@@ -8,14 +9,12 @@
     when running CodeChecks with or without -SkipDiffValidation.
 
 .How-To-Run
-    Install Pester if needed:
-        Install-Module Pester -Force
-
-    Run these tests:
+    Run these tests (Pester is installed automatically via PSModule-Helpers):
         Invoke-Pester -Output Detailed $PSScriptRoot/CodeChecks.Tests.ps1
 #>
 
-Import-Module Pester
+. (Join-Path $PSScriptRoot ".." ".." "common" "scripts" "Helpers" PSModule-Helpers.ps1)
+Install-ModuleIfNotInstalled "Pester" "5.3.3" | Import-Module
 
 BeforeAll {
     . "$PSScriptRoot/../CodeChecks.Helpers.ps1"

@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
                 HttpMessage message = _deploymentStacksWhatIfAtScopeRestClient.CreateCreateOrUpdateRequest(Id.ToString(), deploymentStacksWhatIfResultName, DeploymentStackWhatIfResultData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DeploymentStacksArmOperation<DeploymentStackWhatIfResultResource> operation = new DeploymentStacksArmOperation<DeploymentStackWhatIfResultResource>(
-                    new DeploymentStackWhatIfResultOperationSource(Client),
+                    new DeploymentStackWhatIfResultResourceOperationSource(Client),
                     _deploymentStacksWhatIfAtScopeClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
                 HttpMessage message = _deploymentStacksWhatIfAtScopeRestClient.CreateCreateOrUpdateRequest(Id.ToString(), deploymentStacksWhatIfResultName, DeploymentStackWhatIfResultData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DeploymentStacksArmOperation<DeploymentStackWhatIfResultResource> operation = new DeploymentStacksArmOperation<DeploymentStackWhatIfResultResource>(
-                    new DeploymentStackWhatIfResultOperationSource(Client),
+                    new DeploymentStackWhatIfResultResourceOperationSource(Client),
                     _deploymentStacksWhatIfAtScopeClientDiagnostics,
                     Pipeline,
                     message.Request,

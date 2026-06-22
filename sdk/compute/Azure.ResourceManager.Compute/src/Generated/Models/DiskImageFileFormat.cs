@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Compute.Models
     public readonly partial struct DiskImageFileFormat : IEquatable<DiskImageFileFormat>
     {
         private readonly string _value;
+        /// <summary> A VHD file is a disk image file in the Virtual Hard Disk file format. </summary>
+        private const string VhdValue = "VHD";
+        /// <summary> A VHDX file is a disk image file in the Virtual Hard Disk v2 file format. </summary>
+        private const string VhdxValue = "VHDX";
 
         /// <summary> Initializes a new instance of <see cref="DiskImageFileFormat"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DiskImageFileFormat(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string VhdValue = "VHD";
-        private const string VhdxValue = "VHDX";
+            _value = value;
+        }
 
         /// <summary> A VHD file is a disk image file in the Virtual Hard Disk file format. </summary>
         public static DiskImageFileFormat Vhd { get; } = new DiskImageFileFormat(VhdValue);
+
         /// <summary> A VHDX file is a disk image file in the Virtual Hard Disk v2 file format. </summary>
         public static DiskImageFileFormat Vhdx { get; } = new DiskImageFileFormat(VhdxValue);
+
         /// <summary> Determines if two <see cref="DiskImageFileFormat"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DiskImageFileFormat left, DiskImageFileFormat right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DiskImageFileFormat"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DiskImageFileFormat left, DiskImageFileFormat right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DiskImageFileFormat"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DiskImageFileFormat"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DiskImageFileFormat(string value) => new DiskImageFileFormat(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DiskImageFileFormat"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DiskImageFileFormat?(string value) => value == null ? null : new DiskImageFileFormat(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DiskImageFileFormat other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DiskImageFileFormat other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

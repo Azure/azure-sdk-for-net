@@ -30,6 +30,7 @@ namespace Azure.AI.Projects.Agents
         /// The unique name that identifies the agent. Name can be used to retrieve/update/delete the agent.
         /// <list type="bullet"><item><description>Must start and end with alphanumeric characters,</description></item><item><description>Can contain hyphens in the middle</description></item><item><description>Must not exceed 63 characters.</description></item></list>
         /// </param>
+        /// <param name="state"> The initial operational state of the agent. Defaults to 'enabled' if not specified. </param>
         /// <param name="metadata">
         /// Set of 16 key-value pairs that can be attached to an object. This can be
         /// useful for storing additional information about the object in a structured
@@ -43,9 +44,10 @@ namespace Azure.AI.Projects.Agents
         /// <param name="agentEndpoint"> An optional endpoint configuration. If not specified, a default endpoint configuration will be set for the agent. </param>
         /// <param name="agentCard"> Optional agent card for the agent. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalCreateAgentRequest(string name, IDictionary<string, string> metadata, string description, ProjectsAgentDefinition definition, AgentBlueprintReference blueprintReference, AgentEndpoint agentEndpoint, AgentCard agentCard, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InternalCreateAgentRequest(string name, AgentState? state, IDictionary<string, string> metadata, string description, ProjectsAgentDefinition definition, AgentBlueprintReference blueprintReference, AgentEndpointConfiguration agentEndpoint, AgentCard agentCard, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
+            State = state;
             Metadata = metadata;
             Description = description;
             Definition = definition;
@@ -60,6 +62,9 @@ namespace Azure.AI.Projects.Agents
         /// <list type="bullet"><item><description>Must start and end with alphanumeric characters,</description></item><item><description>Can contain hyphens in the middle</description></item><item><description>Must not exceed 63 characters.</description></item></list>
         /// </summary>
         public string Name { get; }
+
+        /// <summary> The initial operational state of the agent. Defaults to 'enabled' if not specified. </summary>
+        public AgentState? State { get; }
 
         /// <summary>
         /// Set of 16 key-value pairs that can be attached to an object. This can be
@@ -77,7 +82,7 @@ namespace Azure.AI.Projects.Agents
         public AgentBlueprintReference BlueprintReference { get; }
 
         /// <summary> An optional endpoint configuration. If not specified, a default endpoint configuration will be set for the agent. </summary>
-        public AgentEndpoint AgentEndpoint { get; }
+        public AgentEndpointConfiguration AgentEndpoint { get; }
 
         /// <summary> Optional agent card for the agent. </summary>
         public AgentCard AgentCard { get; }

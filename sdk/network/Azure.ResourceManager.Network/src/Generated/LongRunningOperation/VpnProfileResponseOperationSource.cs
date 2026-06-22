@@ -8,23 +8,36 @@
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class VpnProfileResponseOperationSource : IOperationSource<VpnProfileResponse>
+    /// <summary></summary>
+    internal partial class VpnProfileResponseOperationSource : IOperationSource<VpnProfileResponse>
     {
-        VpnProfileResponse IOperationSource<VpnProfileResponse>.CreateResult(Response response, CancellationToken cancellationToken)
+        /// <summary></summary>
+        internal VpnProfileResponseOperationSource()
         {
-            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            return VpnProfileResponse.DeserializeVpnProfileResponse(document.RootElement);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        VpnProfileResponse IOperationSource<VpnProfileResponse>.CreateResult(Response response, CancellationToken cancellationToken)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            return VpnProfileResponse.DeserializeVpnProfileResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<VpnProfileResponse> IOperationSource<VpnProfileResponse>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            return VpnProfileResponse.DeserializeVpnProfileResponse(document.RootElement);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            return VpnProfileResponse.DeserializeVpnProfileResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

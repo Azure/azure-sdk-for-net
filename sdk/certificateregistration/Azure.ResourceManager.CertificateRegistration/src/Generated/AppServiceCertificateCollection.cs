@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.CertificateRegistration
                 HttpMessage message = _appServiceCertificateResourcesRestClient.CreateCreateOrUpdateCertificateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, AppServiceCertificateData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CertificateRegistrationArmOperation<AppServiceCertificateResource> operation = new CertificateRegistrationArmOperation<AppServiceCertificateResource>(
-                    new AppServiceCertificateOperationSource(Client),
+                    new AppServiceCertificateResourceOperationSource(Client),
                     _appServiceCertificateResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.CertificateRegistration
                 HttpMessage message = _appServiceCertificateResourcesRestClient.CreateCreateOrUpdateCertificateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, AppServiceCertificateData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CertificateRegistrationArmOperation<AppServiceCertificateResource> operation = new CertificateRegistrationArmOperation<AppServiceCertificateResource>(
-                    new AppServiceCertificateOperationSource(Client),
+                    new AppServiceCertificateResourceOperationSource(Client),
                     _appServiceCertificateResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,

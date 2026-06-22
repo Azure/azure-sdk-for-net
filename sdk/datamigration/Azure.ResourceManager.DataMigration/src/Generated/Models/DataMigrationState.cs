@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -14,53 +15,82 @@ namespace Azure.ResourceManager.DataMigration.Models
     public readonly partial struct DataMigrationState : IEquatable<DataMigrationState>
     {
         private readonly string _value;
+        /// <summary> None. </summary>
+        private const string NoneValue = "None";
+        /// <summary> InProgress. </summary>
+        private const string InProgressValue = "InProgress";
+        /// <summary> Failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Warning. </summary>
+        private const string WarningValue = "Warning";
+        /// <summary> Completed. </summary>
+        private const string CompletedValue = "Completed";
+        /// <summary> Skipped. </summary>
+        private const string SkippedValue = "Skipped";
+        /// <summary> Stopped. </summary>
+        private const string StoppedValue = "Stopped";
 
         /// <summary> Initializes a new instance of <see cref="DataMigrationState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataMigrationState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "None";
-        private const string InProgressValue = "InProgress";
-        private const string FailedValue = "Failed";
-        private const string WarningValue = "Warning";
-        private const string CompletedValue = "Completed";
-        private const string SkippedValue = "Skipped";
-        private const string StoppedValue = "Stopped";
+            _value = value;
+        }
 
         /// <summary> None. </summary>
         public static DataMigrationState None { get; } = new DataMigrationState(NoneValue);
+
         /// <summary> InProgress. </summary>
         public static DataMigrationState InProgress { get; } = new DataMigrationState(InProgressValue);
+
         /// <summary> Failed. </summary>
         public static DataMigrationState Failed { get; } = new DataMigrationState(FailedValue);
+
         /// <summary> Warning. </summary>
         public static DataMigrationState Warning { get; } = new DataMigrationState(WarningValue);
+
         /// <summary> Completed. </summary>
         public static DataMigrationState Completed { get; } = new DataMigrationState(CompletedValue);
+
         /// <summary> Skipped. </summary>
         public static DataMigrationState Skipped { get; } = new DataMigrationState(SkippedValue);
+
         /// <summary> Stopped. </summary>
         public static DataMigrationState Stopped { get; } = new DataMigrationState(StoppedValue);
+
         /// <summary> Determines if two <see cref="DataMigrationState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataMigrationState left, DataMigrationState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataMigrationState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataMigrationState left, DataMigrationState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataMigrationState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataMigrationState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataMigrationState(string value) => new DataMigrationState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataMigrationState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataMigrationState?(string value) => value == null ? null : new DataMigrationState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataMigrationState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataMigrationState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

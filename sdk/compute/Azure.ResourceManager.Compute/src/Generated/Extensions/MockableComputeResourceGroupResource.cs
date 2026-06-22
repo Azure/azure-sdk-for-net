@@ -8,34 +8,166 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Compute.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Compute.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableComputeResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableComputeResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableComputeResourceGroupResource for mocking. </summary>
         protected MockableComputeResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableComputeResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableComputeResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableComputeResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
+        /// <summary> Gets a collection of VirtualMachineScaleSets in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of VirtualMachineScaleSets and their operations over a VirtualMachineScaleSetResource. </returns>
+        public virtual VirtualMachineScaleSetCollection GetVirtualMachineScaleSets()
         {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
+            return GetCachedClient(client => new VirtualMachineScaleSetCollection(client, Id));
         }
 
-        /// <summary> Gets a collection of AvailabilitySetResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of AvailabilitySetResources and their operations over a AvailabilitySetResource. </returns>
+        /// <summary>
+        /// Display information about a virtual machine scale set.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachineScaleSets_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="vmScaleSetName"> The name of the VM scale set. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. 'UserData' retrieves the UserData property of the VM scale set that was provided by the user during the VM scale set Create/Update operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vmScaleSetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vmScaleSetName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<VirtualMachineScaleSetResource>> GetVirtualMachineScaleSetAsync(string vmScaleSetName, VirtualMachineScaleSetGetExpand? expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(vmScaleSetName, nameof(vmScaleSetName));
+
+            return await GetVirtualMachineScaleSets().GetAsync(vmScaleSetName, expand, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Display information about a virtual machine scale set.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachineScaleSets_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="vmScaleSetName"> The name of the VM scale set. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. 'UserData' retrieves the UserData property of the VM scale set that was provided by the user during the VM scale set Create/Update operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vmScaleSetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vmScaleSetName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<VirtualMachineScaleSetResource> GetVirtualMachineScaleSet(string vmScaleSetName, VirtualMachineScaleSetGetExpand? expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(vmScaleSetName, nameof(vmScaleSetName));
+
+            return GetVirtualMachineScaleSets().Get(vmScaleSetName, expand, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of VirtualMachines in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of VirtualMachines and their operations over a VirtualMachineResource. </returns>
+        public virtual VirtualMachineCollection GetVirtualMachines()
+        {
+            return GetCachedClient(client => new VirtualMachineCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Retrieves information about the model view or the instance view of a virtual machine.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachines_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="vmName"> The name of the virtual machine. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. 'InstanceView' retrieves a snapshot of the runtime properties of the virtual machine that is managed by the platform and can change outside of control plane operations. 'UserData' retrieves the UserData property as part of the VM model view that was provided by the user during the VM Create/Update operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vmName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vmName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<VirtualMachineResource>> GetVirtualMachineAsync(string vmName, InstanceViewType? expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(vmName, nameof(vmName));
+
+            return await GetVirtualMachines().GetAsync(vmName, expand, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Retrieves information about the model view or the instance view of a virtual machine.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachines_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="vmName"> The name of the virtual machine. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. 'InstanceView' retrieves a snapshot of the runtime properties of the virtual machine that is managed by the platform and can change outside of control plane operations. 'UserData' retrieves the UserData property as part of the VM model view that was provided by the user during the VM Create/Update operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vmName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vmName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<VirtualMachineResource> GetVirtualMachine(string vmName, InstanceViewType? expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(vmName, nameof(vmName));
+
+            return GetVirtualMachines().Get(vmName, expand, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of AvailabilitySets in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of AvailabilitySets and their operations over a AvailabilitySetResource. </returns>
         public virtual AvailabilitySetCollection GetAvailabilitySets()
         {
             return GetCachedClient(client => new AvailabilitySetCollection(client, Id));
@@ -45,20 +177,16 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// Retrieves information about an availability set.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AvailabilitySets_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AvailabilitySets_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AvailabilitySetResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -69,6 +197,8 @@ namespace Azure.ResourceManager.Compute.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<AvailabilitySetResource>> GetAvailabilitySetAsync(string availabilitySetName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(availabilitySetName, nameof(availabilitySetName));
+
             return await GetAvailabilitySets().GetAsync(availabilitySetName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -76,20 +206,16 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// Retrieves information about an availability set.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AvailabilitySets_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AvailabilitySets_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AvailabilitySetResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -100,366 +226,13 @@ namespace Azure.ResourceManager.Compute.Mocking
         [ForwardsClientCalls]
         public virtual Response<AvailabilitySetResource> GetAvailabilitySet(string availabilitySetName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(availabilitySetName, nameof(availabilitySetName));
+
             return GetAvailabilitySets().Get(availabilitySetName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of CapacityReservationGroupResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of CapacityReservationGroupResources and their operations over a CapacityReservationGroupResource. </returns>
-        public virtual CapacityReservationGroupCollection GetCapacityReservationGroups()
-        {
-            return GetCachedClient(client => new CapacityReservationGroupCollection(client, Id));
-        }
-
-        /// <summary>
-        /// The operation that retrieves information about a capacity reservation group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/capacityReservationGroups/{capacityReservationGroupName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CapacityReservationGroups_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CapacityReservationGroupResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="capacityReservationGroupName"> The name of the capacity reservation group. </param>
-        /// <param name="expand"> The expand expression to apply on the operation. 'InstanceView' will retrieve the list of instance views of the capacity reservations under the capacity reservation group which is a snapshot of the runtime properties of a capacity reservation that is managed by the platform and can change outside of control plane operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="capacityReservationGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="capacityReservationGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<CapacityReservationGroupResource>> GetCapacityReservationGroupAsync(string capacityReservationGroupName, CapacityReservationGroupInstanceViewType? expand = null, CancellationToken cancellationToken = default)
-        {
-            return await GetCapacityReservationGroups().GetAsync(capacityReservationGroupName, expand, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// The operation that retrieves information about a capacity reservation group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/capacityReservationGroups/{capacityReservationGroupName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CapacityReservationGroups_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CapacityReservationGroupResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="capacityReservationGroupName"> The name of the capacity reservation group. </param>
-        /// <param name="expand"> The expand expression to apply on the operation. 'InstanceView' will retrieve the list of instance views of the capacity reservations under the capacity reservation group which is a snapshot of the runtime properties of a capacity reservation that is managed by the platform and can change outside of control plane operations. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="capacityReservationGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="capacityReservationGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<CapacityReservationGroupResource> GetCapacityReservationGroup(string capacityReservationGroupName, CapacityReservationGroupInstanceViewType? expand = null, CancellationToken cancellationToken = default)
-        {
-            return GetCapacityReservationGroups().Get(capacityReservationGroupName, expand, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of DedicatedHostGroupResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of DedicatedHostGroupResources and their operations over a DedicatedHostGroupResource. </returns>
-        public virtual DedicatedHostGroupCollection GetDedicatedHostGroups()
-        {
-            return GetCachedClient(client => new DedicatedHostGroupCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Retrieves information about a dedicated host group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/hostGroups/{hostGroupName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DedicatedHostGroups_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DedicatedHostGroupResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="hostGroupName"> The name of the dedicated host group. </param>
-        /// <param name="expand"> The expand expression to apply on the operation. 'InstanceView' will retrieve the list of instance views of the dedicated hosts under the dedicated host group. 'UserData' is not supported for dedicated host group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="hostGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="hostGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<DedicatedHostGroupResource>> GetDedicatedHostGroupAsync(string hostGroupName, InstanceViewType? expand = null, CancellationToken cancellationToken = default)
-        {
-            return await GetDedicatedHostGroups().GetAsync(hostGroupName, expand, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Retrieves information about a dedicated host group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/hostGroups/{hostGroupName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DedicatedHostGroups_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DedicatedHostGroupResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="hostGroupName"> The name of the dedicated host group. </param>
-        /// <param name="expand"> The expand expression to apply on the operation. 'InstanceView' will retrieve the list of instance views of the dedicated hosts under the dedicated host group. 'UserData' is not supported for dedicated host group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="hostGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="hostGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<DedicatedHostGroupResource> GetDedicatedHostGroup(string hostGroupName, InstanceViewType? expand = null, CancellationToken cancellationToken = default)
-        {
-            return GetDedicatedHostGroups().Get(hostGroupName, expand, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of DiskImageResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of DiskImageResources and their operations over a DiskImageResource. </returns>
-        public virtual DiskImageCollection GetDiskImages()
-        {
-            return GetCachedClient(client => new DiskImageCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets an image.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/images/{imageName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Images_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DiskImageResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="imageName"> The name of the image. </param>
-        /// <param name="expand"> The expand expression to apply on the operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<DiskImageResource>> GetDiskImageAsync(string imageName, string expand = null, CancellationToken cancellationToken = default)
-        {
-            return await GetDiskImages().GetAsync(imageName, expand, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets an image.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/images/{imageName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Images_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DiskImageResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="imageName"> The name of the image. </param>
-        /// <param name="expand"> The expand expression to apply on the operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<DiskImageResource> GetDiskImage(string imageName, string expand = null, CancellationToken cancellationToken = default)
-        {
-            return GetDiskImages().Get(imageName, expand, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of VirtualMachineScaleSetResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of VirtualMachineScaleSetResources and their operations over a VirtualMachineScaleSetResource. </returns>
-        public virtual VirtualMachineScaleSetCollection GetVirtualMachineScaleSets()
-        {
-            return GetCachedClient(client => new VirtualMachineScaleSetCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Display information about a virtual machine scale set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachineScaleSets_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualMachineScaleSetResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="virtualMachineScaleSetName"> The name of the VM scale set. </param>
-        /// <param name="expand"> The expand expression to apply on the operation. 'UserData' retrieves the UserData property of the VM scale set that was provided by the user during the VM scale set Create/Update operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineScaleSetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="virtualMachineScaleSetName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<VirtualMachineScaleSetResource>> GetVirtualMachineScaleSetAsync(string virtualMachineScaleSetName, VirtualMachineScaleSetGetExpand? expand = null, CancellationToken cancellationToken = default)
-        {
-            return await GetVirtualMachineScaleSets().GetAsync(virtualMachineScaleSetName, expand, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Display information about a virtual machine scale set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachineScaleSets_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualMachineScaleSetResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="virtualMachineScaleSetName"> The name of the VM scale set. </param>
-        /// <param name="expand"> The expand expression to apply on the operation. 'UserData' retrieves the UserData property of the VM scale set that was provided by the user during the VM scale set Create/Update operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineScaleSetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="virtualMachineScaleSetName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<VirtualMachineScaleSetResource> GetVirtualMachineScaleSet(string virtualMachineScaleSetName, VirtualMachineScaleSetGetExpand? expand = null, CancellationToken cancellationToken = default)
-        {
-            return GetVirtualMachineScaleSets().Get(virtualMachineScaleSetName, expand, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of VirtualMachineResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of VirtualMachineResources and their operations over a VirtualMachineResource. </returns>
-        public virtual VirtualMachineCollection GetVirtualMachines()
-        {
-            return GetCachedClient(client => new VirtualMachineCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Retrieves information about the model view or the instance view of a virtual machine.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachines_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualMachineResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="vmName"> The name of the virtual machine. </param>
-        /// <param name="expand"> The expand expression to apply on the operation. 'InstanceView' retrieves a snapshot of the runtime properties of the virtual machine that is managed by the platform and can change outside of control plane operations. 'UserData' retrieves the UserData property as part of the VM model view that was provided by the user during the VM Create/Update operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vmName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vmName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<VirtualMachineResource>> GetVirtualMachineAsync(string vmName, InstanceViewType? expand = null, CancellationToken cancellationToken = default)
-        {
-            return await GetVirtualMachines().GetAsync(vmName, expand, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Retrieves information about the model view or the instance view of a virtual machine.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachines_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualMachineResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="vmName"> The name of the virtual machine. </param>
-        /// <param name="expand"> The expand expression to apply on the operation. 'InstanceView' retrieves a snapshot of the runtime properties of the virtual machine that is managed by the platform and can change outside of control plane operations. 'UserData' retrieves the UserData property as part of the VM model view that was provided by the user during the VM Create/Update operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vmName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vmName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<VirtualMachineResource> GetVirtualMachine(string vmName, InstanceViewType? expand = null, CancellationToken cancellationToken = default)
-        {
-            return GetVirtualMachines().Get(vmName, expand, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ProximityPlacementGroupResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ProximityPlacementGroupResources and their operations over a ProximityPlacementGroupResource. </returns>
+        /// <summary> Gets a collection of ProximityPlacementGroups in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of ProximityPlacementGroups and their operations over a ProximityPlacementGroupResource. </returns>
         public virtual ProximityPlacementGroupCollection GetProximityPlacementGroups()
         {
             return GetCachedClient(client => new ProximityPlacementGroupCollection(client, Id));
@@ -469,20 +242,16 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// Retrieves information about a proximity placement group .
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/proximityPlacementGroups/{proximityPlacementGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/proximityPlacementGroups/{proximityPlacementGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProximityPlacementGroups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProximityPlacementGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProximityPlacementGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -492,8 +261,10 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="proximityPlacementGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="proximityPlacementGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ProximityPlacementGroupResource>> GetProximityPlacementGroupAsync(string proximityPlacementGroupName, string includeColocationStatus = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ProximityPlacementGroupResource>> GetProximityPlacementGroupAsync(string proximityPlacementGroupName, string includeColocationStatus = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(proximityPlacementGroupName, nameof(proximityPlacementGroupName));
+
             return await GetProximityPlacementGroups().GetAsync(proximityPlacementGroupName, includeColocationStatus, cancellationToken).ConfigureAwait(false);
         }
 
@@ -501,20 +272,16 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// Retrieves information about a proximity placement group .
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/proximityPlacementGroups/{proximityPlacementGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/proximityPlacementGroups/{proximityPlacementGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProximityPlacementGroups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProximityPlacementGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProximityPlacementGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -524,84 +291,82 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="proximityPlacementGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="proximityPlacementGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ProximityPlacementGroupResource> GetProximityPlacementGroup(string proximityPlacementGroupName, string includeColocationStatus = null, CancellationToken cancellationToken = default)
+        public virtual Response<ProximityPlacementGroupResource> GetProximityPlacementGroup(string proximityPlacementGroupName, string includeColocationStatus = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(proximityPlacementGroupName, nameof(proximityPlacementGroupName));
+
             return GetProximityPlacementGroups().Get(proximityPlacementGroupName, includeColocationStatus, cancellationToken);
         }
 
-        /// <summary> Gets a collection of RestorePointGroupResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of RestorePointGroupResources and their operations over a RestorePointGroupResource. </returns>
-        public virtual RestorePointGroupCollection GetRestorePointGroups()
+        /// <summary> Gets a collection of DedicatedHostGroups in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of DedicatedHostGroups and their operations over a DedicatedHostGroupResource. </returns>
+        public virtual DedicatedHostGroupCollection GetDedicatedHostGroups()
         {
-            return GetCachedClient(client => new RestorePointGroupCollection(client, Id));
+            return GetCachedClient(client => new DedicatedHostGroupCollection(client, Id));
         }
 
         /// <summary>
-        /// The operation to get the restore point collection.
+        /// Retrieves information about a dedicated host group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/hostGroups/{hostGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RestorePointCollections_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DedicatedHostGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RestorePointGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="restorePointGroupName"> The name of the restore point collection. </param>
-        /// <param name="expand"> The expand expression to apply on the operation. If expand=restorePoints, server will return all contained restore points in the restorePointCollection. </param>
+        /// <param name="hostGroupName"> The name of the dedicated host group. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. 'InstanceView' will retrieve the list of instance views of the dedicated hosts under the dedicated host group. 'UserData' is not supported for dedicated host group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="restorePointGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="restorePointGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="hostGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="hostGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<RestorePointGroupResource>> GetRestorePointGroupAsync(string restorePointGroupName, RestorePointGroupExpand? expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DedicatedHostGroupResource>> GetDedicatedHostGroupAsync(string hostGroupName, InstanceViewType? expand = default, CancellationToken cancellationToken = default)
         {
-            return await GetRestorePointGroups().GetAsync(restorePointGroupName, expand, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNullOrEmpty(hostGroupName, nameof(hostGroupName));
+
+            return await GetDedicatedHostGroups().GetAsync(hostGroupName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// The operation to get the restore point collection.
+        /// Retrieves information about a dedicated host group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/hostGroups/{hostGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RestorePointCollections_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DedicatedHostGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RestorePointGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="restorePointGroupName"> The name of the restore point collection. </param>
-        /// <param name="expand"> The expand expression to apply on the operation. If expand=restorePoints, server will return all contained restore points in the restorePointCollection. </param>
+        /// <param name="hostGroupName"> The name of the dedicated host group. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. 'InstanceView' will retrieve the list of instance views of the dedicated hosts under the dedicated host group. 'UserData' is not supported for dedicated host group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="restorePointGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="restorePointGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="hostGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="hostGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<RestorePointGroupResource> GetRestorePointGroup(string restorePointGroupName, RestorePointGroupExpand? expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<DedicatedHostGroupResource> GetDedicatedHostGroup(string hostGroupName, InstanceViewType? expand = default, CancellationToken cancellationToken = default)
         {
-            return GetRestorePointGroups().Get(restorePointGroupName, expand, cancellationToken);
+            Argument.AssertNotNullOrEmpty(hostGroupName, nameof(hostGroupName));
+
+            return GetDedicatedHostGroups().Get(hostGroupName, expand, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SshPublicKeyResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of SshPublicKeyResources and their operations over a SshPublicKeyResource. </returns>
+        /// <summary> Gets a collection of SshPublicKeys in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of SshPublicKeys and their operations over a SshPublicKeyResource. </returns>
         public virtual SshPublicKeyCollection GetSshPublicKeys()
         {
             return GetCachedClient(client => new SshPublicKeyCollection(client, Id));
@@ -611,20 +376,16 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// Retrieves information about an SSH public key.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/sshPublicKeys/{sshPublicKeyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/sshPublicKeys/{sshPublicKeyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SshPublicKeys_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SshPublicKeyResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SshPublicKeyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -635,6 +396,8 @@ namespace Azure.ResourceManager.Compute.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<SshPublicKeyResource>> GetSshPublicKeyAsync(string sshPublicKeyName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(sshPublicKeyName, nameof(sshPublicKeyName));
+
             return await GetSshPublicKeys().GetAsync(sshPublicKeyName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -642,20 +405,16 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// Retrieves information about an SSH public key.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/sshPublicKeys/{sshPublicKeyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/sshPublicKeys/{sshPublicKeyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SshPublicKeys_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SshPublicKeyResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SshPublicKeyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -666,149 +425,281 @@ namespace Azure.ResourceManager.Compute.Mocking
         [ForwardsClientCalls]
         public virtual Response<SshPublicKeyResource> GetSshPublicKey(string sshPublicKeyName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(sshPublicKeyName, nameof(sshPublicKeyName));
+
             return GetSshPublicKeys().Get(sshPublicKeyName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of DiskAccessResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of DiskAccessResources and their operations over a DiskAccessResource. </returns>
-        public virtual DiskAccessCollection GetDiskAccesses()
+        /// <summary> Gets a collection of DiskImages in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of DiskImages and their operations over a DiskImageResource. </returns>
+        public virtual DiskImageCollection GetDiskImages()
         {
-            return GetCachedClient(client => new DiskAccessCollection(client, Id));
+            return GetCachedClient(client => new DiskImageCollection(client, Id));
         }
 
         /// <summary>
-        /// Gets information about a disk access resource.
+        /// Gets an image.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/diskAccesses/{diskAccessName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/images/{imageName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DiskAccesses_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Images_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-02</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DiskAccessResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="diskAccessName"> The name of the disk access resource that is being created. The name can't be changed after the disk encryption set is created. Supported characters for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80 characters. </param>
+        /// <param name="imageName"> The name of the image. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="diskAccessName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="diskAccessName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DiskAccessResource>> GetDiskAccessAsync(string diskAccessName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DiskImageResource>> GetDiskImageAsync(string imageName, string expand = default, CancellationToken cancellationToken = default)
         {
-            return await GetDiskAccesses().GetAsync(diskAccessName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
+
+            return await GetDiskImages().GetAsync(imageName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Gets information about a disk access resource.
+        /// Gets an image.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/diskAccesses/{diskAccessName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/images/{imageName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DiskAccesses_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Images_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-02</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DiskAccessResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="diskAccessName"> The name of the disk access resource that is being created. The name can't be changed after the disk encryption set is created. Supported characters for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80 characters. </param>
+        /// <param name="imageName"> The name of the image. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="diskAccessName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="diskAccessName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DiskAccessResource> GetDiskAccess(string diskAccessName, CancellationToken cancellationToken = default)
+        public virtual Response<DiskImageResource> GetDiskImage(string imageName, string expand = default, CancellationToken cancellationToken = default)
         {
-            return GetDiskAccesses().Get(diskAccessName, cancellationToken);
+            Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
+
+            return GetDiskImages().Get(imageName, expand, cancellationToken);
         }
 
-        /// <summary> Gets a collection of DiskEncryptionSetResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of DiskEncryptionSetResources and their operations over a DiskEncryptionSetResource. </returns>
-        public virtual DiskEncryptionSetCollection GetDiskEncryptionSets()
+        /// <summary> Gets a collection of RestorePointGroups in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of RestorePointGroups and their operations over a RestorePointGroupResource. </returns>
+        public virtual RestorePointGroupCollection GetRestorePointGroups()
         {
-            return GetCachedClient(client => new DiskEncryptionSetCollection(client, Id));
+            return GetCachedClient(client => new RestorePointGroupCollection(client, Id));
         }
 
         /// <summary>
-        /// Gets information about a disk encryption set.
+        /// The operation to get the restore point collection.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/diskEncryptionSets/{diskEncryptionSetName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DiskEncryptionSets_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> RestorePointCollections_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-02</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DiskEncryptionSetResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="diskEncryptionSetName"> The name of the disk encryption set that is being created. The name can't be changed after the disk encryption set is created. Supported characters for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80 characters. </param>
+        /// <param name="restorePointCollectionName"> The name of the restore point collection. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. If expand=restorePoints, server will return all contained restore points in the restorePointCollection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="diskEncryptionSetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="diskEncryptionSetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="restorePointCollectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="restorePointCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DiskEncryptionSetResource>> GetDiskEncryptionSetAsync(string diskEncryptionSetName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RestorePointGroupResource>> GetRestorePointGroupAsync(string restorePointCollectionName, RestorePointGroupExpand? expand = default, CancellationToken cancellationToken = default)
         {
-            return await GetDiskEncryptionSets().GetAsync(diskEncryptionSetName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNullOrEmpty(restorePointCollectionName, nameof(restorePointCollectionName));
+
+            return await GetRestorePointGroups().GetAsync(restorePointCollectionName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Gets information about a disk encryption set.
+        /// The operation to get the restore point collection.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/diskEncryptionSets/{diskEncryptionSetName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DiskEncryptionSets_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> RestorePointCollections_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-02</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DiskEncryptionSetResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="diskEncryptionSetName"> The name of the disk encryption set that is being created. The name can't be changed after the disk encryption set is created. Supported characters for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80 characters. </param>
+        /// <param name="restorePointCollectionName"> The name of the restore point collection. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. If expand=restorePoints, server will return all contained restore points in the restorePointCollection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="diskEncryptionSetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="diskEncryptionSetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="restorePointCollectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="restorePointCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DiskEncryptionSetResource> GetDiskEncryptionSet(string diskEncryptionSetName, CancellationToken cancellationToken = default)
+        public virtual Response<RestorePointGroupResource> GetRestorePointGroup(string restorePointCollectionName, RestorePointGroupExpand? expand = default, CancellationToken cancellationToken = default)
         {
-            return GetDiskEncryptionSets().Get(diskEncryptionSetName, cancellationToken);
+            Argument.AssertNotNullOrEmpty(restorePointCollectionName, nameof(restorePointCollectionName));
+
+            return GetRestorePointGroups().Get(restorePointCollectionName, expand, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ManagedDiskResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ManagedDiskResources and their operations over a ManagedDiskResource. </returns>
+        /// <summary> Gets a collection of CapacityReservationGroups in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of CapacityReservationGroups and their operations over a CapacityReservationGroupResource. </returns>
+        public virtual CapacityReservationGroupCollection GetCapacityReservationGroups()
+        {
+            return GetCachedClient(client => new CapacityReservationGroupCollection(client, Id));
+        }
+
+        /// <summary>
+        /// The operation that retrieves information about a capacity reservation group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/capacityReservationGroups/{capacityReservationGroupName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CapacityReservationGroups_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="capacityReservationGroupName"> The name of the capacity reservation group. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. 'InstanceView' will retrieve the list of instance views of the capacity reservations under the capacity reservation group which is a snapshot of the runtime properties of a capacity reservation that is managed by the platform and can change outside of control plane operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="capacityReservationGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="capacityReservationGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<CapacityReservationGroupResource>> GetCapacityReservationGroupAsync(string capacityReservationGroupName, CapacityReservationGroupInstanceViewType? expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(capacityReservationGroupName, nameof(capacityReservationGroupName));
+
+            return await GetCapacityReservationGroups().GetAsync(capacityReservationGroupName, expand, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// The operation that retrieves information about a capacity reservation group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/capacityReservationGroups/{capacityReservationGroupName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CapacityReservationGroups_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="capacityReservationGroupName"> The name of the capacity reservation group. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. 'InstanceView' will retrieve the list of instance views of the capacity reservations under the capacity reservation group which is a snapshot of the runtime properties of a capacity reservation that is managed by the platform and can change outside of control plane operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="capacityReservationGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="capacityReservationGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<CapacityReservationGroupResource> GetCapacityReservationGroup(string capacityReservationGroupName, CapacityReservationGroupInstanceViewType? expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(capacityReservationGroupName, nameof(capacityReservationGroupName));
+
+            return GetCapacityReservationGroups().Get(capacityReservationGroupName, expand, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of InterconnectBlocks in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of InterconnectBlocks and their operations over a InterconnectBlockResource. </returns>
+        public virtual InterconnectBlockCollection GetInterconnectBlocks()
+        {
+            return GetCachedClient(client => new InterconnectBlockCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Retrieves information about an Interconnect Block.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/interconnectBlocks/{interconnectBlockName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> InterconnectBlocks_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="interconnectBlockName"> The name of the Interconnect Block. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. 'instanceView' retrieves a snapshot of the runtime properties of the Interconnect Block that is managed by the platform and can change outside of control plane operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="interconnectBlockName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="interconnectBlockName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<InterconnectBlockResource>> GetInterconnectBlockAsync(string interconnectBlockName, InterconnectBlockExpandTypes? expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(interconnectBlockName, nameof(interconnectBlockName));
+
+            return await GetInterconnectBlocks().GetAsync(interconnectBlockName, expand, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Retrieves information about an Interconnect Block.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/interconnectBlocks/{interconnectBlockName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> InterconnectBlocks_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-03-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="interconnectBlockName"> The name of the Interconnect Block. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. 'instanceView' retrieves a snapshot of the runtime properties of the Interconnect Block that is managed by the platform and can change outside of control plane operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="interconnectBlockName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="interconnectBlockName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<InterconnectBlockResource> GetInterconnectBlock(string interconnectBlockName, InterconnectBlockExpandTypes? expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(interconnectBlockName, nameof(interconnectBlockName));
+
+            return GetInterconnectBlocks().Get(interconnectBlockName, expand, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ManagedDisks in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of ManagedDisks and their operations over a ManagedDiskResource. </returns>
         public virtual ManagedDiskCollection GetManagedDisks()
         {
             return GetCachedClient(client => new ManagedDiskCollection(client, Id));
@@ -818,20 +709,16 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// Gets information about a disk.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/disks/{diskName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/disks/{diskName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Disks_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Disks_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-02</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedDiskResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-02. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -842,6 +729,8 @@ namespace Azure.ResourceManager.Compute.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<ManagedDiskResource>> GetManagedDiskAsync(string diskName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(diskName, nameof(diskName));
+
             return await GetManagedDisks().GetAsync(diskName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -849,20 +738,16 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// Gets information about a disk.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/disks/{diskName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/disks/{diskName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Disks_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Disks_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-02</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ManagedDiskResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-02. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -873,11 +758,143 @@ namespace Azure.ResourceManager.Compute.Mocking
         [ForwardsClientCalls]
         public virtual Response<ManagedDiskResource> GetManagedDisk(string diskName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(diskName, nameof(diskName));
+
             return GetManagedDisks().Get(diskName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SnapshotResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of SnapshotResources and their operations over a SnapshotResource. </returns>
+        /// <summary> Gets a collection of DiskAccesses in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of DiskAccesses and their operations over a DiskAccessResource. </returns>
+        public virtual DiskAccessCollection GetDiskAccesses()
+        {
+            return GetCachedClient(client => new DiskAccessCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets information about a disk access resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/diskAccesses/{diskAccessName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DiskAccesses_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-02. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="diskAccessName"> The name of the disk access resource that is being created. The name can't be changed after the disk encryption set is created. Supported characters for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80 characters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="diskAccessName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="diskAccessName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DiskAccessResource>> GetDiskAccessAsync(string diskAccessName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(diskAccessName, nameof(diskAccessName));
+
+            return await GetDiskAccesses().GetAsync(diskAccessName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets information about a disk access resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/diskAccesses/{diskAccessName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DiskAccesses_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-02. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="diskAccessName"> The name of the disk access resource that is being created. The name can't be changed after the disk encryption set is created. Supported characters for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80 characters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="diskAccessName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="diskAccessName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DiskAccessResource> GetDiskAccess(string diskAccessName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(diskAccessName, nameof(diskAccessName));
+
+            return GetDiskAccesses().Get(diskAccessName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of DiskEncryptionSets in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of DiskEncryptionSets and their operations over a DiskEncryptionSetResource. </returns>
+        public virtual DiskEncryptionSetCollection GetDiskEncryptionSets()
+        {
+            return GetCachedClient(client => new DiskEncryptionSetCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets information about a disk encryption set.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/diskEncryptionSets/{diskEncryptionSetName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DiskEncryptionSets_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-02. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="diskEncryptionSetName"> The name of the disk encryption set that is being created. The name can't be changed after the disk encryption set is created. Supported characters for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80 characters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="diskEncryptionSetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="diskEncryptionSetName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DiskEncryptionSetResource>> GetDiskEncryptionSetAsync(string diskEncryptionSetName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(diskEncryptionSetName, nameof(diskEncryptionSetName));
+
+            return await GetDiskEncryptionSets().GetAsync(diskEncryptionSetName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets information about a disk encryption set.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/diskEncryptionSets/{diskEncryptionSetName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DiskEncryptionSets_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-02. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="diskEncryptionSetName"> The name of the disk encryption set that is being created. The name can't be changed after the disk encryption set is created. Supported characters for the name are a-z, A-Z, 0-9, _ and -. The maximum name length is 80 characters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="diskEncryptionSetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="diskEncryptionSetName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DiskEncryptionSetResource> GetDiskEncryptionSet(string diskEncryptionSetName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(diskEncryptionSetName, nameof(diskEncryptionSetName));
+
+            return GetDiskEncryptionSets().Get(diskEncryptionSetName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of Snapshots in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of Snapshots and their operations over a SnapshotResource. </returns>
         public virtual SnapshotCollection GetSnapshots()
         {
             return GetCachedClient(client => new SnapshotCollection(client, Id));
@@ -887,20 +904,16 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// Gets information about a snapshot.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/snapshots/{snapshotName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/snapshots/{snapshotName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Snapshots_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Snapshots_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-02</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SnapshotResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-02. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -911,6 +924,8 @@ namespace Azure.ResourceManager.Compute.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<SnapshotResource>> GetSnapshotAsync(string snapshotName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
+
             return await GetSnapshots().GetAsync(snapshotName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -918,20 +933,16 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// Gets information about a snapshot.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/snapshots/{snapshotName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/snapshots/{snapshotName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Snapshots_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Snapshots_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-02</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SnapshotResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-02. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -942,11 +953,13 @@ namespace Azure.ResourceManager.Compute.Mocking
         [ForwardsClientCalls]
         public virtual Response<SnapshotResource> GetSnapshot(string snapshotName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
+
             return GetSnapshots().Get(snapshotName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of GalleryResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of GalleryResources and their operations over a GalleryResource. </returns>
+        /// <summary> Gets a collection of Galleries in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of Galleries and their operations over a GalleryResource. </returns>
         public virtual GalleryCollection GetGalleries()
         {
             return GetCachedClient(client => new GalleryCollection(client, Id));
@@ -956,20 +969,16 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// Retrieves information about a Shared Image Gallery.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Galleries_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Galleries_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-03</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GalleryResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-03. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -980,29 +989,27 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="galleryName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="galleryName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<GalleryResource>> GetGalleryAsync(string galleryName, SelectPermission? select = null, GalleryExpand? expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<GalleryResource>> GetGalleryAsync(string galleryName, SelectPermission? @select = default, GalleryExpand? expand = default, CancellationToken cancellationToken = default)
         {
-            return await GetGalleries().GetAsync(galleryName, select, expand, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNullOrEmpty(galleryName, nameof(galleryName));
+
+            return await GetGalleries().GetAsync(galleryName, @select, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Retrieves information about a Shared Image Gallery.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Galleries_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Galleries_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-03</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GalleryResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-03. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1013,78 +1020,11 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="galleryName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="galleryName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<GalleryResource> GetGallery(string galleryName, SelectPermission? select = null, GalleryExpand? expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<GalleryResource> GetGallery(string galleryName, SelectPermission? @select = default, GalleryExpand? expand = default, CancellationToken cancellationToken = default)
         {
-            return GetGalleries().Get(galleryName, select, expand, cancellationToken);
-        }
+            Argument.AssertNotNullOrEmpty(galleryName, nameof(galleryName));
 
-        /// <summary> Gets a collection of CloudServiceResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of CloudServiceResources and their operations over a CloudServiceResource. </returns>
-        public virtual CloudServiceCollection GetCloudServices()
-        {
-            return GetCachedClient(client => new CloudServiceCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Display information about a cloud service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/cloudServices/{cloudServiceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CloudServices_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-04</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CloudServiceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cloudServiceName"> Name of the cloud service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="cloudServiceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="cloudServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<CloudServiceResource>> GetCloudServiceAsync(string cloudServiceName, CancellationToken cancellationToken = default)
-        {
-            return await GetCloudServices().GetAsync(cloudServiceName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Display information about a cloud service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/cloudServices/{cloudServiceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CloudServices_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-04</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CloudServiceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cloudServiceName"> Name of the cloud service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="cloudServiceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="cloudServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<CloudServiceResource> GetCloudService(string cloudServiceName, CancellationToken cancellationToken = default)
-        {
-            return GetCloudServices().Get(cloudServiceName, cancellationToken);
+            return GetGalleries().Get(galleryName, @select, expand, cancellationToken);
         }
     }
 }

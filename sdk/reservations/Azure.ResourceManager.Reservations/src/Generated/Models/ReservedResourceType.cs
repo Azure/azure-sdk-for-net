@@ -7,117 +7,185 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Reservations;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    /// <summary> The type of the resource that is being reserved. </summary>
+    /// <summary> The type of the resource that is being reserved. In addition to below types we have also added the following: OpenAIPTU, MDC, Sentinel. </summary>
     public readonly partial struct ReservedResourceType : IEquatable<ReservedResourceType>
     {
         private readonly string _value;
+        /// <summary> VirtualMachines. </summary>
+        private const string VirtualMachinesValue = "VirtualMachines";
+        /// <summary> SqlDatabases. </summary>
+        private const string SqlDatabasesValue = "SqlDatabases";
+        /// <summary> SuseLinux. </summary>
+        private const string SuseLinuxValue = "SuseLinux";
+        /// <summary> CosmosDb. </summary>
+        private const string CosmosDBValue = "CosmosDb";
+        /// <summary> RedHat. </summary>
+        private const string RedHatValue = "RedHat";
+        /// <summary> SqlDataWarehouse. </summary>
+        private const string SqlDataWarehouseValue = "SqlDataWarehouse";
+        /// <summary> VMwareCloudSimple. </summary>
+        private const string VMwareCloudSimpleValue = "VMwareCloudSimple";
+        /// <summary> RedHatOsa. </summary>
+        private const string RedHatOsaValue = "RedHatOsa";
+        /// <summary> Databricks. </summary>
+        private const string DatabricksValue = "Databricks";
+        /// <summary> AppService. </summary>
+        private const string AppServiceValue = "AppService";
+        /// <summary> ManagedDisk. </summary>
+        private const string ManagedDiskValue = "ManagedDisk";
+        /// <summary> BlockBlob. </summary>
+        private const string BlockBlobValue = "BlockBlob";
+        /// <summary> RedisCache. </summary>
+        private const string RedisCacheValue = "RedisCache";
+        /// <summary> AzureDataExplorer. </summary>
+        private const string AzureDataExplorerValue = "AzureDataExplorer";
+        /// <summary> MySql. </summary>
+        private const string MySqlValue = "MySql";
+        /// <summary> MariaDb. </summary>
+        private const string MariaDBValue = "MariaDb";
+        /// <summary> PostgreSql. </summary>
+        private const string PostgreSqlValue = "PostgreSql";
+        /// <summary> DedicatedHost. </summary>
+        private const string DedicatedHostValue = "DedicatedHost";
+        /// <summary> SapHana. </summary>
+        private const string SapHanaValue = "SapHana";
+        /// <summary> SqlAzureHybridBenefit. </summary>
+        private const string SqlAzureHybridBenefitValue = "SqlAzureHybridBenefit";
+        /// <summary> AVS. </summary>
+        private const string AvsValue = "AVS";
+        /// <summary> DataFactory. </summary>
+        private const string DataFactoryValue = "DataFactory";
+        /// <summary> NetAppStorage. </summary>
+        private const string NetAppStorageValue = "NetAppStorage";
+        /// <summary> AzureFiles. </summary>
+        private const string AzureFilesValue = "AzureFiles";
+        /// <summary> SqlEdge. </summary>
+        private const string SqlEdgeValue = "SqlEdge";
+        /// <summary> VirtualMachineSoftware. </summary>
+        private const string VirtualMachineSoftwareValue = "VirtualMachineSoftware";
 
         /// <summary> Initializes a new instance of <see cref="ReservedResourceType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ReservedResourceType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string VirtualMachinesValue = "VirtualMachines";
-        private const string SqlDatabasesValue = "SqlDatabases";
-        private const string SuseLinuxValue = "SuseLinux";
-        private const string CosmosDBValue = "CosmosDb";
-        private const string RedHatValue = "RedHat";
-        private const string SqlDataWarehouseValue = "SqlDataWarehouse";
-        private const string VMwareCloudSimpleValue = "VMwareCloudSimple";
-        private const string RedHatOsaValue = "RedHatOsa";
-        private const string DatabricksValue = "Databricks";
-        private const string AppServiceValue = "AppService";
-        private const string ManagedDiskValue = "ManagedDisk";
-        private const string BlockBlobValue = "BlockBlob";
-        private const string RedisCacheValue = "RedisCache";
-        private const string AzureDataExplorerValue = "AzureDataExplorer";
-        private const string MySqlValue = "MySql";
-        private const string MariaDBValue = "MariaDb";
-        private const string PostgreSqlValue = "PostgreSql";
-        private const string DedicatedHostValue = "DedicatedHost";
-        private const string SapHanaValue = "SapHana";
-        private const string SqlAzureHybridBenefitValue = "SqlAzureHybridBenefit";
-        private const string AvsValue = "AVS";
-        private const string DataFactoryValue = "DataFactory";
-        private const string NetAppStorageValue = "NetAppStorage";
-        private const string AzureFilesValue = "AzureFiles";
-        private const string SqlEdgeValue = "SqlEdge";
-        private const string VirtualMachineSoftwareValue = "VirtualMachineSoftware";
+            _value = value;
+        }
 
         /// <summary> VirtualMachines. </summary>
         public static ReservedResourceType VirtualMachines { get; } = new ReservedResourceType(VirtualMachinesValue);
+
         /// <summary> SqlDatabases. </summary>
         public static ReservedResourceType SqlDatabases { get; } = new ReservedResourceType(SqlDatabasesValue);
+
         /// <summary> SuseLinux. </summary>
         public static ReservedResourceType SuseLinux { get; } = new ReservedResourceType(SuseLinuxValue);
+
         /// <summary> CosmosDb. </summary>
         public static ReservedResourceType CosmosDB { get; } = new ReservedResourceType(CosmosDBValue);
+
         /// <summary> RedHat. </summary>
         public static ReservedResourceType RedHat { get; } = new ReservedResourceType(RedHatValue);
+
         /// <summary> SqlDataWarehouse. </summary>
         public static ReservedResourceType SqlDataWarehouse { get; } = new ReservedResourceType(SqlDataWarehouseValue);
+
         /// <summary> VMwareCloudSimple. </summary>
         public static ReservedResourceType VMwareCloudSimple { get; } = new ReservedResourceType(VMwareCloudSimpleValue);
+
         /// <summary> RedHatOsa. </summary>
         public static ReservedResourceType RedHatOsa { get; } = new ReservedResourceType(RedHatOsaValue);
+
         /// <summary> Databricks. </summary>
         public static ReservedResourceType Databricks { get; } = new ReservedResourceType(DatabricksValue);
+
         /// <summary> AppService. </summary>
         public static ReservedResourceType AppService { get; } = new ReservedResourceType(AppServiceValue);
+
         /// <summary> ManagedDisk. </summary>
         public static ReservedResourceType ManagedDisk { get; } = new ReservedResourceType(ManagedDiskValue);
+
         /// <summary> BlockBlob. </summary>
         public static ReservedResourceType BlockBlob { get; } = new ReservedResourceType(BlockBlobValue);
+
         /// <summary> RedisCache. </summary>
         public static ReservedResourceType RedisCache { get; } = new ReservedResourceType(RedisCacheValue);
+
         /// <summary> AzureDataExplorer. </summary>
         public static ReservedResourceType AzureDataExplorer { get; } = new ReservedResourceType(AzureDataExplorerValue);
+
         /// <summary> MySql. </summary>
         public static ReservedResourceType MySql { get; } = new ReservedResourceType(MySqlValue);
+
         /// <summary> MariaDb. </summary>
         public static ReservedResourceType MariaDB { get; } = new ReservedResourceType(MariaDBValue);
+
         /// <summary> PostgreSql. </summary>
         public static ReservedResourceType PostgreSql { get; } = new ReservedResourceType(PostgreSqlValue);
+
         /// <summary> DedicatedHost. </summary>
         public static ReservedResourceType DedicatedHost { get; } = new ReservedResourceType(DedicatedHostValue);
+
         /// <summary> SapHana. </summary>
         public static ReservedResourceType SapHana { get; } = new ReservedResourceType(SapHanaValue);
+
         /// <summary> SqlAzureHybridBenefit. </summary>
         public static ReservedResourceType SqlAzureHybridBenefit { get; } = new ReservedResourceType(SqlAzureHybridBenefitValue);
+
         /// <summary> AVS. </summary>
         public static ReservedResourceType Avs { get; } = new ReservedResourceType(AvsValue);
+
         /// <summary> DataFactory. </summary>
         public static ReservedResourceType DataFactory { get; } = new ReservedResourceType(DataFactoryValue);
+
         /// <summary> NetAppStorage. </summary>
         public static ReservedResourceType NetAppStorage { get; } = new ReservedResourceType(NetAppStorageValue);
+
         /// <summary> AzureFiles. </summary>
         public static ReservedResourceType AzureFiles { get; } = new ReservedResourceType(AzureFilesValue);
+
         /// <summary> SqlEdge. </summary>
         public static ReservedResourceType SqlEdge { get; } = new ReservedResourceType(SqlEdgeValue);
+
         /// <summary> VirtualMachineSoftware. </summary>
         public static ReservedResourceType VirtualMachineSoftware { get; } = new ReservedResourceType(VirtualMachineSoftwareValue);
+
         /// <summary> Determines if two <see cref="ReservedResourceType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ReservedResourceType left, ReservedResourceType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ReservedResourceType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ReservedResourceType left, ReservedResourceType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ReservedResourceType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ReservedResourceType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ReservedResourceType(string value) => new ReservedResourceType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ReservedResourceType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ReservedResourceType?(string value) => value == null ? null : new ReservedResourceType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ReservedResourceType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ReservedResourceType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

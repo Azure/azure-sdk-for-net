@@ -22,6 +22,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
     {
         private ClientDiagnostics _checkNameAvailabilityOperationGroupClientDiagnostics;
         private CheckNameAvailabilityOperationGroup _checkNameAvailabilityOperationGroupRestClient;
+        private ClientDiagnostics _selfHelpScopeQueryOperationGroupClientDiagnostics;
+        private SelfHelpScopeQueryOperationGroup _selfHelpScopeQueryOperationGroupRestClient;
         private ClientDiagnostics _scheduledActionExtensionClientDiagnostics;
         private ScheduledActionExtension _scheduledActionExtensionRestClient;
 
@@ -40,6 +42,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         private ClientDiagnostics CheckNameAvailabilityOperationGroupClientDiagnostics => _checkNameAvailabilityOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private CheckNameAvailabilityOperationGroup CheckNameAvailabilityOperationGroupRestClient => _checkNameAvailabilityOperationGroupRestClient ??= new CheckNameAvailabilityOperationGroup(CheckNameAvailabilityOperationGroupClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
+
+        private ClientDiagnostics SelfHelpScopeQueryOperationGroupClientDiagnostics => _selfHelpScopeQueryOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private SelfHelpScopeQueryOperationGroup SelfHelpScopeQueryOperationGroupRestClient => _selfHelpScopeQueryOperationGroupRestClient ??= new SelfHelpScopeQueryOperationGroup(SelfHelpScopeQueryOperationGroupClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
 
         private ClientDiagnostics ScheduledActionExtensionClientDiagnostics => _scheduledActionExtensionClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -72,22 +78,13 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             return new FooResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="FooSettingsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="FooConfigurationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="FooSettingsResource"/> object. </returns>
-        public virtual FooSettingsResource GetFooSettingsResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="FooConfigurationResource"/> object. </returns>
+        public virtual FooConfigurationResource GetFooConfigurationResource(ResourceIdentifier id)
         {
-            FooSettingsResource.ValidateResourceId(id);
-            return new FooSettingsResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="BarResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BarResource"/> object. </returns>
-        public virtual BarResource GetBarResource(ResourceIdentifier id)
-        {
-            BarResource.ValidateResourceId(id);
-            return new BarResource(Client, id);
+            FooConfigurationResource.ValidateResourceId(id);
+            return new FooConfigurationResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="BarSettingsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -381,24 +378,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         {
             WorkloadNetworksResource.ValidateResourceId(id);
             return new WorkloadNetworksResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="WorkloadNetworkVmGroupResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WorkloadNetworkVmGroupResource"/> object. </returns>
-        public virtual WorkloadNetworkVmGroupResource GetWorkloadNetworkVmGroupResource(ResourceIdentifier id)
-        {
-            WorkloadNetworkVmGroupResource.ValidateResourceId(id);
-            return new WorkloadNetworkVmGroupResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="WorkloadNetworkSegmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WorkloadNetworkSegmentResource"/> object. </returns>
-        public virtual WorkloadNetworkSegmentResource GetWorkloadNetworkSegmentResource(ResourceIdentifier id)
-        {
-            WorkloadNetworkSegmentResource.ValidateResourceId(id);
-            return new WorkloadNetworkSegmentResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="TargetResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -716,6 +695,15 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             return await GetPolicyArcAssignments(scope).GetAsync(policyAssignmentName, cancellationToken).ConfigureAwait(false);
         }
 
+        /// <summary> Gets an object representing a <see cref="CustomBaseTypeResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="CustomBaseTypeResource"/> object. </returns>
+        public virtual CustomBaseTypeResource GetCustomBaseTypeResource(ResourceIdentifier id)
+        {
+            CustomBaseTypeResource.ValidateResourceId(id);
+            return new CustomBaseTypeResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="TestCertificateResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="TestCertificateResource"/> object. </returns>
@@ -795,6 +783,69 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         {
             CycleTestStoreResource.ValidateResourceId(id);
             return new CycleTestStoreResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="EventGridTopicResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="EventGridTopicResource"/> object. </returns>
+        public virtual EventGridTopicResource GetEventGridTopicResource(ResourceIdentifier id)
+        {
+            EventGridTopicResource.ValidateResourceId(id);
+            return new EventGridTopicResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="EventGridDomainResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="EventGridDomainResource"/> object. </returns>
+        public virtual EventGridDomainResource GetEventGridDomainResource(ResourceIdentifier id)
+        {
+            EventGridDomainResource.ValidateResourceId(id);
+            return new EventGridDomainResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="BarResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="BarResource"/> object. </returns>
+        public virtual BarResource GetBarResource(ResourceIdentifier id)
+        {
+            BarResource.ValidateResourceId(id);
+            return new BarResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="WorkloadNetworkVmGroupResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="WorkloadNetworkVmGroupResource"/> object. </returns>
+        public virtual WorkloadNetworkVmGroupResource GetWorkloadNetworkVmGroupResource(ResourceIdentifier id)
+        {
+            WorkloadNetworkVmGroupResource.ValidateResourceId(id);
+            return new WorkloadNetworkVmGroupResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="WorkloadNetworkSegmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="WorkloadNetworkSegmentResource"/> object. </returns>
+        public virtual WorkloadNetworkSegmentResource GetWorkloadNetworkSegmentResource(ResourceIdentifier id)
+        {
+            WorkloadNetworkSegmentResource.ValidateResourceId(id);
+            return new WorkloadNetworkSegmentResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="EventGridTopicPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="EventGridTopicPrivateEndpointConnectionResource"/> object. </returns>
+        public virtual EventGridTopicPrivateEndpointConnectionResource GetEventGridTopicPrivateEndpointConnectionResource(ResourceIdentifier id)
+        {
+            EventGridTopicPrivateEndpointConnectionResource.ValidateResourceId(id);
+            return new EventGridTopicPrivateEndpointConnectionResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="EventGridDomainPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="EventGridDomainPrivateEndpointConnectionResource"/> object. </returns>
+        public virtual EventGridDomainPrivateEndpointConnectionResource GetEventGridDomainPrivateEndpointConnectionResource(ResourceIdentifier id)
+        {
+            EventGridDomainPrivateEndpointConnectionResource.ValidateResourceId(id);
+            return new EventGridDomainPrivateEndpointConnectionResource(Client, id);
         }
 
         /// <summary>
@@ -880,6 +931,108 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = CheckNameAvailabilityOperationGroupRestClient.CreateCheckNameAvailabilityRequest(scope.ToString(), CheckNameAvailabilityRequest.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<CheckNameAvailabilityResponse> response = Response.FromValue(CheckNameAvailabilityResponse.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// GetDetails
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceScope}/providers/MgmtTypeSpec/selfHelpDetails. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SelfHelpScopeQueryOperationGroup_GetDetails. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="scopeFilter"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="scopeFilter"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scopeFilter"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<CheckNameAvailabilityResponse>> GetDetailsAsync(ResourceIdentifier scope, string scopeFilter, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(scopeFilter, nameof(scopeFilter));
+
+            using DiagnosticScope scope0 = SelfHelpScopeQueryOperationGroupClientDiagnostics.CreateScope("MockableAzureGeneratorMgmtTypeSpecTestsArmClient.GetDetails");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = SelfHelpScopeQueryOperationGroupRestClient.CreateGetDetailsRequest(scope.ToString(), scopeFilter, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<CheckNameAvailabilityResponse> response = Response.FromValue(CheckNameAvailabilityResponse.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// GetDetails
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceScope}/providers/MgmtTypeSpec/selfHelpDetails. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SelfHelpScopeQueryOperationGroup_GetDetails. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="scopeFilter"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="scopeFilter"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scopeFilter"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<CheckNameAvailabilityResponse> GetDetails(ResourceIdentifier scope, string scopeFilter, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(scopeFilter, nameof(scopeFilter));
+
+            using DiagnosticScope scope0 = SelfHelpScopeQueryOperationGroupClientDiagnostics.CreateScope("MockableAzureGeneratorMgmtTypeSpecTestsArmClient.GetDetails");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = SelfHelpScopeQueryOperationGroupRestClient.CreateGetDetailsRequest(scope.ToString(), scopeFilter, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CheckNameAvailabilityResponse> response = Response.FromValue(CheckNameAvailabilityResponse.FromResponse(result), result);
                 if (response.Value == null)

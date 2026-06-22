@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
 {
     internal static partial class ExtensionsStatusLevelTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ExtensionsStatusLevelType value) => value switch
         {
             ExtensionsStatusLevelType.Info => "Info",
@@ -19,11 +20,21 @@ namespace Azure.ResourceManager.HybridCompute.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ExtensionsStatusLevelType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static ExtensionsStatusLevelType ToExtensionsStatusLevelType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Info")) return ExtensionsStatusLevelType.Info;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Warning")) return ExtensionsStatusLevelType.Warning;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Error")) return ExtensionsStatusLevelType.Error;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Info"))
+            {
+                return ExtensionsStatusLevelType.Info;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Warning"))
+            {
+                return ExtensionsStatusLevelType.Warning;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Error"))
+            {
+                return ExtensionsStatusLevelType.Error;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ExtensionsStatusLevelType value.");
         }
     }

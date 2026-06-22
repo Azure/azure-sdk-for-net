@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The ContainerCpuUsage. </summary>
+    /// <summary>
+    /// The ContainerCpuUsage.
+    /// Serialized Name: ContainerCpuUsage
+    /// </summary>
     public partial class ContainerCpuUsage
     {
         /// <summary>
@@ -52,10 +55,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerCpuUsage"/>. </summary>
-        /// <param name="totalUsage"></param>
-        /// <param name="perCpuUsage"></param>
-        /// <param name="kernelModeUsage"></param>
-        /// <param name="userModeUsage"></param>
+        /// <param name="totalUsage"> Serialized Name: ContainerCpuUsage.totalUsage. </param>
+        /// <param name="perCpuUsage"> Serialized Name: ContainerCpuUsage.perCpuUsage. </param>
+        /// <param name="kernelModeUsage"> Serialized Name: ContainerCpuUsage.kernelModeUsage. </param>
+        /// <param name="userModeUsage"> Serialized Name: ContainerCpuUsage.userModeUsage. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ContainerCpuUsage(long? totalUsage, IList<long> perCpuUsage, long? kernelModeUsage, long? userModeUsage, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -66,16 +69,16 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets or sets the total usage. </summary>
+        /// <summary> Serialized Name: ContainerCpuUsage.totalUsage. </summary>
         [WirePath("totalUsage")]
         public long? TotalUsage { get; set; }
-        /// <summary> Gets the per cpu usage. </summary>
+        /// <summary> Serialized Name: ContainerCpuUsage.perCpuUsage. </summary>
         [WirePath("perCpuUsage")]
         public IList<long> PerCpuUsage { get; }
-        /// <summary> Gets or sets the kernel mode usage. </summary>
+        /// <summary> Serialized Name: ContainerCpuUsage.kernelModeUsage. </summary>
         [WirePath("kernelModeUsage")]
         public long? KernelModeUsage { get; set; }
-        /// <summary> Gets or sets the user mode usage. </summary>
+        /// <summary> Serialized Name: ContainerCpuUsage.userModeUsage. </summary>
         [WirePath("userModeUsage")]
         public long? UserModeUsage { get; set; }
     }

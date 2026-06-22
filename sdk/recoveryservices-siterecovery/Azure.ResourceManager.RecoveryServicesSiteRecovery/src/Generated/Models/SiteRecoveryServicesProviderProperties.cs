@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Recovery services provider properties. </summary>
     public partial class SiteRecoveryServicesProviderProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SiteRecoveryServicesProviderProperties"/>. </summary>
         internal SiteRecoveryServicesProviderProperties()
@@ -73,8 +45,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="resourceAccessIdentityDetails"> The resource access identity details. </param>
         /// <param name="dataPlaneAuthenticationIdentityDetails"> The data plane authentication identity details. </param>
         /// <param name="providerVersionDetails"> The provider version details. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SiteRecoveryServicesProviderProperties(string fabricType, string friendlyName, string providerVersion, string serverVersion, string providerVersionState, DateTimeOffset? providerVersionExpireOn, string fabricFriendlyName, DateTimeOffset? lastHeartbeatReceivedOn, string connectionStatus, int? protectedItemCount, IReadOnlyList<string> allowedScenarios, IReadOnlyList<SiteRecoveryHealthError> healthErrorDetails, string draIdentifier, string machineId, string machineName, string biosId, IdentityProviderDetails authenticationIdentityDetails, IdentityProviderDetails resourceAccessIdentityDetails, IdentityProviderDetails dataPlaneAuthenticationIdentityDetails, SiteRecoveryVersionDetails providerVersionDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryServicesProviderProperties(string fabricType, string friendlyName, string providerVersion, string serverVersion, string providerVersionState, DateTimeOffset? providerVersionExpireOn, string fabricFriendlyName, DateTimeOffset? lastHeartbeatReceivedOn, string connectionStatus, int? protectedItemCount, IReadOnlyList<string> allowedScenarios, IReadOnlyList<SiteRecoveryHealthError> healthErrorDetails, string draIdentifier, string machineId, string machineName, string biosId, IdentityProviderDetails authenticationIdentityDetails, IdentityProviderDetails resourceAccessIdentityDetails, IdentityProviderDetails dataPlaneAuthenticationIdentityDetails, SiteRecoveryVersionDetails providerVersionDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FabricType = fabricType;
             FriendlyName = friendlyName;
@@ -96,47 +68,66 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             ResourceAccessIdentityDetails = resourceAccessIdentityDetails;
             DataPlaneAuthenticationIdentityDetails = dataPlaneAuthenticationIdentityDetails;
             ProviderVersionDetails = providerVersionDetails;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Type of the site. </summary>
         public string FabricType { get; }
+
         /// <summary> Friendly name of the DRA. </summary>
         public string FriendlyName { get; }
+
         /// <summary> The provider version. </summary>
         public string ProviderVersion { get; }
+
         /// <summary> The fabric provider. </summary>
         public string ServerVersion { get; }
+
         /// <summary> DRA version status. </summary>
         public string ProviderVersionState { get; }
+
         /// <summary> Expiry date of the version. </summary>
         public DateTimeOffset? ProviderVersionExpireOn { get; }
+
         /// <summary> The fabric friendly name. </summary>
         public string FabricFriendlyName { get; }
+
         /// <summary> Time when last heartbeat was sent by the DRA. </summary>
         public DateTimeOffset? LastHeartbeatReceivedOn { get; }
+
         /// <summary> A value indicating whether DRA is responsive. </summary>
         public string ConnectionStatus { get; }
+
         /// <summary> Number of protected VMs currently managed by the DRA. </summary>
         public int? ProtectedItemCount { get; }
+
         /// <summary> The scenarios allowed on this provider. </summary>
         public IReadOnlyList<string> AllowedScenarios { get; }
+
         /// <summary> The recovery services provider health error details. </summary>
         public IReadOnlyList<SiteRecoveryHealthError> HealthErrorDetails { get; }
+
         /// <summary> The DRA Id. </summary>
         public string DraIdentifier { get; }
+
         /// <summary> The machine Id. </summary>
         public string MachineId { get; }
+
         /// <summary> The machine name. </summary>
         public string MachineName { get; }
+
         /// <summary> The Bios Id. </summary>
         public string BiosId { get; }
+
         /// <summary> The authentication identity details. </summary>
         public IdentityProviderDetails AuthenticationIdentityDetails { get; }
+
         /// <summary> The resource access identity details. </summary>
         public IdentityProviderDetails ResourceAccessIdentityDetails { get; }
+
         /// <summary> The data plane authentication identity details. </summary>
         public IdentityProviderDetails DataPlaneAuthenticationIdentityDetails { get; }
+
         /// <summary> The provider version details. </summary>
         public SiteRecoveryVersionDetails ProviderVersionDetails { get; }
     }

@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.4 (Unreleased)
+## 1.0.0-beta.6 (Unreleased)
 
 ### Features Added
 
@@ -10,7 +10,66 @@
 
 ### Other Changes
 
-## 1.0.0-beta.3 (2026-05-05)
+## 1.0.0-beta.5 (2026-05-21)
+
+### Features Added
+
+- Replaced `invoke_agent` SERVER span with baggage-only propagation. W3C trace context propagation is now handled automatically by ASP.NET Core, so handler spans are parented directly under the caller's span.
+- Response ID, conversation ID, and streaming mode are propagated as Activity baggage for downstream correlation.
+- Simplified `ResponsesActivitySource` to focus on baggage propagation rather than span creation.
+- All error responses (4xx/5xx) now include the `x-platform-error-source` header classifying
+  error origin as `user` (invalid request), `platform` (SDK/infrastructure failure), or
+  `upstream` (developer handler failure) per container-image-spec §8.
+- Platform errors include the `x-platform-error-detail` header with full exception context
+  (type, message, stack trace) for diagnostic telemetry. `AggregateException` wrappers are
+  unwrapped and the detail is truncated to 2048 characters.
+- Foundry storage pipeline exceptions are now tagged as platform errors at the source, enabling
+  accurate classification of storage transport, authentication, and service failures regardless
+  of exception type.
+
+### Bugs Fixed
+
+- Enabled automatic gzip/deflate/brotli decompression on the Foundry storage HTTP pipeline.
+  Intermediary gateways or load-balancers that return compressed responses are now handled
+  transparently, preventing JSON parse failures on raw gzip bytes. The pipeline also
+  advertises `Accept-Encoding` support so servers can compress responses proactively.
+
+## 1.0.0-beta.4 (2026-04-22)
+
+### Features Added
+
+- Foundry storage logging now includes the `traceparent` header (W3C distributed trace ID) in all
+  log messages, enabling correlation between SDK log entries and backend distributed traces.
+- All endpoints now return the `x-request-id` response header for request correlation (via Core
+  `RequestIdMiddleware`). Value is resolved from OTEL trace ID → incoming `x-request-id` header → GUID.
+- Error responses (`ApiErrorResponse`) are automatically enriched with `error.additionalInfo.request_id`
+  matching the `x-request-id` response header value, enabling client-side error correlation.
+- Persistence failure resilience — when storage operations fail, responses now complete gracefully
+  with `status: "failed"` and `error.code: "storage_error"` instead of crashing or leaving responses
+  permanently stuck at `in_progress`. Covers all execution modes (streaming, background+streaming,
+  background+non-streaming, synchronous). For streaming responses, terminal SSE events are buffered,
+  persistence is attempted, and on failure the terminal event is replaced with `response.failed`
+  carrying `error_code="storage_error"`. Synchronous persistence failures return HTTP 500 with the
+  storage error details.
+
+### Bugs Fixed
+
+- Fixed `InvalidOperationException: Response was not set` crash in `FoundryStorageLoggingPolicy` when
+  a transport-level failure (DNS resolution, connection refused, timeout) occurs before any HTTP
+  response is received. These failures are now logged at `Error` level without triggering the
+  logging crash, and the original transport exception continues to propagate.
+- Fixed `GetInputExpanded` not normalizing string content shorthand on `ItemMessage`. When
+  `content` is a plain JSON string (e.g., `"Hello"`), it is now auto-expanded to the canonical
+  array form (`[{"type":"input_text","text":"Hello"}]`) so that `ItemMessage.Content` BinaryData
+  is always consistent regardless of input format.
+
+### Other Changes
+
+- Removed `x-ms-request-id` from Foundry storage logging (unused service header).
+- Migrated header name constants to use `PlatformHeaders` from Core package instead of
+  local `private const` declarations.
+
+## 1.0.0-beta.3 (2026-04-20)
 
 ### Features Added
 

@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Resource name availability request content. </summary>
+    /// <summary>
+    /// Resource name availability request content.
+    /// Serialized Name: ResourceNameAvailabilityRequest
+    /// </summary>
     public partial class AppServiceNameAvailabilityContent
     {
         /// <summary>
@@ -46,8 +49,14 @@ namespace Azure.ResourceManager.AppService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AppServiceNameAvailabilityContent"/>. </summary>
-        /// <param name="name"> Resource name to verify. </param>
-        /// <param name="resourceType"> Resource type used for verification. </param>
+        /// <param name="name">
+        /// Resource name to verify.
+        /// Serialized Name: ResourceNameAvailabilityRequest.name
+        /// </param>
+        /// <param name="resourceType">
+        /// Resource type used for verification.
+        /// Serialized Name: ResourceNameAvailabilityRequest.type
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public AppServiceNameAvailabilityContent(string name, CheckNameResourceType resourceType)
         {
@@ -58,10 +67,22 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AppServiceNameAvailabilityContent"/>. </summary>
-        /// <param name="name"> Resource name to verify. </param>
-        /// <param name="resourceType"> Resource type used for verification. </param>
-        /// <param name="isFqdn"> Is fully qualified domain name. </param>
-        /// <param name="environmentId"> Azure Resource Manager ID of the customer's selected Container Apps Environment on which to host the Function app. This must be of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.App/managedEnvironments/{managedEnvironmentName}. </param>
+        /// <param name="name">
+        /// Resource name to verify.
+        /// Serialized Name: ResourceNameAvailabilityRequest.name
+        /// </param>
+        /// <param name="resourceType">
+        /// Resource type used for verification.
+        /// Serialized Name: ResourceNameAvailabilityRequest.type
+        /// </param>
+        /// <param name="isFqdn">
+        /// Is fully qualified domain name.
+        /// Serialized Name: ResourceNameAvailabilityRequest.isFqdn
+        /// </param>
+        /// <param name="environmentId">
+        /// Azure Resource Manager ID of the customer's selected Container Apps Environment on which to host the Function app. This must be of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.App/managedEnvironments/{managedEnvironmentName}
+        /// Serialized Name: ResourceNameAvailabilityRequest.environmentId
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AppServiceNameAvailabilityContent(string name, CheckNameResourceType resourceType, bool? isFqdn, string environmentId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -77,16 +98,28 @@ namespace Azure.ResourceManager.AppService.Models
         {
         }
 
-        /// <summary> Resource name to verify. </summary>
+        /// <summary>
+        /// Resource name to verify.
+        /// Serialized Name: ResourceNameAvailabilityRequest.name
+        /// </summary>
         [WirePath("name")]
         public string Name { get; }
-        /// <summary> Resource type used for verification. </summary>
+        /// <summary>
+        /// Resource type used for verification.
+        /// Serialized Name: ResourceNameAvailabilityRequest.type
+        /// </summary>
         [WirePath("type")]
         public CheckNameResourceType ResourceType { get; }
-        /// <summary> Is fully qualified domain name. </summary>
+        /// <summary>
+        /// Is fully qualified domain name.
+        /// Serialized Name: ResourceNameAvailabilityRequest.isFqdn
+        /// </summary>
         [WirePath("isFqdn")]
         public bool? IsFqdn { get; set; }
-        /// <summary> Azure Resource Manager ID of the customer's selected Container Apps Environment on which to host the Function app. This must be of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.App/managedEnvironments/{managedEnvironmentName}. </summary>
+        /// <summary>
+        /// Azure Resource Manager ID of the customer's selected Container Apps Environment on which to host the Function app. This must be of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.App/managedEnvironments/{managedEnvironmentName}
+        /// Serialized Name: ResourceNameAvailabilityRequest.environmentId
+        /// </summary>
         [WirePath("environmentId")]
         public string EnvironmentId { get; set; }
     }

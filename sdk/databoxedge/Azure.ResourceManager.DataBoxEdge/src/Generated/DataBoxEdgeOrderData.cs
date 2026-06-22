@@ -29,14 +29,14 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The order properties. </param>
         /// <param name="kind"> It specify the order api version. </param>
-        internal DataBoxEdgeOrderData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, OrderProperties properties, string kind) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxEdgeOrderData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, OrderProperties properties, string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             Kind = kind;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The order properties. </summary>
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 {
                     Properties = new OrderProperties();
                 }
-                Properties.ShipmentType = value.Value;
+                Properties.ShipmentType = value;
             }
         }
     }

@@ -10,13 +10,60 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class VMwareV2FabricCreationContent : IUtf8JsonSerializable, IJsonModel<VMwareV2FabricCreationContent>
+    /// <summary> VMwareV2 fabric provider specific settings. </summary>
+    public partial class VMwareV2FabricCreationContent : FabricSpecificCreationContent, IJsonModel<VMwareV2FabricCreationContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VMwareV2FabricCreationContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="VMwareV2FabricCreationContent"/> for deserialization. </summary>
+        internal VMwareV2FabricCreationContent()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override FabricSpecificCreationContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<VMwareV2FabricCreationContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeVMwareV2FabricCreationContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VMwareV2FabricCreationContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<VMwareV2FabricCreationContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(VMwareV2FabricCreationContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<VMwareV2FabricCreationContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        VMwareV2FabricCreationContent IPersistableModel<VMwareV2FabricCreationContent>.Create(BinaryData data, ModelReaderWriterOptions options) => (VMwareV2FabricCreationContent)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<VMwareV2FabricCreationContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<VMwareV2FabricCreationContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +75,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VMwareV2FabricCreationContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VMwareV2FabricCreationContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VMwareV2FabricCreationContent)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(VMwareSiteId))
             {
@@ -49,100 +95,72 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStringValue(MigrationSolutionId);
         }
 
-        VMwareV2FabricCreationContent IJsonModel<VMwareV2FabricCreationContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        VMwareV2FabricCreationContent IJsonModel<VMwareV2FabricCreationContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (VMwareV2FabricCreationContent)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override FabricSpecificCreationContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VMwareV2FabricCreationContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VMwareV2FabricCreationContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VMwareV2FabricCreationContent)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeVMwareV2FabricCreationContent(document.RootElement, options);
         }
 
-        internal static VMwareV2FabricCreationContent DeserializeVMwareV2FabricCreationContent(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static VMwareV2FabricCreationContent DeserializeVMwareV2FabricCreationContent(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ResourceIdentifier vmwareSiteId = default;
+            string instanceType = "VMwareV2";
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            ResourceIdentifier vMwareSiteId = default;
             ResourceIdentifier physicalSiteId = default;
             ResourceIdentifier migrationSolutionId = default;
-            string instanceType = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("vmwareSiteId"u8))
+                if (prop.NameEquals("instanceType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    instanceType = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("vmwareSiteId"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    vmwareSiteId = new ResourceIdentifier(property.Value.GetString());
+                    vMwareSiteId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("physicalSiteId"u8))
+                if (prop.NameEquals("physicalSiteId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    physicalSiteId = new ResourceIdentifier(property.Value.GetString());
+                    physicalSiteId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("migrationSolutionId"u8))
+                if (prop.NameEquals("migrationSolutionId"u8))
                 {
-                    migrationSolutionId = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("instanceType"u8))
-                {
-                    instanceType = property.Value.GetString();
+                    migrationSolutionId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new VMwareV2FabricCreationContent(instanceType, serializedAdditionalRawData, vmwareSiteId, physicalSiteId, migrationSolutionId);
+            return new VMwareV2FabricCreationContent(instanceType, additionalBinaryDataProperties, vMwareSiteId, physicalSiteId, migrationSolutionId);
         }
-
-        BinaryData IPersistableModel<VMwareV2FabricCreationContent>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<VMwareV2FabricCreationContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(VMwareV2FabricCreationContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        VMwareV2FabricCreationContent IPersistableModel<VMwareV2FabricCreationContent>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<VMwareV2FabricCreationContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeVMwareV2FabricCreationContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(VMwareV2FabricCreationContent)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<VMwareV2FabricCreationContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
 {
     internal static partial class FacetSortOrderExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this FacetSortOrder value) => value switch
         {
             FacetSortOrder.Asc => "asc",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FacetSortOrder value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static FacetSortOrder ToFacetSortOrder(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "asc")) return FacetSortOrder.Asc;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "desc")) return FacetSortOrder.Desc;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "asc"))
+            {
+                return FacetSortOrder.Asc;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "desc"))
+            {
+                return FacetSortOrder.Desc;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FacetSortOrder value.");
         }
     }

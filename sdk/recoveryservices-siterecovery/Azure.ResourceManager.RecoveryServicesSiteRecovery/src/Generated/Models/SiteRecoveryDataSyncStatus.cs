@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public readonly partial struct SiteRecoveryDataSyncStatus : IEquatable<SiteRecoveryDataSyncStatus>
     {
         private readonly string _value;
+        /// <summary> ForDownTime. </summary>
+        private const string ForDownTimeValue = "ForDownTime";
+        /// <summary> ForSynchronization. </summary>
+        private const string ForSynchronizationValue = "ForSynchronization";
 
         /// <summary> Initializes a new instance of <see cref="SiteRecoveryDataSyncStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SiteRecoveryDataSyncStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ForDownTimeValue = "ForDownTime";
-        private const string ForSynchronizationValue = "ForSynchronization";
+            _value = value;
+        }
 
         /// <summary> ForDownTime. </summary>
         public static SiteRecoveryDataSyncStatus ForDownTime { get; } = new SiteRecoveryDataSyncStatus(ForDownTimeValue);
+
         /// <summary> ForSynchronization. </summary>
         public static SiteRecoveryDataSyncStatus ForSynchronization { get; } = new SiteRecoveryDataSyncStatus(ForSynchronizationValue);
+
         /// <summary> Determines if two <see cref="SiteRecoveryDataSyncStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SiteRecoveryDataSyncStatus left, SiteRecoveryDataSyncStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SiteRecoveryDataSyncStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SiteRecoveryDataSyncStatus left, SiteRecoveryDataSyncStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SiteRecoveryDataSyncStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SiteRecoveryDataSyncStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SiteRecoveryDataSyncStatus(string value) => new SiteRecoveryDataSyncStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SiteRecoveryDataSyncStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SiteRecoveryDataSyncStatus?(string value) => value == null ? null : new SiteRecoveryDataSyncStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SiteRecoveryDataSyncStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SiteRecoveryDataSyncStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

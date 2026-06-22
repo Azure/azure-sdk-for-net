@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -14,27 +15,26 @@ namespace Azure.ResourceManager.DataMigration.Models
     public partial class MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputError : MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput
     {
         /// <summary> Initializes a new instance of <see cref="MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputError"/>. </summary>
-        internal MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputError()
+        internal MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputError() : base("ErrorOutput")
         {
             Events = new ChangeTrackingList<SyncMigrationDatabaseErrorEvent>();
-            ResultType = "ErrorOutput";
         }
 
         /// <summary> Initializes a new instance of <see cref="MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputError"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="error"> Migration error. </param>
         /// <param name="events"> List of error events. </param>
-        internal MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputError(string id, string resultType, IDictionary<string, BinaryData> serializedAdditionalRawData, DataMigrationReportableException error, IReadOnlyList<SyncMigrationDatabaseErrorEvent> events) : base(id, resultType, serializedAdditionalRawData)
+        internal MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputError(string id, string resultType, IDictionary<string, BinaryData> additionalBinaryDataProperties, DataMigrationReportableException error, IReadOnlyList<SyncMigrationDatabaseErrorEvent> events) : base(id, resultType, additionalBinaryDataProperties)
         {
             Error = error;
             Events = events;
-            ResultType = resultType ?? "ErrorOutput";
         }
 
         /// <summary> Migration error. </summary>
         public DataMigrationReportableException Error { get; }
+
         /// <summary> List of error events. </summary>
         public IReadOnlyList<SyncMigrationDatabaseErrorEvent> Events { get; }
     }

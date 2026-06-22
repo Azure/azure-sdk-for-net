@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -18,7 +19,6 @@ namespace Azure.ResourceManager.DataMigration.Models
         public DatabaseMigrationSqlDBProperties()
         {
             TableList = new ChangeTrackingList<string>();
-            Kind = ResourceType.SqlDB;
         }
 
         /// <summary> Initializes a new instance of <see cref="DatabaseMigrationSqlDBProperties"/>. </summary>
@@ -32,37 +32,43 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="migrationOperationId"> ID for current migration operation. </param>
         /// <param name="migrationFailureError"> Error details in case of migration failure. </param>
         /// <param name="provisioningError"> Error message for migration provisioning failure, if any. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="sourceSqlConnection"> Source SQL Server connection details. </param>
         /// <param name="sourceDatabaseName"> Name of the source database. </param>
         /// <param name="sourceServerName"> Name of the source sql server. </param>
         /// <param name="targetDatabaseCollation"> Database collation to be used for the target database. </param>
+        /// <param name="sqlServerInstanceId"> Optional property - Resource Id for the source Sql server instance. Validations are performed on this property to ensure that it follows the correct format. </param>
         /// <param name="migrationStatusDetails"> Detailed migration status. Not included by default. </param>
         /// <param name="targetSqlConnection"> Target SQL DB connection details. </param>
         /// <param name="offlineConfiguration"> Offline configuration. </param>
         /// <param name="tableList"> List of tables to copy. </param>
-        internal DatabaseMigrationSqlDBProperties(ResourceType kind, string scope, DataMigrationProvisioningState? provisioningState, string migrationStatus, DateTimeOffset? startedOn, DateTimeOffset? endedOn, ResourceIdentifier migrationService, string migrationOperationId, SqlMigrationErrorInfo migrationFailureError, string provisioningError, IDictionary<string, BinaryData> serializedAdditionalRawData, DataMigrationSqlConnectionInformation sourceSqlConnection, string sourceDatabaseName, string sourceServerName, string targetDatabaseCollation, DataMigrationSqlDBMigrationStatusDetails migrationStatusDetails, DataMigrationSqlConnectionInformation targetSqlConnection, DataMigrationSqlDBOfflineConfiguration offlineConfiguration, IList<string> tableList) : base(kind, scope, provisioningState, migrationStatus, startedOn, endedOn, migrationService, migrationOperationId, migrationFailureError, provisioningError, serializedAdditionalRawData, sourceSqlConnection, sourceDatabaseName, sourceServerName, targetDatabaseCollation)
+        internal DatabaseMigrationSqlDBProperties(ResourceType kind, string scope, DataMigrationProvisioningState? provisioningState, string migrationStatus, DateTimeOffset? startedOn, DateTimeOffset? endedOn, ResourceIdentifier migrationService, string migrationOperationId, SqlMigrationErrorInfo migrationFailureError, string provisioningError, IDictionary<string, BinaryData> additionalBinaryDataProperties, DataMigrationSqlConnectionInformation sourceSqlConnection, string sourceDatabaseName, string sourceServerName, string targetDatabaseCollation, string sqlServerInstanceId, DataMigrationSqlDBMigrationStatusDetails migrationStatusDetails, DataMigrationSqlConnectionInformation targetSqlConnection, DataMigrationSqlDBOfflineConfiguration offlineConfiguration, IList<string> tableList) : base(kind, scope, provisioningState, migrationStatus, startedOn, endedOn, migrationService, migrationOperationId, migrationFailureError, provisioningError, additionalBinaryDataProperties, sourceSqlConnection, sourceDatabaseName, sourceServerName, targetDatabaseCollation, sqlServerInstanceId)
         {
             MigrationStatusDetails = migrationStatusDetails;
             TargetSqlConnection = targetSqlConnection;
             OfflineConfiguration = offlineConfiguration;
             TableList = tableList;
-            Kind = kind;
         }
 
         /// <summary> Detailed migration status. Not included by default. </summary>
         public DataMigrationSqlDBMigrationStatusDetails MigrationStatusDetails { get; }
+
         /// <summary> Target SQL DB connection details. </summary>
         public DataMigrationSqlConnectionInformation TargetSqlConnection { get; set; }
+
         /// <summary> Offline configuration. </summary>
         internal DataMigrationSqlDBOfflineConfiguration OfflineConfiguration { get; }
-        /// <summary> Offline migration. </summary>
-        public bool? IsOfflineMigration
-        {
-            get => OfflineConfiguration?.IsOfflineMigration;
-        }
 
         /// <summary> List of tables to copy. </summary>
         public IList<string> TableList { get; }
+
+        /// <summary> Offline migration. </summary>
+        public bool? IsOfflineMigration
+        {
+            get
+            {
+                return OfflineConfiguration is null ? default : OfflineConfiguration.IsOfflineMigration;
+            }
+        }
     }
 }

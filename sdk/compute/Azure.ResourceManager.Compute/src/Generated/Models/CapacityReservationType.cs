@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Compute.Models
     public readonly partial struct CapacityReservationType : IEquatable<CapacityReservationType>
     {
         private readonly string _value;
+        /// <summary> To consume on demand allocated capacity reservation when a capacity reservation group is provided. </summary>
+        private const string TargetedValue = "Targeted";
+        /// <summary> To consume scheduled allocated block capacity reservation when a capacity reservation group is provided. </summary>
+        private const string BlockValue = "Block";
 
         /// <summary> Initializes a new instance of <see cref="CapacityReservationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CapacityReservationType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string TargetedValue = "Targeted";
-        private const string BlockValue = "Block";
+            _value = value;
+        }
 
         /// <summary> To consume on demand allocated capacity reservation when a capacity reservation group is provided. </summary>
         public static CapacityReservationType Targeted { get; } = new CapacityReservationType(TargetedValue);
+
         /// <summary> To consume scheduled allocated block capacity reservation when a capacity reservation group is provided. </summary>
         public static CapacityReservationType Block { get; } = new CapacityReservationType(BlockValue);
+
         /// <summary> Determines if two <see cref="CapacityReservationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CapacityReservationType left, CapacityReservationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CapacityReservationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CapacityReservationType left, CapacityReservationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CapacityReservationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CapacityReservationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CapacityReservationType(string value) => new CapacityReservationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CapacityReservationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CapacityReservationType?(string value) => value == null ? null : new CapacityReservationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CapacityReservationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CapacityReservationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

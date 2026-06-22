@@ -15,7 +15,7 @@ using Azure.ResourceManager.ContainerService.Models;
 
 namespace Azure.ResourceManager.ContainerService
 {
-    internal partial class GuardrailsAvailableVersionsGetGuardrailsVersionsAsyncCollectionResultOfT : AsyncPageable<GuardrailsAvailableVersionData>
+    internal partial class GuardrailsAvailableVersionsGetGuardrailsVersionsAsyncCollectionResultOfT : AsyncPageable<ContainerServiceGuardrailsAvailableVersionData>
     {
         private readonly GuardrailsAvailableVersions _client;
         private readonly Guid _subscriptionId;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of GuardrailsAvailableVersionsGetGuardrailsVersionsAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<GuardrailsAvailableVersionData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<ContainerServiceGuardrailsAvailableVersionData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ContainerService
                     yield break;
                 }
                 GuardrailsAvailableVersionsList result = GuardrailsAvailableVersionsList.FromResponse(response);
-                yield return Page<GuardrailsAvailableVersionData>.FromValues((IReadOnlyList<GuardrailsAvailableVersionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<ContainerServiceGuardrailsAvailableVersionData>.FromValues((IReadOnlyList<ContainerServiceGuardrailsAvailableVersionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.EdgeActions
                 HttpMessage message = _edgeActionExecutionFiltersRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, executionFilter, EdgeActionExecutionFilterData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 EdgeActionsArmOperation<EdgeActionExecutionFilterResource> operation = new EdgeActionsArmOperation<EdgeActionExecutionFilterResource>(
-                    new EdgeActionExecutionFilterOperationSource(Client),
+                    new EdgeActionExecutionFilterResourceOperationSource(Client),
                     _edgeActionExecutionFiltersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.EdgeActions
                 HttpMessage message = _edgeActionExecutionFiltersRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, executionFilter, EdgeActionExecutionFilterData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 EdgeActionsArmOperation<EdgeActionExecutionFilterResource> operation = new EdgeActionsArmOperation<EdgeActionExecutionFilterResource>(
-                    new EdgeActionExecutionFilterOperationSource(Client),
+                    new EdgeActionExecutionFilterResourceOperationSource(Client),
                     _edgeActionExecutionFiltersClientDiagnostics,
                     Pipeline,
                     message.Request,

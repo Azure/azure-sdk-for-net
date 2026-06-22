@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 HttpMessage message = _sharesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, DataBoxEdgeShareData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DataBoxEdgeArmOperation<DataBoxEdgeShareResource> operation = new DataBoxEdgeArmOperation<DataBoxEdgeShareResource>(
-                    new DataBoxEdgeShareOperationSource(Client),
+                    new DataBoxEdgeShareResourceOperationSource(Client),
                     _sharesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 HttpMessage message = _sharesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, DataBoxEdgeShareData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DataBoxEdgeArmOperation<DataBoxEdgeShareResource> operation = new DataBoxEdgeArmOperation<DataBoxEdgeShareResource>(
-                    new DataBoxEdgeShareOperationSource(Client),
+                    new DataBoxEdgeShareResourceOperationSource(Client),
                     _sharesClientDiagnostics,
                     Pipeline,
                     message.Request,

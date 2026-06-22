@@ -10,14 +10,55 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class VMwareVmDetails : IUtf8JsonSerializable, IJsonModel<VMwareVmDetails>
+    /// <summary> VMware provider specific settings. </summary>
+    public partial class VMwareVmDetails : SiteRecoveryReplicationProviderSettings, IJsonModel<VMwareVmDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VMwareVmDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override SiteRecoveryReplicationProviderSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<VMwareVmDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeVMwareVmDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VMwareVmDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<VMwareVmDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(VMwareVmDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<VMwareVmDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        VMwareVmDetails IPersistableModel<VMwareVmDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => (VMwareVmDetails)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<VMwareVmDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<VMwareVmDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +70,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VMwareVmDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VMwareVmDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VMwareVmDetails)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(AgentGeneratedId))
             {
@@ -80,7 +120,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 writer.WritePropertyName("diskDetails"u8);
                 writer.WriteStartArray();
-                foreach (var item in DiskDetails)
+                foreach (InMageDiskDetails item in DiskDetails)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -90,7 +130,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 writer.WritePropertyName("validationErrors"u8);
                 writer.WriteStartArray();
-                foreach (var item in ValidationErrors)
+                foreach (SiteRecoveryHealthError item in ValidationErrors)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -98,26 +138,33 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
         }
 
-        VMwareVmDetails IJsonModel<VMwareVmDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        VMwareVmDetails IJsonModel<VMwareVmDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (VMwareVmDetails)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override SiteRecoveryReplicationProviderSettings JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VMwareVmDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VMwareVmDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VMwareVmDetails)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeVMwareVmDetails(document.RootElement, options);
         }
 
-        internal static VMwareVmDetails DeserializeVMwareVmDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static VMwareVmDetails DeserializeVMwareVmDetails(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            string instanceType = "VMwareVirtualMachine";
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string agentGeneratedId = default;
             string agentInstalled = default;
             string osType = default;
@@ -128,97 +175,93 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             string discoveryType = default;
             IReadOnlyList<InMageDiskDetails> diskDetails = default;
             IReadOnlyList<SiteRecoveryHealthError> validationErrors = default;
-            string instanceType = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("agentGeneratedId"u8))
+                if (prop.NameEquals("instanceType"u8))
                 {
-                    agentGeneratedId = property.Value.GetString();
+                    instanceType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("agentInstalled"u8))
+                if (prop.NameEquals("agentGeneratedId"u8))
                 {
-                    agentInstalled = property.Value.GetString();
+                    agentGeneratedId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("osType"u8))
+                if (prop.NameEquals("agentInstalled"u8))
                 {
-                    osType = property.Value.GetString();
+                    agentInstalled = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("agentVersion"u8))
+                if (prop.NameEquals("osType"u8))
                 {
-                    agentVersion = property.Value.GetString();
+                    osType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ipAddress"u8))
+                if (prop.NameEquals("agentVersion"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    agentVersion = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("ipAddress"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    ipAddress = IPAddress.Parse(property.Value.GetString());
+                    ipAddress = IPAddress.Parse(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("poweredOn"u8))
+                if (prop.NameEquals("poweredOn"u8))
                 {
-                    poweredOn = property.Value.GetString();
+                    poweredOn = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vCenterInfrastructureId"u8))
+                if (prop.NameEquals("vCenterInfrastructureId"u8))
                 {
-                    vCenterInfrastructureId = property.Value.GetString();
+                    vCenterInfrastructureId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("discoveryType"u8))
+                if (prop.NameEquals("discoveryType"u8))
                 {
-                    discoveryType = property.Value.GetString();
+                    discoveryType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("diskDetails"u8))
+                if (prop.NameEquals("diskDetails"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<InMageDiskDetails> array = new List<InMageDiskDetails>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(InMageDiskDetails.DeserializeInMageDiskDetails(item, options));
                     }
                     diskDetails = array;
                     continue;
                 }
-                if (property.NameEquals("validationErrors"u8))
+                if (prop.NameEquals("validationErrors"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<SiteRecoveryHealthError> array = new List<SiteRecoveryHealthError>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item, options));
                     }
                     validationErrors = array;
                     continue;
                 }
-                if (property.NameEquals("instanceType"u8))
-                {
-                    instanceType = property.Value.GetString();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new VMwareVmDetails(
                 instanceType,
-                serializedAdditionalRawData,
+                additionalBinaryDataProperties,
                 agentGeneratedId,
                 agentInstalled,
                 osType,
@@ -230,36 +273,5 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 diskDetails ?? new ChangeTrackingList<InMageDiskDetails>(),
                 validationErrors ?? new ChangeTrackingList<SiteRecoveryHealthError>());
         }
-
-        BinaryData IPersistableModel<VMwareVmDetails>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<VMwareVmDetails>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(VMwareVmDetails)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        VMwareVmDetails IPersistableModel<VMwareVmDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<VMwareVmDetails>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeVMwareVmDetails(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(VMwareVmDetails)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<VMwareVmDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

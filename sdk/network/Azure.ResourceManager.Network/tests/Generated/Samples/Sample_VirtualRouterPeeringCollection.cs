@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Network.Samples
                 PeerAsn = 20000L,
                 PeerIP = "192.168.1.5",
             };
-            ArmOperation<VirtualRouterPeeringResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, peeringName, data);
+            ArmOperation<VirtualRouterPeeringResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, peeringName, data, cancellationToken: System.Threading.CancellationToken.None);
             VirtualRouterPeeringResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

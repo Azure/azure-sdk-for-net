@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.TrafficManager
         {
             TryGetApiVersion(ResourceType, out string trafficManagerProfileApiVersion);
             _profilesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.TrafficManager", ResourceType.Namespace, Diagnostics);
-            _profilesRestClient = new Profiles(_profilesClientDiagnostics, Pipeline, Endpoint, trafficManagerProfileApiVersion ?? "2022-04-01");
+            _profilesRestClient = new Profiles(_profilesClientDiagnostics, Pipeline, Endpoint, trafficManagerProfileApiVersion ?? "2024-04-01-preview");
             ValidateResourceId(id);
         }
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2022-04-01. </description>
+        /// <description> 2024-04-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.TrafficManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _profilesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _profilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<TrafficManagerProfileData> response = Response.FromValue(TrafficManagerProfileData.FromResponse(result), result);
                 if (response.Value == null)
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2022-04-01. </description>
+        /// <description> 2024-04-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.TrafficManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _profilesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _profilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<TrafficManagerProfileData> response = Response.FromValue(TrafficManagerProfileData.FromResponse(result), result);
                 if (response.Value == null)
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2022-04-01. </description>
+        /// <description> 2024-04-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.TrafficManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _profilesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, TrafficManagerProfileData.ToRequestContent(data), context);
+                HttpMessage message = _profilesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, TrafficManagerProfileData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<TrafficManagerProfileData> response = Response.FromValue(TrafficManagerProfileData.FromResponse(result), result);
                 if (response.Value == null)
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2022-04-01. </description>
+        /// <description> 2024-04-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.TrafficManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _profilesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, TrafficManagerProfileData.ToRequestContent(data), context);
+                HttpMessage message = _profilesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, TrafficManagerProfileData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<TrafficManagerProfileData> response = Response.FromValue(TrafficManagerProfileData.FromResponse(result), result);
                 if (response.Value == null)
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.TrafficManager
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _profilesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _profilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<TrafficManagerProfileData> response = Response.FromValue(TrafficManagerProfileData.FromResponse(result), result);
                     return Response.FromValue(new TrafficManagerProfileResource(Client, response.Value), response.GetRawResponse());
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.TrafficManager
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _profilesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _profilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<TrafficManagerProfileData> response = Response.FromValue(TrafficManagerProfileData.FromResponse(result), result);
                     return Response.FromValue(new TrafficManagerProfileResource(Client, response.Value), response.GetRawResponse());
@@ -411,7 +411,7 @@ namespace Azure.ResourceManager.TrafficManager
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _profilesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _profilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<TrafficManagerProfileData> response = Response.FromValue(TrafficManagerProfileData.FromResponse(result), result);
                     return Response.FromValue(new TrafficManagerProfileResource(Client, response.Value), response.GetRawResponse());
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.TrafficManager
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _profilesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _profilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<TrafficManagerProfileData> response = Response.FromValue(TrafficManagerProfileData.FromResponse(result), result);
                     return Response.FromValue(new TrafficManagerProfileResource(Client, response.Value), response.GetRawResponse());
@@ -496,7 +496,7 @@ namespace Azure.ResourceManager.TrafficManager
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _profilesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _profilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<TrafficManagerProfileData> response = Response.FromValue(TrafficManagerProfileData.FromResponse(result), result);
                     return Response.FromValue(new TrafficManagerProfileResource(Client, response.Value), response.GetRawResponse());
@@ -542,7 +542,7 @@ namespace Azure.ResourceManager.TrafficManager
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _profilesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _profilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<TrafficManagerProfileData> response = Response.FromValue(TrafficManagerProfileData.FromResponse(result), result);
                     return Response.FromValue(new TrafficManagerProfileResource(Client, response.Value), response.GetRawResponse());
@@ -565,41 +565,6 @@ namespace Azure.ResourceManager.TrafficManager
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary> Gets a collection of TrafficManagerEndpoints in the <see cref="TrafficManagerProfileResource"/>. </summary>
-        /// <returns> An object representing collection of TrafficManagerEndpoints and their operations over a TrafficManagerEndpointResource. </returns>
-        public virtual TrafficManagerEndpointCollection GetTrafficManagerEndpoints()
-        {
-            return GetCachedClient(client => new TrafficManagerEndpointCollection(client, Id));
-        }
-
-        /// <summary> Gets a Traffic Manager endpoint. </summary>
-        /// <param name="endpointType"> The type of the Traffic Manager endpoint. </param>
-        /// <param name="endpointName"> The name of the Traffic Manager endpoint. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<TrafficManagerEndpointResource>> GetTrafficManagerEndpointAsync(TrafficManagerEndpointType endpointType, string endpointName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
-
-            return await GetTrafficManagerEndpoints().GetAsync(endpointType, endpointName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Gets a Traffic Manager endpoint. </summary>
-        /// <param name="endpointType"> The type of the Traffic Manager endpoint. </param>
-        /// <param name="endpointName"> The name of the Traffic Manager endpoint. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<TrafficManagerEndpointResource> GetTrafficManagerEndpoint(TrafficManagerEndpointType endpointType, string endpointName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
-
-            return GetTrafficManagerEndpoints().Get(endpointType, endpointName, cancellationToken);
         }
 
         /// <summary> Gets a collection of TrafficManagerHeatMaps in the <see cref="TrafficManagerProfileResource"/>. </summary>
@@ -629,6 +594,111 @@ namespace Azure.ResourceManager.TrafficManager
         public virtual Response<TrafficManagerHeatMapResource> GetTrafficManagerHeatMap(TrafficManagerHeatMapType heatMapType, IEnumerable<double> topLeft = default, IEnumerable<double> botRight = default, CancellationToken cancellationToken = default)
         {
             return GetTrafficManagerHeatMaps().Get(heatMapType, topLeft, botRight, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of AzureEndpointTrafficManagerEndpoints in the <see cref="TrafficManagerProfileResource"/>. </summary>
+        /// <returns> An object representing collection of AzureEndpointTrafficManagerEndpoints and their operations over a AzureEndpointTrafficManagerEndpointResource. </returns>
+        public virtual AzureEndpointTrafficManagerEndpointCollection GetAzureEndpointTrafficManagerEndpoints()
+        {
+            return GetCachedClient(client => new AzureEndpointTrafficManagerEndpointCollection(client, Id));
+        }
+
+        /// <summary> Gets a Traffic Manager endpoint. </summary>
+        /// <param name="endpointType"> The type of the Traffic Manager endpoint. </param>
+        /// <param name="endpointName"> The name of the Traffic Manager endpoint. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<AzureEndpointTrafficManagerEndpointResource>> GetAzureEndpointTrafficManagerEndpointAsync(TrafficManagerEndpointType endpointType, string endpointName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
+
+            return await GetAzureEndpointTrafficManagerEndpoints().GetAsync(endpointType, endpointName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets a Traffic Manager endpoint. </summary>
+        /// <param name="endpointType"> The type of the Traffic Manager endpoint. </param>
+        /// <param name="endpointName"> The name of the Traffic Manager endpoint. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<AzureEndpointTrafficManagerEndpointResource> GetAzureEndpointTrafficManagerEndpoint(TrafficManagerEndpointType endpointType, string endpointName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
+
+            return GetAzureEndpointTrafficManagerEndpoints().Get(endpointType, endpointName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ExternalEndpointTrafficManagerEndpoints in the <see cref="TrafficManagerProfileResource"/>. </summary>
+        /// <returns> An object representing collection of ExternalEndpointTrafficManagerEndpoints and their operations over a ExternalEndpointTrafficManagerEndpointResource. </returns>
+        public virtual ExternalEndpointTrafficManagerEndpointCollection GetExternalEndpointTrafficManagerEndpoints()
+        {
+            return GetCachedClient(client => new ExternalEndpointTrafficManagerEndpointCollection(client, Id));
+        }
+
+        /// <summary> Gets a Traffic Manager endpoint. </summary>
+        /// <param name="endpointType"> The type of the Traffic Manager endpoint. </param>
+        /// <param name="endpointName"> The name of the Traffic Manager endpoint. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ExternalEndpointTrafficManagerEndpointResource>> GetExternalEndpointTrafficManagerEndpointAsync(TrafficManagerEndpointType endpointType, string endpointName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
+
+            return await GetExternalEndpointTrafficManagerEndpoints().GetAsync(endpointType, endpointName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets a Traffic Manager endpoint. </summary>
+        /// <param name="endpointType"> The type of the Traffic Manager endpoint. </param>
+        /// <param name="endpointName"> The name of the Traffic Manager endpoint. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ExternalEndpointTrafficManagerEndpointResource> GetExternalEndpointTrafficManagerEndpoint(TrafficManagerEndpointType endpointType, string endpointName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
+
+            return GetExternalEndpointTrafficManagerEndpoints().Get(endpointType, endpointName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of NestedEndpointTrafficManagerEndpoints in the <see cref="TrafficManagerProfileResource"/>. </summary>
+        /// <returns> An object representing collection of NestedEndpointTrafficManagerEndpoints and their operations over a NestedEndpointTrafficManagerEndpointResource. </returns>
+        public virtual NestedEndpointTrafficManagerEndpointCollection GetNestedEndpointTrafficManagerEndpoints()
+        {
+            return GetCachedClient(client => new NestedEndpointTrafficManagerEndpointCollection(client, Id));
+        }
+
+        /// <summary> Gets a Traffic Manager endpoint. </summary>
+        /// <param name="endpointType"> The type of the Traffic Manager endpoint. </param>
+        /// <param name="endpointName"> The name of the Traffic Manager endpoint. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<NestedEndpointTrafficManagerEndpointResource>> GetNestedEndpointTrafficManagerEndpointAsync(TrafficManagerEndpointType endpointType, string endpointName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
+
+            return await GetNestedEndpointTrafficManagerEndpoints().GetAsync(endpointType, endpointName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets a Traffic Manager endpoint. </summary>
+        /// <param name="endpointType"> The type of the Traffic Manager endpoint. </param>
+        /// <param name="endpointName"> The name of the Traffic Manager endpoint. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<NestedEndpointTrafficManagerEndpointResource> GetNestedEndpointTrafficManagerEndpoint(TrafficManagerEndpointType endpointType, string endpointName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
+
+            return GetNestedEndpointTrafficManagerEndpoints().Get(endpointType, endpointName, cancellationToken);
         }
     }
 }

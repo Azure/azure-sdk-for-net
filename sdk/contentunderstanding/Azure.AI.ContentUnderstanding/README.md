@@ -11,6 +11,8 @@ Use the client library for Azure AI Content Understanding to:
 * **Create custom analyzers** - Build domain-specific analyzers for specialized content extraction needs across all four modalities (documents, video, audio, and images)
 * **Classify documents and video** - Automatically categorize and extract information from documents and video by type
 
+If you have encountered issues or want to suggest features, please [file an issue][file_issue].
+
 [Source code][source_code] | [Package (NuGet)][nuget_package] | [API reference documentation][api_reference] | [Product documentation][product_docs]
 
 ## Getting started
@@ -54,7 +56,7 @@ After creating your Microsoft Foundry resource, you must grant yourself the **Co
 5. Select the **Cognitive Services User** role
 6. Assign it to yourself (or the user/service principal that will run the application)
 
-> **Note:** This role assignment is required even if you are the owner of the resource. Without this role, you will not be able to call the Content Understanding API to configure model deployments for prebuilt analyzers and custom analzyers.
+> **Note:** This role assignment is required even if you are the owner of the resource. Without this role, you will not be able to call the Content Understanding API to configure model deployments for prebuilt analyzers and custom analyzers.
 
 #### Step 2: Deploy required models
 
@@ -140,7 +142,6 @@ Prebuilt analyzers are organized into several categories:
 
 For a complete list of available prebuilt analyzers and their capabilities, see the [Prebuilt analyzers documentation][prebuilt-analyzers-docs].
 
->
 ### Content types
 
 The API returns different content types based on the input. Both `DocumentContent` and `AudioVisualContent` classes derive from `AnalysisContent` class, which provides basic information and markdown representation. Each derived class provides additional properties to access detailed information:
@@ -188,6 +189,7 @@ The samples demonstrate:
 * **Document Content Extraction** - Extract structured markdown content from PDFs and images using `prebuilt-documentSearch`, optimized for RAG (Retrieval-Augmented Generation) applications
 * **Multi-Modal Content Analysis** - Analyze content from URLs across all modalities: extract markdown and summaries from documents, images, audio, and video using `prebuilt-documentSearch`, `prebuilt-imageSearch`, `prebuilt-audioSearch`, and `prebuilt-videoSearch`
 * **Domain-Specific Analysis** - Extract structured fields from invoices using `prebuilt-invoice`
+* **LLM Integration** - Convert analysis results to LLM-ready text with `.ToLlmInput()`
 * **Advanced Document Features** - Extract charts, hyperlinks, formulas, and annotations from documents
 * **Custom Analyzers** - Create custom analyzers with field schemas for specialized extraction needs
 * **Document Classification** - Create and use classifiers to categorize documents
@@ -195,6 +197,99 @@ The samples demonstrate:
 * **Result Management** - Retrieve result files from video analysis and delete analysis results
 
 See the [samples directory][samples_directory] for complete examples.
+
+### Convert results to LLM-ready text
+
+> **Note:** `.ToLlmInput()` is currently in preview and may change in future releases.
+> We welcome feedback — please [file an issue][file_issue].
+
+Use `.ToLlmInput()` to convert any analysis result into a text format that LLMs can consume directly — YAML front matter with extracted fields followed by the markdown body. This works with all content types (documents, images, audio, video) and handles multi-segment results and classification hierarchies automatically.
+
+```csharp
+using Azure.AI.ContentUnderstanding;
+using Azure.Identity;
+
+var client = new ContentUnderstandingClient(new Uri(endpoint), new DefaultAzureCredential());
+
+// Analyze a document with text, tables, and charts using prebuilt-documentSearch (CU's primary RAG analyzer)
+byte[] fileBytes = File.ReadAllBytes("sample_document_features.pdf");
+Operation<AnalysisResult> operation = await client.AnalyzeBinaryAsync(
+    WaitUntil.Completed,
+    "prebuilt-documentSearch",
+    BinaryData.FromBytes(fileBytes));
+
+AnalysisResult result = operation.Value;
+
+// One line to get LLM-ready text
+string text = result.ToLlmInput();
+Console.WriteLine(text);
+// Output:
+//   ---
+//   contentType: document
+//   pages: 1
+//   fields:
+//     Summary: The document provides an overview of Latin, includes a sample
+//       table with names and corporate affiliations, presents a bar chart
+//       figure illustrating monthly values, and describes the AI Document
+//       Intelligence service...
+//   ---
+//   <!-- InputPageNumber: 1 -->
+//   # ==This is title==
+//   ## 1. Text
+//   [Latin](https://en.wikipedia.org/wiki/Latin) refers to an ancient Italic language...
+//   ## 2. Page Objects
+//   ### 2.1 Table
+//   <table><caption>Table 1: This is a dummy table</caption>...</table>
+//   ### 2.2. Figure
+//   ![Values...](figures/1.1 "Bar chart with six bars: Jan=200, Feb=300...")
+//   ...
+```
+
+> **About `<!-- InputPageNumber: N -->`**
+>
+> The helper emits `<!-- InputPageNumber: N -->` markers at page boundaries in
+> the markdown body. `N` is the **original 1-based page number from the source
+> document** (i.e., the page index in the analyzed PDF), not a counter that
+> restarts at 1 for each call. Downstream consumers (RAG indexers, page-citation
+> prompts) can rely on the marker value to cite the correct source page even
+> when only a subset of pages was analyzed.
+>
+> **Why this matters when a page range is specified**
+>
+> Use `ContentRange` on the analyze request to analyze only a subset of pages
+> in a multi-page document. The markers in the rendered output preserve the
+> original page identity:
+>
+> ```csharp
+> // Analyze pages 2-3 and page 5 of a 10-page PDF.
+> Operation<AnalysisResult> operation = await client.AnalyzeAsync(
+>     WaitUntil.Completed,
+>     "prebuilt-documentSearch",
+>     inputs: new[]
+>     {
+>         new AnalysisInput
+>         {
+>             Uri = multiPageUrl,
+>             ContentRange = new ContentRange("2-3,5"),
+>         },
+>     });
+>
+> string text = operation.Value.ToLlmInput();
+> // Output contains markers for the *original* page numbers, not 1, 2, 3:
+> //   pages: 2-3, 5
+> //   ...
+> //   <!-- InputPageNumber: 2 -->
+> //   ...page 2 content...
+> //   <!-- InputPageNumber: 3 -->
+> //   ...page 3 content...
+> //   <!-- InputPageNumber: 5 -->
+> //   ...page 5 content...
+> ```
+>
+> An LLM or RAG indexer can therefore cite "see page 5" with the correct page
+> number, even though page 5 is the *third* segment in the response.
+
+See the [advanced ToLlmInput sample][sample-advanced-to-llm-input] for output options (fields-only, markdown-only, custom metadata), multi-page content ranges, and multi-segment video.
 
 ## Troubleshooting
 
@@ -267,9 +362,11 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [sample00]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample00_UpdateDefaults.md
 [sample01]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample01_AnalyzeBinary.md
 [prebuilt-analyzers-docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/concepts/prebuilt-analyzers
+[sample-advanced-to-llm-input]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample_Advanced_ToLlmInput.md
 [cla]: https://cla.microsoft.com
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
 [code_of_conduct_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 [opencode_email]: mailto:opencode@microsoft.com
 [style-guide-msft]: https://learn.microsoft.com/style-guide/capitalization
 [style-guide-cloud]: https://aka.ms/azsdk/cloud-style-guide
+[file_issue]: https://github.com/Azure/azure-sdk-for-net/issues/new?labels=Cognitive%20-%20Content%20Understanding&title=[ContentUnderstanding]%20&body=%23%23%20Library%20Version%0A%0A%23%23%20Repro%20Steps%0A%0A%23%23%20Expected%20Result%0A%0A%23%23%20Actual%20Result

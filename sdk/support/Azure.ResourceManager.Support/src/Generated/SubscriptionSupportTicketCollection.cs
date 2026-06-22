@@ -28,8 +28,6 @@ namespace Azure.ResourceManager.Support
     {
         private readonly ClientDiagnostics _subscriptionSupportTicketClientDiagnostics;
         private readonly SubscriptionSupportTicket _subscriptionSupportTicketRestClient;
-        private readonly ClientDiagnostics _supportTicketCommunicationClientDiagnostics;
-        private readonly SupportTicketCommunication _supportTicketCommunicationRestClient;
 
         /// <summary> Initializes a new instance of SubscriptionSupportTicketCollection for mocking. </summary>
         protected SubscriptionSupportTicketCollection()
@@ -44,8 +42,6 @@ namespace Azure.ResourceManager.Support
             TryGetApiVersion(SubscriptionSupportTicketResource.ResourceType, out string subscriptionSupportTicketApiVersion);
             _subscriptionSupportTicketClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Support", SubscriptionSupportTicketResource.ResourceType.Namespace, Diagnostics);
             _subscriptionSupportTicketRestClient = new SubscriptionSupportTicket(_subscriptionSupportTicketClientDiagnostics, Pipeline, Endpoint, subscriptionSupportTicketApiVersion ?? "2025-06-01-preview");
-            _supportTicketCommunicationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Support", SubscriptionSupportTicketResource.ResourceType.Namespace, Diagnostics);
-            _supportTicketCommunicationRestClient = new SupportTicketCommunication(_supportTicketCommunicationClientDiagnostics, Pipeline, Endpoint, subscriptionSupportTicketApiVersion ?? "2025-06-01-preview");
             ValidateResourceId(id);
         }
 
@@ -98,7 +94,7 @@ namespace Azure.ResourceManager.Support
                 HttpMessage message = _subscriptionSupportTicketRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), supportTicketName, SupportTicketData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SupportArmOperation<SubscriptionSupportTicketResource> operation = new SupportArmOperation<SubscriptionSupportTicketResource>(
-                    new SubscriptionSupportTicketOperationSource(Client),
+                    new SubscriptionSupportTicketResourceOperationSource(Client),
                     _subscriptionSupportTicketClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -156,7 +152,7 @@ namespace Azure.ResourceManager.Support
                 HttpMessage message = _subscriptionSupportTicketRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), supportTicketName, SupportTicketData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SupportArmOperation<SubscriptionSupportTicketResource> operation = new SupportArmOperation<SubscriptionSupportTicketResource>(
-                    new SubscriptionSupportTicketOperationSource(Client),
+                    new SubscriptionSupportTicketResourceOperationSource(Client),
                     _subscriptionSupportTicketClientDiagnostics,
                     Pipeline,
                     message.Request,

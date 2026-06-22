@@ -64,8 +64,8 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// <param name="propertyName">The name of the property being validated, used in error messages.</param>
         protected static void ValidateNotNullOrEmpty(string value, string propertyName)
         {
-            Assert.IsNotNull(value, $"{propertyName} should not be null");
-            Assert.IsNotEmpty(value, $"{propertyName} should not be empty");
+            Assert.That(value, Is.Not.Null, $"{propertyName} should not be null");
+            Assert.That(value, Is.Not.Empty, $"{propertyName} should not be empty");
         }
 
         /// <summary>
@@ -76,7 +76,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// <param name="responseName">Optional name of the response, used in error messages. If null, the type name is used.</param>
         protected static void ValidateResponse<T>(T response, string responseName = null) where T : class
         {
-            Assert.IsNotNull(response, $"{responseName ?? typeof(T).Name} response should not be null");
+            Assert.That(response, Is.Not.Null, $"{responseName ?? typeof(T).Name} response should not be null");
         }
     }
 }

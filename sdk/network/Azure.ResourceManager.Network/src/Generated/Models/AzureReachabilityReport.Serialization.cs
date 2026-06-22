@@ -8,17 +8,69 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class AzureReachabilityReport : IUtf8JsonSerializable, IJsonModel<AzureReachabilityReport>
+    /// <summary> Azure reachability report details. </summary>
+    public partial class AzureReachabilityReport : IJsonModel<AzureReachabilityReport>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureReachabilityReport>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="AzureReachabilityReport"/> for deserialization. </summary>
+        internal AzureReachabilityReport()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AzureReachabilityReport PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AzureReachabilityReport>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAzureReachabilityReport(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AzureReachabilityReport)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AzureReachabilityReport>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AzureReachabilityReport)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AzureReachabilityReport>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AzureReachabilityReport IPersistableModel<AzureReachabilityReport>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AzureReachabilityReport>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AzureReachabilityReport"/> from. </param>
+        internal static AzureReachabilityReport FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeAzureReachabilityReport(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AzureReachabilityReport>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,32 +82,31 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureReachabilityReport>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AzureReachabilityReport>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AzureReachabilityReport)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("aggregationLevel"u8);
             writer.WriteStringValue(AggregationLevel);
             writer.WritePropertyName("providerLocation"u8);
             writer.WriteObjectValue(ProviderLocation, options);
             writer.WritePropertyName("reachabilityReport"u8);
             writer.WriteStartArray();
-            foreach (var item in ReachabilityReport)
+            foreach (AzureReachabilityReportItem item in ReachabilityReport)
             {
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -64,22 +115,27 @@ namespace Azure.ResourceManager.Network.Models
             }
         }
 
-        AzureReachabilityReport IJsonModel<AzureReachabilityReport>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AzureReachabilityReport IJsonModel<AzureReachabilityReport>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AzureReachabilityReport JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureReachabilityReport>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AzureReachabilityReport>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AzureReachabilityReport)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAzureReachabilityReport(document.RootElement, options);
         }
 
-        internal static AzureReachabilityReport DeserializeAzureReachabilityReport(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static AzureReachabilityReport DeserializeAzureReachabilityReport(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -87,24 +143,23 @@ namespace Azure.ResourceManager.Network.Models
             string aggregationLevel = default;
             AzureReachabilityReportLocation providerLocation = default;
             IReadOnlyList<AzureReachabilityReportItem> reachabilityReport = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("aggregationLevel"u8))
+                if (prop.NameEquals("aggregationLevel"u8))
                 {
-                    aggregationLevel = property.Value.GetString();
+                    aggregationLevel = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("providerLocation"u8))
+                if (prop.NameEquals("providerLocation"u8))
                 {
-                    providerLocation = AzureReachabilityReportLocation.DeserializeAzureReachabilityReportLocation(property.Value, options);
+                    providerLocation = AzureReachabilityReportLocation.DeserializeAzureReachabilityReportLocation(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("reachabilityReport"u8))
+                if (prop.NameEquals("reachabilityReport"u8))
                 {
                     List<AzureReachabilityReportItem> array = new List<AzureReachabilityReportItem>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(AzureReachabilityReportItem.DeserializeAzureReachabilityReportItem(item, options));
                     }
@@ -113,120 +168,10 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new AzureReachabilityReport(aggregationLevel, providerLocation, reachabilityReport, serializedAdditionalRawData);
+            return new AzureReachabilityReport(aggregationLevel, providerLocation, reachabilityReport, additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AggregationLevel), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  aggregationLevel: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(AggregationLevel))
-                {
-                    builder.Append("  aggregationLevel: ");
-                    if (AggregationLevel.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{AggregationLevel}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{AggregationLevel}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProviderLocation), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  providerLocation: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ProviderLocation))
-                {
-                    builder.Append("  providerLocation: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, ProviderLocation, options, 2, false, "  providerLocation: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ReachabilityReport), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  reachabilityReport: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(ReachabilityReport))
-                {
-                    if (ReachabilityReport.Any())
-                    {
-                        builder.Append("  reachabilityReport: ");
-                        builder.AppendLine("[");
-                        foreach (var item in ReachabilityReport)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  reachabilityReport: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<AzureReachabilityReport>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureReachabilityReport>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(AzureReachabilityReport)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        AzureReachabilityReport IPersistableModel<AzureReachabilityReport>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureReachabilityReport>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeAzureReachabilityReport(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AzureReachabilityReport)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<AzureReachabilityReport>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -14,44 +15,63 @@ namespace Azure.ResourceManager.Compute.Models
     public readonly partial struct VmGuestPatchRebootBehavior : IEquatable<VmGuestPatchRebootBehavior>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="VmGuestPatchRebootBehavior"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public VmGuestPatchRebootBehavior(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string UnknownValue = "Unknown";
         private const string NeverRebootsValue = "NeverReboots";
         private const string AlwaysRequiresRebootValue = "AlwaysRequiresReboot";
         private const string CanRequestRebootValue = "CanRequestReboot";
 
-        /// <summary> Unknown. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmGuestPatchRebootBehavior"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public VmGuestPatchRebootBehavior(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Unknown. </summary>
         public static VmGuestPatchRebootBehavior Unknown { get; } = new VmGuestPatchRebootBehavior(UnknownValue);
-        /// <summary> NeverReboots. </summary>
+
+        /// <summary> Gets the NeverReboots. </summary>
         public static VmGuestPatchRebootBehavior NeverReboots { get; } = new VmGuestPatchRebootBehavior(NeverRebootsValue);
-        /// <summary> AlwaysRequiresReboot. </summary>
+
+        /// <summary> Gets the AlwaysRequiresReboot. </summary>
         public static VmGuestPatchRebootBehavior AlwaysRequiresReboot { get; } = new VmGuestPatchRebootBehavior(AlwaysRequiresRebootValue);
-        /// <summary> CanRequestReboot. </summary>
+
+        /// <summary> Gets the CanRequestReboot. </summary>
         public static VmGuestPatchRebootBehavior CanRequestReboot { get; } = new VmGuestPatchRebootBehavior(CanRequestRebootValue);
+
         /// <summary> Determines if two <see cref="VmGuestPatchRebootBehavior"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(VmGuestPatchRebootBehavior left, VmGuestPatchRebootBehavior right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="VmGuestPatchRebootBehavior"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(VmGuestPatchRebootBehavior left, VmGuestPatchRebootBehavior right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="VmGuestPatchRebootBehavior"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="VmGuestPatchRebootBehavior"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator VmGuestPatchRebootBehavior(string value) => new VmGuestPatchRebootBehavior(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="VmGuestPatchRebootBehavior"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator VmGuestPatchRebootBehavior?(string value) => value == null ? null : new VmGuestPatchRebootBehavior(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is VmGuestPatchRebootBehavior other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(VmGuestPatchRebootBehavior other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

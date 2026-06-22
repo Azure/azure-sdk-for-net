@@ -2,20 +2,14 @@
   <PropertyGroup>
     <Description>An OpenTelemetry .NET exporter that exports to Azure Monitor</Description>
     <AssemblyTitle>AzureMonitor OpenTelemetry Exporter</AssemblyTitle>
-    <Version>1.8.0-beta.1</Version>
+    <Version>1.9.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>1.7.0</ApiCompatVersion>
+    <ApiCompatVersion>1.8.1</ApiCompatVersion>
     <PackageTags>Azure Monitor OpenTelemetry Exporter ApplicationInsights</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
     <AotCompatOptOut>true</AotCompatOptOut>
     <EnableConfigurationBindingGenerator>true</EnableConfigurationBindingGenerator>
-    <!-- The configuration binding source generator emits SYSLIB1100/SYSLIB1101 for options
-         properties that cannot be bound from configuration (for example, the Credential
-         (TokenCredential) and Transport properties used by Azure.Core.ClientOptions). These
-         warnings are expected and safe to suppress since those properties are never set via
-         IConfiguration. -->
-    <NoWarn>$(NoWarn);SYSLIB1100;SYSLIB1101</NoWarn>
     <DefineConstants>$(DefineConstants);AZURE_MONITOR_EXPORTER;</DefineConstants>
   </PropertyGroup>
 

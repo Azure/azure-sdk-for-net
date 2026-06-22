@@ -26,7 +26,7 @@ Use the client library to:
 Install the client library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
-dotnet add package Azure.AI.Speech.Transcription --prerelease
+dotnet add package Azure.AI.Speech.Transcription
 ```
 
 ### Authenticate the client
@@ -177,7 +177,7 @@ TranscriptionOptions options = new TranscriptionOptions(audioStream);
 ClientResult<TranscriptionResult> response = await client.TranscribeAsync(options);
 
 // Get the transcribed text
-var channelPhrases = response.Value.PhrasesByChannel.First();
+var channelPhrases = response.Value.CombinedPhrases.First();
 Console.WriteLine(channelPhrases.Text);
 ```
 
@@ -195,7 +195,7 @@ ClientResult<TranscriptionResult> response = await client.TranscribeAsync(option
 TranscriptionResult result = response.Value;
 
 Console.WriteLine($"Transcribed audio from URL: {audioUrl}");
-var channelPhrases = result.PhrasesByChannel.First();
+var channelPhrases = result.CombinedPhrases.First();
 Console.WriteLine($"\nTranscription:\n{channelPhrases.Text}");
 ```
 
@@ -213,8 +213,7 @@ ClientResult<TranscriptionResult> response = await client.TranscribeAsync(option
 TranscriptionResult result = response.Value;
 
 // Access individual words in each phrase
-var channelPhrases = result.PhrasesByChannel.First();
-foreach (TranscribedPhrase phrase in channelPhrases.Phrases)
+foreach (TranscribedPhrase phrase in result.Phrases)
 {
     Console.WriteLine($"\nPhrase: {phrase.Text}");
     Console.WriteLine("Words:");
@@ -246,8 +245,8 @@ ClientResult<TranscriptionResult> response = await client.TranscribeAsync(option
 TranscriptionResult result = response.Value;
 
 Console.WriteLine("Transcription with speaker diarization:");
-var channelPhrases = result.PhrasesByChannel.First();
-foreach (TranscribedPhrase phrase in channelPhrases.Phrases)
+var channelPhrases = result.CombinedPhrases.First();
+foreach (TranscribedPhrase phrase in result.Phrases)
 {
     Console.WriteLine($"Speaker {phrase.Speaker}: {phrase.Text}");
 }
@@ -269,7 +268,7 @@ TranscriptionOptions options = new TranscriptionOptions(audioStream)
 ClientResult<TranscriptionResult> response = await client.TranscribeAsync(options);
 TranscriptionResult result = response.Value;
 
-var channelPhrases = result.PhrasesByChannel.First();
+var channelPhrases = result.CombinedPhrases.First();
 Console.WriteLine(channelPhrases.Text); // Profanity will appear as "f***"
 ```
 
@@ -300,7 +299,7 @@ options.PhraseList.Phrases.Add("Rehaan");
 ClientResult<TranscriptionResult> response = await client.TranscribeAsync(options);
 TranscriptionResult result = response.Value;
 
-var channelPhrases = result.PhrasesByChannel.First();
+var channelPhrases = result.CombinedPhrases.First();
 Console.WriteLine(channelPhrases.Text);
 ```
 
@@ -318,7 +317,7 @@ options.Locales.Add("en-US");
 ClientResult<TranscriptionResult> response = await client.TranscribeAsync(options);
 TranscriptionResult result = response.Value;
 
-var channelPhrases = result.PhrasesByChannel.First();
+var channelPhrases = result.CombinedPhrases.First();
 Console.WriteLine(channelPhrases.Text);
 ```
 
@@ -345,7 +344,7 @@ TranscriptionOptions options = new TranscriptionOptions(audioStream)
 ClientResult<TranscriptionResult> response = await client.TranscribeAsync(options);
 TranscriptionResult result = response.Value;
 
-var channelPhrases = result.PhrasesByChannel.First();
+var channelPhrases = result.CombinedPhrases.First();
 Console.WriteLine(channelPhrases.Text);
 ```
 
@@ -380,7 +379,7 @@ ClientResult<TranscriptionResult> response = await client.TranscribeAsync(option
 TranscriptionResult result = response.Value;
 
 // Display results
-var channelPhrases = result.PhrasesByChannel.First();
+var channelPhrases = result.CombinedPhrases.First();
 Console.WriteLine("Full Transcript:");
 Console.WriteLine(result.CombinedPhrases.First().Text);
 ```

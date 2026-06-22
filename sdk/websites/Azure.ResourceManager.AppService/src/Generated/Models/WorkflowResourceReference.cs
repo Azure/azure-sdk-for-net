@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The resource reference. </summary>
+    /// <summary>
+    /// The resource reference.
+    /// Serialized Name: ResourceReference
+    /// </summary>
     public partial class WorkflowResourceReference
     {
         /// <summary>
@@ -52,9 +55,18 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkflowResourceReference"/>. </summary>
-        /// <param name="id"> The resource id. </param>
-        /// <param name="name"> Gets the resource name. </param>
-        /// <param name="resourceType"> Gets the resource type. </param>
+        /// <param name="id">
+        /// The resource id.
+        /// Serialized Name: ResourceReference.id
+        /// </param>
+        /// <param name="name">
+        /// Gets the resource name.
+        /// Serialized Name: ResourceReference.name
+        /// </param>
+        /// <param name="resourceType">
+        /// Gets the resource type.
+        /// Serialized Name: ResourceReference.type
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal WorkflowResourceReference(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -64,13 +76,22 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The resource id. </summary>
+        /// <summary>
+        /// The resource id.
+        /// Serialized Name: ResourceReference.id
+        /// </summary>
         [WirePath("id")]
         public ResourceIdentifier Id { get; set; }
-        /// <summary> Gets the resource name. </summary>
+        /// <summary>
+        /// Gets the resource name.
+        /// Serialized Name: ResourceReference.name
+        /// </summary>
         [WirePath("name")]
         public string Name { get; }
-        /// <summary> Gets the resource type. </summary>
+        /// <summary>
+        /// Gets the resource type.
+        /// Serialized Name: ResourceReference.type
+        /// </summary>
         [WirePath("type")]
         public ResourceType? ResourceType { get; }
     }

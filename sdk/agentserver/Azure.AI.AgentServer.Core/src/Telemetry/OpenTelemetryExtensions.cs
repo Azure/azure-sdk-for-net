@@ -1,11 +1,15 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Monitor.OpenTelemetry.AspNetCore;
+using Azure.Core;
+using Azure.Identity;
+using Microsoft.Agents.A365.Observability.Runtime.Tracing.Exporters;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.OpenTelemetry;
+using OpenTelemetry;
+using OpenTelemetry.Context.Propagation;
 using OpenTelemetry.Logs;
-using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 
@@ -13,23 +17,23 @@ namespace Azure.AI.AgentServer.Core.Internal;
 
 /// <summary>
 /// Configures OpenTelemetry tracing, logging, and metrics for the agent server.
-/// OTLP exporters are conditional on <c>OTEL_EXPORTER_OTLP_ENDPOINT</c>.
-/// Azure Monitor is conditional on <c>APPLICATIONINSIGHTS_CONNECTION_STRING</c>.
+/// Uses the Microsoft OpenTelemetry distro which auto-detects Azure Monitor
+/// (<c>APPLICATIONINSIGHTS_CONNECTION_STRING</c>) and OTLP
+/// (<c>OTEL_EXPORTER_OTLP_ENDPOINT</c>) exporters from environment variables.
 /// </summary>
 internal static class OpenTelemetryExtensions
 {
+    // The A365 token acquisition scope.
+    private const string Agent365Scope = "api://9b975845-388f-4429-889e-eab1ef63949c/.default";
+
     /// <summary>
-    /// Registers OpenTelemetry providers and conditional exporters.
+    /// Registers OpenTelemetry providers and conditional exporters via the
+    /// Microsoft OpenTelemetry distro.
     /// </summary>
     internal static IServiceCollection AddAgentHostTelemetry(
         this IServiceCollection services,
         Action<TracerProviderBuilder>? configureTracing = null)
     {
-        var otlpEndpoint = FoundryEnvironment.OtlpEndpoint;
-        var appInsightsCs = FoundryEnvironment.AppInsightsConnectionString;
-        var hasOtlp = !string.IsNullOrEmpty(otlpEndpoint);
-        var hasAppInsights = !string.IsNullOrEmpty(appInsightsCs);
-
         // Build resource attributes from Foundry environment
         var resourceBuilder = ResourceBuilder.CreateDefault();
         var agentName = FoundryEnvironment.AgentName;
@@ -50,16 +54,45 @@ internal static class OpenTelemetryExtensions
             });
         }
 
-        // Azure Monitor (must be registered first — it hooks into the OTel builder)
-        if (hasAppInsights)
-        {
-            services.AddOpenTelemetry().UseAzureMonitor(options =>
-            {
-                options.ConnectionString = appInsightsCs;
-            });
-        }
+        // The Microsoft OpenTelemetry distro auto-detects Azure Monitor and OTLP
+        // exporters from environment variables. It registers ASP.NET Core, HttpClient,
+        // SQL, Azure SDK, and AI instrumentation automatically.
+        var otelBuilder = services.AddOpenTelemetry();
 
-        services.AddOpenTelemetry()
+        // Ensure W3C Trace Context and Baggage propagators are active on all TFMs.
+        // On net9+, ASP.NET Core natively respects OTel's propagator for incoming
+        // requests. On net8.0, the W3CBaggagePropagator middleware handles extraction.
+        // This call ensures outgoing requests also propagate baggage correctly.
+        Sdk.SetDefaultTextMapPropagator(new CompositeTextMapPropagator(new TextMapPropagator[]
+        {
+            new TraceContextPropagator(),
+            new BaggagePropagator(),
+        }));
+
+        otelBuilder.UseMicrosoftOpenTelemetry(options =>
+        {
+            var exporters = ExportTarget.None;
+
+            if (!string.IsNullOrEmpty(FoundryEnvironment.AppInsightsConnectionString))
+            {
+                exporters |= ExportTarget.AzureMonitor;
+            }
+
+            if (!string.IsNullOrEmpty(FoundryEnvironment.OtlpEndpoint))
+            {
+                exporters |= ExportTarget.Otlp;
+            }
+
+            if (FoundryEnvironment.IsAgent365TracingEnabled)
+            {
+                exporters |= ExportTarget.Agent365;
+                ConfigureAgent365Export(options);
+            }
+
+            options.Exporters = exporters;
+        });
+
+        otelBuilder
             .ConfigureResource(r =>
             {
                 r.AddDetector(new FoundryResourceDetector());
@@ -67,15 +100,6 @@ internal static class OpenTelemetryExtensions
             })
             .WithTracing(tracing =>
             {
-                // Only add ASP.NET Core and HttpClient instrumentation when UseAzureMonitor
-                // is not active, because UseAzureMonitor already registers both and adding
-                // them again would produce duplicate spans.
-                if (!hasAppInsights)
-                {
-                    tracing.AddAspNetCoreInstrumentation();
-                    tracing.AddHttpClientInstrumentation();
-                }
-
                 tracing.AddSource(AgentHostTelemetry.ResponsesSourceName);
                 tracing.AddSource(AgentHostTelemetry.InvocationsSourceName);
 
@@ -84,28 +108,11 @@ internal static class OpenTelemetryExtensions
                 tracing.AddProcessor(new FoundryEnrichmentProcessor());
 
                 configureTracing?.Invoke(tracing);
-
-                if (hasOtlp)
-                {
-                    tracing.AddOtlpExporter();
-                }
             })
             .WithMetrics(metrics =>
             {
-                // Same guard — UseAzureMonitor already adds ASP.NET Core and HttpClient metrics.
-                if (!hasAppInsights)
-                {
-                    metrics.AddAspNetCoreInstrumentation();
-                    metrics.AddHttpClientInstrumentation();
-                }
-
                 metrics.AddMeter(AgentHostTelemetry.ResponsesMeterName);
                 metrics.AddMeter(AgentHostTelemetry.InvocationsMeterName);
-
-                if (hasOtlp)
-                {
-                    metrics.AddOtlpExporter();
-                }
             });
 
         // Logging with OTel bridge
@@ -117,15 +124,61 @@ internal static class OpenTelemetryExtensions
                 otelLogging.IncludeScopes = true;
                 otelLogging.IncludeFormattedMessage = true;
                 otelLogging.AddProcessor(new BaggageToLogProcessor());
-
-                if (hasOtlp)
-                {
-                    otelLogging.AddOtlpExporter();
-                }
             });
         });
 
         return services;
+    }
+
+    /// <summary>
+    /// Configures Agent365 export when the environment indicates it should be enabled.
+    /// Requires <see cref="FoundryEnvironment.IsAgent365TracingEnabled"/> to be true,
+    /// and <see cref="FoundryEnvironment.AgentInstanceClientId"/> to be set for token acquisition.
+    /// </summary>
+    private static void ConfigureAgent365Export(MicrosoftOpenTelemetryOptions options)
+    {
+        if (!FoundryEnvironment.IsAgent365TracingEnabled)
+        {
+            return;
+        }
+
+        var clientId = FoundryEnvironment.AgentInstanceClientId;
+        if (string.IsNullOrEmpty(clientId))
+        {
+            return;
+        }
+
+        options.Exporters |= ExportTarget.Agent365;
+        options.Agent365.Exporter.UseS2SEndpoint = true;
+        options.Agent365.Exporter.TokenResolver = CreateTokenResolver();
+    }
+
+    /// <summary>
+    /// Creates a token resolver delegate that acquires tokens using
+    /// <see cref="DefaultAzureCredential"/> for the A365 exporter scope.
+    /// The credential is configured with the agent instance's managed identity client ID
+    /// so that token acquisition uses the correct identity.
+    /// </summary>
+    private static AsyncAuthTokenResolver CreateTokenResolver()
+    {
+        var credentialOptions = new DefaultAzureCredentialOptions();
+        var clientId = FoundryEnvironment.AgentInstanceClientId;
+        if (!string.IsNullOrEmpty(clientId))
+        {
+            credentialOptions.ManagedIdentityClientId = clientId;
+        }
+
+        var credential = new DefaultAzureCredential(credentialOptions);
+
+        return async (agentId, tenantId) =>
+        {
+            var tenantForRequest = tenantId ?? FoundryEnvironment.AgentTenantId;
+            var context = new TokenRequestContext(
+                new[] { Agent365Scope },
+                tenantId: tenantForRequest);
+            var token = await credential.GetTokenAsync(context, CancellationToken.None);
+            return token.Token;
+        };
     }
 
     /// <summary>

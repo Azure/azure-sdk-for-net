@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.NetApp
 {
@@ -24,51 +25,49 @@ namespace Azure.ResourceManager.NetApp
     /// </summary>
     public partial class NetAppElasticBackupCollection : ArmCollection, IEnumerable<NetAppElasticBackupResource>, IAsyncEnumerable<NetAppElasticBackupResource>
     {
-        private readonly ClientDiagnostics _netAppElasticBackupElasticBackupsClientDiagnostics;
-        private readonly ElasticBackupsRestOperations _netAppElasticBackupElasticBackupsRestClient;
+        private readonly ClientDiagnostics _elasticBackupsClientDiagnostics;
+        private readonly ElasticBackups _elasticBackupsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="NetAppElasticBackupCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of NetAppElasticBackupCollection for mocking. </summary>
         protected NetAppElasticBackupCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="NetAppElasticBackupCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppElasticBackupCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NetAppElasticBackupCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _netAppElasticBackupElasticBackupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetApp", NetAppElasticBackupResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(NetAppElasticBackupResource.ResourceType, out string netAppElasticBackupElasticBackupsApiVersion);
-            _netAppElasticBackupElasticBackupsRestClient = new ElasticBackupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, netAppElasticBackupElasticBackupsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(NetAppElasticBackupResource.ResourceType, out string netAppElasticBackupApiVersion);
+            _elasticBackupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetApp", NetAppElasticBackupResource.ResourceType.Namespace, Diagnostics);
+            _elasticBackupsRestClient = new ElasticBackups(_elasticBackupsClientDiagnostics, Pipeline, Endpoint, netAppElasticBackupApiVersion ?? "2026-01-15-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != NetAppElasticBackupVaultResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, NetAppElasticBackupVaultResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, NetAppElasticBackupVaultResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Create an elastic backup under the elastic Backup Vault
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticBackupVaults/{backupVaultName}/elasticBackups/{backupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticBackupVaults/{backupVaultName}/elasticBackups/{backupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticBackups_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticBackups_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetAppElasticBackupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,21 +75,34 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="backupName"> The name of the ElasticBackup. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<NetAppElasticBackupResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string backupName, NetAppElasticBackupData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _netAppElasticBackupElasticBackupsClientDiagnostics.CreateScope("NetAppElasticBackupCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _elasticBackupsClientDiagnostics.CreateScope("NetAppElasticBackupCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _netAppElasticBackupElasticBackupsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, backupName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NetAppArmOperation<NetAppElasticBackupResource>(new NetAppElasticBackupOperationSource(Client), _netAppElasticBackupElasticBackupsClientDiagnostics, Pipeline, _netAppElasticBackupElasticBackupsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, backupName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _elasticBackupsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, backupName, NetAppElasticBackupData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                NetAppArmOperation<NetAppElasticBackupResource> operation = new NetAppArmOperation<NetAppElasticBackupResource>(
+                    new NetAppElasticBackupResourceOperationSource(Client),
+                    _elasticBackupsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -104,20 +116,16 @@ namespace Azure.ResourceManager.NetApp
         /// Create an elastic backup under the elastic Backup Vault
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticBackupVaults/{backupVaultName}/elasticBackups/{backupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticBackupVaults/{backupVaultName}/elasticBackups/{backupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticBackups_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticBackups_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetAppElasticBackupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,21 +133,34 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="backupName"> The name of the ElasticBackup. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<NetAppElasticBackupResource> CreateOrUpdate(WaitUntil waitUntil, string backupName, NetAppElasticBackupData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _netAppElasticBackupElasticBackupsClientDiagnostics.CreateScope("NetAppElasticBackupCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _elasticBackupsClientDiagnostics.CreateScope("NetAppElasticBackupCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _netAppElasticBackupElasticBackupsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, backupName, data, cancellationToken);
-                var operation = new NetAppArmOperation<NetAppElasticBackupResource>(new NetAppElasticBackupOperationSource(Client), _netAppElasticBackupElasticBackupsClientDiagnostics, Pipeline, _netAppElasticBackupElasticBackupsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, backupName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _elasticBackupsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, backupName, NetAppElasticBackupData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                NetAppArmOperation<NetAppElasticBackupResource> operation = new NetAppArmOperation<NetAppElasticBackupResource>(
+                    new NetAppElasticBackupResourceOperationSource(Client),
+                    _elasticBackupsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -153,38 +174,42 @@ namespace Azure.ResourceManager.NetApp
         /// Get the specified Elastic Backup under Elastic Backup Vault.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticBackupVaults/{backupVaultName}/elasticBackups/{backupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticBackupVaults/{backupVaultName}/elasticBackups/{backupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticBackups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticBackups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetAppElasticBackupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="backupName"> The name of the ElasticBackup. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<NetAppElasticBackupResource>> GetAsync(string backupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
 
-            using var scope = _netAppElasticBackupElasticBackupsClientDiagnostics.CreateScope("NetAppElasticBackupCollection.Get");
+            using DiagnosticScope scope = _elasticBackupsClientDiagnostics.CreateScope("NetAppElasticBackupCollection.Get");
             scope.Start();
             try
             {
-                var response = await _netAppElasticBackupElasticBackupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, backupName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _elasticBackupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, backupName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<NetAppElasticBackupData> response = Response.FromValue(NetAppElasticBackupData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetAppElasticBackupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -198,38 +223,42 @@ namespace Azure.ResourceManager.NetApp
         /// Get the specified Elastic Backup under Elastic Backup Vault.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticBackupVaults/{backupVaultName}/elasticBackups/{backupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticBackupVaults/{backupVaultName}/elasticBackups/{backupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticBackups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticBackups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetAppElasticBackupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="backupName"> The name of the ElasticBackup. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<NetAppElasticBackupResource> Get(string backupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
 
-            using var scope = _netAppElasticBackupElasticBackupsClientDiagnostics.CreateScope("NetAppElasticBackupCollection.Get");
+            using DiagnosticScope scope = _elasticBackupsClientDiagnostics.CreateScope("NetAppElasticBackupCollection.Get");
             scope.Start();
             try
             {
-                var response = _netAppElasticBackupElasticBackupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, backupName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _elasticBackupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, backupName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<NetAppElasticBackupData> response = Response.FromValue(NetAppElasticBackupData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetAppElasticBackupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -243,50 +272,51 @@ namespace Azure.ResourceManager.NetApp
         /// List all elastic backups Under an elastic Backup Vault
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticBackupVaults/{backupVaultName}/elasticBackups</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticBackupVaults/{backupVaultName}/elasticBackups. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticBackups_ListByVault</description>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticBackups_ListByVault. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetAppElasticBackupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetAppElasticBackupResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetAppElasticBackupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetAppElasticBackupResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _netAppElasticBackupElasticBackupsRestClient.CreateListByVaultRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _netAppElasticBackupElasticBackupsRestClient.CreateListByVaultNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetAppElasticBackupResource(Client, NetAppElasticBackupData.DeserializeNetAppElasticBackupData(e)), _netAppElasticBackupElasticBackupsClientDiagnostics, Pipeline, "NetAppElasticBackupCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<NetAppElasticBackupData, NetAppElasticBackupResource>(new ElasticBackupsGetByVaultAsyncCollectionResultOfT(
+                _elasticBackupsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "NetAppElasticBackupCollection.GetAll"), data => new NetAppElasticBackupResource(Client, data));
         }
 
         /// <summary>
         /// List all elastic backups Under an elastic Backup Vault
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticBackupVaults/{backupVaultName}/elasticBackups</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticBackupVaults/{backupVaultName}/elasticBackups. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticBackups_ListByVault</description>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticBackups_ListByVault. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetAppElasticBackupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,45 +324,68 @@ namespace Azure.ResourceManager.NetApp
         /// <returns> A collection of <see cref="NetAppElasticBackupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetAppElasticBackupResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _netAppElasticBackupElasticBackupsRestClient.CreateListByVaultRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _netAppElasticBackupElasticBackupsRestClient.CreateListByVaultNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetAppElasticBackupResource(Client, NetAppElasticBackupData.DeserializeNetAppElasticBackupData(e)), _netAppElasticBackupElasticBackupsClientDiagnostics, Pipeline, "NetAppElasticBackupCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<NetAppElasticBackupData, NetAppElasticBackupResource>(new ElasticBackupsGetByVaultCollectionResultOfT(
+                _elasticBackupsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "NetAppElasticBackupCollection.GetAll"), data => new NetAppElasticBackupResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticBackupVaults/{backupVaultName}/elasticBackups/{backupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticBackupVaults/{backupVaultName}/elasticBackups/{backupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticBackups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticBackups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetAppElasticBackupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="backupName"> The name of the ElasticBackup. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string backupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
 
-            using var scope = _netAppElasticBackupElasticBackupsClientDiagnostics.CreateScope("NetAppElasticBackupCollection.Exists");
+            using DiagnosticScope scope = _elasticBackupsClientDiagnostics.CreateScope("NetAppElasticBackupCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _netAppElasticBackupElasticBackupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, backupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _elasticBackupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, backupName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<NetAppElasticBackupData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NetAppElasticBackupData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NetAppElasticBackupData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -346,36 +399,50 @@ namespace Azure.ResourceManager.NetApp
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticBackupVaults/{backupVaultName}/elasticBackups/{backupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticBackupVaults/{backupVaultName}/elasticBackups/{backupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticBackups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticBackups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetAppElasticBackupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="backupName"> The name of the ElasticBackup. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string backupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
 
-            using var scope = _netAppElasticBackupElasticBackupsClientDiagnostics.CreateScope("NetAppElasticBackupCollection.Exists");
+            using DiagnosticScope scope = _elasticBackupsClientDiagnostics.CreateScope("NetAppElasticBackupCollection.Exists");
             scope.Start();
             try
             {
-                var response = _netAppElasticBackupElasticBackupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, backupName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _elasticBackupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, backupName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<NetAppElasticBackupData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NetAppElasticBackupData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NetAppElasticBackupData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -389,38 +456,54 @@ namespace Azure.ResourceManager.NetApp
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticBackupVaults/{backupVaultName}/elasticBackups/{backupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticBackupVaults/{backupVaultName}/elasticBackups/{backupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticBackups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticBackups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetAppElasticBackupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="backupName"> The name of the ElasticBackup. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<NetAppElasticBackupResource>> GetIfExistsAsync(string backupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
 
-            using var scope = _netAppElasticBackupElasticBackupsClientDiagnostics.CreateScope("NetAppElasticBackupCollection.GetIfExists");
+            using DiagnosticScope scope = _elasticBackupsClientDiagnostics.CreateScope("NetAppElasticBackupCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _netAppElasticBackupElasticBackupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, backupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _elasticBackupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, backupName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<NetAppElasticBackupData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NetAppElasticBackupData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NetAppElasticBackupData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<NetAppElasticBackupResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetAppElasticBackupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -434,38 +517,54 @@ namespace Azure.ResourceManager.NetApp
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticBackupVaults/{backupVaultName}/elasticBackups/{backupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/elasticAccounts/{accountName}/elasticBackupVaults/{backupVaultName}/elasticBackups/{backupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ElasticBackups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ElasticBackups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-12-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetAppElasticBackupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="backupName"> The name of the ElasticBackup. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<NetAppElasticBackupResource> GetIfExists(string backupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
 
-            using var scope = _netAppElasticBackupElasticBackupsClientDiagnostics.CreateScope("NetAppElasticBackupCollection.GetIfExists");
+            using DiagnosticScope scope = _elasticBackupsClientDiagnostics.CreateScope("NetAppElasticBackupCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _netAppElasticBackupElasticBackupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, backupName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _elasticBackupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, backupName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<NetAppElasticBackupData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NetAppElasticBackupData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NetAppElasticBackupData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<NetAppElasticBackupResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetAppElasticBackupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -485,6 +584,7 @@ namespace Azure.ResourceManager.NetApp
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<NetAppElasticBackupResource> IAsyncEnumerable<NetAppElasticBackupResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

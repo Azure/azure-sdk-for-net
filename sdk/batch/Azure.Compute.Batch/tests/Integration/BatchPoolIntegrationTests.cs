@@ -222,7 +222,7 @@ namespace Azure.Compute.Batch.Tests.Integration
                         {
                             Imds = new HostEndpointSettings
                             {
-                                Mode = HostEndpointSettingsModeTypes.Audit,
+                                Mode = HostEndpointSettingsModeType.Audit,
                             },
                             Enabled = false,
                             //WireServer = new HostEndpointSettings
@@ -259,7 +259,7 @@ namespace Azure.Compute.Batch.Tests.Integration
                 Assert.AreEqual(pool.VirtualMachineConfiguration.SecurityProfile.UefiSettings.SecureBootEnabled, true);
                 Assert.AreEqual(pool.VirtualMachineConfiguration.SecurityProfile.UefiSettings.VTpmEnabled, true);
                 Assert.AreEqual(pool.VirtualMachineConfiguration.SecurityProfile.ProxyAgentSettings.Enabled, false);
-                Assert.AreEqual(pool.VirtualMachineConfiguration.SecurityProfile.ProxyAgentSettings.Imds.Mode, HostEndpointSettingsModeTypes.Audit);
+                Assert.AreEqual(pool.VirtualMachineConfiguration.SecurityProfile.ProxyAgentSettings.Imds.Mode, HostEndpointSettingsModeType.Audit);
                 Assert.AreEqual(pool.VirtualMachineConfiguration.OsDisk.Caching, CachingType.ReadWrite);
                 Assert.AreEqual(pool.VirtualMachineConfiguration.OsDisk.ManagedDisk.SecurityProfile.SecurityEncryptionType, SecurityEncryptionTypes.VMGuestStateOnly);
             }
@@ -310,7 +310,7 @@ namespace Azure.Compute.Batch.Tests.Integration
                         {
                             Imds = new HostEndpointSettings
                             {
-                                Mode = HostEndpointSettingsModeTypes.Audit,
+                                Mode = HostEndpointSettingsModeType.Audit,
                             },
                             Enabled = false,
                             //WireServer = new HostEndpointSettings
@@ -362,7 +362,7 @@ namespace Azure.Compute.Batch.Tests.Integration
                 Assert.AreEqual(pool.VirtualMachineConfiguration.SecurityProfile.UefiSettings.SecureBootEnabled, true);
                 Assert.AreEqual(pool.VirtualMachineConfiguration.SecurityProfile.UefiSettings.VTpmEnabled, true);
                 Assert.AreEqual(pool.VirtualMachineConfiguration.SecurityProfile.ProxyAgentSettings.Enabled, false);
-                Assert.AreEqual(pool.VirtualMachineConfiguration.SecurityProfile.ProxyAgentSettings.Imds.Mode, HostEndpointSettingsModeTypes.Audit);
+                Assert.AreEqual(pool.VirtualMachineConfiguration.SecurityProfile.ProxyAgentSettings.Imds.Mode, HostEndpointSettingsModeType.Audit);
                 Assert.AreEqual(pool.VirtualMachineConfiguration.OsDisk.Caching, CachingType.ReadWrite);
                 Assert.AreEqual(pool.VirtualMachineConfiguration.OsDisk.ManagedDisk.SecurityProfile.SecurityEncryptionType, SecurityEncryptionTypes.VMGuestStateOnly);
                 Assert.AreEqual(pool.VirtualMachineConfiguration.OsDisk.ManagedDisk.DiskEncryptionSet.Id, DiskEncryptionSetId);

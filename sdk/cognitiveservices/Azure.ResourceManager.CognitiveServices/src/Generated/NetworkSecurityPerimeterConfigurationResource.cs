@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             TryGetApiVersion(ResourceType, out string networkSecurityPerimeterConfigurationApiVersion);
             _networkSecurityPerimeterConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", ResourceType.Namespace, Diagnostics);
-            _networkSecurityPerimeterConfigurationsRestClient = new NetworkSecurityPerimeterConfigurations(_networkSecurityPerimeterConfigurationsClientDiagnostics, Pipeline, Endpoint, networkSecurityPerimeterConfigurationApiVersion ?? "2026-01-15-preview");
+            _networkSecurityPerimeterConfigurationsRestClient = new NetworkSecurityPerimeterConfigurations(_networkSecurityPerimeterConfigurationsClientDiagnostics, Pipeline, Endpoint, networkSecurityPerimeterConfigurationApiVersion ?? "2026-03-15-preview");
             ValidateResourceId(id);
         }
 
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateReconcileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CognitiveServicesArmOperation<NetworkSecurityPerimeterConfigurationResource> operation = new CognitiveServicesArmOperation<NetworkSecurityPerimeterConfigurationResource>(
-                    new NetworkSecurityPerimeterConfigurationOperationSource(Client),
+                    new NetworkSecurityPerimeterConfigurationResourceOperationSource(Client),
                     _networkSecurityPerimeterConfigurationsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-15-preview. </description>
+        /// <description> 2026-03-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateReconcileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CognitiveServicesArmOperation<NetworkSecurityPerimeterConfigurationResource> operation = new CognitiveServicesArmOperation<NetworkSecurityPerimeterConfigurationResource>(
-                    new NetworkSecurityPerimeterConfigurationOperationSource(Client),
+                    new NetworkSecurityPerimeterConfigurationResourceOperationSource(Client),
                     _networkSecurityPerimeterConfigurationsClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -15,25 +16,18 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         /// <summary> Initializes a new instance of <see cref="CdnCertificateSource"/>. </summary>
         /// <param name="certificateType"> Type of certificate used. </param>
-        public CdnCertificateSource(CdnManagedCertificateType certificateType)
+        public CdnCertificateSource(CdnManagedCertificateType certificateType) : base(CertificateSourceParametersType.CdnCertificateSourceParameters)
         {
             CertificateType = certificateType;
-            TypeName = CertificateSourceParametersType.CdnCertificateSourceParameters;
         }
 
         /// <summary> Initializes a new instance of <see cref="CdnCertificateSource"/>. </summary>
         /// <param name="typeName"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="certificateType"> Type of certificate used. </param>
-        internal CdnCertificateSource(CertificateSourceParametersType typeName, IDictionary<string, BinaryData> serializedAdditionalRawData, CdnManagedCertificateType certificateType) : base(typeName, serializedAdditionalRawData)
+        internal CdnCertificateSource(CertificateSourceParametersType typeName, IDictionary<string, BinaryData> additionalBinaryDataProperties, CdnManagedCertificateType certificateType) : base(typeName, additionalBinaryDataProperties)
         {
             CertificateType = certificateType;
-            TypeName = typeName;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="CdnCertificateSource"/> for deserialization. </summary>
-        internal CdnCertificateSource()
-        {
         }
 
         /// <summary> Type of certificate used. </summary>

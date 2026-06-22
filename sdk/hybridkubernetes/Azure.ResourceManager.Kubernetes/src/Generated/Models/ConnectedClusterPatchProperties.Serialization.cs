@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
             }
             string distribution = default;
             string distributionVersion = default;
-            AzureHybridBenefit? azureHybridBenefit = default;
+            ConnectedClusterAzureHybridBenefit? azureHybridBenefit = default;
             Gateway gateway = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
                     {
                         continue;
                     }
-                    azureHybridBenefit = new AzureHybridBenefit(prop.Value.GetString());
+                    azureHybridBenefit = new ConnectedClusterAzureHybridBenefit(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("gateway"u8))

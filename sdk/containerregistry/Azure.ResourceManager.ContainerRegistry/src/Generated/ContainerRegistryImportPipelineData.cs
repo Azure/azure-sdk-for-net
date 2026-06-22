@@ -29,16 +29,16 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="name"> The name of the private link resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The properties of the import pipeline. </param>
         /// <param name="location"> The location of the import pipeline. </param>
         /// <param name="identity"> The identity of the import pipeline. </param>
-        internal ContainerRegistryImportPipelineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ImportPipelineProperties properties, AzureLocation? location, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerRegistryImportPipelineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ImportPipelineProperties properties, AzureLocation? location, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             Location = location;
             Identity = identity;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The properties of the import pipeline. </summary>
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 {
                     Properties = new ImportPipelineProperties();
                 }
-                Properties.SourceTriggerStatus = value.Value;
+                Properties.SourceTriggerStatus = value;
             }
         }
     }

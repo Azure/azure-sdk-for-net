@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 HttpMessage message = _logicalNetworksRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, logicalNetworkName, HciVmLogicalNetworkData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 VmArmOperation<HciVmLogicalNetworkResource> operation = new VmArmOperation<HciVmLogicalNetworkResource>(
-                    new HciVmLogicalNetworkOperationSource(Client),
+                    new HciVmLogicalNetworkResourceOperationSource(Client),
                     _logicalNetworksClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 HttpMessage message = _logicalNetworksRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, logicalNetworkName, HciVmLogicalNetworkData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 VmArmOperation<HciVmLogicalNetworkResource> operation = new VmArmOperation<HciVmLogicalNetworkResource>(
-                    new HciVmLogicalNetworkOperationSource(Client),
+                    new HciVmLogicalNetworkResourceOperationSource(Client),
                     _logicalNetworksClientDiagnostics,
                     Pipeline,
                     message.Request,

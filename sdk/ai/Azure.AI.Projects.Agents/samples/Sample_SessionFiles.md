@@ -6,44 +6,13 @@ This sample require the deployedf Hosted agent. Please follow the [instructions]
 
 ## Sample
 
-In this example we will create the session for an Agent and will demonstrate how to manage files in session sandbox.
-To use sessions, we need to provide the `Foundry-Features` header in our REST requests. It can be done using `PipelinePolicy`.
-
-```C# Snippet:Sample_Agents_ExperimentalHeader
-internal class FeaturePolicy(string feature) : PipelinePolicy
-{
-    private const string _FEATURE_HEADER = "Foundry-Features";
-
-    public override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
-    {
-        message.Request.Headers.Add(_FEATURE_HEADER, feature);
-        ProcessNext(message, pipeline, currentIndex);
-    }
-
-    public override async ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
-    {
-        message.Request.Headers.Add(_FEATURE_HEADER, feature);
-        await ProcessNextAsync(message, pipeline, currentIndex);
-    }
-}
-```
-
-We also need to ignore the `AAIP001` warning.
-
-```C#
-#pragma warning disable AAIP001
-```
-
-1. First, we need to create clients to operate sessions, files and Agents and read the environment variables, which will be used in the next steps. We also will add the experimental `Foundry-Features: HostedAgents=V1Preview` header policy to the client.
-**Note:** If the `AgentAdministrationClient` client was created using `AgentAdministrationClient` property of `AIProjectClient`, the `Foundry-Features` will already contain all the experimental features and no additional actions will be needed.
+1. First, we need to create clients to operate sessions, files and Agents and read the environment variables, which will be used in the next steps.
 
 ```C# Snippet:Sample_CreateClient_SessionFiles
 var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
 var hostedAgentName = System.Environment.GetEnvironmentVariable("HOSTED_AGENT_NAME");
 var hostedAgentVersion = System.Environment.GetEnvironmentVariable("HOSTED_AGENT_VERSION");
-AgentAdministrationClientOptions options = new();
-options.AddPolicy(new FeaturePolicy("HostedAgents=V1Preview,AgentEndpoints=V1Preview"), PipelinePosition.PerCall);
-AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
+AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 AgentSessionFiles sessionClient = agentsClient.GetAgentSessionFiles();
 ```
 
@@ -54,12 +23,10 @@ Synchronous sample:
 ProjectsAgentVersion agentVersion = agentsClient.GetAgentVersion(
     agentName: hostedAgentName,
     agentVersion: hostedAgentVersion);
-string sessionKey = Guid.NewGuid().ToString();
 string sessionId = Guid.NewGuid().ToString();
 ProjectAgentSession session = agentsClient.CreateSession(
     agentName: agentVersion.Name,
     agentSessionId: sessionId,
-    isolationKey: sessionKey,
     versionIndicator: new VersionRefIndicator(agentVersion.Version)
 );
 while (session.Status != AgentSessionStatus.Failed && session.Status != AgentSessionStatus.Active)
@@ -74,12 +41,10 @@ Asynchronous sample:
 ProjectsAgentVersion agentVersion = await agentsClient.GetAgentVersionAsync(
     agentName: hostedAgentName,
     agentVersion: hostedAgentVersion);
-string sessionKey = Guid.NewGuid().ToString("N");
 string sessionId = Guid.NewGuid().ToString("N");
 ProjectAgentSession session = await agentsClient.CreateSessionAsync(
     agentName: agentVersion.Name,
     agentSessionId: sessionId,
-    isolationKey: sessionKey,
     versionIndicator: new VersionRefIndicator(agentVersion.Version)
 );
 while (session.Status != AgentSessionStatus.Failed && session.Status != AgentSessionStatus.Active)
@@ -152,9 +117,9 @@ File.Delete(filePath);
 
 Synchronous sample:
 ```C# Snippet:Sample_List_SessionFiles_Sync
-SessionDirectoryListResponse response = sessionClient.GetSessionFiles(agentName: agentVersion.Name, sessionId: session.AgentSessionId, sessionStoragePath: ".");
-Console.WriteLine($"The path {response.Path} contains the next files:");
-foreach (SessionDirectoryEntry entry in response.Entries)
+CollectionResult<SessionDirectoryEntry> response = sessionClient.GetSessionFiles(agentName: agentVersion.Name, agentSessionId: session.AgentSessionId, sessionStoragePath: ".");
+Console.WriteLine($"The path contains the next files:");
+foreach (SessionDirectoryEntry entry in response)
 {
     Console.WriteLine($"    - {entry.Name}, size {entry.Size}");
 }
@@ -162,9 +127,9 @@ foreach (SessionDirectoryEntry entry in response.Entries)
 
 Asynchronous sample:
 ```C# Snippet:Sample_List_SessionFiles_Async
-SessionDirectoryListResponse response = await sessionClient.GetSessionFilesAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId, sessionStoragePath: ".");
-Console.WriteLine($"The path {response.Path} contains the next files:");
-foreach (SessionDirectoryEntry entry in response.Entries)
+AsyncCollectionResult<SessionDirectoryEntry> response = sessionClient.GetSessionFilesAsync(agentName: agentVersion.Name, agentSessionId: session.AgentSessionId, sessionStoragePath: ".");
+Console.WriteLine($"The path contains the next files:");
+await foreach (SessionDirectoryEntry entry in response)
 {
     Console.WriteLine($"    - {entry.Name}, size {entry.Size}");
 }
@@ -204,12 +169,12 @@ Synchronous sample:
 ```C# Snippet:Sample_DeleteFiles_SessionFiles_Sync
 sessionClient.DeleteSessionFile(agentName: agentVersion.Name, sessionId: session.AgentSessionId, path: "sample_file_for_upload1.txt");
 sessionClient.DeleteSessionFile(agentName: agentVersion.Name, sessionId: session.AgentSessionId, path: "sample_file_for_upload2.txt");
-agentsClient.DeleteSession(agentName: agentVersion.Name, sessionId: session.AgentSessionId, isolationKey: sessionKey);
+agentsClient.DeleteSession(agentName: agentVersion.Name, sessionId: session.AgentSessionId);
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_DeleteFiles_SessionFiles_Async
 await sessionClient.DeleteSessionFileAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId, path: "sample_file_for_upload1.txt");
 await sessionClient.DeleteSessionFileAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId, path: "sample_file_for_upload2.txt");
-await agentsClient.DeleteSessionAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId, isolationKey: sessionKey);
+await agentsClient.DeleteSessionAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId);
 ```

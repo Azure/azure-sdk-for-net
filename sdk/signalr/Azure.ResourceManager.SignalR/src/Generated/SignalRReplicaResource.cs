@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.SignalR
                 HttpMessage message = _replicasRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SignalRReplicaData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SignalRArmOperation<SignalRReplicaResource> operation = new SignalRArmOperation<SignalRReplicaResource>(
-                    new SignalRReplicaOperationSource(Client),
+                    new SignalRReplicaResourceOperationSource(Client),
                     _replicasClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.SignalR
                 HttpMessage message = _replicasRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SignalRReplicaData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SignalRArmOperation<SignalRReplicaResource> operation = new SignalRArmOperation<SignalRReplicaResource>(
-                    new SignalRReplicaOperationSource(Client),
+                    new SignalRReplicaResourceOperationSource(Client),
                     _replicasClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -617,7 +617,7 @@ namespace Azure.ResourceManager.SignalR
                 else
                 {
                     SignalRReplicaData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    SignalRReplicaData patch = new SignalRReplicaData();
+                    SignalRReplicaData patch = new SignalRReplicaData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -665,7 +665,7 @@ namespace Azure.ResourceManager.SignalR
                 else
                 {
                     SignalRReplicaData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    SignalRReplicaData patch = new SignalRReplicaData();
+                    SignalRReplicaData patch = new SignalRReplicaData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -712,7 +712,7 @@ namespace Azure.ResourceManager.SignalR
                 else
                 {
                     SignalRReplicaData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    SignalRReplicaData patch = new SignalRReplicaData();
+                    SignalRReplicaData patch = new SignalRReplicaData(current.Location);
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<SignalRReplicaResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -755,7 +755,7 @@ namespace Azure.ResourceManager.SignalR
                 else
                 {
                     SignalRReplicaData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    SignalRReplicaData patch = new SignalRReplicaData();
+                    SignalRReplicaData patch = new SignalRReplicaData(current.Location);
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<SignalRReplicaResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -797,7 +797,7 @@ namespace Azure.ResourceManager.SignalR
                 else
                 {
                     SignalRReplicaData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    SignalRReplicaData patch = new SignalRReplicaData();
+                    SignalRReplicaData patch = new SignalRReplicaData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -843,7 +843,7 @@ namespace Azure.ResourceManager.SignalR
                 else
                 {
                     SignalRReplicaData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    SignalRReplicaData patch = new SignalRReplicaData();
+                    SignalRReplicaData patch = new SignalRReplicaData(current.Location);
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

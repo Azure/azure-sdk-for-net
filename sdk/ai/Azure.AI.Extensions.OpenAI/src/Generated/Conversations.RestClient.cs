@@ -13,13 +13,17 @@ namespace Azure.AI.Extensions.OpenAI
 
         private static PipelineMessageClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 ??= PipelineMessageClassifier.Create(stackalloc ushort[] { 200 });
 
-        internal PipelineMessage CreateCreateConversationRequest(BinaryContent content, RequestOptions options)
+        internal PipelineMessage CreateCreateConversationRequest(BinaryContent content, string userIsolationKey, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/openai/v1/conversations", false);
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "POST", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
+            if (userIsolationKey != null)
+            {
+                request.Headers.Set("x-ms-user-isolation-key", userIsolationKey);
+            }
             request.Headers.Set("Content-Type", "application/json");
             request.Headers.Set("Accept", "application/json");
             request.Content = content;
@@ -27,7 +31,7 @@ namespace Azure.AI.Extensions.OpenAI
             return message;
         }
 
-        internal PipelineMessage CreateUpdateConversationRequest(string conversationId, BinaryContent content, RequestOptions options)
+        internal PipelineMessage CreateUpdateConversationRequest(string conversationId, BinaryContent content, string userIsolationKey, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -35,6 +39,10 @@ namespace Azure.AI.Extensions.OpenAI
             uri.AppendPath(conversationId, true);
             PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "POST", PipelineMessageClassifier200);
             PipelineRequest request = message.Request;
+            if (userIsolationKey != null)
+            {
+                request.Headers.Set("x-ms-user-isolation-key", userIsolationKey);
+            }
             request.Headers.Set("Content-Type", "application/json");
             request.Headers.Set("Accept", "application/json");
             request.Content = content;

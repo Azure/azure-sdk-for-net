@@ -1,0 +1,6 @@
+# WithAzureCredential extensions on Azure.Identity.ConfigurationExtensions were removed
+# in 1.57.0-beta.1. They were [Experimental("SCME0002")] and have been replaced by
+# AddAzureCredentialResolver (DI) and GetAzureClientSettings/GetAzureCredentialSettings
+# (standalone), all of which were added in the 1.57.0-beta.1 Azure.Core release.
+MembersMustExist : Member 'public System.ClientModel.Primitives.IClientBuilder Azure.Identity.ConfigurationExtensions.WithAzureCredential(System.ClientModel.Primitives.IClientBuilder)' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'public T Azure.Identity.ConfigurationExtensions.WithAzureCredential<T>(T)' does not exist in the implementation but it does exist in the contract.

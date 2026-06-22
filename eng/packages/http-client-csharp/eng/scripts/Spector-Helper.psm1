@@ -9,6 +9,7 @@ $failingSpecs = @(
     Join-Path 'http' 'azure' 'client-generator-core' 'alternate-type'
     Join-Path 'http' 'azure' 'client-generator-core' 'deserialize-empty-string-as-null' # long path issue and also not needed for Azure emitter
     Join-Path 'http' 'azure' 'client-generator-core' 'flatten-property' # flatten property not supported
+    Join-Path 'http' 'azure' 'special-headers' 'conditional-request' # https://github.com/microsoft/typespec/issues/10585 - Azure.Core.eTag generates invalid .Value on string
     Join-Path 'http' 'authentication' 'noauth' 'union' # NoAuth not supported
     Join-Path 'http' 'type' 'union' 'discriminated' # discriminated unions not supported
 # These scenarios will be covered in Azure.Generator.Management
@@ -21,6 +22,7 @@ $failingSpecs = @(
     Join-Path 'http' 'azure' 'resource-manager' 'multi-service'
     Join-Path 'http' 'azure' 'resource-manager' 'multi-service-shared-models'
     Join-Path 'http' 'azure' 'resource-manager' 'multi-service-older-versions'
+    Join-Path 'http' 'azure' 'resource-manager' 'management-group'
 )
 
 function Capitalize-FirstLetter {

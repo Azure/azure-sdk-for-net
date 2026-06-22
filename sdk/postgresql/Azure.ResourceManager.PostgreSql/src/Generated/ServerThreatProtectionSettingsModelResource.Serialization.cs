@@ -8,22 +8,33 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure.ResourceManager.PostgreSql;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
+    /// <summary></summary>
     public partial class ServerThreatProtectionSettingsModelResource : IJsonModel<ServerThreatProtectionSettingsModelData>
     {
-        private static ServerThreatProtectionSettingsModelData s_dataDeserializationInstance;
-        private static ServerThreatProtectionSettingsModelData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ServerThreatProtectionSettingsModelData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ServerThreatProtectionSettingsModelData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ServerThreatProtectionSettingsModelData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ServerThreatProtectionSettingsModelData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ServerThreatProtectionSettingsModelData>)Data).Write(writer, options);
 
-        ServerThreatProtectionSettingsModelData IJsonModel<ServerThreatProtectionSettingsModelData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ServerThreatProtectionSettingsModelData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ServerThreatProtectionSettingsModelData IJsonModel<ServerThreatProtectionSettingsModelData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ServerThreatProtectionSettingsModelData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ServerThreatProtectionSettingsModelData>(Data, options, AzureResourceManagerPostgreSqlContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ServerThreatProtectionSettingsModelData IPersistableModel<ServerThreatProtectionSettingsModelData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ServerThreatProtectionSettingsModelData>(data, options, AzureResourceManagerPostgreSqlContext.Default);
 
-        string IPersistableModel<ServerThreatProtectionSettingsModelData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ServerThreatProtectionSettingsModelData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ServerThreatProtectionSettingsModelData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }
