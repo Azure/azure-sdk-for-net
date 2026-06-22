@@ -109,6 +109,8 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
         {
             #region Snippet:Invocations_ReadMe_MultiUser_Startup
 
+            builder.Services.AddAgentServerCore();
+
             // Any HttpClient with FoundryCallIdHandler echoes the CURRENT request's
             // x-agent-foundry-call-id — never bake one call's ID into static headers.
             builder.Services.AddHttpClient("foundry", c => c.BaseAddress = new Uri(projectEndpoint))

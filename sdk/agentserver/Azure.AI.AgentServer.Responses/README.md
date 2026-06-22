@@ -244,6 +244,8 @@ On container protocol `2.0.0` a single agent session can serve **multiple users*
 Register `FoundryCallIdHandler` on the Foundry `HttpClient` so the current request's call ID is echoed on every outbound call:
 
 ```C# Snippet:Responses_ReadMe_MultiUser_Startup
+builder.Services.AddAgentServerCore();
+
 // Any HttpClient with FoundryCallIdHandler echoes the CURRENT request's
 // x-agent-foundry-call-id — never bake one call's ID into static headers.
 builder.Services.AddHttpClient("foundry", c => c.BaseAddress = new Uri(projectEndpoint))
