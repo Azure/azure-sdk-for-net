@@ -1246,9 +1246,6 @@
 /.github/copilot-instructions.md                                   @jsquire @m-redding @praveenkuttappan @maririos
 /.github/skills/                                                   @azure/azsdk-cli @m-nash @jsquire
 
-# PRLabel: %EngSys
-/sdk/template/                                                     @hallipr @benbp @jsquire
-
 ###########################
 # Repository configuration
 ###########################
