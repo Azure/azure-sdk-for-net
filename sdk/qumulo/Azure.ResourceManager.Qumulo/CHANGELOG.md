@@ -5,6 +5,7 @@
 ### Features Added
 
 - Upgrade to API version 2026-04-16.
+- Added `PerformanceTier` property to `QumuloFileSystemResourceData` and `FileSystemResourceUpdateProperties`.
 
 ## 1.2.0 (2025-10-22)
 
