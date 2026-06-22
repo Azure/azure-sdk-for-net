@@ -6,7 +6,7 @@ description: "Headless, bounded repair of custom-code build failures in an alrea
 
 Purpose-built, **headless** skill that repairs an **already-generated Azure SDK pull request** whose build fails because of **custom (non-generated) code** that has drifted from the regenerated surface.
 
-This is NOT a migration. The SDK PR already exists, the TypeSpec source is already pinned via `tsp-location.yaml`, and most of the diff is generated code. Your only job is to drive the shared **`azure-sdk-mcp:azsdk_customized_code_update`** engine — in **custom-code-only** scope (`editScope: CustomCode`) — re-invoking it up to **`maxIterations`** times until the package builds, then stop. **Do not hand-edit code and do not use any other fix engine** (e.g. the per-language generator-agent); the cross-language design centralizes the fix logic in this one shared tool.
+This is NOT a migration. The SDK PR already exists, the TypeSpec source is already pinned via `tsp-location.yaml`, and most of the diff is generated code. Your only job is to drive the shared **`azure-sdk-mcp:azsdk_customized_code_update`** engine — in **custom-code-only** scope (`editScope: CustomCode`) — re-invoking it up to **`maxIterations` = 3** times (a cap this skill defines; see [Bounds](#bounds)) until the package builds, then stop. **Do not hand-edit code and do not use any other fix engine** (e.g. the per-language generator-agent); the cross-language design centralizes the fix logic in this one shared tool.
 
 ## When Invoked
 
@@ -56,10 +56,10 @@ Pass the **build error output** as `customizationRequest`. Pass `packagePath` fo
 
 ## Bounds
 
-Each call performs **one repair attempt**; the skill owns the iterate-until-green loop and caps it with **`maxIterations`** (default **3** if not configured):
+Each call performs **one repair attempt**; the skill owns the iterate-until-green loop and caps it at **`maxIterations` = 3** attempts (this skill defines the value — it is not a tool parameter or external input):
 
-- Re-invoke the tool at most `maxIterations` times (it is idempotent on an already-partially-repaired branch); do not loop it unbounded. Re-invoke only while the build error set is still shrinking — stop early if an attempt makes no progress.
-- If `maxIterations` is reached without a green build, **commit progress made so far and report** — do not switch to manual fixing.
+- Re-invoke the tool at most 3 times (it is idempotent on an already-partially-repaired branch); do not loop it unbounded. Re-invoke only while the build error set is still shrinking — stop early if an attempt makes no progress.
+- If 3 attempts are reached without a green build, **commit progress made so far and report** — do not switch to manual fixing.
 - Do not expand scope to other packages — `packagePath` already targets the single failing package.
 
 ## Workflow
