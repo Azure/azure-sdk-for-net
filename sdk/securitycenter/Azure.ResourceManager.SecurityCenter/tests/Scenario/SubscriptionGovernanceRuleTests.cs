@@ -2,12 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.SecurityCenter.Models;
 using NUnit.Framework;
 
@@ -15,8 +13,8 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
 {
     internal class SubscriptionGovernanceRuleTests : SecurityCenterManagementTestBase
     {
-#pragma warning disable 0618
-        private SubscriptionGovernanceRuleCollection _subscriptionGovernanceRuleCollection => DefaultSubscription.GetSubscriptionGovernanceRules();
+        private GovernanceRuleCollection _governanceRuleCollection => Client.GetGovernanceRules(DefaultSubscription.Id);
+
         public SubscriptionGovernanceRuleTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {
         }
@@ -43,17 +41,15 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
                     new BinaryData("{\"conditions\":[{\"property\":\"$.AssessmentKey\",\"value\":\"[\\\""+AssessmentKey+"\\\", \\\""+AssessmentValue+"\\\"]\",\"operator\":\"In\"}]}"),
                 }
             };
-            var list = await _subscriptionGovernanceRuleCollection.CreateOrUpdateAsync(WaitUntil.Completed, ruleId, data);
+            var list = await _governanceRuleCollection.CreateOrUpdateAsync(WaitUntil.Completed, ruleId, data);
             Assert.IsNotNull(list);
         }
 
         [RecordedTest]
-        [Category("Manually")]
         public async Task GetAll()
         {
-            var list = await _subscriptionGovernanceRuleCollection.GetAllAsync().ToEnumerableAsync();
+            var list = await _governanceRuleCollection.GetAllAsync().ToEnumerableAsync();
             Assert.IsEmpty(list);
         }
-#pragma warning disable 0618
     }
 }
