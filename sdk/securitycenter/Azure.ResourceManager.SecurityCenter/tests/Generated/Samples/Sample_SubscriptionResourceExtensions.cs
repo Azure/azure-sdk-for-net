@@ -5,6 +5,8 @@
 
 #nullable disable
 
+#pragma warning disable CS0618 // Generated samples validate compilation of legacy compatibility shims.
+
 using System;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -542,33 +544,6 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetAllSecuritySolutionsReferenceInfo_GetSecuritySolutions()
-        {
-            // Generated from example definition: specification/security/resource-manager/Microsoft.Security/stable/2020-01-01/examples/SecuritySolutionsReferenceInfo/GetSecuritySolutionsReferenceDataSubscription_example.json
-            // this example is just showing the usage of "securitySolutionsReferenceData_List" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (SecuritySolutionsReferenceInfo item in subscriptionResource.GetAllSecuritySolutionsReferenceInfoAsync())
-            {
-                Console.WriteLine($"Succeeded: {item}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task GetTopologies_GetTopologyOnASubscription()
         {
             // Generated from example definition: specification/security/resource-manager/Microsoft.Security/stable/2020-01-01/examples/Topology/GetTopologySubscription_example.json
@@ -622,35 +597,5 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             Console.WriteLine("Succeeded");
         }
 
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetSecurityCenterApiCollections_GetsAListOfAPICollectionsWithinASubscriptionThatHaveBeenOnboardedToMicrosoftDefenderForAPIs()
-        {
-            // Generated from example definition: specification/security/resource-manager/Microsoft.Security/stable/2023-11-15/examples/ApiCollections/APICollections_ListBySubscription_example.json
-            // this example is just showing the usage of "APICollections_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "3fa85f64-5717-4562-b3fc-2c963f66afa6";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (SecurityCenterApiCollectionResource item in subscriptionResource.GetSecurityCenterApiCollectionsAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                SecurityCenterApiCollectionData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
     }
 }
