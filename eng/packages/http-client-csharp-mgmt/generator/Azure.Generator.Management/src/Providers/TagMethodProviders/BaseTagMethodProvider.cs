@@ -247,6 +247,11 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
                     patchCtorCall,
                     out var patchVar));
 
+                if (_resource.TagPatchHookMethodName is not null)
+                {
+                    statements.Add(This.Invoke(_resource.TagPatchHookMethodName, [patchVar, resourceDataVar]).Terminate());
+                }
+
                 if (copyExistingTags)
                 {
                     // Generate foreach loop: foreach (var tag in current.Tags) { patch.Tags.Add(tag); }

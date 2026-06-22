@@ -145,6 +145,39 @@ namespace Azure.Generator.Management.Tests.Providers
         }
 
         [TestCase]
+        public void Verify_SetTagsInvokesTagPatchHook()
+        {
+            var setTagsMethod = GetTagMethodByName("SetTags", false, customizationSources:
+            [
+                """
+                namespace Microsoft.TypeSpec.Generator.Customizations
+                {
+                    internal class CodeGenTagPatchHookAttribute : System.Attribute
+                    {
+                        public CodeGenTagPatchHookAttribute(string methodName) { }
+                    }
+                }
+
+                namespace Samples
+                {
+                    using Microsoft.TypeSpec.Generator.Customizations;
+
+                    [CodeGenTagPatchHook(nameof(PrepareTagPatch))]
+                    public partial class ResponseTypeResource
+                    {
+                        private void PrepareTagPatch(ResponseTypeData patch, ResponseTypeData current) { }
+                    }
+                }
+                """
+            ]);
+
+            var bodyStatements = setTagsMethod.BodyStatements?.ToDisplayString();
+            Assert.That(bodyStatements, Is.Not.Null);
+            Assert.That(bodyStatements, Does.Contain("this.PrepareTagPatch(patch, current);"));
+            Assert.That(bodyStatements!.IndexOf("this.PrepareTagPatch(patch, current);"), Is.LessThan(bodyStatements.IndexOf("patch.Tags.ReplaceWith(tags);")));
+        }
+
+        [TestCase]
         public void Verify_NoTagMethods_WhenPatchHasNoBody()
         {
             var (client, models) = InputResourceData.ClientWithResourceBodylessPatch();
@@ -251,9 +284,9 @@ namespace Azure.Generator.Management.Tests.Providers
             }
         }
 
-        private static MethodProvider GetTagMethodByName(string methodName, bool isAsync)
+        private static MethodProvider GetTagMethodByName(string methodName, bool isAsync, string[]? customizationSources = null)
         {
-            var (resource, restClient) = GetResourceClientProvider();
+            var (resource, restClient) = GetResourceClientProvider(customizationSources);
             var mockUpdateMethodProvider = CreateMockUpdateMethodProvider(resource);
 
             // validate the tag related methods are generated in the resource
@@ -284,10 +317,10 @@ namespace Azure.Generator.Management.Tests.Providers
             return new MethodProvider(updateSignature, mockBody, resourceClientProvider);
         }
 
-        private static (ResourceClientProvider Resource, ClientProvider RestClientProvider) GetResourceClientProvider()
+        private static (ResourceClientProvider Resource, ClientProvider RestClientProvider) GetResourceClientProvider(string[]? customizationSources = null)
         {
             var (client, models) = InputResourceData.ClientWithResource();
-            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client], customizationSources: customizationSources);
             var resourceClientProvider = ManagementClientGenerator.Instance.OutputLibrary.TypeProviders.OfType<ResourceClientProvider>().First();
             Assert.That(resourceClientProvider, Is.Not.Null);
             var clientProvider = ManagementClientGenerator.Instance.TypeFactory.CreateClient(client);
