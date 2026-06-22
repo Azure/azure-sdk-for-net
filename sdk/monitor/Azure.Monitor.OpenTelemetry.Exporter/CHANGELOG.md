@@ -4,11 +4,15 @@
 
 ### Features Added
 
+- Added support for the Microsoft OpenTelemetry distro's SDK statistics: a new internal meter subscription and an AppContext switch (`Azure.Monitor.OpenTelemetry.Exporter.RouteSdkStatsToDistroEndpoint`) that lets the distro redirect SDK statistics to its own ingestion path.
+
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+- Updated customer SDK stats dimension key names to use camelCase (`computeType`, `telemetryType`, `dropCode`, `dropReason`, `retryCode`, `retryReason`).
 
 ## 1.8.1 (2026-05-20)
 

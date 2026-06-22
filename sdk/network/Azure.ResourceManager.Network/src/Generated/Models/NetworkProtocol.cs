@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct NetworkProtocol : IEquatable<NetworkProtocol>
     {
         private readonly string _value;
+        /// <summary> Any. </summary>
+        private const string AnyValue = "Any";
+        /// <summary> TCP. </summary>
+        private const string TCPValue = "TCP";
+        /// <summary> UDP. </summary>
+        private const string UDPValue = "UDP";
+        /// <summary> ICMP. </summary>
+        private const string ICMPValue = "ICMP";
 
         /// <summary> Initializes a new instance of <see cref="NetworkProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NetworkProtocol(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AnyValue = "Any";
-        private const string TcpValue = "TCP";
-        private const string UdpValue = "UDP";
-        private const string IcmpValue = "ICMP";
+            _value = value;
+        }
 
         /// <summary> Any. </summary>
         public static NetworkProtocol Any { get; } = new NetworkProtocol(AnyValue);
+
         /// <summary> TCP. </summary>
-        public static NetworkProtocol Tcp { get; } = new NetworkProtocol(TcpValue);
+        public static NetworkProtocol TCP { get; } = new NetworkProtocol(TCPValue);
+
         /// <summary> UDP. </summary>
-        public static NetworkProtocol Udp { get; } = new NetworkProtocol(UdpValue);
+        public static NetworkProtocol UDP { get; } = new NetworkProtocol(UDPValue);
+
         /// <summary> ICMP. </summary>
-        public static NetworkProtocol Icmp { get; } = new NetworkProtocol(IcmpValue);
+        public static NetworkProtocol ICMP { get; } = new NetworkProtocol(ICMPValue);
+
         /// <summary> Determines if two <see cref="NetworkProtocol"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NetworkProtocol left, NetworkProtocol right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NetworkProtocol"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NetworkProtocol left, NetworkProtocol right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NetworkProtocol"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NetworkProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NetworkProtocol(string value) => new NetworkProtocol(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NetworkProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NetworkProtocol?(string value) => value == null ? null : new NetworkProtocol(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NetworkProtocol other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NetworkProtocol other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

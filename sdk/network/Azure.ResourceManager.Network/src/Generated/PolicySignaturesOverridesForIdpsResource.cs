@@ -6,45 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary>
-    /// A Class representing a PolicySignaturesOverridesForIdps along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PolicySignaturesOverridesForIdpsResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetPolicySignaturesOverridesForIdpsResource method.
+    /// A class representing a PolicySignaturesOverridesForIdps along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PolicySignaturesOverridesForIdpsResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
     /// Otherwise you can get one from its parent resource <see cref="FirewallPolicyResource"/> using the GetPolicySignaturesOverridesForIdps method.
     /// </summary>
     public partial class PolicySignaturesOverridesForIdpsResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="PolicySignaturesOverridesForIdpsResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="firewallPolicyName"> The firewallPolicyName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string firewallPolicyName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firewallPolicies/{firewallPolicyName}/signatureOverrides/default";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _policySignaturesOverridesForIdpsFirewallPolicyIdpsSignaturesOverridesClientDiagnostics;
-        private readonly FirewallPolicyIdpsSignaturesOverridesRestOperations _policySignaturesOverridesForIdpsFirewallPolicyIdpsSignaturesOverridesRestClient;
+        private readonly ClientDiagnostics _firewallPolicyIdpsSignaturesOverridesClientDiagnostics;
+        private readonly FirewallPolicyIdpsSignaturesOverrides _firewallPolicyIdpsSignaturesOverridesRestClient;
         private readonly PolicySignaturesOverridesForIdpsData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Network/firewallPolicies/signatureOverrides";
 
-        /// <summary> Initializes a new instance of the <see cref="PolicySignaturesOverridesForIdpsResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of PolicySignaturesOverridesForIdpsResource for mocking. </summary>
         protected PolicySignaturesOverridesForIdpsResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="PolicySignaturesOverridesForIdpsResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicySignaturesOverridesForIdpsResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal PolicySignaturesOverridesForIdpsResource(ArmClient client, PolicySignaturesOverridesForIdpsData data) : this(client, data.Id)
@@ -53,201 +43,50 @@ namespace Azure.ResourceManager.Network
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="PolicySignaturesOverridesForIdpsResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicySignaturesOverridesForIdpsResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal PolicySignaturesOverridesForIdpsResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _policySignaturesOverridesForIdpsFirewallPolicyIdpsSignaturesOverridesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string policySignaturesOverridesForIdpsFirewallPolicyIdpsSignaturesOverridesApiVersion);
-            _policySignaturesOverridesForIdpsFirewallPolicyIdpsSignaturesOverridesRestClient = new FirewallPolicyIdpsSignaturesOverridesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, policySignaturesOverridesForIdpsFirewallPolicyIdpsSignaturesOverridesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string policySignaturesOverridesForIdpsApiVersion);
+            _firewallPolicyIdpsSignaturesOverridesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
+            _firewallPolicyIdpsSignaturesOverridesRestClient = new FirewallPolicyIdpsSignaturesOverrides(_firewallPolicyIdpsSignaturesOverridesClientDiagnostics, Pipeline, Endpoint, policySignaturesOverridesForIdpsApiVersion ?? "2025-07-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual PolicySignaturesOverridesForIdpsData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="firewallPolicyName"> The firewallPolicyName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string firewallPolicyName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firewallPolicies/{firewallPolicyName}/signatureOverrides/default";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-        }
-
-        /// <summary>
-        /// Returns all signatures overrides for a specific policy.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firewallPolicies/{firewallPolicyName}/signatureOverrides/default</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FirewallPolicyIdpsSignaturesOverrides_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PolicySignaturesOverridesForIdpsResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PolicySignaturesOverridesForIdpsResource>> GetAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _policySignaturesOverridesForIdpsFirewallPolicyIdpsSignaturesOverridesClientDiagnostics.CreateScope("PolicySignaturesOverridesForIdpsResource.Get");
-            scope.Start();
-            try
             {
-                var response = await _policySignaturesOverridesForIdpsFirewallPolicyIdpsSignaturesOverridesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PolicySignaturesOverridesForIdpsResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Returns all signatures overrides for a specific policy.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firewallPolicies/{firewallPolicyName}/signatureOverrides/default</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FirewallPolicyIdpsSignaturesOverrides_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PolicySignaturesOverridesForIdpsResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PolicySignaturesOverridesForIdpsResource> Get(CancellationToken cancellationToken = default)
-        {
-            using var scope = _policySignaturesOverridesForIdpsFirewallPolicyIdpsSignaturesOverridesClientDiagnostics.CreateScope("PolicySignaturesOverridesForIdpsResource.Get");
-            scope.Start();
-            try
-            {
-                var response = _policySignaturesOverridesForIdpsFirewallPolicyIdpsSignaturesOverridesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
-                if (response.Value == null)
-                    throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PolicySignaturesOverridesForIdpsResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Will update the status of policy's signature overrides for IDPS
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firewallPolicies/{firewallPolicyName}/signatureOverrides/default</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FirewallPolicyIdpsSignaturesOverrides_Patch</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PolicySignaturesOverridesForIdpsResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="data"> Will contain all properties of the object to put. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<PolicySignaturesOverridesForIdpsResource>> UpdateAsync(PolicySignaturesOverridesForIdpsData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var scope = _policySignaturesOverridesForIdpsFirewallPolicyIdpsSignaturesOverridesClientDiagnostics.CreateScope("PolicySignaturesOverridesForIdpsResource.Update");
-            scope.Start();
-            try
-            {
-                var response = await _policySignaturesOverridesForIdpsFirewallPolicyIdpsSignaturesOverridesRestClient.PatchAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new PolicySignaturesOverridesForIdpsResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Will update the status of policy's signature overrides for IDPS
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firewallPolicies/{firewallPolicyName}/signatureOverrides/default</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FirewallPolicyIdpsSignaturesOverrides_Patch</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PolicySignaturesOverridesForIdpsResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="data"> Will contain all properties of the object to put. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Response<PolicySignaturesOverridesForIdpsResource> Update(PolicySignaturesOverridesForIdpsData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var scope = _policySignaturesOverridesForIdpsFirewallPolicyIdpsSignaturesOverridesClientDiagnostics.CreateScope("PolicySignaturesOverridesForIdpsResource.Update");
-            scope.Start();
-            try
-            {
-                var response = _policySignaturesOverridesForIdpsFirewallPolicyIdpsSignaturesOverridesRestClient.Patch(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken);
-                return Response.FromValue(new PolicySignaturesOverridesForIdpsResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -255,20 +94,20 @@ namespace Azure.ResourceManager.Network
         /// Will override/create a new signature overrides for the policy's IDPS
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firewallPolicies/{firewallPolicyName}/signatureOverrides/default</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firewallPolicies/{firewallPolicyName}/signatureOverrides/default. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FirewallPolicyIdpsSignaturesOverrides_Put</description>
+        /// <term> Operation Id. </term>
+        /// <description> FirewallPolicyIdpsSignaturesOverrides_Put. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PolicySignaturesOverridesForIdpsResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PolicySignaturesOverridesForIdpsResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -280,16 +119,24 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _policySignaturesOverridesForIdpsFirewallPolicyIdpsSignaturesOverridesClientDiagnostics.CreateScope("PolicySignaturesOverridesForIdpsResource.CreateOrUpdate");
+            using DiagnosticScope scope = _firewallPolicyIdpsSignaturesOverridesClientDiagnostics.CreateScope("PolicySignaturesOverridesForIdpsResource.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _policySignaturesOverridesForIdpsFirewallPolicyIdpsSignaturesOverridesRestClient.PutAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken).ConfigureAwait(false);
-                var uri = _policySignaturesOverridesForIdpsFirewallPolicyIdpsSignaturesOverridesRestClient.CreatePutRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new NetworkArmOperation<PolicySignaturesOverridesForIdpsResource>(Response.FromValue(new PolicySignaturesOverridesForIdpsResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _firewallPolicyIdpsSignaturesOverridesRestClient.CreatePutRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, PolicySignaturesOverridesForIdpsData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<PolicySignaturesOverridesForIdpsData> response = Response.FromValue(PolicySignaturesOverridesForIdpsData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                NetworkArmOperation<PolicySignaturesOverridesForIdpsResource> operation = new NetworkArmOperation<PolicySignaturesOverridesForIdpsResource>(Response.FromValue(new PolicySignaturesOverridesForIdpsResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -303,20 +150,20 @@ namespace Azure.ResourceManager.Network
         /// Will override/create a new signature overrides for the policy's IDPS
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firewallPolicies/{firewallPolicyName}/signatureOverrides/default</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firewallPolicies/{firewallPolicyName}/signatureOverrides/default. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FirewallPolicyIdpsSignaturesOverrides_Put</description>
+        /// <term> Operation Id. </term>
+        /// <description> FirewallPolicyIdpsSignaturesOverrides_Put. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PolicySignaturesOverridesForIdpsResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PolicySignaturesOverridesForIdpsResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -328,17 +175,225 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _policySignaturesOverridesForIdpsFirewallPolicyIdpsSignaturesOverridesClientDiagnostics.CreateScope("PolicySignaturesOverridesForIdpsResource.CreateOrUpdate");
+            using DiagnosticScope scope = _firewallPolicyIdpsSignaturesOverridesClientDiagnostics.CreateScope("PolicySignaturesOverridesForIdpsResource.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _policySignaturesOverridesForIdpsFirewallPolicyIdpsSignaturesOverridesRestClient.Put(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken);
-                var uri = _policySignaturesOverridesForIdpsFirewallPolicyIdpsSignaturesOverridesRestClient.CreatePutRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new NetworkArmOperation<PolicySignaturesOverridesForIdpsResource>(Response.FromValue(new PolicySignaturesOverridesForIdpsResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _firewallPolicyIdpsSignaturesOverridesRestClient.CreatePutRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, PolicySignaturesOverridesForIdpsData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<PolicySignaturesOverridesForIdpsData> response = Response.FromValue(PolicySignaturesOverridesForIdpsData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                NetworkArmOperation<PolicySignaturesOverridesForIdpsResource> operation = new NetworkArmOperation<PolicySignaturesOverridesForIdpsResource>(Response.FromValue(new PolicySignaturesOverridesForIdpsResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Returns all signatures overrides for a specific policy.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firewallPolicies/{firewallPolicyName}/signatureOverrides/default. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> FirewallPolicyIdpsSignaturesOverrides_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PolicySignaturesOverridesForIdpsResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<PolicySignaturesOverridesForIdpsResource>> GetAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _firewallPolicyIdpsSignaturesOverridesClientDiagnostics.CreateScope("PolicySignaturesOverridesForIdpsResource.Get");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _firewallPolicyIdpsSignaturesOverridesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<PolicySignaturesOverridesForIdpsData> response = Response.FromValue(PolicySignaturesOverridesForIdpsData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new PolicySignaturesOverridesForIdpsResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Returns all signatures overrides for a specific policy.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firewallPolicies/{firewallPolicyName}/signatureOverrides/default. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> FirewallPolicyIdpsSignaturesOverrides_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PolicySignaturesOverridesForIdpsResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<PolicySignaturesOverridesForIdpsResource> Get(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _firewallPolicyIdpsSignaturesOverridesClientDiagnostics.CreateScope("PolicySignaturesOverridesForIdpsResource.Get");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _firewallPolicyIdpsSignaturesOverridesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<PolicySignaturesOverridesForIdpsData> response = Response.FromValue(PolicySignaturesOverridesForIdpsData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new PolicySignaturesOverridesForIdpsResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Will update the status of policy's signature overrides for IDPS
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firewallPolicies/{firewallPolicyName}/signatureOverrides/default. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> FirewallPolicyIdpsSignaturesOverrides_Patch. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PolicySignaturesOverridesForIdpsResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="data"> Will contain all properties of the object to put. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual async Task<Response<PolicySignaturesOverridesForIdpsResource>> PatchAsync(PolicySignaturesOverridesForIdpsData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(data, nameof(data));
+
+            using DiagnosticScope scope = _firewallPolicyIdpsSignaturesOverridesClientDiagnostics.CreateScope("PolicySignaturesOverridesForIdpsResource.Patch");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _firewallPolicyIdpsSignaturesOverridesRestClient.CreatePatchRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, PolicySignaturesOverridesForIdpsData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<PolicySignaturesOverridesForIdpsData> response = Response.FromValue(PolicySignaturesOverridesForIdpsData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new PolicySignaturesOverridesForIdpsResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Will update the status of policy's signature overrides for IDPS
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firewallPolicies/{firewallPolicyName}/signatureOverrides/default. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> FirewallPolicyIdpsSignaturesOverrides_Patch. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PolicySignaturesOverridesForIdpsResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="data"> Will contain all properties of the object to put. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual Response<PolicySignaturesOverridesForIdpsResource> Patch(PolicySignaturesOverridesForIdpsData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(data, nameof(data));
+
+            using DiagnosticScope scope = _firewallPolicyIdpsSignaturesOverridesClientDiagnostics.CreateScope("PolicySignaturesOverridesForIdpsResource.Patch");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _firewallPolicyIdpsSignaturesOverridesRestClient.CreatePatchRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, PolicySignaturesOverridesForIdpsData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<PolicySignaturesOverridesForIdpsData> response = Response.FromValue(PolicySignaturesOverridesForIdpsData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new PolicySignaturesOverridesForIdpsResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

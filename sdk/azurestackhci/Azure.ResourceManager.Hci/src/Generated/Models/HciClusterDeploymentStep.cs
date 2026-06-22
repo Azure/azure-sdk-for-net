@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
@@ -33,8 +34,9 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="status"> Status of step. Allowed values are 'Error', 'Success', 'InProgress'. </param>
         /// <param name="steps"> List of nested steps of AzureStackHCI Cluster Deployment. </param>
         /// <param name="exception"> List of exceptions in AzureStackHCI Cluster Deployment. </param>
+        /// <param name="error"> error details. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HciClusterDeploymentStep(string name, string description, string fullStepIndex, string startOn, string endOn, string status, IReadOnlyList<HciClusterDeploymentStep> steps, IReadOnlyList<string> exception, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HciClusterDeploymentStep(string name, string description, string fullStepIndex, string startOn, string endOn, string status, IReadOnlyList<HciClusterDeploymentStep> steps, IReadOnlyList<string> exception, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
@@ -44,6 +46,7 @@ namespace Azure.ResourceManager.Hci.Models
             Status = status;
             Steps = steps;
             Exception = exception;
+            Error = error;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -78,5 +81,9 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> List of exceptions in AzureStackHCI Cluster Deployment. </summary>
         [WirePath("exception")]
         public IReadOnlyList<string> Exception { get; }
+
+        /// <summary> error details. </summary>
+        [WirePath("error")]
+        public ResponseError Error { get; }
     }
 }

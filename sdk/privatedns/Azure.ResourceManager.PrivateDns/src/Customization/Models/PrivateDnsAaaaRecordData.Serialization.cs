@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.PrivateDns
             if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
-                JsonSerializer.Serialize(writer, SystemData);
+                writer.WriteObjectValue(SystemData, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.PrivateDns
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = ModelReaderWriter.Read<SystemData>(BinaryData.FromString(property.Value.GetRawText()), ModelSerializationExtensions.WireOptions, AzureResourceManagerPrivateDnsContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

@@ -22,10 +22,20 @@ namespace Azure.ResourceManager.Compute
     {
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<VirtualMachineScaleSetVmResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string instanceId, VirtualMachineScaleSetVmData data, CancellationToken cancellationToken)
-            => await CreateOrUpdateAsync(waitUntil, instanceId, data, null, null, cancellationToken).ConfigureAwait(false);
+            => await CreateOrUpdateAsync(waitUntil, instanceId, data, null, cancellationToken).ConfigureAwait(false);
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<VirtualMachineScaleSetVmResource> CreateOrUpdate(WaitUntil waitUntil, string instanceId, VirtualMachineScaleSetVmData data, CancellationToken cancellationToken)
-            => CreateOrUpdate(waitUntil, instanceId, data, null, null, cancellationToken);
+            => CreateOrUpdate(waitUntil, instanceId, data, null, cancellationToken);
+
+        // Backward-compatibility shim that accepts ifMatch and ifNoneMatch as positional string parameters; new code should use the MatchConditions overload.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<ArmOperation<VirtualMachineScaleSetVmResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string instanceId, VirtualMachineScaleSetVmData data, string ifMatch, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+            => await CreateOrUpdateAsync(waitUntil, instanceId, data, ConditionalRequestExtensions.BuildMatchConditions(ifMatch, ifNoneMatch), cancellationToken).ConfigureAwait(false);
+
+        // Backward-compatibility shim that accepts ifMatch and ifNoneMatch as positional string parameters; new code should use the MatchConditions overload.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual ArmOperation<VirtualMachineScaleSetVmResource> CreateOrUpdate(WaitUntil waitUntil, string instanceId, VirtualMachineScaleSetVmData data, string ifMatch, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+            => CreateOrUpdate(waitUntil, instanceId, data, ConditionalRequestExtensions.BuildMatchConditions(ifMatch, ifNoneMatch), cancellationToken);
     }
 }

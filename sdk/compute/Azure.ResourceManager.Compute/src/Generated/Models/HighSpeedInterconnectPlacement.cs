@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Compute.Models
     public readonly partial struct HighSpeedInterconnectPlacement : IEquatable<HighSpeedInterconnectPlacement>
     {
         private readonly string _value;
+        /// <summary> No high speed interconnect placement. </summary>
+        private const string NoneValue = "None";
+        /// <summary> Trunk high speed interconnect placement. </summary>
+        private const string TrunkValue = "Trunk";
 
         /// <summary> Initializes a new instance of <see cref="HighSpeedInterconnectPlacement"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public HighSpeedInterconnectPlacement(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "None";
-        private const string TrunkValue = "Trunk";
+            _value = value;
+        }
 
         /// <summary> No high speed interconnect placement. </summary>
         public static HighSpeedInterconnectPlacement None { get; } = new HighSpeedInterconnectPlacement(NoneValue);
+
         /// <summary> Trunk high speed interconnect placement. </summary>
         public static HighSpeedInterconnectPlacement Trunk { get; } = new HighSpeedInterconnectPlacement(TrunkValue);
+
         /// <summary> Determines if two <see cref="HighSpeedInterconnectPlacement"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(HighSpeedInterconnectPlacement left, HighSpeedInterconnectPlacement right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="HighSpeedInterconnectPlacement"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(HighSpeedInterconnectPlacement left, HighSpeedInterconnectPlacement right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="HighSpeedInterconnectPlacement"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="HighSpeedInterconnectPlacement"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator HighSpeedInterconnectPlacement(string value) => new HighSpeedInterconnectPlacement(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="HighSpeedInterconnectPlacement"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator HighSpeedInterconnectPlacement?(string value) => value == null ? null : new HighSpeedInterconnectPlacement(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is HighSpeedInterconnectPlacement other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(HighSpeedInterconnectPlacement other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

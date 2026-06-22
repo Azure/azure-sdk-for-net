@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     public readonly partial struct NetworkFabricConfigurationType : IEquatable<NetworkFabricConfigurationType>
     {
         private readonly string _value;
+        /// <summary> File Configuration Type. </summary>
+        private const string FileValue = "File";
+        /// <summary> Inline Configuration Type. </summary>
+        private const string InlineValue = "Inline";
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricConfigurationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NetworkFabricConfigurationType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string FileValue = "File";
-        private const string InlineValue = "Inline";
+            _value = value;
+        }
 
         /// <summary> File Configuration Type. </summary>
         public static NetworkFabricConfigurationType File { get; } = new NetworkFabricConfigurationType(FileValue);
+
         /// <summary> Inline Configuration Type. </summary>
         public static NetworkFabricConfigurationType Inline { get; } = new NetworkFabricConfigurationType(InlineValue);
+
         /// <summary> Determines if two <see cref="NetworkFabricConfigurationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NetworkFabricConfigurationType left, NetworkFabricConfigurationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NetworkFabricConfigurationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NetworkFabricConfigurationType left, NetworkFabricConfigurationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NetworkFabricConfigurationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NetworkFabricConfigurationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NetworkFabricConfigurationType(string value) => new NetworkFabricConfigurationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NetworkFabricConfigurationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NetworkFabricConfigurationType?(string value) => value == null ? null : new NetworkFabricConfigurationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NetworkFabricConfigurationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NetworkFabricConfigurationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Describes the connection monitor endpoint. </summary>
     public partial class ConnectionMonitorEndpoint
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ConnectionMonitorEndpoint"/>. </summary>
         /// <param name="name"> The name of the connection monitor endpoint. </param>
@@ -58,7 +30,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of <see cref="ConnectionMonitorEndpoint"/>. </summary>
         /// <param name="name"> The name of the connection monitor endpoint. </param>
-        /// <param name="endpointType"> The endpoint type. </param>
+        /// <param name="type"> The endpoint type. </param>
         /// <param name="resourceId"> Resource ID of the connection monitor endpoint are supported for AzureVM, AzureVMSS, AzureVNet, AzureSubnet, MMAWorkspaceMachine, MMAWorkspaceNetwork, AzureArcVM endpoint type. </param>
         /// <param name="address"> Address of the connection monitor endpoint. Supported for AzureVM, ExternalAddress, ArcMachine, MMAWorkspaceMachine endpoint type. </param>
         /// <param name="filter"> Filter field is getting deprecated and should not be used. Instead use Include/Exclude scope fields for it. </param>
@@ -66,11 +38,11 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="coverageLevel"> Test coverage for the endpoint. </param>
         /// <param name="locationDetails"> Location details is optional and only being used for 'AzureArcNetwork' type endpoints, which contains region details. </param>
         /// <param name="subscriptionId"> Subscription ID for connection monitor endpoint. It's an optional parameter which is being used for 'AzureArcNetwork' type endpoint. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectionMonitorEndpoint(string name, ConnectionMonitorEndpointType? endpointType, ResourceIdentifier resourceId, string address, ConnectionMonitorEndpointFilter filter, ConnectionMonitorEndpointScope scope, CoverageLevel? coverageLevel, ConnectionMonitorEndpointLocationDetails locationDetails, Guid? subscriptionId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectionMonitorEndpoint(string name, EndpointType? @type, ResourceIdentifier resourceId, string address, ConnectionMonitorEndpointFilter filter, ConnectionMonitorEndpointScope scope, CoverageLevel? coverageLevel, ConnectionMonitorEndpointLocationDetails locationDetails, Guid? subscriptionId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
-            EndpointType = endpointType;
+            Type = @type;
             ResourceId = resourceId;
             Address = address;
             Filter = filter;
@@ -78,52 +50,61 @@ namespace Azure.ResourceManager.Network.Models
             CoverageLevel = coverageLevel;
             LocationDetails = locationDetails;
             SubscriptionId = subscriptionId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ConnectionMonitorEndpoint"/> for deserialization. </summary>
-        internal ConnectionMonitorEndpoint()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The name of the connection monitor endpoint. </summary>
         [WirePath("name")]
         public string Name { get; set; }
+
         /// <summary> The endpoint type. </summary>
         [WirePath("type")]
-        public ConnectionMonitorEndpointType? EndpointType { get; set; }
+        public EndpointType? Type { get; set; }
+
         /// <summary> Resource ID of the connection monitor endpoint are supported for AzureVM, AzureVMSS, AzureVNet, AzureSubnet, MMAWorkspaceMachine, MMAWorkspaceNetwork, AzureArcVM endpoint type. </summary>
         [WirePath("resourceId")]
         public ResourceIdentifier ResourceId { get; set; }
+
         /// <summary> Address of the connection monitor endpoint. Supported for AzureVM, ExternalAddress, ArcMachine, MMAWorkspaceMachine endpoint type. </summary>
         [WirePath("address")]
         public string Address { get; set; }
+
         /// <summary> Filter field is getting deprecated and should not be used. Instead use Include/Exclude scope fields for it. </summary>
         [WirePath("filter")]
         public ConnectionMonitorEndpointFilter Filter { get; set; }
+
         /// <summary> Endpoint scope defines which target resource to monitor in case of compound resource endpoints like VMSS, AzureSubnet, AzureVNet, MMAWorkspaceNetwork, AzureArcNetwork. </summary>
         [WirePath("scope")]
         public ConnectionMonitorEndpointScope Scope { get; set; }
+
         /// <summary> Test coverage for the endpoint. </summary>
         [WirePath("coverageLevel")]
         public CoverageLevel? CoverageLevel { get; set; }
+
         /// <summary> Location details is optional and only being used for 'AzureArcNetwork' type endpoints, which contains region details. </summary>
+        [WirePath("locationDetails")]
         internal ConnectionMonitorEndpointLocationDetails LocationDetails { get; set; }
-        /// <summary> Region for connection monitor endpoint. </summary>
-        [WirePath("locationDetails.region")]
-        public string LocationDetailsRegion
-        {
-            get => LocationDetails is null ? default : LocationDetails.Region;
-            set
-            {
-                if (LocationDetails is null)
-                    LocationDetails = new ConnectionMonitorEndpointLocationDetails();
-                LocationDetails.Region = value;
-            }
-        }
 
         /// <summary> Subscription ID for connection monitor endpoint. It's an optional parameter which is being used for 'AzureArcNetwork' type endpoint. </summary>
         [WirePath("subscriptionId")]
         public Guid? SubscriptionId { get; set; }
+
+        /// <summary> Region for connection monitor endpoint. </summary>
+        [WirePath("locationDetails.region")]
+        public string LocationDetailsRegion
+        {
+            get
+            {
+                return LocationDetails is null ? default : LocationDetails.Region;
+            }
+            set
+            {
+                if (LocationDetails is null)
+                {
+                    LocationDetails = new ConnectionMonitorEndpointLocationDetails();
+                }
+                LocationDetails.Region = value;
+            }
+        }
     }
 }

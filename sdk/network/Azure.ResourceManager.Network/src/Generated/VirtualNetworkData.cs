@@ -7,155 +7,300 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary>
-    /// A class representing the VirtualNetwork data model.
-    /// Virtual Network resource.
-    /// </summary>
+    /// <summary> Virtual Network resource. </summary>
     public partial class VirtualNetworkData : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkData"/>. </summary>
         public VirtualNetworkData()
         {
-            Subnets = new ChangeTrackingList<SubnetData>();
-            VirtualNetworkPeerings = new ChangeTrackingList<VirtualNetworkPeeringData>();
-            IPAllocations = new ChangeTrackingList<WritableSubResource>();
-            FlowLogs = new ChangeTrackingList<FlowLogData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="type"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties of the virtual network. </param>
         /// <param name="extendedLocation"> The extended location of the virtual network. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="addressSpace"> The AddressSpace that contains an array of IP address ranges that can be used by subnets. </param>
-        /// <param name="dhcpOptions"> The dhcpOptions that contains an array of DNS servers available to VMs deployed in the virtual network. </param>
-        /// <param name="flowTimeoutInMinutes"> The FlowTimeout value (in minutes) for the Virtual Network. </param>
-        /// <param name="subnets"> A list of subnets in a Virtual Network. </param>
-        /// <param name="virtualNetworkPeerings"> A list of peerings in a Virtual Network. </param>
-        /// <param name="resourceGuid"> The resourceGuid property of the Virtual Network resource. </param>
-        /// <param name="provisioningState"> The provisioning state of the virtual network resource. </param>
-        /// <param name="enableDdosProtection"> Indicates if DDoS protection is enabled for all the protected resources in the virtual network. It requires a DDoS protection plan associated with the resource. </param>
-        /// <param name="enableVmProtection"> Indicates if VM protection is enabled for all the subnets in the virtual network. </param>
-        /// <param name="ddosProtectionPlan"> The DDoS protection plan associated with the virtual network. </param>
-        /// <param name="bgpCommunities"> Bgp Communities sent over ExpressRoute with each route corresponding to a prefix in this VNET. </param>
-        /// <param name="encryption"> Indicates if encryption is enabled on virtual network and if VM without encryption is allowed in encrypted VNet. </param>
-        /// <param name="ipAllocations"> Array of IpAllocation which reference this VNET. </param>
-        /// <param name="flowLogs"> A collection of references to flow log resources. </param>
-        /// <param name="privateEndpointVnetPolicy"> Private Endpoint VNet Policies. </param>
-        /// <param name="defaultPublicNatGateway"> A reference to the default public nat gateway being used by this virtual network resource. </param>
-        internal VirtualNetworkData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ExtendedLocation extendedLocation, ETag? etag, VirtualNetworkAddressSpace addressSpace, DhcpOptions dhcpOptions, int? flowTimeoutInMinutes, IList<SubnetData> subnets, IList<VirtualNetworkPeeringData> virtualNetworkPeerings, Guid? resourceGuid, NetworkProvisioningState? provisioningState, bool? enableDdosProtection, bool? enableVmProtection, WritableSubResource ddosProtectionPlan, VirtualNetworkBgpCommunities bgpCommunities, VirtualNetworkEncryption encryption, IList<WritableSubResource> ipAllocations, IReadOnlyList<FlowLogData> flowLogs, PrivateEndpointVnetPolicy? privateEndpointVnetPolicy, WritableSubResource defaultPublicNatGateway) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        internal VirtualNetworkData(ResourceIdentifier id, string name, string @type, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, VirtualNetworkPropertiesFormat properties, ExtendedLocation extendedLocation, ETag? eTag) : base(id, name, @type, location, tags, additionalBinaryDataProperties)
         {
+            Properties = properties;
             ExtendedLocation = extendedLocation;
-            ETag = etag;
-            AddressSpace = addressSpace;
-            DhcpOptions = dhcpOptions;
-            FlowTimeoutInMinutes = flowTimeoutInMinutes;
-            Subnets = subnets;
-            VirtualNetworkPeerings = virtualNetworkPeerings;
-            ResourceGuid = resourceGuid;
-            ProvisioningState = provisioningState;
-            EnableDdosProtection = enableDdosProtection;
-            EnableVmProtection = enableVmProtection;
-            DdosProtectionPlan = ddosProtectionPlan;
-            BgpCommunities = bgpCommunities;
-            Encryption = encryption;
-            IPAllocations = ipAllocations;
-            FlowLogs = flowLogs;
-            PrivateEndpointVnetPolicy = privateEndpointVnetPolicy;
-            DefaultPublicNatGateway = defaultPublicNatGateway;
+            ETag = eTag;
         }
+
+        /// <summary> Properties of the virtual network. </summary>
+        [WirePath("properties")]
+        internal VirtualNetworkPropertiesFormat Properties { get; set; }
 
         /// <summary> The extended location of the virtual network. </summary>
         [WirePath("extendedLocation")]
         public ExtendedLocation ExtendedLocation { get; set; }
+
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }
+
         /// <summary> The AddressSpace that contains an array of IP address ranges that can be used by subnets. </summary>
         [WirePath("properties.addressSpace")]
-        public VirtualNetworkAddressSpace AddressSpace { get; set; }
-        /// <summary> The dhcpOptions that contains an array of DNS servers available to VMs deployed in the virtual network. </summary>
-        internal DhcpOptions DhcpOptions { get; set; }
+        public VirtualNetworkAddressSpace AddressSpace
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AddressSpace;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualNetworkPropertiesFormat();
+                }
+                Properties.AddressSpace = value;
+            }
+        }
+
+        /// <summary> The FlowTimeout value (in minutes) for the Virtual Network. </summary>
+        [WirePath("properties.flowTimeoutInMinutes")]
+        public int? FlowTimeoutInMinutes
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FlowTimeoutInMinutes;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualNetworkPropertiesFormat();
+                }
+                Properties.FlowTimeoutInMinutes = value;
+            }
+        }
+
+        /// <summary> A list of subnets in a Virtual Network. </summary>
+        [WirePath("properties.subnets")]
+        public IList<SubnetData> Subnets
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualNetworkPropertiesFormat();
+                }
+                return Properties.Subnets;
+            }
+        }
+
+        /// <summary> A list of peerings in a Virtual Network. </summary>
+        [WirePath("properties.virtualNetworkPeerings")]
+        public IList<VirtualNetworkPeeringData> VirtualNetworkPeerings
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualNetworkPropertiesFormat();
+                }
+                return Properties.VirtualNetworkPeerings;
+            }
+        }
+
+        /// <summary> The provisioning state of the virtual network resource. </summary>
+        [WirePath("properties.provisioningState")]
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> Indicates if DDoS protection is enabled for all the protected resources in the virtual network. It requires a DDoS protection plan associated with the resource. </summary>
+        [WirePath("properties.enableDdosProtection")]
+        public bool? EnableDdosProtection
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnableDdosProtection;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualNetworkPropertiesFormat();
+                }
+                Properties.EnableDdosProtection = value;
+            }
+        }
+
+        /// <summary> Indicates if VM protection is enabled for all the subnets in the virtual network. </summary>
+        [WirePath("properties.enableVmProtection")]
+        public bool? EnableVmProtection
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnableVmProtection;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualNetworkPropertiesFormat();
+                }
+                Properties.EnableVmProtection = value;
+            }
+        }
+
+        /// <summary> Bgp Communities sent over ExpressRoute with each route corresponding to a prefix in this VNET. </summary>
+        [WirePath("properties.bgpCommunities")]
+        public VirtualNetworkBgpCommunities BgpCommunities
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BgpCommunities;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualNetworkPropertiesFormat();
+                }
+                Properties.BgpCommunities = value;
+            }
+        }
+
+        /// <summary> Indicates if encryption is enabled on virtual network and if VM without encryption is allowed in encrypted VNet. </summary>
+        [WirePath("properties.encryption")]
+        public VirtualNetworkEncryption Encryption
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Encryption;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualNetworkPropertiesFormat();
+                }
+                Properties.Encryption = value;
+            }
+        }
+
+        /// <summary> Array of IpAllocation which reference this VNET. </summary>
+        [WirePath("properties.ipAllocations")]
+        public IList<NetworkSubResource> IpAllocations
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualNetworkPropertiesFormat();
+                }
+                return Properties.IpAllocations;
+            }
+        }
+
+        /// <summary> A collection of references to flow log resources. </summary>
+        [WirePath("properties.flowLogs")]
+        public IReadOnlyList<FlowLogData> FlowLogs
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualNetworkPropertiesFormat();
+                }
+                return Properties.FlowLogs;
+            }
+        }
+
+        /// <summary> Private Endpoint VNet Policies. </summary>
+        [WirePath("properties.privateEndpointVNetPolicies")]
+        public PrivateEndpointVnetPolicy? PrivateEndpointVNetPolicies
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateEndpointVNetPolicies;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualNetworkPropertiesFormat();
+                }
+                Properties.PrivateEndpointVNetPolicies = value;
+            }
+        }
+
+        /// <summary> A configurable list of summarized gateway prefixes advertised for the virtual network. </summary>
+        [WirePath("properties.summarizedGatewayPrefixes")]
+        public VirtualNetworkAddressSpace SummarizedGatewayPrefixes
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SummarizedGatewayPrefixes;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualNetworkPropertiesFormat();
+                }
+                Properties.SummarizedGatewayPrefixes = value;
+            }
+        }
+
         /// <summary> The list of DNS servers IP addresses. </summary>
         [WirePath("properties.dhcpOptions.dnsServers")]
         public IList<string> DhcpOptionsDnsServers
         {
             get
             {
-                if (DhcpOptions is null)
-                    DhcpOptions = new DhcpOptions();
-                return DhcpOptions.DnsServers;
+                if (Properties is null)
+                {
+                    Properties = new VirtualNetworkPropertiesFormat();
+                }
+                return Properties.DhcpOptionsDnsServers;
             }
         }
 
-        /// <summary> The FlowTimeout value (in minutes) for the Virtual Network. </summary>
-        [WirePath("properties.flowTimeoutInMinutes")]
-        public int? FlowTimeoutInMinutes { get; set; }
-        /// <summary> A list of subnets in a Virtual Network. </summary>
-        [WirePath("properties.subnets")]
-        public IList<SubnetData> Subnets { get; }
-        /// <summary> A list of peerings in a Virtual Network. </summary>
-        [WirePath("properties.virtualNetworkPeerings")]
-        public IList<VirtualNetworkPeeringData> VirtualNetworkPeerings { get; }
-        /// <summary> The resourceGuid property of the Virtual Network resource. </summary>
-        [WirePath("properties.resourceGuid")]
-        public Guid? ResourceGuid { get; }
-        /// <summary> The provisioning state of the virtual network resource. </summary>
-        [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
-        /// <summary> Indicates if DDoS protection is enabled for all the protected resources in the virtual network. It requires a DDoS protection plan associated with the resource. </summary>
-        [WirePath("properties.enableDdosProtection")]
-        public bool? EnableDdosProtection { get; set; }
-        /// <summary> Indicates if VM protection is enabled for all the subnets in the virtual network. </summary>
-        [WirePath("properties.enableVmProtection")]
-        public bool? EnableVmProtection { get; set; }
-        /// <summary> The DDoS protection plan associated with the virtual network. </summary>
-        internal WritableSubResource DdosProtectionPlan { get; set; }
-        /// <summary> Gets or sets Id. </summary>
+        /// <summary> Resource ID. </summary>
         [WirePath("properties.ddosProtectionPlan.id")]
         public ResourceIdentifier DdosProtectionPlanId
         {
-            get => DdosProtectionPlan is null ? default : DdosProtectionPlan.Id;
+            get
+            {
+                return Properties is null ? default : Properties.DdosProtectionPlanId;
+            }
             set
             {
-                if (DdosProtectionPlan is null)
-                    DdosProtectionPlan = new WritableSubResource();
-                DdosProtectionPlan.Id = value;
+                if (Properties is null)
+                {
+                    Properties = new VirtualNetworkPropertiesFormat();
+                }
+                Properties.DdosProtectionPlanId = value;
             }
         }
 
-        /// <summary> Bgp Communities sent over ExpressRoute with each route corresponding to a prefix in this VNET. </summary>
-        [WirePath("properties.bgpCommunities")]
-        public VirtualNetworkBgpCommunities BgpCommunities { get; set; }
-        /// <summary> Indicates if encryption is enabled on virtual network and if VM without encryption is allowed in encrypted VNet. </summary>
-        [WirePath("properties.encryption")]
-        public VirtualNetworkEncryption Encryption { get; set; }
-        /// <summary> Array of IpAllocation which reference this VNET. </summary>
-        [WirePath("properties.ipAllocations")]
-        public IList<WritableSubResource> IPAllocations { get; }
-        /// <summary> A collection of references to flow log resources. </summary>
-        [WirePath("properties.flowLogs")]
-        public IReadOnlyList<FlowLogData> FlowLogs { get; }
-        /// <summary> Private Endpoint VNet Policies. </summary>
-        [WirePath("properties.privateEndpointVNetPolicies")]
-        public PrivateEndpointVnetPolicy? PrivateEndpointVnetPolicy { get; set; }
-        /// <summary> A reference to the default public nat gateway being used by this virtual network resource. </summary>
-        internal WritableSubResource DefaultPublicNatGateway { get; }
-        /// <summary> Gets or sets Id. </summary>
+        /// <summary> Resource ID. </summary>
         [WirePath("properties.defaultPublicNatGateway.id")]
         public ResourceIdentifier DefaultPublicNatGatewayId
         {
-            get => DefaultPublicNatGateway?.Id;
+            get
+            {
+                return Properties is null ? default : Properties.DefaultPublicNatGatewayId;
+            }
         }
     }
 }

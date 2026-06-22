@@ -8,17 +8,64 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class GatewayRouteSetsInformation : IUtf8JsonSerializable, IJsonModel<GatewayRouteSetsInformation>
+    /// <summary> Gateway Route Sets Information. </summary>
+    public partial class GatewayRouteSetsInformation : IJsonModel<GatewayRouteSetsInformation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GatewayRouteSetsInformation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual GatewayRouteSetsInformation PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<GatewayRouteSetsInformation>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeGatewayRouteSetsInformation(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(GatewayRouteSetsInformation)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<GatewayRouteSetsInformation>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(GatewayRouteSetsInformation)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<GatewayRouteSetsInformation>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        GatewayRouteSetsInformation IPersistableModel<GatewayRouteSetsInformation>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<GatewayRouteSetsInformation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="GatewayRouteSetsInformation"/> from. </param>
+        internal static GatewayRouteSetsInformation FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeGatewayRouteSetsInformation(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<GatewayRouteSetsInformation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,12 +77,11 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GatewayRouteSetsInformation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GatewayRouteSetsInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(GatewayRouteSetsInformation)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(LastComputedOn))
             {
                 writer.WritePropertyName("lastComputedTime"u8);
@@ -55,7 +101,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("routeSets"u8);
                 writer.WriteStartArray();
-                foreach (var item in RouteSets)
+                foreach (GatewayRouteSet item in RouteSets)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -72,15 +118,15 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -89,249 +135,102 @@ namespace Azure.ResourceManager.Network.Models
             }
         }
 
-        GatewayRouteSetsInformation IJsonModel<GatewayRouteSetsInformation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        GatewayRouteSetsInformation IJsonModel<GatewayRouteSetsInformation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual GatewayRouteSetsInformation JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GatewayRouteSetsInformation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GatewayRouteSetsInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(GatewayRouteSetsInformation)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeGatewayRouteSetsInformation(document.RootElement, options);
         }
 
-        internal static GatewayRouteSetsInformation DeserializeGatewayRouteSetsInformation(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static GatewayRouteSetsInformation DeserializeGatewayRouteSetsInformation(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            DateTimeOffset? lastComputedTime = default;
-            DateTimeOffset? nextEligibleComputeTime = default;
+            DateTimeOffset? lastComputedOn = default;
+            DateTimeOffset? nextEligibleComputeOn = default;
             string routeSetVersion = default;
             IReadOnlyList<GatewayRouteSet> routeSets = default;
             IReadOnlyDictionary<string, CircuitMetadataMap> circuitsMetadataMap = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("lastComputedTime"u8))
+                if (prop.NameEquals("lastComputedTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lastComputedTime = property.Value.GetDateTimeOffset("O");
+                    lastComputedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("nextEligibleComputeTime"u8))
+                if (prop.NameEquals("nextEligibleComputeTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    nextEligibleComputeTime = property.Value.GetDateTimeOffset("O");
+                    nextEligibleComputeOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("routeSetVersion"u8))
+                if (prop.NameEquals("routeSetVersion"u8))
                 {
-                    routeSetVersion = property.Value.GetString();
+                    routeSetVersion = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("routeSets"u8))
+                if (prop.NameEquals("routeSets"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<GatewayRouteSet> array = new List<GatewayRouteSet>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(GatewayRouteSet.DeserializeGatewayRouteSet(item, options));
                     }
                     routeSets = array;
                     continue;
                 }
-                if (property.NameEquals("circuitsMetadataMap"u8))
+                if (prop.NameEquals("circuitsMetadataMap"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, CircuitMetadataMap> dictionary = new Dictionary<string, CircuitMetadataMap>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, CircuitMetadataMap.DeserializeCircuitMetadataMap(property0.Value, options));
+                        dictionary.Add(prop0.Name, CircuitMetadataMap.DeserializeCircuitMetadataMap(prop0.Value, options));
                     }
                     circuitsMetadataMap = dictionary;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new GatewayRouteSetsInformation(
-                lastComputedTime,
-                nextEligibleComputeTime,
+                lastComputedOn,
+                nextEligibleComputeOn,
                 routeSetVersion,
                 routeSets ?? new ChangeTrackingList<GatewayRouteSet>(),
                 circuitsMetadataMap ?? new ChangeTrackingDictionary<string, CircuitMetadataMap>(),
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastComputedOn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  lastComputedTime: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(LastComputedOn))
-                {
-                    builder.Append("  lastComputedTime: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(LastComputedOn.Value, "o");
-                    builder.AppendLine($"'{formattedDateTimeString}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NextEligibleComputeOn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  nextEligibleComputeTime: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(NextEligibleComputeOn))
-                {
-                    builder.Append("  nextEligibleComputeTime: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(NextEligibleComputeOn.Value, "o");
-                    builder.AppendLine($"'{formattedDateTimeString}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RouteSetVersion), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  routeSetVersion: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(RouteSetVersion))
-                {
-                    builder.Append("  routeSetVersion: ");
-                    if (RouteSetVersion.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{RouteSetVersion}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{RouteSetVersion}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RouteSets), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  routeSets: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(RouteSets))
-                {
-                    if (RouteSets.Any())
-                    {
-                        builder.Append("  routeSets: ");
-                        builder.AppendLine("[");
-                        foreach (var item in RouteSets)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  routeSets: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CircuitsMetadataMap), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  circuitsMetadataMap: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(CircuitsMetadataMap))
-                {
-                    if (CircuitsMetadataMap.Any())
-                    {
-                        builder.Append("  circuitsMetadataMap: ");
-                        builder.AppendLine("{");
-                        foreach (var item in CircuitsMetadataMap)
-                        {
-                            builder.Append($"    '{item.Key}': ");
-                            BicepSerializationHelpers.AppendChildObject(builder, item.Value, options, 4, false, "  circuitsMetadataMap: ");
-                        }
-                        builder.AppendLine("  }");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<GatewayRouteSetsInformation>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<GatewayRouteSetsInformation>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(GatewayRouteSetsInformation)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        GatewayRouteSetsInformation IPersistableModel<GatewayRouteSetsInformation>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<GatewayRouteSetsInformation>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeGatewayRouteSetsInformation(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(GatewayRouteSetsInformation)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<GatewayRouteSetsInformation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

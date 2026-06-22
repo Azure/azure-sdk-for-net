@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> File share. </summary>
     public partial class DataMigrationSqlFileShare
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataMigrationSqlFileShare"/>. </summary>
         public DataMigrationSqlFileShare()
@@ -54,19 +25,21 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="path"> Location as SMB share or local drive where backups are placed. </param>
         /// <param name="username"> Username to access the file share location for backups. </param>
         /// <param name="password"> Password for username to access file share location. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataMigrationSqlFileShare(string path, string username, string password, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DataMigrationSqlFileShare(string path, string username, string password, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Path = path;
             Username = username;
             Password = password;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Location as SMB share or local drive where backups are placed. </summary>
         public string Path { get; set; }
+
         /// <summary> Username to access the file share location for backups. </summary>
         public string Username { get; set; }
+
         /// <summary> Password for username to access file share location. </summary>
         public string Password { get; set; }
     }

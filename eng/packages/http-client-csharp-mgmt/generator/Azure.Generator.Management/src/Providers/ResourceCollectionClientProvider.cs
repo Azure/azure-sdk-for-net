@@ -210,7 +210,7 @@ namespace Azure.Generator.Management.Providers
 
         internal string ResourceName => _resource.ResourceName;
         internal ResourceScope ResourceScope => _resource.ResourceScope;
-        internal ModelProvider ResourceData => _resource.ResourceData;
+        internal TypeProvider ResourceData => _resource.ResourceData;
 
         protected override TypeProvider[] BuildSerializationProviders() => [];
 
@@ -355,7 +355,7 @@ namespace Azure.Generator.Management.Providers
             var parentResourceCsharpType = GetParentResourceType(_resourceMetadata, _resource);
             if (_resourceMetadata.Scope.Kind != ResourceScope.Extension)
             {
-                methods.Add(ResourceMethodSnippets.BuildValidateResourceIdMethod(this,Static(parentResourceCsharpType!).As<ArmResource>().ResourceType()));
+                methods.Add(ResourceMethodSnippets.BuildValidateResourceIdMethod(this, Static(parentResourceCsharpType!).As<ArmResource>().ResourceType()));
             }
             // For extension resource with known parent resource type, we can also generate a ValidateResourceId method
             else if (_resourceMetadata.Scope.ScopeResourceType is { } parentResourceType)

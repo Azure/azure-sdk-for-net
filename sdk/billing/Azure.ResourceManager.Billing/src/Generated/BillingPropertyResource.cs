@@ -7,44 +7,36 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Billing
 {
     /// <summary>
-    /// A Class representing a BillingProperty along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BillingPropertyResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetBillingPropertyResource method.
+    /// A class representing a BillingProperty along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BillingPropertyResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
     /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetBillingProperty method.
     /// </summary>
     public partial class BillingPropertyResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="BillingPropertyResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Billing/billingProperty/default";
-            return new ResourceIdentifier(resourceId);
-        }
-
         private readonly ClientDiagnostics _billingPropertyClientDiagnostics;
-        private readonly BillingPropertyRestOperations _billingPropertyRestClient;
+        private readonly BillingProperty _billingPropertyRestClient;
         private readonly BillingPropertyData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Billing/billingProperty";
 
-        /// <summary> Initializes a new instance of the <see cref="BillingPropertyResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of BillingPropertyResource for mocking. </summary>
         protected BillingPropertyResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="BillingPropertyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingPropertyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal BillingPropertyResource(ArmClient client, BillingPropertyData data) : this(client, data.Id)
@@ -53,73 +45,92 @@ namespace Azure.ResourceManager.Billing
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="BillingPropertyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingPropertyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal BillingPropertyResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _billingPropertyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string billingPropertyApiVersion);
-            _billingPropertyRestClient = new BillingPropertyRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, billingPropertyApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _billingPropertyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
+            _billingPropertyRestClient = new BillingProperty(_billingPropertyClientDiagnostics, Pipeline, Endpoint, billingPropertyApiVersion ?? "2024-04-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual BillingPropertyData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Billing/billingProperty/default";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets the billing properties for a subscription
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Billing/billingProperty/default</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Billing/billingProperty/default. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingProperty_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> BillingProperties_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingPropertyResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingPropertyResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="includeBillingCountry"> A flag that specifies whether or not to include billing country. </param>
         /// <param name="includeTransitionStatus"> A flag that specifies whether or not to include transition status for billing accounts with agreement type Microsoft Customer Agreement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<BillingPropertyResource>> GetAsync(bool? includeBillingCountry = null, bool? includeTransitionStatus = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BillingPropertyResource>> GetAsync(bool? includeBillingCountry = default, bool? includeTransitionStatus = default, CancellationToken cancellationToken = default)
         {
-            using var scope = _billingPropertyClientDiagnostics.CreateScope("BillingPropertyResource.Get");
+            using DiagnosticScope scope = _billingPropertyClientDiagnostics.CreateScope("BillingPropertyResource.Get");
             scope.Start();
             try
             {
-                var response = await _billingPropertyRestClient.GetAsync(Id.SubscriptionId, includeBillingCountry, includeTransitionStatus, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _billingPropertyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), includeBillingCountry, includeTransitionStatus, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<BillingPropertyData> response = Response.FromValue(BillingPropertyData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new BillingPropertyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -133,35 +144,43 @@ namespace Azure.ResourceManager.Billing
         /// Gets the billing properties for a subscription
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Billing/billingProperty/default</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Billing/billingProperty/default. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingProperty_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> BillingProperties_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingPropertyResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingPropertyResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="includeBillingCountry"> A flag that specifies whether or not to include billing country. </param>
         /// <param name="includeTransitionStatus"> A flag that specifies whether or not to include transition status for billing accounts with agreement type Microsoft Customer Agreement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<BillingPropertyResource> Get(bool? includeBillingCountry = null, bool? includeTransitionStatus = null, CancellationToken cancellationToken = default)
+        public virtual Response<BillingPropertyResource> Get(bool? includeBillingCountry = default, bool? includeTransitionStatus = default, CancellationToken cancellationToken = default)
         {
-            using var scope = _billingPropertyClientDiagnostics.CreateScope("BillingPropertyResource.Get");
+            using DiagnosticScope scope = _billingPropertyClientDiagnostics.CreateScope("BillingPropertyResource.Get");
             scope.Start();
             try
             {
-                var response = _billingPropertyRestClient.Get(Id.SubscriptionId, includeBillingCountry, includeTransitionStatus, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _billingPropertyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), includeBillingCountry, includeTransitionStatus, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<BillingPropertyData> response = Response.FromValue(BillingPropertyData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new BillingPropertyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -175,20 +194,20 @@ namespace Azure.ResourceManager.Billing
         /// Updates the billing property of a subscription. Currently, cost center can be updated for billing accounts with agreement type Microsoft Customer Agreement and subscription service usage address can be updated for billing accounts with agreement type Microsoft Online Service Program.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Billing/billingProperty/default</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Billing/billingProperty/default. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingProperty_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> BillingProperties_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingPropertyResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingPropertyResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -199,11 +218,21 @@ namespace Azure.ResourceManager.Billing
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _billingPropertyClientDiagnostics.CreateScope("BillingPropertyResource.Update");
+            using DiagnosticScope scope = _billingPropertyClientDiagnostics.CreateScope("BillingPropertyResource.Update");
             scope.Start();
             try
             {
-                var response = await _billingPropertyRestClient.UpdateAsync(Id.SubscriptionId, data, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _billingPropertyRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), BillingPropertyData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<BillingPropertyData> response = Response.FromValue(BillingPropertyData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new BillingPropertyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -217,20 +246,20 @@ namespace Azure.ResourceManager.Billing
         /// Updates the billing property of a subscription. Currently, cost center can be updated for billing accounts with agreement type Microsoft Customer Agreement and subscription service usage address can be updated for billing accounts with agreement type Microsoft Online Service Program.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Billing/billingProperty/default</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Billing/billingProperty/default. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingProperty_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> BillingProperties_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingPropertyResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingPropertyResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -241,11 +270,21 @@ namespace Azure.ResourceManager.Billing
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _billingPropertyClientDiagnostics.CreateScope("BillingPropertyResource.Update");
+            using DiagnosticScope scope = _billingPropertyClientDiagnostics.CreateScope("BillingPropertyResource.Update");
             scope.Start();
             try
             {
-                var response = _billingPropertyRestClient.Update(Id.SubscriptionId, data, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _billingPropertyRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), BillingPropertyData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<BillingPropertyData> response = Response.FromValue(BillingPropertyData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new BillingPropertyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -255,27 +294,7 @@ namespace Azure.ResourceManager.Billing
             }
         }
 
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Billing/billingProperty/default</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingProperty_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingPropertyResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -285,29 +304,35 @@ namespace Azure.ResourceManager.Billing
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _billingPropertyClientDiagnostics.CreateScope("BillingPropertyResource.AddTag");
+            using DiagnosticScope scope = _billingPropertyClientDiagnostics.CreateScope("BillingPropertyResource.AddTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _billingPropertyRestClient.GetAsync(Id.SubscriptionId, null, null, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new BillingPropertyResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _billingPropertyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), default, default, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<BillingPropertyData> response = Response.FromValue(BillingPropertyData.FromResponse(result), result);
+                    return Response.FromValue(new BillingPropertyResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new BillingPropertyData();
-                    foreach (var tag in current.Tags)
+                    BillingPropertyData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    BillingPropertyData patch = new BillingPropertyData();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    Response<BillingPropertyResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -317,27 +342,7 @@ namespace Azure.ResourceManager.Billing
             }
         }
 
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Billing/billingProperty/default</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingProperty_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingPropertyResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -347,29 +352,35 @@ namespace Azure.ResourceManager.Billing
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _billingPropertyClientDiagnostics.CreateScope("BillingPropertyResource.AddTag");
+            using DiagnosticScope scope = _billingPropertyClientDiagnostics.CreateScope("BillingPropertyResource.AddTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _billingPropertyRestClient.Get(Id.SubscriptionId, null, null, cancellationToken);
-                    return Response.FromValue(new BillingPropertyResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _billingPropertyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), default, default, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<BillingPropertyData> response = Response.FromValue(BillingPropertyData.FromResponse(result), result);
+                    return Response.FromValue(new BillingPropertyResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new BillingPropertyData();
-                    foreach (var tag in current.Tags)
+                    BillingPropertyData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    BillingPropertyData patch = new BillingPropertyData();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    Response<BillingPropertyResource> result = Update(patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -379,54 +390,40 @@ namespace Azure.ResourceManager.Billing
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Billing/billingProperty/default</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingProperty_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingPropertyResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<BillingPropertyResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _billingPropertyClientDiagnostics.CreateScope("BillingPropertyResource.SetTags");
+            using DiagnosticScope scope = _billingPropertyClientDiagnostics.CreateScope("BillingPropertyResource.SetTags");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _billingPropertyRestClient.GetAsync(Id.SubscriptionId, null, null, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new BillingPropertyResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _billingPropertyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), default, default, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<BillingPropertyData> response = Response.FromValue(BillingPropertyData.FromResponse(result), result);
+                    return Response.FromValue(new BillingPropertyResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new BillingPropertyData();
+                    BillingPropertyData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    BillingPropertyData patch = new BillingPropertyData();
                     patch.Tags.ReplaceWith(tags);
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    Response<BillingPropertyResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -436,54 +433,40 @@ namespace Azure.ResourceManager.Billing
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Billing/billingProperty/default</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingProperty_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingPropertyResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<BillingPropertyResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _billingPropertyClientDiagnostics.CreateScope("BillingPropertyResource.SetTags");
+            using DiagnosticScope scope = _billingPropertyClientDiagnostics.CreateScope("BillingPropertyResource.SetTags");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _billingPropertyRestClient.Get(Id.SubscriptionId, null, null, cancellationToken);
-                    return Response.FromValue(new BillingPropertyResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _billingPropertyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), default, default, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<BillingPropertyData> response = Response.FromValue(BillingPropertyData.FromResponse(result), result);
+                    return Response.FromValue(new BillingPropertyResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new BillingPropertyData();
+                    BillingPropertyData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    BillingPropertyData patch = new BillingPropertyData();
                     patch.Tags.ReplaceWith(tags);
-                    var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    Response<BillingPropertyResource> result = Update(patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -493,27 +476,7 @@ namespace Azure.ResourceManager.Billing
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Billing/billingProperty/default</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingProperty_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingPropertyResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -521,29 +484,35 @@ namespace Azure.ResourceManager.Billing
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _billingPropertyClientDiagnostics.CreateScope("BillingPropertyResource.RemoveTag");
+            using DiagnosticScope scope = _billingPropertyClientDiagnostics.CreateScope("BillingPropertyResource.RemoveTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _billingPropertyRestClient.GetAsync(Id.SubscriptionId, null, null, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new BillingPropertyResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _billingPropertyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), default, default, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<BillingPropertyData> response = Response.FromValue(BillingPropertyData.FromResponse(result), result);
+                    return Response.FromValue(new BillingPropertyResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new BillingPropertyData();
-                    foreach (var tag in current.Tags)
+                    BillingPropertyData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    BillingPropertyData patch = new BillingPropertyData();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    Response<BillingPropertyResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -553,27 +522,7 @@ namespace Azure.ResourceManager.Billing
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Billing/billingProperty/default</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BillingProperty_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingPropertyResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -581,29 +530,35 @@ namespace Azure.ResourceManager.Billing
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _billingPropertyClientDiagnostics.CreateScope("BillingPropertyResource.RemoveTag");
+            using DiagnosticScope scope = _billingPropertyClientDiagnostics.CreateScope("BillingPropertyResource.RemoveTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _billingPropertyRestClient.Get(Id.SubscriptionId, null, null, cancellationToken);
-                    return Response.FromValue(new BillingPropertyResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _billingPropertyRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), default, default, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<BillingPropertyData> response = Response.FromValue(BillingPropertyData.FromResponse(result), result);
+                    return Response.FromValue(new BillingPropertyResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new BillingPropertyData();
-                    foreach (var tag in current.Tags)
+                    BillingPropertyData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    BillingPropertyData patch = new BillingPropertyData();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    Response<BillingPropertyResource> result = Update(patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)

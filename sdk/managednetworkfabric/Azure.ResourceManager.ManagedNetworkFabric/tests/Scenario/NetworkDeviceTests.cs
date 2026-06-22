@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             TestContext.Out.WriteLine($"List by Subscription operation succeeded.");
 
             // Update Serial Number
-            NetworkDevicePatch patch = new NetworkDevicePatch()
+            NetworkDevicePatchContent patch = new NetworkDevicePatchContent()
             {
                 Annotation = "null",
                 HostName = "networkDeviceName",

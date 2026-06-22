@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct FirewallPolicyIntrusionDetectionProtocol : IEquatable<FirewallPolicyIntrusionDetectionProtocol>
     {
         private readonly string _value;
+        /// <summary> TCP. </summary>
+        private const string TCPValue = "TCP";
+        /// <summary> UDP. </summary>
+        private const string UDPValue = "UDP";
+        /// <summary> ICMP. </summary>
+        private const string ICMPValue = "ICMP";
+        /// <summary> ANY. </summary>
+        private const string ANYValue = "ANY";
 
         /// <summary> Initializes a new instance of <see cref="FirewallPolicyIntrusionDetectionProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public FirewallPolicyIntrusionDetectionProtocol(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string TcpValue = "TCP";
-        private const string UdpValue = "UDP";
-        private const string IcmpValue = "ICMP";
-        private const string AnyValue = "ANY";
-
         /// <summary> TCP. </summary>
-        public static FirewallPolicyIntrusionDetectionProtocol Tcp { get; } = new FirewallPolicyIntrusionDetectionProtocol(TcpValue);
+        public static FirewallPolicyIntrusionDetectionProtocol TCP { get; } = new FirewallPolicyIntrusionDetectionProtocol(TCPValue);
+
         /// <summary> UDP. </summary>
-        public static FirewallPolicyIntrusionDetectionProtocol Udp { get; } = new FirewallPolicyIntrusionDetectionProtocol(UdpValue);
+        public static FirewallPolicyIntrusionDetectionProtocol UDP { get; } = new FirewallPolicyIntrusionDetectionProtocol(UDPValue);
+
         /// <summary> ICMP. </summary>
-        public static FirewallPolicyIntrusionDetectionProtocol Icmp { get; } = new FirewallPolicyIntrusionDetectionProtocol(IcmpValue);
+        public static FirewallPolicyIntrusionDetectionProtocol ICMP { get; } = new FirewallPolicyIntrusionDetectionProtocol(ICMPValue);
+
         /// <summary> ANY. </summary>
-        public static FirewallPolicyIntrusionDetectionProtocol Any { get; } = new FirewallPolicyIntrusionDetectionProtocol(AnyValue);
+        public static FirewallPolicyIntrusionDetectionProtocol ANY { get; } = new FirewallPolicyIntrusionDetectionProtocol(ANYValue);
+
         /// <summary> Determines if two <see cref="FirewallPolicyIntrusionDetectionProtocol"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(FirewallPolicyIntrusionDetectionProtocol left, FirewallPolicyIntrusionDetectionProtocol right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="FirewallPolicyIntrusionDetectionProtocol"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(FirewallPolicyIntrusionDetectionProtocol left, FirewallPolicyIntrusionDetectionProtocol right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="FirewallPolicyIntrusionDetectionProtocol"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="FirewallPolicyIntrusionDetectionProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator FirewallPolicyIntrusionDetectionProtocol(string value) => new FirewallPolicyIntrusionDetectionProtocol(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="FirewallPolicyIntrusionDetectionProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator FirewallPolicyIntrusionDetectionProtocol?(string value) => value == null ? null : new FirewallPolicyIntrusionDetectionProtocol(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is FirewallPolicyIntrusionDetectionProtocol other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(FirewallPolicyIntrusionDetectionProtocol other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

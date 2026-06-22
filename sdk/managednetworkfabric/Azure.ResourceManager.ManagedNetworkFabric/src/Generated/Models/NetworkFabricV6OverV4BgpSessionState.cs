@@ -7,45 +7,65 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> v6 over v4 bgp session. </summary>
+    /// <summary> V6 over V4 BGP session state. </summary>
     public readonly partial struct NetworkFabricV6OverV4BgpSessionState : IEquatable<NetworkFabricV6OverV4BgpSessionState>
     {
         private readonly string _value;
+        /// <summary> V6OverV4BgpSessionState-Enabled. </summary>
+        private const string EnabledValue = "Enabled";
+        /// <summary> V6OverV4BgpSessionState-Disabled. </summary>
+        private const string DisabledValue = "Disabled";
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricV6OverV4BgpSessionState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NetworkFabricV6OverV4BgpSessionState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string EnabledValue = "Enabled";
-        private const string DisabledValue = "Disabled";
+            _value = value;
+        }
 
         /// <summary> V6OverV4BgpSessionState-Enabled. </summary>
         public static NetworkFabricV6OverV4BgpSessionState Enabled { get; } = new NetworkFabricV6OverV4BgpSessionState(EnabledValue);
+
         /// <summary> V6OverV4BgpSessionState-Disabled. </summary>
         public static NetworkFabricV6OverV4BgpSessionState Disabled { get; } = new NetworkFabricV6OverV4BgpSessionState(DisabledValue);
+
         /// <summary> Determines if two <see cref="NetworkFabricV6OverV4BgpSessionState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NetworkFabricV6OverV4BgpSessionState left, NetworkFabricV6OverV4BgpSessionState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NetworkFabricV6OverV4BgpSessionState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NetworkFabricV6OverV4BgpSessionState left, NetworkFabricV6OverV4BgpSessionState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NetworkFabricV6OverV4BgpSessionState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NetworkFabricV6OverV4BgpSessionState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NetworkFabricV6OverV4BgpSessionState(string value) => new NetworkFabricV6OverV4BgpSessionState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NetworkFabricV6OverV4BgpSessionState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NetworkFabricV6OverV4BgpSessionState?(string value) => value == null ? null : new NetworkFabricV6OverV4BgpSessionState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NetworkFabricV6OverV4BgpSessionState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NetworkFabricV6OverV4BgpSessionState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

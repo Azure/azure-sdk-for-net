@@ -6,88 +6,101 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A class representing a collection of <see cref="InboundSecurityRuleResource"/> and their operations.
     /// Each <see cref="InboundSecurityRuleResource"/> in the collection will belong to the same instance of <see cref="NetworkVirtualApplianceResource"/>.
-    /// To get an <see cref="InboundSecurityRuleCollection"/> instance call the GetInboundSecurityRules method from an instance of <see cref="NetworkVirtualApplianceResource"/>.
+    /// To get a <see cref="InboundSecurityRuleCollection"/> instance call the GetInboundSecurityRules method from an instance of <see cref="NetworkVirtualApplianceResource"/>.
     /// </summary>
     public partial class InboundSecurityRuleCollection : ArmCollection
     {
         private readonly ClientDiagnostics _inboundSecurityRuleClientDiagnostics;
-        private readonly InboundSecurityRuleRestOperations _inboundSecurityRuleRestClient;
+        private readonly InboundSecurityRule _inboundSecurityRuleRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="InboundSecurityRuleCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of InboundSecurityRuleCollection for mocking. </summary>
         protected InboundSecurityRuleCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="InboundSecurityRuleCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="InboundSecurityRuleCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal InboundSecurityRuleCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _inboundSecurityRuleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", InboundSecurityRuleResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(InboundSecurityRuleResource.ResourceType, out string inboundSecurityRuleApiVersion);
-            _inboundSecurityRuleRestClient = new InboundSecurityRuleRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, inboundSecurityRuleApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _inboundSecurityRuleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", InboundSecurityRuleResource.ResourceType.Namespace, Diagnostics);
+            _inboundSecurityRuleRestClient = new InboundSecurityRule(_inboundSecurityRuleClientDiagnostics, Pipeline, Endpoint, inboundSecurityRuleApiVersion ?? "2025-07-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != NetworkVirtualApplianceResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, NetworkVirtualApplianceResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, NetworkVirtualApplianceResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Creates or updates the specified Network Virtual Appliance Inbound Security Rules.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}/inboundSecurityRules/{ruleCollectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}/inboundSecurityRules/{ruleCollectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>InboundSecurityRule_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> InboundSecurityRuleOperationGroup_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="InboundSecurityRuleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="ruleCollectionName"> The name of security rule collection. </param>
+        /// <param name="ruleCollectionName"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="data"> Parameters supplied to the create or update Network Virtual Appliance Inbound Security Rules operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleCollectionName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<InboundSecurityRuleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string ruleCollectionName, InboundSecurityRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleCollectionName, nameof(ruleCollectionName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _inboundSecurityRuleClientDiagnostics.CreateScope("InboundSecurityRuleCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _inboundSecurityRuleClientDiagnostics.CreateScope("InboundSecurityRuleCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _inboundSecurityRuleRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleCollectionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<InboundSecurityRuleResource>(new InboundSecurityRuleOperationSource(Client), _inboundSecurityRuleClientDiagnostics, Pipeline, _inboundSecurityRuleRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleCollectionName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _inboundSecurityRuleRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleCollectionName, InboundSecurityRuleData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                NetworkArmOperation<InboundSecurityRuleResource> operation = new NetworkArmOperation<InboundSecurityRuleResource>(
+                    new InboundSecurityRuleResourceOperationSource(Client),
+                    _inboundSecurityRuleClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -101,42 +114,51 @@ namespace Azure.ResourceManager.Network
         /// Creates or updates the specified Network Virtual Appliance Inbound Security Rules.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}/inboundSecurityRules/{ruleCollectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}/inboundSecurityRules/{ruleCollectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>InboundSecurityRule_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> InboundSecurityRuleOperationGroup_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="InboundSecurityRuleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="ruleCollectionName"> The name of security rule collection. </param>
+        /// <param name="ruleCollectionName"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="data"> Parameters supplied to the create or update Network Virtual Appliance Inbound Security Rules operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleCollectionName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<InboundSecurityRuleResource> CreateOrUpdate(WaitUntil waitUntil, string ruleCollectionName, InboundSecurityRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleCollectionName, nameof(ruleCollectionName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _inboundSecurityRuleClientDiagnostics.CreateScope("InboundSecurityRuleCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _inboundSecurityRuleClientDiagnostics.CreateScope("InboundSecurityRuleCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _inboundSecurityRuleRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleCollectionName, data, cancellationToken);
-                var operation = new NetworkArmOperation<InboundSecurityRuleResource>(new InboundSecurityRuleOperationSource(Client), _inboundSecurityRuleClientDiagnostics, Pipeline, _inboundSecurityRuleRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleCollectionName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _inboundSecurityRuleRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleCollectionName, InboundSecurityRuleData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                NetworkArmOperation<InboundSecurityRuleResource> operation = new NetworkArmOperation<InboundSecurityRuleResource>(
+                    new InboundSecurityRuleResourceOperationSource(Client),
+                    _inboundSecurityRuleClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -150,38 +172,42 @@ namespace Azure.ResourceManager.Network
         /// Retrieves the available specified Network Virtual Appliance Inbound Security Rules Collection.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}/inboundSecurityRules/{ruleCollectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}/inboundSecurityRules/{ruleCollectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>InboundSecurityRule_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> InboundSecurityRuleOperationGroup_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="InboundSecurityRuleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="ruleCollectionName"> The name of security rule collection. </param>
+        /// <param name="ruleCollectionName"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleCollectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<InboundSecurityRuleResource>> GetAsync(string ruleCollectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleCollectionName, nameof(ruleCollectionName));
 
-            using var scope = _inboundSecurityRuleClientDiagnostics.CreateScope("InboundSecurityRuleCollection.Get");
+            using DiagnosticScope scope = _inboundSecurityRuleClientDiagnostics.CreateScope("InboundSecurityRuleCollection.Get");
             scope.Start();
             try
             {
-                var response = await _inboundSecurityRuleRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleCollectionName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _inboundSecurityRuleRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleCollectionName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<InboundSecurityRuleData> response = Response.FromValue(InboundSecurityRuleData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new InboundSecurityRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -195,38 +221,42 @@ namespace Azure.ResourceManager.Network
         /// Retrieves the available specified Network Virtual Appliance Inbound Security Rules Collection.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}/inboundSecurityRules/{ruleCollectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}/inboundSecurityRules/{ruleCollectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>InboundSecurityRule_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> InboundSecurityRuleOperationGroup_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="InboundSecurityRuleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="ruleCollectionName"> The name of security rule collection. </param>
+        /// <param name="ruleCollectionName"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleCollectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<InboundSecurityRuleResource> Get(string ruleCollectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleCollectionName, nameof(ruleCollectionName));
 
-            using var scope = _inboundSecurityRuleClientDiagnostics.CreateScope("InboundSecurityRuleCollection.Get");
+            using DiagnosticScope scope = _inboundSecurityRuleClientDiagnostics.CreateScope("InboundSecurityRuleCollection.Get");
             scope.Start();
             try
             {
-                var response = _inboundSecurityRuleRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleCollectionName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _inboundSecurityRuleRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleCollectionName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<InboundSecurityRuleData> response = Response.FromValue(InboundSecurityRuleData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new InboundSecurityRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -240,36 +270,50 @@ namespace Azure.ResourceManager.Network
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}/inboundSecurityRules/{ruleCollectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}/inboundSecurityRules/{ruleCollectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>InboundSecurityRule_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> InboundSecurityRuleOperationGroup_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="InboundSecurityRuleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="ruleCollectionName"> The name of security rule collection. </param>
+        /// <param name="ruleCollectionName"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleCollectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string ruleCollectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleCollectionName, nameof(ruleCollectionName));
 
-            using var scope = _inboundSecurityRuleClientDiagnostics.CreateScope("InboundSecurityRuleCollection.Exists");
+            using DiagnosticScope scope = _inboundSecurityRuleClientDiagnostics.CreateScope("InboundSecurityRuleCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _inboundSecurityRuleRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleCollectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _inboundSecurityRuleRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleCollectionName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<InboundSecurityRuleData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(InboundSecurityRuleData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((InboundSecurityRuleData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -283,36 +327,50 @@ namespace Azure.ResourceManager.Network
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}/inboundSecurityRules/{ruleCollectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}/inboundSecurityRules/{ruleCollectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>InboundSecurityRule_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> InboundSecurityRuleOperationGroup_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="InboundSecurityRuleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="ruleCollectionName"> The name of security rule collection. </param>
+        /// <param name="ruleCollectionName"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleCollectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string ruleCollectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleCollectionName, nameof(ruleCollectionName));
 
-            using var scope = _inboundSecurityRuleClientDiagnostics.CreateScope("InboundSecurityRuleCollection.Exists");
+            using DiagnosticScope scope = _inboundSecurityRuleClientDiagnostics.CreateScope("InboundSecurityRuleCollection.Exists");
             scope.Start();
             try
             {
-                var response = _inboundSecurityRuleRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleCollectionName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _inboundSecurityRuleRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleCollectionName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<InboundSecurityRuleData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(InboundSecurityRuleData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((InboundSecurityRuleData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -326,38 +384,54 @@ namespace Azure.ResourceManager.Network
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}/inboundSecurityRules/{ruleCollectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}/inboundSecurityRules/{ruleCollectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>InboundSecurityRule_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> InboundSecurityRuleOperationGroup_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="InboundSecurityRuleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="ruleCollectionName"> The name of security rule collection. </param>
+        /// <param name="ruleCollectionName"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleCollectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<InboundSecurityRuleResource>> GetIfExistsAsync(string ruleCollectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleCollectionName, nameof(ruleCollectionName));
 
-            using var scope = _inboundSecurityRuleClientDiagnostics.CreateScope("InboundSecurityRuleCollection.GetIfExists");
+            using DiagnosticScope scope = _inboundSecurityRuleClientDiagnostics.CreateScope("InboundSecurityRuleCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _inboundSecurityRuleRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleCollectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _inboundSecurityRuleRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleCollectionName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<InboundSecurityRuleData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(InboundSecurityRuleData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((InboundSecurityRuleData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<InboundSecurityRuleResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new InboundSecurityRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -371,38 +445,54 @@ namespace Azure.ResourceManager.Network
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}/inboundSecurityRules/{ruleCollectionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkVirtualAppliances/{networkVirtualApplianceName}/inboundSecurityRules/{ruleCollectionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>InboundSecurityRule_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> InboundSecurityRuleOperationGroup_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="InboundSecurityRuleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="ruleCollectionName"> The name of security rule collection. </param>
+        /// <param name="ruleCollectionName"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleCollectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<InboundSecurityRuleResource> GetIfExists(string ruleCollectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleCollectionName, nameof(ruleCollectionName));
 
-            using var scope = _inboundSecurityRuleClientDiagnostics.CreateScope("InboundSecurityRuleCollection.GetIfExists");
+            using DiagnosticScope scope = _inboundSecurityRuleClientDiagnostics.CreateScope("InboundSecurityRuleCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _inboundSecurityRuleRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ruleCollectionName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _inboundSecurityRuleRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleCollectionName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<InboundSecurityRuleData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(InboundSecurityRuleData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((InboundSecurityRuleData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<InboundSecurityRuleResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new InboundSecurityRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

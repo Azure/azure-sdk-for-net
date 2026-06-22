@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,59 +15,92 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct OwaspCrsExclusionEntryMatchVariable : IEquatable<OwaspCrsExclusionEntryMatchVariable>
     {
         private readonly string _value;
+        /// <summary> RequestHeaderNames. </summary>
+        private const string RequestHeaderNamesValue = "RequestHeaderNames";
+        /// <summary> RequestCookieNames. </summary>
+        private const string RequestCookieNamesValue = "RequestCookieNames";
+        /// <summary> RequestArgNames. </summary>
+        private const string RequestArgNamesValue = "RequestArgNames";
+        /// <summary> RequestHeaderKeys. </summary>
+        private const string RequestHeaderKeysValue = "RequestHeaderKeys";
+        /// <summary> RequestHeaderValues. </summary>
+        private const string RequestHeaderValuesValue = "RequestHeaderValues";
+        /// <summary> RequestCookieKeys. </summary>
+        private const string RequestCookieKeysValue = "RequestCookieKeys";
+        /// <summary> RequestCookieValues. </summary>
+        private const string RequestCookieValuesValue = "RequestCookieValues";
+        /// <summary> RequestArgKeys. </summary>
+        private const string RequestArgKeysValue = "RequestArgKeys";
+        /// <summary> RequestArgValues. </summary>
+        private const string RequestArgValuesValue = "RequestArgValues";
 
         /// <summary> Initializes a new instance of <see cref="OwaspCrsExclusionEntryMatchVariable"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public OwaspCrsExclusionEntryMatchVariable(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string RequestHeaderNamesValue = "RequestHeaderNames";
-        private const string RequestCookieNamesValue = "RequestCookieNames";
-        private const string RequestArgNamesValue = "RequestArgNames";
-        private const string RequestHeaderKeysValue = "RequestHeaderKeys";
-        private const string RequestHeaderValuesValue = "RequestHeaderValues";
-        private const string RequestCookieKeysValue = "RequestCookieKeys";
-        private const string RequestCookieValuesValue = "RequestCookieValues";
-        private const string RequestArgKeysValue = "RequestArgKeys";
-        private const string RequestArgValuesValue = "RequestArgValues";
+            _value = value;
+        }
 
         /// <summary> RequestHeaderNames. </summary>
         public static OwaspCrsExclusionEntryMatchVariable RequestHeaderNames { get; } = new OwaspCrsExclusionEntryMatchVariable(RequestHeaderNamesValue);
+
         /// <summary> RequestCookieNames. </summary>
         public static OwaspCrsExclusionEntryMatchVariable RequestCookieNames { get; } = new OwaspCrsExclusionEntryMatchVariable(RequestCookieNamesValue);
+
         /// <summary> RequestArgNames. </summary>
         public static OwaspCrsExclusionEntryMatchVariable RequestArgNames { get; } = new OwaspCrsExclusionEntryMatchVariable(RequestArgNamesValue);
+
         /// <summary> RequestHeaderKeys. </summary>
         public static OwaspCrsExclusionEntryMatchVariable RequestHeaderKeys { get; } = new OwaspCrsExclusionEntryMatchVariable(RequestHeaderKeysValue);
+
         /// <summary> RequestHeaderValues. </summary>
         public static OwaspCrsExclusionEntryMatchVariable RequestHeaderValues { get; } = new OwaspCrsExclusionEntryMatchVariable(RequestHeaderValuesValue);
+
         /// <summary> RequestCookieKeys. </summary>
         public static OwaspCrsExclusionEntryMatchVariable RequestCookieKeys { get; } = new OwaspCrsExclusionEntryMatchVariable(RequestCookieKeysValue);
+
         /// <summary> RequestCookieValues. </summary>
         public static OwaspCrsExclusionEntryMatchVariable RequestCookieValues { get; } = new OwaspCrsExclusionEntryMatchVariable(RequestCookieValuesValue);
+
         /// <summary> RequestArgKeys. </summary>
         public static OwaspCrsExclusionEntryMatchVariable RequestArgKeys { get; } = new OwaspCrsExclusionEntryMatchVariable(RequestArgKeysValue);
+
         /// <summary> RequestArgValues. </summary>
         public static OwaspCrsExclusionEntryMatchVariable RequestArgValues { get; } = new OwaspCrsExclusionEntryMatchVariable(RequestArgValuesValue);
+
         /// <summary> Determines if two <see cref="OwaspCrsExclusionEntryMatchVariable"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(OwaspCrsExclusionEntryMatchVariable left, OwaspCrsExclusionEntryMatchVariable right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="OwaspCrsExclusionEntryMatchVariable"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(OwaspCrsExclusionEntryMatchVariable left, OwaspCrsExclusionEntryMatchVariable right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="OwaspCrsExclusionEntryMatchVariable"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="OwaspCrsExclusionEntryMatchVariable"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator OwaspCrsExclusionEntryMatchVariable(string value) => new OwaspCrsExclusionEntryMatchVariable(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="OwaspCrsExclusionEntryMatchVariable"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator OwaspCrsExclusionEntryMatchVariable?(string value) => value == null ? null : new OwaspCrsExclusionEntryMatchVariable(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is OwaspCrsExclusionEntryMatchVariable other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(OwaspCrsExclusionEntryMatchVariable other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -14,44 +15,63 @@ namespace Azure.ResourceManager.Compute.Models
     public readonly partial struct ConfidentialVmEncryptionType : IEquatable<ConfidentialVmEncryptionType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ConfidentialVmEncryptionType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ConfidentialVmEncryptionType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string EncryptedVmGuestStateOnlyWithPmkValue = "EncryptedVMGuestStateOnlyWithPmk";
         private const string EncryptedWithPmkValue = "EncryptedWithPmk";
         private const string EncryptedWithCmkValue = "EncryptedWithCmk";
         private const string NonPersistedTPMValue = "NonPersistedTPM";
 
-        /// <summary> EncryptedVMGuestStateOnlyWithPmk. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfidentialVmEncryptionType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ConfidentialVmEncryptionType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the EncryptedVmGuestStateOnlyWithPmk. </summary>
         public static ConfidentialVmEncryptionType EncryptedVmGuestStateOnlyWithPmk { get; } = new ConfidentialVmEncryptionType(EncryptedVmGuestStateOnlyWithPmkValue);
-        /// <summary> EncryptedWithPmk. </summary>
+
+        /// <summary> Gets the EncryptedWithPmk. </summary>
         public static ConfidentialVmEncryptionType EncryptedWithPmk { get; } = new ConfidentialVmEncryptionType(EncryptedWithPmkValue);
-        /// <summary> EncryptedWithCmk. </summary>
+
+        /// <summary> Gets the EncryptedWithCmk. </summary>
         public static ConfidentialVmEncryptionType EncryptedWithCmk { get; } = new ConfidentialVmEncryptionType(EncryptedWithCmkValue);
-        /// <summary> NonPersistedTPM. </summary>
+
+        /// <summary> Gets the NonPersistedTPM. </summary>
         public static ConfidentialVmEncryptionType NonPersistedTPM { get; } = new ConfidentialVmEncryptionType(NonPersistedTPMValue);
+
         /// <summary> Determines if two <see cref="ConfidentialVmEncryptionType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ConfidentialVmEncryptionType left, ConfidentialVmEncryptionType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ConfidentialVmEncryptionType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ConfidentialVmEncryptionType left, ConfidentialVmEncryptionType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ConfidentialVmEncryptionType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ConfidentialVmEncryptionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ConfidentialVmEncryptionType(string value) => new ConfidentialVmEncryptionType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ConfidentialVmEncryptionType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ConfidentialVmEncryptionType?(string value) => value == null ? null : new ConfidentialVmEncryptionType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ConfidentialVmEncryptionType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ConfidentialVmEncryptionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

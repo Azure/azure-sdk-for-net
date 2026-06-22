@@ -3,8 +3,10 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using OpenAI;
 using OpenAI.Responses;
@@ -1139,7 +1141,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> A new <see cref="Agents.CreateAgentFromCodeOptions"/> instance for mocking. </returns>
         public static CreateAgentFromCodeOptions CreateAgentFromCodeOptions(CreateAgentVersionFromCodeMetadata metadata = default, BinaryData code = default)
         {
-            return new CreateAgentFromCodeOptions(metadata, code, additionalBinaryDataProperties: null);
+            return new CreateAgentFromCodeOptions(metadata, code);
         }
 
         /// <summary>
@@ -1429,19 +1431,19 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Caller-supplied inputs for an optimization job. </summary>
         /// <param name="agent"> The agent (and pinned version) being optimized. </param>
-        /// <param name="trainDatasetReference"> Reference to a registered training dataset (required). </param>
-        /// <param name="validationDatasetReference"> Optional held-out validation dataset for measuring generalization of the final candidate. </param>
-        /// <param name="evaluators"> Job-level evaluators (referenced by name). Per-task criteria may override. Default: ['task_adherence']. </param>
+        /// <param name="trainDataset"> Training dataset — either inline items or a reference to a registered dataset. Required. </param>
+        /// <param name="validationDataset"> Optional held-out validation dataset for measuring generalization of the final candidate. </param>
+        /// <param name="evaluators"> Job-level evaluators referenced by name and optional version. Required; at least one must be provided. </param>
         /// <param name="options"> Tuning knobs and run-mode. </param>
         /// <returns> A new <see cref="Agents.OptimizationJobInputs"/> instance for mocking. </returns>
-        public static OptimizationJobInputs OptimizationJobInputs(AgentIdentifier agent = default, DatasetRef trainDatasetReference = default, DatasetRef validationDatasetReference = default, IEnumerable<string> evaluators = default, OptimizationOptions options = default)
+        public static OptimizationJobInputs OptimizationJobInputs(OptimizationAgentIdentifier agent = default, OptimizationDatasetInput trainDataset = default, OptimizationDatasetInput validationDataset = default, IEnumerable<OptimizationEvaluatorRef> evaluators = default, OptimizationOptions options = default)
         {
-            evaluators ??= new ChangeTrackingList<string>();
+            evaluators ??= new ChangeTrackingList<OptimizationEvaluatorRef>();
 
             return new OptimizationJobInputs(
                 agent,
-                trainDatasetReference,
-                validationDatasetReference,
+                trainDataset,
+                validationDataset,
                 evaluators.ToList(),
                 options,
                 additionalBinaryDataProperties: null);
@@ -1450,34 +1452,86 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Identifies the registered Foundry agent to optimize (request-only). Skills, tools, and system_prompt are specified in options.optimization_config. </summary>
         /// <param name="agentName"> Registered Foundry agent name (required). </param>
         /// <param name="agentVersion"> Pinned agent version. Defaults to latest if omitted. </param>
-        /// <returns> A new <see cref="Agents.AgentIdentifier"/> instance for mocking. </returns>
-        public static AgentIdentifier AgentIdentifier(string agentName = default, string agentVersion = default)
+        /// <returns> A new <see cref="Agents.OptimizationAgentIdentifier"/> instance for mocking. </returns>
+        public static OptimizationAgentIdentifier OptimizationAgentIdentifier(string agentName = default, string agentVersion = default)
         {
-            return new AgentIdentifier(agentName, agentVersion, additionalBinaryDataProperties: null);
+            return new OptimizationAgentIdentifier(agentName, agentVersion, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Reference to a registered dataset in the Foundry Dataset Service. </summary>
-        /// <param name="name"> Dataset name. </param>
-        /// <param name="version"> Dataset version. If not specified, the latest version is used. </param>
-        /// <returns> A new <see cref="Agents.DatasetRef"/> instance for mocking. </returns>
-        public static DatasetRef DatasetRef(string name = default, string version = default)
+        /// <summary>
+        /// Base discriminated model for dataset input. Either inline items or a registered reference.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.OptimizationInlineDatasetInput"/> and <see cref="Agents.OptimizationReferenceDatasetInput"/>.
+        /// </summary>
+        /// <param name="type"> Dataset input type discriminator. </param>
+        /// <returns> A new <see cref="Agents.OptimizationDatasetInput"/> instance for mocking. </returns>
+        public static OptimizationDatasetInput OptimizationDatasetInput(string @type = default)
         {
-            return new DatasetRef(name, version, additionalBinaryDataProperties: null);
+            return new UnknownOptimizationDatasetInput(new OptimizationDatasetInputType(@type), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Inline dataset — items supplied directly in the request body. </summary>
+        /// <param name="items"> Dataset items. </param>
+        /// <returns> A new <see cref="Agents.OptimizationInlineDatasetInput"/> instance for mocking. </returns>
+        public static OptimizationInlineDatasetInput OptimizationInlineDatasetInput(IEnumerable<OptimizationDatasetItem> items = default)
+        {
+            items ??= new ChangeTrackingList<OptimizationDatasetItem>();
+
+            return new OptimizationInlineDatasetInput(OptimizationDatasetInputType.Inline, additionalBinaryDataProperties: null, items.ToList());
+        }
+
+        /// <summary> A single item in an inline dataset. </summary>
+        /// <param name="query"> The user query / prompt. </param>
+        /// <param name="groundTruth"> Expected ground truth answer. </param>
+        /// <param name="desiredNumTurns"> Desired number of conversation turns for simulation mode (1-20). </param>
+        /// <param name="criteria"> Per-item evaluation criteria. </param>
+        /// <returns> A new <see cref="Agents.OptimizationDatasetItem"/> instance for mocking. </returns>
+        public static OptimizationDatasetItem OptimizationDatasetItem(string query = default, string groundTruth = default, int? desiredNumTurns = default, IEnumerable<OptimizationDatasetCriterion> criteria = default)
+        {
+            criteria ??= new ChangeTrackingList<OptimizationDatasetCriterion>();
+
+            return new OptimizationDatasetItem(query, groundTruth, desiredNumTurns, criteria.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Evaluation criterion: a name + instruction pair used for per-item scoring. </summary>
+        /// <param name="name"> Criterion name. </param>
+        /// <param name="instruction"> Criterion instruction / description. </param>
+        /// <returns> A new <see cref="Agents.OptimizationDatasetCriterion"/> instance for mocking. </returns>
+        public static OptimizationDatasetCriterion OptimizationDatasetCriterion(string name = default, string instruction = default)
+        {
+            return new OptimizationDatasetCriterion(name, instruction, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Reference to a registered Foundry dataset. </summary>
+        /// <param name="name"> Registered dataset name. </param>
+        /// <param name="version"> Dataset version. If not specified, the latest version is used. </param>
+        /// <returns> A new <see cref="Agents.OptimizationReferenceDatasetInput"/> instance for mocking. </returns>
+        public static OptimizationReferenceDatasetInput OptimizationReferenceDatasetInput(string name = default, string version = default)
+        {
+            return new OptimizationReferenceDatasetInput(OptimizationDatasetInputType.Reference, additionalBinaryDataProperties: null, name, version);
+        }
+
+        /// <summary> Reference to a named evaluator, optionally pinned to a version. </summary>
+        /// <param name="name"> Evaluator name. </param>
+        /// <param name="version"> Evaluator version. If not specified, the latest version is used. </param>
+        /// <returns> A new <see cref="Agents.OptimizationEvaluatorRef"/> instance for mocking. </returns>
+        public static OptimizationEvaluatorRef OptimizationEvaluatorRef(string name = default, string version = default)
+        {
+            return new OptimizationEvaluatorRef(name, version, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Tuning knobs and run-mode for an optimization job. </summary>
-        /// <param name="maxIterations"> Maximum optimization iterations per strategy. Must be &gt;= 1. Default: 5. </param>
+        /// <param name="maxCandidates"> Maximum number of optimization candidates to generate. Must be &gt;= 1. Default: 5. </param>
         /// <param name="optimizationConfig"> Per-target-attribute configuration overrides. Contains skills, tools, system_prompt for the agent, plus model space for model optimization. </param>
         /// <param name="evalModel"> Model deployment used for evaluation. Defaults to server config (typically 'gpt-4o'). </param>
         /// <param name="optimizationModel"> Model deployment for optimization reasoning (must be gpt-5 family). Falls back to the default eval model when not set. </param>
         /// <param name="evaluationLevel"> Evaluation granularity. Null/omitted means per-item single-turn. Set to 'conversation' for per-conversation multi-turn simulation scoring. </param>
         /// <returns> A new <see cref="Agents.OptimizationOptions"/> instance for mocking. </returns>
-        public static OptimizationOptions OptimizationOptions(int? maxIterations = default, IDictionary<string, BinaryData> optimizationConfig = default, string evalModel = default, string optimizationModel = default, EvaluationLevel? evaluationLevel = default)
+        public static OptimizationOptions OptimizationOptions(int? maxCandidates = default, IDictionary<string, BinaryData> optimizationConfig = default, string evalModel = default, string optimizationModel = default, EvaluationLevel? evaluationLevel = default)
         {
             optimizationConfig ??= new ChangeTrackingDictionary<string, BinaryData>();
 
             return new OptimizationOptions(
-                maxIterations,
+                maxCandidates,
                 optimizationConfig,
                 evalModel,
                 optimizationModel,
@@ -1486,116 +1540,40 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> Terminal-state result body. Populated when status is succeeded or failed. </summary>
-        /// <param name="baseline"> Evaluation scores for the original (un-optimized) agent configuration. </param>
-        /// <param name="best"> The highest-scoring candidate found during optimization. </param>
+        /// <param name="baseline"> Candidate ID of the original (un-optimized) baseline evaluation. </param>
+        /// <param name="best"> Candidate ID of the highest-scoring candidate found during optimization. </param>
         /// <param name="candidates"> All evaluated candidates including baseline. </param>
-        /// <param name="options"> The options used for this optimization run. </param>
-        /// <param name="warnings"> Non-fatal warnings from the optimization run (e.g., target attribute failures that were skipped). </param>
-        /// <param name="allTargetAttributesFailed"> True when all target attributes failed — only the baseline was evaluated. </param>
         /// <returns> A new <see cref="Agents.OptimizationJobResult"/> instance for mocking. </returns>
-        public static OptimizationJobResult OptimizationJobResult(OptimizationCandidate baseline = default, OptimizationCandidate best = default, IEnumerable<OptimizationCandidate> candidates = default, OptimizationOptions options = default, IEnumerable<string> warnings = default, bool? allTargetAttributesFailed = default)
+        public static OptimizationJobResult OptimizationJobResult(string baseline = default, string best = default, IEnumerable<OptimizationCandidate> candidates = default)
         {
             candidates ??= new ChangeTrackingList<OptimizationCandidate>();
-            warnings ??= new ChangeTrackingList<string>();
 
-            return new OptimizationJobResult(
-                baseline,
-                best,
-                candidates.ToList(),
-                options,
-                warnings.ToList(),
-                allTargetAttributesFailed,
-                additionalBinaryDataProperties: null);
+            return new OptimizationJobResult(baseline, best, candidates.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Aggregated evaluation result for a single candidate agent configuration across all tasks. </summary>
         /// <param name="candidateId"> Server-assigned candidate identifier. Use with GET /candidates/{id} sub-endpoints. </param>
         /// <param name="name"> Display name of the candidate (e.g., 'baseline', 'instruction-v2'). </param>
-        /// <param name="config"> The agent configuration that produced this candidate. </param>
         /// <param name="mutations"> What was mutated from the baseline (e.g., {system_prompt: 'new prompt'}). </param>
         /// <param name="avgScore"> Average composite score across all tasks. </param>
         /// <param name="avgTokens"> Average token usage across all tasks. </param>
-        /// <param name="passRate"> Fraction of tasks that met the pass threshold. </param>
-        /// <param name="taskScores"> Individual task-level scores. </param>
-        /// <param name="isParetoOptimal"> Whether this candidate is on the Pareto frontier (score vs cost). </param>
         /// <param name="evalId"> Foundry evaluation identifier used to score this candidate. </param>
         /// <param name="evalRunId"> Foundry evaluation run identifier for this candidate's scoring run. </param>
         /// <param name="promotion"> Promotion metadata. Null if the candidate has not been promoted. </param>
         /// <returns> A new <see cref="Agents.OptimizationCandidate"/> instance for mocking. </returns>
-        public static OptimizationCandidate OptimizationCandidate(string candidateId = default, string name = default, OptimizationAgentDefinition config = default, IDictionary<string, BinaryData> mutations = default, double avgScore = default, double avgTokens = default, double passRate = default, IEnumerable<OptimizationTaskResult> taskScores = default, bool isParetoOptimal = default, string evalId = default, string evalRunId = default, PromotionInfo promotion = default)
+        public static OptimizationCandidate OptimizationCandidate(string candidateId = default, string name = default, IDictionary<string, BinaryData> mutations = default, double avgScore = default, double avgTokens = default, string evalId = default, string evalRunId = default, PromotionInfo promotion = default)
         {
             mutations ??= new ChangeTrackingDictionary<string, BinaryData>();
-            taskScores ??= new ChangeTrackingList<OptimizationTaskResult>();
 
             return new OptimizationCandidate(
                 candidateId,
                 name,
-                config,
                 mutations,
                 avgScore,
                 avgTokens,
-                passRate,
-                taskScores.ToList(),
-                isParetoOptimal,
                 evalId,
                 evalRunId,
                 promotion,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Agent definition returned in response payloads (includes resolved config). </summary>
-        /// <param name="agentName"> Agent name. </param>
-        /// <param name="agentVersion"> Agent version. </param>
-        /// <param name="model"> Model deployment name. </param>
-        /// <param name="systemPrompt"> System prompt / instructions. </param>
-        /// <param name="skills"> Agent skills. </param>
-        /// <param name="tools"> Agent tools. </param>
-        /// <returns> A new <see cref="Agents.OptimizationAgentDefinition"/> instance for mocking. </returns>
-        public static OptimizationAgentDefinition OptimizationAgentDefinition(string agentName = default, string agentVersion = default, string model = default, string systemPrompt = default, IEnumerable<IDictionary<string, BinaryData>> skills = default, IEnumerable<IDictionary<string, BinaryData>> tools = default)
-        {
-            skills ??= new ChangeTrackingList<IDictionary<string, BinaryData>>();
-            tools ??= new ChangeTrackingList<IDictionary<string, BinaryData>>();
-
-            return new OptimizationAgentDefinition(
-                agentName,
-                agentVersion,
-                model,
-                systemPrompt,
-                skills.ToList(),
-                tools.ToList(),
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Per-task evaluation result for a single candidate. </summary>
-        /// <param name="taskName"> Task name (from the dataset). </param>
-        /// <param name="query"> The user query / input for the task. </param>
-        /// <param name="scores"> Per-evaluator scores keyed by evaluator name. </param>
-        /// <param name="compositeScore"> Composite score combining all evaluator scores. </param>
-        /// <param name="tokens"> Total tokens consumed during the agent run for this task. </param>
-        /// <param name="durationSeconds"> Wall-clock seconds for this task's agent execution. </param>
-        /// <param name="passed"> Whether the task met the pass threshold. </param>
-        /// <param name="errorMessage"> Error message if the task failed during execution. </param>
-        /// <param name="rationales"> Per-evaluator reasoning keyed by evaluator name. </param>
-        /// <param name="response"> Raw agent response text. </param>
-        /// <param name="runId"> Identifier of the agent run that produced this result. </param>
-        /// <returns> A new <see cref="Agents.OptimizationTaskResult"/> instance for mocking. </returns>
-        public static OptimizationTaskResult OptimizationTaskResult(string taskName = default, string query = default, IDictionary<string, double> scores = default, double compositeScore = default, long tokens = default, TimeSpan durationSeconds = default, bool passed = default, string errorMessage = default, IDictionary<string, string> rationales = default, string response = default, string runId = default)
-        {
-            scores ??= new ChangeTrackingDictionary<string, double>();
-            rationales ??= new ChangeTrackingDictionary<string, string>();
-
-            return new OptimizationTaskResult(
-                taskName,
-                query,
-                scores,
-                compositeScore,
-                tokens,
-                durationSeconds,
-                passed,
-                errorMessage,
-                rationales,
-                response,
-                runId,
                 additionalBinaryDataProperties: null);
         }
 
@@ -1610,136 +1588,13 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> In-flight progress; only populated while status is queued or in_progress. </summary>
-        /// <param name="currentIteration"> 1-based current iteration index. </param>
+        /// <param name="candidatesCompleted"> Number of candidates whose evaluation has completed so far. </param>
         /// <param name="bestScore"> Best score observed so far across all candidates. </param>
         /// <param name="elapsedSeconds"> Wall-clock time elapsed in seconds since the job began executing. </param>
         /// <returns> A new <see cref="Agents.OptimizationJobProgress"/> instance for mocking. </returns>
-        public static OptimizationJobProgress OptimizationJobProgress(int currentIteration = default, double bestScore = default, double elapsedSeconds = default)
+        public static OptimizationJobProgress OptimizationJobProgress(int candidatesCompleted = default, double bestScore = default, double elapsedSeconds = default)
         {
-            return new OptimizationJobProgress(currentIteration, bestScore, elapsedSeconds, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Metadata about the dataset used for optimization, surfaced in the response. </summary>
-        /// <param name="name"> Dataset name when using a registered dataset reference. Null for inline datasets. </param>
-        /// <param name="version"> Dataset version when using a registered dataset reference. Null for inline datasets. </param>
-        /// <param name="taskCount"> Number of tasks/rows in the dataset. </param>
-        /// <param name="isInline"> True when the dataset was provided inline in the request body. </param>
-        /// <returns> A new <see cref="Agents.DatasetInfo"/> instance for mocking. </returns>
-        public static DatasetInfo DatasetInfo(string name = default, string version = default, int taskCount = default, bool isInline = default)
-        {
-            return new DatasetInfo(name, version, taskCount, isInline, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The response data for a requested list of items. </summary>
-        /// <param name="data"> The requested list of items. </param>
-        /// <param name="firstId"> The first ID represented in this list. </param>
-        /// <param name="lastId"> The last ID represented in this list. </param>
-        /// <param name="hasMore"> A value indicating whether there are additional values available not captured in this list. </param>
-        /// <returns> A new <see cref="Agents.AgentsPagedResultOptimizationCandidate"/> instance for mocking. </returns>
-        public static AgentsPagedResultOptimizationCandidate AgentsPagedResultOptimizationCandidate(IEnumerable<OptimizationCandidate> data = default, string firstId = default, string lastId = default, bool hasMore = default)
-        {
-            data ??= new ChangeTrackingList<OptimizationCandidate>();
-
-            return new AgentsPagedResultOptimizationCandidate(data.ToList(), firstId, lastId, hasMore, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Candidate metadata returned by GET /candidates/{id}. </summary>
-        /// <param name="candidateId"> Server-assigned candidate identifier. </param>
-        /// <param name="jobId"> Owning optimization job id. </param>
-        /// <param name="candidateName"> Display name of the candidate. </param>
-        /// <param name="status"> Candidate lifecycle status. </param>
-        /// <param name="score"> Candidate's aggregate score. </param>
-        /// <param name="hasResults"> Whether detailed results are available for this candidate. </param>
-        /// <param name="createdAt"> Timestamp when the candidate was created, represented in Unix time. </param>
-        /// <param name="updatedAt"> Timestamp when the candidate was last updated, represented in Unix time. </param>
-        /// <param name="promotion"> Promotion metadata. Null if not promoted. </param>
-        /// <param name="files"> Files in the candidate's blob directory. </param>
-        /// <returns> A new <see cref="Agents.CandidateMetadata"/> instance for mocking. </returns>
-        public static CandidateMetadata CandidateMetadata(string candidateId = default, string jobId = default, string candidateName = default, string status = default, double? score = default, bool hasResults = default, DateTimeOffset createdAt = default, DateTimeOffset updatedAt = default, PromotionInfo promotion = default, IEnumerable<CandidateFileInfo> files = default)
-        {
-            files ??= new ChangeTrackingList<CandidateFileInfo>();
-
-            return new CandidateMetadata(
-                candidateId,
-                jobId,
-                candidateName,
-                status,
-                score,
-                hasResults,
-                createdAt,
-                updatedAt,
-                promotion,
-                files.ToList(),
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> File entry in a candidate's blob directory. </summary>
-        /// <param name="path"> Relative path of the file. </param>
-        /// <param name="type"> File type category (e.g. 'config', 'results'). </param>
-        /// <param name="sizeBytes"> File size in bytes. </param>
-        /// <returns> A new <see cref="Agents.CandidateFileInfo"/> instance for mocking. </returns>
-        public static CandidateFileInfo CandidateFileInfo(string path = default, string @type = default, long sizeBytes = default)
-        {
-            return new CandidateFileInfo(path, @type, sizeBytes, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Deploy-config blob for a candidate. Suitable for setting OPTIMIZATION_CONFIG on a hosted-agent version. </summary>
-        /// <param name="instructions"> System prompt / instructions. </param>
-        /// <param name="model"> Foundry deployment name. </param>
-        /// <param name="temperature"> Optional sampling temperature. </param>
-        /// <param name="skills"> Optional skill overrides. </param>
-        /// <param name="tools"> Optional tool overrides. </param>
-        /// <returns> A new <see cref="Agents.CandidateDeployConfig"/> instance for mocking. </returns>
-        public static CandidateDeployConfig CandidateDeployConfig(string instructions = default, string model = default, float? temperature = default, IEnumerable<IDictionary<string, BinaryData>> skills = default, IEnumerable<IDictionary<string, BinaryData>> tools = default)
-        {
-            skills ??= new ChangeTrackingList<IDictionary<string, BinaryData>>();
-            tools ??= new ChangeTrackingList<IDictionary<string, BinaryData>>();
-
-            return new CandidateDeployConfig(
-                instructions,
-                model,
-                temperature,
-                skills.ToList(),
-                tools.ToList(),
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Full per-task evaluation results for a candidate, returned by GET /candidates/{id}/results. </summary>
-        /// <param name="candidateId"> Owning candidate id. </param>
-        /// <param name="results"> Per-task evaluation rows. </param>
-        /// <returns> A new <see cref="Agents.CandidateResults"/> instance for mocking. </returns>
-        public static CandidateResults CandidateResults(string candidateId = default, IEnumerable<OptimizationTaskResult> results = default)
-        {
-            results ??= new ChangeTrackingList<OptimizationTaskResult>();
-
-            return new CandidateResults(candidateId, results.ToList(), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Request body for promoting a candidate to a Foundry agent version. </summary>
-        /// <param name="agentName"> Name of the Foundry agent to promote to. </param>
-        /// <param name="agentVersion"> Version of the Foundry agent to promote to. </param>
-        /// <returns> A new <see cref="Agents.PromoteCandidateRequest"/> instance for mocking. </returns>
-        public static PromoteCandidateRequest PromoteCandidateRequest(string agentName = default, string agentVersion = default)
-        {
-            return new PromoteCandidateRequest(agentName, agentVersion, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Response after successfully promoting a candidate. </summary>
-        /// <param name="candidateId"> The promoted candidate id. </param>
-        /// <param name="status"> Status after promotion. </param>
-        /// <param name="promotedAt"> Timestamp when promotion occurred, represented in Unix time. </param>
-        /// <param name="agentName"> Name of the Foundry agent promoted to. </param>
-        /// <param name="agentVersion"> Version of the Foundry agent promoted to. </param>
-        /// <returns> A new <see cref="Agents.PromoteCandidateResponse"/> instance for mocking. </returns>
-        public static PromoteCandidateResponse PromoteCandidateResponse(string candidateId = default, string status = default, DateTimeOffset promotedAt = default, string agentName = default, string agentVersion = default)
-        {
-            return new PromoteCandidateResponse(
-                candidateId,
-                status,
-                promotedAt,
-                agentName,
-                agentVersion,
-                additionalBinaryDataProperties: null);
+            return new OptimizationJobProgress(candidatesCompleted, bestScore, elapsedSeconds, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The ProjectsAgentVersionCreationOptions. </summary>
@@ -1797,6 +1652,14 @@ namespace Azure.AI.Projects.Agents
         public static UpdateToolboxRequest UpdateToolboxRequest(string name = default, string defaultVersion = default)
         {
             return new UpdateToolboxRequest(name, defaultVersion, additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ProjectsAgentRecord ProjectsAgentRecord(string id, string name)
+        {
+            return ProjectsAgentRecord(id: id, name: name, state: default);
         }
 
         /// <summary> The ProjectsAgentVersion. </summary>

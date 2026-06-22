@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
@@ -21,55 +22,53 @@ namespace Azure.ResourceManager.Network
     /// <summary>
     /// A class representing a collection of <see cref="ApplicationSecurityGroupResource"/> and their operations.
     /// Each <see cref="ApplicationSecurityGroupResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get an <see cref="ApplicationSecurityGroupCollection"/> instance call the GetApplicationSecurityGroups method from an instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="ApplicationSecurityGroupCollection"/> instance call the GetApplicationSecurityGroups method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class ApplicationSecurityGroupCollection : ArmCollection, IEnumerable<ApplicationSecurityGroupResource>, IAsyncEnumerable<ApplicationSecurityGroupResource>
     {
-        private readonly ClientDiagnostics _applicationSecurityGroupClientDiagnostics;
-        private readonly ApplicationSecurityGroupsRestOperations _applicationSecurityGroupRestClient;
+        private readonly ClientDiagnostics _applicationSecurityGroupsClientDiagnostics;
+        private readonly ApplicationSecurityGroups _applicationSecurityGroupsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ApplicationSecurityGroupCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ApplicationSecurityGroupCollection for mocking. </summary>
         protected ApplicationSecurityGroupCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ApplicationSecurityGroupCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationSecurityGroupCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ApplicationSecurityGroupCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _applicationSecurityGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ApplicationSecurityGroupResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ApplicationSecurityGroupResource.ResourceType, out string applicationSecurityGroupApiVersion);
-            _applicationSecurityGroupRestClient = new ApplicationSecurityGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, applicationSecurityGroupApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _applicationSecurityGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ApplicationSecurityGroupResource.ResourceType.Namespace, Diagnostics);
+            _applicationSecurityGroupsRestClient = new ApplicationSecurityGroups(_applicationSecurityGroupsClientDiagnostics, Pipeline, Endpoint, applicationSecurityGroupApiVersion ?? "2025-07-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Creates or updates an application security group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationSecurityGroups/{applicationSecurityGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationSecurityGroups/{applicationSecurityGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApplicationSecurityGroups_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> ApplicationSecurityGroups_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationSecurityGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,21 +76,34 @@ namespace Azure.ResourceManager.Network
         /// <param name="applicationSecurityGroupName"> The name of the application security group. </param>
         /// <param name="data"> Parameters supplied to the create or update ApplicationSecurityGroup operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="applicationSecurityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationSecurityGroupName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applicationSecurityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<ApplicationSecurityGroupResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string applicationSecurityGroupName, ApplicationSecurityGroupData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationSecurityGroupName, nameof(applicationSecurityGroupName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _applicationSecurityGroupClientDiagnostics.CreateScope("ApplicationSecurityGroupCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _applicationSecurityGroupsClientDiagnostics.CreateScope("ApplicationSecurityGroupCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _applicationSecurityGroupRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, applicationSecurityGroupName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<ApplicationSecurityGroupResource>(new ApplicationSecurityGroupOperationSource(Client), _applicationSecurityGroupClientDiagnostics, Pipeline, _applicationSecurityGroupRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, applicationSecurityGroupName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _applicationSecurityGroupsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, applicationSecurityGroupName, ApplicationSecurityGroupData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                NetworkArmOperation<ApplicationSecurityGroupResource> operation = new NetworkArmOperation<ApplicationSecurityGroupResource>(
+                    new ApplicationSecurityGroupResourceOperationSource(Client),
+                    _applicationSecurityGroupsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -105,20 +117,16 @@ namespace Azure.ResourceManager.Network
         /// Creates or updates an application security group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationSecurityGroups/{applicationSecurityGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationSecurityGroups/{applicationSecurityGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApplicationSecurityGroups_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> ApplicationSecurityGroups_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationSecurityGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,21 +134,34 @@ namespace Azure.ResourceManager.Network
         /// <param name="applicationSecurityGroupName"> The name of the application security group. </param>
         /// <param name="data"> Parameters supplied to the create or update ApplicationSecurityGroup operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="applicationSecurityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationSecurityGroupName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applicationSecurityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<ApplicationSecurityGroupResource> CreateOrUpdate(WaitUntil waitUntil, string applicationSecurityGroupName, ApplicationSecurityGroupData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationSecurityGroupName, nameof(applicationSecurityGroupName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _applicationSecurityGroupClientDiagnostics.CreateScope("ApplicationSecurityGroupCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _applicationSecurityGroupsClientDiagnostics.CreateScope("ApplicationSecurityGroupCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _applicationSecurityGroupRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, applicationSecurityGroupName, data, cancellationToken);
-                var operation = new NetworkArmOperation<ApplicationSecurityGroupResource>(new ApplicationSecurityGroupOperationSource(Client), _applicationSecurityGroupClientDiagnostics, Pipeline, _applicationSecurityGroupRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, applicationSecurityGroupName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _applicationSecurityGroupsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, applicationSecurityGroupName, ApplicationSecurityGroupData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                NetworkArmOperation<ApplicationSecurityGroupResource> operation = new NetworkArmOperation<ApplicationSecurityGroupResource>(
+                    new ApplicationSecurityGroupResourceOperationSource(Client),
+                    _applicationSecurityGroupsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -154,38 +175,42 @@ namespace Azure.ResourceManager.Network
         /// Gets information about the specified application security group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationSecurityGroups/{applicationSecurityGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationSecurityGroups/{applicationSecurityGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApplicationSecurityGroups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ApplicationSecurityGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationSecurityGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="applicationSecurityGroupName"> The name of the application security group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="applicationSecurityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationSecurityGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applicationSecurityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<ApplicationSecurityGroupResource>> GetAsync(string applicationSecurityGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationSecurityGroupName, nameof(applicationSecurityGroupName));
 
-            using var scope = _applicationSecurityGroupClientDiagnostics.CreateScope("ApplicationSecurityGroupCollection.Get");
+            using DiagnosticScope scope = _applicationSecurityGroupsClientDiagnostics.CreateScope("ApplicationSecurityGroupCollection.Get");
             scope.Start();
             try
             {
-                var response = await _applicationSecurityGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, applicationSecurityGroupName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _applicationSecurityGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, applicationSecurityGroupName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ApplicationSecurityGroupData> response = Response.FromValue(ApplicationSecurityGroupData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ApplicationSecurityGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -199,38 +224,42 @@ namespace Azure.ResourceManager.Network
         /// Gets information about the specified application security group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationSecurityGroups/{applicationSecurityGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationSecurityGroups/{applicationSecurityGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApplicationSecurityGroups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ApplicationSecurityGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationSecurityGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="applicationSecurityGroupName"> The name of the application security group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="applicationSecurityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationSecurityGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applicationSecurityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<ApplicationSecurityGroupResource> Get(string applicationSecurityGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationSecurityGroupName, nameof(applicationSecurityGroupName));
 
-            using var scope = _applicationSecurityGroupClientDiagnostics.CreateScope("ApplicationSecurityGroupCollection.Get");
+            using DiagnosticScope scope = _applicationSecurityGroupsClientDiagnostics.CreateScope("ApplicationSecurityGroupCollection.Get");
             scope.Start();
             try
             {
-                var response = _applicationSecurityGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, applicationSecurityGroupName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _applicationSecurityGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, applicationSecurityGroupName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ApplicationSecurityGroupData> response = Response.FromValue(ApplicationSecurityGroupData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ApplicationSecurityGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -244,50 +273,44 @@ namespace Azure.ResourceManager.Network
         /// Gets all the application security groups in a resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationSecurityGroups</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationSecurityGroups. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApplicationSecurityGroups_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> ApplicationSecurityGroups_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationSecurityGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApplicationSecurityGroupResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ApplicationSecurityGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ApplicationSecurityGroupResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _applicationSecurityGroupRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _applicationSecurityGroupRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApplicationSecurityGroupResource(Client, ApplicationSecurityGroupData.DeserializeApplicationSecurityGroupData(e)), _applicationSecurityGroupClientDiagnostics, Pipeline, "ApplicationSecurityGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ApplicationSecurityGroupData, ApplicationSecurityGroupResource>(new ApplicationSecurityGroupsListAsyncCollectionResultOfT(_applicationSecurityGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ApplicationSecurityGroupCollection.GetAll"), data => new ApplicationSecurityGroupResource(Client, data));
         }
 
         /// <summary>
         /// Gets all the application security groups in a resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationSecurityGroups</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationSecurityGroups. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApplicationSecurityGroups_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> ApplicationSecurityGroups_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationSecurityGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -295,45 +318,61 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="ApplicationSecurityGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ApplicationSecurityGroupResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _applicationSecurityGroupRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _applicationSecurityGroupRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApplicationSecurityGroupResource(Client, ApplicationSecurityGroupData.DeserializeApplicationSecurityGroupData(e)), _applicationSecurityGroupClientDiagnostics, Pipeline, "ApplicationSecurityGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ApplicationSecurityGroupData, ApplicationSecurityGroupResource>(new ApplicationSecurityGroupsListCollectionResultOfT(_applicationSecurityGroupsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ApplicationSecurityGroupCollection.GetAll"), data => new ApplicationSecurityGroupResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationSecurityGroups/{applicationSecurityGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationSecurityGroups/{applicationSecurityGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApplicationSecurityGroups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ApplicationSecurityGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationSecurityGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="applicationSecurityGroupName"> The name of the application security group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="applicationSecurityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationSecurityGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applicationSecurityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string applicationSecurityGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationSecurityGroupName, nameof(applicationSecurityGroupName));
 
-            using var scope = _applicationSecurityGroupClientDiagnostics.CreateScope("ApplicationSecurityGroupCollection.Exists");
+            using DiagnosticScope scope = _applicationSecurityGroupsClientDiagnostics.CreateScope("ApplicationSecurityGroupCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _applicationSecurityGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, applicationSecurityGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _applicationSecurityGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, applicationSecurityGroupName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ApplicationSecurityGroupData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ApplicationSecurityGroupData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ApplicationSecurityGroupData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -347,36 +386,50 @@ namespace Azure.ResourceManager.Network
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationSecurityGroups/{applicationSecurityGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationSecurityGroups/{applicationSecurityGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApplicationSecurityGroups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ApplicationSecurityGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationSecurityGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="applicationSecurityGroupName"> The name of the application security group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="applicationSecurityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationSecurityGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applicationSecurityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string applicationSecurityGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationSecurityGroupName, nameof(applicationSecurityGroupName));
 
-            using var scope = _applicationSecurityGroupClientDiagnostics.CreateScope("ApplicationSecurityGroupCollection.Exists");
+            using DiagnosticScope scope = _applicationSecurityGroupsClientDiagnostics.CreateScope("ApplicationSecurityGroupCollection.Exists");
             scope.Start();
             try
             {
-                var response = _applicationSecurityGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, applicationSecurityGroupName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _applicationSecurityGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, applicationSecurityGroupName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ApplicationSecurityGroupData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ApplicationSecurityGroupData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ApplicationSecurityGroupData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -390,38 +443,54 @@ namespace Azure.ResourceManager.Network
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationSecurityGroups/{applicationSecurityGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationSecurityGroups/{applicationSecurityGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApplicationSecurityGroups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ApplicationSecurityGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationSecurityGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="applicationSecurityGroupName"> The name of the application security group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="applicationSecurityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationSecurityGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applicationSecurityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<ApplicationSecurityGroupResource>> GetIfExistsAsync(string applicationSecurityGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationSecurityGroupName, nameof(applicationSecurityGroupName));
 
-            using var scope = _applicationSecurityGroupClientDiagnostics.CreateScope("ApplicationSecurityGroupCollection.GetIfExists");
+            using DiagnosticScope scope = _applicationSecurityGroupsClientDiagnostics.CreateScope("ApplicationSecurityGroupCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _applicationSecurityGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, applicationSecurityGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _applicationSecurityGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, applicationSecurityGroupName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ApplicationSecurityGroupData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ApplicationSecurityGroupData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ApplicationSecurityGroupData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ApplicationSecurityGroupResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ApplicationSecurityGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -435,38 +504,54 @@ namespace Azure.ResourceManager.Network
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationSecurityGroups/{applicationSecurityGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/applicationSecurityGroups/{applicationSecurityGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApplicationSecurityGroups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ApplicationSecurityGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationSecurityGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="applicationSecurityGroupName"> The name of the application security group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="applicationSecurityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationSecurityGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applicationSecurityGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<ApplicationSecurityGroupResource> GetIfExists(string applicationSecurityGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationSecurityGroupName, nameof(applicationSecurityGroupName));
 
-            using var scope = _applicationSecurityGroupClientDiagnostics.CreateScope("ApplicationSecurityGroupCollection.GetIfExists");
+            using DiagnosticScope scope = _applicationSecurityGroupsClientDiagnostics.CreateScope("ApplicationSecurityGroupCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _applicationSecurityGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, applicationSecurityGroupName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _applicationSecurityGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, applicationSecurityGroupName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ApplicationSecurityGroupData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ApplicationSecurityGroupData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ApplicationSecurityGroupData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ApplicationSecurityGroupResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ApplicationSecurityGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -486,6 +571,7 @@ namespace Azure.ResourceManager.Network
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<ApplicationSecurityGroupResource> IAsyncEnumerable<ApplicationSecurityGroupResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

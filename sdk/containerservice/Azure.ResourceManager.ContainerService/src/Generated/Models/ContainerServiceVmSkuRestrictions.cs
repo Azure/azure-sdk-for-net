@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="restrictionInfo"> The information about the restriction where the SKU cannot be used. </param>
         /// <param name="reasonCode"> The reason for restriction. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerServiceVmSkuRestrictions(ResourceSkuRestrictionsType? @type, IReadOnlyList<string> values, ContainerServiceVmSkuRestrictionInfo restrictionInfo, ResourceSkuRestrictionsReasonCode? reasonCode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerServiceVmSkuRestrictions(ContainerServiceSkuRestrictionsType? @type, IReadOnlyList<string> values, ContainerServiceVmSkuRestrictionInfo restrictionInfo, ContainerServiceSkuRestrictionsReasonCode? reasonCode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             Values = values;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> The type of restrictions. </summary>
         [WirePath("type")]
-        public ResourceSkuRestrictionsType? Type { get; }
+        public ContainerServiceSkuRestrictionsType? Type { get; }
 
         /// <summary> The value of restrictions. If the restriction type is set to location. This would be different locations where the SKU is restricted. </summary>
         [WirePath("values")]
@@ -52,6 +52,6 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> The reason for restriction. </summary>
         [WirePath("reasonCode")]
-        public ResourceSkuRestrictionsReasonCode? ReasonCode { get; }
+        public ContainerServiceSkuRestrictionsReasonCode? ReasonCode { get; }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Compute.Models
     public readonly partial struct VmScaleSetLifecycleHookEventState : IEquatable<VmScaleSetLifecycleHookEventState>
     {
         private readonly string _value;
+        /// <summary> The lifecycle hook event is active. E.g., waiting on a response from the customer. </summary>
+        private const string ActiveValue = "Active";
+        /// <summary> The lifecycle hook event is completed. i.e., all the target resources in the event have moved to a terminal state. </summary>
+        private const string CompletedValue = "Completed";
 
         /// <summary> Initializes a new instance of <see cref="VmScaleSetLifecycleHookEventState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public VmScaleSetLifecycleHookEventState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ActiveValue = "Active";
-        private const string CompletedValue = "Completed";
+            _value = value;
+        }
 
         /// <summary> The lifecycle hook event is active. E.g., waiting on a response from the customer. </summary>
         public static VmScaleSetLifecycleHookEventState Active { get; } = new VmScaleSetLifecycleHookEventState(ActiveValue);
+
         /// <summary> The lifecycle hook event is completed. i.e., all the target resources in the event have moved to a terminal state. </summary>
         public static VmScaleSetLifecycleHookEventState Completed { get; } = new VmScaleSetLifecycleHookEventState(CompletedValue);
+
         /// <summary> Determines if two <see cref="VmScaleSetLifecycleHookEventState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(VmScaleSetLifecycleHookEventState left, VmScaleSetLifecycleHookEventState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="VmScaleSetLifecycleHookEventState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(VmScaleSetLifecycleHookEventState left, VmScaleSetLifecycleHookEventState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="VmScaleSetLifecycleHookEventState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="VmScaleSetLifecycleHookEventState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator VmScaleSetLifecycleHookEventState(string value) => new VmScaleSetLifecycleHookEventState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="VmScaleSetLifecycleHookEventState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator VmScaleSetLifecycleHookEventState?(string value) => value == null ? null : new VmScaleSetLifecycleHookEventState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is VmScaleSetLifecycleHookEventState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(VmScaleSetLifecycleHookEventState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

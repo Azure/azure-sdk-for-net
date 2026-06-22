@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Network
 {
+    /// <summary></summary>
     public partial class BgpConnectionResource : IJsonModel<BgpConnectionData>
     {
-        private static BgpConnectionData s_dataDeserializationInstance;
-        private static BgpConnectionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<BgpConnectionData> s_dataDeserializationInstance;
 
+        private static IJsonModel<BgpConnectionData> DataDeserializationInstance => s_dataDeserializationInstance ??= new BgpConnectionData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BgpConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<BgpConnectionData>)Data).Write(writer, options);
 
-        BgpConnectionData IJsonModel<BgpConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BgpConnectionData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BgpConnectionData IJsonModel<BgpConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<BgpConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<BgpConnectionData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         BgpConnectionData IPersistableModel<BgpConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BgpConnectionData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<BgpConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BgpConnectionData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<BgpConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

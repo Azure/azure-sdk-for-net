@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> The MediaStreamingContentType. </summary>
+    /// <summary> Type of content in Media streaming. </summary>
     public readonly partial struct MediaStreamingContent : IEquatable<MediaStreamingContent>
     {
         private readonly string _value;
