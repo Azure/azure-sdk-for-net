@@ -309,8 +309,6 @@ namespace Azure.Generator.Management
             {
                 ManagementClientGenerator.Instance.AddTypeToKeep(mockableResource.Name);
             }
-            ManagementClientGenerator.Instance.AddTypeToKeep(CodeGenResourceDataAttributeDefinition.Name);
-            ManagementClientGenerator.Instance.AddTypeToKeep(CodeGenTagPatchHookAttributeDefinition.Name);
             ManagementClientGenerator.Instance.AddTypeToKeep(ExtensionProvider.Name);
 
             // Extract array response collection results from all methods
@@ -319,8 +317,6 @@ namespace Azure.Generator.Management
             return [
                 .. base.BuildTypeProviders().Where(t => t is not SystemObjectModelProvider),
                 WirePathAttributeDefinition,
-                CodeGenResourceDataAttributeDefinition,
-                CodeGenTagPatchHookAttributeDefinition,
                 ArmOperation,
                 ArmOperationOfT,
                 .. OperationSourceDict.Values,
