@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Statements;
@@ -15,11 +14,9 @@ namespace Azure.Generator.Management.Providers;
 internal sealed class CodeGenResourceDataAttributeDefinition : CustomCodeAttributeDefinition
 {
     public const string AttributeName = "CodeGenResourceDataAttribute";
-    private readonly FieldProvider _dataTypeField;
 
     public CodeGenResourceDataAttributeDefinition()
     {
-        _dataTypeField = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, typeof(Type), "_dataType", this);
     }
 
     protected override string BuildRelativeFilePath() => Path.Combine("src", "Generated", "Internal", $"{Name}.cs");
@@ -31,16 +28,6 @@ internal sealed class CodeGenResourceDataAttributeDefinition : CustomCodeAttribu
     protected override TypeSignatureModifiers BuildDeclarationModifiers() => TypeSignatureModifiers.Internal | TypeSignatureModifiers.Class;
 
     protected override CSharpType[] BuildImplements() => [typeof(Attribute)];
-
-    protected override FieldProvider[] BuildFields() => [_dataTypeField];
-
-    protected override PropertyProvider[] BuildProperties()
-    {
-        return
-        [
-            new PropertyProvider(null, MethodSignatureModifiers.Public, typeof(Type), "DataType", new ExpressionPropertyBody(_dataTypeField), this)
-        ];
-    }
 
     protected override IReadOnlyList<AttributeStatement> BuildAttributes()
     {
@@ -54,7 +41,7 @@ internal sealed class CodeGenResourceDataAttributeDefinition : CustomCodeAttribu
     {
         var dataTypeParameter = new ParameterProvider("dataType", $"The resource data type.", typeof(Type));
         var ctorSignature = new ConstructorSignature(Type, null, MethodSignatureModifiers.Public, [dataTypeParameter]);
-        var ctor = new ConstructorProvider(ctorSignature, _dataTypeField.Assign(dataTypeParameter).Terminate(), this);
+        var ctor = new ConstructorProvider(ctorSignature, MethodBodyStatement.Empty, this);
 
         return [ctor];
     }
