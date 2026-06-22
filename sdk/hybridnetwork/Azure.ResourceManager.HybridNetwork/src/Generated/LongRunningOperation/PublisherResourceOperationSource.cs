@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.HybridNetwork
 {
     /// <summary></summary>
-    internal partial class SiteOperationSource : IOperationSource<SiteResource>
+    internal partial class PublisherResourceOperationSource : IOperationSource<PublisherResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal SiteOperationSource(ArmClient client)
+        internal PublisherResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        SiteResource IOperationSource<SiteResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        PublisherResource IOperationSource<PublisherResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            SiteData data = SiteData.DeserializeSiteData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new SiteResource(_client, data);
+            PublisherData data = PublisherData.DeserializePublisherData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new PublisherResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<SiteResource> IOperationSource<SiteResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<PublisherResource> IOperationSource<PublisherResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            SiteData data = SiteData.DeserializeSiteData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new SiteResource(_client, data);
+            PublisherData data = PublisherData.DeserializePublisherData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new PublisherResource(_client, data);
         }
     }
 }

@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.HybridNetwork
 {
     /// <summary></summary>
-    internal partial class SiteNetworkServiceOperationSource : IOperationSource<SiteNetworkServiceResource>
+    internal partial class SiteResourceOperationSource : IOperationSource<SiteResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal SiteNetworkServiceOperationSource(ArmClient client)
+        internal SiteResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        SiteNetworkServiceResource IOperationSource<SiteNetworkServiceResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        SiteResource IOperationSource<SiteResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            SiteNetworkServiceData data = SiteNetworkServiceData.DeserializeSiteNetworkServiceData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new SiteNetworkServiceResource(_client, data);
+            SiteData data = SiteData.DeserializeSiteData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new SiteResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<SiteNetworkServiceResource> IOperationSource<SiteNetworkServiceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<SiteResource> IOperationSource<SiteResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            SiteNetworkServiceData data = SiteNetworkServiceData.DeserializeSiteNetworkServiceData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new SiteNetworkServiceResource(_client, data);
+            SiteData data = SiteData.DeserializeSiteData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new SiteResource(_client, data);
         }
     }
 }

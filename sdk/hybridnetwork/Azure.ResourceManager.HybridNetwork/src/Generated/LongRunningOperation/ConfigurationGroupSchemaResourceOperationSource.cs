@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.HybridNetwork
 {
     /// <summary></summary>
-    internal partial class NetworkFunctionDefinitionVersionOperationSource : IOperationSource<NetworkFunctionDefinitionVersionResource>
+    internal partial class ConfigurationGroupSchemaResourceOperationSource : IOperationSource<ConfigurationGroupSchemaResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal NetworkFunctionDefinitionVersionOperationSource(ArmClient client)
+        internal ConfigurationGroupSchemaResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        NetworkFunctionDefinitionVersionResource IOperationSource<NetworkFunctionDefinitionVersionResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ConfigurationGroupSchemaResource IOperationSource<ConfigurationGroupSchemaResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            NetworkFunctionDefinitionVersionData data = NetworkFunctionDefinitionVersionData.DeserializeNetworkFunctionDefinitionVersionData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new NetworkFunctionDefinitionVersionResource(_client, data);
+            ConfigurationGroupSchemaData data = ConfigurationGroupSchemaData.DeserializeConfigurationGroupSchemaData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ConfigurationGroupSchemaResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<NetworkFunctionDefinitionVersionResource> IOperationSource<NetworkFunctionDefinitionVersionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ConfigurationGroupSchemaResource> IOperationSource<ConfigurationGroupSchemaResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            NetworkFunctionDefinitionVersionData data = NetworkFunctionDefinitionVersionData.DeserializeNetworkFunctionDefinitionVersionData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new NetworkFunctionDefinitionVersionResource(_client, data);
+            ConfigurationGroupSchemaData data = ConfigurationGroupSchemaData.DeserializeConfigurationGroupSchemaData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ConfigurationGroupSchemaResource(_client, data);
         }
     }
 }
