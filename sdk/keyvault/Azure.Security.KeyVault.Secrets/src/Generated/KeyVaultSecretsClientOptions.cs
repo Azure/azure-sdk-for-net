@@ -13,7 +13,7 @@ using Microsoft.Extensions.Configuration;
 namespace Azure.Security.KeyVault.Secrets
 {
     /// <summary> Client options for <see cref="KeyVaultSecretsClient"/>. </summary>
-    public partial class KeyVaultSecretsClientOptions : ClientOptions
+    internal partial class KeyVaultSecretsClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2026_05_01_Preview;
 

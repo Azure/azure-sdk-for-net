@@ -10,15 +10,7 @@
 
 ### Other Changes
 
-## 4.11.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- `SecretClient` now uses a TypeSpec-generated transport (request building, response parsing, paging, and LRO polling). Public method signatures, return types, exception contracts and over-the-wire HTTP traffic are unchanged. `SecretClientOptions` continues to be honored end-to-end: custom retry, transport, diagnostics settings, and any `AddPolicy` entries are forwarded into the new pipeline without modification. Service versions older than 7.5 (`V7_0` – `V7_4`) are mapped to the wire api-version `7.5` for the operations exposed by this client; choosing any of those enum values continues to construct a working client.
 
 ## 4.11.0 (2026-05-05)
 

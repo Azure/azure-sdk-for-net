@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
 
 namespace Azure.Security.KeyVault.Secrets
 {
@@ -16,15 +17,15 @@ namespace Azure.Security.KeyVault.Secrets
     {
         private static readonly TimeSpan s_defaultPollingInterval = TimeSpan.FromSeconds(2);
 
-        private readonly KeyVaultPipeline _pipeline;
+        private readonly KeyVaultSecretsClient _generated;
         private readonly OperationInternal _operationInternal;
         private readonly SecretProperties _value;
 
-        internal RecoverDeletedSecretOperation(KeyVaultPipeline pipeline, Response<SecretProperties> response)
+        internal RecoverDeletedSecretOperation(KeyVaultSecretsClient generated, ClientDiagnostics diagnostics, Response<SecretProperties> response)
         {
-            _pipeline = pipeline;
+            _generated = generated ?? throw new ArgumentNullException(nameof(generated));
             _value = response.Value ?? throw new InvalidOperationException("The response does not contain a value.");
-            _operationInternal = new(this, _pipeline.Diagnostics, response.GetRawResponse(), nameof(RecoverDeletedSecretOperation), new[] { new KeyValuePair<string, string>("secret", _value.Name) });
+            _operationInternal = new(this, diagnostics, response.GetRawResponse(), nameof(RecoverDeletedSecretOperation), new[] { new KeyValuePair<string, string>("secret", _value.Name) });
         }
 
         /// <summary> Initializes a new instance of <see cref="RecoverDeletedSecretOperation" /> for mocking. </summary>
@@ -46,6 +47,13 @@ namespace Azure.Security.KeyVault.Secrets
         public override bool HasCompleted => _operationInternal.HasCompleted;
 
         /// <inheritdoc/>
+        /// <remarks>
+        /// Always returns <see langword="true"/>. The recover call returns the
+        /// <see cref="SecretProperties"/> immediately (the value is populated from that response),
+        /// even when soft-delete polling has not yet completed. Callers should still await
+        /// <see cref="WaitForCompletionAsync(CancellationToken)"/> before using the recovered
+        /// secret if soft-delete is enabled.
+        /// </remarks>
         public override bool HasValue => true;
 
         /// <inheritdoc/>
@@ -53,25 +61,11 @@ namespace Azure.Security.KeyVault.Secrets
 
         /// <inheritdoc/>
         public override Response UpdateStatus(CancellationToken cancellationToken = default)
-        {
-            if (!HasCompleted)
-            {
-                return _operationInternal.UpdateStatus(cancellationToken);
-            }
-
-            return GetRawResponse();
-        }
+            => HasCompleted ? GetRawResponse() : _operationInternal.UpdateStatus(cancellationToken);
 
         /// <inheritdoc/>
         public override async ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default)
-        {
-            if (!HasCompleted)
-            {
-                return await _operationInternal.UpdateStatusAsync(cancellationToken).ConfigureAwait(false);
-            }
-
-            return GetRawResponse();
-        }
+            => HasCompleted ? GetRawResponse() : await _operationInternal.UpdateStatusAsync(cancellationToken).ConfigureAwait(false);
 
         /// <inheritdoc />
         public override ValueTask<Response<SecretProperties>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
@@ -83,25 +77,19 @@ namespace Azure.Security.KeyVault.Secrets
 
         async ValueTask<OperationState> IOperation.UpdateStateAsync(bool async, CancellationToken cancellationToken)
         {
+            var ctx = new RequestContext { CancellationToken = cancellationToken, ErrorOptions = ErrorOptions.NoThrow };
             Response response = async
-                ? await _pipeline.GetResponseAsync(RequestMethod.Get, cancellationToken, SecretClient.SecretsPath, _value.Name).ConfigureAwait(false)
-                : _pipeline.GetResponse(RequestMethod.Get, cancellationToken, SecretClient.SecretsPath, _value.Name);
+                ? await _generated.GetSecretAsync(_value.Name, secretVersion: null, outContentType: default, context: ctx).ConfigureAwait(false)
+                : _generated.GetSecret(_value.Name, secretVersion: null, outContentType: default, context: ctx);
 
-            switch (response.Status)
+            return response.Status switch
             {
-                case 200:
-                case 403: // Access denied but proof the secret was recovered.
-                    return OperationState.Success(response);
-
-                case 404:
-                    return OperationState.Pending(response);
-
-                default:
-                    return OperationState.Failure(response, new RequestFailedException(response));
-            }
+                200 or 403 => OperationState.Success(response), // 403 == access denied, but proves the secret was recovered.
+                404        => OperationState.Pending(response),
+                _          => OperationState.Failure(response, new RequestFailedException(response)),
+            };
         }
 
-        // This method is never invoked since we don't override Operation<T>.GetRehydrationToken.
         RehydrationToken IOperation.GetRehydrationToken() =>
             throw new NotSupportedException($"{nameof(GetRehydrationToken)} is not supported.");
     }
