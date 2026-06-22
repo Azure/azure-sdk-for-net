@@ -4,7 +4,7 @@ license: MIT
 metadata:
   version: "1.0.0"
   distribution: shared
-description: "Diagnose and resolve failures in Azure SDK CI and generation pipelines. **UTILITY SKILL**. USE FOR: \"pipeline failed\", \"build failure\", \"CI check failing\", \"SDK generation error\", \"reproduce pipeline locally\", \"debug SDK pipeline\". DO NOT USE FOR: local build issues without pipeline context, API design review, SDK publishing. INVOKES: azure-sdk-mcp:azsdk_analyze_pipeline, azure-sdk-mcp:azsdk_verify_setup, azure-sdk-mcp:azsdk_package_build_code, azure-sdk-mcp:azsdk_package_run_check, azure-sdk-mcp:azsdk_package_pack."
+description: 'Diagnose and resolve failures in Azure SDK CI and generation pipelines. **UTILITY SKILL**. USE FOR: "pipeline failed", "build failure", "CI check failing", "SDK generation error", "reproduce pipeline locally", "debug SDK pipeline". DO NOT USE FOR: local build issues without pipeline context, API design review, SDK publishing. INVOKES: azure-sdk-mcp:azsdk_analyze_pipeline, azure-sdk-mcp:azsdk_verify_setup, azure-sdk-mcp:azsdk_package_build_code, azure-sdk-mcp:azsdk_package_run_check, azure-sdk-mcp:azsdk_package_pack.'
 compatibility: "azure-sdk-mcp server, Azure DevOps pipeline build ID"
 ---
 
@@ -26,8 +26,8 @@ DO NOT USE FOR: local build issues without pipeline context, API design review, 
 
 ## MCP Tools
 
-| Tool                       | Purpose                  |
-| -------------------------- | ------------------------ |
+| Tool                                     | Purpose                  |
+| ---------------------------------------- | ------------------------ |
 | `azure-sdk-mcp:azsdk_analyze_pipeline`   | Analyze pipeline failure |
 | `azure-sdk-mcp:azsdk_verify_setup`       | Verify local environment |
 | `azure-sdk-mcp:azsdk_package_build_code` | Reproduce build locally  |
