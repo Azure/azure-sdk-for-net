@@ -3,7 +3,7 @@
 
 #nullable disable
 
-// TypeSpec exposes the aggregate record-set model internally; suppress its generated factory overload to avoid surfacing internal RecordSetProperties.
+// TypeSpec exposes the aggregate record-set model internally; suppress its generated factory overload to avoid surfacing internal PrivateDnsRecordSetProperties.
 
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,7 +15,7 @@ using CodeGenSuppressAttribute = Microsoft.TypeSpec.Generator.Customizations.Cod
 
 namespace Azure.ResourceManager.PrivateDns.Models
 {
-    [CodeGenSuppressAttribute("PrivateDnsRecordData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(RecordSetProperties), typeof(ETag?))]
+    [CodeGenSuppressAttribute("PrivateDnsRecordData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(PrivateDnsRecordSetProperties), typeof(ETag?))]
     [CodeGenSuppressAttribute("VirtualNetworkLinkData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(IDictionary<string, string>), typeof(AzureLocation), typeof(bool?), typeof(PrivateDnsResolutionPolicy?), typeof(VirtualNetworkLinkState?), typeof(PrivateDnsProvisioningState?), typeof(string), typeof(ETag?))]
     [CodeGenSuppressAttribute("VirtualNetworkLinkData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(IDictionary<string, string>), typeof(AzureLocation), typeof(ETag?), typeof(ResourceIdentifier), typeof(bool?), typeof(PrivateDnsResolutionPolicy?), typeof(VirtualNetworkLinkState?), typeof(PrivateDnsProvisioningState?))]
     [CodeGenSuppressAttribute("VirtualNetworkLinkData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(IDictionary<string, string>), typeof(AzureLocation), typeof(ETag?), typeof(ResourceIdentifier), typeof(bool?), typeof(VirtualNetworkLinkState?), typeof(PrivateDnsProvisioningState?))]

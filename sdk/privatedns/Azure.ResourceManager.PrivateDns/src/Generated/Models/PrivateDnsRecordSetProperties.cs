@@ -12,13 +12,13 @@ using Azure.ResourceManager.PrivateDns;
 namespace Azure.ResourceManager.PrivateDns.Models
 {
     /// <summary> Represents the properties of the records in the record set. </summary>
-    internal partial class RecordSetProperties
+    internal partial class PrivateDnsRecordSetProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RecordSetProperties"/>. </summary>
-        public RecordSetProperties()
+        /// <summary> Initializes a new instance of <see cref="PrivateDnsRecordSetProperties"/>. </summary>
+        public PrivateDnsRecordSetProperties()
         {
             Metadata = new ChangeTrackingDictionary<string, string>();
             PrivateDnsARecords = new ChangeTrackingList<PrivateDnsARecordInfo>();
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
             PrivateDnsTxtRecords = new ChangeTrackingList<PrivateDnsTxtRecordInfo>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="RecordSetProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateDnsRecordSetProperties"/>. </summary>
         /// <param name="metadata"> The metadata attached to the record set. </param>
         /// <param name="ttlInSeconds"> The TTL (time-to-live) of the records in the record set. </param>
         /// <param name="fqdn"> Fully qualified domain name of the record set. </param>
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
         /// <param name="privateDnsSrvRecords"> The list of SRV records in the record set. </param>
         /// <param name="privateDnsTxtRecords"> The list of TXT records in the record set. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RecordSetProperties(IDictionary<string, string> metadata, long? ttlInSeconds, string fqdn, bool? isAutoRegistered, IList<PrivateDnsARecordInfo> privateDnsARecords, IList<PrivateDnsAaaaRecordInfo> privateDnsAaaaRecords, PrivateDnsCnameRecordInfo privateDnsCnameRecord, IList<PrivateDnsMXRecordInfo> privateDnsMXRecords, IList<PrivateDnsPtrRecordInfo> privateDnsPtrRecords, PrivateDnsSoaRecordInfo privateDnsSoaRecord, IList<PrivateDnsSrvRecordInfo> privateDnsSrvRecords, IList<PrivateDnsTxtRecordInfo> privateDnsTxtRecords, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PrivateDnsRecordSetProperties(IDictionary<string, string> metadata, long? ttlInSeconds, string fqdn, bool? isAutoRegistered, IList<PrivateDnsARecordInfo> privateDnsARecords, IList<PrivateDnsAaaaRecordInfo> privateDnsAaaaRecords, PrivateDnsCnameRecordInfo privateDnsCnameRecord, IList<PrivateDnsMXRecordInfo> privateDnsMXRecords, IList<PrivateDnsPtrRecordInfo> privateDnsPtrRecords, PrivateDnsSoaRecordInfo privateDnsSoaRecord, IList<PrivateDnsSrvRecordInfo> privateDnsSrvRecords, IList<PrivateDnsTxtRecordInfo> privateDnsTxtRecords, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Metadata = metadata;
             TtlInSeconds = ttlInSeconds;

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The properties of the record set. </param>
         /// <param name="eTag"> The etag of the record set. </param>
-        internal PrivateDnsCnameRecordData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, RecordSetProperties properties, ETag? eTag) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, properties, eTag)
+        internal PrivateDnsCnameRecordData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, PrivateDnsRecordSetProperties properties, ETag? eTag) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, properties, eTag)
         {
         }
 
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.PrivateDns
             {
                 if (Properties is null)
                 {
-                    Properties = new RecordSetProperties();
+                    Properties = new PrivateDnsRecordSetProperties();
                 }
                 Properties.Cname = value;
             }

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The properties of the record set. </param>
         /// <param name="eTag"> The ETag of the record set. </param>
-        internal PrivateDnsBaseRecordData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, RecordSetProperties properties, ETag? eTag) : base(id, name, resourceType, systemData)
+        internal PrivateDnsBaseRecordData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, PrivateDnsRecordSetProperties properties, ETag? eTag) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.PrivateDns
         }
 
         /// <summary> The properties of the record set. </summary>
-        internal RecordSetProperties Properties { get; set; }
+        internal PrivateDnsRecordSetProperties Properties { get; set; }
 
         /// <summary> The ETag of the record set. </summary>
         public ETag? ETag { get; set; }
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.PrivateDns
             {
                 if (Properties is null)
                 {
-                    Properties = new RecordSetProperties();
+                    Properties = new PrivateDnsRecordSetProperties();
                 }
                 return Properties.Metadata;
             }
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.PrivateDns
             {
                 if (Properties is null)
                 {
-                    Properties = new RecordSetProperties();
+                    Properties = new PrivateDnsRecordSetProperties();
                 }
                 Properties.TtlInSeconds = value;
             }

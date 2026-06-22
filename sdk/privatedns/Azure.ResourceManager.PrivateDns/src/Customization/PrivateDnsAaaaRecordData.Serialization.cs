@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.PrivateDns
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            RecordSetProperties properties = default;
+            PrivateDnsRecordSetProperties properties = default;
             ETag? eTag = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.PrivateDns
                     {
                         continue;
                     }
-                    properties = RecordSetProperties.DeserializeRecordSetProperties(prop.Value, options);
+                    properties = PrivateDnsRecordSetProperties.DeserializePrivateDnsRecordSetProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("etag"u8))

@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.PrivateDns
         }
 
         /// <summary> Initializes a new instance of <see cref="PrivateDnsRecordData"/>. </summary>
-        internal PrivateDnsRecordData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, RecordSetProperties properties, ETag? eTag) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, properties, eTag)
+        internal PrivateDnsRecordData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, PrivateDnsRecordSetProperties properties, ETag? eTag) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, properties, eTag)
         {
         }
 
@@ -131,11 +131,11 @@ namespace Azure.ResourceManager.PrivateDns
 
             internal PrivateDnsTxtRecordData ToTxtRecordData() => new PrivateDnsTxtRecordData(Id, Name, ResourceType, SystemData, _additionalBinaryDataProperties, Properties, ETag);
 
-        private RecordSetProperties EnsureProperties()
+        private PrivateDnsRecordSetProperties EnsureProperties()
         {
             if (Properties is null)
             {
-                Properties = new RecordSetProperties();
+                Properties = new PrivateDnsRecordSetProperties();
             }
             return Properties;
         }
