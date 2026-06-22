@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.Billing.Models
     public readonly partial struct MarketplacePurchasesPolicy : IEquatable<MarketplacePurchasesPolicy>
     {
         private readonly string _value;
+        /// <summary> Other. </summary>
+        private const string OtherValue = "Other";
+        /// <summary> AllAllowed. </summary>
+        private const string AllAllowedValue = "AllAllowed";
+        /// <summary> Disabled. </summary>
+        private const string DisabledValue = "Disabled";
+        /// <summary> NotAllowed. </summary>
+        private const string NotAllowedValue = "NotAllowed";
+        /// <summary> OnlyFreeAllowed. </summary>
+        private const string OnlyFreeAllowedValue = "OnlyFreeAllowed";
 
         /// <summary> Initializes a new instance of <see cref="MarketplacePurchasesPolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MarketplacePurchasesPolicy(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string OtherValue = "Other";
-        private const string AllAllowedValue = "AllAllowed";
-        private const string DisabledValue = "Disabled";
-        private const string NotAllowedValue = "NotAllowed";
-        private const string OnlyFreeAllowedValue = "OnlyFreeAllowed";
+            _value = value;
+        }
 
         /// <summary> Other. </summary>
         public static MarketplacePurchasesPolicy Other { get; } = new MarketplacePurchasesPolicy(OtherValue);
+
         /// <summary> AllAllowed. </summary>
         public static MarketplacePurchasesPolicy AllAllowed { get; } = new MarketplacePurchasesPolicy(AllAllowedValue);
+
         /// <summary> Disabled. </summary>
         public static MarketplacePurchasesPolicy Disabled { get; } = new MarketplacePurchasesPolicy(DisabledValue);
+
         /// <summary> NotAllowed. </summary>
         public static MarketplacePurchasesPolicy NotAllowed { get; } = new MarketplacePurchasesPolicy(NotAllowedValue);
+
         /// <summary> OnlyFreeAllowed. </summary>
         public static MarketplacePurchasesPolicy OnlyFreeAllowed { get; } = new MarketplacePurchasesPolicy(OnlyFreeAllowedValue);
+
         /// <summary> Determines if two <see cref="MarketplacePurchasesPolicy"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MarketplacePurchasesPolicy left, MarketplacePurchasesPolicy right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MarketplacePurchasesPolicy"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MarketplacePurchasesPolicy left, MarketplacePurchasesPolicy right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MarketplacePurchasesPolicy"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MarketplacePurchasesPolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MarketplacePurchasesPolicy(string value) => new MarketplacePurchasesPolicy(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MarketplacePurchasesPolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MarketplacePurchasesPolicy?(string value) => value == null ? null : new MarketplacePurchasesPolicy(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MarketplacePurchasesPolicy other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MarketplacePurchasesPolicy other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

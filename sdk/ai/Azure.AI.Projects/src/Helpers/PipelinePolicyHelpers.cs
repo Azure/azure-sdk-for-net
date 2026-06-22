@@ -118,10 +118,11 @@ internal static partial class PipelinePolicyHelpers
                         {
                             foreach (JsonNode inputItemNode in inputArray)
                             {
-                                if (inputItemNode?.AsObject() is JsonObject inputItemObject)
+                                if (inputItemNode?.AsObject() is JsonObject inputItemObject && !inputItemObject.ContainsKey("encrypted_content"))
                                 {
                                     inputItemObject.Remove("id");
                                     inputItemObject.Remove("status");
+                                    inputItemObject.Remove("response_id");
                                 }
                             }
 

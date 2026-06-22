@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network.Samples
                 Description = "A sample policy",
                 AppliesTo = { new NetworkManagerRoutingGroupItem("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Network/networkManagers/testNetworkManager/networkGroups/testGroup") },
             };
-            ArmOperation<NetworkManagerRoutingRulesResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, ruleCollectionName, data);
+            ArmOperation<NetworkManagerRoutingRulesResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, ruleCollectionName, data, cancellationToken: System.Threading.CancellationToken.None);
             NetworkManagerRoutingRulesResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

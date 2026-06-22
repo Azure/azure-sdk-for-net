@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Intrusion detection bypass traffic specification. </summary>
     public partial class FirewallPolicyIntrusionDetectionBypassTrafficSpecifications
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FirewallPolicyIntrusionDetectionBypassTrafficSpecifications"/>. </summary>
         public FirewallPolicyIntrusionDetectionBypassTrafficSpecifications()
@@ -51,8 +23,8 @@ namespace Azure.ResourceManager.Network.Models
             SourceAddresses = new ChangeTrackingList<string>();
             DestinationAddresses = new ChangeTrackingList<string>();
             DestinationPorts = new ChangeTrackingList<string>();
-            SourceIPGroups = new ChangeTrackingList<string>();
-            DestinationIPGroups = new ChangeTrackingList<string>();
+            SourceIpGroups = new ChangeTrackingList<string>();
+            DestinationIpGroups = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="FirewallPolicyIntrusionDetectionBypassTrafficSpecifications"/>. </summary>
@@ -62,10 +34,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="sourceAddresses"> List of source IP addresses or ranges for this rule. </param>
         /// <param name="destinationAddresses"> List of destination IP addresses or ranges for this rule. </param>
         /// <param name="destinationPorts"> List of destination ports or ranges. </param>
-        /// <param name="sourceIPGroups"> List of source IpGroups for this rule. </param>
-        /// <param name="destinationIPGroups"> List of destination IpGroups for this rule. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FirewallPolicyIntrusionDetectionBypassTrafficSpecifications(string name, string description, FirewallPolicyIntrusionDetectionProtocol? protocol, IList<string> sourceAddresses, IList<string> destinationAddresses, IList<string> destinationPorts, IList<string> sourceIPGroups, IList<string> destinationIPGroups, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="sourceIpGroups"> List of source IpGroups for this rule. </param>
+        /// <param name="destinationIpGroups"> List of destination IpGroups for this rule. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal FirewallPolicyIntrusionDetectionBypassTrafficSpecifications(string name, string description, FirewallPolicyIntrusionDetectionProtocol? protocol, IList<string> sourceAddresses, IList<string> destinationAddresses, IList<string> destinationPorts, IList<string> sourceIpGroups, IList<string> destinationIpGroups, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
@@ -73,34 +45,41 @@ namespace Azure.ResourceManager.Network.Models
             SourceAddresses = sourceAddresses;
             DestinationAddresses = destinationAddresses;
             DestinationPorts = destinationPorts;
-            SourceIPGroups = sourceIPGroups;
-            DestinationIPGroups = destinationIPGroups;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            SourceIpGroups = sourceIpGroups;
+            DestinationIpGroups = destinationIpGroups;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Name of the bypass traffic rule. </summary>
         [WirePath("name")]
         public string Name { get; set; }
+
         /// <summary> Description of the bypass traffic rule. </summary>
         [WirePath("description")]
         public string Description { get; set; }
+
         /// <summary> The rule bypass protocol. </summary>
         [WirePath("protocol")]
         public FirewallPolicyIntrusionDetectionProtocol? Protocol { get; set; }
+
         /// <summary> List of source IP addresses or ranges for this rule. </summary>
         [WirePath("sourceAddresses")]
         public IList<string> SourceAddresses { get; }
+
         /// <summary> List of destination IP addresses or ranges for this rule. </summary>
         [WirePath("destinationAddresses")]
         public IList<string> DestinationAddresses { get; }
+
         /// <summary> List of destination ports or ranges. </summary>
         [WirePath("destinationPorts")]
         public IList<string> DestinationPorts { get; }
+
         /// <summary> List of source IpGroups for this rule. </summary>
         [WirePath("sourceIpGroups")]
-        public IList<string> SourceIPGroups { get; }
+        public IList<string> SourceIpGroups { get; }
+
         /// <summary> List of destination IpGroups for this rule. </summary>
         [WirePath("destinationIpGroups")]
-        public IList<string> DestinationIPGroups { get; }
+        public IList<string> DestinationIpGroups { get; }
     }
 }

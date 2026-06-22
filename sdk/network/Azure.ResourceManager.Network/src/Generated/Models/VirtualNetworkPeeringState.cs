@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct VirtualNetworkPeeringState : IEquatable<VirtualNetworkPeeringState>
     {
         private readonly string _value;
+        /// <summary> Initiated. </summary>
+        private const string InitiatedValue = "Initiated";
+        /// <summary> Connected. </summary>
+        private const string ConnectedValue = "Connected";
+        /// <summary> Disconnected. </summary>
+        private const string DisconnectedValue = "Disconnected";
 
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkPeeringState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public VirtualNetworkPeeringState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string InitiatedValue = "Initiated";
-        private const string ConnectedValue = "Connected";
-        private const string DisconnectedValue = "Disconnected";
+            _value = value;
+        }
 
         /// <summary> Initiated. </summary>
         public static VirtualNetworkPeeringState Initiated { get; } = new VirtualNetworkPeeringState(InitiatedValue);
+
         /// <summary> Connected. </summary>
         public static VirtualNetworkPeeringState Connected { get; } = new VirtualNetworkPeeringState(ConnectedValue);
+
         /// <summary> Disconnected. </summary>
         public static VirtualNetworkPeeringState Disconnected { get; } = new VirtualNetworkPeeringState(DisconnectedValue);
+
         /// <summary> Determines if two <see cref="VirtualNetworkPeeringState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(VirtualNetworkPeeringState left, VirtualNetworkPeeringState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="VirtualNetworkPeeringState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(VirtualNetworkPeeringState left, VirtualNetworkPeeringState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="VirtualNetworkPeeringState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="VirtualNetworkPeeringState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator VirtualNetworkPeeringState(string value) => new VirtualNetworkPeeringState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="VirtualNetworkPeeringState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator VirtualNetworkPeeringState?(string value) => value == null ? null : new VirtualNetworkPeeringState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is VirtualNetworkPeeringState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(VirtualNetworkPeeringState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

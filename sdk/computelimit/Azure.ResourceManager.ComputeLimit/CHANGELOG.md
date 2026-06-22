@@ -1,14 +1,13 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.2.0 (2026-06-17)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Upgraded API version to 2026-07-01.
+- Added `SharedLimitCapResource`, `SharedLimitCapCollection`, and `SharedLimitCapData` for managing shared compute limit cap configurations per VM family. The resource is scoped per region (`/locations/{location}/sharedLimitCaps/{vmFamilyName}`).
+- Added `MemberCapOverrideResource`, `MemberCapOverrideCollection`, and `MemberCapOverrideData` for managing per-member subscription cap overrides under a `SharedLimitCap`.
+- Added `SetMemberCapOverrides` action on `SharedLimitCapResource` (with `ComputeLimitSetMemberCapOverridesContent`) for replacing the full set of per-member cap overrides in a single call.
 
 ## 1.1.0 (2026-06-04)
 

@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
@@ -107,15 +108,34 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
         internal const string AMS_Url = "http://169.254.169.254/metadata/instance/compute?api-version=2017-08-01&format=json";
 
         /// <summary>
-        /// 24 hrs == 86400000 milliseconds.
+        /// 15 min == 900000 milliseconds. Cadence of the shared statsbeat reader.
         /// </summary>
-        internal const int GeneralStatsbeatInterval = 86400000;
+        internal const int NetworkStatsbeatInterval = 900000;
+
+        /// <summary>
+        /// Min time between Attach observable gauge emissions (long-interval cadence
+        /// while sharing the 15-min reader).
+        /// </summary>
+        internal static readonly TimeSpan AttachEmissionInterval = TimeSpan.FromHours(24);
 
         internal const string AttachStatsbeatMeterName = "AttachStatsbeatMeter";
         internal const string AttachStatsbeatMetricName = "Attach";
 
         internal const string FeatureStatsbeatMeterName = "FeatureStatsbeatMeter";
         internal const string FeatureStatsbeatMetricName = "Feature";
+
+        /// <summary>
+        /// Meter name for Network SDKStats (short interval - 15 min). Tracks request success,
+        /// failure, retry, throttle, exception counts and request duration for outbound
+        /// transmissions to the configured ingestion endpoint.
+        /// </summary>
+        internal const string NetworkSdkStatsMeterName = "NetworkSdkStatsMeter";
+
+        /// <summary>
+        /// Value of the <c>endpoint</c> dimension on Network SDKStats metrics published by the
+        /// Azure Monitor / Application Insights exporter (Breeze ingestion).
+        /// </summary>
+        internal const string NetworkSdkStatsEndpointBreeze = "breeze";
 
         /// <summary>
         /// Meter name used by the Microsoft OpenTelemetry distro to publish distro-owned Feature

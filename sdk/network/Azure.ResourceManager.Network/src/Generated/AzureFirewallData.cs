@@ -7,149 +7,285 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary>
-    /// A class representing the AzureFirewall data model.
-    /// Azure Firewall resource.
-    /// </summary>
+    /// <summary> Azure Firewall resource. </summary>
     public partial class AzureFirewallData : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of <see cref="AzureFirewallData"/>. </summary>
         public AzureFirewallData()
         {
             Zones = new ChangeTrackingList<string>();
-            ApplicationRuleCollections = new ChangeTrackingList<AzureFirewallApplicationRuleCollectionData>();
-            NatRuleCollections = new ChangeTrackingList<AzureFirewallNatRuleCollectionData>();
-            NetworkRuleCollections = new ChangeTrackingList<AzureFirewallNetworkRuleCollectionData>();
-            IPConfigurations = new ChangeTrackingList<AzureFirewallIPConfiguration>();
-            IPGroups = new ChangeTrackingList<AzureFirewallIPGroups>();
-            AdditionalProperties = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureFirewallData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="type"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties of the azure firewall. </param>
         /// <param name="extendedLocation"> The extended location of type local virtual network gateway. </param>
         /// <param name="zones"> A list of availability zones denoting where the resource needs to come from. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="applicationRuleCollections"> Collection of application rule collections used by Azure Firewall. </param>
-        /// <param name="natRuleCollections"> Collection of NAT rule collections used by Azure Firewall. </param>
-        /// <param name="networkRuleCollections"> Collection of network rule collections used by Azure Firewall. </param>
-        /// <param name="ipConfigurations"> IP configuration of the Azure Firewall resource. </param>
-        /// <param name="managementIPConfiguration"> IP configuration of the Azure Firewall used for management traffic. </param>
-        /// <param name="provisioningState"> The provisioning state of the Azure firewall resource. </param>
-        /// <param name="threatIntelMode"> The operation mode for Threat Intelligence. </param>
-        /// <param name="virtualHub"> The virtualHub to which the firewall belongs. </param>
-        /// <param name="firewallPolicy"> The firewallPolicy associated with this azure firewall. </param>
-        /// <param name="hubIPAddresses"> IP addresses associated with AzureFirewall. </param>
-        /// <param name="ipGroups"> IpGroups associated with AzureFirewall. </param>
-        /// <param name="sku"> The Azure Firewall Resource SKU. </param>
-        /// <param name="additionalProperties"> The additional properties used to further config this azure firewall. </param>
-        /// <param name="autoscaleConfiguration"> Properties to provide a custom autoscale configuration to this azure firewall. </param>
-        internal AzureFirewallData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ExtendedLocation extendedLocation, IList<string> zones, ETag? etag, IList<AzureFirewallApplicationRuleCollectionData> applicationRuleCollections, IList<AzureFirewallNatRuleCollectionData> natRuleCollections, IList<AzureFirewallNetworkRuleCollectionData> networkRuleCollections, IList<AzureFirewallIPConfiguration> ipConfigurations, AzureFirewallIPConfiguration managementIPConfiguration, NetworkProvisioningState? provisioningState, AzureFirewallThreatIntelMode? threatIntelMode, WritableSubResource virtualHub, WritableSubResource firewallPolicy, HubIPAddresses hubIPAddresses, IReadOnlyList<AzureFirewallIPGroups> ipGroups, AzureFirewallSku sku, IDictionary<string, string> additionalProperties, AzureFirewallAutoscaleConfiguration autoscaleConfiguration) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        internal AzureFirewallData(ResourceIdentifier id, string name, string @type, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureFirewallPropertiesFormat properties, ExtendedLocation extendedLocation, IList<string> zones, ETag? eTag) : base(id, name, @type, location, tags, additionalBinaryDataProperties)
         {
+            Properties = properties;
             ExtendedLocation = extendedLocation;
             Zones = zones;
-            ETag = etag;
-            ApplicationRuleCollections = applicationRuleCollections;
-            NatRuleCollections = natRuleCollections;
-            NetworkRuleCollections = networkRuleCollections;
-            IPConfigurations = ipConfigurations;
-            ManagementIPConfiguration = managementIPConfiguration;
-            ProvisioningState = provisioningState;
-            ThreatIntelMode = threatIntelMode;
-            VirtualHub = virtualHub;
-            FirewallPolicy = firewallPolicy;
-            HubIPAddresses = hubIPAddresses;
-            IPGroups = ipGroups;
-            Sku = sku;
-            AdditionalProperties = additionalProperties;
-            AutoscaleConfiguration = autoscaleConfiguration;
+            ETag = eTag;
         }
+
+        /// <summary> Properties of the azure firewall. </summary>
+        [WirePath("properties")]
+        internal AzureFirewallPropertiesFormat Properties { get; set; }
 
         /// <summary> The extended location of type local virtual network gateway. </summary>
         [WirePath("extendedLocation")]
         public ExtendedLocation ExtendedLocation { get; set; }
+
         /// <summary> A list of availability zones denoting where the resource needs to come from. </summary>
         [WirePath("zones")]
         public IList<string> Zones { get; }
+
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }
+
         /// <summary> Collection of application rule collections used by Azure Firewall. </summary>
         [WirePath("properties.applicationRuleCollections")]
-        public IList<AzureFirewallApplicationRuleCollectionData> ApplicationRuleCollections { get; }
-        /// <summary> Collection of NAT rule collections used by Azure Firewall. </summary>
-        [WirePath("properties.natRuleCollections")]
-        public IList<AzureFirewallNatRuleCollectionData> NatRuleCollections { get; }
-        /// <summary> Collection of network rule collections used by Azure Firewall. </summary>
-        [WirePath("properties.networkRuleCollections")]
-        public IList<AzureFirewallNetworkRuleCollectionData> NetworkRuleCollections { get; }
-        /// <summary> IP configuration of the Azure Firewall resource. </summary>
-        [WirePath("properties.ipConfigurations")]
-        public IList<AzureFirewallIPConfiguration> IPConfigurations { get; }
-        /// <summary> IP configuration of the Azure Firewall used for management traffic. </summary>
-        [WirePath("properties.managementIpConfiguration")]
-        public AzureFirewallIPConfiguration ManagementIPConfiguration { get; set; }
-        /// <summary> The provisioning state of the Azure firewall resource. </summary>
-        [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
-        /// <summary> The operation mode for Threat Intelligence. </summary>
-        [WirePath("properties.threatIntelMode")]
-        public AzureFirewallThreatIntelMode? ThreatIntelMode { get; set; }
-        /// <summary> The virtualHub to which the firewall belongs. </summary>
-        internal WritableSubResource VirtualHub { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.virtualHub.id")]
-        public ResourceIdentifier VirtualHubId
+        public IList<AzureFirewallApplicationRuleCollectionData> ApplicationRuleCollections
         {
-            get => VirtualHub is null ? default : VirtualHub.Id;
-            set
+            get
             {
-                if (VirtualHub is null)
-                    VirtualHub = new WritableSubResource();
-                VirtualHub.Id = value;
+                if (Properties is null)
+                {
+                    Properties = new AzureFirewallPropertiesFormat();
+                }
+                return Properties.ApplicationRuleCollections;
             }
         }
 
-        /// <summary> The firewallPolicy associated with this azure firewall. </summary>
-        internal WritableSubResource FirewallPolicy { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.firewallPolicy.id")]
-        public ResourceIdentifier FirewallPolicyId
+        /// <summary> Collection of NAT rule collections used by Azure Firewall. </summary>
+        [WirePath("properties.natRuleCollections")]
+        public IList<AzureFirewallNatRuleCollectionData> NatRuleCollections
         {
-            get => FirewallPolicy is null ? default : FirewallPolicy.Id;
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new AzureFirewallPropertiesFormat();
+                }
+                return Properties.NatRuleCollections;
+            }
+        }
+
+        /// <summary> Collection of network rule collections used by Azure Firewall. </summary>
+        [WirePath("properties.networkRuleCollections")]
+        public IList<AzureFirewallNetworkRuleCollectionData> NetworkRuleCollections
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new AzureFirewallPropertiesFormat();
+                }
+                return Properties.NetworkRuleCollections;
+            }
+        }
+
+        /// <summary> IP configuration of the Azure Firewall resource. </summary>
+        [WirePath("properties.ipConfigurations")]
+        public IList<AzureFirewallIPConfiguration> IpConfigurations
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new AzureFirewallPropertiesFormat();
+                }
+                return Properties.IpConfigurations;
+            }
+        }
+
+        /// <summary> IP configuration of the Azure Firewall used for management traffic. </summary>
+        [WirePath("properties.managementIpConfiguration")]
+        public AzureFirewallIPConfiguration ManagementIpConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ManagementIpConfiguration;
+            }
             set
             {
-                if (FirewallPolicy is null)
-                    FirewallPolicy = new WritableSubResource();
-                FirewallPolicy.Id = value;
+                if (Properties is null)
+                {
+                    Properties = new AzureFirewallPropertiesFormat();
+                }
+                Properties.ManagementIpConfiguration = value;
+            }
+        }
+
+        /// <summary> The provisioning state of the Azure firewall resource. </summary>
+        [WirePath("properties.provisioningState")]
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> The operation mode for Threat Intelligence. </summary>
+        [WirePath("properties.threatIntelMode")]
+        public AzureFirewallThreatIntelMode? ThreatIntelMode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ThreatIntelMode;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AzureFirewallPropertiesFormat();
+                }
+                Properties.ThreatIntelMode = value;
             }
         }
 
         /// <summary> IP addresses associated with AzureFirewall. </summary>
         [WirePath("properties.hubIPAddresses")]
-        public HubIPAddresses HubIPAddresses { get; set; }
+        public HubIPAddresses HubIPAddresses
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HubIPAddresses;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AzureFirewallPropertiesFormat();
+                }
+                Properties.HubIPAddresses = value;
+            }
+        }
+
         /// <summary> IpGroups associated with AzureFirewall. </summary>
         [WirePath("properties.ipGroups")]
-        public IReadOnlyList<AzureFirewallIPGroups> IPGroups { get; }
+        public IReadOnlyList<AzureFirewallIPGroups> IpGroups
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new AzureFirewallPropertiesFormat();
+                }
+                return Properties.IpGroups;
+            }
+        }
+
         /// <summary> The Azure Firewall Resource SKU. </summary>
         [WirePath("properties.sku")]
-        public AzureFirewallSku Sku { get; set; }
+        public AzureFirewallSku Sku
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Sku;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AzureFirewallPropertiesFormat();
+                }
+                Properties.Sku = value;
+            }
+        }
+
         /// <summary> The additional properties used to further config this azure firewall. </summary>
         [WirePath("properties.additionalProperties")]
-        public IDictionary<string, string> AdditionalProperties { get; }
+        public IDictionary<string, string> AdditionalProperties
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new AzureFirewallPropertiesFormat();
+                }
+                return Properties.AdditionalProperties;
+            }
+        }
+
         /// <summary> Properties to provide a custom autoscale configuration to this azure firewall. </summary>
         [WirePath("properties.autoscaleConfiguration")]
-        public AzureFirewallAutoscaleConfiguration AutoscaleConfiguration { get; set; }
+        public AzureFirewallAutoscaleConfiguration AutoscaleConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AutoscaleConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AzureFirewallPropertiesFormat();
+                }
+                Properties.AutoscaleConfiguration = value;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        [WirePath("properties.virtualHub.id")]
+        public ResourceIdentifier VirtualHubId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VirtualHubId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AzureFirewallPropertiesFormat();
+                }
+                Properties.VirtualHubId = value;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        [WirePath("properties.firewallPolicy.id")]
+        public ResourceIdentifier FirewallPolicyId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FirewallPolicyId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AzureFirewallPropertiesFormat();
+                }
+                Properties.FirewallPolicyId = value;
+            }
+        }
+
+        /// <summary> The endpoint URL of the AFC control plane associated with this Azure Firewall. </summary>
+        [WirePath("properties.afcConfiguration.serviceEndpoint")]
+        public string AfcServiceEndpoint
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AfcServiceEndpoint;
+            }
+        }
     }
 }

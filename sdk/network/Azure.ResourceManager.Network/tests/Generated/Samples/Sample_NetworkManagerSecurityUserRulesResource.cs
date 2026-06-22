@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // invoke the operation
             bool? force = false;
-            await networkManagerSecurityUserRules.DeleteAsync(WaitUntil.Completed, force: force);
+            await networkManagerSecurityUserRules.DeleteAsync(WaitUntil.Completed, force: force, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Network.Samples
                 Description = "A sample policy",
                 AppliesToGroups = { new SecurityUserGroupItem("/subscriptions/subId/resourceGroups/rg1/providers/Microsoft.Network/networkManagers/testNetworkManager/networkGroups/testGroup") },
             };
-            ArmOperation<NetworkManagerSecurityUserRulesResource> lro = await networkManagerSecurityUserRules.UpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<NetworkManagerSecurityUserRulesResource> lro = await networkManagerSecurityUserRules.UpdateAsync(WaitUntil.Completed, data, cancellationToken: System.Threading.CancellationToken.None);
             NetworkManagerSecurityUserRulesResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

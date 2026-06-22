@@ -4,13 +4,11 @@
 using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Azure.AI.Projects.Agents;
 
-[Experimental("AAIP001")]
 [CodeGenType("Toolboxes")]
 public partial class AgentToolboxes
 {

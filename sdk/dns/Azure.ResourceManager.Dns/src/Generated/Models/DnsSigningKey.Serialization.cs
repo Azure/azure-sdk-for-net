@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Dns;
 
 namespace Azure.ResourceManager.Dns.Models
 {
-    public partial class DnsSigningKey : IUtf8JsonSerializable, IJsonModel<DnsSigningKey>
+    /// <summary> Represents the signing key. </summary>
+    public partial class DnsSigningKey : IJsonModel<DnsSigningKey>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DnsSigningKey>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DnsSigningKey PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DnsSigningKey>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDnsSigningKey(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DnsSigningKey)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DnsSigningKey>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDnsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DnsSigningKey)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DnsSigningKey>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DnsSigningKey IPersistableModel<DnsSigningKey>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DnsSigningKey>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DnsSigningKey>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,17 +69,16 @@ namespace Azure.ResourceManager.Dns.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DnsSigningKey>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DnsSigningKey>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DnsSigningKey)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsCollectionDefined(DelegationSignerInfo))
             {
                 writer.WritePropertyName("delegationSignerInfo"u8);
                 writer.WriteStartArray();
-                foreach (var item in DelegationSignerInfo)
+                foreach (DelegationSignerInfo item in DelegationSignerInfo)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -69,15 +109,15 @@ namespace Azure.ResourceManager.Dns.Models
                 writer.WritePropertyName("securityAlgorithmType"u8);
                 writer.WriteNumberValue(SecurityAlgorithmType.Value);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -86,22 +126,27 @@ namespace Azure.ResourceManager.Dns.Models
             }
         }
 
-        DnsSigningKey IJsonModel<DnsSigningKey>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DnsSigningKey IJsonModel<DnsSigningKey>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DnsSigningKey JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DnsSigningKey>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DnsSigningKey>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DnsSigningKey)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDnsSigningKey(document.RootElement, options);
         }
 
-        internal static DnsSigningKey DeserializeDnsSigningKey(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DnsSigningKey DeserializeDnsSigningKey(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -112,71 +157,69 @@ namespace Azure.ResourceManager.Dns.Models
             int? protocol = default;
             string publicKey = default;
             int? securityAlgorithmType = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("delegationSignerInfo"u8))
+                if (prop.NameEquals("delegationSignerInfo"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<DelegationSignerInfo> array = new List<DelegationSignerInfo>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(Models.DelegationSignerInfo.DeserializeDelegationSignerInfo(item, options));
                     }
                     delegationSignerInfo = array;
                     continue;
                 }
-                if (property.NameEquals("flags"u8))
+                if (prop.NameEquals("flags"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    flags = property.Value.GetInt32();
+                    flags = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("keyTag"u8))
+                if (prop.NameEquals("keyTag"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    keyTag = property.Value.GetInt32();
+                    keyTag = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("protocol"u8))
+                if (prop.NameEquals("protocol"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    protocol = property.Value.GetInt32();
+                    protocol = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("publicKey"u8))
+                if (prop.NameEquals("publicKey"u8))
                 {
-                    publicKey = property.Value.GetString();
+                    publicKey = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("securityAlgorithmType"u8))
+                if (prop.NameEquals("securityAlgorithmType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    securityAlgorithmType = property.Value.GetInt32();
+                    securityAlgorithmType = prop.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new DnsSigningKey(
                 delegationSignerInfo ?? new ChangeTrackingList<DelegationSignerInfo>(),
                 flags,
@@ -184,38 +227,7 @@ namespace Azure.ResourceManager.Dns.Models
                 protocol,
                 publicKey,
                 securityAlgorithmType,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<DnsSigningKey>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DnsSigningKey>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDnsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DnsSigningKey)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        DnsSigningKey IPersistableModel<DnsSigningKey>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DnsSigningKey>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDnsSigningKey(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DnsSigningKey)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<DnsSigningKey>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
