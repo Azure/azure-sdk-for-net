@@ -44,6 +44,8 @@ namespace Azure.Storage.Files.Shares.Tests
                     ShareClientOptions.ServiceVersion.V2026_02_06,
                     ShareClientOptions.ServiceVersion.V2026_04_06,
                     ShareClientOptions.ServiceVersion.V2026_06_06,
+                    ShareClientOptions.ServiceVersion.V2026_10_06,
+                    ShareClientOptions.ServiceVersion.V2026_12_06,
                     StorageVersionExtensions.LatestVersion,
                     StorageVersionExtensions.MaxVersion
                 },
