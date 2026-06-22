@@ -11,7 +11,7 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    // Customized: restore legacy property names over generated TypeSpec-normalized names.
+    // Customized: restore GA status enum type over the generated private-link status type.
     [CodeGenSuppress("Status")]
     public partial class MachineLearningPrivateLinkServiceConnectionState
     {

@@ -11,7 +11,8 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    // Customized: restore legacy property names over generated TypeSpec-normalized names.
+    // Customized: restore GA errors declaration because generation references this property from
+    // constructors/serialization but does not emit the public declaration.
     [CodeGenSuppress("Errors")]
     public partial class MachineLearningComputeInstanceProperties
     {

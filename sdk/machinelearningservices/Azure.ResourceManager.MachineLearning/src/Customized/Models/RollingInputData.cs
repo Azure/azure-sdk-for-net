@@ -7,7 +7,8 @@ using System;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    // Customized: restore URI constructor overloads whose legacy parameter shapes differ from the discriminator-first constructors emitted by TypeSpec.
+    // Customized: preserve GA constructor overloads. The uri property is already alternateType'd to
+    // Uri in client.tsp, while the string overload remains only for source compatibility.
     public partial class RollingInputData
     {
         /// <summary> Initializes a new instance of <see cref="RollingInputData"/>. </summary>

@@ -11,7 +11,8 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    // Customized: restore legacy property names over generated TypeSpec-normalized names.
+    // Customized: restore GA flattened nested property. This cannot be expressed as a simple
+    // client.tsp property rename because the generated model exposes SystemCreatedAcrAccount.
     public partial class RegistryAcrDetails
     {
         /// <summary> ARM resource ID of the generated ACR account. </summary>

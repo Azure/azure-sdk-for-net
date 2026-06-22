@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.MachineLearning
 {
     public partial class MachineLearningDataContainerResource
     {
-        // Customized: generated child getters cannot currently be renamed from TypeSpec decorators.
+        // Customized: preserve GA MachineLearning-prefixed child accessors over generated GetDataVersions/GetDataVersion methods.
         public virtual MachineLearningDataVersionCollection GetMachineLearningDataVersions() => GetDataVersions();
 
         /// <summary> Gets a data version. </summary>

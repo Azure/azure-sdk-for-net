@@ -16,10 +16,10 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.MachineLearning
 {
-    // Customized: preserve legacy MachineLearning-prefixed child resource getters and related legacy resource helpers.
+    // Customized: preserve GA MachineLearning-prefixed child resource accessors over shorter generated model child accessors.
     public partial class MachineLearningModelContainerResource
     {
-        // Customized: preserve legacy MachineLearning-prefixed child resource getters.
+        // Customized: keep the historical MachineLearning* method names for source compatibility.
         public virtual MachineLearningModelVersionCollection GetMachineLearningModelVersions() => GetModelVersions();
         /// <summary> Gets a model version. </summary>
         [ForwardsClientCalls]

@@ -11,7 +11,7 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    // Customized: restore legacy property names over generated TypeSpec-normalized names.
+    // Customized: restore GA DateTimeOffset aliases over generated Unix-time fields.
     public partial class MachineLearningEndpointAuthToken
     {
         /// <summary> Access token expiry time. </summary>

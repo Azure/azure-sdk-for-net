@@ -11,7 +11,7 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    // Customized: restore legacy property names over generated TypeSpec-normalized names.
+    // Customized: restore GA IsEnabled alias over generated Enabled for the same wire path.
     public partial class MachineLearningAutoScaleProperties
     {
         /// <summary> Gets or sets whether auto scale is enabled. </summary>

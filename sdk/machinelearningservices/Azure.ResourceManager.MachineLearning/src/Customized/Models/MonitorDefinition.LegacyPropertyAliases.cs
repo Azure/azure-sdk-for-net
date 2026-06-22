@@ -11,7 +11,8 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    // Customized: restore legacy property names over generated TypeSpec-normalized names.
+    // Customized: restore GA flattened notification emails setter over the generated
+    // AlertNotificationEmails collection backed by nested MonitorNotificationSettings.
     public partial class MonitorDefinition
     {
         /// <summary> The email recipient list which has a limitation of 499 characters in total. </summary>

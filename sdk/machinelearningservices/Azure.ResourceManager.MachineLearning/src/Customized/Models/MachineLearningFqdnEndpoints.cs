@@ -11,7 +11,7 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    // Customized: restore legacy property names over generated TypeSpec-normalized names.
+    // Customized: restore GA flattened Properties bag over generated Category/Endpoints properties.
     public partial class MachineLearningFqdnEndpoints
     {
         /// <summary> Gets the FQDN endpoint property bag. </summary>

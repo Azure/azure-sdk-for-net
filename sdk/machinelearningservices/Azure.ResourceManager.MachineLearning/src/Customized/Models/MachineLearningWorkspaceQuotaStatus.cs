@@ -5,7 +5,8 @@
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    // Customized: restore the legacy enum-like constant casing that differs from TypeSpec naming.
+    // Customized: restore GA enum-like constant casing. TypeSpec value InvalidVMFamilyName generates
+    // InvalidVMFamilyName; GA exposed InvalidVmFamilyName.
     public readonly partial struct MachineLearningWorkspaceQuotaStatus
     {
         /// <summary> Gets the InvalidVmFamilyName. </summary>

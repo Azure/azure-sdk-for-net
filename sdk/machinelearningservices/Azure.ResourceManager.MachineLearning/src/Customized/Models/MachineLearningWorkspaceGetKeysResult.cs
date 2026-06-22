@@ -11,7 +11,9 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    // Customized: restore legacy property names over generated TypeSpec-normalized names.
+    // Customized: restore GA names. UserStorageResourceId is a legacy alias for generated
+    // UserStorageArmId, and ContainerRegistryCredentials is suppressed because generation omits
+    // the public declaration while constructors/serialization still reference it.
     [CodeGenSuppress("ContainerRegistryCredentials")]
     public partial class MachineLearningWorkspaceGetKeysResult
     {

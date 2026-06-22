@@ -11,7 +11,7 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    // Customized: restore legacy property names over generated TypeSpec-normalized names.
+    // Customized: restore GA OS acronym casing alias over generated IsLatestOsImageVersion.
     public partial class ImageMetadata
     {
         /// <summary> Whether this compute instance is running on the latest operating system image. </summary>

@@ -9,8 +9,8 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.MachineLearning
 {
-    // Customized: restore registry collection properties that were previously settable but are
-    // represented by generated internal backing properties after TypeSpec migration.
+    // Customized: restore GA settable collection properties. The TypeSpec model keeps these
+    // collections inside read-only RegistryProperties, so SDK custom code is required to expose setters.
     public partial class MachineLearningRegistryData
     {
         /// <summary> Private endpoint connections info used for pending connections in private link portal. </summary>

@@ -12,6 +12,8 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.MachineLearning
 {
+    // Customized: preserve GA flattened aliases and compatibility model types over the generated
+    // nested PrivateEndpointConnectionProperties/WorkspacePrivateEndpointResource shape.
     [CodeGenSuppress("PrivateEndpoint")]
     public partial class MachineLearningPrivateEndpointConnectionData : TrackedResourceData
     {

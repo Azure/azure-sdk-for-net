@@ -11,7 +11,7 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    // Customized: restore legacy property names over generated TypeSpec-normalized names.
+    // Customized: restore GA limits model type over the generated command-job limit shape.
     [CodeGenSuppress("Limits")]
     public partial class MachineLearningCommandJob
     {

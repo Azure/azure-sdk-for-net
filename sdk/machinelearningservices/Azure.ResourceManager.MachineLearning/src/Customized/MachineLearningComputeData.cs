@@ -9,8 +9,8 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MachineLearning
 {
-    // Customized: restore the legacy location-only constructor; the generated TypeSpec model only
-    // has an internal deserialization constructor, which makes the public GA type effectively sealed.
+    // Customized: restore the GA location-only constructor; without it ApiCompat treats the generated
+    // TypeSpec model as effectively sealed because it only has an internal deserialization constructor.
     public partial class MachineLearningComputeData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of <see cref="MachineLearningComputeData"/>. </summary>

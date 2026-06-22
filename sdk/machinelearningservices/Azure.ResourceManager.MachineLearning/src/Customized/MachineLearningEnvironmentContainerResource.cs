@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.MachineLearning
 {
     public partial class MachineLearningEnvironmentContainerResource
     {
-        // Customized: generated child getters cannot currently be renamed from TypeSpec decorators.
+        // Customized: preserve GA MachineLearning-prefixed child accessors over generated GetEnvironmentVersions/GetEnvironmentVersion methods.
         public virtual MachineLearningEnvironmentVersionCollection GetMachineLearningEnvironmentVersions() => GetEnvironmentVersions();
 
         /// <summary> Gets an environment version. </summary>

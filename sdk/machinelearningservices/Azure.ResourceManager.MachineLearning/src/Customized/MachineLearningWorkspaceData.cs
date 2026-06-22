@@ -12,6 +12,9 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.MachineLearning
 {
+    // Customized: preserve GA property shapes. CosmosDbCollectionsThroughput is a flattened alias
+    // over generated service-managed settings, Encryption uses a legacy compatibility model, and
+    // PublicNetworkAccess used Azure.Core.PublicNetworkAccess.
     [CodeGenSuppress("Encryption")]
     [CodeGenSuppress("PublicNetworkAccess")]
     public partial class MachineLearningWorkspaceData : TrackedResourceData

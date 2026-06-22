@@ -1,7 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-// Customized: the generator leaves serialization empty for this ResourceData-compatible custom base model, while generated resource methods still require these helpers.
+// Customized: generated resource methods call data serialization helpers, but the generator does
+// not emit a serialization partial for this ResourceData-compatible model.
 
 #nullable disable
 
@@ -19,47 +20,34 @@ namespace Azure.ResourceManager.MachineLearning
 {
     public partial class MachineLearningWorkspaceConnectionData
     {
-        // Customized: generated resource deserialization creates this model as an IJsonModel shim.
+        // Customized: required by the generated resource IJsonModel deserialization instance.
         internal MachineLearningWorkspaceConnectionData()
         {
         }
 
-        /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual object PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<MachineLearningWorkspaceConnectionData>.Write(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<MachineLearningWorkspaceConnectionData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
+            if (format != "J")
             {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeMachineLearningWorkspaceConnectionData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(MachineLearningWorkspaceConnectionData)} does not support reading '{options.Format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningWorkspaceConnectionData)} does not support writing '{format}' format.");
             }
+            return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
         }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<MachineLearningWorkspaceConnectionData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(MachineLearningWorkspaceConnectionData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MachineLearningWorkspaceConnectionData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MachineLearningWorkspaceConnectionData IPersistableModel<MachineLearningWorkspaceConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => (MachineLearningWorkspaceConnectionData)PersistableModelCreateCore(data, options);
+        MachineLearningWorkspaceConnectionData IPersistableModel<MachineLearningWorkspaceConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MachineLearningWorkspaceConnectionData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningWorkspaceConnectionData)} does not support reading '{format}' format.");
+            }
+            using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeMachineLearningWorkspaceConnectionData(document.RootElement, options);
+        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<MachineLearningWorkspaceConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -105,11 +93,7 @@ namespace Azure.ResourceManager.MachineLearning
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MachineLearningWorkspaceConnectionData IJsonModel<MachineLearningWorkspaceConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (MachineLearningWorkspaceConnectionData)JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual object JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        MachineLearningWorkspaceConnectionData IJsonModel<MachineLearningWorkspaceConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<MachineLearningWorkspaceConnectionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

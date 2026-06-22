@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.MachineLearning
 {
     public partial class MachineLearningCodeContainerResource
     {
-        // Customized: generated child getters cannot currently be renamed from TypeSpec decorators.
+        // Customized: preserve GA MachineLearning-prefixed child accessors over generated GetCodeVersions/GetCodeVersion methods.
         public virtual MachineLearningCodeVersionCollection GetMachineLearningCodeVersions() => GetCodeVersions();
 
         /// <summary> Gets a code version. </summary>

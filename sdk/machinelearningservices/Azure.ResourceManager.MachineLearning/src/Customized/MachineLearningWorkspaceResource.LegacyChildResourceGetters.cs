@@ -16,14 +16,14 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.MachineLearning
 {
-    // Customized: preserve legacy MachineLearning-prefixed child resource getters and related legacy resource helpers.
+    // Customized: preserve GA MachineLearning-prefixed child resource accessors over shorter generated workspace child accessors.
     [CodeGenSuppress("GetOutboundNetworkDependenciesEndpointsAsync", typeof(CancellationToken))]
     [CodeGenSuppress("GetOutboundNetworkDependenciesEndpoints", typeof(CancellationToken))]
     public partial class MachineLearningWorkspaceResource
     {
         internal const string LegacyManagedNetworkName = "default";
 
-        // Customized: preserve legacy MachineLearning-prefixed child resource getters.
+        // Customized: keep the historical MachineLearning* method names for source compatibility.
         /// <summary> Deletes this workspace. </summary>
         [ForwardsClientCalls]
         public virtual Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken) => DeleteAsync(waitUntil, default(bool?), cancellationToken);

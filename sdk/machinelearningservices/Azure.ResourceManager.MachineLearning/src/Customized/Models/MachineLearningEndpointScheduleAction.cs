@@ -11,7 +11,7 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    // Customized: restore legacy property names over generated TypeSpec-normalized names.
+    // Customized: restore GA BinaryData endpoint invocation payload over generated structured payload type.
     [CodeGenSuppress("EndpointInvocationDefinition")]
     public partial class MachineLearningEndpointScheduleAction
     {

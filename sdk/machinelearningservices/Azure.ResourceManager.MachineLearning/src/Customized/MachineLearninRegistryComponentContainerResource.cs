@@ -16,10 +16,10 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.MachineLearning
 {
-    // Customized: preserve legacy MachineLearning-prefixed child resource getters and related legacy resource helpers.
+    // Customized: preserve GA MachineLearnin-prefixed child resource accessors over shorter generated registry child accessors.
     public partial class MachineLearninRegistryComponentContainerResource
     {
-        // Customized: preserve legacy MachineLearnin-prefixed child resource getters.
+        // Customized: keep the historical MachineLearnin* typo in method names for source compatibility.
         public virtual MachineLearninRegistryComponentVersionCollection GetMachineLearninRegistryComponentVersions() => GetRegistryComponentVersions();
         /// <summary> Gets a registry component version. </summary>
         [ForwardsClientCalls]

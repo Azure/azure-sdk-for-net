@@ -11,7 +11,7 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    // Customized: restore legacy property names over generated TypeSpec-normalized names.
+    // Customized: restore GA public network access enum type over generated Azure.Core.PublicNetworkAccess.
     [CodeGenSuppress("PublicNetworkAccess")]
     public partial class MachineLearningOnlineEndpointProperties
     {

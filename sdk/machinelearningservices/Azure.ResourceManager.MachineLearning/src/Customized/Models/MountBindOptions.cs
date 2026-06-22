@@ -11,7 +11,8 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    // Customized: restore legacy property names over generated TypeSpec-normalized names.
+    // Customized: restore GA property name. A client.tsp @@clientName decorator for this property
+    // was tested, but the generated declaration still emits CreateHostPath.
     public partial class MountBindOptions
     {
         /// <summary> Indicate whether to create host path. </summary>

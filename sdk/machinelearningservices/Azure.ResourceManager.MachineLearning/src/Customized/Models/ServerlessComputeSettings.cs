@@ -11,7 +11,8 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    // Customized: restore legacy property names over generated TypeSpec-normalized names.
+    // Customized: restore GA acronym casing. The generated name remains ServerlessComputeNoPublicIP;
+    // clientName cannot force the final C# acronym to stay IP instead of Ip for the alias name.
     public partial class ServerlessComputeSettings
     {
         /// <summary> Whether serverless compute nodes have no public IP. </summary>

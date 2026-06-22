@@ -11,7 +11,7 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    // Customized: restore legacy property names over generated TypeSpec-normalized names.
+    // Customized: restore GA acronym/casing aliases over generated vCPU/OS VHD/premium IO names.
     public partial class MachineLearningVmSize
     {
         /// <summary> The number of vCPUs supported by the virtual machine size. </summary>

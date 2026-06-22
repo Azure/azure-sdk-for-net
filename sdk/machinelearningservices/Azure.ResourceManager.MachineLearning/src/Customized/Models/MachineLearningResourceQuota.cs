@@ -11,7 +11,7 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    // Customized: restore legacy property names over generated TypeSpec-normalized names.
+    // Customized: restore GA type alias while keeping the generated Type property for the same wire path.
     public partial class MachineLearningResourceQuota
     {
         /// <summary> Specifies the resource type. </summary>

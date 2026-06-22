@@ -11,7 +11,7 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    // Customized: restore legacy property names over generated TypeSpec-normalized names.
+    // Customized: restore GA parameterless construction and settable feature properties.
     [CodeGenSuppress("MachineLearningFeatureProperties")]
     [CodeGenSuppress("DataType")]
     [CodeGenSuppress("FeatureName")]

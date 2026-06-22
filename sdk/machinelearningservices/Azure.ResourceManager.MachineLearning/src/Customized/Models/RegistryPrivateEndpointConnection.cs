@@ -11,7 +11,8 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    // Customized: restore legacy property names over generated TypeSpec-normalized names.
+    // Customized: restore GA flattened aliases and compatibility private-endpoint model over the
+    // generated nested RegistryPrivateEndpointConnectionProperties shape.
     [CodeGenSuppress("GroupIds")]
     [CodeGenSuppress("PrivateEndpoint")]
     public partial class RegistryPrivateEndpointConnection
