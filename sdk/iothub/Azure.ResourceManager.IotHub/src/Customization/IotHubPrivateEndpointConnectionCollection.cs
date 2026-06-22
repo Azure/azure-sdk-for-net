@@ -12,95 +12,9 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager.Resources;
 
 #pragma warning disable CS1591 // Compatibility overloads mirror existing generated API documentation.
-#pragma warning disable SA1402 // Keep closely related compatibility partials together.
 
 namespace Azure.ResourceManager.IotHub
 {
-    // Customization justification:
-    // These shims intentionally preserve public API shapes from the pre-TypeSpec IoT Hub management
-    // package. The TypeSpec-generated ARM surface is more strictly aligned with the resource model, but
-    // several GA callers rely on older method names, collection entry points, and string-based If-Match
-    // overloads. Keeping these members in custom partials lets the generated code remain regeneration-safe
-    // while maintaining source and binary compatibility for existing customers.
-    public partial class IotHubDescriptionResource
-    {
-        // The lower-case "iotHubs" route segment is required to keep the generated swagger identical to
-        // the checked-in OpenAPI. With that segment casing, the generator no longer treats these private
-        // endpoint operations as normal child-resource collection methods on the parent resource. These
-        // helpers restore the previous parameterless collection accessors and single-name forwarding
-        // methods by using the parent IoT Hub resource identifier as the missing resourceName.
-        public virtual IotHubPrivateEndpointConnectionCollection GetIotHubPrivateEndpointConnections()
-            => GetCachedClient(client => new IotHubPrivateEndpointConnectionCollection(client, Id));
-
-        [ForwardsClientCalls]
-        public virtual async Task<Response<IotHubPrivateEndpointConnectionResource>> GetIotHubPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
-            => await GetIotHubPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
-
-        [ForwardsClientCalls]
-        public virtual Response<IotHubPrivateEndpointConnectionResource> GetIotHubPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
-            => GetIotHubPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
-
-        public virtual IotHubPrivateEndpointGroupInformationCollection GetAllIotHubPrivateEndpointGroupInformation()
-            => GetCachedClient(client => new IotHubPrivateEndpointGroupInformationCollection(client, Id));
-
-        [ForwardsClientCalls]
-        public virtual async Task<Response<IotHubPrivateEndpointGroupInformationResource>> GetIotHubPrivateEndpointGroupInformationAsync(string groupId, CancellationToken cancellationToken = default)
-            => await GetAllIotHubPrivateEndpointGroupInformation().GetAsync(groupId, cancellationToken).ConfigureAwait(false);
-
-        [ForwardsClientCalls]
-        public virtual Response<IotHubPrivateEndpointGroupInformationResource> GetIotHubPrivateEndpointGroupInformation(string groupId, CancellationToken cancellationToken = default)
-            => GetAllIotHubPrivateEndpointGroupInformation().Get(groupId, cancellationToken);
-    }
-
-    // Customization justification:
-    // The generated ARM method uses Azure.Core.ETag for If-Match, which is the preferred Azure SDK type.
-    // The previous GA IoT Hub package exposed the same header as string on hub create/update, so removing
-    // the string overload would force existing callers to change source. This overload is a thin adapter:
-    // it converts string to nullable ETag and delegates to generated code so request construction,
-    // diagnostics, and long-running-operation handling stay centralized.
-    public partial class IotHubDescriptionCollection
-    {
-        public virtual async Task<ArmOperation<IotHubDescriptionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string resourceName, IotHubDescriptionData data, string ifMatch, CancellationToken cancellationToken = default)
-            => await CreateOrUpdateAsync(waitUntil, resourceName, data, ToETag(ifMatch), cancellationToken).ConfigureAwait(false);
-
-        public virtual ArmOperation<IotHubDescriptionResource> CreateOrUpdate(WaitUntil waitUntil, string resourceName, IotHubDescriptionData data, string ifMatch, CancellationToken cancellationToken = default)
-            => CreateOrUpdate(waitUntil, resourceName, data, ToETag(ifMatch), cancellationToken);
-
-        private static ETag? ToETag(string value) => value is null ? default(ETag?) : new ETag(value);
-    }
-
-    // Customization justification:
-    // Certificate create/update also exposed If-Match as string in the previous GA surface. The TypeSpec
-    // generated method correctly models the header as ETag, but keeping this adapter avoids a source
-    // break for existing callers and keeps the compatibility behavior scoped to method overloads rather
-    // than changing the generated model or REST operation.
-    public partial class IotHubCertificateDescriptionCollection
-    {
-        public virtual async Task<ArmOperation<IotHubCertificateDescriptionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string certificateName, IotHubCertificateDescriptionData data, string ifMatch, CancellationToken cancellationToken = default)
-            => await CreateOrUpdateAsync(waitUntil, certificateName, data, ToETag(ifMatch), cancellationToken).ConfigureAwait(false);
-
-        public virtual ArmOperation<IotHubCertificateDescriptionResource> CreateOrUpdate(WaitUntil waitUntil, string certificateName, IotHubCertificateDescriptionData data, string ifMatch, CancellationToken cancellationToken = default)
-            => CreateOrUpdate(waitUntil, certificateName, data, ToETag(ifMatch), cancellationToken);
-
-        private static ETag? ToETag(string value) => value is null ? default(ETag?) : new ETag(value);
-    }
-
-    // Customization justification:
-    // Certificate update on the resource type needs the same string If-Match compatibility as collection
-    // create/update. The overload is intentionally implemented by converting to ETag and forwarding to the
-    // generated method, which means future generator changes to polling, diagnostics, or request creation
-    // are still picked up automatically.
-    public partial class IotHubCertificateDescriptionResource
-    {
-        public virtual async Task<ArmOperation<IotHubCertificateDescriptionResource>> UpdateAsync(WaitUntil waitUntil, IotHubCertificateDescriptionData data, string ifMatch, CancellationToken cancellationToken = default)
-            => await UpdateAsync(waitUntil, data, ToETag(ifMatch), cancellationToken).ConfigureAwait(false);
-
-        public virtual ArmOperation<IotHubCertificateDescriptionResource> Update(WaitUntil waitUntil, IotHubCertificateDescriptionData data, string ifMatch, CancellationToken cancellationToken = default)
-            => Update(waitUntil, data, ToETag(ifMatch), cancellationToken);
-
-        private static ETag? ToETag(string value) => value is null ? default(ETag?) : new ETag(value);
-    }
-
     public partial class IotHubPrivateEndpointConnectionCollection
     {
         // Customization justification:
@@ -245,5 +159,4 @@ namespace Azure.ResourceManager.IotHub
     }
 }
 
-#pragma warning restore SA1402
 #pragma warning restore CS1591
