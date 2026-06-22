@@ -1,12 +1,12 @@
 ---
 name: auto-build-repair
-description: "Headless, bounded repair of custom-code build failures in an already-generated Azure SDK PR. Thin wrapper over the shared azure-sdk-mcp:azsdk_customized_code_update engine in custom-code-only scope (editScope: CustomCode); the skill owns the iterate-until-green budget. WHEN: Copilot cloud agent runs on a release-planner Auto SDK PR labeled `auto-sdk-build-fix` that fails to build because of custom (non-generated) code. DO NOT USE FOR: full TypeSpec migrations, spec edits, API design review, manual fixing. INVOKES: azure-sdk-mcp:azsdk_customized_code_update."
+description: "Headless, bounded repair of custom-code build failures in an already-generated Azure SDK PR. Thin wrapper over the shared azure-sdk-mcp:azsdk_customized_code_update engine in custom-code-only scope (editScope: CustomCode); the skill owns the iterate-until-green loop, capped by maxIterations. WHEN: Copilot cloud agent runs on a release-planner Auto SDK PR labeled `auto-sdk-build-fix` that fails to build because of custom (non-generated) code. DO NOT USE FOR: full TypeSpec migrations, spec edits, API design review, manual fixing. INVOKES: azure-sdk-mcp:azsdk_customized_code_update."
 ---
 # Auto Build Repair
 
 Purpose-built, **headless** skill that repairs an **already-generated Azure SDK pull request** whose build fails because of **custom (non-generated) code** that has drifted from the regenerated surface.
 
-This is NOT a migration. The SDK PR already exists, the TypeSpec source is already pinned via `tsp-location.yaml`, and most of the diff is generated code. Your only job is to drive the shared **`azure-sdk-mcp:azsdk_customized_code_update`** engine — in **custom-code-only** scope (`editScope: CustomCode`) — looping it under a skill-owned budget until the package builds, then stop. **Do not hand-edit code and do not use any other fix engine** (e.g. the per-language generator-agent); the cross-language design centralizes the fix logic in this one shared tool.
+This is NOT a migration. The SDK PR already exists, the TypeSpec source is already pinned via `tsp-location.yaml`, and most of the diff is generated code. Your only job is to drive the shared **`azure-sdk-mcp:azsdk_customized_code_update`** engine — in **custom-code-only** scope (`editScope: CustomCode`) — re-invoking it up to **`maxIterations`** times until the package builds, then stop. **Do not hand-edit code and do not use any other fix engine** (e.g. the per-language generator-agent); the cross-language design centralizes the fix logic in this one shared tool.
 
 ## When Invoked
 
@@ -39,7 +39,7 @@ azure-sdk-mcp:azsdk_customized_code_update(
 
 Pass the **build error output** as `customizationRequest`. Pass `packagePath` for the single failing package — it is already scoped; do not widen. Use **`editScope: CustomCode`** so the tool never edits `client.tsp` / `tspconfig.yaml` and never moves the pinned commit. **Omit `tspProjectPath`** (required only for `SpecInputs`/`All` scope).
 
-> The tool runs **one bounded repair attempt per call** (regenerate → classify → build → a second classifier pass enriched with the build error → build) and returns a terminal build result. It has **no `maxIterations` / `wallClockBudget`** and no open-ended internal retry loop, so **the iterate-until-green-or-budget loop lives in this skill** (see [Bounds](#bounds)): re-invoke the idempotent tool while it makes progress, under a skill-owned cap + wall-clock budget. A richer structured result / diff manifest is additive and still proposed in the design (§6); until it lands, drive the call above and read `BuildResult` / `ResponseError`.
+> Each call performs **one repair attempt** (regenerate → classify → build → a second classifier pass enriched with the build error → build) and returns a terminal build result. The **iterate-until-green loop lives in this skill** (see [Bounds](#bounds)): re-invoke the idempotent tool while it makes progress, up to **`maxIterations`** attempts. A richer structured result / diff manifest is additive and still proposed in the design (§6); until it lands, drive the call above and read `BuildResult` / `ResponseError`.
 
 ## Scope — read this first
 
@@ -56,10 +56,10 @@ Pass the **build error output** as `customizationRequest`. Pass `packagePath` fo
 
 ## Bounds
 
-The tool runs **one bounded repair attempt per call** and has **no `maxIterations` / `wallClockBudget`** — so the skill owns the budget and the loop:
+Each call performs **one repair attempt**; the skill owns the iterate-until-green loop and caps it with **`maxIterations`** (default **3** if not configured):
 
-- Re-invoke the tool only a small, fixed number of times (it is idempotent on an already-partially-repaired branch); do not loop it unbounded. Re-invoke only while the build error set is still shrinking.
-- Track wall-clock yourself; if the configured budget is exhausted without a green build, **commit progress made so far and report** — do not switch to manual fixing.
+- Re-invoke the tool at most `maxIterations` times (it is idempotent on an already-partially-repaired branch); do not loop it unbounded. Re-invoke only while the build error set is still shrinking — stop early if an attempt makes no progress.
+- If `maxIterations` is reached without a green build, **commit progress made so far and report** — do not switch to manual fixing.
 - Do not expand scope to other packages — `packagePath` already targets the single failing package.
 
 ## Workflow
@@ -71,7 +71,7 @@ The tool runs **one bounded repair attempt per call** and has **no `maxIteration
    The tool regenerates from the pinned commit, patches ONLY custom code, rebuilds, and returns a build result.
 3. Inspect the structured result (build success/failure + BuildResult, plus ResponseError / ErrorCode):
       - Build green → ensure custom-code edits AND regenerated Generated/ are committed. Go to 5.
-      - Still failing but the error set shrank and budget remains → re-invoke (step 2) with the updated build errors; it is idempotent.
+      - Still failing but the error set shrank and attempts remain (< `maxIterations`) → re-invoke (step 2) with the updated build errors; it is idempotent.
       - SpecChangeRequired / RegenerateFailed at the pinned commit / no further progress → STOP (see Stop Conditions).
 4. Never hand-edit to finish the job; if the tool cannot, it is a stop condition.
 5. Summarize the result (see below). Fixes land as reviewable commits — no auto-merge.
@@ -84,7 +84,7 @@ When the tool returns one of these, **surface its guidance (`ResponseError` / `B
 - **Out of scope (spec change required)** — the tool reports `SpecChangeRequired`: the only real fix is a `client.tsp`/`tspconfig.yaml` decorator or spec edit (e.g. `@@clientName`, `@@access`, `AZC0030`/`AZC0012` naming). Because the call uses `editScope: CustomCode`, the tool reports these instead of applying them. Report "requires a spec-repo PR" with the offending errors. Leave the PR red for a human to route.
 - **Regeneration fails at the pinned commit (spec-side error)** — the tool returns `ErrorCode: RegenerateFailed` because of a spec-side problem at the **unchanged** pinned `tsp-location.yaml` commit: invalid `tspconfig.yaml`, missing/renamed spec files, or a broken TypeSpec source. Because this skill must never move the pinned commit or edit spec inputs, treat this as an **immediate stop** — report "spec-side generation failure at the pinned commit; requires a spec-repo fix" with the generation error. Do **not** attempt to fix the spec or bump the commit.
 - **Suspected generator bug** — `Generated/` has structural errors that persist after the tool reconciles customizations and regenerates from the unchanged pinned commit. Do NOT suppress; report with the minimal repro.
-- **Budget exhausted** — the skill's re-invocation count / wall-clock budget is reached without a green build. Commit progress and report remaining errors.
+- **`maxIterations` reached** — the skill's re-invocation cap is reached without a green build. Commit progress and report remaining errors.
 
 On success, summarize: errors fixed, files changed (generated-vs-custom split), final build status, and confirmation that no spec inputs or the pinned commit were touched.
 
@@ -94,5 +94,5 @@ On success, summarize: errors fixed, files changed (generated-vs-custom split), 
 2. Never edit `client.tsp`, `tspconfig.yaml`, or any TypeSpec/spec input; never move the pinned spec commit in `tsp-location.yaml` (`editScope: CustomCode` enforces this — and omit `tspProjectPath`).
 3. Commit the tool's regenerated `Generated/` alongside the custom-code edits (the guard is reproducibility, not freezing).
 4. Never touch `.github/`, `eng/`, shared props/targets, pipelines, metadata, or secrets.
-5. Never prompt the user; run fully headless, honoring the skill-enforced budget.
+5. Never prompt the user; run fully headless, honoring `maxIterations`.
 6. Never auto-merge — fixes land as reviewable commits for human review.
