@@ -4,13 +4,13 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text.Json;
 using Azure;
 using Azure.ResourceManager.Automation.Models;
 using Azure.ResourceManager.Models;
-using System.ClientModel.Primitives;
 
 #pragma warning disable CS0618
 #pragma warning disable CS1591

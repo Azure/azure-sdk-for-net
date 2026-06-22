@@ -4,6 +4,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.ComponentModel;
 using System.Text.Json;
 using System.Threading;
@@ -11,7 +12,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Automation.Models;
-using System.ClientModel.Primitives;
 
 #pragma warning disable CS0618
 #pragma warning disable CS1591

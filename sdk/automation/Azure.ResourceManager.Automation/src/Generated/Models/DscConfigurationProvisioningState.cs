@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.Automation.Models
     public readonly partial struct DscConfigurationProvisioningState : IEquatable<DscConfigurationProvisioningState>
     {
         private readonly string _value;
+        /// <summary> Succeeded. </summary>
         private const string SucceededValue = "Succeeded";
 
         /// <summary> Initializes a new instance of <see cref="DscConfigurationProvisioningState"/>. </summary>
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.Automation.Models
             _value = value;
         }
 
-        /// <summary> Gets the Succeeded. </summary>
+        /// <summary> Succeeded. </summary>
         public static DscConfigurationProvisioningState Succeeded { get; } = new DscConfigurationProvisioningState(SucceededValue);
 
         /// <summary> Determines if two <see cref="DscConfigurationProvisioningState"/> values are the same. </summary>
