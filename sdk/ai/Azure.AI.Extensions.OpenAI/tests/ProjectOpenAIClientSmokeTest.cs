@@ -301,6 +301,7 @@ public class ProjectOpenAIClientSmokeTest : ProjectsOpenAITestBase
             try
             {
                 await oaiClient.GetResponseAsync(result.Id);
+                Assert.Fail("Expected GetResponseAsync to fail when StoredOutputEnabled=false.");
             }
             catch (ClientResultException e)
             {
