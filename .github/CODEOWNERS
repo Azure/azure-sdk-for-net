@@ -77,7 +77,6 @@
 # Client Libraries
 ####################
 
-
 # PRLabel: %AI Agents
 /sdk/agentserver/    @ankitbko @RaviPidaparthi @vangarp
 
@@ -119,9 +118,6 @@
 
 # PRLabel: %Azure Projects
 /sdk/cloudmachine/    @KrzysztofCwalina
-
-# AzureSdkOwners: @KrzysztofCwalina
-# ServiceLabel: %Azure Projects
 
 # PRLabel: %Azure Stack
 /sdk/azurestack*/    @bganapa @rakku-ms
