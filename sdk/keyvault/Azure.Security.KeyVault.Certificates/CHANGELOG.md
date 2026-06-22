@@ -10,6 +10,9 @@
 
 ### Other Changes
 
+- Internal transport rewired to delegate to the TypeSpec-generated `KeyVaultCertificatesClient` instead of the legacy hand-written `KeyVaultPipeline`. This brings the .NET package in line with the established Java/Python/Go/JavaScript layering (an internal generated client wrapped by the hand-written `CertificateClient` public surface). No public API changes, no behavior changes — the same `CertificateClient`, the same models, the same diagnostic scope names on the public surface, and the same on-the-wire requests; existing recordings replay byte-for-byte. The customer's full `CertificateClientOptions` (including `AddPolicy`, custom `Retry`, `Diagnostics.LoggedHeaderNames`/`LoggedQueryParameters`, `Transport`, and `ApplicationId`) continues to flow end-to-end into the generated client.
+- Operations now emit an additional nested `KeyVaultCertificatesClient.<Op>` distributed-tracing span from the internal generated client, in addition to the existing `CertificateClient.<Op>` span — visible only to telemetry consumers (no wire effect).
+
 ## 4.10.0-beta.1 (2026-06-04)
 
 ### Features Added

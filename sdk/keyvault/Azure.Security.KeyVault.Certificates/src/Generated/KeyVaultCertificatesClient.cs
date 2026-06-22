@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -16,8 +15,7 @@ using Azure.Security.KeyVault.Certificates.Models;
 
 namespace Azure.Security.KeyVault.Certificates
 {
-    /// <summary> The key vault client performs cryptographic key operations and vault operations against the Key Vault service. </summary>
-    public partial class KeyVaultCertificatesClient
+    internal partial class KeyVaultCertificatesClient
     {
         private readonly Uri _endpoint;
         private static readonly string[] AuthorizationScopes = new string[] { "https://vault.azure.net/.default" };
@@ -31,7 +29,6 @@ namespace Azure.Security.KeyVault.Certificates
         /// <summary> Initializes a new instance of KeyVaultCertificatesClient. </summary>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public KeyVaultCertificatesClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new KeyVaultCertificatesClientOptions())
         {
         }
@@ -63,15 +60,7 @@ namespace Azure.Security.KeyVault.Certificates
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public KeyVaultCertificatesClient(Uri endpoint, TokenCredential credential, KeyVaultCertificatesClientOptions options) : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, options)
-        {
-        }
-
-        /// <summary> Initializes a new instance of KeyVaultCertificatesClient from a <see cref="KeyVaultCertificatesClientSettings"/>. </summary>
-        /// <param name="settings"> The settings for KeyVaultCertificatesClient. </param>
-        [Experimental("SCME0002")]
-        public KeyVaultCertificatesClient(KeyVaultCertificatesClientSettings settings) : this(settings?.VaultBaseUrl, settings?.CredentialProvider as TokenCredential, settings?.Options)
         {
         }
 
@@ -1145,7 +1134,7 @@ namespace Azure.Security.KeyVault.Certificates
             scope.Start();
             try
             {
-                using HttpMessage message = this.CreateUpdateCertificateRequest(certificateName, content, certificateVersion, context);
+                using HttpMessage message = this.CreateUpdateCertificateRequest(certificateName, certificateVersion, content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1175,7 +1164,7 @@ namespace Azure.Security.KeyVault.Certificates
             scope.Start();
             try
             {
-                using HttpMessage message = this.CreateUpdateCertificateRequest(certificateName, content, certificateVersion, context);
+                using HttpMessage message = this.CreateUpdateCertificateRequest(certificateName, certificateVersion, content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
