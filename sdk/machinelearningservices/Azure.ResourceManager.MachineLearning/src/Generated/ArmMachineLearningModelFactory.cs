@@ -591,12 +591,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="encryptionKeyIdentifier"> Gets or sets the EncryptionKeyIdentifier. </param>
         /// <param name="sku"> Optional. This field is required to be implemented by the RP because AML is supporting more than one tier. </param>
         /// <param name="tags"> The resource tags for the machine learning workspace. </param>
-        /// <returns> A new <see cref="Models.WorkspacePatch"/> instance for mocking. </returns>
-        public static WorkspacePatch WorkspacePatch(ManagedServiceIdentity identity = default, bool? allowRoleAssignmentOnRG = default, string applicationInsights = default, string containerRegistry = default, string description = default, bool? enableDataIsolation = default, bool? enableSoftwareBillOfMaterials = default, FeatureStoreSettings featureStoreSettings = default, string friendlyName = default, string imageBuildCompute = default, IEnumerable<string> ipAllowlist = default, ManagedNetworkSettings managedNetwork = default, NetworkAcls networkAcls = default, string primaryUserAssignedIdentity = default, PublicNetworkAccess? publicNetworkAccessType = default, ServerlessComputeSettings serverlessComputeSettings = default, int? softDeleteRetentionInDays = default, SystemDatastoresAuthMode? systemDatastoresAuthMode = default, bool? isV1LegacyMode = default, int? serviceManagedResourcesCosmosDbCollectionsThroughput = default, string encryptionKeyIdentifier = default, MachineLearningSku sku = default, IDictionary<string, string> tags = default)
+        /// <returns> A new <see cref="Models.MachineLearningWorkspacePatch"/> instance for mocking. </returns>
+        public static MachineLearningWorkspacePatch MachineLearningWorkspacePatch(ManagedServiceIdentity identity = default, bool? allowRoleAssignmentOnRG = default, string applicationInsights = default, string containerRegistry = default, string description = default, bool? enableDataIsolation = default, bool? enableSoftwareBillOfMaterials = default, FeatureStoreSettings featureStoreSettings = default, string friendlyName = default, string imageBuildCompute = default, IEnumerable<string> ipAllowlist = default, ManagedNetworkSettings managedNetwork = default, NetworkAcls networkAcls = default, string primaryUserAssignedIdentity = default, PublicNetworkAccess? publicNetworkAccessType = default, ServerlessComputeSettings serverlessComputeSettings = default, int? softDeleteRetentionInDays = default, SystemDatastoresAuthMode? systemDatastoresAuthMode = default, bool? isV1LegacyMode = default, int? serviceManagedResourcesCosmosDbCollectionsThroughput = default, string encryptionKeyIdentifier = default, MachineLearningSku sku = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new WorkspacePatch(identity, allowRoleAssignmentOnRG is null && applicationInsights is null && containerRegistry is null && description is null && enableDataIsolation is null && enableSoftwareBillOfMaterials is null && featureStoreSettings is null && friendlyName is null && imageBuildCompute is null && ipAllowlist is null && managedNetwork is null && networkAcls is null && primaryUserAssignedIdentity is null && publicNetworkAccessType is null && serverlessComputeSettings is null && serviceManagedResourcesCosmosDbCollectionsThroughput is null && softDeleteRetentionInDays is null && systemDatastoresAuthMode is null && isV1LegacyMode is null ? default : new WorkspacePropertiesUpdateParameters(
+            return new MachineLearningWorkspacePatch(identity, allowRoleAssignmentOnRG is null && applicationInsights is null && containerRegistry is null && description is null && enableDataIsolation is null && enableSoftwareBillOfMaterials is null && featureStoreSettings is null && friendlyName is null && imageBuildCompute is null && ipAllowlist is null && managedNetwork is null && networkAcls is null && primaryUserAssignedIdentity is null && publicNetworkAccessType is null && serverlessComputeSettings is null && serviceManagedResourcesCosmosDbCollectionsThroughput is null && softDeleteRetentionInDays is null && systemDatastoresAuthMode is null && isV1LegacyMode is null ? default : new WorkspacePropertiesUpdateParameters(
                 allowRoleAssignmentOnRG,
                 applicationInsights,
                 containerRegistry,
@@ -7145,7 +7145,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 default);
         }
 
-        /// <param name="type"> Type of Volume Definition. Possible Values: bind,volume,tmpfs,npipe. </param>
+        /// <param name="definitionType"> Type of Volume Definition. Possible Values: bind,volume,tmpfs,npipe. </param>
         /// <param name="readOnly"> Indicate whether to mount volume as readOnly. Default value for this is false. </param>
         /// <param name="source"> Source of the mount. For bind mounts this is the host path. </param>
         /// <param name="target"> Target of the mount. For bind mounts this is the path in the container. </param>
@@ -7154,10 +7154,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="nocopy"> Indicate whether volume is nocopy. </param>
         /// <param name="tmpfsSize"> Mention the Tmpfs size. </param>
         /// <returns> A new <see cref="Models.VolumeDefinition"/> instance for mocking. </returns>
-        public static VolumeDefinition VolumeDefinition(VolumeDefinitionType? @type = default, bool? readOnly = default, string source = default, string target = default, string consistency = default, MountBindOptions bind = default, bool? nocopy = default, int? tmpfsSize = default)
+        public static VolumeDefinition VolumeDefinition(VolumeDefinitionType? definitionType = default, bool? readOnly = default, string source = default, string target = default, string consistency = default, MountBindOptions bind = default, bool? nocopy = default, int? tmpfsSize = default)
         {
             return new VolumeDefinition(
-                @type,
+                definitionType,
                 readOnly,
                 source,
                 target,

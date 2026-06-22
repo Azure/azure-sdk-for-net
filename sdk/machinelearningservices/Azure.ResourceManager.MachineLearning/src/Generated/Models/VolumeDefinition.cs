@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="VolumeDefinition"/>. </summary>
-        /// <param name="type"> Type of Volume Definition. Possible Values: bind,volume,tmpfs,npipe. </param>
+        /// <param name="definitionType"> Type of Volume Definition. Possible Values: bind,volume,tmpfs,npipe. </param>
         /// <param name="readOnly"> Indicate whether to mount volume as readOnly. Default value for this is false. </param>
         /// <param name="source"> Source of the mount. For bind mounts this is the host path. </param>
         /// <param name="target"> Target of the mount. For bind mounts this is the path in the container. </param>
@@ -32,9 +32,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="volume"> Volume Options of the mount. </param>
         /// <param name="tmpfs"> tmpfs option of the mount. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VolumeDefinition(VolumeDefinitionType? @type, bool? readOnly, string source, string target, string consistency, MountBindOptions bind, VolumeOptions volume, TmpfsOptions tmpfs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VolumeDefinition(VolumeDefinitionType? definitionType, bool? readOnly, string source, string target, string consistency, MountBindOptions bind, VolumeOptions volume, TmpfsOptions tmpfs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = @type;
+            DefinitionType = definitionType;
             ReadOnly = readOnly;
             Source = source;
             Target = target;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Type of Volume Definition. Possible Values: bind,volume,tmpfs,npipe. </summary>
         [WirePath("type")]
-        public VolumeDefinitionType? Type { get; set; }
+        public VolumeDefinitionType? DefinitionType { get; set; }
 
         /// <summary> Indicate whether to mount volume as readOnly. Default value for this is false. </summary>
         [WirePath("readOnly")]

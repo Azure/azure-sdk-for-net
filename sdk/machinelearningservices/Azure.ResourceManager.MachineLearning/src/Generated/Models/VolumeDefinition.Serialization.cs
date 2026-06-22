@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(VolumeDefinition)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(DefinitionType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(DefinitionType.Value.ToString());
             }
             if (Optional.IsDefined(ReadOnly))
             {
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            VolumeDefinitionType? @type = default;
+            VolumeDefinitionType? volumeType = default;
             bool? readOnly = default;
             string source = default;
             string target = default;
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    @type = new VolumeDefinitionType(prop.Value.GetString());
+                    volumeType = new VolumeDefinitionType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("readOnly"u8))
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             return new VolumeDefinition(
-                @type,
+                volumeType,
                 readOnly,
                 source,
                 target,

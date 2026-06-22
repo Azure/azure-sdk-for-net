@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.MachineLearning;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MachineLearning.Models
@@ -14,37 +15,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The parameters for updating a machine learning workspace. </summary>
     public partial class MachineLearningWorkspacePatch
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspacePatch"/>. </summary>
         public MachineLearningWorkspacePatch()
@@ -53,114 +25,389 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspacePatch"/>. </summary>
+        /// <param name="identity"></param>
+        /// <param name="properties"> The properties that the machine learning workspace will be updated with. </param>
+        /// <param name="sku"> Optional. This field is required to be implemented by the RP because AML is supporting more than one tier. </param>
         /// <param name="tags"> The resource tags for the machine learning workspace. </param>
-        /// <param name="sku"> The sku of the workspace. </param>
-        /// <param name="identity"> The identity of the resource. </param>
-        /// <param name="description"> The description of this workspace. </param>
-        /// <param name="friendlyName"> The friendly name for this workspace. </param>
-        /// <param name="imageBuildCompute"> The compute name for image build. </param>
-        /// <param name="serviceManagedResourcesSettings"> The service managed resource settings. </param>
-        /// <param name="primaryUserAssignedIdentity"> The user assigned identity resource id that represents the workspace identity. </param>
-        /// <param name="serverlessComputeSettings"> Settings for serverless compute created in the workspace. </param>
-        /// <param name="publicNetworkAccessType"> Whether requests from Public Network are allowed. </param>
-        /// <param name="applicationInsights"> ARM id of the application insights associated with this workspace. </param>
-        /// <param name="containerRegistry"> ARM id of the container registry associated with this workspace. </param>
-        /// <param name="featureStoreSettings"> Settings for feature store type workspace. </param>
-        /// <param name="managedNetwork"> Managed Network settings for a machine learning workspace. </param>
-        /// <param name="enableDataIsolation"></param>
-        /// <param name="v1LegacyMode"> Enabling v1_legacy_mode may prevent you from using features provided by the v2 API. </param>
-        /// <param name="encryption"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MachineLearningWorkspacePatch(IDictionary<string, string> tags, MachineLearningSku sku, ManagedServiceIdentity identity, string description, string friendlyName, string imageBuildCompute, ServiceManagedResourcesSettings serviceManagedResourcesSettings, string primaryUserAssignedIdentity, ServerlessComputeSettings serverlessComputeSettings, PublicNetworkAccess? publicNetworkAccessType, string applicationInsights, string containerRegistry, FeatureStoreSettings featureStoreSettings, ManagedNetworkSettings managedNetwork, bool? enableDataIsolation, bool? v1LegacyMode, EncryptionUpdateProperties encryption, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningWorkspacePatch(ManagedServiceIdentity identity, WorkspacePropertiesUpdateParameters properties, MachineLearningSku sku, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Tags = tags;
-            Sku = sku;
             Identity = identity;
-            Description = description;
-            FriendlyName = friendlyName;
-            ImageBuildCompute = imageBuildCompute;
-            ServiceManagedResourcesSettings = serviceManagedResourcesSettings;
-            PrimaryUserAssignedIdentity = primaryUserAssignedIdentity;
-            ServerlessComputeSettings = serverlessComputeSettings;
-            PublicNetworkAccessType = publicNetworkAccessType;
-            ApplicationInsights = applicationInsights;
-            ContainerRegistry = containerRegistry;
-            FeatureStoreSettings = featureStoreSettings;
-            ManagedNetwork = managedNetwork;
-            EnableDataIsolation = enableDataIsolation;
-            V1LegacyMode = v1LegacyMode;
-            Encryption = encryption;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            Sku = sku;
+            Tags = tags;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Gets or sets the Identity. </summary>
+        [WirePath("identity")]
+        public ManagedServiceIdentity Identity { get; set; }
+
+        /// <summary> The properties that the machine learning workspace will be updated with. </summary>
+        [WirePath("properties")]
+        internal WorkspacePropertiesUpdateParameters Properties { get; set; }
+
+        /// <summary> Optional. This field is required to be implemented by the RP because AML is supporting more than one tier. </summary>
+        [WirePath("sku")]
+        public MachineLearningSku Sku { get; set; }
 
         /// <summary> The resource tags for the machine learning workspace. </summary>
         [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
-        /// <summary> The sku of the workspace. </summary>
-        [WirePath("sku")]
-        public MachineLearningSku Sku { get; set; }
-        /// <summary> The identity of the resource. </summary>
-        [WirePath("identity")]
-        public ManagedServiceIdentity Identity { get; set; }
-        /// <summary> The description of this workspace. </summary>
-        [WirePath("properties.description")]
-        public string Description { get; set; }
-        /// <summary> The friendly name for this workspace. </summary>
-        [WirePath("properties.friendlyName")]
-        public string FriendlyName { get; set; }
-        /// <summary> The compute name for image build. </summary>
-        [WirePath("properties.imageBuildCompute")]
-        public string ImageBuildCompute { get; set; }
-        /// <summary> The service managed resource settings. </summary>
-        internal ServiceManagedResourcesSettings ServiceManagedResourcesSettings { get; set; }
-        /// <summary> The throughput of the collections in cosmosdb database. </summary>
-        [WirePath("properties.serviceManagedResourcesSettings.cosmosDb.collectionsThroughput")]
-        public int? CosmosDbCollectionsThroughput
+
+        /// <summary> Gets or sets the AllowRoleAssignmentOnRG. </summary>
+        [WirePath("properties.allowRoleAssignmentOnRG")]
+        public bool? AllowRoleAssignmentOnRG
         {
-            get => ServiceManagedResourcesSettings is null ? default : ServiceManagedResourcesSettings.CosmosDbCollectionsThroughput;
+            get
+            {
+                return Properties is null ? default : Properties.AllowRoleAssignmentOnRG;
+            }
             set
             {
-                if (ServiceManagedResourcesSettings is null)
-                    ServiceManagedResourcesSettings = new ServiceManagedResourcesSettings();
-                ServiceManagedResourcesSettings.CosmosDbCollectionsThroughput = value;
+                if (Properties is null)
+                {
+                    Properties = new WorkspacePropertiesUpdateParameters();
+                }
+                Properties.AllowRoleAssignmentOnRG = value;
+            }
+        }
+
+        /// <summary> ARM id of the application insights associated with this workspace. </summary>
+        [WirePath("properties.applicationInsights")]
+        public string ApplicationInsights
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ApplicationInsights;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkspacePropertiesUpdateParameters();
+                }
+                Properties.ApplicationInsights = value;
+            }
+        }
+
+        /// <summary> ARM id of the container registry associated with this workspace. </summary>
+        [WirePath("properties.containerRegistry")]
+        public string ContainerRegistry
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ContainerRegistry;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkspacePropertiesUpdateParameters();
+                }
+                Properties.ContainerRegistry = value;
+            }
+        }
+
+        /// <summary> The description of this workspace. </summary>
+        [WirePath("properties.description")]
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkspacePropertiesUpdateParameters();
+                }
+                Properties.Description = value;
+            }
+        }
+
+        /// <summary> Gets or sets the EnableDataIsolation. </summary>
+        [WirePath("properties.enableDataIsolation")]
+        public bool? EnableDataIsolation
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnableDataIsolation;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkspacePropertiesUpdateParameters();
+                }
+                Properties.EnableDataIsolation = value;
+            }
+        }
+
+        /// <summary> Flag to tell if SoftwareBillOfMaterials should be enabled for this workspace. </summary>
+        [WirePath("properties.enableSoftwareBillOfMaterials")]
+        public bool? EnableSoftwareBillOfMaterials
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnableSoftwareBillOfMaterials;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkspacePropertiesUpdateParameters();
+                }
+                Properties.EnableSoftwareBillOfMaterials = value;
+            }
+        }
+
+        /// <summary> Settings for feature store type workspace. </summary>
+        [WirePath("properties.featureStoreSettings")]
+        public FeatureStoreSettings FeatureStoreSettings
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FeatureStoreSettings;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkspacePropertiesUpdateParameters();
+                }
+                Properties.FeatureStoreSettings = value;
+            }
+        }
+
+        /// <summary> The friendly name for this workspace. This name in mutable. </summary>
+        [WirePath("properties.friendlyName")]
+        public string FriendlyName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FriendlyName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkspacePropertiesUpdateParameters();
+                }
+                Properties.FriendlyName = value;
+            }
+        }
+
+        /// <summary> The compute name for image build. </summary>
+        [WirePath("properties.imageBuildCompute")]
+        public string ImageBuildCompute
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ImageBuildCompute;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkspacePropertiesUpdateParameters();
+                }
+                Properties.ImageBuildCompute = value;
+            }
+        }
+
+        /// <summary> The list of IPv4 addresses that are allowed to access the workspace. </summary>
+        [WirePath("properties.ipAllowlist")]
+        public IList<string> IpAllowlist
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkspacePropertiesUpdateParameters();
+                }
+                return Properties.IpAllowlist;
+            }
+        }
+
+        /// <summary> Gets or sets the ManagedNetwork. </summary>
+        [WirePath("properties.managedNetwork")]
+        public ManagedNetworkSettings ManagedNetwork
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ManagedNetwork;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkspacePropertiesUpdateParameters();
+                }
+                Properties.ManagedNetwork = value;
+            }
+        }
+
+        /// <summary> A set of rules governing the network accessibility of the workspace. </summary>
+        [WirePath("properties.networkAcls")]
+        public NetworkAcls NetworkAcls
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NetworkAcls;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkspacePropertiesUpdateParameters();
+                }
+                Properties.NetworkAcls = value;
             }
         }
 
         /// <summary> The user assigned identity resource id that represents the workspace identity. </summary>
         [WirePath("properties.primaryUserAssignedIdentity")]
-        public string PrimaryUserAssignedIdentity { get; set; }
-        /// <summary> Settings for serverless compute created in the workspace. </summary>
-        [WirePath("properties.serverlessComputeSettings")]
-        public ServerlessComputeSettings ServerlessComputeSettings { get; set; }
+        public string PrimaryUserAssignedIdentity
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrimaryUserAssignedIdentity;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkspacePropertiesUpdateParameters();
+                }
+                Properties.PrimaryUserAssignedIdentity = value;
+            }
+        }
+
         /// <summary> Whether requests from Public Network are allowed. </summary>
         [WirePath("properties.publicNetworkAccess")]
-        public PublicNetworkAccess? PublicNetworkAccessType { get; set; }
-        /// <summary> ARM id of the application insights associated with this workspace. </summary>
-        [WirePath("properties.applicationInsights")]
-        public string ApplicationInsights { get; set; }
-        /// <summary> ARM id of the container registry associated with this workspace. </summary>
-        [WirePath("properties.containerRegistry")]
-        public string ContainerRegistry { get; set; }
-        /// <summary> Settings for feature store type workspace. </summary>
-        [WirePath("properties.featureStoreSettings")]
-        public FeatureStoreSettings FeatureStoreSettings { get; set; }
-        /// <summary> Managed Network settings for a machine learning workspace. </summary>
-        [WirePath("properties.managedNetwork")]
-        public ManagedNetworkSettings ManagedNetwork { get; set; }
-        /// <summary> Gets or sets the enable data isolation. </summary>
-        [WirePath("properties.enableDataIsolation")]
-        public bool? EnableDataIsolation { get; set; }
+        public PublicNetworkAccess? PublicNetworkAccessType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublicNetworkAccessType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkspacePropertiesUpdateParameters();
+                }
+                Properties.PublicNetworkAccessType = value;
+            }
+        }
+
+        /// <summary> Settings for serverless compute in a workspace. </summary>
+        [WirePath("properties.serverlessComputeSettings")]
+        public ServerlessComputeSettings ServerlessComputeSettings
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ServerlessComputeSettings;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkspacePropertiesUpdateParameters();
+                }
+                Properties.ServerlessComputeSettings = value;
+            }
+        }
+
+        /// <summary> Retention time in days after workspace get soft deleted. </summary>
+        [WirePath("properties.softDeleteRetentionInDays")]
+        public int? SoftDeleteRetentionInDays
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SoftDeleteRetentionInDays;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkspacePropertiesUpdateParameters();
+                }
+                Properties.SoftDeleteRetentionInDays = value;
+            }
+        }
+
+        /// <summary> The auth mode used for accessing the system datastores of the workspace. </summary>
+        [WirePath("properties.systemDatastoresAuthMode")]
+        public SystemDatastoresAuthMode? SystemDatastoresAuthMode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SystemDatastoresAuthMode;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkspacePropertiesUpdateParameters();
+                }
+                Properties.SystemDatastoresAuthMode = value;
+            }
+        }
+
         /// <summary> Enabling v1_legacy_mode may prevent you from using features provided by the v2 API. </summary>
         [WirePath("properties.v1LegacyMode")]
-        public bool? V1LegacyMode { get; set; }
-        /// <summary> Gets or sets the encryption. </summary>
-        internal EncryptionUpdateProperties Encryption { get; set; }
-        /// <summary> Gets or sets the key identifier. </summary>
-        [WirePath("properties.encryption.keyVaultProperties.keyIdentifier")]
-        public string KeyIdentifier
+        public bool? IsV1LegacyMode
         {
-            get => Encryption is null ? default : Encryption.KeyIdentifier;
-            set => Encryption = new EncryptionUpdateProperties(value);
+            get
+            {
+                return Properties is null ? default : Properties.IsV1LegacyMode;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkspacePropertiesUpdateParameters();
+                }
+                Properties.IsV1LegacyMode = value;
+            }
+        }
+
+        /// <summary> Gets or sets the CollectionsThroughput. </summary>
+        [WirePath("properties.serviceManagedResourcesSettings.cosmosDb.collectionsThroughput")]
+        public int? ServiceManagedResourcesCosmosDbCollectionsThroughput
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ServiceManagedResourcesCosmosDbCollectionsThroughput;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkspacePropertiesUpdateParameters();
+                }
+                Properties.ServiceManagedResourcesCosmosDbCollectionsThroughput = value;
+            }
+        }
+
+        /// <summary> Gets or sets the EncryptionKeyIdentifier. </summary>
+        public string EncryptionKeyIdentifier
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EncryptionKeyIdentifier;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkspacePropertiesUpdateParameters();
+                }
+                Properties.EncryptionKeyIdentifier = value;
+            }
         }
     }
 }

@@ -11,17 +11,11 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    // Customized: restore GA names. UserStorageResourceId is a legacy alias for generated
-    // UserStorageArmId, and ContainerRegistryCredentials is suppressed because generation omits
-    // the public declaration while constructors/serialization still reference it.
+    // Customized: preserve the GA container registry credential model type over the generated
+    // RegistryListCredentialsResult property type.
     [CodeGenSuppress("ContainerRegistryCredentials")]
     public partial class MachineLearningWorkspaceGetKeysResult
     {
-        /// <summary> The resource ID of the workspace storage. </summary>
-        [WirePath("userStorageResourceId")]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public string UserStorageResourceId => UserStorageArmId;
-
         /// <summary> Gets the ContainerRegistryCredentials. </summary>
         [WirePath("containerRegistryCredentials")]
         [EditorBrowsable(EditorBrowsableState.Never)]

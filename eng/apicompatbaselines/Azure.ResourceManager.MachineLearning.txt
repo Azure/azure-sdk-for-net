@@ -3,3 +3,6 @@ CannotRemoveAttribute : Attribute 'Azure.ResourceManager.MachineLearning.WirePat
 CannotRemoveAttribute : Attribute 'Azure.ResourceManager.MachineLearning.WirePathAttribute' exists on 'Azure.ResourceManager.MachineLearning.Models.DockerSetting.AdditionalProperties' in the contract but not the implementation.
 CannotRemoveAttribute : Attribute 'Azure.ResourceManager.MachineLearning.WirePathAttribute' exists on 'Azure.ResourceManager.MachineLearning.Models.EnvironmentVariable.AdditionalProperties' in the contract but not the implementation.
 CannotRemoveAttribute : Attribute 'Azure.ResourceManager.MachineLearning.WirePathAttribute' exists on 'Azure.ResourceManager.MachineLearning.Models.ImageSetting.AdditionalProperties' in the contract but not the implementation.
+
+# UserStorageResourceId is now generated from the TypeSpec property rename while preserving the original wire path.
+CannotChangeAttribute : Attribute 'Azure.ResourceManager.MachineLearning.WirePathAttribute' on 'Azure.ResourceManager.MachineLearning.Models.MachineLearningWorkspaceGetKeysResult.UserStorageResourceId' changed from '[WirePathAttribute("userStorageResourceId")]' in the contract to '[WirePathAttribute("userStorageArmId")]' in the implementation.

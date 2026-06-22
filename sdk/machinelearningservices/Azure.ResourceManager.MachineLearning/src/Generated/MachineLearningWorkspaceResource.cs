@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="patch"> The parameters for updating a machine learning workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation<MachineLearningWorkspaceResource>> UpdateAsync(WaitUntil waitUntil, WorkspacePatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<MachineLearningWorkspaceResource>> UpdateAsync(WaitUntil waitUntil, MachineLearningWorkspacePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspacesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, WorkspacePatch.ToRequestContent(patch), context);
+                HttpMessage message = _workspacesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MachineLearningWorkspacePatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 MachineLearningArmOperation<MachineLearningWorkspaceResource> operation = new MachineLearningArmOperation<MachineLearningWorkspaceResource>(
                     new MachineLearningWorkspaceResourceOperationSource(Client),
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="patch"> The parameters for updating a machine learning workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation<MachineLearningWorkspaceResource> Update(WaitUntil waitUntil, WorkspacePatch patch, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<MachineLearningWorkspaceResource> Update(WaitUntil waitUntil, MachineLearningWorkspacePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspacesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, WorkspacePatch.ToRequestContent(patch), context);
+                HttpMessage message = _workspacesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MachineLearningWorkspacePatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 MachineLearningArmOperation<MachineLearningWorkspaceResource> operation = new MachineLearningArmOperation<MachineLearningWorkspaceResource>(
                     new MachineLearningWorkspaceResourceOperationSource(Client),
@@ -1614,7 +1614,7 @@ namespace Azure.ResourceManager.MachineLearning
                 else
                 {
                     MachineLearningWorkspaceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    WorkspacePatch patch = new WorkspacePatch();
+                    MachineLearningWorkspacePatch patch = new MachineLearningWorkspacePatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -1662,7 +1662,7 @@ namespace Azure.ResourceManager.MachineLearning
                 else
                 {
                     MachineLearningWorkspaceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    WorkspacePatch patch = new WorkspacePatch();
+                    MachineLearningWorkspacePatch patch = new MachineLearningWorkspacePatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -1709,7 +1709,7 @@ namespace Azure.ResourceManager.MachineLearning
                 else
                 {
                     MachineLearningWorkspaceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    WorkspacePatch patch = new WorkspacePatch();
+                    MachineLearningWorkspacePatch patch = new MachineLearningWorkspacePatch();
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<MachineLearningWorkspaceResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -1752,7 +1752,7 @@ namespace Azure.ResourceManager.MachineLearning
                 else
                 {
                     MachineLearningWorkspaceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    WorkspacePatch patch = new WorkspacePatch();
+                    MachineLearningWorkspacePatch patch = new MachineLearningWorkspacePatch();
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<MachineLearningWorkspaceResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -1794,7 +1794,7 @@ namespace Azure.ResourceManager.MachineLearning
                 else
                 {
                     MachineLearningWorkspaceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    WorkspacePatch patch = new WorkspacePatch();
+                    MachineLearningWorkspacePatch patch = new MachineLearningWorkspacePatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -1840,7 +1840,7 @@ namespace Azure.ResourceManager.MachineLearning
                 else
                 {
                     MachineLearningWorkspaceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    WorkspacePatch patch = new WorkspacePatch();
+                    MachineLearningWorkspacePatch patch = new MachineLearningWorkspacePatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

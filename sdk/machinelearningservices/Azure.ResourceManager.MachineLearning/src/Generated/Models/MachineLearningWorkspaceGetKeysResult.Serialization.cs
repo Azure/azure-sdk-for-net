@@ -90,17 +90,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(ContainerRegistryCredentials))
             {
                 writer.WritePropertyName("containerRegistryCredentials"u8);
-                writer.WriteObjectValue(ContainerRegistryCredentials, options);
+                writer.WriteObjectValue<MachineLearningContainerRegistryCredentials>(ContainerRegistryCredentials, options);
             }
             if (Optional.IsDefined(NotebookAccessKeys))
             {
                 writer.WritePropertyName("notebookAccessKeys"u8);
                 writer.WriteObjectValue(NotebookAccessKeys, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(UserStorageArmId))
+            if (options.Format != "W" && Optional.IsDefined(UserStorageResourceId))
             {
                 writer.WritePropertyName("userStorageArmId"u8);
-                writer.WriteStringValue(UserStorageArmId);
+                writer.WriteStringValue(UserStorageResourceId);
             }
             if (options.Format != "W" && Optional.IsDefined(UserStorageKey))
             {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             string appInsightsInstrumentationKey = default;
             MachineLearningContainerRegistryCredentials containerRegistryCredentials = default;
             MachineLearningWorkspaceGetNotebookKeysResult notebookAccessKeys = default;
-            string userStorageArmId = default;
+            string userStorageResourceId = default;
             string userStorageKey = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("userStorageArmId"u8))
                 {
-                    userStorageArmId = prop.Value.GetString();
+                    userStorageResourceId = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("userStorageKey"u8))
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 appInsightsInstrumentationKey,
                 containerRegistryCredentials,
                 notebookAccessKeys,
-                userStorageArmId,
+                userStorageResourceId,
                 userStorageKey,
                 additionalBinaryDataProperties);
         }

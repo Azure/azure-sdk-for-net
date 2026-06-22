@@ -26,15 +26,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="appInsightsInstrumentationKey"> The access key of the workspace app insights. </param>
         /// <param name="containerRegistryCredentials"></param>
         /// <param name="notebookAccessKeys"></param>
-        /// <param name="userStorageArmId"> The arm Id key of the workspace storage. </param>
+        /// <param name="userStorageResourceId"> The arm Id key of the workspace storage. </param>
         /// <param name="userStorageKey"> The access key of the workspace storage. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MachineLearningWorkspaceGetKeysResult(string appInsightsInstrumentationKey, MachineLearningContainerRegistryCredentials containerRegistryCredentials, MachineLearningWorkspaceGetNotebookKeysResult notebookAccessKeys, string userStorageArmId, string userStorageKey, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MachineLearningWorkspaceGetKeysResult(string appInsightsInstrumentationKey, MachineLearningContainerRegistryCredentials containerRegistryCredentials, MachineLearningWorkspaceGetNotebookKeysResult notebookAccessKeys, string userStorageResourceId, string userStorageKey, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AppInsightsInstrumentationKey = appInsightsInstrumentationKey;
             ContainerRegistryCredentials = containerRegistryCredentials;
             NotebookAccessKeys = notebookAccessKeys;
-            UserStorageArmId = userStorageArmId;
+            UserStorageResourceId = userStorageResourceId;
             UserStorageKey = userStorageKey;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> The arm Id key of the workspace storage. </summary>
         [WirePath("userStorageArmId")]
-        public string UserStorageArmId { get; }
+        public string UserStorageResourceId { get; }
 
         /// <summary> The access key of the workspace storage. </summary>
         [WirePath("userStorageKey")]

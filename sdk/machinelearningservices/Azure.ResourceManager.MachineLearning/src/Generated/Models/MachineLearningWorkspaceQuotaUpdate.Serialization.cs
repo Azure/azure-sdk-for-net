@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Optional.IsDefined(Type))
+            if (options.Format != "W" && Optional.IsDefined(UpdateWorkspaceQuotasType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type);
+                writer.WriteStringValue(UpdateWorkspaceQuotasType);
             }
             if (Optional.IsDefined(Limit))
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             string id = default;
-            string @type = default;
+            string updateWorkspaceQuotasType = default;
             long? limit = default;
             MachineLearningQuotaUnit? unit = default;
             MachineLearningWorkspaceQuotaStatus? status = default;
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    updateWorkspaceQuotasType = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("limit"u8))
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             return new MachineLearningWorkspaceQuotaUpdate(
                 id,
-                @type,
+                updateWorkspaceQuotasType,
                 limit,
                 unit,
                 status,

@@ -725,7 +725,7 @@ namespace Azure.ResourceManager.MachineLearning
     [ModelReaderWriterBuildable(typeof(WorkspaceConnectionSharedAccessSignature))]
     [ModelReaderWriterBuildable(typeof(WorkspaceHubConfig))]
     [ModelReaderWriterBuildable(typeof(WorkspaceListResult))]
-    [ModelReaderWriterBuildable(typeof(WorkspacePatch))]
+    [ModelReaderWriterBuildable(typeof(MachineLearningWorkspacePatch))]
     [ModelReaderWriterBuildable(typeof(WorkspacePrivateEndpointResource))]
     [ModelReaderWriterBuildable(typeof(WorkspaceProperties))]
     [ModelReaderWriterBuildable(typeof(WorkspacePropertiesUpdateParameters))]

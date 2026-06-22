@@ -24,15 +24,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspaceQuotaUpdate"/>. </summary>
         /// <param name="id"> Specifies the resource ID. </param>
-        /// <param name="type"> Specifies the resource type. </param>
+        /// <param name="updateWorkspaceQuotasType"> Specifies the resource type. </param>
         /// <param name="limit"> The maximum permitted quota of the resource. </param>
         /// <param name="unit"> An enum describing the unit of quota measurement. </param>
         /// <param name="status"> Status of update workspace quota. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MachineLearningWorkspaceQuotaUpdate(string id, string @type, long? limit, MachineLearningQuotaUnit? unit, MachineLearningWorkspaceQuotaStatus? status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MachineLearningWorkspaceQuotaUpdate(string id, string updateWorkspaceQuotasType, long? limit, MachineLearningQuotaUnit? unit, MachineLearningWorkspaceQuotaStatus? status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
-            Type = @type;
+            UpdateWorkspaceQuotasType = updateWorkspaceQuotasType;
             Limit = limit;
             Unit = unit;
             Status = status;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Specifies the resource type. </summary>
         [WirePath("type")]
-        public string Type { get; }
+        public string UpdateWorkspaceQuotasType { get; }
 
         /// <summary> The maximum permitted quota of the resource. </summary>
         [WirePath("limit")]
