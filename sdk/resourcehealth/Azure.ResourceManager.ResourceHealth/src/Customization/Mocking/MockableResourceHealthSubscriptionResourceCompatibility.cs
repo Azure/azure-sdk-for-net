@@ -27,18 +27,6 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
             return new GetAvailabilityStatusResourcesBySubscriptionCollectionResult(AvailabilityStatusesRestClient, Id.SubscriptionId, filter, expand, context);
         }
 
-        /// <summary> Lists current availability status for resources in the subscription. </summary>
-        public virtual AsyncPageable<ResourceHealthAvailabilityStatus> GetAvailabilityStatusesBySubscriptionAsync(string filter = default, string expand = default, CancellationToken cancellationToken = default)
-        {
-            return GetAvailabilityStatusResourcesBySubscriptionAsync(filter, expand, cancellationToken);
-        }
-
-        /// <summary> Lists current availability status for resources in the subscription. </summary>
-        public virtual Pageable<ResourceHealthAvailabilityStatus> GetAvailabilityStatusesBySubscription(string filter = default, string expand = default, CancellationToken cancellationToken = default)
-        {
-            return GetAvailabilityStatusResourcesBySubscription(filter, expand, cancellationToken);
-        }
-
         private static RequestContext CreateRequestContext(CancellationToken cancellationToken)
         {
             return new RequestContext
