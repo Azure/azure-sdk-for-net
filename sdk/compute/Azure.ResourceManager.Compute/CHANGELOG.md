@@ -9,10 +9,8 @@
 
 ### Breaking Changes
 
-- A number of legacy compatibility members are now marked obsolete and hidden from IntelliSense. Many of these members are preserved only for binary/source compatibility and should be replaced with the newer generated properties. See the migration guide below for details and examples.
+- A number of legacy compatibility members are now marked obsolete and hidden from IntelliSense. Many of these members are preserved only for binary/source compatibility and should be replaced with the newer generated properties.
 - Cloud Services (classic) APIs are no longer supported by the generated Compute client. Existing CloudService-related types and methods are obsolete and preserved only for compatibility.
-
-### Migration Guide
 
 Version 1.15.0 is the first stable release of `Azure.ResourceManager.Compute` generated from Compute TypeSpec definitions. The package name, namespace, authentication model, and ARM resource pattern remain the same, but the generated API surface is more directly aligned with the service model. To preserve compatibility, many previously shipped members are still present but are marked `[Obsolete]` and hidden from IntelliSense with `[EditorBrowsable(EditorBrowsableState.Never)]`.
 
