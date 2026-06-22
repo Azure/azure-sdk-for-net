@@ -1,14 +1,20 @@
 # Release History
 
-## 1.15.0-beta.2 (Unreleased)
+## 1.15.0 (2026-06-22)
 
 ### Features Added
 
+- This is the first stable release of `Azure.ResourceManager.Compute` generated from the Compute TypeSpec definitions.
+- Upgraded the generated Compute API surface to the merged `package-2026-03-01` TypeSpec input. This includes all features listed in the previous `1.15.0-beta.1` release and adds support for Interconnect Block APIs and automatic SKU migration policy on VM scale set SKU profiles.
+
 ### Breaking Changes
 
-### Bugs Fixed
+- A number of legacy compatibility members are now marked obsolete and hidden from IntelliSense. Many of these members are preserved only for binary/source compatibility and should be replaced with the newer generated properties. See the [migration guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/compute/Azure.ResourceManager.Compute/MigrationGuide.md) for details and examples.
+- Cloud Services (classic) APIs are no longer supported by the generated Compute client. Existing CloudService-related types and methods are obsolete and preserved only for compatibility.
 
 ### Other Changes
+
+- Added a [migration guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/compute/Azure.ResourceManager.Compute/MigrationGuide.md) for customers upgrading from `1.14.x` or earlier stable versions to this TypeSpec-generated release.
 
 ## 1.15.0-beta.1 (2026-04-24)
 
