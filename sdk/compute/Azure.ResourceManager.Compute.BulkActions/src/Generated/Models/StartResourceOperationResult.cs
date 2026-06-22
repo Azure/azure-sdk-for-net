@@ -20,26 +20,26 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <summary> Initializes a new instance of <see cref="StartResourceOperationResult"/>. </summary>
         /// <param name="description"> The description of the operation response. </param>
-        /// <param name="resourceType"> The type of resources used in the start request eg virtual machines. </param>
+        /// <param name="resourceTypeName"> The type of resources used in the start request eg virtual machines. </param>
         /// <param name="location"> The location of the start request eg westus. </param>
-        internal StartResourceOperationResult(string description, string resourceType, AzureLocation location)
+        internal StartResourceOperationResult(string description, string resourceTypeName, AzureLocation location)
         {
             Description = description;
-            ResourceType = resourceType;
+            ResourceTypeName = resourceTypeName;
             Location = location;
             Results = new ChangeTrackingList<ComputeBulkOperationResult>();
         }
 
         /// <summary> Initializes a new instance of <see cref="StartResourceOperationResult"/>. </summary>
         /// <param name="description"> The description of the operation response. </param>
-        /// <param name="resourceType"> The type of resources used in the start request eg virtual machines. </param>
+        /// <param name="resourceTypeName"> The type of resources used in the start request eg virtual machines. </param>
         /// <param name="location"> The location of the start request eg westus. </param>
         /// <param name="results"> The results from the start request if no errors exist. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StartResourceOperationResult(string description, string resourceType, AzureLocation location, IList<ComputeBulkOperationResult> results, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StartResourceOperationResult(string description, string resourceTypeName, AzureLocation location, IList<ComputeBulkOperationResult> results, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
-            ResourceType = resourceType;
+            ResourceTypeName = resourceTypeName;
             Location = location;
             Results = results;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         public string Description { get; }
 
         /// <summary> The type of resources used in the start request eg virtual machines. </summary>
-        public string ResourceType { get; }
+        public string ResourceTypeName { get; }
 
         /// <summary> The location of the start request eg westus. </summary>
         public AzureLocation Location { get; }

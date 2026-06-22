@@ -1,6 +1,6 @@
 directory: specification/compute/resource-manager/Microsoft.Compute/Bulkactions
-commit: 01f74745c4c341c5dbf48f99baf5f54f32975b78
-repo: sumedhsp-msft/azure-rest-api-specs
+commit: 8726dd490b0ee3bb0c00aac9622d529a0449f015
+repo: Azure/azure-rest-api-specs
 additionalDirectories:
 
 emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json

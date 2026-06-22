@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             writer.WritePropertyName("description"u8);
             writer.WriteStringValue(Description);
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(ResourceType);
+            writer.WriteStringValue(ResourceTypeName);
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
             if (Optional.IsCollectionDefined(Results))
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 return null;
             }
             string description = default;
-            string resourceType = default;
+            string resourceTypeName = default;
             AzureLocation location = default;
             IList<ComputeBulkOperationResult> results = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    resourceType = prop.Value.GetString();
+                    resourceTypeName = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("location"u8))
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new StartResourceOperationResult(description, resourceType, location, results ?? new ChangeTrackingList<ComputeBulkOperationResult>(), additionalBinaryDataProperties);
+            return new StartResourceOperationResult(description, resourceTypeName, location, results ?? new ChangeTrackingList<ComputeBulkOperationResult>(), additionalBinaryDataProperties);
         }
     }
 }

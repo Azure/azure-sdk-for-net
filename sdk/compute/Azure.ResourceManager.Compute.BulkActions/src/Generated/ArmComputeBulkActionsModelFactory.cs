@@ -52,15 +52,15 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <param name="description"> The description of the operation response. </param>
-        /// <param name="resourceType"> The type of resources used in the deallocate request eg virtual machines. </param>
+        /// <param name="resourceTypeName"> The type of resources used in the deallocate request eg virtual machines. </param>
         /// <param name="location"> The location of the deallocate request eg westus. </param>
         /// <param name="results"> The results from the deallocate request if no errors exist. </param>
         /// <returns> A new <see cref="Models.DeallocateResourceOperationResult"/> instance for mocking. </returns>
-        public static DeallocateResourceOperationResult DeallocateResourceOperationResult(string description = default, string resourceType = default, AzureLocation location = default, IEnumerable<ComputeBulkOperationResult> results = default)
+        public static DeallocateResourceOperationResult DeallocateResourceOperationResult(string description = default, string resourceTypeName = default, AzureLocation location = default, IEnumerable<ComputeBulkOperationResult> results = default)
         {
             results ??= new ChangeTrackingList<ComputeBulkOperationResult>();
 
-            return new DeallocateResourceOperationResult(description, resourceType, location, (results ?? new ChangeTrackingList<ComputeBulkOperationResult>()).ToList(), default);
+            return new DeallocateResourceOperationResult(description, resourceTypeName, location, (results ?? new ChangeTrackingList<ComputeBulkOperationResult>()).ToList(), default);
         }
 
         /// <param name="resourceId"> Unique identifier for the resource involved in the operation, for example Azure resource ID. </param>
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="completedOn"> Time the operation was complete if errors are null. </param>
         /// <param name="retryPolicy"> Retry policy the user can pass. </param>
         /// <returns> A new <see cref="Models.ComputeBulkOperationDetails"/> instance for mocking. </returns>
-        public static ComputeBulkOperationDetails ComputeBulkOperationDetails(string operationId = default, ResourceIdentifier resourceId = default, ComputeBulkOperationType? operationType = default, Guid subscriptionId = default, DateTimeOffset? deadlineOn = default, ScheduledActionDeadlineType? deadlineType = default, ScheduledActionOperationState? state = default, string timeZone = default, ComputeBulkOperationError error = default, ComputeBulkFallbackOperationInfo fallbackOperationInfo = default, DateTimeOffset? completedOn = default, BulkOperationRetryPolicy retryPolicy = default)
+        public static ComputeBulkOperationDetails ComputeBulkOperationDetails(string operationId = default, ResourceIdentifier resourceId = default, ComputeBulkOperationType? operationType = default, Guid? subscriptionId = default, DateTimeOffset? deadlineOn = default, ScheduledActionDeadlineType? deadlineType = default, ScheduledActionOperationState? state = default, string timeZone = default, ComputeBulkOperationError error = default, ComputeBulkFallbackOperationInfo fallbackOperationInfo = default, DateTimeOffset? completedOn = default, BulkOperationRetryPolicy retryPolicy = default)
         {
             return new ComputeBulkOperationDetails(
                 operationId,
@@ -130,15 +130,15 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <param name="description"> The description of the operation response. </param>
-        /// <param name="resourceType"> The type of resources used in the Hibernate request eg virtual machines. </param>
+        /// <param name="resourceTypeName"> The type of resources used in the Hibernate request eg virtual machines. </param>
         /// <param name="location"> The location of the Hibernate request eg westus. </param>
         /// <param name="results"> The results from the Hibernate request if no errors exist. </param>
         /// <returns> A new <see cref="Models.HibernateResourceOperationResult"/> instance for mocking. </returns>
-        public static HibernateResourceOperationResult HibernateResourceOperationResult(string description = default, string resourceType = default, AzureLocation location = default, IEnumerable<ComputeBulkOperationResult> results = default)
+        public static HibernateResourceOperationResult HibernateResourceOperationResult(string description = default, string resourceTypeName = default, AzureLocation location = default, IEnumerable<ComputeBulkOperationResult> results = default)
         {
             results ??= new ChangeTrackingList<ComputeBulkOperationResult>();
 
-            return new HibernateResourceOperationResult(description, resourceType, location, (results ?? new ChangeTrackingList<ComputeBulkOperationResult>()).ToList(), default);
+            return new HibernateResourceOperationResult(description, resourceTypeName, location, (results ?? new ChangeTrackingList<ComputeBulkOperationResult>()).ToList(), default);
         }
 
         /// <param name="executionParameters"> The execution parameters for the request. </param>
@@ -150,15 +150,15 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <param name="description"> The description of the operation response. </param>
-        /// <param name="resourceType"> The type of resources used in the start request eg virtual machines. </param>
+        /// <param name="resourceTypeName"> The type of resources used in the start request eg virtual machines. </param>
         /// <param name="location"> The location of the start request eg westus. </param>
         /// <param name="results"> The results from the start request if no errors exist. </param>
         /// <returns> A new <see cref="Models.StartResourceOperationResult"/> instance for mocking. </returns>
-        public static StartResourceOperationResult StartResourceOperationResult(string description = default, string resourceType = default, AzureLocation location = default, IEnumerable<ComputeBulkOperationResult> results = default)
+        public static StartResourceOperationResult StartResourceOperationResult(string description = default, string resourceTypeName = default, AzureLocation location = default, IEnumerable<ComputeBulkOperationResult> results = default)
         {
             results ??= new ChangeTrackingList<ComputeBulkOperationResult>();
 
-            return new StartResourceOperationResult(description, resourceType, location, (results ?? new ChangeTrackingList<ComputeBulkOperationResult>()).ToList(), default);
+            return new StartResourceOperationResult(description, resourceTypeName, location, (results ?? new ChangeTrackingList<ComputeBulkOperationResult>()).ToList(), default);
         }
 
         /// <param name="executionParameters"> The execution parameters for the request. </param>
@@ -171,15 +171,15 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <param name="description"> The description of the operation response. </param>
-        /// <param name="resourceType"> The type of resources used in the delete request eg virtual machines. </param>
+        /// <param name="resourceTypeName"> The type of resources used in the delete request eg virtual machines. </param>
         /// <param name="location"> The location of the delete request eg westus. </param>
         /// <param name="results"> The results from the delete request if no errors exist. </param>
         /// <returns> A new <see cref="Models.DeleteResourceOperationResult"/> instance for mocking. </returns>
-        public static DeleteResourceOperationResult DeleteResourceOperationResult(string description = default, string resourceType = default, AzureLocation location = default, IEnumerable<ComputeBulkOperationResult> results = default)
+        public static DeleteResourceOperationResult DeleteResourceOperationResult(string description = default, string resourceTypeName = default, AzureLocation location = default, IEnumerable<ComputeBulkOperationResult> results = default)
         {
             results ??= new ChangeTrackingList<ComputeBulkOperationResult>();
 
-            return new DeleteResourceOperationResult(description, resourceType, location, (results ?? new ChangeTrackingList<ComputeBulkOperationResult>()).ToList(), default);
+            return new DeleteResourceOperationResult(description, resourceTypeName, location, (results ?? new ChangeTrackingList<ComputeBulkOperationResult>()).ToList(), default);
         }
 
         /// <param name="operationIds"> The list of operation ids to get the status of. </param>

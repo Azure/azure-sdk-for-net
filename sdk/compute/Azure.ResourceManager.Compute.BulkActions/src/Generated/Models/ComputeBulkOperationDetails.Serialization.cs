@@ -92,8 +92,11 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 writer.WritePropertyName("opType"u8);
                 writer.WriteStringValue(OperationType.Value.ToString());
             }
-            writer.WritePropertyName("subscriptionId"u8);
-            writer.WriteStringValue(SubscriptionId);
+            if (Optional.IsDefined(SubscriptionId))
+            {
+                writer.WritePropertyName("subscriptionId"u8);
+                writer.WriteStringValue(SubscriptionId.Value);
+            }
             if (Optional.IsDefined(DeadlineOn))
             {
                 writer.WritePropertyName("deadline"u8);
@@ -179,7 +182,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             string operationId = default;
             ResourceIdentifier resourceId = default;
             ComputeBulkOperationType? operationType = default;
-            Guid subscriptionId = default;
+            Guid? subscriptionId = default;
             DateTimeOffset? deadlineOn = default;
             ScheduledActionDeadlineType? deadlineType = default;
             ScheduledActionOperationState? state = default;

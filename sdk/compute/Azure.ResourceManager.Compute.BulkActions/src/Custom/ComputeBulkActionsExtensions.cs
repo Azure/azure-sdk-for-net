@@ -26,7 +26,10 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> The deallocate operation result response. </returns>
         internal static Task<Response<DeallocateResourceOperationResult>> BulkDeallocateOperationAsync(this ResourceGroupResource resourceGroupResource, AzureLocation location, ExecuteDeallocateContent content, CancellationToken cancellationToken = default)
-            => GetMockableComputeBulkActionsResourceGroupResource(resourceGroupResource).BulkDeallocateOperationAsync(content, cancellationToken);
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            return GetMockableComputeBulkActionsResourceGroupResource(resourceGroupResource).BulkDeallocateOperationAsync(content, cancellationToken);
+        }
 
         /// <summary>
         /// BulkDeallocate: Execute deallocate operation for a batch of virtual machines.
@@ -40,7 +43,10 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> The deallocate operation result response. </returns>
         public static Task<Response<DeallocateResourceOperationResult>> BulkDeallocateOperationAsync(this ResourceGroupResource resourceGroupResource, ExecuteDeallocateContent content, CancellationToken cancellationToken = default)
-            => GetMockableComputeBulkActionsResourceGroupResource(resourceGroupResource).BulkDeallocateOperationAsync(content, cancellationToken);
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            return GetMockableComputeBulkActionsResourceGroupResource(resourceGroupResource).BulkDeallocateOperationAsync(content, cancellationToken);
+        }
 
         /// <summary>
         /// BulkDeallocate: Execute deallocate operation for a batch of virtual machines.
@@ -56,7 +62,10 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> The deallocate operation result response. </returns>
         internal static Response<DeallocateResourceOperationResult> BulkDeallocateOperation(this ResourceGroupResource resourceGroupResource, AzureLocation location, ExecuteDeallocateContent content, CancellationToken cancellationToken = default)
-            => GetMockableComputeBulkActionsResourceGroupResource(resourceGroupResource).BulkDeallocateOperation(content, cancellationToken);
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            return GetMockableComputeBulkActionsResourceGroupResource(resourceGroupResource).BulkDeallocateOperation(content, cancellationToken);
+        }
 
         /// <summary>
         /// BulkDeallocate: Execute deallocate operation for a batch of virtual machines.
@@ -70,7 +79,10 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> The deallocate operation result response. </returns>
         public static Response<DeallocateResourceOperationResult> BulkDeallocateOperation(this ResourceGroupResource resourceGroupResource, ExecuteDeallocateContent content, CancellationToken cancellationToken = default)
-            => GetMockableComputeBulkActionsResourceGroupResource(resourceGroupResource).BulkDeallocateOperation(content, cancellationToken);
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            return GetMockableComputeBulkActionsResourceGroupResource(resourceGroupResource).BulkDeallocateOperation(content, cancellationToken);
+        }
 
         /// <summary>
         /// BulkHibernate: Execute hibernate operation for a batch of virtual machines.
@@ -86,7 +98,10 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> The hibernate operation result response. </returns>
         internal static Task<Response<HibernateResourceOperationResult>> BulkHibernateOperationAsync(this ResourceGroupResource resourceGroupResource, AzureLocation location, ExecuteHibernateContent content, CancellationToken cancellationToken = default)
-            => GetMockableComputeBulkActionsResourceGroupResource(resourceGroupResource).BulkHibernateOperationAsync(content, cancellationToken);
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            return GetMockableComputeBulkActionsResourceGroupResource(resourceGroupResource).BulkHibernateOperationAsync(content, cancellationToken);
+        }
 
         /// <summary>
         /// BulkHibernate: Execute hibernate operation for a batch of virtual machines.
@@ -100,7 +115,10 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> The hibernate operation result response. </returns>
         public static Task<Response<HibernateResourceOperationResult>> BulkHibernateOperationAsync(this ResourceGroupResource resourceGroupResource, ExecuteHibernateContent content, CancellationToken cancellationToken = default)
-            => GetMockableComputeBulkActionsResourceGroupResource(resourceGroupResource).BulkHibernateOperationAsync(content, cancellationToken);
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            return GetMockableComputeBulkActionsResourceGroupResource(resourceGroupResource).BulkHibernateOperationAsync(content, cancellationToken);
+        }
 
         /// <summary>
         /// BulkHibernate: Execute hibernate operation for a batch of virtual machines.
@@ -116,7 +134,10 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> The hibernate operation result response. </returns>
         internal static Response<HibernateResourceOperationResult> BulkHibernateOperation(this ResourceGroupResource resourceGroupResource, AzureLocation location, ExecuteHibernateContent content, CancellationToken cancellationToken = default)
-            => GetMockableComputeBulkActionsResourceGroupResource(resourceGroupResource).BulkHibernateOperation(content, cancellationToken);
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            return GetMockableComputeBulkActionsResourceGroupResource(resourceGroupResource).BulkHibernateOperation(content, cancellationToken);
+        }
 
         /// <summary>
         /// BulkHibernate: Execute hibernate operation for a batch of virtual machines.
@@ -130,7 +151,10 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> The hibernate operation result response. </returns>
         public static Response<HibernateResourceOperationResult> BulkHibernateOperation(this ResourceGroupResource resourceGroupResource, ExecuteHibernateContent content, CancellationToken cancellationToken = default)
-            => GetMockableComputeBulkActionsResourceGroupResource(resourceGroupResource).BulkHibernateOperation(content, cancellationToken);
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            return GetMockableComputeBulkActionsResourceGroupResource(resourceGroupResource).BulkHibernateOperation(content, cancellationToken);
+        }
 
         /// <summary>
         /// BulkStart: Execute start operation for a batch of virtual machines.
@@ -146,7 +170,10 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> The start operation result response. </returns>
         internal static Task<Response<StartResourceOperationResult>> BulkStartOperationAsync(this ResourceGroupResource resourceGroupResource, AzureLocation location, ExecuteStartContent content, CancellationToken cancellationToken = default)
-            => GetMockableComputeBulkActionsResourceGroupResource(resourceGroupResource).BulkStartOperationAsync(content, cancellationToken);
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            return GetMockableComputeBulkActionsResourceGroupResource(resourceGroupResource).BulkStartOperationAsync(content, cancellationToken);
+        }
 
         /// <summary>
         /// BulkStart: Execute start operation for a batch of virtual machines.
@@ -160,7 +187,10 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> The start operation result response. </returns>
         public static Task<Response<StartResourceOperationResult>> BulkStartOperationAsync(this ResourceGroupResource resourceGroupResource, ExecuteStartContent content, CancellationToken cancellationToken = default)
-            => GetMockableComputeBulkActionsResourceGroupResource(resourceGroupResource).BulkStartOperationAsync(content, cancellationToken);
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            return GetMockableComputeBulkActionsResourceGroupResource(resourceGroupResource).BulkStartOperationAsync(content, cancellationToken);
+        }
 
         /// <summary>
         /// BulkStart: Execute start operation for a batch of virtual machines.
@@ -176,7 +206,10 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> The start operation result response. </returns>
         internal static Response<StartResourceOperationResult> BulkStartOperation(this ResourceGroupResource resourceGroupResource, AzureLocation location, ExecuteStartContent content, CancellationToken cancellationToken = default)
-            => GetMockableComputeBulkActionsResourceGroupResource(resourceGroupResource).BulkStartOperation(content, cancellationToken);
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            return GetMockableComputeBulkActionsResourceGroupResource(resourceGroupResource).BulkStartOperation(content, cancellationToken);
+        }
 
         /// <summary>
         /// BulkStart: Execute start operation for a batch of virtual machines.
@@ -190,7 +223,10 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> The start operation result response. </returns>
         public static Response<StartResourceOperationResult> BulkStartOperation(this ResourceGroupResource resourceGroupResource, ExecuteStartContent content, CancellationToken cancellationToken = default)
-            => GetMockableComputeBulkActionsResourceGroupResource(resourceGroupResource).BulkStartOperation(content, cancellationToken);
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            return GetMockableComputeBulkActionsResourceGroupResource(resourceGroupResource).BulkStartOperation(content, cancellationToken);
+        }
 
         /// <summary>
         /// BulkDelete: Execute delete operation for a batch of virtual machines.
@@ -206,7 +242,10 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> The delete operation result response. </returns>
         internal static Task<Response<DeleteResourceOperationResult>> BulkDeleteOperationAsync(this ResourceGroupResource resourceGroupResource, AzureLocation location, ExecuteDeleteContent content, CancellationToken cancellationToken = default)
-            => GetMockableComputeBulkActionsResourceGroupResource(resourceGroupResource).BulkDeleteOperationAsync(content, cancellationToken);
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            return GetMockableComputeBulkActionsResourceGroupResource(resourceGroupResource).BulkDeleteOperationAsync(content, cancellationToken);
+        }
 
         /// <summary>
         /// BulkDelete: Execute delete operation for a batch of virtual machines.
@@ -220,7 +259,10 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> The delete operation result response. </returns>
         public static Task<Response<DeleteResourceOperationResult>> BulkDeleteOperationAsync(this ResourceGroupResource resourceGroupResource, ExecuteDeleteContent content, CancellationToken cancellationToken = default)
-            => GetMockableComputeBulkActionsResourceGroupResource(resourceGroupResource).BulkDeleteOperationAsync(content, cancellationToken);
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            return GetMockableComputeBulkActionsResourceGroupResource(resourceGroupResource).BulkDeleteOperationAsync(content, cancellationToken);
+        }
 
         /// <summary>
         /// BulkDelete: Execute delete operation for a batch of virtual machines.
@@ -236,7 +278,10 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> The delete operation result response. </returns>
         internal static Response<DeleteResourceOperationResult> BulkDeleteOperation(this ResourceGroupResource resourceGroupResource, AzureLocation location, ExecuteDeleteContent content, CancellationToken cancellationToken = default)
-            => GetMockableComputeBulkActionsResourceGroupResource(resourceGroupResource).BulkDeleteOperation(content, cancellationToken);
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            return GetMockableComputeBulkActionsResourceGroupResource(resourceGroupResource).BulkDeleteOperation(content, cancellationToken);
+        }
 
         /// <summary>
         /// BulkDelete: Execute delete operation for a batch of virtual machines.
@@ -250,7 +295,10 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> The delete operation result response. </returns>
         public static Response<DeleteResourceOperationResult> BulkDeleteOperation(this ResourceGroupResource resourceGroupResource, ExecuteDeleteContent content, CancellationToken cancellationToken = default)
-            => GetMockableComputeBulkActionsResourceGroupResource(resourceGroupResource).BulkDeleteOperation(content, cancellationToken);
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            return GetMockableComputeBulkActionsResourceGroupResource(resourceGroupResource).BulkDeleteOperation(content, cancellationToken);
+        }
 
         /// <summary>
         /// BulkGetOperationsStatus: Polling endpoint to read status of operations performed on virtual machines.
@@ -266,7 +314,10 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> The status operation result response. </returns>
         internal static Task<Response<GetBulkOperationStatusResult>> BulkGetOperationsStatusAsync(this ResourceGroupResource resourceGroupResource, AzureLocation location, GetBulkOperationStatusContent content, CancellationToken cancellationToken = default)
-            => GetMockableComputeBulkActionsResourceGroupResource(resourceGroupResource).BulkGetOperationsStatusAsync(content, cancellationToken);
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            return GetMockableComputeBulkActionsResourceGroupResource(resourceGroupResource).BulkGetOperationsStatusAsync(content, cancellationToken);
+        }
 
         /// <summary>
         /// BulkGetOperationsStatus: Polling endpoint to read status of operations performed on virtual machines.
@@ -280,7 +331,10 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> The status operation result response. </returns>
         public static Task<Response<GetBulkOperationStatusResult>> BulkGetOperationsStatusAsync(this ResourceGroupResource resourceGroupResource, GetBulkOperationStatusContent content, CancellationToken cancellationToken = default)
-            => GetMockableComputeBulkActionsResourceGroupResource(resourceGroupResource).BulkGetOperationsStatusAsync(content, cancellationToken);
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            return GetMockableComputeBulkActionsResourceGroupResource(resourceGroupResource).BulkGetOperationsStatusAsync(content, cancellationToken);
+        }
 
         /// <summary>
         /// BulkGetOperationsStatus: Polling endpoint to read status of operations performed on virtual machines.
@@ -296,7 +350,10 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> The status operation result response. </returns>
         internal static Response<GetBulkOperationStatusResult> BulkGetOperationsStatus(this ResourceGroupResource resourceGroupResource, AzureLocation location, GetBulkOperationStatusContent content, CancellationToken cancellationToken = default)
-            => GetMockableComputeBulkActionsResourceGroupResource(resourceGroupResource).BulkGetOperationsStatus(content, cancellationToken);
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            return GetMockableComputeBulkActionsResourceGroupResource(resourceGroupResource).BulkGetOperationsStatus(content, cancellationToken);
+        }
 
         /// <summary>
         /// BulkGetOperationsStatus: Polling endpoint to read status of operations performed on virtual machines.
@@ -310,7 +367,10 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> The status operation result response. </returns>
         public static Response<GetBulkOperationStatusResult> BulkGetOperationsStatus(this ResourceGroupResource resourceGroupResource, GetBulkOperationStatusContent content, CancellationToken cancellationToken = default)
-            => GetMockableComputeBulkActionsResourceGroupResource(resourceGroupResource).BulkGetOperationsStatus(content, cancellationToken);
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            return GetMockableComputeBulkActionsResourceGroupResource(resourceGroupResource).BulkGetOperationsStatus(content, cancellationToken);
+        }
 
         /// <summary>
         /// BulkCancelOperations: Cancel a previously submitted (start/deallocate/hibernate) request.
@@ -326,7 +386,10 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> The cancel operation result response. </returns>
         internal static Task<Response<CancelBulkOperationsResult>> BulkCancelOperationsAsync(this ResourceGroupResource resourceGroupResource, AzureLocation location, CancelBulkOperationsContent content, CancellationToken cancellationToken = default)
-            => GetMockableComputeBulkActionsResourceGroupResource(resourceGroupResource).BulkCancelOperationsAsync(content, cancellationToken);
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            return GetMockableComputeBulkActionsResourceGroupResource(resourceGroupResource).BulkCancelOperationsAsync(content, cancellationToken);
+        }
 
         /// <summary>
         /// BulkCancelOperations: Cancel a previously submitted (start/deallocate/hibernate) request.
@@ -340,7 +403,10 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> The cancel operation result response. </returns>
         public static Task<Response<CancelBulkOperationsResult>> BulkCancelOperationsAsync(this ResourceGroupResource resourceGroupResource, CancelBulkOperationsContent content, CancellationToken cancellationToken = default)
-            => GetMockableComputeBulkActionsResourceGroupResource(resourceGroupResource).BulkCancelOperationsAsync(content, cancellationToken);
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            return GetMockableComputeBulkActionsResourceGroupResource(resourceGroupResource).BulkCancelOperationsAsync(content, cancellationToken);
+        }
 
         /// <summary>
         /// BulkCancelOperations: Cancel a previously submitted (start/deallocate/hibernate) request.
@@ -356,7 +422,10 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> The cancel operation result response. </returns>
         internal static Response<CancelBulkOperationsResult> BulkCancelOperations(this ResourceGroupResource resourceGroupResource, AzureLocation location, CancelBulkOperationsContent content, CancellationToken cancellationToken = default)
-            => GetMockableComputeBulkActionsResourceGroupResource(resourceGroupResource).BulkCancelOperations(content, cancellationToken);
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            return GetMockableComputeBulkActionsResourceGroupResource(resourceGroupResource).BulkCancelOperations(content, cancellationToken);
+        }
 
         /// <summary>
         /// BulkCancelOperations: Cancel a previously submitted (start/deallocate/hibernate) request.
@@ -370,6 +439,9 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> The cancel operation result response. </returns>
         public static Response<CancelBulkOperationsResult> BulkCancelOperations(this ResourceGroupResource resourceGroupResource, CancelBulkOperationsContent content, CancellationToken cancellationToken = default)
-            => GetMockableComputeBulkActionsResourceGroupResource(resourceGroupResource).BulkCancelOperations(content, cancellationToken);
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            return GetMockableComputeBulkActionsResourceGroupResource(resourceGroupResource).BulkCancelOperations(content, cancellationToken);
+        }
     }
 }
