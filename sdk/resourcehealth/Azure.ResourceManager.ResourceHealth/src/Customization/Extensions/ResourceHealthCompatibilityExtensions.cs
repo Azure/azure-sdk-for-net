@@ -70,33 +70,5 @@ namespace Azure.ResourceManager.ResourceHealth
 
             return GetMockableResourceHealthResourceGroupResource(resourceGroupResource).GetAvailabilityStatusesByResourceGroup(filter, expand, cancellationToken);
         }
-
-        /// <summary> Lists current availability status for resources in the subscription. </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="filter"> The filter to apply on the operation. </param>
-        /// <param name="expand"> Setting $expand=recommendedactions in url query expands the recommendedactions in the response. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ResourceHealthAvailabilityStatus"/> that may take multiple service requests to iterate over. </returns>
-        [ForwardsClientCalls]
-        public static AsyncPageable<ResourceHealthAvailabilityStatus> GetAvailabilityStatusResourcesBySubscriptionAsync(this SubscriptionResource subscriptionResource, string filter = default, string expand = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableResourceHealthSubscriptionResource(subscriptionResource).GetAvailabilityStatusResourcesBySubscriptionAsync(filter, expand, cancellationToken);
-        }
-
-        /// <summary> Lists current availability status for resources in the subscription. </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="filter"> The filter to apply on the operation. </param>
-        /// <param name="expand"> Setting $expand=recommendedactions in url query expands the recommendedactions in the response. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ResourceHealthAvailabilityStatus"/> that may take multiple service requests to iterate over. </returns>
-        [ForwardsClientCalls]
-        public static Pageable<ResourceHealthAvailabilityStatus> GetAvailabilityStatusResourcesBySubscription(this SubscriptionResource subscriptionResource, string filter = default, string expand = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableResourceHealthSubscriptionResource(subscriptionResource).GetAvailabilityStatusResourcesBySubscription(filter, expand, cancellationToken);
-        }
     }
 }

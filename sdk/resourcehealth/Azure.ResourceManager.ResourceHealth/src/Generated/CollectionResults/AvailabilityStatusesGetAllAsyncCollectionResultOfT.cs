@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ResourceHealth
 
         /// <summary> Initializes a new instance of AvailabilityStatusesGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The AvailabilityStatuses client used to send requests. </param>
-        /// <param name="resourceUri"> The fully qualified Azure Resource manager identifier of the resource. </param>
+        /// <param name="resourceUri"> The resource URI. </param>
         /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
         /// <param name="expand"> Setting $expand=recommendedactions in url query expands the recommendedactions in the response. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
