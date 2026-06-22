@@ -5,6 +5,11 @@
 
 #nullable disable
 
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure;
+using Azure.Core;
 using Azure.ResourceManager.Compute.BulkActions.Mocking;
 using Azure.ResourceManager.Resources;
 
@@ -17,6 +22,234 @@ namespace Azure.ResourceManager.Compute.BulkActions
         private static MockableComputeBulkActionsResourceGroupResource GetMockableComputeBulkActionsResourceGroupResource(ResourceGroupResource resourceGroupResource)
         {
             return resourceGroupResource.GetCachedClient(client => new MockableComputeBulkActionsResourceGroupResource(client, resourceGroupResource.Id));
+        }
+
+        /// <summary>
+        /// BulkDeallocate: Execute deallocate operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsResourceGroupResource.BulkDeallocateOperationAsync(AzureLocation, ExecuteDeallocateContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="location"> The location name. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        private static partial Task<Response<global::.DeallocateResourceOperationResult>> BulkDeallocateOperationAsync(ResourceGroupResource resourceGroupResource0, AzureLocation location0, global::.ExecuteDeallocateContent content0, CancellationToken cancellationToken0)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableComputeBulkActionsResourceGroupResource(resourceGroupResource).BulkDeallocateOperationAsync(location, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// BulkDeallocate: Execute deallocate operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsResourceGroupResource.BulkDeallocateOperation(AzureLocation, ExecuteDeallocateContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="location"> The location name. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        private static partial Response<global::.DeallocateResourceOperationResult> BulkDeallocateOperation(ResourceGroupResource resourceGroupResource0, AzureLocation location0, global::.ExecuteDeallocateContent content0, CancellationToken cancellationToken0)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableComputeBulkActionsResourceGroupResource(resourceGroupResource).BulkDeallocateOperation(location, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// BulkHibernate: Execute hibernate operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsResourceGroupResource.BulkHibernateOperationAsync(AzureLocation, ExecuteHibernateContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="location"> The location name. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        private static partial Task<Response<global::.HibernateResourceOperationResult>> BulkHibernateOperationAsync(ResourceGroupResource resourceGroupResource0, AzureLocation location0, global::.ExecuteHibernateContent content0, CancellationToken cancellationToken0)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableComputeBulkActionsResourceGroupResource(resourceGroupResource).BulkHibernateOperationAsync(location, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// BulkHibernate: Execute hibernate operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsResourceGroupResource.BulkHibernateOperation(AzureLocation, ExecuteHibernateContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="location"> The location name. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        private static partial Response<global::.HibernateResourceOperationResult> BulkHibernateOperation(ResourceGroupResource resourceGroupResource0, AzureLocation location0, global::.ExecuteHibernateContent content0, CancellationToken cancellationToken0)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableComputeBulkActionsResourceGroupResource(resourceGroupResource).BulkHibernateOperation(location, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// BulkStart: Execute start operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsResourceGroupResource.BulkStartOperationAsync(AzureLocation, ExecuteStartContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="location"> The location name. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        private static partial Task<Response<global::.StartResourceOperationResult>> BulkStartOperationAsync(ResourceGroupResource resourceGroupResource0, AzureLocation location0, global::.ExecuteStartContent content0, CancellationToken cancellationToken0)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableComputeBulkActionsResourceGroupResource(resourceGroupResource).BulkStartOperationAsync(location, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// BulkStart: Execute start operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsResourceGroupResource.BulkStartOperation(AzureLocation, ExecuteStartContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="location"> The location name. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        private static partial Response<global::.StartResourceOperationResult> BulkStartOperation(ResourceGroupResource resourceGroupResource0, AzureLocation location0, global::.ExecuteStartContent content0, CancellationToken cancellationToken0)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableComputeBulkActionsResourceGroupResource(resourceGroupResource).BulkStartOperation(location, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// BulkDelete: Execute delete operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsResourceGroupResource.BulkDeleteOperationAsync(AzureLocation, ExecuteDeleteContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="location"> The location name. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        private static partial Task<Response<global::.DeleteResourceOperationResult>> BulkDeleteOperationAsync(ResourceGroupResource resourceGroupResource0, AzureLocation location0, global::.ExecuteDeleteContent content0, CancellationToken cancellationToken0)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableComputeBulkActionsResourceGroupResource(resourceGroupResource).BulkDeleteOperationAsync(location, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// BulkDelete: Execute delete operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsResourceGroupResource.BulkDeleteOperation(AzureLocation, ExecuteDeleteContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="location"> The location name. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        private static partial Response<global::.DeleteResourceOperationResult> BulkDeleteOperation(ResourceGroupResource resourceGroupResource0, AzureLocation location0, global::.ExecuteDeleteContent content0, CancellationToken cancellationToken0)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableComputeBulkActionsResourceGroupResource(resourceGroupResource).BulkDeleteOperation(location, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// BulkGetOperationsStatus: Polling endpoint to read status of operations performed on virtual machines
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsResourceGroupResource.BulkGetOperationsStatusAsync(AzureLocation, GetBulkOperationStatusContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="location"> The location name. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        private static partial Task<Response<global::.GetBulkOperationStatusResult>> BulkGetOperationsStatusAsync(ResourceGroupResource resourceGroupResource0, AzureLocation location0, global::.GetBulkOperationStatusContent content0, CancellationToken cancellationToken0)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableComputeBulkActionsResourceGroupResource(resourceGroupResource).BulkGetOperationsStatusAsync(location, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// BulkGetOperationsStatus: Polling endpoint to read status of operations performed on virtual machines
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsResourceGroupResource.BulkGetOperationsStatus(AzureLocation, GetBulkOperationStatusContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="location"> The location name. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        private static partial Response<global::.GetBulkOperationStatusResult> BulkGetOperationsStatus(ResourceGroupResource resourceGroupResource0, AzureLocation location0, global::.GetBulkOperationStatusContent content0, CancellationToken cancellationToken0)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableComputeBulkActionsResourceGroupResource(resourceGroupResource).BulkGetOperationsStatus(location, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// BulkCancelOperations: Cancel a previously submitted (start/deallocate/hibernate) request
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsResourceGroupResource.BulkCancelOperationsAsync(AzureLocation, CancelBulkOperationsContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="location"> The location name. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        private static partial Task<Response<global::.CancelBulkOperationsResult>> BulkCancelOperationsAsync(ResourceGroupResource resourceGroupResource0, AzureLocation location0, global::.CancelBulkOperationsContent content0, CancellationToken cancellationToken0)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableComputeBulkActionsResourceGroupResource(resourceGroupResource).BulkCancelOperationsAsync(location, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// BulkCancelOperations: Cancel a previously submitted (start/deallocate/hibernate) request
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeBulkActionsResourceGroupResource.BulkCancelOperations(AzureLocation, CancelBulkOperationsContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="location"> The location name. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        private static partial Response<global::.CancelBulkOperationsResult> BulkCancelOperations(ResourceGroupResource resourceGroupResource0, AzureLocation location0, global::.CancelBulkOperationsContent content0, CancellationToken cancellationToken0)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableComputeBulkActionsResourceGroupResource(resourceGroupResource).BulkCancelOperations(location, content, cancellationToken);
         }
     }
 }
