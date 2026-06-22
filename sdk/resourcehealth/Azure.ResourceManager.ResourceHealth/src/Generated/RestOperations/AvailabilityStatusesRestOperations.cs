@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ResourceHealth
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/", false);
-            uri.AppendPath(resourceUri, true);
+            uri.AppendPath(resourceUri, false);
             uri.AppendPath("/providers/Microsoft.ResourceHealth/availabilityStatuses/current", false);
             if (_apiVersion != null)
             {

@@ -56,42 +56,6 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
             return new GetHealthEventsOfSingleResourceCollectionResult(EventsRestClient, scope.ToString(), filter, CreateRequestContext(cancellationToken));
         }
 
-        private async Task<Response> GetChildResponseAsync(ResourceIdentifier scope, string filter, string expand, CancellationToken cancellationToken)
-        {
-            Argument.AssertNotNull(scope, nameof(scope));
-            RequestContext context = CreateRequestContext(cancellationToken);
-            HttpMessage message = ChildAvailabilityStatusesRestClient.CreateGetAvailabilityStatusOfChildResourceRequest(scope.ToString(), filter, expand, context);
-            using DiagnosticScope scopeDiagnostics = ChildAvailabilityStatusesRestClient.ClientDiagnostics.CreateScope("MockableResourceHealthArmClient.GetAvailabilityStatusOfChildResource");
-            scopeDiagnostics.Start();
-            try
-            {
-                return await ChildAvailabilityStatusesRestClient.Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scopeDiagnostics.Failed(e);
-                throw;
-            }
-        }
-
-        private Response GetChildResponse(ResourceIdentifier scope, string filter, string expand, CancellationToken cancellationToken)
-        {
-            Argument.AssertNotNull(scope, nameof(scope));
-            RequestContext context = CreateRequestContext(cancellationToken);
-            HttpMessage message = ChildAvailabilityStatusesRestClient.CreateGetAvailabilityStatusOfChildResourceRequest(scope.ToString(), filter, expand, context);
-            using DiagnosticScope scopeDiagnostics = ChildAvailabilityStatusesRestClient.ClientDiagnostics.CreateScope("MockableResourceHealthArmClient.GetAvailabilityStatusOfChildResource");
-            scopeDiagnostics.Start();
-            try
-            {
-                return ChildAvailabilityStatusesRestClient.Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scopeDiagnostics.Failed(e);
-                throw;
-            }
-        }
-
         private static RequestContext CreateRequestContext(CancellationToken cancellationToken)
         {
             return new RequestContext
