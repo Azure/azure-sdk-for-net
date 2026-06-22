@@ -1,5 +1,5 @@
 directory: specification/napster/Napster.CompanionAPI.Management
-commit: a63dbe7e86589c3734622991cecd6453632364de
+commit: 4c374297fa9f348585b849ea3fdca34baf1db747
 repo: Azure/azure-rest-api-specs
 additionalDirectories: 
 
