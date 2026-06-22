@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network.Samples
                 ResourceId = new ResourceIdentifier("subscriptions/f0dc2b34-dfad-40e4-83e0-2309fed8d00b"),
                 Description = "This is a scope connection to a cross tenant subscription.",
             };
-            ArmOperation<ScopeConnectionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, scopeConnectionName, data);
+            ArmOperation<ScopeConnectionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, scopeConnectionName, data, cancellationToken: System.Threading.CancellationToken.None);
             ScopeConnectionResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

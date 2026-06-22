@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Represents a single NIC configuration. </summary>
     public partial class VirtualApplianceNetworkInterfaceConfiguration
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VirtualApplianceNetworkInterfaceConfiguration"/>. </summary>
         public VirtualApplianceNetworkInterfaceConfiguration()
@@ -53,28 +25,33 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="VirtualApplianceNetworkInterfaceConfiguration"/>. </summary>
         /// <param name="nicType"> NIC type. This should be either PublicNic or PrivateNic. </param>
         /// <param name="properties"> Represents a single NIC configuration properties. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualApplianceNetworkInterfaceConfiguration(NicTypeInRequest? nicType, VirtualApplianceNetworkInterfaceConfigurationProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualApplianceNetworkInterfaceConfiguration(NicTypeInRequest? nicType, VirtualApplianceNetworkInterfaceConfigurationProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NicType = nicType;
             Properties = properties;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> NIC type. This should be either PublicNic or PrivateNic. </summary>
         [WirePath("type")]
         public NicTypeInRequest? NicType { get; set; }
+
         /// <summary> Represents a single NIC configuration properties. </summary>
+        [WirePath("properties")]
         internal VirtualApplianceNetworkInterfaceConfigurationProperties Properties { get; set; }
-        /// <summary> Gets the virtual appliance network interface ip configurations. </summary>
+
+        /// <summary> Gets the IpConfigurations. </summary>
         [WirePath("properties.ipConfigurations")]
-        public IList<VirtualApplianceIPConfiguration> VirtualApplianceNetworkInterfaceIPConfigurations
+        public IList<VirtualApplianceIPConfiguration> VirtualApplianceNetworkInterfaceIpConfigurations
         {
             get
             {
                 if (Properties is null)
+                {
                     Properties = new VirtualApplianceNetworkInterfaceConfigurationProperties();
-                return Properties.IPConfigurations;
+                }
+                return Properties.IpConfigurations;
             }
         }
     }

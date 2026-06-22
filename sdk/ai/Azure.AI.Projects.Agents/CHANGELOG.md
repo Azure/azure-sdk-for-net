@@ -6,6 +6,10 @@
 
 ### Breaking Changes
 
+- Hosted Agents do not need the `Foundry-Features: HostedAgents=V1Preview` header and warning suppression anymore.
+- The deployment of hosted Agent using code does not require the `Foundry-Features: CodeAgents=V1Preview` header and warning suppression anymore.
+- Using toolboxes does not require the `Foundry-Features: Toolboxes=V1Preview`
+
 ### Bugs Fixed
 
 ### Other Changes

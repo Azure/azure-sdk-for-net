@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -14,41 +15,60 @@ namespace Azure.ResourceManager.Compute.Models
     public readonly partial struct SecurityType : IEquatable<SecurityType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="SecurityType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public SecurityType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
+        /// <summary> Indicates a VM without UEFI features such as SecureBoot or vTPM; returned as the default value when securityType is not specified. </summary>
         private const string StandardValue = "Standard";
         private const string TrustedLaunchValue = "TrustedLaunch";
         private const string ConfidentialVmValue = "ConfidentialVM";
 
+        /// <summary> Initializes a new instance of <see cref="SecurityType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public SecurityType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
         /// <summary> Indicates a VM without UEFI features such as SecureBoot or vTPM; returned as the default value when securityType is not specified. </summary>
         public static SecurityType Standard { get; } = new SecurityType(StandardValue);
-        /// <summary> TrustedLaunch. </summary>
+
+        /// <summary> Gets the TrustedLaunch. </summary>
         public static SecurityType TrustedLaunch { get; } = new SecurityType(TrustedLaunchValue);
-        /// <summary> ConfidentialVM. </summary>
+
+        /// <summary> Gets the ConfidentialVm. </summary>
         public static SecurityType ConfidentialVm { get; } = new SecurityType(ConfidentialVmValue);
+
         /// <summary> Determines if two <see cref="SecurityType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SecurityType left, SecurityType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SecurityType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SecurityType left, SecurityType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SecurityType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SecurityType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SecurityType(string value) => new SecurityType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SecurityType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SecurityType?(string value) => value == null ? null : new SecurityType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SecurityType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SecurityType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

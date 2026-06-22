@@ -7,54 +7,80 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> The PcError. </summary>
+    /// <summary></summary>
     public readonly partial struct PcError : IEquatable<PcError>
     {
         private readonly string _value;
+        /// <summary> InternalError. </summary>
+        private const string InternalErrorValue = "InternalError";
+        /// <summary> AgentStopped. </summary>
+        private const string AgentStoppedValue = "AgentStopped";
+        /// <summary> CaptureFailed. </summary>
+        private const string CaptureFailedValue = "CaptureFailed";
+        /// <summary> LocalFileFailed. </summary>
+        private const string LocalFileFailedValue = "LocalFileFailed";
+        /// <summary> StorageFailed. </summary>
+        private const string StorageFailedValue = "StorageFailed";
 
         /// <summary> Initializes a new instance of <see cref="PcError"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PcError(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string InternalErrorValue = "InternalError";
-        private const string AgentStoppedValue = "AgentStopped";
-        private const string CaptureFailedValue = "CaptureFailed";
-        private const string LocalFileFailedValue = "LocalFileFailed";
-        private const string StorageFailedValue = "StorageFailed";
+            _value = value;
+        }
 
         /// <summary> InternalError. </summary>
         public static PcError InternalError { get; } = new PcError(InternalErrorValue);
+
         /// <summary> AgentStopped. </summary>
         public static PcError AgentStopped { get; } = new PcError(AgentStoppedValue);
+
         /// <summary> CaptureFailed. </summary>
         public static PcError CaptureFailed { get; } = new PcError(CaptureFailedValue);
+
         /// <summary> LocalFileFailed. </summary>
         public static PcError LocalFileFailed { get; } = new PcError(LocalFileFailedValue);
+
         /// <summary> StorageFailed. </summary>
         public static PcError StorageFailed { get; } = new PcError(StorageFailedValue);
+
         /// <summary> Determines if two <see cref="PcError"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PcError left, PcError right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PcError"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PcError left, PcError right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PcError"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PcError"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PcError(string value) => new PcError(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PcError"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PcError?(string value) => value == null ? null : new PcError(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PcError other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PcError other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Compute.Models
     public readonly partial struct LifecycleHookActionState : IEquatable<LifecycleHookActionState>
     {
         private readonly string _value;
+        /// <summary> The lifecycle hook for the target resource is waiting for approval. </summary>
+        private const string WaitingValue = "Waiting";
+        /// <summary> The lifecycle hook for the target resource is approved. </summary>
+        private const string ApprovedValue = "Approved";
+        /// <summary> The lifecycle hook for the target resource is rejected. </summary>
+        private const string RejectedValue = "Rejected";
 
         /// <summary> Initializes a new instance of <see cref="LifecycleHookActionState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public LifecycleHookActionState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string WaitingValue = "Waiting";
-        private const string ApprovedValue = "Approved";
-        private const string RejectedValue = "Rejected";
+            _value = value;
+        }
 
         /// <summary> The lifecycle hook for the target resource is waiting for approval. </summary>
         public static LifecycleHookActionState Waiting { get; } = new LifecycleHookActionState(WaitingValue);
+
         /// <summary> The lifecycle hook for the target resource is approved. </summary>
         public static LifecycleHookActionState Approved { get; } = new LifecycleHookActionState(ApprovedValue);
+
         /// <summary> The lifecycle hook for the target resource is rejected. </summary>
         public static LifecycleHookActionState Rejected { get; } = new LifecycleHookActionState(RejectedValue);
+
         /// <summary> Determines if two <see cref="LifecycleHookActionState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(LifecycleHookActionState left, LifecycleHookActionState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="LifecycleHookActionState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(LifecycleHookActionState left, LifecycleHookActionState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="LifecycleHookActionState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="LifecycleHookActionState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator LifecycleHookActionState(string value) => new LifecycleHookActionState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="LifecycleHookActionState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator LifecycleHookActionState?(string value) => value == null ? null : new LifecycleHookActionState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is LifecycleHookActionState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(LifecycleHookActionState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

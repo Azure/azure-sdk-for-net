@@ -11,7 +11,6 @@ using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 using OpenAI.Responses;
 
-# pragma warning disable AAIP001
 namespace Azure.AI.Extensions.OpenAI.Tests.Samples;
 
 public class Sample_ToolBoxWithRAI : ProjectsOpenAITestBase
