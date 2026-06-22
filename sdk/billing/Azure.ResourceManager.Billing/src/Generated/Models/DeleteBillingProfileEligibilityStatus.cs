@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Billing.Models
     public readonly partial struct DeleteBillingProfileEligibilityStatus : IEquatable<DeleteBillingProfileEligibilityStatus>
     {
         private readonly string _value;
+        /// <summary> Allowed. </summary>
+        private const string AllowedValue = "Allowed";
+        /// <summary> NotAllowed. </summary>
+        private const string NotAllowedValue = "NotAllowed";
 
         /// <summary> Initializes a new instance of <see cref="DeleteBillingProfileEligibilityStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DeleteBillingProfileEligibilityStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AllowedValue = "Allowed";
-        private const string NotAllowedValue = "NotAllowed";
+            _value = value;
+        }
 
         /// <summary> Allowed. </summary>
         public static DeleteBillingProfileEligibilityStatus Allowed { get; } = new DeleteBillingProfileEligibilityStatus(AllowedValue);
+
         /// <summary> NotAllowed. </summary>
         public static DeleteBillingProfileEligibilityStatus NotAllowed { get; } = new DeleteBillingProfileEligibilityStatus(NotAllowedValue);
+
         /// <summary> Determines if two <see cref="DeleteBillingProfileEligibilityStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DeleteBillingProfileEligibilityStatus left, DeleteBillingProfileEligibilityStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DeleteBillingProfileEligibilityStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DeleteBillingProfileEligibilityStatus left, DeleteBillingProfileEligibilityStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DeleteBillingProfileEligibilityStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DeleteBillingProfileEligibilityStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DeleteBillingProfileEligibilityStatus(string value) => new DeleteBillingProfileEligibilityStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DeleteBillingProfileEligibilityStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DeleteBillingProfileEligibilityStatus?(string value) => value == null ? null : new DeleteBillingProfileEligibilityStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DeleteBillingProfileEligibilityStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DeleteBillingProfileEligibilityStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

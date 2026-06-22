@@ -6,21 +6,64 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.Text.Json;
+using System.ClientModel;
+using System.Diagnostics.CodeAnalysis;
+using System.IO;
 
 namespace Azure.AI.Agents.Persistent
 {
+    /// <summary> The UploadFileRequest. </summary>
     internal partial class UploadFileRequest
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary> Initializes a new instance of <see cref="UploadFileRequest"/>. </summary>
+        /// <param name="dataPath"> The file path for the file file. </param>
+        /// <param name="purpose"> The intended purpose of the uploaded file. Use `assistants` for Agents and Message files, `vision` for Agents image file inputs, `batch` for Batch API, and `fine-tune` for Fine-tuning. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataPath"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataPath"/> is an empty string, and was expected to be non-empty. </exception>
+        [Experimental("SCME0004")]
+        public UploadFileRequest(string dataPath, PersistentAgentFilePurpose purpose)
+        {
+            Argument.AssertNotNullOrEmpty(dataPath, nameof(dataPath));
+
+            Data = new FileBinaryContent(dataPath);
+            Purpose = purpose;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UploadFileRequest"/>. </summary>
+        /// <param name="data"> The content for the file file. </param>
+        /// <param name="purpose"> The intended purpose of the uploaded file. Use `assistants` for Agents and Message files, `vision` for Agents image file inputs, `batch` for Batch API, and `fine-tune` for Fine-tuning. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        [Experimental("SCME0004")]
+        public UploadFileRequest(Stream data, PersistentAgentFilePurpose purpose)
+        {
+            Argument.AssertNotNull(data, nameof(data));
+
+            Data = new FileBinaryContent(data);
+            Purpose = purpose;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UploadFileRequest"/>. </summary>
+        /// <param name="data"> The content for the file file. </param>
+        /// <param name="purpose"> The intended purpose of the uploaded file. Use `assistants` for Agents and Message files, `vision` for Agents image file inputs, `batch` for Batch API, and `fine-tune` for Fine-tuning. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        [Experimental("SCME0004")]
+        public UploadFileRequest(BinaryData data, PersistentAgentFilePurpose purpose)
+        {
+            Argument.AssertNotNull(data, nameof(data));
+
+            Data = new FileBinaryContent(data);
+            Purpose = purpose;
+        }
 
         /// <summary> Initializes a new instance of <see cref="UploadFileRequest"/>. </summary>
         /// <param name="data"> The file data, in bytes. </param>
         /// <param name="purpose"> The intended purpose of the uploaded file. Use `assistants` for Agents and Message files, `vision` for Agents image file inputs, `batch` for Batch API, and `fine-tune` for Fine-tuning. </param>
-        public UploadFileRequest(BinaryData data, PersistentAgentFilePurpose purpose)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        [Experimental("SCME0004")]
+        public UploadFileRequest(FileBinaryContent data, PersistentAgentFilePurpose purpose)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             Data = data;
             Purpose = purpose;
         }
@@ -29,42 +72,18 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="data"> The file data, in bytes. </param>
         /// <param name="purpose"> The intended purpose of the uploaded file. Use `assistants` for Agents and Message files, `vision` for Agents image file inputs, `batch` for Batch API, and `fine-tune` for Fine-tuning. </param>
         /// <param name="filename"> The name of the file. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UploadFileRequest(BinaryData data, PersistentAgentFilePurpose purpose, string filename, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+#pragma warning disable SCME0004 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+        internal UploadFileRequest(FileBinaryContent data, PersistentAgentFilePurpose purpose, string filename)
         {
             Data = data;
             Purpose = purpose;
             Filename = filename;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+#pragma warning restore SCME0004 // Type is for evaluation purposes only and is subject to change or removal in future updates.
 
-        /// <summary>
-        /// The file data, in bytes.
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("\"foo\""). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData Data { get; }
+        /// <summary> The file data, in bytes. </summary>
+        [Experimental("SCME0004")]
+        public FileBinaryContent Data { get; }
 
         /// <summary> The intended purpose of the uploaded file. Use `assistants` for Agents and Message files, `vision` for Agents image file inputs, `batch` for Batch API, and `fine-tune` for Fine-tuning. </summary>
         public PersistentAgentFilePurpose Purpose { get; }

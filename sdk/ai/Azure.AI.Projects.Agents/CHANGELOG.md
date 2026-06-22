@@ -1,14 +1,31 @@
 # Release History
 
-## 2.1.0-beta.3 (Unreleased)
+## 2.1.0-beta.4 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
+- Hosted Agents do not need the `Foundry-Features: HostedAgents=V1Preview` header and warning suppression anymore.
+- The deployment of hosted Agent using code does not require the `Foundry-Features: CodeAgents=V1Preview` header and warning suppression anymore.
+- Using toolboxes does not require the `Foundry-Features: Toolboxes=V1Preview`
+
 ### Bugs Fixed
 
 ### Other Changes
+
+## 2.1.0-beta.3 (2026-05-29)
+
+### Features Added
+
+- Added client for Agent optimization Jobs.
+
+### Breaking Changes
+
+- `CreateSkillFromPackage` and `CreateSkillFromPackageAsync` methods of `ProjectAgentSkills` client were replaced by `CreateSkillVersionFromFiles` and `CreateSkillVersionFromFilesAsync` respectively.
+- `DownloadSkill` and `DownloadSkillAsync`  methods of `ProjectAgentSkills` client were replaced by `GetSkillContent` and `GetSkillContentAsync` respectively.
+- `UpdateSkill` and `UpdateSkillAsync`  methods of `ProjectAgentSkills` now can only set the default version of `AgentsSkill`.
+- `OptimizationTaskResult.Tokens` was changed from `int` to `long`.
 
 ## 2.1.0-beta.2 (2026-05-14)
 

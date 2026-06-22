@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> The NetworkInterfacePatch resource definition. </summary>
     public partial class NetworkDeviceInterfacePatch
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkDeviceInterfacePatch"/>. </summary>
         public NetworkDeviceInterfacePatch()
@@ -51,15 +22,54 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkDeviceInterfacePatch"/>. </summary>
-        /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkDeviceInterfacePatch(string annotation, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> Network Interface Patch properties. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkDeviceInterfacePatch(NetworkInterfacePatchProperties properties, NetworkFabricManagedServiceIdentityPatch identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Annotation = annotation;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            Identity = identity;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Network Interface Patch properties. </summary>
+        internal NetworkInterfacePatchProperties Properties { get; set; }
+
+        /// <summary> The managed service identities assigned to this resource. </summary>
+        public NetworkFabricManagedServiceIdentityPatch Identity { get; set; }
+
         /// <summary> Switch configuration description. </summary>
-        public string Annotation { get; set; }
+        public string Annotation
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Annotation;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkInterfacePatchProperties();
+                }
+                Properties.Annotation = value;
+            }
+        }
+
+        /// <summary> Additional description of the interface. </summary>
+        public string AdditionalDescription
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AdditionalDescription;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkInterfacePatchProperties();
+                }
+                Properties.AdditionalDescription = value;
+            }
+        }
     }
 }

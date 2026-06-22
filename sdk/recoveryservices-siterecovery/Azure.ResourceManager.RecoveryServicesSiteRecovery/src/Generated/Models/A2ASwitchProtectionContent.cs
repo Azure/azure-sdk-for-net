@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -15,16 +16,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public partial class A2ASwitchProtectionContent : SwitchProtectionProviderSpecificContent
     {
         /// <summary> Initializes a new instance of <see cref="A2ASwitchProtectionContent"/>. </summary>
-        public A2ASwitchProtectionContent()
+        public A2ASwitchProtectionContent() : base("A2A")
         {
             VmDisks = new ChangeTrackingList<A2AVmDiskDetails>();
             VmManagedDisks = new ChangeTrackingList<A2AVmManagedDiskDetails>();
-            InstanceType = "A2A";
         }
 
         /// <summary> Initializes a new instance of <see cref="A2ASwitchProtectionContent"/>. </summary>
         /// <param name="instanceType"> Gets the Instance type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="recoveryContainerId"> The recovery container Id. </param>
         /// <param name="vmDisks"> The list of vm disk details. </param>
         /// <param name="vmManagedDisks"> The list of vm managed disk details. </param>
@@ -37,8 +37,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="recoveryProximityPlacementGroupId"> The recovery proximity placement group Id. </param>
         /// <param name="recoveryVirtualMachineScaleSetId"> The virtual machine scale set id. </param>
         /// <param name="recoveryCapacityReservationGroupId"> The recovery capacity reservation group Id. </param>
+        /// <param name="platformFaultDomain"> the platform fault domain. </param>
         /// <param name="diskEncryptionInfo"> The recovery disk encryption information. </param>
-        internal A2ASwitchProtectionContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier recoveryContainerId, IList<A2AVmDiskDetails> vmDisks, IList<A2AVmManagedDiskDetails> vmManagedDisks, ResourceIdentifier recoveryResourceGroupId, string recoveryCloudServiceId, ResourceIdentifier recoveryAvailabilitySetId, ResourceIdentifier policyId, ResourceIdentifier recoveryBootDiagStorageAccountId, string recoveryAvailabilityZone, ResourceIdentifier recoveryProximityPlacementGroupId, ResourceIdentifier recoveryVirtualMachineScaleSetId, ResourceIdentifier recoveryCapacityReservationGroupId, SiteRecoveryDiskEncryptionInfo diskEncryptionInfo) : base(instanceType, serializedAdditionalRawData)
+        internal A2ASwitchProtectionContent(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier recoveryContainerId, IList<A2AVmDiskDetails> vmDisks, IList<A2AVmManagedDiskDetails> vmManagedDisks, ResourceIdentifier recoveryResourceGroupId, string recoveryCloudServiceId, ResourceIdentifier recoveryAvailabilitySetId, ResourceIdentifier policyId, ResourceIdentifier recoveryBootDiagStorageAccountId, string recoveryAvailabilityZone, ResourceIdentifier recoveryProximityPlacementGroupId, ResourceIdentifier recoveryVirtualMachineScaleSetId, ResourceIdentifier recoveryCapacityReservationGroupId, int? platformFaultDomain, SiteRecoveryDiskEncryptionInfo diskEncryptionInfo) : base(instanceType, additionalBinaryDataProperties)
         {
             RecoveryContainerId = recoveryContainerId;
             VmDisks = vmDisks;
@@ -52,34 +53,49 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             RecoveryProximityPlacementGroupId = recoveryProximityPlacementGroupId;
             RecoveryVirtualMachineScaleSetId = recoveryVirtualMachineScaleSetId;
             RecoveryCapacityReservationGroupId = recoveryCapacityReservationGroupId;
+            PlatformFaultDomain = platformFaultDomain;
             DiskEncryptionInfo = diskEncryptionInfo;
-            InstanceType = instanceType ?? "A2A";
         }
 
         /// <summary> The recovery container Id. </summary>
         public ResourceIdentifier RecoveryContainerId { get; set; }
+
         /// <summary> The list of vm disk details. </summary>
         public IList<A2AVmDiskDetails> VmDisks { get; }
+
         /// <summary> The list of vm managed disk details. </summary>
         public IList<A2AVmManagedDiskDetails> VmManagedDisks { get; }
+
         /// <summary> The recovery resource group Id. Valid for V2 scenarios. </summary>
         public ResourceIdentifier RecoveryResourceGroupId { get; set; }
+
         /// <summary> The recovery cloud service Id. Valid for V1 scenarios. </summary>
         public string RecoveryCloudServiceId { get; set; }
+
         /// <summary> The recovery availability set. </summary>
         public ResourceIdentifier RecoveryAvailabilitySetId { get; set; }
+
         /// <summary> The Policy Id. </summary>
         public ResourceIdentifier PolicyId { get; set; }
+
         /// <summary> The boot diagnostic storage account. </summary>
         public ResourceIdentifier RecoveryBootDiagStorageAccountId { get; set; }
+
         /// <summary> The recovery availability zone. </summary>
         public string RecoveryAvailabilityZone { get; set; }
+
         /// <summary> The recovery proximity placement group Id. </summary>
         public ResourceIdentifier RecoveryProximityPlacementGroupId { get; set; }
+
         /// <summary> The virtual machine scale set id. </summary>
         public ResourceIdentifier RecoveryVirtualMachineScaleSetId { get; set; }
+
         /// <summary> The recovery capacity reservation group Id. </summary>
         public ResourceIdentifier RecoveryCapacityReservationGroupId { get; set; }
+
+        /// <summary> the platform fault domain. </summary>
+        public int? PlatformFaultDomain { get; set; }
+
         /// <summary> The recovery disk encryption information. </summary>
         public SiteRecoveryDiskEncryptionInfo DiskEncryptionInfo { get; set; }
     }

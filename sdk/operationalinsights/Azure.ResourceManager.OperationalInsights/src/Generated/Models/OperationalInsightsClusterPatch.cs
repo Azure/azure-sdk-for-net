@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.OperationalInsights;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
     /// <summary> The top level Log Analytics cluster resource container. </summary>
     public partial class OperationalInsightsClusterPatch
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="OperationalInsightsClusterPatch"/>. </summary>
         public OperationalInsightsClusterPatch()
@@ -53,36 +25,70 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="OperationalInsightsClusterPatch"/>. </summary>
+        /// <param name="properties"> Log Analytics cluster properties. </param>
         /// <param name="identity"> Resource's identity. </param>
         /// <param name="sku"> The sku properties. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="keyVaultProperties"> The associated key properties. </param>
-        /// <param name="billingType"> The cluster's billing type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OperationalInsightsClusterPatch(ManagedServiceIdentity identity, OperationalInsightsClusterSku sku, IDictionary<string, string> tags, OperationalInsightsKeyVaultProperties keyVaultProperties, OperationalInsightsBillingType? billingType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal OperationalInsightsClusterPatch(ClusterPatchProperties properties, ManagedServiceIdentity identity, OperationalInsightsClusterSku sku, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            Properties = properties;
             Identity = identity;
             Sku = sku;
             Tags = tags;
-            KeyVaultProperties = keyVaultProperties;
-            BillingType = billingType;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Log Analytics cluster properties. </summary>
+        [WirePath("properties")]
+        internal ClusterPatchProperties Properties { get; set; }
 
         /// <summary> Resource's identity. </summary>
         [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
+
         /// <summary> The sku properties. </summary>
         [WirePath("sku")]
         public OperationalInsightsClusterSku Sku { get; set; }
+
         /// <summary> Resource tags. </summary>
         [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
+
         /// <summary> The associated key properties. </summary>
         [WirePath("properties.keyVaultProperties")]
-        public OperationalInsightsKeyVaultProperties KeyVaultProperties { get; set; }
+        public OperationalInsightsKeyVaultProperties KeyVaultProperties
+        {
+            get
+            {
+                return Properties is null ? default : Properties.KeyVaultProperties;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterPatchProperties();
+                }
+                Properties.KeyVaultProperties = value;
+            }
+        }
+
         /// <summary> The cluster's billing type. </summary>
         [WirePath("properties.billingType")]
-        public OperationalInsightsBillingType? BillingType { get; set; }
+        public OperationalInsightsBillingType? BillingType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BillingType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterPatchProperties();
+                }
+                Properties.BillingType = value;
+            }
+        }
     }
 }

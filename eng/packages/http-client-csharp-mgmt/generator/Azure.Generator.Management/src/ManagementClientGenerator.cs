@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using Azure.Generator.Management.Visitors;
+using Azure.Generator.Management.Providers;
+using Azure.Generator.Management.Utilities;
 using Azure.ResourceManager;
 using Microsoft.CodeAnalysis;
 using Microsoft.TypeSpec.Generator;
@@ -45,15 +47,27 @@ namespace Azure.Generator.Management
         /// <inheritdoc/>
         public override ManagementTypeFactory TypeFactory { get; }
 
+        private ResourceDataCustomizationResolver? _resourceDataCustomizationResolver;
+        internal ResourceDataCustomizationResolver ResourceDataCustomizationResolver => _resourceDataCustomizationResolver ??= new();
+
         /// <inheritdoc/>
         public override TypeProviderWriter GetWriter(TypeProvider provider)
         {
             if (provider is ModelFactoryProvider modelFactory)
             {
-                // Model factory back-compat overloads can be synthesized from LastContractView
-                // after normal visitors run. Repair them here so the final methods being written
-                // preserve arguments that were moved into flattened model properties.
+                // Run model-factory repairs at write time, after all visitors have finalized model constructor
+                // shape/order. This keeps both current factory bodies and EBV overloads aligned with the final constructors.
+                ModelFactoryBackwardCompatHelper.FixModelFactoryConstructorCalls(modelFactory.Methods);
                 ModelFactoryBackwardCompatHelper.FixModelFactoryBackwardCompatOverloads(modelFactory.Methods);
+            }
+            else
+            {
+                ModelFactoryBackwardCompatHelper.FixConstructorCalls(provider.Methods);
+            }
+
+            foreach (var serialization in provider.SerializationProviders)
+            {
+                ModelFactoryBackwardCompatHelper.FixConstructorCalls(serialization.Methods);
             }
 
             return base.GetWriter(provider);
@@ -67,6 +81,7 @@ namespace Azure.Generator.Management
             base.Configure();
             // Include Azure.ResourceManager
             AddMetadataReference(MetadataReference.CreateFromFile(typeof(ArmClient).Assembly.Location));
+            AddCustomCodeAttributeProvider(OutputLibrary.CodeGenResourceDataAttributeDefinition);
             // renaming should come first
             AddVisitor(new NameVisitor());
             AddVisitor(new SerializationVisitor());

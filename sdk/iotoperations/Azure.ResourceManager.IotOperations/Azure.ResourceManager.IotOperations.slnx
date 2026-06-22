@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/Azure.ResourceManager.IotOperations.csproj" />
+  <Project Path="tests/Azure.ResourceManager.IotOperations.Tests.csproj" />
+</Solution>

@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.HybridNetwork
 {
-    internal class NetworkServiceDesignVersionOperationSource : IOperationSource<NetworkServiceDesignVersionResource>
+    /// <summary></summary>
+    internal partial class NetworkServiceDesignVersionOperationSource : IOperationSource<NetworkServiceDesignVersionResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal NetworkServiceDesignVersionOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         NetworkServiceDesignVersionResource IOperationSource<NetworkServiceDesignVersionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetworkServiceDesignVersionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHybridNetworkContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            NetworkServiceDesignVersionData data = NetworkServiceDesignVersionData.DeserializeNetworkServiceDesignVersionData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new NetworkServiceDesignVersionResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<NetworkServiceDesignVersionResource> IOperationSource<NetworkServiceDesignVersionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetworkServiceDesignVersionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHybridNetworkContext.Default);
-            return await Task.FromResult(new NetworkServiceDesignVersionResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            NetworkServiceDesignVersionData data = NetworkServiceDesignVersionData.DeserializeNetworkServiceDesignVersionData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new NetworkServiceDesignVersionResource(_client, data);
         }
     }
 }

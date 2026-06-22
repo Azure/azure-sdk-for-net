@@ -74,17 +74,17 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 throw new FormatException($"The model {nameof(ManagedClusterSnapshotInfo)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(KubernetesVersion))
+            if (options.Format != "W" && Optional.IsDefined(KubernetesVersion))
             {
                 writer.WritePropertyName("kubernetesVersion"u8);
                 writer.WriteStringValue(KubernetesVersion);
             }
-            if (Optional.IsDefined(Sku))
+            if (options.Format != "W" && Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku, options);
             }
-            if (Optional.IsDefined(IsRbacEnabled))
+            if (options.Format != "W" && Optional.IsDefined(IsRbacEnabled))
             {
                 writer.WritePropertyName("enableRbac"u8);
                 writer.WriteBooleanValue(IsRbacEnabled.Value);

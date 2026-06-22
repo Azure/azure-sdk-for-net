@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -14,50 +15,77 @@ namespace Azure.ResourceManager.Billing.Models
     public readonly partial struct BillingInvoiceStatus : IEquatable<BillingInvoiceStatus>
     {
         private readonly string _value;
+        /// <summary> Other. </summary>
+        private const string OtherValue = "Other";
+        /// <summary> Due. </summary>
+        private const string DueValue = "Due";
+        /// <summary> OverDue. </summary>
+        private const string OverDueValue = "OverDue";
+        /// <summary> Paid. </summary>
+        private const string PaidValue = "Paid";
+        /// <summary> Void. </summary>
+        private const string VoidValue = "Void";
+        /// <summary> Locked. </summary>
+        private const string LockedValue = "Locked";
 
         /// <summary> Initializes a new instance of <see cref="BillingInvoiceStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BillingInvoiceStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string OtherValue = "Other";
-        private const string DueValue = "Due";
-        private const string OverDueValue = "OverDue";
-        private const string PaidValue = "Paid";
-        private const string VoidValue = "Void";
-        private const string LockedValue = "Locked";
+            _value = value;
+        }
 
         /// <summary> Other. </summary>
         public static BillingInvoiceStatus Other { get; } = new BillingInvoiceStatus(OtherValue);
+
         /// <summary> Due. </summary>
         public static BillingInvoiceStatus Due { get; } = new BillingInvoiceStatus(DueValue);
+
         /// <summary> OverDue. </summary>
         public static BillingInvoiceStatus OverDue { get; } = new BillingInvoiceStatus(OverDueValue);
+
         /// <summary> Paid. </summary>
         public static BillingInvoiceStatus Paid { get; } = new BillingInvoiceStatus(PaidValue);
+
         /// <summary> Void. </summary>
         public static BillingInvoiceStatus Void { get; } = new BillingInvoiceStatus(VoidValue);
+
         /// <summary> Locked. </summary>
         public static BillingInvoiceStatus Locked { get; } = new BillingInvoiceStatus(LockedValue);
+
         /// <summary> Determines if two <see cref="BillingInvoiceStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BillingInvoiceStatus left, BillingInvoiceStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BillingInvoiceStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BillingInvoiceStatus left, BillingInvoiceStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BillingInvoiceStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BillingInvoiceStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BillingInvoiceStatus(string value) => new BillingInvoiceStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BillingInvoiceStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BillingInvoiceStatus?(string value) => value == null ? null : new BillingInvoiceStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BillingInvoiceStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BillingInvoiceStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -7,49 +7,16 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary>
-    /// A class representing the CloudServiceSwap data model.
-    /// SwapResource to represent slot type on the specified cloud service.
-    /// </summary>
+    /// <summary> SwapResource to represent slot type on the specified cloud service. </summary>
     public partial class CloudServiceSwapData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CloudServiceSwapData"/>. </summary>
         public CloudServiceSwapData()
@@ -57,29 +24,34 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Initializes a new instance of <see cref="CloudServiceSwapData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Swap resource properties. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CloudServiceSwapData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CloudServiceSwapProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="name"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CloudServiceSwapData(SwapResourceProperties properties, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Name = name;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Swap resource properties. </summary>
-        internal CloudServiceSwapProperties Properties { get; set; }
+        [WirePath("properties")]
+        internal SwapResourceProperties Properties { get; set; }
+
         /// <summary> Specifies slot info on a cloud service. </summary>
         [WirePath("properties.slotType")]
-        public SwapSlotType? CloudServiceSwapSlotType
+        public SwapSlotType? SwapResourceSlotType
         {
-            get => Properties is null ? default : Properties.SlotType;
+            get
+            {
+                return Properties is null ? default : Properties.SlotType;
+            }
             set
             {
                 if (Properties is null)
-                    Properties = new CloudServiceSwapProperties();
+                {
+                    Properties = new SwapResourceProperties();
+                }
                 Properties.SlotType = value;
             }
         }

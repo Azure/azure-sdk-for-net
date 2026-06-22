@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
@@ -32,7 +34,8 @@ namespace Azure.Generator.Management.Tests.TestHelpers
             ClientResponseApi? clientResponseApi = null,
             ClientPipelineApi? clientPipelineApi = null,
             HttpMessageApi? httpMessageApi = null,
-            string? primaryNamespace = null)
+            string? primaryNamespace = null,
+            IEnumerable<string>? customizationSources = null)
         {
             IReadOnlyList<string> inputNsApiVersions = apiVersions?.Invoke() ?? ["2023-01-01"];
             IReadOnlyList<InputLiteralType> inputNsLiterals = inputLiterals?.Invoke() ?? [];
@@ -74,7 +77,7 @@ namespace Azure.Generator.Management.Tests.TestHelpers
             mockPluginInstance.SetupGet(p => p.InputLibrary).Returns(mockInputLibrary.Object);
             mockPluginInstance.SetupGet(p => p.TypeFactory).Returns(mockTypeFactory.Object);
 
-            var sourceInputModel = new Mock<SourceInputModel>(() => new SourceInputModel(null, null)) { CallBase = true };
+            var sourceInputModel = new Mock<SourceInputModel>(() => new SourceInputModel(BuildCustomizationCompilation(customizationSources), null)) { CallBase = true };
             mockPluginInstance.Setup(p => p.SourceInputModel).Returns(sourceInputModel.Object);
             var configureMethod = typeof(CodeModelGenerator).GetMethod(
                 "Configure",
@@ -84,12 +87,48 @@ namespace Azure.Generator.Management.Tests.TestHelpers
             return mockPluginInstance;
         }
 
+        private static Compilation? BuildCustomizationCompilation(IEnumerable<string>? sources)
+        {
+            if (sources is null)
+            {
+                return null;
+            }
+
+            var syntaxTrees = new List<SyntaxTree>();
+            foreach (var source in sources)
+            {
+                syntaxTrees.Add(CSharpSyntaxTree.ParseText(source));
+            }
+
+            var references = new[]
+            {
+                MetadataReference.CreateFromFile(typeof(object).Assembly.Location),
+                MetadataReference.CreateFromFile(typeof(Type).Assembly.Location)
+            };
+
+            return CSharpCompilation.Create(
+                "Customization",
+                syntaxTrees,
+                references,
+                new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
+        }
+
         public static void SetCustomCodeView(TypeProvider typeProvider, TypeProvider customCodeTypeProvider)
         {
-            typeProvider.GetType().BaseType!.GetField(
-                    "_customCodeView",
-                    BindingFlags.NonPublic | BindingFlags.Instance)?
-                .SetValue(typeProvider, new Lazy<TypeProvider>(() => customCodeTypeProvider));
+            var currentType = typeProvider.GetType();
+            while (currentType is not null)
+            {
+                var field = currentType.GetField("_customCodeView", BindingFlags.NonPublic | BindingFlags.Instance);
+                if (field is not null)
+                {
+                    field.SetValue(typeProvider, new Lazy<TypeProvider>(() => customCodeTypeProvider));
+                    return;
+                }
+
+                currentType = currentType.BaseType;
+            }
+
+            throw new InvalidOperationException($"Unable to find _customCodeView field on {typeProvider.GetType().FullName}.");
         }
     }
 }

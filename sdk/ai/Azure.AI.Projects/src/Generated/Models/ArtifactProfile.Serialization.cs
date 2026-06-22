@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> Artifact profile of the model. </summary>
-    public partial class ArtifactProfile : IJsonModel<ArtifactProfile>
+    internal partial class ArtifactProfile : IJsonModel<ArtifactProfile>
     {
         /// <summary> Initializes a new instance of <see cref="ArtifactProfile"/> for deserialization. </summary>
         internal ArtifactProfile()

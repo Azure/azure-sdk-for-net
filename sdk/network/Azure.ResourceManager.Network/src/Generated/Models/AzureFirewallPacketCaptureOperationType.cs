@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct AzureFirewallPacketCaptureOperationType : IEquatable<AzureFirewallPacketCaptureOperationType>
     {
         private readonly string _value;
+        /// <summary> Start. </summary>
+        private const string StartValue = "Start";
+        /// <summary> Status. </summary>
+        private const string StatusValue = "Status";
+        /// <summary> Stop. </summary>
+        private const string StopValue = "Stop";
 
         /// <summary> Initializes a new instance of <see cref="AzureFirewallPacketCaptureOperationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AzureFirewallPacketCaptureOperationType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string StartValue = "Start";
-        private const string StatusValue = "Status";
-        private const string StopValue = "Stop";
+            _value = value;
+        }
 
         /// <summary> Start. </summary>
         public static AzureFirewallPacketCaptureOperationType Start { get; } = new AzureFirewallPacketCaptureOperationType(StartValue);
+
         /// <summary> Status. </summary>
         public static AzureFirewallPacketCaptureOperationType Status { get; } = new AzureFirewallPacketCaptureOperationType(StatusValue);
+
         /// <summary> Stop. </summary>
         public static AzureFirewallPacketCaptureOperationType Stop { get; } = new AzureFirewallPacketCaptureOperationType(StopValue);
+
         /// <summary> Determines if two <see cref="AzureFirewallPacketCaptureOperationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AzureFirewallPacketCaptureOperationType left, AzureFirewallPacketCaptureOperationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AzureFirewallPacketCaptureOperationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AzureFirewallPacketCaptureOperationType left, AzureFirewallPacketCaptureOperationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AzureFirewallPacketCaptureOperationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AzureFirewallPacketCaptureOperationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AzureFirewallPacketCaptureOperationType(string value) => new AzureFirewallPacketCaptureOperationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AzureFirewallPacketCaptureOperationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AzureFirewallPacketCaptureOperationType?(string value) => value == null ? null : new AzureFirewallPacketCaptureOperationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AzureFirewallPacketCaptureOperationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AzureFirewallPacketCaptureOperationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

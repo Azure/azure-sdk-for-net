@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.StorageCache;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    public partial class AutoImportJobPropertiesStatusBlobSyncEvents : IUtf8JsonSerializable, IJsonModel<AutoImportJobPropertiesStatusBlobSyncEvents>
+    /// <summary> The storage account blob change feed status of the auto import job. </summary>
+    public partial class AutoImportJobPropertiesStatusBlobSyncEvents : IJsonModel<AutoImportJobPropertiesStatusBlobSyncEvents>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutoImportJobPropertiesStatusBlobSyncEvents>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AutoImportJobPropertiesStatusBlobSyncEvents PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AutoImportJobPropertiesStatusBlobSyncEvents>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAutoImportJobPropertiesStatusBlobSyncEvents(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AutoImportJobPropertiesStatusBlobSyncEvents)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AutoImportJobPropertiesStatusBlobSyncEvents>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageCacheContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AutoImportJobPropertiesStatusBlobSyncEvents)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AutoImportJobPropertiesStatusBlobSyncEvents>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AutoImportJobPropertiesStatusBlobSyncEvents IPersistableModel<AutoImportJobPropertiesStatusBlobSyncEvents>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AutoImportJobPropertiesStatusBlobSyncEvents>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AutoImportJobPropertiesStatusBlobSyncEvents>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AutoImportJobPropertiesStatusBlobSyncEvents>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AutoImportJobPropertiesStatusBlobSyncEvents>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AutoImportJobPropertiesStatusBlobSyncEvents)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(ImportedFiles))
             {
                 writer.WritePropertyName("importedFiles"u8);
@@ -99,15 +139,15 @@ namespace Azure.ResourceManager.StorageCache.Models
                 writer.WritePropertyName("lastTimeFullySynchronized"u8);
                 writer.WriteStringValue(LastTimeFullySynchronized.Value, "O");
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -116,22 +156,27 @@ namespace Azure.ResourceManager.StorageCache.Models
             }
         }
 
-        AutoImportJobPropertiesStatusBlobSyncEvents IJsonModel<AutoImportJobPropertiesStatusBlobSyncEvents>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AutoImportJobPropertiesStatusBlobSyncEvents IJsonModel<AutoImportJobPropertiesStatusBlobSyncEvents>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AutoImportJobPropertiesStatusBlobSyncEvents JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AutoImportJobPropertiesStatusBlobSyncEvents>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AutoImportJobPropertiesStatusBlobSyncEvents>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AutoImportJobPropertiesStatusBlobSyncEvents)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAutoImportJobPropertiesStatusBlobSyncEvents(document.RootElement, options);
         }
 
-        internal static AutoImportJobPropertiesStatusBlobSyncEvents DeserializeAutoImportJobPropertiesStatusBlobSyncEvents(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static AutoImportJobPropertiesStatusBlobSyncEvents DeserializeAutoImportJobPropertiesStatusBlobSyncEvents(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -147,135 +192,133 @@ namespace Azure.ResourceManager.StorageCache.Models
             long? totalErrors = default;
             long? totalConflicts = default;
             long? deletions = default;
-            DateTimeOffset? lastChangeFeedEventConsumedTime = default;
+            DateTimeOffset? lastChangeFeedEventConsumedOn = default;
             DateTimeOffset? lastTimeFullySynchronized = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("importedFiles"u8))
+                if (prop.NameEquals("importedFiles"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    importedFiles = property.Value.GetInt64();
+                    importedFiles = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("importedDirectories"u8))
+                if (prop.NameEquals("importedDirectories"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    importedDirectories = property.Value.GetInt64();
+                    importedDirectories = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("importedSymlinks"u8))
+                if (prop.NameEquals("importedSymlinks"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    importedSymlinks = property.Value.GetInt64();
+                    importedSymlinks = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("preexistingFiles"u8))
+                if (prop.NameEquals("preexistingFiles"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    preexistingFiles = property.Value.GetInt64();
+                    preexistingFiles = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("preexistingDirectories"u8))
+                if (prop.NameEquals("preexistingDirectories"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    preexistingDirectories = property.Value.GetInt64();
+                    preexistingDirectories = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("preexistingSymlinks"u8))
+                if (prop.NameEquals("preexistingSymlinks"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    preexistingSymlinks = property.Value.GetInt64();
+                    preexistingSymlinks = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("totalBlobsImported"u8))
+                if (prop.NameEquals("totalBlobsImported"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    totalBlobsImported = property.Value.GetInt64();
+                    totalBlobsImported = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("rateOfBlobImport"u8))
+                if (prop.NameEquals("rateOfBlobImport"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    rateOfBlobImport = property.Value.GetInt64();
+                    rateOfBlobImport = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("totalErrors"u8))
+                if (prop.NameEquals("totalErrors"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    totalErrors = property.Value.GetInt64();
+                    totalErrors = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("totalConflicts"u8))
+                if (prop.NameEquals("totalConflicts"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    totalConflicts = property.Value.GetInt64();
+                    totalConflicts = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("deletions"u8))
+                if (prop.NameEquals("deletions"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    deletions = property.Value.GetInt64();
+                    deletions = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("lastChangeFeedEventConsumedTime"u8))
+                if (prop.NameEquals("lastChangeFeedEventConsumedTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lastChangeFeedEventConsumedTime = property.Value.GetDateTimeOffset("O");
+                    lastChangeFeedEventConsumedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastTimeFullySynchronized"u8))
+                if (prop.NameEquals("lastTimeFullySynchronized"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lastTimeFullySynchronized = property.Value.GetDateTimeOffset("O");
+                    lastTimeFullySynchronized = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new AutoImportJobPropertiesStatusBlobSyncEvents(
                 importedFiles,
                 importedDirectories,
@@ -288,40 +331,9 @@ namespace Azure.ResourceManager.StorageCache.Models
                 totalErrors,
                 totalConflicts,
                 deletions,
-                lastChangeFeedEventConsumedTime,
+                lastChangeFeedEventConsumedOn,
                 lastTimeFullySynchronized,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<AutoImportJobPropertiesStatusBlobSyncEvents>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AutoImportJobPropertiesStatusBlobSyncEvents>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageCacheContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(AutoImportJobPropertiesStatusBlobSyncEvents)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        AutoImportJobPropertiesStatusBlobSyncEvents IPersistableModel<AutoImportJobPropertiesStatusBlobSyncEvents>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AutoImportJobPropertiesStatusBlobSyncEvents>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeAutoImportJobPropertiesStatusBlobSyncEvents(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AutoImportJobPropertiesStatusBlobSyncEvents)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<AutoImportJobPropertiesStatusBlobSyncEvents>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

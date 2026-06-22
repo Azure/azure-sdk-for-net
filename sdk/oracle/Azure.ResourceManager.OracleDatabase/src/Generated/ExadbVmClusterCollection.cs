@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 HttpMessage message = _exadbVmClustersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, exadbVmClusterName, ExadbVmClusterData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OracleDatabaseArmOperation<ExadbVmClusterResource> operation = new OracleDatabaseArmOperation<ExadbVmClusterResource>(
-                    new ExadbVmClusterOperationSource(Client),
+                    new ExadbVmClusterResourceOperationSource(Client),
                     _exadbVmClustersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 HttpMessage message = _exadbVmClustersRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, exadbVmClusterName, ExadbVmClusterData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OracleDatabaseArmOperation<ExadbVmClusterResource> operation = new OracleDatabaseArmOperation<ExadbVmClusterResource>(
-                    new ExadbVmClusterOperationSource(Client),
+                    new ExadbVmClusterResourceOperationSource(Client),
                     _exadbVmClustersClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -6,48 +6,38 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Billing.Models;
 
 namespace Azure.ResourceManager.Billing
 {
     /// <summary>
-    /// A Class representing a BillingInvoice along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BillingInvoiceResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetBillingInvoiceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="BillingAccountResource"/> using the GetBillingInvoice method.
+    /// A class representing a BillingInvoice along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BillingInvoiceResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="BillingAccountResource"/> using the GetBillingInvoices method.
     /// </summary>
     public partial class BillingInvoiceResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="BillingInvoiceResource"/> instance. </summary>
-        /// <param name="billingAccountName"> The billingAccountName. </param>
-        /// <param name="invoiceName"> The invoiceName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string billingAccountName, string invoiceName)
-        {
-            var resourceId = $"/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/invoices/{invoiceName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _billingInvoiceInvoicesClientDiagnostics;
-        private readonly InvoicesRestOperations _billingInvoiceInvoicesRestClient;
+        private readonly ClientDiagnostics _invoicesClientDiagnostics;
+        private readonly Invoices _invoicesRestClient;
         private readonly ClientDiagnostics _transactionsClientDiagnostics;
-        private readonly TransactionsRestOperations _transactionsRestClient;
+        private readonly Transactions _transactionsRestClient;
         private readonly BillingInvoiceData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Billing/billingAccounts/invoices";
 
-        /// <summary> Initializes a new instance of the <see cref="BillingInvoiceResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of BillingInvoiceResource for mocking. </summary>
         protected BillingInvoiceResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="BillingInvoiceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingInvoiceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal BillingInvoiceResource(ArmClient client, BillingInvoiceData data) : this(client, data.Id)
@@ -56,73 +46,93 @@ namespace Azure.ResourceManager.Billing
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="BillingInvoiceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingInvoiceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal BillingInvoiceResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _billingInvoiceInvoicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string billingInvoiceInvoicesApiVersion);
-            _billingInvoiceInvoicesRestClient = new InvoicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, billingInvoiceInvoicesApiVersion);
-            _transactionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _transactionsRestClient = new TransactionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string billingInvoiceApiVersion);
+            _invoicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
+            _invoicesRestClient = new Invoices(_invoicesClientDiagnostics, Pipeline, Endpoint, billingInvoiceApiVersion ?? "2024-04-01");
+            _transactionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
+            _transactionsRestClient = new Transactions(_transactionsClientDiagnostics, Pipeline, Endpoint, billingInvoiceApiVersion ?? "2024-04-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual BillingInvoiceData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="billingAccountName"> The billingAccountName. </param>
+        /// <param name="invoiceName"> The invoiceName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string billingAccountName, string invoiceName)
+        {
+            string resourceId = $"/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/invoices/{invoiceName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets an invoice by billing account name and ID. The operation is supported for all billing account types.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/invoices/{invoiceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/invoices/{invoiceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Invoices_GetByBillingAccount</description>
+        /// <term> Operation Id. </term>
+        /// <description> Invoices_GetByBillingAccount. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingInvoiceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingInvoiceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<BillingInvoiceResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _billingInvoiceInvoicesClientDiagnostics.CreateScope("BillingInvoiceResource.Get");
+            using DiagnosticScope scope = _invoicesClientDiagnostics.CreateScope("BillingInvoiceResource.Get");
             scope.Start();
             try
             {
-                var response = await _billingInvoiceInvoicesRestClient.GetByBillingAccountAsync(Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _invoicesRestClient.CreateGetByBillingAccountRequest(Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<BillingInvoiceData> response = Response.FromValue(BillingInvoiceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new BillingInvoiceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -136,33 +146,41 @@ namespace Azure.ResourceManager.Billing
         /// Gets an invoice by billing account name and ID. The operation is supported for all billing account types.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/invoices/{invoiceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/invoices/{invoiceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Invoices_GetByBillingAccount</description>
+        /// <term> Operation Id. </term>
+        /// <description> Invoices_GetByBillingAccount. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingInvoiceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingInvoiceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<BillingInvoiceResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _billingInvoiceInvoicesClientDiagnostics.CreateScope("BillingInvoiceResource.Get");
+            using DiagnosticScope scope = _invoicesClientDiagnostics.CreateScope("BillingInvoiceResource.Get");
             scope.Start();
             try
             {
-                var response = _billingInvoiceInvoicesRestClient.GetByBillingAccount(Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _invoicesRestClient.CreateGetByBillingAccountRequest(Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<BillingInvoiceData> response = Response.FromValue(BillingInvoiceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new BillingInvoiceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -176,20 +194,20 @@ namespace Azure.ResourceManager.Billing
         /// Regenerate an invoice by billing account name and invoice name. The operation is supported for billing accounts with agreement type Microsoft Customer Agreement.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/invoices/{invoiceName}/amend</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/invoices/{invoiceName}/amend. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Invoices_Amend</description>
+        /// <term> Operation Id. </term>
+        /// <description> Invoices_Amend. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingInvoiceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingInvoiceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -197,14 +215,21 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> AmendAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _billingInvoiceInvoicesClientDiagnostics.CreateScope("BillingInvoiceResource.Amend");
+            using DiagnosticScope scope = _invoicesClientDiagnostics.CreateScope("BillingInvoiceResource.Amend");
             scope.Start();
             try
             {
-                var response = await _billingInvoiceInvoicesRestClient.AmendAsync(Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new BillingArmOperation(_billingInvoiceInvoicesClientDiagnostics, Pipeline, _billingInvoiceInvoicesRestClient.CreateAmendRequest(Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _invoicesRestClient.CreateAmendRequest(Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                BillingArmOperation operation = new BillingArmOperation(_invoicesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -218,20 +243,20 @@ namespace Azure.ResourceManager.Billing
         /// Regenerate an invoice by billing account name and invoice name. The operation is supported for billing accounts with agreement type Microsoft Customer Agreement.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/invoices/{invoiceName}/amend</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/invoices/{invoiceName}/amend. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Invoices_Amend</description>
+        /// <term> Operation Id. </term>
+        /// <description> Invoices_Amend. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingInvoiceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingInvoiceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -239,14 +264,21 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Amend(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _billingInvoiceInvoicesClientDiagnostics.CreateScope("BillingInvoiceResource.Amend");
+            using DiagnosticScope scope = _invoicesClientDiagnostics.CreateScope("BillingInvoiceResource.Amend");
             scope.Start();
             try
             {
-                var response = _billingInvoiceInvoicesRestClient.Amend(Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new BillingArmOperation(_billingInvoiceInvoicesClientDiagnostics, Pipeline, _billingInvoiceInvoicesRestClient.CreateAmendRequest(Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _invoicesRestClient.CreateAmendRequest(Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                BillingArmOperation operation = new BillingArmOperation(_invoicesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -260,36 +292,49 @@ namespace Azure.ResourceManager.Billing
         /// Gets a URL to download an invoice document. The operation is supported for billing accounts with agreement type Microsoft Partner Agreement, Microsoft Customer Agreement or Enterprise Agreement.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/invoices/{invoiceName}/download</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/invoices/{invoiceName}/download. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Invoices_DownloadByBillingAccount</description>
+        /// <term> Operation Id. </term>
+        /// <description> Invoices_DownloadByBillingAccount. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingInvoiceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingInvoiceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="documentName"> The ID that uniquely identifies an invoice document. This ID may be an identifier for an invoice PDF, a credit note, or a tax receipt. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<BillingDocumentDownloadResult>> DownloadByBillingAccountAsync(WaitUntil waitUntil, string documentName = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BillingDocumentDownloadResult>> DownloadByBillingAccountAsync(WaitUntil waitUntil, string documentName = default, CancellationToken cancellationToken = default)
         {
-            using var scope = _billingInvoiceInvoicesClientDiagnostics.CreateScope("BillingInvoiceResource.DownloadByBillingAccount");
+            using DiagnosticScope scope = _invoicesClientDiagnostics.CreateScope("BillingInvoiceResource.DownloadByBillingAccount");
             scope.Start();
             try
             {
-                var response = await _billingInvoiceInvoicesRestClient.DownloadByBillingAccountAsync(Id.Parent.Name, Id.Name, documentName, cancellationToken).ConfigureAwait(false);
-                var operation = new BillingArmOperation<BillingDocumentDownloadResult>(new BillingDocumentDownloadResultOperationSource(), _billingInvoiceInvoicesClientDiagnostics, Pipeline, _billingInvoiceInvoicesRestClient.CreateDownloadByBillingAccountRequest(Id.Parent.Name, Id.Name, documentName).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _invoicesRestClient.CreateDownloadByBillingAccountRequest(Id.Parent.Name, Id.Name, documentName, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                BillingArmOperation<BillingDocumentDownloadResult> operation = new BillingArmOperation<BillingDocumentDownloadResult>(
+                    new BillingDocumentDownloadResultOperationSource(),
+                    _invoicesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -303,36 +348,49 @@ namespace Azure.ResourceManager.Billing
         /// Gets a URL to download an invoice document. The operation is supported for billing accounts with agreement type Microsoft Partner Agreement, Microsoft Customer Agreement or Enterprise Agreement.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/invoices/{invoiceName}/download</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/invoices/{invoiceName}/download. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Invoices_DownloadByBillingAccount</description>
+        /// <term> Operation Id. </term>
+        /// <description> Invoices_DownloadByBillingAccount. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingInvoiceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingInvoiceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="documentName"> The ID that uniquely identifies an invoice document. This ID may be an identifier for an invoice PDF, a credit note, or a tax receipt. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<BillingDocumentDownloadResult> DownloadByBillingAccount(WaitUntil waitUntil, string documentName = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BillingDocumentDownloadResult> DownloadByBillingAccount(WaitUntil waitUntil, string documentName = default, CancellationToken cancellationToken = default)
         {
-            using var scope = _billingInvoiceInvoicesClientDiagnostics.CreateScope("BillingInvoiceResource.DownloadByBillingAccount");
+            using DiagnosticScope scope = _invoicesClientDiagnostics.CreateScope("BillingInvoiceResource.DownloadByBillingAccount");
             scope.Start();
             try
             {
-                var response = _billingInvoiceInvoicesRestClient.DownloadByBillingAccount(Id.Parent.Name, Id.Name, documentName, cancellationToken);
-                var operation = new BillingArmOperation<BillingDocumentDownloadResult>(new BillingDocumentDownloadResultOperationSource(), _billingInvoiceInvoicesClientDiagnostics, Pipeline, _billingInvoiceInvoicesRestClient.CreateDownloadByBillingAccountRequest(Id.Parent.Name, Id.Name, documentName).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _invoicesRestClient.CreateDownloadByBillingAccountRequest(Id.Parent.Name, Id.Name, documentName, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                BillingArmOperation<BillingDocumentDownloadResult> operation = new BillingArmOperation<BillingDocumentDownloadResult>(
+                    new BillingDocumentDownloadResultOperationSource(),
+                    _invoicesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -346,20 +404,20 @@ namespace Azure.ResourceManager.Billing
         /// Gets a URL to download the summary document for an invoice. The operation is supported for billing accounts with agreement type Enterprise Agreement.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/invoices/{invoiceName}/downloadSummary</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/invoices/{invoiceName}/downloadSummary. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Invoices_DownloadSummaryByBillingAccount</description>
+        /// <term> Operation Id. </term>
+        /// <description> Invoices_DownloadSummaryByBillingAccount. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingInvoiceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingInvoiceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -367,14 +425,27 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation<BillingDocumentDownloadResult>> DownloadSummaryByBillingAccountAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _billingInvoiceInvoicesClientDiagnostics.CreateScope("BillingInvoiceResource.DownloadSummaryByBillingAccount");
+            using DiagnosticScope scope = _invoicesClientDiagnostics.CreateScope("BillingInvoiceResource.DownloadSummaryByBillingAccount");
             scope.Start();
             try
             {
-                var response = await _billingInvoiceInvoicesRestClient.DownloadSummaryByBillingAccountAsync(Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new BillingArmOperation<BillingDocumentDownloadResult>(new BillingDocumentDownloadResultOperationSource(), _billingInvoiceInvoicesClientDiagnostics, Pipeline, _billingInvoiceInvoicesRestClient.CreateDownloadSummaryByBillingAccountRequest(Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _invoicesRestClient.CreateDownloadSummaryByBillingAccountRequest(Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                BillingArmOperation<BillingDocumentDownloadResult> operation = new BillingArmOperation<BillingDocumentDownloadResult>(
+                    new BillingDocumentDownloadResultOperationSource(),
+                    _invoicesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -388,20 +459,20 @@ namespace Azure.ResourceManager.Billing
         /// Gets a URL to download the summary document for an invoice. The operation is supported for billing accounts with agreement type Enterprise Agreement.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/invoices/{invoiceName}/downloadSummary</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/invoices/{invoiceName}/downloadSummary. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Invoices_DownloadSummaryByBillingAccount</description>
+        /// <term> Operation Id. </term>
+        /// <description> Invoices_DownloadSummaryByBillingAccount. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingInvoiceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingInvoiceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -409,15 +480,128 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation<BillingDocumentDownloadResult> DownloadSummaryByBillingAccount(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _billingInvoiceInvoicesClientDiagnostics.CreateScope("BillingInvoiceResource.DownloadSummaryByBillingAccount");
+            using DiagnosticScope scope = _invoicesClientDiagnostics.CreateScope("BillingInvoiceResource.DownloadSummaryByBillingAccount");
             scope.Start();
             try
             {
-                var response = _billingInvoiceInvoicesRestClient.DownloadSummaryByBillingAccount(Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new BillingArmOperation<BillingDocumentDownloadResult>(new BillingDocumentDownloadResultOperationSource(), _billingInvoiceInvoicesClientDiagnostics, Pipeline, _billingInvoiceInvoicesRestClient.CreateDownloadSummaryByBillingAccountRequest(Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _invoicesRestClient.CreateDownloadSummaryByBillingAccountRequest(Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                BillingArmOperation<BillingDocumentDownloadResult> operation = new BillingArmOperation<BillingDocumentDownloadResult>(
+                    new BillingDocumentDownloadResultOperationSource(),
+                    _invoicesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the transaction summary for an invoice. Transactions include purchases, refunds and Azure usage charges.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/invoices/{invoiceName}/transactionSummary. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Invoices_GetTransactionSummaryByInvoice. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingInvoiceResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> The filter query option allows clients to filter the line items that are aggregated to create the line item summary. </param>
+        /// <param name="search"> The search query option allows clients to filter the line items that are aggregated to create the line item summary. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<BillingTransactionSummary>> GetTransactionSummaryByInvoiceTransactionAsync(string filter = default, string search = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _transactionsClientDiagnostics.CreateScope("BillingInvoiceResource.GetTransactionSummaryByInvoiceTransaction");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _transactionsRestClient.CreateGetTransactionSummaryByInvoiceTransactionRequest(Id.Parent.Name, Id.Name, filter, search, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<BillingTransactionSummary> response = Response.FromValue(BillingTransactionSummary.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the transaction summary for an invoice. Transactions include purchases, refunds and Azure usage charges.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/invoices/{invoiceName}/transactionSummary. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Invoices_GetTransactionSummaryByInvoice. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingInvoiceResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> The filter query option allows clients to filter the line items that are aggregated to create the line item summary. </param>
+        /// <param name="search"> The search query option allows clients to filter the line items that are aggregated to create the line item summary. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<BillingTransactionSummary> GetTransactionSummaryByInvoiceTransaction(string filter = default, string search = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _transactionsClientDiagnostics.CreateScope("BillingInvoiceResource.GetTransactionSummaryByInvoiceTransaction");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _transactionsRestClient.CreateGetTransactionSummaryByInvoiceTransactionRequest(Id.Parent.Name, Id.Name, filter, search, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<BillingTransactionSummary> response = Response.FromValue(BillingTransactionSummary.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
             }
             catch (Exception e)
             {
@@ -430,74 +614,118 @@ namespace Azure.ResourceManager.Billing
         /// Lists the transactions for an invoice. Transactions include purchases, refunds and Azure usage charges.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/invoices/{invoiceName}/transactions</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/invoices/{invoiceName}/transactions. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Transactions_ListByInvoice</description>
+        /// <term> Operation Id. </term>
+        /// <description> Invoices_ListByInvoice. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingInvoiceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
+        /// <param name="orderBy"> The orderby query option allows clients to request resources in a particular order. </param>
+        /// <param name="maxCount"> The top query option requests the number of items in the queried collection to be included in the result. The maximum supported value for top is 50. </param>
+        /// <param name="skip"> The skip query option requests the number of items in the queried collection that are to be skipped and not included in the result. </param>
+        /// <param name="count"> The count query option allows clients to request a count of the matching resources included with the resources in the response. </param>
+        /// <param name="search"> The search query option allows clients to request items within a collection matching a free-text search expression. search is only supported for string fields. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BillingTransactionData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BillingTransactionData> GetTransactionsAsync(BillingInvoiceResourceGetTransactionsOptions options, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="BillingTransactionData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BillingTransactionData> GetByInvoiceAsync(string filter = default, string orderBy = default, long? maxCount = default, long? skip = default, bool? count = default, string search = default, CancellationToken cancellationToken = default)
         {
-            options ??= new BillingInvoiceResourceGetTransactionsOptions();
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _transactionsRestClient.CreateListByInvoiceRequest(Id.Parent.Name, Id.Name, options.Filter, options.OrderBy, options.Top, options.Skip, options.Count, options.Search);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _transactionsRestClient.CreateListByInvoiceNextPageRequest(nextLink, Id.Parent.Name, Id.Name, options.Filter, options.OrderBy, options.Top, options.Skip, options.Count, options.Search);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BillingTransactionData.DeserializeBillingTransactionData(e), _transactionsClientDiagnostics, Pipeline, "BillingInvoiceResource.GetTransactions", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new TransactionsGetByInvoiceAsyncCollectionResultOfT(
+                _transactionsRestClient,
+                Id.Parent.Name,
+                Id.Name,
+                filter,
+                orderBy,
+                maxCount,
+                skip,
+                count,
+                search,
+                context,
+                "BillingInvoiceResource.GetByInvoice");
         }
 
         /// <summary>
         /// Lists the transactions for an invoice. Transactions include purchases, refunds and Azure usage charges.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/invoices/{invoiceName}/transactions</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/invoices/{invoiceName}/transactions. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Transactions_ListByInvoice</description>
+        /// <term> Operation Id. </term>
+        /// <description> Invoices_ListByInvoice. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingInvoiceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
+        /// <param name="orderBy"> The orderby query option allows clients to request resources in a particular order. </param>
+        /// <param name="maxCount"> The top query option requests the number of items in the queried collection to be included in the result. The maximum supported value for top is 50. </param>
+        /// <param name="skip"> The skip query option requests the number of items in the queried collection that are to be skipped and not included in the result. </param>
+        /// <param name="count"> The count query option allows clients to request a count of the matching resources included with the resources in the response. </param>
+        /// <param name="search"> The search query option allows clients to request items within a collection matching a free-text search expression. search is only supported for string fields. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BillingTransactionData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BillingTransactionData> GetTransactions(BillingInvoiceResourceGetTransactionsOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<BillingTransactionData> GetByInvoice(string filter = default, string orderBy = default, long? maxCount = default, long? skip = default, bool? count = default, string search = default, CancellationToken cancellationToken = default)
         {
-            options ??= new BillingInvoiceResourceGetTransactionsOptions();
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _transactionsRestClient.CreateListByInvoiceRequest(Id.Parent.Name, Id.Name, options.Filter, options.OrderBy, options.Top, options.Skip, options.Count, options.Search);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _transactionsRestClient.CreateListByInvoiceNextPageRequest(nextLink, Id.Parent.Name, Id.Name, options.Filter, options.OrderBy, options.Top, options.Skip, options.Count, options.Search);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BillingTransactionData.DeserializeBillingTransactionData(e), _transactionsClientDiagnostics, Pipeline, "BillingInvoiceResource.GetTransactions", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new TransactionsGetByInvoiceCollectionResultOfT(
+                _transactionsRestClient,
+                Id.Parent.Name,
+                Id.Name,
+                filter,
+                orderBy,
+                maxCount,
+                skip,
+                count,
+                search,
+                context,
+                "BillingInvoiceResource.GetByInvoice");
         }
 
         /// <summary>
         /// Gets a URL to download the transactions document for an invoice. The operation is supported for billing accounts with agreement type Enterprise Agreement.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/invoices/{invoiceName}/transactionsDownload</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/invoices/{invoiceName}/transactionsDownload. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Transactions_TransactionsDownloadByInvoice</description>
+        /// <term> Operation Id. </term>
+        /// <description> Invoices_TransactionsDownloadByInvoice. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingInvoiceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -505,14 +733,27 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation<BillingDocumentDownloadResult>> TransactionsDownloadByInvoiceTransactionAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _transactionsClientDiagnostics.CreateScope("BillingInvoiceResource.TransactionsDownloadByInvoiceTransaction");
+            using DiagnosticScope scope = _transactionsClientDiagnostics.CreateScope("BillingInvoiceResource.TransactionsDownloadByInvoiceTransaction");
             scope.Start();
             try
             {
-                var response = await _transactionsRestClient.TransactionsDownloadByInvoiceAsync(Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new BillingArmOperation<BillingDocumentDownloadResult>(new BillingDocumentDownloadResultOperationSource(), _transactionsClientDiagnostics, Pipeline, _transactionsRestClient.CreateTransactionsDownloadByInvoiceRequest(Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _transactionsRestClient.CreateTransactionsDownloadByInvoiceTransactionRequest(Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                BillingArmOperation<BillingDocumentDownloadResult> operation = new BillingArmOperation<BillingDocumentDownloadResult>(
+                    new BillingDocumentDownloadResultOperationSource(),
+                    _transactionsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -526,16 +767,20 @@ namespace Azure.ResourceManager.Billing
         /// Gets a URL to download the transactions document for an invoice. The operation is supported for billing accounts with agreement type Enterprise Agreement.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/invoices/{invoiceName}/transactionsDownload</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/invoices/{invoiceName}/transactionsDownload. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Transactions_TransactionsDownloadByInvoice</description>
+        /// <term> Operation Id. </term>
+        /// <description> Invoices_TransactionsDownloadByInvoice. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="BillingInvoiceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -543,87 +788,28 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation<BillingDocumentDownloadResult> TransactionsDownloadByInvoiceTransaction(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _transactionsClientDiagnostics.CreateScope("BillingInvoiceResource.TransactionsDownloadByInvoiceTransaction");
+            using DiagnosticScope scope = _transactionsClientDiagnostics.CreateScope("BillingInvoiceResource.TransactionsDownloadByInvoiceTransaction");
             scope.Start();
             try
             {
-                var response = _transactionsRestClient.TransactionsDownloadByInvoice(Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new BillingArmOperation<BillingDocumentDownloadResult>(new BillingDocumentDownloadResultOperationSource(), _transactionsClientDiagnostics, Pipeline, _transactionsRestClient.CreateTransactionsDownloadByInvoiceRequest(Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _transactionsRestClient.CreateTransactionsDownloadByInvoiceTransactionRequest(Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                BillingArmOperation<BillingDocumentDownloadResult> operation = new BillingArmOperation<BillingDocumentDownloadResult>(
+                    new BillingDocumentDownloadResultOperationSource(),
+                    _transactionsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets the transaction summary for an invoice. Transactions include purchases, refunds and Azure usage charges.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/invoices/{invoiceName}/transactionSummary</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Transactions_GetTransactionSummaryByInvoice</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="filter"> The filter query option allows clients to filter the line items that are aggregated to create the line item summary. </param>
-        /// <param name="search"> The search query option allows clients to filter the line items that are aggregated to create the line item summary. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<BillingTransactionSummary>> GetTransactionSummaryByInvoiceTransactionAsync(string filter = null, string search = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _transactionsClientDiagnostics.CreateScope("BillingInvoiceResource.GetTransactionSummaryByInvoiceTransaction");
-            scope.Start();
-            try
-            {
-                var response = await _transactionsRestClient.GetTransactionSummaryByInvoiceAsync(Id.Parent.Name, Id.Name, filter, search, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets the transaction summary for an invoice. Transactions include purchases, refunds and Azure usage charges.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/invoices/{invoiceName}/transactionSummary</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Transactions_GetTransactionSummaryByInvoice</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="filter"> The filter query option allows clients to filter the line items that are aggregated to create the line item summary. </param>
-        /// <param name="search"> The search query option allows clients to filter the line items that are aggregated to create the line item summary. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<BillingTransactionSummary> GetTransactionSummaryByInvoiceTransaction(string filter = null, string search = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _transactionsClientDiagnostics.CreateScope("BillingInvoiceResource.GetTransactionSummaryByInvoiceTransaction");
-            scope.Start();
-            try
-            {
-                var response = _transactionsRestClient.GetTransactionSummaryByInvoice(Id.Parent.Name, Id.Name, filter, search, cancellationToken);
-                return response;
             }
             catch (Exception e)
             {

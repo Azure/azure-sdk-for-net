@@ -32,7 +32,6 @@ namespace Azure.ResourceManager.Storage
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Properties of the storage account. </param>
@@ -42,9 +41,9 @@ namespace Azure.ResourceManager.Storage
         /// <param name="extendedLocation"> The extendedLocation of the resource. </param>
         /// <param name="zones"> The availability zones. </param>
         /// <param name="placement"> Optional. Gets or sets the zonal placement details for the storage account. </param>
-        internal StorageAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, StorageAccountProperties properties, StorageSku sku, StorageKind? kind, ManagedServiceIdentity identity, ExtendedLocation extendedLocation, IList<string> zones, Placement placement) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal StorageAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, StorageAccountProperties properties, StorageSku sku, StorageKind? kind, ManagedServiceIdentity identity, ExtendedLocation extendedLocation, IList<string> zones, Placement placement, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             Sku = sku;
             Kind = kind;
@@ -52,6 +51,7 @@ namespace Azure.ResourceManager.Storage
             ExtendedLocation = extendedLocation;
             Zones = zones;
             Placement = placement;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Properties of the storage account. </summary>
@@ -551,6 +551,42 @@ namespace Azure.ResourceManager.Storage
             get
             {
                 return Properties is null ? default : Properties.IsSkuConversionBlocked;
+            }
+        }
+
+        /// <summary> Indicate shared key access properties at service level. </summary>
+        [WirePath("properties.allowSharedKeyAccessForServices")]
+        public StorageAccountSharedKeyAccessProperties AllowSharedKeyAccessForServices
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AllowSharedKeyAccessForServices;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageAccountProperties();
+                }
+                Properties.AllowSharedKeyAccessForServices = value;
+            }
+        }
+
+        /// <summary> Data Collaboration policy for the storage account. </summary>
+        [WirePath("properties.dataCollaborationPolicyProperties")]
+        public StorageDataCollaborationPolicyProperties DataCollaborationPolicyProperties
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DataCollaborationPolicyProperties;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageAccountProperties();
+                }
+                Properties.DataCollaborationPolicyProperties = value;
             }
         }
 

@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.Maintenance.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="namespace"> Gets or sets namespace of the resource. </param>
         /// <param name="extensionProperties"> Gets or sets extensionProperties of the maintenanceConfiguration. </param>
@@ -34,9 +35,8 @@ namespace Azure.ResourceManager.Maintenance.Models
         /// <param name="duration"> Duration of the maintenance window in HH:mm format. If not provided, default value will be used based on maintenance scope provided. Example: 05:00. </param>
         /// <param name="timeZone"> Name of the timezone. List of timezones can be obtained by executing [System.TimeZoneInfo]::GetSystemTimeZones() in PowerShell. Example: Pacific Standard Time, UTC, W. Europe Standard Time, Korea Standard Time, Cen. Australia Standard Time. </param>
         /// <param name="recurEvery"> Rate at which a Maintenance window is expected to recur. The rate can be expressed as daily, weekly, or monthly schedules. Daily schedule are formatted as recurEvery: [Frequency as integer]['Day(s)']. If no frequency is provided, the default frequency is 1. Daily schedule examples are recurEvery: Day, recurEvery: 3Days.  Weekly schedule are formatted as recurEvery: [Frequency as integer]['Week(s)'] [Optional comma separated list of weekdays Monday-Sunday]. Weekly schedule examples are recurEvery: 3Weeks, recurEvery: Week Saturday,Sunday. Monthly schedules are formatted as [Frequency as integer]['Month(s)'] [Comma separated list of month days] or [Frequency as integer]['Month(s)'] [Week of Month (First, Second, Third, Fourth, Last)] [Weekday Monday-Sunday] [Optional Offset(No. of days)]. Offset value must be between -6 to 6 inclusive. Monthly schedule examples are recurEvery: Month, recurEvery: 2Months, recurEvery: Month day23,day24, recurEvery: Month Last Sunday, recurEvery: Month Fourth Monday, recurEvery: Month Last Sunday Offset-3, recurEvery: Month Third Sunday Offset6. </param>
-        /// <param name="tags"> Gets or sets tags of the resource. </param>
         /// <returns> A new <see cref="Maintenance.MaintenanceConfigurationData"/> instance for mocking. </returns>
-        public static MaintenanceConfigurationData MaintenanceConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation location = default, string @namespace = default, IDictionary<string, string> extensionProperties = default, MaintenanceScope? maintenanceScope = default, MaintenanceConfigurationVisibility? visibility = default, MaintenancePatchConfiguration installPatches = default, DateTimeOffset? startOn = default, DateTimeOffset? expireOn = default, TimeSpan? duration = default, string timeZone = default, string recurEvery = default, IDictionary<string, string> tags = default)
+        public static MaintenanceConfigurationData MaintenanceConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string @namespace = default, IDictionary<string, string> extensionProperties = default, MaintenanceScope? maintenanceScope = default, MaintenanceConfigurationVisibility? visibility = default, MaintenancePatchConfiguration installPatches = default, DateTimeOffset? startOn = default, DateTimeOffset? expireOn = default, TimeSpan? duration = default, string timeZone = default, string recurEvery = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -45,11 +45,11 @@ namespace Azure.ResourceManager.Maintenance.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                @namespace is null && extensionProperties is null && maintenanceScope is null && visibility is null && installPatches is null && startOn is null && expireOn is null && duration is null && timeZone is null && recurEvery is null ? default : new MaintenanceConfigurationProperties(
+                @namespace is null && extensionProperties is null && maintenanceScope is null && startOn is null && expireOn is null && duration is null && timeZone is null && recurEvery is null && visibility is null && installPatches is null ? default : new MaintenanceConfigurationProperties(
                     @namespace,
-                    extensionProperties,
+                    extensionProperties ?? new ChangeTrackingDictionary<string, string>(),
                     maintenanceScope,
                     new MaintenanceWindow(
                         startOn,
@@ -57,14 +57,22 @@ namespace Azure.ResourceManager.Maintenance.Models
                         duration,
                         timeZone,
                         recurEvery,
-                        null),
+                        default),
                     visibility,
                     installPatches,
-                    null),
-                tags);
+                    default),
+                default);
         }
 
-        /// <summary> Input properties for patching a Windows machine. </summary>
+        /// <param name="rebootSetting"> Possible reboot preference as defined by the user based on which it would be decided to reboot the machine or not after the patch operation is completed. </param>
+        /// <param name="windowsPatchSettings"> Input parameters specific to patching a Windows machine. For Linux machines, do not pass this property. </param>
+        /// <param name="linuxPatchSettings"> Input parameters specific to patching Linux machine. For Windows machines, do not pass this property. </param>
+        /// <returns> A new <see cref="Models.MaintenancePatchConfiguration"/> instance for mocking. </returns>
+        public static MaintenancePatchConfiguration MaintenancePatchConfiguration(MaintenanceRebootOption? rebootSetting = default, MaintenanceWindowsPatchSettings windowsPatchSettings = default, MaintenanceLinuxPatchSettings linuxPatchSettings = default)
+        {
+            return new MaintenancePatchConfiguration(rebootSetting, windowsPatchSettings, linuxPatchSettings, default);
+        }
+
         /// <param name="kbNumbersToExclude"> Windows KBID to be excluded for patching. </param>
         /// <param name="kbNumbersToInclude"> Windows KBID to be included for patching. </param>
         /// <param name="classificationsToInclude"> Classification category of patches to be patched. Allowed values are 'Critical', 'Security', 'UpdateRollup', 'FeaturePack', 'ServicePack', 'Definition', 'Tools', and 'Updates'. </param>
@@ -76,10 +84,9 @@ namespace Azure.ResourceManager.Maintenance.Models
             kbNumbersToInclude ??= new ChangeTrackingList<string>();
             classificationsToInclude ??= new ChangeTrackingList<string>();
 
-            return new MaintenanceWindowsPatchSettings(kbNumbersToExclude.ToList(), kbNumbersToInclude.ToList(), classificationsToInclude.ToList(), isExcludeKbsRebootRequired, additionalBinaryDataProperties: null);
+            return new MaintenanceWindowsPatchSettings((kbNumbersToExclude ?? new ChangeTrackingList<string>()).ToList(), (kbNumbersToInclude ?? new ChangeTrackingList<string>()).ToList(), (classificationsToInclude ?? new ChangeTrackingList<string>()).ToList(), isExcludeKbsRebootRequired, default);
         }
 
-        /// <summary> Input properties for patching a Linux machine. </summary>
         /// <param name="packageNameMasksToExclude"> Package names to be excluded for patching. </param>
         /// <param name="packageNameMasksToInclude"> Package names to be included for patching. </param>
         /// <param name="classificationsToInclude"> Classification category of patches to be patched. Allowed values are 'Critical', 'Security', and 'Other'. </param>
@@ -90,7 +97,7 @@ namespace Azure.ResourceManager.Maintenance.Models
             packageNameMasksToInclude ??= new ChangeTrackingList<string>();
             classificationsToInclude ??= new ChangeTrackingList<string>();
 
-            return new MaintenanceLinuxPatchSettings(packageNameMasksToExclude.ToList(), packageNameMasksToInclude.ToList(), classificationsToInclude.ToList(), additionalBinaryDataProperties: null);
+            return new MaintenanceLinuxPatchSettings((packageNameMasksToExclude ?? new ChangeTrackingList<string>()).ToList(), (packageNameMasksToInclude ?? new ChangeTrackingList<string>()).ToList(), (classificationsToInclude ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -108,8 +115,8 @@ namespace Azure.ResourceManager.Maintenance.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                status is null && resourceId is null && lastUpdatedOn is null ? default : new ApplyUpdateProperties(status, resourceId, lastUpdatedOn, null));
+                status is null && resourceId is null && lastUpdatedOn is null ? default : new ApplyUpdateProperties(status, resourceId, lastUpdatedOn, default),
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -128,12 +135,11 @@ namespace Azure.ResourceManager.Maintenance.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                maintenanceConfigurationId is null && resourceId is null && filter is null ? default : new ConfigurationAssignmentProperties(maintenanceConfigurationId, resourceId, filter, null),
-                location);
+                maintenanceConfigurationId is null && resourceId is null && filter is null ? default : new ConfigurationAssignmentProperties(maintenanceConfigurationId, resourceId, filter, default),
+                location,
+                default);
         }
 
-        /// <summary> Azure query for the update configuration. </summary>
         /// <param name="resourceTypes"> List of allowed resources. </param>
         /// <param name="resourceGroups"> List of allowed resource groups. </param>
         /// <param name="osTypes"> List of allowed operating systems. </param>
@@ -148,15 +154,14 @@ namespace Azure.ResourceManager.Maintenance.Models
             locations ??= new ChangeTrackingList<AzureLocation>();
 
             return new MaintenanceConfigurationAssignmentFilter(
-                resourceTypes.ToList(),
-                resourceGroups.ToList(),
-                osTypes.ToList(),
-                locations.ToList(),
+                (resourceTypes ?? new ChangeTrackingList<ResourceType>()).ToList(),
+                (resourceGroups ?? new ChangeTrackingList<string>()).ToList(),
+                (osTypes ?? new ChangeTrackingList<string>()).ToList(),
+                (locations ?? new ChangeTrackingList<AzureLocation>()).ToList(),
                 tagSettings,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> Tag filter information for the VM. </summary>
         /// <param name="tags"> Dictionary of tags with its list of values. </param>
         /// <param name="filterOperator"> Filter VMs by Any or All specified tags. </param>
         /// <returns> A new <see cref="Models.MaintenanceVmTagSettings"/> instance for mocking. </returns>
@@ -164,15 +169,14 @@ namespace Azure.ResourceManager.Maintenance.Models
         {
             tags ??= new ChangeTrackingDictionary<string, IList<string>>();
 
-            return new MaintenanceVmTagSettings(tags, filterOperator, additionalBinaryDataProperties: null);
+            return new MaintenanceVmTagSettings(tags ?? new ChangeTrackingDictionary<string, IList<string>>(), filterOperator, default);
         }
 
-        /// <summary> Response of scheduled event acknowledge. </summary>
         /// <param name="value"> Successfully Approved. </param>
         /// <returns> A new <see cref="Models.MaintenanceScheduledEventApproveResult"/> instance for mocking. </returns>
         public static MaintenanceScheduledEventApproveResult MaintenanceScheduledEventApproveResult(string value = default)
         {
-            return new MaintenanceScheduledEventApproveResult(value, additionalBinaryDataProperties: null);
+            return new MaintenanceScheduledEventApproveResult(value, default);
         }
 
         /// <param name="maintenanceScope"> The impact area. </param>
@@ -190,8 +194,8 @@ namespace Azure.ResourceManager.Maintenance.Models
                 status,
                 impactDurationInSec,
                 notBefore,
-                resourceId is null ? default : new UpdateProperties(resourceId, null),
-                additionalBinaryDataProperties: null);
+                resourceId is null ? default : new UpdateProperties(resourceId, default),
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Maintenance.MaintenanceConfigurationData"/>. </summary>
@@ -212,9 +216,30 @@ namespace Azure.ResourceManager.Maintenance.Models
         /// <param name="recurEvery"> Rate at which a Maintenance window is expected to recur. The rate can be expressed as daily, weekly, or monthly schedules. Daily schedule are formatted as recurEvery: [Frequency as integer]['Day(s)']. If no frequency is provided, the default frequency is 1. Daily schedule examples are recurEvery: Day, recurEvery: 3Days.  Weekly schedule are formatted as recurEvery: [Frequency as integer]['Week(s)'] [Optional comma separated list of weekdays Monday-Sunday]. Weekly schedule examples are recurEvery: 3Weeks, recurEvery: Week Saturday,Sunday. Monthly schedules are formatted as [Frequency as integer]['Month(s)'] [Comma separated list of month days] or [Frequency as integer]['Month(s)'] [Week of Month (First, Second, Third, Fourth, Last)] [Weekday Monday-Sunday]. Monthly schedule examples are recurEvery: Month, recurEvery: 2Months, recurEvery: Month day23,day24, recurEvery: Month Last Sunday, recurEvery: Month Fourth Monday. </param>
         /// <returns> A new <see cref="Maintenance.MaintenanceConfigurationData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static MaintenanceConfigurationData MaintenanceConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string @namespace, IDictionary<string, string> extensionProperties, MaintenanceScope? maintenanceScope, MaintenanceConfigurationVisibility? visibility, DateTimeOffset? startOn, DateTimeOffset? expireOn, TimeSpan? duration, string timeZone, string recurEvery)
+        public static MaintenanceConfigurationData MaintenanceConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string @namespace = default, IDictionary<string, string> extensionProperties = default, MaintenanceScope? maintenanceScope = default, MaintenanceConfigurationVisibility? visibility = default, DateTimeOffset? startOn = default, DateTimeOffset? expireOn = default, TimeSpan? duration = default, string timeZone = default, string recurEvery = default)
         {
-            return MaintenanceConfigurationData(id: id, name: name, resourceType: resourceType, systemData: systemData, location: location, @namespace: @namespace, extensionProperties: extensionProperties, maintenanceScope: maintenanceScope, visibility: visibility, installPatches: default, startOn: startOn, expireOn: expireOn, duration: duration, timeZone: timeZone, recurEvery: recurEvery, tags: tags);
+            return new MaintenanceConfigurationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                @namespace is null && extensionProperties is null && maintenanceScope is null && startOn is null && expireOn is null && duration is null && timeZone is null && recurEvery is null && visibility is null ? default : new MaintenanceConfigurationProperties(
+                    @namespace,
+                    extensionProperties ?? new ChangeTrackingDictionary<string, string>(),
+                    maintenanceScope,
+                    new MaintenanceWindow(
+                        startOn,
+                        expireOn,
+                        duration,
+                        timeZone,
+                        recurEvery,
+                        default),
+                    visibility,
+                    default,
+                    default),
+                default);
         }
     }
 }

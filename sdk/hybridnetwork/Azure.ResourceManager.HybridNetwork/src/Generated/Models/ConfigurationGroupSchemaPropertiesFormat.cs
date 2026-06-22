@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> Configuration group schema properties. </summary>
     public partial class ConfigurationGroupSchemaPropertiesFormat
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ConfigurationGroupSchemaPropertiesFormat"/>. </summary>
         public ConfigurationGroupSchemaPropertiesFormat()
@@ -55,22 +26,25 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="versionState"> The configuration group schema version state. </param>
         /// <param name="description"> Description of what schema can contain. </param>
         /// <param name="schemaDefinition"> Name and value pairs that define the configuration value. It can be a well formed escaped JSON string. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConfigurationGroupSchemaPropertiesFormat(ProvisioningState? provisioningState, VersionState? versionState, string description, string schemaDefinition, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ConfigurationGroupSchemaPropertiesFormat(ProvisioningState? provisioningState, VersionState? versionState, string description, string schemaDefinition, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             VersionState = versionState;
             Description = description;
             SchemaDefinition = schemaDefinition;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The provisioning state of the Configuration group schema resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
+
         /// <summary> The configuration group schema version state. </summary>
         public VersionState? VersionState { get; }
+
         /// <summary> Description of what schema can contain. </summary>
         public string Description { get; set; }
+
         /// <summary> Name and value pairs that define the configuration value. It can be a well formed escaped JSON string. </summary>
         public string SchemaDefinition { get; set; }
     }

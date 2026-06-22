@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.StorageCache;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.StorageCache.Models
     public readonly partial struct NfsAccessRuleScope : IEquatable<NfsAccessRuleScope>
     {
         private readonly string _value;
+        /// <summary> default. </summary>
+        private const string DefaultValue = "default";
+        /// <summary> network. </summary>
+        private const string NetworkValue = "network";
+        /// <summary> host. </summary>
+        private const string HostValue = "host";
 
         /// <summary> Initializes a new instance of <see cref="NfsAccessRuleScope"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NfsAccessRuleScope(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DefaultValue = "default";
-        private const string NetworkValue = "network";
-        private const string HostValue = "host";
+            _value = value;
+        }
 
         /// <summary> default. </summary>
         public static NfsAccessRuleScope Default { get; } = new NfsAccessRuleScope(DefaultValue);
+
         /// <summary> network. </summary>
         public static NfsAccessRuleScope Network { get; } = new NfsAccessRuleScope(NetworkValue);
+
         /// <summary> host. </summary>
         public static NfsAccessRuleScope Host { get; } = new NfsAccessRuleScope(HostValue);
+
         /// <summary> Determines if two <see cref="NfsAccessRuleScope"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NfsAccessRuleScope left, NfsAccessRuleScope right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NfsAccessRuleScope"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NfsAccessRuleScope left, NfsAccessRuleScope right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NfsAccessRuleScope"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NfsAccessRuleScope"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NfsAccessRuleScope(string value) => new NfsAccessRuleScope(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NfsAccessRuleScope"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NfsAccessRuleScope?(string value) => value == null ? null : new NfsAccessRuleScope(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NfsAccessRuleScope other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NfsAccessRuleScope other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

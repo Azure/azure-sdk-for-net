@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.HybridCompute
 {
+    /// <summary></summary>
     public partial class HybridComputePrivateLinkScopeResource : IJsonModel<HybridComputePrivateLinkScopeData>
     {
-        private static HybridComputePrivateLinkScopeData s_dataDeserializationInstance;
-        private static HybridComputePrivateLinkScopeData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<HybridComputePrivateLinkScopeData> s_dataDeserializationInstance;
 
+        private static IJsonModel<HybridComputePrivateLinkScopeData> DataDeserializationInstance => s_dataDeserializationInstance ??= new HybridComputePrivateLinkScopeData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HybridComputePrivateLinkScopeData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<HybridComputePrivateLinkScopeData>)Data).Write(writer, options);
 
-        HybridComputePrivateLinkScopeData IJsonModel<HybridComputePrivateLinkScopeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HybridComputePrivateLinkScopeData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HybridComputePrivateLinkScopeData IJsonModel<HybridComputePrivateLinkScopeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<HybridComputePrivateLinkScopeData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HybridComputePrivateLinkScopeData>(Data, options, AzureResourceManagerHybridComputeContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         HybridComputePrivateLinkScopeData IPersistableModel<HybridComputePrivateLinkScopeData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HybridComputePrivateLinkScopeData>(data, options, AzureResourceManagerHybridComputeContext.Default);
 
-        string IPersistableModel<HybridComputePrivateLinkScopeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HybridComputePrivateLinkScopeData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<HybridComputePrivateLinkScopeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

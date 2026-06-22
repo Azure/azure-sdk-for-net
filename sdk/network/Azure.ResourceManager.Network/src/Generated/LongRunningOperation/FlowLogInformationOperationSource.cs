@@ -8,23 +8,36 @@
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    internal class FlowLogInformationOperationSource : IOperationSource<FlowLogInformation>
+    /// <summary></summary>
+    internal partial class FlowLogInformationOperationSource : IOperationSource<FlowLogInformation>
     {
-        FlowLogInformation IOperationSource<FlowLogInformation>.CreateResult(Response response, CancellationToken cancellationToken)
+        /// <summary></summary>
+        internal FlowLogInformationOperationSource()
         {
-            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            return FlowLogInformation.DeserializeFlowLogInformation(document.RootElement);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        FlowLogInformation IOperationSource<FlowLogInformation>.CreateResult(Response response, CancellationToken cancellationToken)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            return FlowLogInformation.DeserializeFlowLogInformation(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<FlowLogInformation> IOperationSource<FlowLogInformation>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            return FlowLogInformation.DeserializeFlowLogInformation(document.RootElement);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            return FlowLogInformation.DeserializeFlowLogInformation(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

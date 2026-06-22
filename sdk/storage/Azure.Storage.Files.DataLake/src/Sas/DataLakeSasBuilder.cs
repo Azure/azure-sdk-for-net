@@ -702,7 +702,14 @@ namespace Azure.Storage.Sas
                 PreauthorizedAgentObjectId = originalDataLakeSasBuilder.PreauthorizedAgentObjectId,
                 AgentObjectId = originalDataLakeSasBuilder.AgentObjectId,
                 CorrelationId = originalDataLakeSasBuilder.CorrelationId,
-                EncryptionScope = originalDataLakeSasBuilder.EncryptionScope
+                EncryptionScope = originalDataLakeSasBuilder.EncryptionScope,
+                DelegatedUserObjectId = originalDataLakeSasBuilder.DelegatedUserObjectId,
+                RequestHeaders = originalDataLakeSasBuilder.RequestHeaders == null
+                    ? null
+                    : new Dictionary<string, string>(originalDataLakeSasBuilder.RequestHeaders),
+                RequestQueryParameters = originalDataLakeSasBuilder.RequestQueryParameters == null
+                    ? null
+                    : new Dictionary<string, string>(originalDataLakeSasBuilder.RequestQueryParameters)
             };
     }
 }

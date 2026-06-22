@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 HttpMessage message = _dynamicSchemasRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dynamicSchemaName, EdgeDynamicSchemaData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 WorkloadOrchestrationArmOperation<EdgeDynamicSchemaResource> operation = new WorkloadOrchestrationArmOperation<EdgeDynamicSchemaResource>(
-                    new EdgeDynamicSchemaOperationSource(Client),
+                    new EdgeDynamicSchemaResourceOperationSource(Client),
                     _dynamicSchemasClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 HttpMessage message = _dynamicSchemasRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dynamicSchemaName, EdgeDynamicSchemaData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 WorkloadOrchestrationArmOperation<EdgeDynamicSchemaResource> operation = new WorkloadOrchestrationArmOperation<EdgeDynamicSchemaResource>(
-                    new EdgeDynamicSchemaOperationSource(Client),
+                    new EdgeDynamicSchemaResourceOperationSource(Client),
                     _dynamicSchemasClientDiagnostics,
                     Pipeline,
                     message.Request,

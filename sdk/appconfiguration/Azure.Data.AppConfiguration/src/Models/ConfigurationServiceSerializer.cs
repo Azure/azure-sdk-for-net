@@ -65,6 +65,11 @@ namespace Azure.Data.AppConfiguration
             {
                 writer.WriteString("etag", setting.ETag.ToString());
             }
+
+            if (setting.Description != null)
+            {
+                writer.WriteString("description", setting.Description);
+            }
         }
 
         public static ConfigurationSetting ReadSetting(ref Utf8JsonReader reader)
@@ -166,6 +171,10 @@ namespace Azure.Data.AppConfiguration
             else if (property.NameEquals("value"))
             {
                 setting.Value = property.Value.GetString();
+            }
+            else if (property.NameEquals("description"))
+            {
+                setting.Description = property.Value.ValueKind == JsonValueKind.Null ? null : property.Value.GetString();
             }
         }
 

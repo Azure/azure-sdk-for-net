@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.NetApp
                 HttpMessage message = _cachesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, cacheName, NetAppCacheData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetAppArmOperation<NetAppCacheResource> operation = new NetAppArmOperation<NetAppCacheResource>(
-                    new NetAppCacheOperationSource(Client),
+                    new NetAppCacheResourceOperationSource(Client),
                     _cachesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.NetApp
                 HttpMessage message = _cachesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, cacheName, NetAppCacheData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetAppArmOperation<NetAppCacheResource> operation = new NetAppArmOperation<NetAppCacheResource>(
-                    new NetAppCacheOperationSource(Client),
+                    new NetAppCacheResourceOperationSource(Client),
                     _cachesClientDiagnostics,
                     Pipeline,
                     message.Request,

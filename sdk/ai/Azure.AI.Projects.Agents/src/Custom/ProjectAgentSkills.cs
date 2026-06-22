@@ -3,43 +3,58 @@
 
 using System;
 using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using System.IO.Compression;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Options;
 
 namespace Azure.AI.Projects.Agents;
 
 [Experimental("AAIP001")]
 [CodeGenType("Skills")]
+[CodeGenSuppress("GetSkills", typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
+[CodeGenSuppress("GetSkillsAsync", typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
+[CodeGenSuppress("GetSkills", typeof(int?), typeof(AgentListOrder?), typeof(string), typeof(string), typeof(CancellationToken))]
+[CodeGenSuppress("GetSkillsAsync", typeof(int?), typeof(AgentListOrder?), typeof(string), typeof(string), typeof(CancellationToken))]
+[CodeGenSuppress("CreateSkillVersionFromFiles", typeof(string), typeof(CreateSkillVersionFromFilesBody), typeof(CancellationToken))]
+[CodeGenSuppress("CreateSkillVersionFromFilesAsync", typeof(string), typeof(CreateSkillVersionFromFilesBody), typeof(CancellationToken))]
 public partial class ProjectAgentSkills
 {
     /// <summary> Creates a skill from a zip package. </summary>
+    /// <param name="name"> The name of the skill. </param>
     /// <param name="directoryPath"> The path to the directory, containing skill description. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <exception cref="ArgumentNullException"> <paramref name="directoryPath"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="directoryPath"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual ClientResult<AgentsSkill> CreateSkillFromPackage(string directoryPath, CancellationToken cancellationToken = default)
+    public virtual ClientResult<AgentsSkill> CreateSkillVersionFromFiles(string name, string directoryPath, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(directoryPath, nameof(directoryPath));
 
-        ClientResult result = CreateSkillFromPackage(BinaryContent.Create(FileHelper.CreateAndReadZipFileFromDirectory(directoryPath)), cancellationToken.ToRequestOptions());
+        BinaryData data = FileHelper.CreateAndReadZipFileFromDirectory(directoryPath);
+        using MultiPartFormDataBinaryContent content = new();
+        content.Add(data, name: name, filename: "name.zip");
+        ClientResult result = CreateSkillVersionFromFiles(name, content, content.ContentType, cancellationToken.ToRequestOptions());
         return ClientResult.FromValue((AgentsSkill)result, result.GetRawResponse());
     }
 
     /// <summary> Creates a skill from a zip package. </summary>
+    /// <param name="name"> The name of the skill. </param>
     /// <param name="directoryPath"> The path to the directory, containing skill description. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <exception cref="ArgumentNullException"> <paramref name="directoryPath"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="directoryPath"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual async Task<ClientResult<AgentsSkill>> CreateSkillFromPackageAsync(string directoryPath, CancellationToken cancellationToken = default)
+    public virtual async Task<ClientResult<AgentsSkill>> CreateSkillVersionFromFilesAsync(string name, string directoryPath, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(directoryPath, nameof(directoryPath));
 
-        ClientResult result = await CreateSkillFromPackageAsync(BinaryContent.Create(FileHelper.CreateAndReadZipFileFromDirectory(directoryPath)), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+        BinaryData data = FileHelper.CreateAndReadZipFileFromDirectory(directoryPath);
+        using MultiPartFormDataBinaryContent content = new();
+        content.Add(data, name: name, filename: "name.zip");
+        ClientResult result = await CreateSkillVersionFromFilesAsync(name, content, content.ContentType, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
         return ClientResult.FromValue((AgentsSkill)result, result.GetRawResponse());
     }
 
@@ -101,7 +116,7 @@ public partial class ProjectAgentSkills
     /// </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual AsyncCollectionResult<AgentsSkill> GetSkillsAsyncAsync(int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
+    public virtual AsyncCollectionResult<AgentsSkill> GetSkillsAsync(int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
     {
         return new InternalOpenAIAsyncCollectionResultOfT<AgentsSkill>(
             Pipeline,
@@ -124,12 +139,12 @@ public partial class ProjectAgentSkills
     /// <exception cref="ArgumentNullException"> <paramref name="skillName"/> or <paramref name="path"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="skillName"/> or <paramref name="path"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public BinaryData DownloadSkill(string skillName, string path, CancellationToken cancellationToken = default)
+    public BinaryData GetSkillContent(string skillName, string path, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(skillName, nameof(skillName));
         Argument.AssertNotNullOrEmpty(path, nameof(path));
 
-        BinaryData result = DownloadSkill(skillName, cancellationToken);
+        BinaryData result = GetSkillContent(skillName, cancellationToken);
         FileHelper.SaveAndUnzipData(path, result);
         return result;
     }
@@ -141,12 +156,12 @@ public partial class ProjectAgentSkills
     /// <exception cref="ArgumentNullException"> <paramref name="skillName"/> or <paramref name="path"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="skillName"/> or <paramref name="path"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual async Task<BinaryData> DownloadSkillAsync(string skillName, string path, CancellationToken cancellationToken = default)
+    public virtual async Task<BinaryData> GetSkillContentAsync(string skillName, string path, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(skillName, nameof(skillName));
         Argument.AssertNotNullOrEmpty(path, nameof(path));
 
-        BinaryData result = await DownloadSkillAsync(skillName, cancellationToken).ConfigureAwait(false);
+        BinaryData result = await GetSkillContentAsync(skillName, cancellationToken).ConfigureAwait(false);
         FileHelper.SaveAndUnzipData(path, result);
         return result;
     }
