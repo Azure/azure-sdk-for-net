@@ -18,6 +18,8 @@ The Copilot cloud agent runs this skill on an **Auto SDK PR** created by the rel
 
 This skill is a **thin wrapper**. All classification → fix → regenerate → rebuild logic lives inside the shared `azure-sdk-mcp:azsdk_customized_code_update` tool, which already handles .NET (partial classes / `[CodeGen*]`), Python (`_patch.py`), and Java (`*Customization.java`). Do **not** replicate its behavior by editing files yourself, and do **not** invoke a per-language generator-agent — the design deliberately uses this single shared engine.
 
+> **Requires azsdk ≥ 0.6.22** — the `editScope` parameter (and optional `tspProjectPath`) used below shipped in azsdk-cli `0.6.22`. The cloud agent installs the MCP tool via `eng/common/mcp/azure-sdk-mcp.ps1`, which defaults to the latest release, so this is satisfied automatically; no version pin needs bumping.
+
 Given the failing package and the **build errors** (passed as `customizationRequest`), invoked with **`editScope: CustomCode`**, the tool:
 - **regenerates** the client from the **pinned `tsp-location.yaml` commit** (omit `tspProjectPath` — it resolves from the pinned commit, so no manual spec checkout);
 - in `CustomCode` scope, **only patches custom (non-generated) code** and reports anything that would need a spec change as out of scope (`SpecChangeRequired`) instead of applying it;
