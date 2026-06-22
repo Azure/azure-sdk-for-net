@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
                 State = SecurityAlertsSuppressionRuleState.Enabled,
                 Reason = "FalsePositive",
                 Comment = "Test VM",
-                SuppressionAlertsScope = new SuppressionAlertsScope(allof),
+                SuppressionAlertsScopeAllOf = allof,
             };
             var alertSuppressionRule = await _alertsSuppressionRuleCollection.CreateOrUpdateAsync(WaitUntil.Completed, alertsSuppressionRuleName, data);
             return alertSuppressionRule.Value;

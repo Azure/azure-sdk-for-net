@@ -205,11 +205,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 if (prop.NameEquals("policyDefinitionId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    policyDefinitionId = new ResourceIdentifier(prop.Value.GetString());
+                    DeserializePolicyDefinitionId(prop, ref policyDefinitionId);
                     continue;
                 }
                 if (prop.NameEquals("description"u8))

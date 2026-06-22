@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         {
             DefaultLocation = AzureLocation.CentralUS;
             _resourceGroup = await CreateResourceGroup();
-            _resourceGroupSecurityAlertCollection = _resourceGroup.GetResourceGroupSecurityAlerts(DefaultLocation.ToString());
+            _resourceGroupSecurityAlertCollection = _resourceGroup.GetResourceGroupSecurityAlerts(DefaultLocation);
         }
 
         [RecordedTest]

@@ -11,6 +11,8 @@ using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.SecurityCenter.Models;
 using NUnit.Framework;
 
+#pragma warning disable CS0618 // Existing scenario covers an unsupported legacy compatibility shim.
+
 namespace Azure.ResourceManager.SecurityCenter.Tests
 {
     internal class SoftwareTests : SecurityCenterManagementTestBase

@@ -33,7 +33,6 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         }
 
         [RecordedTest]
-        [Ignore("Needs re-recording because the migrated tenant assessment metadata response shape contains empty resource IDs in the old recording.")]
         public async Task GetAll()
         {
             var list = await _tenantAssessmentMetadataCollection.GetAllAsync().ToEnumerableAsync();
