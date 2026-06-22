@@ -12,22 +12,22 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.DataFactory
 {
-    internal partial class TriggerRuns
+    internal partial class IntegrationRuntimeResources
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of TriggerRuns for mocking. </summary>
-        protected TriggerRuns()
+        /// <summary> Initializes a new instance of IntegrationRuntimeResources for mocking. </summary>
+        protected IntegrationRuntimeResources()
         {
         }
 
-        /// <summary> Initializes a new instance of TriggerRuns. </summary>
+        /// <summary> Initializes a new instance of IntegrationRuntimeResources. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal TriggerRuns(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal IntegrationRuntimeResources(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateRerunTriggerRunRequest(Guid subscriptionId, string resourceGroupName, string factoryName, string triggerName, string runId, RequestContext context)
+        internal HttpMessage CreateGetOutboundNetworkDependenciesRequest(Guid subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -51,11 +51,9 @@ namespace Azure.ResourceManager.DataFactory
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DataFactory/factories/", false);
             uri.AppendPath(factoryName, true);
-            uri.AppendPath("/triggers/", false);
-            uri.AppendPath(triggerName, true);
-            uri.AppendPath("/triggerRuns/", false);
-            uri.AppendPath(runId, true);
-            uri.AppendPath("/rerun", false);
+            uri.AppendPath("/integrationRuntimes/", false);
+            uri.AppendPath(integrationRuntimeName, true);
+            uri.AppendPath("/outboundNetworkDependenciesEndpoints", false);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
@@ -63,11 +61,12 @@ namespace Azure.ResourceManager.DataFactory
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateCancelTriggerRunRequest(Guid subscriptionId, string resourceGroupName, string factoryName, string triggerName, string runId, RequestContext context)
+        internal HttpMessage CreateGetAllIntegrationRuntimeObjectMetadataRequest(Guid subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -77,11 +76,9 @@ namespace Azure.ResourceManager.DataFactory
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DataFactory/factories/", false);
             uri.AppendPath(factoryName, true);
-            uri.AppendPath("/triggers/", false);
-            uri.AppendPath(triggerName, true);
-            uri.AppendPath("/triggerRuns/", false);
-            uri.AppendPath(runId, true);
-            uri.AppendPath("/cancel", false);
+            uri.AppendPath("/integrationRuntimes/", false);
+            uri.AppendPath(integrationRuntimeName, true);
+            uri.AppendPath("/getObjectMetadata", false);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
@@ -90,6 +87,12 @@ namespace Azure.ResourceManager.DataFactory
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
+            if (content != null)
+            {
+                request.Headers.SetValue("Content-Type", "application/json");
+            }
+            request.Headers.SetValue("Accept", "application/json");
+            request.Content = content;
             return message;
         }
     }

@@ -219,31 +219,6 @@ namespace Azure.ResourceManager.DataFactory
             return message;
         }
 
-        internal HttpMessage CreateGetOutboundNetworkDependenciesRequest(Guid subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId.ToString(), true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.DataFactory/factories/", false);
-            uri.AppendPath(factoryName, true);
-            uri.AppendPath("/integrationRuntimes/", false);
-            uri.AppendPath(integrationRuntimeName, true);
-            uri.AppendPath("/outboundNetworkDependenciesEndpoints", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json");
-            return message;
-        }
-
         internal HttpMessage CreateGetConnectionInfoRequest(Guid subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();

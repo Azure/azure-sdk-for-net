@@ -34,12 +34,6 @@ namespace Azure.ResourceManager.DataFactory
         private readonly PipelineRuns _pipelineRunsRestClient;
         private readonly ClientDiagnostics _exposureControlClientDiagnostics;
         private readonly ExposureControl _exposureControlRestClient;
-        private readonly ClientDiagnostics _privateLinkResourcesClientDiagnostics;
-        private readonly PrivateLinkResources _privateLinkResourcesRestClient;
-        private readonly ClientDiagnostics _activityRunsClientDiagnostics;
-        private readonly ActivityRuns _activityRunsRestClient;
-        private readonly ClientDiagnostics _triggerRunsClientDiagnostics;
-        private readonly TriggerRuns _triggerRunsRestClient;
         private readonly ClientDiagnostics _triggersClientDiagnostics;
         private readonly Triggers _triggersRestClient;
         private readonly DataFactoryData _data;
@@ -74,12 +68,6 @@ namespace Azure.ResourceManager.DataFactory
             _pipelineRunsRestClient = new PipelineRuns(_pipelineRunsClientDiagnostics, Pipeline, Endpoint, dataFactoryApiVersion ?? "2018-06-01");
             _exposureControlClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", ResourceType.Namespace, Diagnostics);
             _exposureControlRestClient = new ExposureControl(_exposureControlClientDiagnostics, Pipeline, Endpoint, dataFactoryApiVersion ?? "2018-06-01");
-            _privateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", ResourceType.Namespace, Diagnostics);
-            _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Endpoint, dataFactoryApiVersion ?? "2018-06-01");
-            _activityRunsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", ResourceType.Namespace, Diagnostics);
-            _activityRunsRestClient = new ActivityRuns(_activityRunsClientDiagnostics, Pipeline, Endpoint, dataFactoryApiVersion ?? "2018-06-01");
-            _triggerRunsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", ResourceType.Namespace, Diagnostics);
-            _triggerRunsRestClient = new TriggerRuns(_triggerRunsClientDiagnostics, Pipeline, Endpoint, dataFactoryApiVersion ?? "2018-06-01");
             _triggersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", ResourceType.Namespace, Diagnostics);
             _triggersRestClient = new Triggers(_triggersClientDiagnostics, Pipeline, Endpoint, dataFactoryApiVersion ?? "2018-06-01");
             ValidateResourceId(id);
@@ -1452,6 +1440,262 @@ namespace Azure.ResourceManager.DataFactory
         }
 
         /// <summary>
+        /// Gets the private link resources
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/privateLinkResources. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Factories_PrivateLinkResourcesGet. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-06-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DataFactoryResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DataFactoryPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DataFactoryPrivateLinkResource> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new FactoriesGetPrivateLinkResourcesAsyncCollectionResultOfT(
+                _factoriesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DataFactoryResource.GetPrivateLinkResources");
+        }
+
+        /// <summary>
+        /// Gets the private link resources
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/privateLinkResources. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Factories_PrivateLinkResourcesGet. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-06-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DataFactoryResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DataFactoryPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DataFactoryPrivateLinkResource> GetPrivateLinkResources(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new FactoriesGetPrivateLinkResourcesCollectionResultOfT(
+                _factoriesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DataFactoryResource.GetPrivateLinkResources");
+        }
+
+        /// <summary>
+        /// Query pipeline runs in the factory based on input filter conditions.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/queryPipelineRuns. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Factories_QueryByFactory. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-06-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DataFactoryResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> Parameters to filter the pipeline run. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <returns> A collection of <see cref="DataFactoryPipelineRunInfo"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DataFactoryPipelineRunInfo> GetPipelineRunsAsync(RunFilterContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new FactoriesGetPipelineRunsAsyncCollectionResultOfT(
+                _factoriesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                RunFilterContent.ToRequestContent(content),
+                context,
+                "DataFactoryResource.GetPipelineRuns");
+        }
+
+        /// <summary>
+        /// Query pipeline runs in the factory based on input filter conditions.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/queryPipelineRuns. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Factories_QueryByFactory. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-06-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DataFactoryResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> Parameters to filter the pipeline run. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <returns> A collection of <see cref="DataFactoryPipelineRunInfo"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DataFactoryPipelineRunInfo> GetPipelineRuns(RunFilterContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new FactoriesGetPipelineRunsCollectionResultOfT(
+                _factoriesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                RunFilterContent.ToRequestContent(content),
+                context,
+                "DataFactoryResource.GetPipelineRuns");
+        }
+
+        /// <summary>
+        /// Query activity runs based on input filter conditions.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/pipelineruns/{runId}/queryActivityruns. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Factories_QueryByPipelineRun. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-06-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DataFactoryResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="runId"> The pipeline run identifier. </param>
+        /// <param name="content"> Parameters to filter the activity runs. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="runId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="PipelineActivityRunInformation"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PipelineActivityRunInformation> GetActivityRunAsync(string runId, RunFilterContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new FactoriesGetActivityRunAsyncCollectionResultOfT(
+                _factoriesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                runId,
+                RunFilterContent.ToRequestContent(content),
+                context,
+                "DataFactoryResource.GetActivityRun");
+        }
+
+        /// <summary>
+        /// Query activity runs based on input filter conditions.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/pipelineruns/{runId}/queryActivityruns. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Factories_QueryByPipelineRun. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-06-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DataFactoryResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="runId"> The pipeline run identifier. </param>
+        /// <param name="content"> Parameters to filter the activity runs. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="runId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="PipelineActivityRunInformation"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PipelineActivityRunInformation> GetActivityRun(string runId, RunFilterContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new FactoriesGetActivityRunCollectionResultOfT(
+                _factoriesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                runId,
+                RunFilterContent.ToRequestContent(content),
+                context,
+                "DataFactoryResource.GetActivityRun");
+        }
+
+        /// <summary>
         /// Get list of exposure control features for specific factory.
         /// <list type="bullet">
         /// <item>
@@ -1553,6 +1797,92 @@ namespace Azure.ResourceManager.DataFactory
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Query trigger runs.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/queryTriggerRuns. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Factories_TriggerRunsQueryByFactory. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-06-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DataFactoryResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> Parameters to filter the pipeline run. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <returns> A collection of <see cref="DataFactoryTriggerRun"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DataFactoryTriggerRun> GetTriggerRunsAsync(RunFilterContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new FactoriesGetTriggerRunsAsyncCollectionResultOfT(
+                _factoriesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                RunFilterContent.ToRequestContent(content),
+                context,
+                "DataFactoryResource.GetTriggerRuns");
+        }
+
+        /// <summary>
+        /// Query trigger runs.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/queryTriggerRuns. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Factories_TriggerRunsQueryByFactory. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-06-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DataFactoryResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> Parameters to filter the pipeline run. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <returns> A collection of <see cref="DataFactoryTriggerRun"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DataFactoryTriggerRun> GetTriggerRuns(RunFilterContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new FactoriesGetTriggerRunsCollectionResultOfT(
+                _factoriesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                RunFilterContent.ToRequestContent(content),
+                context,
+                "DataFactoryResource.GetTriggerRuns");
         }
 
         /// <summary> Add a tag to the current resource. </summary>

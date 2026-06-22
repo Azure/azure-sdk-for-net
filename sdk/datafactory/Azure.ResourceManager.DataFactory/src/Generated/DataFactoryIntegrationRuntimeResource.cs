@@ -30,6 +30,8 @@ namespace Azure.ResourceManager.DataFactory
         private readonly IntegrationRuntime _integrationRuntimeRestClient;
         private readonly ClientDiagnostics _integrationRuntimeNodesClientDiagnostics;
         private readonly IntegrationRuntimeNodes _integrationRuntimeNodesRestClient;
+        private readonly ClientDiagnostics _integrationRuntimeResourcesClientDiagnostics;
+        private readonly IntegrationRuntimeResources _integrationRuntimeResourcesRestClient;
         private readonly ClientDiagnostics _integrationRuntimeObjectMetadataClientDiagnostics;
         private readonly IntegrationRuntimeObjectMetadata _integrationRuntimeObjectMetadataRestClient;
         private readonly DataFactoryIntegrationRuntimeData _data;
@@ -62,6 +64,8 @@ namespace Azure.ResourceManager.DataFactory
             _integrationRuntimeRestClient = new IntegrationRuntime(_integrationRuntimeClientDiagnostics, Pipeline, Endpoint, dataFactoryIntegrationRuntimeApiVersion ?? "2018-06-01");
             _integrationRuntimeNodesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", ResourceType.Namespace, Diagnostics);
             _integrationRuntimeNodesRestClient = new IntegrationRuntimeNodes(_integrationRuntimeNodesClientDiagnostics, Pipeline, Endpoint, dataFactoryIntegrationRuntimeApiVersion ?? "2018-06-01");
+            _integrationRuntimeResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", ResourceType.Namespace, Diagnostics);
+            _integrationRuntimeResourcesRestClient = new IntegrationRuntimeResources(_integrationRuntimeResourcesClientDiagnostics, Pipeline, Endpoint, dataFactoryIntegrationRuntimeApiVersion ?? "2018-06-01");
             _integrationRuntimeObjectMetadataClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", ResourceType.Namespace, Diagnostics);
             _integrationRuntimeObjectMetadataRestClient = new IntegrationRuntimeObjectMetadata(_integrationRuntimeObjectMetadataClientDiagnostics, Pipeline, Endpoint, dataFactoryIntegrationRuntimeApiVersion ?? "2018-06-01");
             ValidateResourceId(id);
@@ -1447,6 +1451,88 @@ namespace Azure.ResourceManager.DataFactory
         }
 
         /// <summary>
+        /// Get a SSIS integration runtime object metadata by specified path. The return is pageable metadata list.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/integrationRuntimes/{integrationRuntimeName}/getObjectMetadata. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> IntegrationRuntimeResources_IntegrationRuntimeObjectMetadataGet. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-06-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DataFactoryIntegrationRuntimeResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The parameters for getting a SSIS object metadata. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SsisObjectMetadata"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SsisObjectMetadata> GetAllIntegrationRuntimeObjectMetadataAsync(GetSsisObjectMetadataContent content = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new IntegrationRuntimeResourcesGetAllIntegrationRuntimeObjectMetadataAsyncCollectionResultOfT(
+                _integrationRuntimeResourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                GetSsisObjectMetadataContent.ToRequestContent(content),
+                context,
+                "DataFactoryIntegrationRuntimeResource.GetAllIntegrationRuntimeObjectMetadata");
+        }
+
+        /// <summary>
+        /// Get a SSIS integration runtime object metadata by specified path. The return is pageable metadata list.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/integrationRuntimes/{integrationRuntimeName}/getObjectMetadata. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> IntegrationRuntimeResources_IntegrationRuntimeObjectMetadataGet. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-06-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DataFactoryIntegrationRuntimeResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The parameters for getting a SSIS object metadata. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SsisObjectMetadata"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SsisObjectMetadata> GetAllIntegrationRuntimeObjectMetadata(GetSsisObjectMetadataContent content = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new IntegrationRuntimeResourcesGetAllIntegrationRuntimeObjectMetadataCollectionResultOfT(
+                _integrationRuntimeResourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                GetSsisObjectMetadataContent.ToRequestContent(content),
+                context,
+                "DataFactoryIntegrationRuntimeResource.GetAllIntegrationRuntimeObjectMetadata");
+        }
+
+        /// <summary>
         /// Retrieves the authentication keys for an integration runtime.
         /// <list type="bullet">
         /// <item>
@@ -1540,6 +1626,84 @@ namespace Azure.ResourceManager.DataFactory
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Gets the list of outbound network dependencies for a given Azure-SSIS integration runtime.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/integrationRuntimes/{integrationRuntimeName}/outboundNetworkDependenciesEndpoints. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> IntegrationRuntimeResources_ListOutboundNetworkDependenciesEndpoints. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-06-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DataFactoryIntegrationRuntimeResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint> GetOutboundNetworkDependenciesAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new IntegrationRuntimeResourcesGetOutboundNetworkDependenciesAsyncCollectionResultOfT(
+                _integrationRuntimeResourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "DataFactoryIntegrationRuntimeResource.GetOutboundNetworkDependencies");
+        }
+
+        /// <summary>
+        /// Gets the list of outbound network dependencies for a given Azure-SSIS integration runtime.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/integrationRuntimes/{integrationRuntimeName}/outboundNetworkDependenciesEndpoints. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> IntegrationRuntimeResources_ListOutboundNetworkDependenciesEndpoints. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-06-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DataFactoryIntegrationRuntimeResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint> GetOutboundNetworkDependencies(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new IntegrationRuntimeResourcesGetOutboundNetworkDependenciesCollectionResultOfT(
+                _integrationRuntimeResourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "DataFactoryIntegrationRuntimeResource.GetOutboundNetworkDependencies");
         }
 
         /// <summary>

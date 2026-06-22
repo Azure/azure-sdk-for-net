@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataFactory
     {
         private static MockableDataFactoryArmClient GetMockableDataFactoryArmClientForManagedIdentityCredential(ArmClient client)
         {
-            return client.GetCachedClient(c => new MockableDataFactoryArmClient(c, ResourceIdentifier.Root));
+            return GetMockableDataFactoryArmClient(client);
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataFactory
         public static Response<DataFactoryResource> GetDataFactory(this ResourceGroupResource resourceGroupResource, string factoryName, string ifNoneMatch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-            return resourceGroupResource.GetCachedClient(client => new MockableDataFactoryResourceGroupResource(client, resourceGroupResource.Id)).GetDataFactory(factoryName, ifNoneMatch, cancellationToken);
+            return GetMockableDataFactoryResourceGroupResource(resourceGroupResource).GetDataFactory(factoryName, ifNoneMatch, cancellationToken);
         }
 
         /// <summary> Back-compat overload of GetDataFactoryAsync taking <paramref name="ifNoneMatch"/> as a string. </summary>
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DataFactory
         public static Task<Response<DataFactoryResource>> GetDataFactoryAsync(this ResourceGroupResource resourceGroupResource, string factoryName, string ifNoneMatch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-            return resourceGroupResource.GetCachedClient(client => new MockableDataFactoryResourceGroupResource(client, resourceGroupResource.Id)).GetDataFactoryAsync(factoryName, ifNoneMatch, cancellationToken);
+            return GetMockableDataFactoryResourceGroupResource(resourceGroupResource).GetDataFactoryAsync(factoryName, ifNoneMatch, cancellationToken);
         }
     }
 }

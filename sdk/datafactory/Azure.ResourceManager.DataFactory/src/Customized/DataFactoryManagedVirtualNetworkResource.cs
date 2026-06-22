@@ -8,8 +8,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 
-#pragma warning disable CS1591
-
 namespace Azure.ResourceManager.DataFactory
 {
     // Customization restores back-compat overloads on DataFactoryManagedVirtualNetworkResource where the MPG generator
@@ -19,30 +17,50 @@ namespace Azure.ResourceManager.DataFactory
     // new usage of the legacy signatures.
     public partial class DataFactoryManagedVirtualNetworkResource
     {
+        /// <summary> Gets a managed virtual network. </summary>
+        /// <param name="ifNoneMatch"> ETag of the managed virtual network entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<DataFactoryManagedVirtualNetworkResource>> GetAsync(string ifNoneMatch, CancellationToken cancellationToken = default)
         {
             return await GetAsync(ifNoneMatch != null ? new ETag(ifNoneMatch) : (ETag?)null, cancellationToken).ConfigureAwait(false);
         }
 
+        /// <summary> Gets a managed virtual network. </summary>
+        /// <param name="ifNoneMatch"> ETag of the managed virtual network entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<DataFactoryManagedVirtualNetworkResource> Get(string ifNoneMatch, CancellationToken cancellationToken = default)
         {
             return Get(ifNoneMatch != null ? new ETag(ifNoneMatch) : (ETag?)null, cancellationToken);
         }
 
+        /// <summary> Updates a managed virtual network. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="data"> The managed virtual network definition. </param>
+        /// <param name="ifMatch"> ETag of the managed virtual network entity. Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<DataFactoryManagedVirtualNetworkResource>> UpdateAsync(WaitUntil waitUntil, DataFactoryManagedVirtualNetworkData data, string ifMatch, CancellationToken cancellationToken = default)
         {
             return await UpdateAsync(waitUntil, data, ifMatch != null ? new ETag(ifMatch) : (ETag?)null, cancellationToken).ConfigureAwait(false);
         }
 
+        /// <summary> Updates a managed virtual network. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="data"> The managed virtual network definition. </param>
+        /// <param name="ifMatch"> ETag of the managed virtual network entity. Should only be specified for update, for which it should match existing entity or can be * for unconditional update. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<DataFactoryManagedVirtualNetworkResource> Update(WaitUntil waitUntil, DataFactoryManagedVirtualNetworkData data, string ifMatch, CancellationToken cancellationToken = default)
         {
             return Update(waitUntil, data, ifMatch != null ? new ETag(ifMatch) : (ETag?)null, cancellationToken);
         }
 
+        /// <summary> Gets a managed private endpoint. </summary>
+        /// <param name="managedPrivateEndpointName"> The managed private endpoint name. </param>
+        /// <param name="ifNoneMatch"> ETag of the managed private endpoint entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<DataFactoryPrivateEndpointResource>> GetDataFactoryPrivateEndpointAsync(string managedPrivateEndpointName, string ifNoneMatch, CancellationToken cancellationToken = default)
@@ -50,6 +68,10 @@ namespace Azure.ResourceManager.DataFactory
             return await GetDataFactoryPrivateEndpointAsync(managedPrivateEndpointName, ifNoneMatch != null ? new ETag(ifNoneMatch) : (ETag?)null, cancellationToken).ConfigureAwait(false);
         }
 
+        /// <summary> Gets a managed private endpoint. </summary>
+        /// <param name="managedPrivateEndpointName"> The managed private endpoint name. </param>
+        /// <param name="ifNoneMatch"> ETag of the managed private endpoint entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<DataFactoryPrivateEndpointResource> GetDataFactoryPrivateEndpoint(string managedPrivateEndpointName, string ifNoneMatch, CancellationToken cancellationToken = default)
