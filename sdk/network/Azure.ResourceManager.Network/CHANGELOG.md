@@ -6,10 +6,6 @@
 
 - Upgraded api-version to 2025-07-01.
 
-### Breaking Changes
-
-### Bugs Fixed
-
 ### Other Changes
 
 - Migrated code generation from AutoRest to TypeSpec.
