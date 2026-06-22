@@ -3,74 +3,47 @@
 
 #nullable disable
 
+// TypeSpec generates a shared record-set data model and record-type parameters; these partials preserve the shipped per-record data and fixed-record-type APIs.
+
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PrivateDns.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.PrivateDns
 {
     /// <summary> A class representing the PrivateDnsPtrRecord data model. </summary>
     public partial class PrivateDnsPtrRecordData : PrivateDnsBaseRecordData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
-        /// <summary> Initializes a new instance of PrivateDnsPtrRecordData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateDnsPtrRecordData"/>. </summary>
         public PrivateDnsPtrRecordData()
         {
-            PrivateDnsPtrRecords = new ChangeTrackingList<PrivateDnsPtrRecordInfo>();
         }
 
-        /// <summary> Initializes a new instance of RecordData. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="etag"> The ETag of the record set. </param>
-        /// <param name="metadata"> The metadata attached to the record set. </param>
-        /// <param name="ttl"> The TTL (time-to-live) of the records in the record set. </param>
-        /// <param name="fqdn"> Fully qualified domain name of the record set. </param>
-        /// <param name="isAutoRegistered"> Is the record set auto-registered in the Private DNS zone through a virtual network link?. </param>
-        /// <param name="ptrRecords"> The list of PTR records in the record set. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateDnsPtrRecordData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttl, string fqdn, bool? isAutoRegistered, IList<PrivateDnsPtrRecordInfo> ptrRecords, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, etag, metadata, ttl, fqdn, isAutoRegistered, serializedAdditionalRawData)
+        /// <summary> Initializes a new instance of <see cref="PrivateDnsPtrRecordData"/>. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The properties of the record set. </param>
+        /// <param name="eTag"> The etag of the record set. </param>
+        internal PrivateDnsPtrRecordData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, RecordSetProperties properties, ETag? eTag) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, properties, eTag)
         {
-            PrivateDnsPtrRecords = ptrRecords;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The list of Ptr records in the record set. </summary>
-        public IList<PrivateDnsPtrRecordInfo> PrivateDnsPtrRecords { get; }
+        /// <summary> The list of PTR records in the record set. </summary>
+        public IList<PrivateDnsPtrRecordInfo> PrivateDnsPtrRecords
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new RecordSetProperties();
+                }
+                return Properties.PrivateDnsPtrRecords;
+            }
+        }
     }
 }

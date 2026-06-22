@@ -1,0 +1,4 @@
+directory: specification/privatedns/resource-manager/Microsoft.Network/PrivateDns
+commit: 0094c2f2f3739070e6f6476e8446d34ee69809d3
+repo: Azure/azure-rest-api-specs
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json

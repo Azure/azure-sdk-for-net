@@ -5,17 +5,132 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Net;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.PrivateDns;
 
 namespace Azure.ResourceManager.PrivateDns.Models
 {
-    /// <summary> Model factory for models. </summary>
+    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmPrivateDnsModelFactory
     {
+
+        /// <param name="iPv4Address"> The IPv4 address of this A record. </param>
+        /// <returns> A new <see cref="Models.PrivateDnsARecordInfo"/> instance for mocking. </returns>
+        public static PrivateDnsARecordInfo PrivateDnsARecordInfo(IPAddress iPv4Address = default)
+        {
+            return new PrivateDnsARecordInfo(iPv4Address, default);
+        }
+
+        /// <param name="iPv6Address"> The IPv6 address of this AAAA record. </param>
+        /// <returns> A new <see cref="Models.PrivateDnsAaaaRecordInfo"/> instance for mocking. </returns>
+        public static PrivateDnsAaaaRecordInfo PrivateDnsAaaaRecordInfo(IPAddress iPv6Address = default)
+        {
+            return new PrivateDnsAaaaRecordInfo(iPv6Address, default);
+        }
+
+        /// <param name="preference"> The preference value for this MX record. </param>
+        /// <param name="exchange"> The domain name of the mail host for this MX record. </param>
+        /// <returns> A new <see cref="Models.PrivateDnsMXRecordInfo"/> instance for mocking. </returns>
+        public static PrivateDnsMXRecordInfo PrivateDnsMXRecordInfo(int? preference = default, string exchange = default)
+        {
+            return new PrivateDnsMXRecordInfo(preference, exchange, default);
+        }
+
+        /// <param name="ptrDomainName"> The PTR target domain name for this PTR record. </param>
+        /// <returns> A new <see cref="Models.PrivateDnsPtrRecordInfo"/> instance for mocking. </returns>
+        public static PrivateDnsPtrRecordInfo PrivateDnsPtrRecordInfo(string ptrDomainName = default)
+        {
+            return new PrivateDnsPtrRecordInfo(ptrDomainName, default);
+        }
+
+        /// <param name="host"> The domain name of the authoritative name server for this SOA record. </param>
+        /// <param name="email"> The email contact for this SOA record. </param>
+        /// <param name="serialNumber"> The serial number for this SOA record. </param>
+        /// <param name="refreshTimeInSeconds"> The refresh value for this SOA record. </param>
+        /// <param name="retryTimeInSeconds"> The retry time for this SOA record. </param>
+        /// <param name="expireTimeInSeconds"> The expire time for this SOA record. </param>
+        /// <param name="minimumTtlInSeconds"> The minimum value for this SOA record. By convention this is used to determine the negative caching duration. </param>
+        /// <returns> A new <see cref="Models.PrivateDnsSoaRecordInfo"/> instance for mocking. </returns>
+        public static PrivateDnsSoaRecordInfo PrivateDnsSoaRecordInfo(string host = default, string email = default, long? serialNumber = default, long? refreshTimeInSeconds = default, long? retryTimeInSeconds = default, long? expireTimeInSeconds = default, long? minimumTtlInSeconds = default)
+        {
+            return new PrivateDnsSoaRecordInfo(
+                host,
+                email,
+                serialNumber,
+                refreshTimeInSeconds,
+                retryTimeInSeconds,
+                expireTimeInSeconds,
+                minimumTtlInSeconds,
+                default);
+        }
+
+        /// <param name="priority"> The priority value for this SRV record. </param>
+        /// <param name="weight"> The weight value for this SRV record. </param>
+        /// <param name="port"> The port value for this SRV record. </param>
+        /// <param name="target"> The target domain name for this SRV record. </param>
+        /// <returns> A new <see cref="Models.PrivateDnsSrvRecordInfo"/> instance for mocking. </returns>
+        public static PrivateDnsSrvRecordInfo PrivateDnsSrvRecordInfo(int? priority = default, int? weight = default, int? port = default, string target = default)
+        {
+            return new PrivateDnsSrvRecordInfo(priority, weight, port, target, default);
+        }
+
+        /// <param name="values"> The text value of this TXT record. </param>
+        /// <returns> A new <see cref="Models.PrivateDnsTxtRecordInfo"/> instance for mocking. </returns>
+        public static PrivateDnsTxtRecordInfo PrivateDnsTxtRecordInfo(IEnumerable<string> values = default)
+        {
+            values ??= new ChangeTrackingList<string>();
+
+            return new PrivateDnsTxtRecordInfo((values ?? new ChangeTrackingList<string>()).ToList(), default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="maxNumberOfRecords"> The maximum number of record sets that can be created in this Private DNS zone. This is a read-only property and any attempt to set this value will be ignored. </param>
+        /// <param name="numberOfRecords"> The current number of record sets in this Private DNS zone. This is a read-only property and any attempt to set this value will be ignored. </param>
+        /// <param name="maxNumberOfVirtualNetworkLinks"> The maximum number of virtual networks that can be linked to this Private DNS zone. This is a read-only property and any attempt to set this value will be ignored. </param>
+        /// <param name="numberOfVirtualNetworkLinks"> The current number of virtual networks that are linked to this Private DNS zone. This is a read-only property and any attempt to set this value will be ignored. </param>
+        /// <param name="maxNumberOfVirtualNetworkLinksWithRegistration"> The maximum number of virtual networks that can be linked to this Private DNS zone with registration enabled. This is a read-only property and any attempt to set this value will be ignored. </param>
+        /// <param name="numberOfVirtualNetworkLinksWithRegistration"> The current number of virtual networks that are linked to this Private DNS zone with registration enabled. This is a read-only property and any attempt to set this value will be ignored. </param>
+        /// <param name="privateDnsProvisioningState"> The provisioning state of the resource. This is a read-only property and any attempt to set this value will be ignored. </param>
+        /// <param name="internalId"> Private zone internal Id. </param>
+        /// <param name="eTag"> The ETag of the zone. </param>
+        /// <returns> A new <see cref="PrivateDns.PrivateDnsZoneData"/> instance for mocking. </returns>
+        public static PrivateDnsZoneData PrivateDnsZoneData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, long? maxNumberOfRecords = default, long? numberOfRecords = default, long? maxNumberOfVirtualNetworkLinks = default, long? numberOfVirtualNetworkLinks = default, long? maxNumberOfVirtualNetworkLinksWithRegistration = default, long? numberOfVirtualNetworkLinksWithRegistration = default, PrivateDnsProvisioningState? privateDnsProvisioningState = default, string internalId = default, ETag? eTag = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new PrivateDnsZoneData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                maxNumberOfRecords is null && numberOfRecords is null && maxNumberOfVirtualNetworkLinks is null && numberOfVirtualNetworkLinks is null && maxNumberOfVirtualNetworkLinksWithRegistration is null && numberOfVirtualNetworkLinksWithRegistration is null && privateDnsProvisioningState is null && internalId is null ? default : new PrivateZoneProperties(
+                    maxNumberOfRecords,
+                    numberOfRecords,
+                    maxNumberOfVirtualNetworkLinks,
+                    numberOfVirtualNetworkLinks,
+                    maxNumberOfVirtualNetworkLinksWithRegistration,
+                    numberOfVirtualNetworkLinksWithRegistration,
+                    privateDnsProvisioningState,
+                    internalId,
+                    default),
+                eTag,
+                default);
+        }
+
         /// <summary> Initializes a new instance of <see cref="PrivateDns.PrivateDnsZoneData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -33,80 +148,28 @@ namespace Azure.ResourceManager.PrivateDns.Models
         /// <param name="privateDnsProvisioningState"> The provisioning state of the resource. This is a read-only property and any attempt to set this value will be ignored. </param>
         /// <param name="internalId"> Private zone internal Id. </param>
         /// <returns> A new <see cref="PrivateDns.PrivateDnsZoneData"/> instance for mocking. </returns>
-        public static PrivateDnsZoneData PrivateDnsZoneData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, long? maxNumberOfRecords = null, long? numberOfRecords = null, long? maxNumberOfVirtualNetworkLinks = null, long? numberOfVirtualNetworkLinks = null, long? maxNumberOfVirtualNetworkLinksWithRegistration = null, long? numberOfVirtualNetworkLinksWithRegistration = null, PrivateDnsProvisioningState? privateDnsProvisioningState = null, string internalId = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PrivateDnsZoneData PrivateDnsZoneData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ETag? etag = default, long? maxNumberOfRecords = default, long? numberOfRecords = default, long? maxNumberOfVirtualNetworkLinks = default, long? numberOfVirtualNetworkLinks = default, long? maxNumberOfVirtualNetworkLinksWithRegistration = default, long? numberOfVirtualNetworkLinksWithRegistration = default, PrivateDnsProvisioningState? privateDnsProvisioningState = default, string internalId = default)
         {
-            tags ??= new Dictionary<string, string>();
-
             return new PrivateDnsZoneData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
+                maxNumberOfRecords is null && numberOfRecords is null && maxNumberOfVirtualNetworkLinks is null && numberOfVirtualNetworkLinks is null && maxNumberOfVirtualNetworkLinksWithRegistration is null && numberOfVirtualNetworkLinksWithRegistration is null && privateDnsProvisioningState is null && internalId is null ? default : new PrivateZoneProperties(
+                    maxNumberOfRecords,
+                    numberOfRecords,
+                    maxNumberOfVirtualNetworkLinks,
+                    numberOfVirtualNetworkLinks,
+                    maxNumberOfVirtualNetworkLinksWithRegistration,
+                    numberOfVirtualNetworkLinksWithRegistration,
+                    privateDnsProvisioningState,
+                    internalId,
+                    default),
                 etag,
-                maxNumberOfRecords,
-                numberOfRecords,
-                maxNumberOfVirtualNetworkLinks,
-                numberOfVirtualNetworkLinks,
-                maxNumberOfVirtualNetworkLinksWithRegistration,
-                numberOfVirtualNetworkLinksWithRegistration,
-                privateDnsProvisioningState,
-                internalId,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="PrivateDns.VirtualNetworkLinkData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="etag"> The ETag of the virtual network link. </param>
-        /// <param name="virtualNetworkId"> The reference of the virtual network. </param>
-        /// <param name="registrationEnabled"> Is auto-registration of virtual machine records in the virtual network in the Private DNS zone enabled?. </param>
-        /// <param name="privateDnsResolutionPolicy"> The resolution policy on the virtual network link. Only applicable for virtual network links to privatelink zones, and for A,AAAA,CNAME queries. When set to 'NxDomainRedirect', Azure DNS resolver falls back to public resolution if private dns query resolution results in non-existent domain response. </param>
-        /// <param name="virtualNetworkLinkState"> The status of the virtual network link to the Private DNS zone. Possible values are 'InProgress' and 'Done'. This is a read-only property and any attempt to set this value will be ignored. </param>
-        /// <param name="privateDnsProvisioningState"> The provisioning state of the resource. This is a read-only property and any attempt to set this value will be ignored. </param>
-        /// <returns> A new <see cref="PrivateDns.VirtualNetworkLinkData"/> instance for mocking. </returns>
-        public static VirtualNetworkLinkData VirtualNetworkLinkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, ResourceIdentifier virtualNetworkId = null, bool? registrationEnabled = null, PrivateDnsResolutionPolicy? privateDnsResolutionPolicy = null, VirtualNetworkLinkState? virtualNetworkLinkState = null, PrivateDnsProvisioningState? privateDnsProvisioningState = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new VirtualNetworkLinkData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags,
-                location,
-                etag,
-                virtualNetworkId != null ? ResourceManagerModelFactory.WritableSubResource(virtualNetworkId) : null,
-                registrationEnabled,
-                privateDnsResolutionPolicy,
-                virtualNetworkLinkState,
-                privateDnsProvisioningState,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.PrivateDns.VirtualNetworkLinkData" />. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="etag"> The ETag of the virtual network link. </param>
-        /// <param name="virtualNetworkId"> The reference of the virtual network. </param>
-        /// <param name="registrationEnabled"> Is auto-registration of virtual machine records in the virtual network in the Private DNS zone enabled?. </param>
-        /// <param name="virtualNetworkLinkState"> The status of the virtual network link to the Private DNS zone. Possible values are 'InProgress' and 'Done'. This is a read-only property and any attempt to set this value will be ignored. </param>
-        /// <param name="privateDnsProvisioningState"> The provisioning state of the resource. This is a read-only property and any attempt to set this value will be ignored. </param>
-        /// <returns> A new <see cref="T:Azure.ResourceManager.PrivateDns.VirtualNetworkLinkData" /> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static VirtualNetworkLinkData VirtualNetworkLinkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ResourceIdentifier virtualNetworkId, bool? registrationEnabled, VirtualNetworkLinkState? virtualNetworkLinkState, PrivateDnsProvisioningState? privateDnsProvisioningState)
-        {
-            return VirtualNetworkLinkData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, etag: etag, virtualNetworkId: virtualNetworkId, registrationEnabled: registrationEnabled, privateDnsResolutionPolicy: default, virtualNetworkLinkState: virtualNetworkLinkState, privateDnsProvisioningState: privateDnsProvisioningState);
+                default);
         }
     }
 }
