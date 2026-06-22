@@ -16,7 +16,8 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.MachineLearning
 {
-    // Customized: preserve GA MachineLearning-prefixed child resource accessors over shorter generated workspace child accessors.
+    // Customized: preserve GA MachineLearning-prefixed child resource accessors over shorter generated
+    // workspace child-resource accessors, which are not standalone REST operations that client.tsp can rename.
     [CodeGenSuppress("GetOutboundNetworkDependenciesEndpointsAsync", typeof(CancellationToken))]
     [CodeGenSuppress("GetOutboundNetworkDependenciesEndpoints", typeof(CancellationToken))]
     public partial class MachineLearningWorkspaceResource

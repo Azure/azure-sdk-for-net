@@ -15,7 +15,8 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.MachineLearning
 {
-    // Customized: collection request bodies currently require manual serialization for these action methods.
+    // Customized: restore public methods for collection-body actions. Generation currently emits only
+    // REST request builders that accept RequestContent, so custom code serializes the enumerable body.
     [CodeGenSuppress("UpdateCustomServicesAsync", typeof(IEnumerable<CustomService>), typeof(CancellationToken))]
     [CodeGenSuppress("UpdateCustomServices", typeof(IEnumerable<CustomService>), typeof(CancellationToken))]
     [CodeGenSuppress("UpdateDataMountsAsync", typeof(IEnumerable<MachineLearningComputeInstanceDataMount>), typeof(CancellationToken))]

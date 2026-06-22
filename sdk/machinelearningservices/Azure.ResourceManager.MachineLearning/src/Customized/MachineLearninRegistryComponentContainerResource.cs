@@ -16,7 +16,8 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.MachineLearning
 {
-    // Customized: preserve GA MachineLearnin-prefixed child resource accessors over shorter generated registry child accessors.
+    // Customized: preserve GA MachineLearnin-prefixed child resource accessors over shorter generated
+    // registry child-resource accessors, which are not standalone REST operations that client.tsp can rename.
     public partial class MachineLearninRegistryComponentContainerResource
     {
         // Customized: keep the historical MachineLearnin* typo in method names for source compatibility.

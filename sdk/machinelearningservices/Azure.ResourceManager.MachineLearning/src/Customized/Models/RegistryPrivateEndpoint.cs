@@ -8,8 +8,8 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    // Customized: suppress the generated duplicate SubnetArmId member; the property is already
-    // provided by the custom base model used for registry private endpoints.
+    // Customized: suppress a generated duplicate member. RegistryPrivateEndpoint inherits the
+    // customized PrivateEndpointBase.SubnetArmId, but generation still emits a new SubnetArmId here.
     [CodeGenSuppress("SubnetArmId", typeof(ResourceIdentifier))]
     public partial class RegistryPrivateEndpoint
     {

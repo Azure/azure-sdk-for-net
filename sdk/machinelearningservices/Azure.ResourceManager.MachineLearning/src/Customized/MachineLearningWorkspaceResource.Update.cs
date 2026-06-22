@@ -10,7 +10,8 @@ using Azure.ResourceManager.MachineLearning.Models;
 
 namespace Azure.ResourceManager.MachineLearning
 {
-    // Customized: restore legacy workspace update overload that accepted MachineLearningWorkspacePatch.
+    // Customized: restore GA update overloads that accepted MachineLearningWorkspacePatch. The
+    // generated operation now takes WorkspacePatch, so these bridge the shipped request model.
     public partial class MachineLearningWorkspaceResource
     {
         /// <summary> Updates a machine learning workspace. </summary>

@@ -12,7 +12,8 @@ namespace Azure.ResourceManager.MachineLearning
 {
     public partial class MachineLearningCodeContainerResource
     {
-        // Customized: preserve GA MachineLearning-prefixed child accessors over generated GetCodeVersions/GetCodeVersion methods.
+        // Customized: preserve GA MachineLearning-prefixed child accessors. These wrappers sit over
+        // generated child-resource accessors, not standalone REST operations that client.tsp can rename.
         public virtual MachineLearningCodeVersionCollection GetMachineLearningCodeVersions() => GetCodeVersions();
 
         /// <summary> Gets a code version. </summary>

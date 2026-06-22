@@ -13,7 +13,8 @@ using Azure.ResourceManager.MachineLearning.Models;
 
 namespace Azure.ResourceManager.MachineLearning.Mocking
 {
-    // Customized: preserve legacy mockable subscription overloads that accepted AzureLocation.
+    // Customized: preserve GA mockable subscription overloads that accepted AzureLocation. The
+    // generated operations use the TypeSpec path parameter shape (`string location`).
     public partial class MockableMachineLearningSubscriptionResource
     {
         /// <summary> Gets the currently assigned Workspace Quotas based on VMFamily. </summary>
