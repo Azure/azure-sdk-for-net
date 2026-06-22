@@ -16,67 +16,62 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary> The parameters supplied to the create or update package operation. </summary>
-    public partial class PackageCreateOrUpdateContent : IJsonModel<PackageCreateOrUpdateContent>
+    /// <summary> The parameters supplied to the update package operation. </summary>
+    public partial class AutomationPackagePatch : IJsonModel<AutomationPackagePatch>
     {
-        /// <summary> Initializes a new instance of <see cref="PackageCreateOrUpdateContent"/> for deserialization. </summary>
-        internal PackageCreateOrUpdateContent()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PackageCreateOrUpdateContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual AutomationPackagePatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PackageCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AutomationPackagePatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializePackageCreateOrUpdateContent(document.RootElement, options);
+                        return DeserializeAutomationPackagePatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PackageCreateOrUpdateContent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationPackagePatch)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PackageCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AutomationPackagePatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerAutomationContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(PackageCreateOrUpdateContent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationPackagePatch)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PackageCreateOrUpdateContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<AutomationPackagePatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PackageCreateOrUpdateContent IPersistableModel<PackageCreateOrUpdateContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AutomationPackagePatch IPersistableModel<AutomationPackagePatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PackageCreateOrUpdateContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AutomationPackagePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="packageCreateOrUpdateContent"> The <see cref="PackageCreateOrUpdateContent"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(PackageCreateOrUpdateContent packageCreateOrUpdateContent)
+        /// <param name="automationPackagePatch"> The <see cref="AutomationPackagePatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(AutomationPackagePatch automationPackagePatch)
         {
-            if (packageCreateOrUpdateContent == null)
+            if (automationPackagePatch == null)
             {
                 return null;
             }
-            return RequestContent.Create(packageCreateOrUpdateContent, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(automationPackagePatch, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<PackageCreateOrUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AutomationPackagePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -87,17 +82,20 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PackageCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AutomationPackagePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PackageCreateOrUpdateContent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationPackagePatch)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties, options);
-            if (Optional.IsDefined(AllOf))
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
+            if (Optional.IsDefined(TrackedResource))
             {
                 writer.WritePropertyName("allOf"u8);
-                ((IJsonModel<TrackedResourceData>)AllOf).Write(writer, options);
+                ((IJsonModel<TrackedResourceData>)TrackedResource).Write(writer, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -118,37 +116,41 @@ namespace Azure.ResourceManager.Automation.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PackageCreateOrUpdateContent IJsonModel<PackageCreateOrUpdateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AutomationPackagePatch IJsonModel<AutomationPackagePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PackageCreateOrUpdateContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual AutomationPackagePatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PackageCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AutomationPackagePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PackageCreateOrUpdateContent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationPackagePatch)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePackageCreateOrUpdateContent(document.RootElement, options);
+            return DeserializeAutomationPackagePatch(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static PackageCreateOrUpdateContent DeserializePackageCreateOrUpdateContent(JsonElement element, ModelReaderWriterOptions options)
+        internal static AutomationPackagePatch DeserializeAutomationPackagePatch(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            PackageCreateOrUpdateProperties properties = default;
-            TrackedResourceData allOf = default;
+            PackageUpdateProperties properties = default;
+            TrackedResourceData trackedResource = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("properties"u8))
                 {
-                    properties = PackageCreateOrUpdateProperties.DeserializePackageCreateOrUpdateProperties(prop.Value, options);
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = PackageUpdateProperties.DeserializePackageUpdateProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("allOf"u8))
@@ -157,7 +159,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    allOf = ModelReaderWriter.Read<TrackedResourceData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAutomationContext.Default);
+                    trackedResource = ModelReaderWriter.Read<TrackedResourceData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAutomationContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
@@ -165,7 +167,7 @@ namespace Azure.ResourceManager.Automation.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PackageCreateOrUpdateContent(properties, allOf, additionalBinaryDataProperties);
+            return new AutomationPackagePatch(properties, trackedResource, additionalBinaryDataProperties);
         }
     }
 }

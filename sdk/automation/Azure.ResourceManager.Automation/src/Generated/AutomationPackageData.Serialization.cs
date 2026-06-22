@@ -18,10 +18,10 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Automation
 {
     /// <summary> Definition of the Package type. </summary>
-    public partial class PackageData : TrackedResourceData, IJsonModel<PackageData>
+    public partial class AutomationPackageData : TrackedResourceData, IJsonModel<AutomationPackageData>
     {
-        /// <summary> Initializes a new instance of <see cref="PackageData"/> for deserialization. </summary>
-        internal PackageData()
+        /// <summary> Initializes a new instance of <see cref="AutomationPackageData"/> for deserialization. </summary>
+        internal AutomationPackageData()
         {
         }
 
@@ -29,52 +29,52 @@ namespace Azure.ResourceManager.Automation
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PackageData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AutomationPackageData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializePackageData(document.RootElement, options);
+                        return DeserializeAutomationPackageData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PackageData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationPackageData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PackageData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AutomationPackageData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerAutomationContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(PackageData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationPackageData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PackageData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<AutomationPackageData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PackageData IPersistableModel<PackageData>.Create(BinaryData data, ModelReaderWriterOptions options) => (PackageData)PersistableModelCreateCore(data, options);
+        AutomationPackageData IPersistableModel<AutomationPackageData>.Create(BinaryData data, ModelReaderWriterOptions options) => (AutomationPackageData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PackageData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AutomationPackageData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="PackageData"/> from. </param>
-        internal static PackageData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AutomationPackageData"/> from. </param>
+        internal static AutomationPackageData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializePackageData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeAutomationPackageData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<PackageData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AutomationPackageData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.Automation
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PackageData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AutomationPackageData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PackageData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationPackageData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -115,24 +115,24 @@ namespace Azure.ResourceManager.Automation
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PackageData IJsonModel<PackageData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (PackageData)JsonModelCreateCore(ref reader, options);
+        AutomationPackageData IJsonModel<AutomationPackageData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AutomationPackageData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PackageData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AutomationPackageData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PackageData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationPackageData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePackageData(document.RootElement, options);
+            return DeserializeAutomationPackageData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static PackageData DeserializePackageData(JsonElement element, ModelReaderWriterOptions options)
+        internal static AutomationPackageData DeserializeAutomationPackageData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Automation
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PackageData(
+            return new AutomationPackageData(
                 id,
                 name,
                 resourceType,

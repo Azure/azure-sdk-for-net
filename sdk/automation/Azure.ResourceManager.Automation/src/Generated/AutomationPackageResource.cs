@@ -18,40 +18,40 @@ using Azure.ResourceManager.Automation.Models;
 namespace Azure.ResourceManager.Automation
 {
     /// <summary>
-    /// A class representing a Package along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PackageResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="RuntimeEnvironmentResource"/> using the GetPackages method.
+    /// A class representing a AutomationPackage along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="AutomationPackageResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="RuntimeEnvironmentResource"/> using the GetAutomationPackages method.
     /// </summary>
-    public partial class PackageResource : ArmResource
+    public partial class AutomationPackageResource : ArmResource
     {
         private readonly ClientDiagnostics _packageClientDiagnostics;
         private readonly Package _packageRestClient;
-        private readonly PackageData _data;
+        private readonly AutomationPackageData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Automation/automationAccounts/runtimeEnvironments/packages";
 
-        /// <summary> Initializes a new instance of PackageResource for mocking. </summary>
-        protected PackageResource()
+        /// <summary> Initializes a new instance of AutomationPackageResource for mocking. </summary>
+        protected AutomationPackageResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PackageResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationPackageResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal PackageResource(ArmClient client, PackageData data) : this(client, data.Id)
+        internal AutomationPackageResource(ArmClient client, AutomationPackageData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PackageResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationPackageResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal PackageResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal AutomationPackageResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string packageApiVersion);
+            TryGetApiVersion(ResourceType, out string automationPackageApiVersion);
             _packageClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ResourceType.Namespace, Diagnostics);
-            _packageRestClient = new Package(_packageClientDiagnostics, Pipeline, Endpoint, packageApiVersion ?? "2024-10-23");
+            _packageRestClient = new Package(_packageClientDiagnostics, Pipeline, Endpoint, automationPackageApiVersion ?? "2024-10-23");
             ValidateResourceId(id);
         }
 
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Automation
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual PackageData Data
+        public virtual AutomationPackageData Data
         {
             get
             {
@@ -110,14 +110,14 @@ namespace Azure.ResourceManager.Automation
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="PackageResource"/>. </description>
+        /// <description> <see cref="AutomationPackageResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PackageResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AutomationPackageResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _packageClientDiagnostics.CreateScope("PackageResource.Get");
+            using DiagnosticScope scope = _packageClientDiagnostics.CreateScope("AutomationPackageResource.Get");
             scope.Start();
             try
             {
@@ -127,12 +127,12 @@ namespace Azure.ResourceManager.Automation
                 };
                 HttpMessage message = _packageRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<PackageData> response = Response.FromValue(PackageData.FromResponse(result), result);
+                Response<AutomationPackageData> response = Response.FromValue(AutomationPackageData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new PackageResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AutomationPackageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -158,14 +158,14 @@ namespace Azure.ResourceManager.Automation
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="PackageResource"/>. </description>
+        /// <description> <see cref="AutomationPackageResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PackageResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<AutomationPackageResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _packageClientDiagnostics.CreateScope("PackageResource.Get");
+            using DiagnosticScope scope = _packageClientDiagnostics.CreateScope("AutomationPackageResource.Get");
             scope.Start();
             try
             {
@@ -175,12 +175,12 @@ namespace Azure.ResourceManager.Automation
                 };
                 HttpMessage message = _packageRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<PackageData> response = Response.FromValue(PackageData.FromResponse(result), result);
+                Response<AutomationPackageData> response = Response.FromValue(AutomationPackageData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new PackageResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AutomationPackageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -206,18 +206,18 @@ namespace Azure.ResourceManager.Automation
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="PackageResource"/>. </description>
+        /// <description> <see cref="AutomationPackageResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="patch"> The update parameters for Package. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<PackageResource>> UpdateAsync(PackagePatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AutomationPackageResource>> UpdateAsync(AutomationPackagePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _packageClientDiagnostics.CreateScope("PackageResource.Update");
+            using DiagnosticScope scope = _packageClientDiagnostics.CreateScope("AutomationPackageResource.Update");
             scope.Start();
             try
             {
@@ -225,14 +225,14 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _packageRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, PackagePatch.ToRequestContent(patch), context);
+                HttpMessage message = _packageRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, AutomationPackagePatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<PackageData> response = Response.FromValue(PackageData.FromResponse(result), result);
+                Response<AutomationPackageData> response = Response.FromValue(AutomationPackageData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new PackageResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AutomationPackageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -258,18 +258,18 @@ namespace Azure.ResourceManager.Automation
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="PackageResource"/>. </description>
+        /// <description> <see cref="AutomationPackageResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="patch"> The update parameters for Package. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<PackageResource> Update(PackagePatch patch, CancellationToken cancellationToken = default)
+        public virtual Response<AutomationPackageResource> Update(AutomationPackagePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _packageClientDiagnostics.CreateScope("PackageResource.Update");
+            using DiagnosticScope scope = _packageClientDiagnostics.CreateScope("AutomationPackageResource.Update");
             scope.Start();
             try
             {
@@ -277,14 +277,14 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _packageRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, PackagePatch.ToRequestContent(patch), context);
+                HttpMessage message = _packageRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, AutomationPackagePatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<PackageData> response = Response.FromValue(PackageData.FromResponse(result), result);
+                Response<AutomationPackageData> response = Response.FromValue(AutomationPackageData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new PackageResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AutomationPackageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.Automation
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="PackageResource"/>. </description>
+        /// <description> <see cref="AutomationPackageResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _packageClientDiagnostics.CreateScope("PackageResource.Delete");
+            using DiagnosticScope scope = _packageClientDiagnostics.CreateScope("AutomationPackageResource.Delete");
             scope.Start();
             try
             {
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.Automation
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="PackageResource"/>. </description>
+        /// <description> <see cref="AutomationPackageResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _packageClientDiagnostics.CreateScope("PackageResource.Delete");
+            using DiagnosticScope scope = _packageClientDiagnostics.CreateScope("AutomationPackageResource.Delete");
             scope.Start();
             try
             {

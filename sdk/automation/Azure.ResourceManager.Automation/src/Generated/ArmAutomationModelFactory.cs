@@ -380,21 +380,21 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="contentLink"> Gets or sets the module content link. </param>
         /// <param name="tags"> Gets or sets the tags attached to the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="contentLink"/> is null. </exception>
-        /// <returns> A new <see cref="Models.AutomationAccountPython2PackageCreateOrUpdateContent"/> instance for mocking. </returns>
-        public static AutomationAccountPython2PackageCreateOrUpdateContent AutomationAccountPython2PackageCreateOrUpdateContent(AutomationContentLink contentLink = default, IDictionary<string, string> tags = default)
+        /// <returns> A new <see cref="Models.AutomationPythonPackageCreateOrUpdateContent"/> instance for mocking. </returns>
+        public static AutomationPythonPackageCreateOrUpdateContent AutomationPythonPackageCreateOrUpdateContent(AutomationContentLink contentLink = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new AutomationAccountPython2PackageCreateOrUpdateContent(default, tags ?? new ChangeTrackingDictionary<string, string>(), default);
+            return new AutomationPythonPackageCreateOrUpdateContent(default, tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
         /// <param name="tags"> Gets or sets the tags attached to the resource. </param>
-        /// <returns> A new <see cref="Models.AutomationAccountPython2PackagePatch"/> instance for mocking. </returns>
-        public static AutomationAccountPython2PackagePatch AutomationAccountPython2PackagePatch(IDictionary<string, string> tags = default)
+        /// <returns> A new <see cref="Models.AutomationPythonPackagePatch"/> instance for mocking. </returns>
+        public static AutomationPythonPackagePatch AutomationPythonPackagePatch(IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new AutomationAccountPython2PackagePatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
+            return new AutomationPythonPackagePatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1693,54 +1693,54 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="provisioningState"> Gets or sets the provisioning state of the Package. </param>
         /// <param name="contentLink"> Gets or sets the contentLink of the Package. </param>
         /// <param name="error"> Gets or sets the error info of the Package. </param>
-        /// <param name="allOf"> Metadata pertaining to creation and last modification of the resource. </param>
-        /// <returns> A new <see cref="Automation.PackageData"/> instance for mocking. </returns>
-        public static PackageData PackageData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, bool? isDefault = default, string version = default, long? sizeInBytes = default, PackageProvisioningState? provisioningState = default, AutomationContentLink contentLink = default, PackageErrorInfo error = default, SystemData allOf = default)
+        /// <param name="resourceSystemData"> Metadata pertaining to creation and last modification of the resource. </param>
+        /// <returns> A new <see cref="Automation.AutomationPackageData"/> instance for mocking. </returns>
+        public static AutomationPackageData AutomationPackageData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, bool? isDefault = default, string version = default, long? sizeInBytes = default, AutomationPackageProvisioningState? provisioningState = default, AutomationContentLink contentLink = default, AutomationPackageErrorInfo error = default, SystemData resourceSystemData = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new PackageData(
+            return new AutomationPackageData(
                 id,
                 name,
                 resourceType,
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                isDefault is null && version is null && sizeInBytes is null && provisioningState is null && contentLink is null && error is null && allOf is null ? default : new PackageProperties(
+                isDefault is null && version is null && sizeInBytes is null && provisioningState is null && contentLink is null && error is null && resourceSystemData is null ? default : new PackageProperties(
                     isDefault,
                     version,
                     sizeInBytes,
                     provisioningState,
                     contentLink,
                     error,
-                    allOf,
+                    resourceSystemData,
                     default),
                 default);
         }
 
         /// <param name="code"> Package import error code. </param>
         /// <param name="message"> Package import error message. </param>
-        /// <returns> A new <see cref="Models.PackageErrorInfo"/> instance for mocking. </returns>
-        public static PackageErrorInfo PackageErrorInfo(string code = default, string message = default)
+        /// <returns> A new <see cref="Models.AutomationPackageErrorInfo"/> instance for mocking. </returns>
+        public static AutomationPackageErrorInfo AutomationPackageErrorInfo(string code = default, string message = default)
         {
-            return new PackageErrorInfo(code, message, default);
+            return new AutomationPackageErrorInfo(code, message, default);
         }
 
         /// <param name="contentLink"> Gets or sets the package content link. </param>
-        /// <param name="allOf"> The resource model definition for an Azure Resource Manager tracked top level resource which has 'tags' and a 'location'. </param>
+        /// <param name="trackedResource"> The resource model definition for an Azure Resource Manager tracked top level resource which has 'tags' and a 'location'. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="contentLink"/> is null. </exception>
-        /// <returns> A new <see cref="Models.PackageCreateOrUpdateContent"/> instance for mocking. </returns>
-        public static PackageCreateOrUpdateContent PackageCreateOrUpdateContent(AutomationContentLink contentLink = default, TrackedResourceData allOf = default)
+        /// <returns> A new <see cref="Models.AutomationPackageCreateOrUpdateContent"/> instance for mocking. </returns>
+        public static AutomationPackageCreateOrUpdateContent AutomationPackageCreateOrUpdateContent(AutomationContentLink contentLink = default, TrackedResourceData trackedResource = default)
         {
-            return new PackageCreateOrUpdateContent(default, allOf, default);
+            return new AutomationPackageCreateOrUpdateContent(default, trackedResource, default);
         }
 
         /// <param name="contentLink"> Gets or sets the package content link. </param>
-        /// <param name="allOf"> The resource model definition for an Azure Resource Manager tracked top level resource which has 'tags' and a 'location'. </param>
-        /// <returns> A new <see cref="Models.PackagePatch"/> instance for mocking. </returns>
-        public static PackagePatch PackagePatch(AutomationContentLink contentLink = default, TrackedResourceData allOf = default)
+        /// <param name="trackedResource"> The resource model definition for an Azure Resource Manager tracked top level resource which has 'tags' and a 'location'. </param>
+        /// <returns> A new <see cref="Models.AutomationPackagePatch"/> instance for mocking. </returns>
+        public static AutomationPackagePatch AutomationPackagePatch(AutomationContentLink contentLink = default, TrackedResourceData trackedResource = default)
         {
-            return new PackagePatch(contentLink is null ? default : new PackageUpdateProperties(contentLink, default), allOf, default);
+            return new AutomationPackagePatch(contentLink is null ? default : new PackageUpdateProperties(contentLink, default), trackedResource, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -2362,16 +2362,6 @@ namespace Azure.ResourceManager.Automation.Models
                     default),
                 etag,
                 default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.AutomationAccountPython2PackageCreateOrUpdateContent"/>. </summary>
-        /// <param name="tags"> Gets or sets the tags attached to the resource. </param>
-        /// <param name="contentLink"> Gets or sets the module content link. </param>
-        /// <returns> A new <see cref="Models.AutomationAccountPython2PackageCreateOrUpdateContent"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AutomationAccountPython2PackageCreateOrUpdateContent AutomationAccountPython2PackageCreateOrUpdateContent(IDictionary<string, string> tags = default, AutomationContentLink contentLink = default)
-        {
-            return new AutomationAccountPython2PackageCreateOrUpdateContent(contentLink is null ? default : new PythonPackageCreateProperties(contentLink, default), tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Automation.DscNodeConfigurationData"/>. </summary>

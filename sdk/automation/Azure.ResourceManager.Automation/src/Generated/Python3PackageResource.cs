@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="patch"> The update parameters for python package. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<Python3PackageResource>> UpdateAsync(AutomationAccountPython2PackagePatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Python3PackageResource>> UpdateAsync(AutomationPythonPackagePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _python3PackageRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AutomationAccountPython2PackagePatch.ToRequestContent(patch), context);
+                HttpMessage message = _python3PackageRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AutomationPythonPackagePatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AutomationModuleData> response = Response.FromValue(AutomationModuleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="patch"> The update parameters for python package. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<Python3PackageResource> Update(AutomationAccountPython2PackagePatch patch, CancellationToken cancellationToken = default)
+        public virtual Response<Python3PackageResource> Update(AutomationPythonPackagePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _python3PackageRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AutomationAccountPython2PackagePatch.ToRequestContent(patch), context);
+                HttpMessage message = _python3PackageRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AutomationPythonPackagePatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AutomationModuleData> response = Response.FromValue(AutomationModuleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.Automation
                 else
                 {
                     AutomationModuleData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    AutomationAccountPython2PackagePatch patch = new AutomationAccountPython2PackagePatch();
+                    AutomationPythonPackagePatch patch = new AutomationPythonPackagePatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.Automation
                 else
                 {
                     AutomationModuleData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    AutomationAccountPython2PackagePatch patch = new AutomationAccountPython2PackagePatch();
+                    AutomationPythonPackagePatch patch = new AutomationPythonPackagePatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -522,7 +522,7 @@ namespace Azure.ResourceManager.Automation
                 else
                 {
                     AutomationModuleData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    AutomationAccountPython2PackagePatch patch = new AutomationAccountPython2PackagePatch();
+                    AutomationPythonPackagePatch patch = new AutomationPythonPackagePatch();
                     patch.Tags.ReplaceWith(tags);
                     Response<Python3PackageResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -565,7 +565,7 @@ namespace Azure.ResourceManager.Automation
                 else
                 {
                     AutomationModuleData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    AutomationAccountPython2PackagePatch patch = new AutomationAccountPython2PackagePatch();
+                    AutomationPythonPackagePatch patch = new AutomationPythonPackagePatch();
                     patch.Tags.ReplaceWith(tags);
                     Response<Python3PackageResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -607,7 +607,7 @@ namespace Azure.ResourceManager.Automation
                 else
                 {
                     AutomationModuleData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    AutomationAccountPython2PackagePatch patch = new AutomationAccountPython2PackagePatch();
+                    AutomationPythonPackagePatch patch = new AutomationPythonPackagePatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -653,7 +653,7 @@ namespace Azure.ResourceManager.Automation
                 else
                 {
                     AutomationModuleData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    AutomationAccountPython2PackagePatch patch = new AutomationAccountPython2PackagePatch();
+                    AutomationPythonPackagePatch patch = new AutomationPythonPackagePatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

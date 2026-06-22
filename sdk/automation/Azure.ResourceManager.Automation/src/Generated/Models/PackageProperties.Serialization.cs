@@ -106,10 +106,10 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("error"u8);
                 writer.WriteObjectValue(Error, options);
             }
-            if (Optional.IsDefined(AllOf))
+            if (Optional.IsDefined(ResourceSystemData))
             {
                 writer.WritePropertyName("allOf"u8);
-                ((IJsonModel<SystemData>)AllOf).Write(writer, options);
+                ((IJsonModel<SystemData>)ResourceSystemData).Write(writer, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -156,10 +156,10 @@ namespace Azure.ResourceManager.Automation.Models
             bool? isDefault = default;
             string version = default;
             long? sizeInBytes = default;
-            PackageProvisioningState? provisioningState = default;
+            AutomationPackageProvisioningState? provisioningState = default;
             AutomationContentLink contentLink = default;
-            PackageErrorInfo error = default;
-            SystemData allOf = default;
+            AutomationPackageErrorInfo error = default;
+            SystemData resourceSystemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    provisioningState = new PackageProvisioningState(prop.Value.GetString());
+                    provisioningState = new AutomationPackageProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("contentLink"u8))
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    error = PackageErrorInfo.DeserializePackageErrorInfo(prop.Value, options);
+                    error = AutomationPackageErrorInfo.DeserializeAutomationPackageErrorInfo(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("allOf"u8))
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    allOf = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAutomationContext.Default);
+                    resourceSystemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAutomationContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Automation.Models
                 provisioningState,
                 contentLink,
                 error,
-                allOf,
+                resourceSystemData,
                 additionalBinaryDataProperties);
         }
     }

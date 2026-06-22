@@ -29,9 +29,9 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="provisioningState"> Gets or sets the provisioning state of the Package. </param>
         /// <param name="contentLink"> Gets or sets the contentLink of the Package. </param>
         /// <param name="error"> Gets or sets the error info of the Package. </param>
-        /// <param name="allOf"> Metadata pertaining to creation and last modification of the resource. </param>
+        /// <param name="resourceSystemData"> Metadata pertaining to creation and last modification of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PackageProperties(bool? isDefault, string version, long? sizeInBytes, PackageProvisioningState? provisioningState, AutomationContentLink contentLink, PackageErrorInfo error, SystemData allOf, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PackageProperties(bool? isDefault, string version, long? sizeInBytes, AutomationPackageProvisioningState? provisioningState, AutomationContentLink contentLink, AutomationPackageErrorInfo error, SystemData resourceSystemData, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsDefault = isDefault;
             Version = version;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Automation.Models
             ProvisioningState = provisioningState;
             ContentLink = contentLink;
             Error = error;
-            AllOf = allOf;
+            ResourceSystemData = resourceSystemData;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -53,15 +53,15 @@ namespace Azure.ResourceManager.Automation.Models
         public long? SizeInBytes { get; }
 
         /// <summary> Gets or sets the provisioning state of the Package. </summary>
-        public PackageProvisioningState? ProvisioningState { get; }
+        public AutomationPackageProvisioningState? ProvisioningState { get; }
 
         /// <summary> Gets or sets the contentLink of the Package. </summary>
         public AutomationContentLink ContentLink { get; }
 
         /// <summary> Gets or sets the error info of the Package. </summary>
-        public PackageErrorInfo Error { get; }
+        public AutomationPackageErrorInfo Error { get; }
 
         /// <summary> Metadata pertaining to creation and last modification of the resource. </summary>
-        public SystemData AllOf { get; }
+        public SystemData ResourceSystemData { get; }
     }
 }

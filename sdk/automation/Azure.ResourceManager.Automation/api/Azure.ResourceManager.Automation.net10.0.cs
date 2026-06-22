@@ -97,7 +97,9 @@ namespace Azure.ResourceManager.Automation
     {
         protected AutomationAccountPython2PackageCollection() { }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Automation.AutomationAccountPython2PackageResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string packageName, Azure.ResourceManager.Automation.Models.AutomationAccountPython2PackageCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Automation.AutomationAccountPython2PackageResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string packageName, Azure.ResourceManager.Automation.Models.AutomationPythonPackageCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Automation.AutomationAccountPython2PackageResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string packageName, Azure.ResourceManager.Automation.Models.AutomationAccountPython2PackageCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Automation.AutomationAccountPython2PackageResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string packageName, Azure.ResourceManager.Automation.Models.AutomationPythonPackageCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string packageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string packageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Automation.AutomationAccountPython2PackageResource> Get(string packageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -133,7 +135,9 @@ namespace Azure.ResourceManager.Automation
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.AutomationModuleData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.AutomationModuleData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Automation.AutomationAccountPython2PackageResource> Update(Azure.ResourceManager.Automation.Models.AutomationAccountPython2PackagePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Automation.AutomationAccountPython2PackageResource> Update(Azure.ResourceManager.Automation.Models.AutomationPythonPackagePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Automation.AutomationAccountPython2PackageResource>> UpdateAsync(Azure.ResourceManager.Automation.Models.AutomationAccountPython2PackagePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Automation.AutomationAccountPython2PackageResource>> UpdateAsync(Azure.ResourceManager.Automation.Models.AutomationPythonPackagePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class AutomationAccountResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.AutomationAccountData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.AutomationAccountData>
     {
@@ -508,6 +512,7 @@ namespace Azure.ResourceManager.Automation
         public static Azure.ResourceManager.Automation.AutomationCredentialResource GetAutomationCredentialResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Automation.AutomationJobResource GetAutomationJobResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Automation.AutomationJobScheduleResource GetAutomationJobScheduleResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Automation.AutomationPackageResource GetAutomationPackageResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Automation.AutomationPrivateEndpointConnectionResource GetAutomationPrivateEndpointConnectionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Automation.AutomationRunbookResource GetAutomationRunbookResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Automation.AutomationScheduleResource GetAutomationScheduleResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -524,7 +529,6 @@ namespace Azure.ResourceManager.Automation
         public static Azure.ResourceManager.Automation.DscNodeResource GetDscNodeResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Automation.HybridRunbookWorkerGroupResource GetHybridRunbookWorkerGroupResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Automation.HybridRunbookWorkerResource GetHybridRunbookWorkerResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Automation.PackageResource GetPackageResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Automation.Python3PackageResource GetPython3PackageResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Automation.RuntimeEnvironmentResource GetRuntimeEnvironmentResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Automation.SoftwareUpdateConfigurationResource GetSoftwareUpdateConfigurationResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -683,6 +687,62 @@ namespace Azure.ResourceManager.Automation
         Azure.ResourceManager.Automation.AutomationModuleData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.AutomationModuleData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.AutomationModuleData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.AutomationModuleData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class AutomationPackageCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Automation.AutomationPackageResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Automation.AutomationPackageResource>, System.Collections.IEnumerable
+    {
+        protected AutomationPackageCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Automation.AutomationPackageResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string packageName, Azure.ResourceManager.Automation.Models.AutomationPackageCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Automation.AutomationPackageResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string packageName, Azure.ResourceManager.Automation.Models.AutomationPackageCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string packageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string packageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Automation.AutomationPackageResource> Get(string packageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Automation.AutomationPackageResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Automation.AutomationPackageResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Automation.AutomationPackageResource>> GetAsync(string packageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Automation.AutomationPackageResource> GetIfExists(string packageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Automation.AutomationPackageResource>> GetIfExistsAsync(string packageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Automation.AutomationPackageResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Automation.AutomationPackageResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Automation.AutomationPackageResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Automation.AutomationPackageResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class AutomationPackageData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.AutomationPackageData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.AutomationPackageData>
+    {
+        internal AutomationPackageData() { }
+        public Azure.ResourceManager.Automation.Models.AutomationContentLink ContentLink { get { throw null; } }
+        public Azure.ResourceManager.Automation.Models.AutomationPackageErrorInfo Error { get { throw null; } }
+        public bool? IsDefault { get { throw null; } }
+        public Azure.ResourceManager.Automation.Models.AutomationPackageProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Models.SystemData ResourceSystemData { get { throw null; } }
+        public long? SizeInBytes { get { throw null; } }
+        public string Version { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Automation.AutomationPackageData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.AutomationPackageData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.AutomationPackageData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.AutomationPackageData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.AutomationPackageData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.AutomationPackageData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.AutomationPackageData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class AutomationPackageResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.AutomationPackageData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.AutomationPackageData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected AutomationPackageResource() { }
+        public virtual Azure.ResourceManager.Automation.AutomationPackageData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string automationAccountName, string runtimeEnvironmentName, string packageName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Automation.AutomationPackageResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Automation.AutomationPackageResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Automation.AutomationPackageData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.AutomationPackageData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.AutomationPackageData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.AutomationPackageData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.AutomationPackageData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.AutomationPackageData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.AutomationPackageData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Automation.AutomationPackageResource> Update(Azure.ResourceManager.Automation.Models.AutomationPackagePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Automation.AutomationPackageResource>> UpdateAsync(Azure.ResourceManager.Automation.Models.AutomationPackagePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class AutomationPrivateEndpointConnectionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Automation.AutomationPrivateEndpointConnectionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Automation.AutomationPrivateEndpointConnectionResource>, System.Collections.IEnumerable
     {
@@ -1545,67 +1605,11 @@ namespace Azure.ResourceManager.Automation
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Automation.HybridRunbookWorkerResource>> UpdateAsync(Azure.ResourceManager.Automation.Models.HybridRunbookWorkerCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Automation.HybridRunbookWorkerResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Automation.Models.HybridRunbookWorkerCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class PackageCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Automation.PackageResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Automation.PackageResource>, System.Collections.IEnumerable
-    {
-        protected PackageCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Automation.PackageResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string packageName, Azure.ResourceManager.Automation.Models.PackageCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Automation.PackageResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string packageName, Azure.ResourceManager.Automation.Models.PackageCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string packageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string packageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Automation.PackageResource> Get(string packageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Automation.PackageResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Automation.PackageResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Automation.PackageResource>> GetAsync(string packageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.NullableResponse<Azure.ResourceManager.Automation.PackageResource> GetIfExists(string packageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Automation.PackageResource>> GetIfExistsAsync(string packageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Automation.PackageResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Automation.PackageResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Automation.PackageResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Automation.PackageResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class PackageData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.PackageData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.PackageData>
-    {
-        internal PackageData() { }
-        public Azure.ResourceManager.Models.SystemData AllOf { get { throw null; } }
-        public Azure.ResourceManager.Automation.Models.AutomationContentLink ContentLink { get { throw null; } }
-        public Azure.ResourceManager.Automation.Models.PackageErrorInfo Error { get { throw null; } }
-        public bool? IsDefault { get { throw null; } }
-        public Azure.ResourceManager.Automation.Models.PackageProvisioningState? ProvisioningState { get { throw null; } }
-        public long? SizeInBytes { get { throw null; } }
-        public string Version { get { throw null; } }
-        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Automation.PackageData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.PackageData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.PackageData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Automation.PackageData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.PackageData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.PackageData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.PackageData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class PackageResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.PackageData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.PackageData>
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected PackageResource() { }
-        public virtual Azure.ResourceManager.Automation.PackageData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string automationAccountName, string runtimeEnvironmentName, string packageName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Automation.PackageResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Automation.PackageResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        Azure.ResourceManager.Automation.PackageData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.PackageData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.PackageData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Automation.PackageData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.PackageData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.PackageData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.PackageData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Automation.PackageResource> Update(Azure.ResourceManager.Automation.Models.PackagePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Automation.PackageResource>> UpdateAsync(Azure.ResourceManager.Automation.Models.PackagePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
     public partial class Python3PackageCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Automation.Python3PackageResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Automation.Python3PackageResource>, System.Collections.IEnumerable
     {
         protected Python3PackageCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Automation.Python3PackageResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string packageName, Azure.ResourceManager.Automation.Models.AutomationAccountPython2PackageCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Automation.Python3PackageResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string packageName, Azure.ResourceManager.Automation.Models.AutomationAccountPython2PackageCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Automation.Python3PackageResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string packageName, Azure.ResourceManager.Automation.Models.AutomationPythonPackageCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Automation.Python3PackageResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string packageName, Azure.ResourceManager.Automation.Models.AutomationPythonPackageCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string packageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string packageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Automation.Python3PackageResource> Get(string packageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1640,8 +1644,8 @@ namespace Azure.ResourceManager.Automation
         Azure.ResourceManager.Automation.AutomationModuleData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.AutomationModuleData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.AutomationModuleData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.AutomationModuleData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Automation.Python3PackageResource> Update(Azure.ResourceManager.Automation.Models.AutomationAccountPython2PackagePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Automation.Python3PackageResource>> UpdateAsync(Azure.ResourceManager.Automation.Models.AutomationAccountPython2PackagePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Automation.Python3PackageResource> Update(Azure.ResourceManager.Automation.Models.AutomationPythonPackagePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Automation.Python3PackageResource>> UpdateAsync(Azure.ResourceManager.Automation.Models.AutomationPythonPackagePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class RuntimeEnvironmentCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Automation.RuntimeEnvironmentResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Automation.RuntimeEnvironmentResource>, System.Collections.IEnumerable
     {
@@ -1688,9 +1692,9 @@ namespace Azure.ResourceManager.Automation
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Automation.RuntimeEnvironmentResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Automation.RuntimeEnvironmentResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Automation.PackageResource> GetPackage(string packageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Automation.PackageResource>> GetPackageAsync(string packageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Automation.PackageCollection GetPackages() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Automation.AutomationPackageResource> GetAutomationPackage(string packageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Automation.AutomationPackageResource>> GetAutomationPackageAsync(string packageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Automation.AutomationPackageCollection GetAutomationPackages() { throw null; }
         Azure.ResourceManager.Automation.RuntimeEnvironmentData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.RuntimeEnvironmentData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.RuntimeEnvironmentData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Automation.RuntimeEnvironmentData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.RuntimeEnvironmentData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1772,6 +1776,7 @@ namespace Azure.ResourceManager.Automation.Mocking
         public virtual Azure.ResourceManager.Automation.AutomationCredentialResource GetAutomationCredentialResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Automation.AutomationJobResource GetAutomationJobResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Automation.AutomationJobScheduleResource GetAutomationJobScheduleResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Automation.AutomationPackageResource GetAutomationPackageResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Automation.AutomationPrivateEndpointConnectionResource GetAutomationPrivateEndpointConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Automation.AutomationRunbookResource GetAutomationRunbookResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Automation.AutomationScheduleResource GetAutomationScheduleResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -1786,7 +1791,6 @@ namespace Azure.ResourceManager.Automation.Mocking
         public virtual Azure.ResourceManager.Automation.DscNodeResource GetDscNodeResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Automation.HybridRunbookWorkerGroupResource GetHybridRunbookWorkerGroupResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Automation.HybridRunbookWorkerResource GetHybridRunbookWorkerResource(Azure.Core.ResourceIdentifier id) { throw null; }
-        public virtual Azure.ResourceManager.Automation.PackageResource GetPackageResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Automation.Python3PackageResource GetPython3PackageResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Automation.RuntimeEnvironmentResource GetRuntimeEnvironmentResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Automation.SoftwareUpdateConfigurationResource GetSoftwareUpdateConfigurationResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -1931,10 +1935,16 @@ namespace Azure.ResourceManager.Automation.Models
         public static Azure.ResourceManager.Automation.AutomationModuleData AutomationModuleData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), bool? isGlobal = default(bool?), string version = null, long? sizeInBytes = default(long?), int? activityCount = default(int?), Azure.ResourceManager.Automation.Models.ModuleProvisioningState? provisioningState = default(Azure.ResourceManager.Automation.Models.ModuleProvisioningState?), Azure.ResourceManager.Automation.Models.AutomationContentLink contentLink = null, Azure.ResourceManager.Automation.Models.AutomationModuleErrorInfo error = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), string description = null, bool? isComposite = default(bool?), Azure.ETag? eTag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.Automation.Models.AutomationModuleErrorInfo AutomationModuleErrorInfo(string code = null, string message = null) { throw null; }
         public static Azure.ResourceManager.Automation.Models.AutomationModuleField AutomationModuleField(string name = null, string fieldType = null) { throw null; }
+        public static Azure.ResourceManager.Automation.Models.AutomationPackageCreateOrUpdateContent AutomationPackageCreateOrUpdateContent(Azure.ResourceManager.Automation.Models.AutomationContentLink contentLink = null, Azure.ResourceManager.Models.TrackedResourceData trackedResource = null) { throw null; }
+        public static Azure.ResourceManager.Automation.AutomationPackageData AutomationPackageData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), bool? isDefault = default(bool?), string version = null, long? sizeInBytes = default(long?), Azure.ResourceManager.Automation.Models.AutomationPackageProvisioningState? provisioningState = default(Azure.ResourceManager.Automation.Models.AutomationPackageProvisioningState?), Azure.ResourceManager.Automation.Models.AutomationContentLink contentLink = null, Azure.ResourceManager.Automation.Models.AutomationPackageErrorInfo error = null, Azure.ResourceManager.Models.SystemData resourceSystemData = null) { throw null; }
+        public static Azure.ResourceManager.Automation.Models.AutomationPackageErrorInfo AutomationPackageErrorInfo(string code = null, string message = null) { throw null; }
+        public static Azure.ResourceManager.Automation.Models.AutomationPackagePatch AutomationPackagePatch(Azure.ResourceManager.Automation.Models.AutomationContentLink contentLink = null, Azure.ResourceManager.Models.TrackedResourceData trackedResource = null) { throw null; }
         public static Azure.ResourceManager.Automation.AutomationPrivateEndpointConnectionData AutomationPrivateEndpointConnectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.ResourceIdentifier privateEndpointId = null, System.Collections.Generic.IEnumerable<string> groupIds = null, Azure.ResourceManager.Automation.Models.AutomationPrivateLinkServiceConnectionStateProperty connectionState = null) { throw null; }
         public static Azure.ResourceManager.Automation.AutomationPrivateEndpointConnectionData AutomationPrivateEndpointConnectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IEnumerable<string> groupIds = null, Azure.ResourceManager.Automation.Models.AutomationPrivateLinkServiceConnectionStateProperty connectionState = null, Azure.Core.ResourceIdentifier privateEndpointId = null) { throw null; }
         public static Azure.ResourceManager.Automation.Models.AutomationPrivateLinkResource AutomationPrivateLinkResource(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string groupId = null, System.Collections.Generic.IEnumerable<string> requiredMembers = null) { throw null; }
         public static Azure.ResourceManager.Automation.Models.AutomationPrivateLinkServiceConnectionStateProperty AutomationPrivateLinkServiceConnectionStateProperty(string status = null, string description = null, string actionsRequired = null) { throw null; }
+        public static Azure.ResourceManager.Automation.Models.AutomationPythonPackageCreateOrUpdateContent AutomationPythonPackageCreateOrUpdateContent(Azure.ResourceManager.Automation.Models.AutomationContentLink contentLink = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
+        public static Azure.ResourceManager.Automation.Models.AutomationPythonPackagePatch AutomationPythonPackagePatch(System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.Automation.Models.AutomationResponseError AutomationResponseError(string code = null, string message = null) { throw null; }
         public static Azure.ResourceManager.Automation.Models.AutomationRunbookCreateOrUpdateContent AutomationRunbookCreateOrUpdateContent(bool? isLogVerboseEnabled = default(bool?), bool? isLogProgressEnabled = default(bool?), string runtimeEnvironment = null, Azure.ResourceManager.Automation.Models.AutomationRunbookType runbookType = default(Azure.ResourceManager.Automation.Models.AutomationRunbookType), Azure.ResourceManager.Automation.Models.AutomationRunbookDraft draft = null, Azure.ResourceManager.Automation.Models.AutomationContentLink publishContentLink = null, string description = null, int? logActivityTrace = default(int?), string name = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.Automation.Models.AutomationRunbookCreateOrUpdateContent AutomationRunbookCreateOrUpdateContent(string name = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IDictionary<string, string> tags = null, bool? isLogVerboseEnabled = default(bool?), bool? isLogProgressEnabled = default(bool?), Azure.ResourceManager.Automation.Models.AutomationRunbookType runbookType = default(Azure.ResourceManager.Automation.Models.AutomationRunbookType), Azure.ResourceManager.Automation.Models.AutomationRunbookDraft draft = null, Azure.ResourceManager.Automation.Models.AutomationContentLink publishContentLink = null, string description = null, int? logActivityTrace = default(int?)) { throw null; }
@@ -1997,10 +2007,6 @@ namespace Azure.ResourceManager.Automation.Models
         public static Azure.ResourceManager.Automation.Models.HybridRunbookWorkerMoveContent HybridRunbookWorkerMoveContent(string hybridRunbookWorkerGroupName = null) { throw null; }
         public static Azure.ResourceManager.Automation.Models.LinuxUpdateConfigurationProperties LinuxUpdateConfigurationProperties(Azure.ResourceManager.Automation.Models.LinuxUpdateClassification? includedPackageClassifications = default(Azure.ResourceManager.Automation.Models.LinuxUpdateClassification?), System.Collections.Generic.IEnumerable<string> excludedPackageNameMasks = null, System.Collections.Generic.IEnumerable<string> includedPackageNameMasks = null, string rebootSetting = null) { throw null; }
         public static Azure.ResourceManager.Automation.Models.NonAzureQueryProperties NonAzureQueryProperties(string functionAlias = null, string workspaceId = null) { throw null; }
-        public static Azure.ResourceManager.Automation.Models.PackageCreateOrUpdateContent PackageCreateOrUpdateContent(Azure.ResourceManager.Automation.Models.AutomationContentLink contentLink = null, Azure.ResourceManager.Models.TrackedResourceData allOf = null) { throw null; }
-        public static Azure.ResourceManager.Automation.PackageData PackageData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), bool? isDefault = default(bool?), string version = null, long? sizeInBytes = default(long?), Azure.ResourceManager.Automation.Models.PackageProvisioningState? provisioningState = default(Azure.ResourceManager.Automation.Models.PackageProvisioningState?), Azure.ResourceManager.Automation.Models.AutomationContentLink contentLink = null, Azure.ResourceManager.Automation.Models.PackageErrorInfo error = null, Azure.ResourceManager.Models.SystemData allOf = null) { throw null; }
-        public static Azure.ResourceManager.Automation.Models.PackageErrorInfo PackageErrorInfo(string code = null, string message = null) { throw null; }
-        public static Azure.ResourceManager.Automation.Models.PackagePatch PackagePatch(Azure.ResourceManager.Automation.Models.AutomationContentLink contentLink = null, Azure.ResourceManager.Models.TrackedResourceData allOf = null) { throw null; }
         public static Azure.ResourceManager.Automation.Models.QueryTagSettingsProperties QueryTagSettingsProperties(System.Collections.Generic.IDictionary<string, System.Collections.Generic.IList<string>> tags = null, Azure.ResourceManager.Automation.Models.QueryTagOperator? filterOperator = default(Azure.ResourceManager.Automation.Models.QueryTagOperator?)) { throw null; }
         public static Azure.ResourceManager.Automation.Models.RawGraphicalRunbookContent RawGraphicalRunbookContent(string schemaVersion = null, string runbookDefinition = null, Azure.ResourceManager.Automation.Models.GraphRunbookType? runbookType = default(Azure.ResourceManager.Automation.Models.GraphRunbookType?)) { throw null; }
         public static Azure.ResourceManager.Automation.Models.RunbookAssociationProperty RunbookAssociationProperty(string name = null) { throw null; }
@@ -2847,6 +2853,82 @@ namespace Azure.ResourceManager.Automation.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationModuleField>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationModuleField>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class AutomationPackageCreateOrUpdateContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationPackageCreateOrUpdateContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationPackageCreateOrUpdateContent>
+    {
+        public AutomationPackageCreateOrUpdateContent(Azure.ResourceManager.Automation.Models.AutomationContentLink contentLink) { }
+        public Azure.ResourceManager.Automation.Models.AutomationContentLink ContentLink { get { throw null; } }
+        public Azure.ResourceManager.Models.TrackedResourceData TrackedResource { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Automation.Models.AutomationPackageCreateOrUpdateContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Automation.Models.AutomationPackageCreateOrUpdateContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Automation.Models.AutomationPackageCreateOrUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationPackageCreateOrUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationPackageCreateOrUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.AutomationPackageCreateOrUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationPackageCreateOrUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationPackageCreateOrUpdateContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationPackageCreateOrUpdateContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class AutomationPackageErrorInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationPackageErrorInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationPackageErrorInfo>
+    {
+        internal AutomationPackageErrorInfo() { }
+        public string Code { get { throw null; } }
+        public string Message { get { throw null; } }
+        protected virtual Azure.ResourceManager.Automation.Models.AutomationPackageErrorInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Automation.Models.AutomationPackageErrorInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Automation.Models.AutomationPackageErrorInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationPackageErrorInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationPackageErrorInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.AutomationPackageErrorInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationPackageErrorInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationPackageErrorInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationPackageErrorInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class AutomationPackagePatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationPackagePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationPackagePatch>
+    {
+        public AutomationPackagePatch() { }
+        public Azure.ResourceManager.Automation.Models.AutomationContentLink ContentLink { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.TrackedResourceData TrackedResource { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Automation.Models.AutomationPackagePatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Automation.Models.AutomationPackagePatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Automation.Models.AutomationPackagePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationPackagePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationPackagePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.AutomationPackagePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationPackagePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationPackagePatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationPackagePatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AutomationPackageProvisioningState : System.IEquatable<Azure.ResourceManager.Automation.Models.AutomationPackageProvisioningState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AutomationPackageProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.Automation.Models.AutomationPackageProvisioningState ActivitiesStored { get { throw null; } }
+        public static Azure.ResourceManager.Automation.Models.AutomationPackageProvisioningState Canceled { get { throw null; } }
+        public static Azure.ResourceManager.Automation.Models.AutomationPackageProvisioningState ConnectionTypeImported { get { throw null; } }
+        public static Azure.ResourceManager.Automation.Models.AutomationPackageProvisioningState ContentDownloaded { get { throw null; } }
+        public static Azure.ResourceManager.Automation.Models.AutomationPackageProvisioningState ContentRetrieved { get { throw null; } }
+        public static Azure.ResourceManager.Automation.Models.AutomationPackageProvisioningState ContentStored { get { throw null; } }
+        public static Azure.ResourceManager.Automation.Models.AutomationPackageProvisioningState ContentValidated { get { throw null; } }
+        public static Azure.ResourceManager.Automation.Models.AutomationPackageProvisioningState Created { get { throw null; } }
+        public static Azure.ResourceManager.Automation.Models.AutomationPackageProvisioningState Creating { get { throw null; } }
+        public static Azure.ResourceManager.Automation.Models.AutomationPackageProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.Automation.Models.AutomationPackageProvisioningState ModuleDataStored { get { throw null; } }
+        public static Azure.ResourceManager.Automation.Models.AutomationPackageProvisioningState ModuleImportRunbookComplete { get { throw null; } }
+        public static Azure.ResourceManager.Automation.Models.AutomationPackageProvisioningState RunningImportModuleRunbook { get { throw null; } }
+        public static Azure.ResourceManager.Automation.Models.AutomationPackageProvisioningState StartingImportModuleRunbook { get { throw null; } }
+        public static Azure.ResourceManager.Automation.Models.AutomationPackageProvisioningState Succeeded { get { throw null; } }
+        public static Azure.ResourceManager.Automation.Models.AutomationPackageProvisioningState Updating { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Automation.Models.AutomationPackageProvisioningState other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Automation.Models.AutomationPackageProvisioningState left, Azure.ResourceManager.Automation.Models.AutomationPackageProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Automation.Models.AutomationPackageProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Automation.Models.AutomationPackageProvisioningState? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Automation.Models.AutomationPackageProvisioningState left, Azure.ResourceManager.Automation.Models.AutomationPackageProvisioningState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class AutomationPrivateLinkResource : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationPrivateLinkResource>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationPrivateLinkResource>
     {
         public AutomationPrivateLinkResource() { }
@@ -2877,6 +2959,35 @@ namespace Azure.ResourceManager.Automation.Models
         Azure.ResourceManager.Automation.Models.AutomationPrivateLinkServiceConnectionStateProperty System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationPrivateLinkServiceConnectionStateProperty>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationPrivateLinkServiceConnectionStateProperty>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationPrivateLinkServiceConnectionStateProperty>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class AutomationPythonPackageCreateOrUpdateContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationPythonPackageCreateOrUpdateContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationPythonPackageCreateOrUpdateContent>
+    {
+        public AutomationPythonPackageCreateOrUpdateContent(Azure.ResourceManager.Automation.Models.AutomationContentLink contentLink) { }
+        public Azure.ResourceManager.Automation.Models.AutomationContentLink ContentLink { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.Automation.Models.AutomationPythonPackageCreateOrUpdateContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Automation.Models.AutomationPythonPackageCreateOrUpdateContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Automation.Models.AutomationPythonPackageCreateOrUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationPythonPackageCreateOrUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationPythonPackageCreateOrUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.AutomationPythonPackageCreateOrUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationPythonPackageCreateOrUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationPythonPackageCreateOrUpdateContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationPythonPackageCreateOrUpdateContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class AutomationPythonPackagePatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationPythonPackagePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationPythonPackagePatch>
+    {
+        public AutomationPythonPackagePatch() { }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual Azure.ResourceManager.Automation.Models.AutomationPythonPackagePatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Automation.Models.AutomationPythonPackagePatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Automation.Models.AutomationPythonPackagePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationPythonPackagePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationPythonPackagePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Automation.Models.AutomationPythonPackagePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationPythonPackagePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationPythonPackagePatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationPythonPackagePatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class AutomationResponseError : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationResponseError>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationResponseError>
     {
@@ -3807,82 +3918,6 @@ namespace Azure.ResourceManager.Automation.Models
         Azure.ResourceManager.Automation.Models.NonAzureQueryProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.NonAzureQueryProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.NonAzureQueryProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.NonAzureQueryProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class PackageCreateOrUpdateContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.PackageCreateOrUpdateContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.PackageCreateOrUpdateContent>
-    {
-        public PackageCreateOrUpdateContent(Azure.ResourceManager.Automation.Models.AutomationContentLink contentLink) { }
-        public Azure.ResourceManager.Models.TrackedResourceData AllOf { get { throw null; } set { } }
-        public Azure.ResourceManager.Automation.Models.AutomationContentLink ContentLink { get { throw null; } }
-        protected virtual Azure.ResourceManager.Automation.Models.PackageCreateOrUpdateContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Automation.Models.PackageCreateOrUpdateContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Automation.Models.PackageCreateOrUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.PackageCreateOrUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.PackageCreateOrUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Automation.Models.PackageCreateOrUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.PackageCreateOrUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.PackageCreateOrUpdateContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.PackageCreateOrUpdateContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class PackageErrorInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.PackageErrorInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.PackageErrorInfo>
-    {
-        internal PackageErrorInfo() { }
-        public string Code { get { throw null; } }
-        public string Message { get { throw null; } }
-        protected virtual Azure.ResourceManager.Automation.Models.PackageErrorInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Automation.Models.PackageErrorInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Automation.Models.PackageErrorInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.PackageErrorInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.PackageErrorInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Automation.Models.PackageErrorInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.PackageErrorInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.PackageErrorInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.PackageErrorInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class PackagePatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.PackagePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.PackagePatch>
-    {
-        public PackagePatch() { }
-        public Azure.ResourceManager.Models.TrackedResourceData AllOf { get { throw null; } set { } }
-        public Azure.ResourceManager.Automation.Models.AutomationContentLink ContentLink { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.Automation.Models.PackagePatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Automation.Models.PackagePatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Automation.Models.PackagePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.PackagePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.PackagePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Automation.Models.PackagePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.PackagePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.PackagePatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.PackagePatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct PackageProvisioningState : System.IEquatable<Azure.ResourceManager.Automation.Models.PackageProvisioningState>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public PackageProvisioningState(string value) { throw null; }
-        public static Azure.ResourceManager.Automation.Models.PackageProvisioningState ActivitiesStored { get { throw null; } }
-        public static Azure.ResourceManager.Automation.Models.PackageProvisioningState Canceled { get { throw null; } }
-        public static Azure.ResourceManager.Automation.Models.PackageProvisioningState ConnectionTypeImported { get { throw null; } }
-        public static Azure.ResourceManager.Automation.Models.PackageProvisioningState ContentDownloaded { get { throw null; } }
-        public static Azure.ResourceManager.Automation.Models.PackageProvisioningState ContentRetrieved { get { throw null; } }
-        public static Azure.ResourceManager.Automation.Models.PackageProvisioningState ContentStored { get { throw null; } }
-        public static Azure.ResourceManager.Automation.Models.PackageProvisioningState ContentValidated { get { throw null; } }
-        public static Azure.ResourceManager.Automation.Models.PackageProvisioningState Created { get { throw null; } }
-        public static Azure.ResourceManager.Automation.Models.PackageProvisioningState Creating { get { throw null; } }
-        public static Azure.ResourceManager.Automation.Models.PackageProvisioningState Failed { get { throw null; } }
-        public static Azure.ResourceManager.Automation.Models.PackageProvisioningState ModuleDataStored { get { throw null; } }
-        public static Azure.ResourceManager.Automation.Models.PackageProvisioningState ModuleImportRunbookComplete { get { throw null; } }
-        public static Azure.ResourceManager.Automation.Models.PackageProvisioningState RunningImportModuleRunbook { get { throw null; } }
-        public static Azure.ResourceManager.Automation.Models.PackageProvisioningState StartingImportModuleRunbook { get { throw null; } }
-        public static Azure.ResourceManager.Automation.Models.PackageProvisioningState Succeeded { get { throw null; } }
-        public static Azure.ResourceManager.Automation.Models.PackageProvisioningState Updating { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Automation.Models.PackageProvisioningState other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Automation.Models.PackageProvisioningState left, Azure.ResourceManager.Automation.Models.PackageProvisioningState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Automation.Models.PackageProvisioningState (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Automation.Models.PackageProvisioningState? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Automation.Models.PackageProvisioningState left, Azure.ResourceManager.Automation.Models.PackageProvisioningState right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public enum QueryTagOperator
     {

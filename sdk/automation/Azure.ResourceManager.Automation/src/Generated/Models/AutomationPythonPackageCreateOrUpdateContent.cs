@@ -12,15 +12,15 @@ using Azure.ResourceManager.Automation;
 namespace Azure.ResourceManager.Automation.Models
 {
     /// <summary> The parameters supplied to the create or update module operation. </summary>
-    public partial class AutomationAccountPython2PackageCreateOrUpdateContent
+    public partial class AutomationPythonPackageCreateOrUpdateContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AutomationAccountPython2PackageCreateOrUpdateContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationPythonPackageCreateOrUpdateContent"/>. </summary>
         /// <param name="contentLink"> Gets or sets the module content link. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="contentLink"/> is null. </exception>
-        public AutomationAccountPython2PackageCreateOrUpdateContent(AutomationContentLink contentLink)
+        public AutomationPythonPackageCreateOrUpdateContent(AutomationContentLink contentLink)
         {
             Argument.AssertNotNull(contentLink, nameof(contentLink));
 
@@ -28,11 +28,11 @@ namespace Azure.ResourceManager.Automation.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AutomationAccountPython2PackageCreateOrUpdateContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationPythonPackageCreateOrUpdateContent"/>. </summary>
         /// <param name="properties"> Gets or sets the module create properties. </param>
         /// <param name="tags"> Gets or sets the tags attached to the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AutomationAccountPython2PackageCreateOrUpdateContent(PythonPackageCreateProperties properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AutomationPythonPackageCreateOrUpdateContent(PythonPackageCreateProperties properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
             Tags = tags;

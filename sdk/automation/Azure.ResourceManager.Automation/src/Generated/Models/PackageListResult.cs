@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Automation.Models
 
         /// <summary> Initializes a new instance of <see cref="PackageListResult"/>. </summary>
         /// <param name="value"> The Package items on this page. </param>
-        internal PackageListResult(IEnumerable<PackageData> value)
+        internal PackageListResult(IEnumerable<AutomationPackageData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="value"> The Package items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PackageListResult(IList<PackageData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PackageListResult(IList<AutomationPackageData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> The Package items on this page. </summary>
-        public IList<PackageData> Value { get; }
+        public IList<AutomationPackageData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

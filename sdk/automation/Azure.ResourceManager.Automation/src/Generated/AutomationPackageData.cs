@@ -14,18 +14,18 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Automation
 {
     /// <summary> Definition of the Package type. </summary>
-    public partial class PackageData : TrackedResourceData
+    public partial class AutomationPackageData : TrackedResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="PackageData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationPackageData"/>. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        internal PackageData(AzureLocation location) : base(location)
+        internal AutomationPackageData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PackageData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationPackageData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Gets or sets the Package properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PackageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, PackageProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal AutomationPackageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, PackageProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Automation
         }
 
         /// <summary> Gets or sets the provisioning state of the Package. </summary>
-        public PackageProvisioningState? ProvisioningState
+        public AutomationPackageProvisioningState? ProvisioningState
         {
             get
             {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Automation
         }
 
         /// <summary> Gets or sets the error info of the Package. </summary>
-        public PackageErrorInfo Error
+        public AutomationPackageErrorInfo Error
         {
             get
             {
@@ -98,11 +98,11 @@ namespace Azure.ResourceManager.Automation
         }
 
         /// <summary> Metadata pertaining to creation and last modification of the resource. </summary>
-        public SystemData AllOf
+        public SystemData ResourceSystemData
         {
             get
             {
-                return Properties is null ? default : Properties.AllOf;
+                return Properties is null ? default : Properties.ResourceSystemData;
             }
         }
     }

@@ -12,7 +12,7 @@ using Azure.ResourceManager.Automation;
 namespace Azure.ResourceManager.Automation.Models
 {
     /// <summary> Gets or sets the provisioning state of the Package. </summary>
-    public readonly partial struct PackageProvisioningState : IEquatable<PackageProvisioningState>
+    public readonly partial struct AutomationPackageProvisioningState : IEquatable<AutomationPackageProvisioningState>
     {
         private readonly string _value;
         /// <summary> Created. </summary>
@@ -48,10 +48,10 @@ namespace Azure.ResourceManager.Automation.Models
         /// <summary> Updating. </summary>
         private const string UpdatingValue = "Updating";
 
-        /// <summary> Initializes a new instance of <see cref="PackageProvisioningState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationPackageProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public PackageProvisioningState(string value)
+        public AutomationPackageProvisioningState(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -59,77 +59,77 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> Created. </summary>
-        public static PackageProvisioningState Created { get; } = new PackageProvisioningState(CreatedValue);
+        public static AutomationPackageProvisioningState Created { get; } = new AutomationPackageProvisioningState(CreatedValue);
 
         /// <summary> Creating. </summary>
-        public static PackageProvisioningState Creating { get; } = new PackageProvisioningState(CreatingValue);
+        public static AutomationPackageProvisioningState Creating { get; } = new AutomationPackageProvisioningState(CreatingValue);
 
         /// <summary> StartingImportModuleRunbook. </summary>
-        public static PackageProvisioningState StartingImportModuleRunbook { get; } = new PackageProvisioningState(StartingImportModuleRunbookValue);
+        public static AutomationPackageProvisioningState StartingImportModuleRunbook { get; } = new AutomationPackageProvisioningState(StartingImportModuleRunbookValue);
 
         /// <summary> RunningImportModuleRunbook. </summary>
-        public static PackageProvisioningState RunningImportModuleRunbook { get; } = new PackageProvisioningState(RunningImportModuleRunbookValue);
+        public static AutomationPackageProvisioningState RunningImportModuleRunbook { get; } = new AutomationPackageProvisioningState(RunningImportModuleRunbookValue);
 
         /// <summary> ContentRetrieved. </summary>
-        public static PackageProvisioningState ContentRetrieved { get; } = new PackageProvisioningState(ContentRetrievedValue);
+        public static AutomationPackageProvisioningState ContentRetrieved { get; } = new AutomationPackageProvisioningState(ContentRetrievedValue);
 
         /// <summary> ContentDownloaded. </summary>
-        public static PackageProvisioningState ContentDownloaded { get; } = new PackageProvisioningState(ContentDownloadedValue);
+        public static AutomationPackageProvisioningState ContentDownloaded { get; } = new AutomationPackageProvisioningState(ContentDownloadedValue);
 
         /// <summary> ContentValidated. </summary>
-        public static PackageProvisioningState ContentValidated { get; } = new PackageProvisioningState(ContentValidatedValue);
+        public static AutomationPackageProvisioningState ContentValidated { get; } = new AutomationPackageProvisioningState(ContentValidatedValue);
 
         /// <summary> ConnectionTypeImported. </summary>
-        public static PackageProvisioningState ConnectionTypeImported { get; } = new PackageProvisioningState(ConnectionTypeImportedValue);
+        public static AutomationPackageProvisioningState ConnectionTypeImported { get; } = new AutomationPackageProvisioningState(ConnectionTypeImportedValue);
 
         /// <summary> ContentStored. </summary>
-        public static PackageProvisioningState ContentStored { get; } = new PackageProvisioningState(ContentStoredValue);
+        public static AutomationPackageProvisioningState ContentStored { get; } = new AutomationPackageProvisioningState(ContentStoredValue);
 
         /// <summary> ModuleDataStored. </summary>
-        public static PackageProvisioningState ModuleDataStored { get; } = new PackageProvisioningState(ModuleDataStoredValue);
+        public static AutomationPackageProvisioningState ModuleDataStored { get; } = new AutomationPackageProvisioningState(ModuleDataStoredValue);
 
         /// <summary> ActivitiesStored. </summary>
-        public static PackageProvisioningState ActivitiesStored { get; } = new PackageProvisioningState(ActivitiesStoredValue);
+        public static AutomationPackageProvisioningState ActivitiesStored { get; } = new AutomationPackageProvisioningState(ActivitiesStoredValue);
 
         /// <summary> ModuleImportRunbookComplete. </summary>
-        public static PackageProvisioningState ModuleImportRunbookComplete { get; } = new PackageProvisioningState(ModuleImportRunbookCompleteValue);
+        public static AutomationPackageProvisioningState ModuleImportRunbookComplete { get; } = new AutomationPackageProvisioningState(ModuleImportRunbookCompleteValue);
 
         /// <summary> Succeeded. </summary>
-        public static PackageProvisioningState Succeeded { get; } = new PackageProvisioningState(SucceededValue);
+        public static AutomationPackageProvisioningState Succeeded { get; } = new AutomationPackageProvisioningState(SucceededValue);
 
         /// <summary> Failed. </summary>
-        public static PackageProvisioningState Failed { get; } = new PackageProvisioningState(FailedValue);
+        public static AutomationPackageProvisioningState Failed { get; } = new AutomationPackageProvisioningState(FailedValue);
 
         /// <summary> Canceled. </summary>
-        public static PackageProvisioningState Canceled { get; } = new PackageProvisioningState(CanceledValue);
+        public static AutomationPackageProvisioningState Canceled { get; } = new AutomationPackageProvisioningState(CanceledValue);
 
         /// <summary> Updating. </summary>
-        public static PackageProvisioningState Updating { get; } = new PackageProvisioningState(UpdatingValue);
+        public static AutomationPackageProvisioningState Updating { get; } = new AutomationPackageProvisioningState(UpdatingValue);
 
-        /// <summary> Determines if two <see cref="PackageProvisioningState"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="AutomationPackageProvisioningState"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(PackageProvisioningState left, PackageProvisioningState right) => left.Equals(right);
+        public static bool operator ==(AutomationPackageProvisioningState left, AutomationPackageProvisioningState right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="PackageProvisioningState"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="AutomationPackageProvisioningState"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(PackageProvisioningState left, PackageProvisioningState right) => !left.Equals(right);
+        public static bool operator !=(AutomationPackageProvisioningState left, AutomationPackageProvisioningState right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="PackageProvisioningState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="AutomationPackageProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PackageProvisioningState(string value) => new PackageProvisioningState(value);
+        public static implicit operator AutomationPackageProvisioningState(string value) => new AutomationPackageProvisioningState(value);
 
-        /// <summary> Converts a string to a <see cref="PackageProvisioningState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="AutomationPackageProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PackageProvisioningState?(string value) => value == null ? null : new PackageProvisioningState(value);
+        public static implicit operator AutomationPackageProvisioningState?(string value) => value == null ? null : new AutomationPackageProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is PackageProvisioningState other && Equals(other);
+        public override bool Equals(object obj) => obj is AutomationPackageProvisioningState other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(PackageProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(AutomationPackageProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

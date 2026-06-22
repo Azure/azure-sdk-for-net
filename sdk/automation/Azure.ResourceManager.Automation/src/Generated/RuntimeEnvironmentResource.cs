@@ -394,11 +394,11 @@ namespace Azure.ResourceManager.Automation
             }
         }
 
-        /// <summary> Gets a collection of Packages in the <see cref="RuntimeEnvironmentResource"/>. </summary>
-        /// <returns> An object representing collection of Packages and their operations over a PackageResource. </returns>
-        public virtual PackageCollection GetPackages()
+        /// <summary> Gets a collection of AutomationPackages in the <see cref="RuntimeEnvironmentResource"/>. </summary>
+        /// <returns> An object representing collection of AutomationPackages and their operations over a AutomationPackageResource. </returns>
+        public virtual AutomationPackageCollection GetAutomationPackages()
         {
-            return GetCachedClient(client => new PackageCollection(client, Id));
+            return GetCachedClient(client => new AutomationPackageCollection(client, Id));
         }
 
         /// <summary> Retrieve the Package identified by Package name. </summary>
@@ -407,11 +407,11 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="packageName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="packageName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<PackageResource>> GetPackageAsync(string packageName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AutomationPackageResource>> GetAutomationPackageAsync(string packageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(packageName, nameof(packageName));
 
-            return await GetPackages().GetAsync(packageName, cancellationToken).ConfigureAwait(false);
+            return await GetAutomationPackages().GetAsync(packageName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Retrieve the Package identified by Package name. </summary>
@@ -420,11 +420,11 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="packageName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="packageName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<PackageResource> GetPackage(string packageName, CancellationToken cancellationToken = default)
+        public virtual Response<AutomationPackageResource> GetAutomationPackage(string packageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(packageName, nameof(packageName));
 
-            return GetPackages().Get(packageName, cancellationToken);
+            return GetAutomationPackages().Get(packageName, cancellationToken);
         }
     }
 }

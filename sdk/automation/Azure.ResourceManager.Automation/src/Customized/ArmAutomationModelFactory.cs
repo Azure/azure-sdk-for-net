@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using Azure.Core;
 using Azure.ResourceManager.Automation;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -44,6 +43,32 @@ namespace Azure.ResourceManager.Automation.Models
                 default);
         }
 
+        /// <param name="contentLink"> Gets or sets the module content link. </param>
+        /// <param name="tags"> Gets or sets the tags attached to the resource. </param>
+        /// <returns> A new <see cref="Models.AutomationAccountPython2PackageCreateOrUpdateContent"/> instance for mocking. </returns>
+        public static AutomationAccountPython2PackageCreateOrUpdateContent AutomationAccountPython2PackageCreateOrUpdateContent(AutomationContentLink contentLink = default, IDictionary<string, string> tags = default)
+        {
+            return new AutomationAccountPython2PackageCreateOrUpdateContent(contentLink is null ? default : new PythonPackageCreateProperties(contentLink, default), tags ?? new ChangeTrackingDictionary<string, string>(), default);
+        }
+
+        /// <param name="tags"> Gets or sets the tags attached to the resource. </param>
+        /// <returns> A new <see cref="Models.AutomationAccountPython2PackagePatch"/> instance for mocking. </returns>
+        public static AutomationAccountPython2PackagePatch AutomationAccountPython2PackagePatch(IDictionary<string, string> tags = default)
+        {
+            return new AutomationAccountPython2PackagePatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.AutomationAccountPython2PackageCreateOrUpdateContent"/>. </summary>
+        /// <param name="tags"> Gets or sets the tags attached to the resource. </param>
+        /// <param name="contentLink"> Gets or sets the module content link. </param>
+        /// <returns> A new <see cref="Models.AutomationAccountPython2PackageCreateOrUpdateContent"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AutomationAccountPython2PackageCreateOrUpdateContent AutomationAccountPython2PackageCreateOrUpdateContent(IDictionary<string, string> tags = default, AutomationContentLink contentLink = default)
+        {
+            return new AutomationAccountPython2PackageCreateOrUpdateContent(contentLink is null ? default : new PythonPackageCreateProperties(contentLink, default), tags ?? new ChangeTrackingDictionary<string, string>(), default);
+        }
+
+        // DscCompilationJob was removed from the TypeSpec input; these GA compatibility factory overloads are intentionally unsupported.
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete(Azure.ResourceManager.Automation.DscCompilationJobCompatibilityHelpers.ObsoleteMessage)]
         public static DscCompilationJobCreateOrUpdateContent DscCompilationJobCreateOrUpdateContent(string name = null, AzureLocation? location = default, IDictionary<string, string> tags = null, string configurationName = null, IDictionary<string, string> parameters = null, bool? isIncrementNodeConfigurationBuildRequired = default)

@@ -12,21 +12,21 @@ using Azure.ResourceManager.Automation;
 namespace Azure.ResourceManager.Automation.Models
 {
     /// <summary> The parameters supplied to the update module operation. </summary>
-    public partial class AutomationAccountPython2PackagePatch
+    public partial class AutomationPythonPackagePatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AutomationAccountPython2PackagePatch"/>. </summary>
-        public AutomationAccountPython2PackagePatch()
+        /// <summary> Initializes a new instance of <see cref="AutomationPythonPackagePatch"/>. </summary>
+        public AutomationPythonPackagePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AutomationAccountPython2PackagePatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationPythonPackagePatch"/>. </summary>
         /// <param name="tags"> Gets or sets the tags attached to the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AutomationAccountPython2PackagePatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AutomationPythonPackagePatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tags = tags;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

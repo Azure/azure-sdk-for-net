@@ -13,29 +13,29 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Automation.Models
 {
     /// <summary> The parameters supplied to the create or update package operation. </summary>
-    public partial class PackageCreateOrUpdateContent
+    public partial class AutomationPackageCreateOrUpdateContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="PackageCreateOrUpdateContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationPackageCreateOrUpdateContent"/>. </summary>
         /// <param name="contentLink"> Gets or sets the package content link. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="contentLink"/> is null. </exception>
-        public PackageCreateOrUpdateContent(AutomationContentLink contentLink)
+        public AutomationPackageCreateOrUpdateContent(AutomationContentLink contentLink)
         {
             Argument.AssertNotNull(contentLink, nameof(contentLink));
 
             Properties = new PackageCreateOrUpdateProperties(contentLink);
         }
 
-        /// <summary> Initializes a new instance of <see cref="PackageCreateOrUpdateContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationPackageCreateOrUpdateContent"/>. </summary>
         /// <param name="properties"> Gets or sets the package create properties. </param>
-        /// <param name="allOf"> The resource model definition for an Azure Resource Manager tracked top level resource which has 'tags' and a 'location'. </param>
+        /// <param name="trackedResource"> The resource model definition for an Azure Resource Manager tracked top level resource which has 'tags' and a 'location'. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PackageCreateOrUpdateContent(PackageCreateOrUpdateProperties properties, TrackedResourceData allOf, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AutomationPackageCreateOrUpdateContent(PackageCreateOrUpdateProperties properties, TrackedResourceData trackedResource, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
-            AllOf = allOf;
+            TrackedResource = trackedResource;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Automation.Models
         internal PackageCreateOrUpdateProperties Properties { get; }
 
         /// <summary> The resource model definition for an Azure Resource Manager tracked top level resource which has 'tags' and a 'location'. </summary>
-        public TrackedResourceData AllOf { get; set; }
+        public TrackedResourceData TrackedResource { get; set; }
 
         /// <summary> Gets or sets the package content link. </summary>
         public AutomationContentLink ContentLink

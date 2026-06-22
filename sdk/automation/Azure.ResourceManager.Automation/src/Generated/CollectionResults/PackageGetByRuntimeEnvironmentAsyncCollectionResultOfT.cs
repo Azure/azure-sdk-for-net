@@ -15,7 +15,7 @@ using Azure.ResourceManager.Automation.Models;
 
 namespace Azure.ResourceManager.Automation
 {
-    internal partial class PackageGetByRuntimeEnvironmentAsyncCollectionResultOfT : AsyncPageable<PackageData>
+    internal partial class PackageGetByRuntimeEnvironmentAsyncCollectionResultOfT : AsyncPageable<AutomationPackageData>
     {
         private readonly Package _client;
         private readonly Guid _subscriptionId;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of PackageGetByRuntimeEnvironmentAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<PackageData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<AutomationPackageData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Automation
                     yield break;
                 }
                 PackageListResult result = PackageListResult.FromResponse(response);
-                yield return Page<PackageData>.FromValues((IReadOnlyList<PackageData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<AutomationPackageData>.FromValues((IReadOnlyList<AutomationPackageData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

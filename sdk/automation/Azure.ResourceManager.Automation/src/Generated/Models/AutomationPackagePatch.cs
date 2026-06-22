@@ -12,24 +12,24 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Automation.Models
 {
     /// <summary> The parameters supplied to the update package operation. </summary>
-    public partial class PackagePatch
+    public partial class AutomationPackagePatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="PackagePatch"/>. </summary>
-        public PackagePatch()
+        /// <summary> Initializes a new instance of <see cref="AutomationPackagePatch"/>. </summary>
+        public AutomationPackagePatch()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PackagePatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationPackagePatch"/>. </summary>
         /// <param name="properties"> Gets or sets the package update properties. </param>
-        /// <param name="allOf"> The resource model definition for an Azure Resource Manager tracked top level resource which has 'tags' and a 'location'. </param>
+        /// <param name="trackedResource"> The resource model definition for an Azure Resource Manager tracked top level resource which has 'tags' and a 'location'. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PackagePatch(PackageUpdateProperties properties, TrackedResourceData allOf, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AutomationPackagePatch(PackageUpdateProperties properties, TrackedResourceData trackedResource, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
-            AllOf = allOf;
+            TrackedResource = trackedResource;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Automation.Models
         internal PackageUpdateProperties Properties { get; set; }
 
         /// <summary> The resource model definition for an Azure Resource Manager tracked top level resource which has 'tags' and a 'location'. </summary>
-        public TrackedResourceData AllOf { get; set; }
+        public TrackedResourceData TrackedResource { get; set; }
 
         /// <summary> Gets or sets the package content link. </summary>
         public AutomationContentLink ContentLink

@@ -197,13 +197,13 @@ namespace Azure.ResourceManager.Automation.Mocking
             return new AutomationAccountModuleResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="PackageResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="AutomationPackageResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PackageResource"/> object. </returns>
-        public virtual PackageResource GetPackageResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AutomationPackageResource"/> object. </returns>
+        public virtual AutomationPackageResource GetAutomationPackageResource(ResourceIdentifier id)
         {
-            PackageResource.ValidateResourceId(id);
-            return new PackageResource(Client, id);
+            AutomationPackageResource.ValidateResourceId(id);
+            return new AutomationPackageResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="AutomationRunbookResource"/> along with the instance operations that can be performed on it but with no data. </summary>

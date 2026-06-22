@@ -20,28 +20,28 @@ using Azure.ResourceManager.Automation.Models;
 namespace Azure.ResourceManager.Automation
 {
     /// <summary>
-    /// A class representing a collection of <see cref="PackageResource"/> and their operations.
-    /// Each <see cref="PackageResource"/> in the collection will belong to the same instance of <see cref="RuntimeEnvironmentResource"/>.
-    /// To get a <see cref="PackageCollection"/> instance call the GetPackages method from an instance of <see cref="RuntimeEnvironmentResource"/>.
+    /// A class representing a collection of <see cref="AutomationPackageResource"/> and their operations.
+    /// Each <see cref="AutomationPackageResource"/> in the collection will belong to the same instance of <see cref="RuntimeEnvironmentResource"/>.
+    /// To get a <see cref="AutomationPackageCollection"/> instance call the GetAutomationPackages method from an instance of <see cref="RuntimeEnvironmentResource"/>.
     /// </summary>
-    public partial class PackageCollection : ArmCollection, IEnumerable<PackageResource>, IAsyncEnumerable<PackageResource>
+    public partial class AutomationPackageCollection : ArmCollection, IEnumerable<AutomationPackageResource>, IAsyncEnumerable<AutomationPackageResource>
     {
         private readonly ClientDiagnostics _packageClientDiagnostics;
         private readonly Package _packageRestClient;
 
-        /// <summary> Initializes a new instance of PackageCollection for mocking. </summary>
-        protected PackageCollection()
+        /// <summary> Initializes a new instance of AutomationPackageCollection for mocking. </summary>
+        protected AutomationPackageCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PackageCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationPackageCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal PackageCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal AutomationPackageCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(PackageResource.ResourceType, out string packageApiVersion);
-            _packageClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", PackageResource.ResourceType.Namespace, Diagnostics);
-            _packageRestClient = new Package(_packageClientDiagnostics, Pipeline, Endpoint, packageApiVersion ?? "2024-10-23");
+            TryGetApiVersion(AutomationPackageResource.ResourceType, out string automationPackageApiVersion);
+            _packageClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", AutomationPackageResource.ResourceType.Namespace, Diagnostics);
+            _packageRestClient = new Package(_packageClientDiagnostics, Pipeline, Endpoint, automationPackageApiVersion ?? "2024-10-23");
             ValidateResourceId(id);
         }
 
@@ -78,12 +78,12 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="packageName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="packageName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<PackageResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string packageName, PackageCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<AutomationPackageResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string packageName, AutomationPackageCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(packageName, nameof(packageName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _packageClientDiagnostics.CreateScope("PackageCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _packageClientDiagnostics.CreateScope("AutomationPackageCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -91,12 +91,12 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _packageRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, packageName, PackageCreateOrUpdateContent.ToRequestContent(content), context);
+                HttpMessage message = _packageRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, packageName, AutomationPackageCreateOrUpdateContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<PackageData> response = Response.FromValue(PackageData.FromResponse(result), result);
+                Response<AutomationPackageData> response = Response.FromValue(AutomationPackageData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                AutomationArmOperation<PackageResource> operation = new AutomationArmOperation<PackageResource>(Response.FromValue(new PackageResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                AutomationArmOperation<AutomationPackageResource> operation = new AutomationArmOperation<AutomationPackageResource>(Response.FromValue(new AutomationPackageResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -133,12 +133,12 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="packageName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="packageName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<PackageResource> CreateOrUpdate(WaitUntil waitUntil, string packageName, PackageCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<AutomationPackageResource> CreateOrUpdate(WaitUntil waitUntil, string packageName, AutomationPackageCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(packageName, nameof(packageName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _packageClientDiagnostics.CreateScope("PackageCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _packageClientDiagnostics.CreateScope("AutomationPackageCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -146,12 +146,12 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _packageRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, packageName, PackageCreateOrUpdateContent.ToRequestContent(content), context);
+                HttpMessage message = _packageRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, packageName, AutomationPackageCreateOrUpdateContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<PackageData> response = Response.FromValue(PackageData.FromResponse(result), result);
+                Response<AutomationPackageData> response = Response.FromValue(AutomationPackageData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                AutomationArmOperation<PackageResource> operation = new AutomationArmOperation<PackageResource>(Response.FromValue(new PackageResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                AutomationArmOperation<AutomationPackageResource> operation = new AutomationArmOperation<AutomationPackageResource>(Response.FromValue(new AutomationPackageResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);
@@ -186,11 +186,11 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="packageName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="packageName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<PackageResource>> GetAsync(string packageName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AutomationPackageResource>> GetAsync(string packageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(packageName, nameof(packageName));
 
-            using DiagnosticScope scope = _packageClientDiagnostics.CreateScope("PackageCollection.Get");
+            using DiagnosticScope scope = _packageClientDiagnostics.CreateScope("AutomationPackageCollection.Get");
             scope.Start();
             try
             {
@@ -200,12 +200,12 @@ namespace Azure.ResourceManager.Automation
                 };
                 HttpMessage message = _packageRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, packageName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<PackageData> response = Response.FromValue(PackageData.FromResponse(result), result);
+                Response<AutomationPackageData> response = Response.FromValue(AutomationPackageData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new PackageResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AutomationPackageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -235,11 +235,11 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="packageName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="packageName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<PackageResource> Get(string packageName, CancellationToken cancellationToken = default)
+        public virtual Response<AutomationPackageResource> Get(string packageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(packageName, nameof(packageName));
 
-            using DiagnosticScope scope = _packageClientDiagnostics.CreateScope("PackageCollection.Get");
+            using DiagnosticScope scope = _packageClientDiagnostics.CreateScope("AutomationPackageCollection.Get");
             scope.Start();
             try
             {
@@ -249,12 +249,12 @@ namespace Azure.ResourceManager.Automation
                 };
                 HttpMessage message = _packageRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, packageName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<PackageData> response = Response.FromValue(PackageData.FromResponse(result), result);
+                Response<AutomationPackageData> response = Response.FromValue(AutomationPackageData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new PackageResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AutomationPackageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -281,21 +281,21 @@ namespace Azure.ResourceManager.Automation
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PackageResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PackageResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AutomationPackageResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AutomationPackageResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PackageData, PackageResource>(new PackageGetByRuntimeEnvironmentAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AutomationPackageData, AutomationPackageResource>(new PackageGetByRuntimeEnvironmentAsyncCollectionResultOfT(
                 _packageRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
                 context,
-                "PackageCollection.GetAll"), data => new PackageResource(Client, data));
+                "AutomationPackageCollection.GetAll"), data => new AutomationPackageResource(Client, data));
         }
 
         /// <summary>
@@ -316,21 +316,21 @@ namespace Azure.ResourceManager.Automation
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PackageResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PackageResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AutomationPackageResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AutomationPackageResource> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PackageData, PackageResource>(new PackageGetByRuntimeEnvironmentCollectionResultOfT(
+            return new PageableWrapper<AutomationPackageData, AutomationPackageResource>(new PackageGetByRuntimeEnvironmentCollectionResultOfT(
                 _packageRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
                 context,
-                "PackageCollection.GetAll"), data => new PackageResource(Client, data));
+                "AutomationPackageCollection.GetAll"), data => new AutomationPackageResource(Client, data));
         }
 
         /// <summary>
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.Automation
         {
             Argument.AssertNotNullOrEmpty(packageName, nameof(packageName));
 
-            using DiagnosticScope scope = _packageClientDiagnostics.CreateScope("PackageCollection.Exists");
+            using DiagnosticScope scope = _packageClientDiagnostics.CreateScope("AutomationPackageCollection.Exists");
             scope.Start();
             try
             {
@@ -369,14 +369,14 @@ namespace Azure.ResourceManager.Automation
                 HttpMessage message = _packageRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, packageName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<PackageData> response = default;
+                Response<AutomationPackageData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(PackageData.FromResponse(result), result);
+                        response = Response.FromValue(AutomationPackageData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((PackageData)null, result);
+                        response = Response.FromValue((AutomationPackageData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.Automation
         {
             Argument.AssertNotNullOrEmpty(packageName, nameof(packageName));
 
-            using DiagnosticScope scope = _packageClientDiagnostics.CreateScope("PackageCollection.Exists");
+            using DiagnosticScope scope = _packageClientDiagnostics.CreateScope("AutomationPackageCollection.Exists");
             scope.Start();
             try
             {
@@ -426,14 +426,14 @@ namespace Azure.ResourceManager.Automation
                 HttpMessage message = _packageRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, packageName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<PackageData> response = default;
+                Response<AutomationPackageData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(PackageData.FromResponse(result), result);
+                        response = Response.FromValue(AutomationPackageData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((PackageData)null, result);
+                        response = Response.FromValue((AutomationPackageData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -468,11 +468,11 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="packageName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="packageName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<PackageResource>> GetIfExistsAsync(string packageName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<AutomationPackageResource>> GetIfExistsAsync(string packageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(packageName, nameof(packageName));
 
-            using DiagnosticScope scope = _packageClientDiagnostics.CreateScope("PackageCollection.GetIfExists");
+            using DiagnosticScope scope = _packageClientDiagnostics.CreateScope("AutomationPackageCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -483,23 +483,23 @@ namespace Azure.ResourceManager.Automation
                 HttpMessage message = _packageRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, packageName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<PackageData> response = default;
+                Response<AutomationPackageData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(PackageData.FromResponse(result), result);
+                        response = Response.FromValue(AutomationPackageData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((PackageData)null, result);
+                        response = Response.FromValue((AutomationPackageData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<PackageResource>(response.GetRawResponse());
+                    return new NoValueResponse<AutomationPackageResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new PackageResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AutomationPackageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -529,11 +529,11 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="packageName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="packageName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<PackageResource> GetIfExists(string packageName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<AutomationPackageResource> GetIfExists(string packageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(packageName, nameof(packageName));
 
-            using DiagnosticScope scope = _packageClientDiagnostics.CreateScope("PackageCollection.GetIfExists");
+            using DiagnosticScope scope = _packageClientDiagnostics.CreateScope("AutomationPackageCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -544,23 +544,23 @@ namespace Azure.ResourceManager.Automation
                 HttpMessage message = _packageRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, packageName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<PackageData> response = default;
+                Response<AutomationPackageData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(PackageData.FromResponse(result), result);
+                        response = Response.FromValue(AutomationPackageData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((PackageData)null, result);
+                        response = Response.FromValue((AutomationPackageData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<PackageResource>(response.GetRawResponse());
+                    return new NoValueResponse<AutomationPackageResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new PackageResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AutomationPackageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -569,7 +569,7 @@ namespace Azure.ResourceManager.Automation
             }
         }
 
-        IEnumerator<PackageResource> IEnumerable<PackageResource>.GetEnumerator()
+        IEnumerator<AutomationPackageResource> IEnumerable<AutomationPackageResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -580,7 +580,7 @@ namespace Azure.ResourceManager.Automation
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<PackageResource> IAsyncEnumerable<PackageResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<AutomationPackageResource> IAsyncEnumerable<AutomationPackageResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

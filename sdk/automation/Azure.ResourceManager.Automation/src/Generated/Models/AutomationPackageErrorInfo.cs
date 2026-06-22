@@ -11,21 +11,21 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Automation.Models
 {
     /// <summary> Definition of the package error info type. </summary>
-    public partial class PackageErrorInfo
+    public partial class AutomationPackageErrorInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="PackageErrorInfo"/>. </summary>
-        internal PackageErrorInfo()
+        /// <summary> Initializes a new instance of <see cref="AutomationPackageErrorInfo"/>. </summary>
+        internal AutomationPackageErrorInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PackageErrorInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationPackageErrorInfo"/>. </summary>
         /// <param name="code"> Package import error code. </param>
         /// <param name="message"> Package import error message. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PackageErrorInfo(string code, string message, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AutomationPackageErrorInfo(string code, string message, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Code = code;
             Message = message;
