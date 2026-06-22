@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<NetworkCloudOperationStatusResult>> ReimageAsync(WaitUntil waitUntil, CancellationToken cancellationToken)
-            => await ReimageAsync(waitUntil, cancellationToken: cancellationToken).ConfigureAwait(false);
+            => await ReimageAsync(waitUntil, default, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Reimage the provided bare metal machine.
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<NetworkCloudOperationStatusResult> Reimage(WaitUntil waitUntil, CancellationToken cancellationToken)
-            => Reimage(waitUntil, cancellationToken: cancellationToken);
+            => Reimage(waitUntil, default, cancellationToken);
 
         /// <summary>
         /// Patch properties of the provided bare metal machine, or update tags associated with the bare metal machine. Properties and tag updates can be done independently.
