@@ -81,11 +81,11 @@ namespace Azure.Generator.Management
         /// </summary>
         protected override void Configure()
         {
+            AddCustomCodeAttributeProvider(OutputLibrary.CodeGenResourceDataAttributeDefinition);
+            AddCustomCodeAttributeProvider(OutputLibrary.CodeGenTagPatchHookAttributeDefinition);
             base.Configure();
             // Include Azure.ResourceManager
             AddMetadataReference(MetadataReference.CreateFromFile(typeof(ArmClient).Assembly.Location));
-            AddCustomCodeAttributeProvider(OutputLibrary.CodeGenResourceDataAttributeDefinition);
-            AddCustomCodeAttributeProvider(OutputLibrary.CodeGenTagPatchHookAttributeDefinition);
             // renaming should come first
             AddVisitor(new NameVisitor());
             AddVisitor(new SerializationVisitor());
