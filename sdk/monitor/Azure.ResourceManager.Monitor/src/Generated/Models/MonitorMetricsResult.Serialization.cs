@@ -15,63 +15,63 @@ using Azure.ResourceManager.Monitor;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> The response to a metrics query. </summary>
-    public partial class Response : IJsonModel<Response>
+    public partial class MonitorMetricsResult : IJsonModel<MonitorMetricsResult>
     {
-        /// <summary> Initializes a new instance of <see cref="Response"/> for deserialization. </summary>
-        internal Response()
+        /// <summary> Initializes a new instance of <see cref="MonitorMetricsResult"/> for deserialization. </summary>
+        internal MonitorMetricsResult()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual Response PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual MonitorMetricsResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Response>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MonitorMetricsResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeResponse(document.RootElement, options);
+                        return DeserializeMonitorMetricsResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Response)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorMetricsResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Response>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MonitorMetricsResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerMonitorContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(Response)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorMetricsResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<Response>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<MonitorMetricsResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        Response IPersistableModel<Response>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        MonitorMetricsResult IPersistableModel<MonitorMetricsResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<Response>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MonitorMetricsResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Azure.Response"/> to deserialize the <see cref="Response"/> from. </param>
-        internal static Response FromResponse(Azure.Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="MonitorMetricsResult"/> from. </param>
+        internal static MonitorMetricsResult FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeMonitorMetricsResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<Response>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MonitorMetricsResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -82,10 +82,10 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Response>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MonitorMetricsResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Response)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorMetricsResult)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Cost))
             {
@@ -135,24 +135,24 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        Response IJsonModel<Response>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        MonitorMetricsResult IJsonModel<MonitorMetricsResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual Response JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual MonitorMetricsResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Response>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MonitorMetricsResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Response)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorMetricsResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeResponse(document.RootElement, options);
+            return DeserializeMonitorMetricsResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static Response DeserializeResponse(JsonElement element, ModelReaderWriterOptions options)
+        internal static MonitorMetricsResult DeserializeMonitorMetricsResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new Response(
+            return new MonitorMetricsResult(
                 cost,
                 timespan,
                 interval,

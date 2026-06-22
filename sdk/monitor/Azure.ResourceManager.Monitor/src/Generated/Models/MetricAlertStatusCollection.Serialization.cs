@@ -57,8 +57,8 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<MetricAlertStatusCollection>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Azure.Response"/> to deserialize the <see cref="MetricAlertStatusCollection"/> from. </param>
-        internal static MetricAlertStatusCollection FromResponse(Azure.Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="MetricAlertStatusCollection"/> from. </param>
+        internal static MetricAlertStatusCollection FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeMetricAlertStatusCollection(document.RootElement, ModelSerializationExtensions.WireOptions);

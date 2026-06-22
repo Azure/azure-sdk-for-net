@@ -12,21 +12,21 @@ using System.Linq;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> The response to a metrics query. </summary>
-    public partial class Response
+    public partial class MonitorMetricsResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="Response"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorMetricsResult"/>. </summary>
         /// <param name="timespan"> The timespan for which the data was retrieved. Its value consists of two datetimes concatenated, separated by '/'.  This may be adjusted in the future and returned back from what was originally requested. </param>
         /// <param name="value"> The value of the collection. </param>
-        internal Response(string timespan, IEnumerable<MonitorMetric> value)
+        internal MonitorMetricsResult(string timespan, IEnumerable<MonitorMetric> value)
         {
             Timespan = timespan;
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="Response"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorMetricsResult"/>. </summary>
         /// <param name="cost"> The integer value representing the relative cost of the query. </param>
         /// <param name="timespan"> The timespan for which the data was retrieved. Its value consists of two datetimes concatenated, separated by '/'.  This may be adjusted in the future and returned back from what was originally requested. </param>
         /// <param name="interval">
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="resourceregion"> The region of the resource being queried for metrics. </param>
         /// <param name="value"> The value of the collection. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal Response(int? cost, string timespan, string interval, string @namespace, string resourceregion, IList<MonitorMetric> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MonitorMetricsResult(int? cost, string timespan, string interval, string @namespace, string resourceregion, IList<MonitorMetric> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Cost = cost;
             Timespan = timespan;

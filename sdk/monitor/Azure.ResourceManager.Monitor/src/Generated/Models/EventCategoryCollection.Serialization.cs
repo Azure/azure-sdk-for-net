@@ -62,8 +62,8 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<EventCategoryCollection>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Azure.Response"/> to deserialize the <see cref="EventCategoryCollection"/> from. </param>
-        internal static EventCategoryCollection FromResponse(Azure.Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="EventCategoryCollection"/> from. </param>
+        internal static EventCategoryCollection FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeEventCategoryCollection(document.RootElement, ModelSerializationExtensions.WireOptions);

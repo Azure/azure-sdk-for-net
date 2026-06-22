@@ -57,8 +57,8 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<MonitorPrivateEndpointConnectionListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Azure.Response"/> to deserialize the <see cref="MonitorPrivateEndpointConnectionListResult"/> from. </param>
-        internal static MonitorPrivateEndpointConnectionListResult FromResponse(Azure.Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="MonitorPrivateEndpointConnectionListResult"/> from. </param>
+        internal static MonitorPrivateEndpointConnectionListResult FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeMonitorPrivateEndpointConnectionListResult(document.RootElement, ModelSerializationExtensions.WireOptions);

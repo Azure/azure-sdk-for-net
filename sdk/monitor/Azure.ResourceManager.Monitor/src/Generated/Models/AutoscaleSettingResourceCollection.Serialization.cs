@@ -62,8 +62,8 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AutoscaleSettingResourceCollection>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Azure.Response"/> to deserialize the <see cref="AutoscaleSettingResourceCollection"/> from. </param>
-        internal static AutoscaleSettingResourceCollection FromResponse(Azure.Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AutoscaleSettingResourceCollection"/> from. </param>
+        internal static AutoscaleSettingResourceCollection FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeAutoscaleSettingResourceCollection(document.RootElement, ModelSerializationExtensions.WireOptions);

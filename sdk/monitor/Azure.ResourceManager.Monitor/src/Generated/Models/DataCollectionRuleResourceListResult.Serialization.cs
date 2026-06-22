@@ -62,8 +62,8 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DataCollectionRuleResourceListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Azure.Response"/> to deserialize the <see cref="DataCollectionRuleResourceListResult"/> from. </param>
-        internal static DataCollectionRuleResourceListResult FromResponse(Azure.Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DataCollectionRuleResourceListResult"/> from. </param>
+        internal static DataCollectionRuleResourceListResult FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeDataCollectionRuleResourceListResult(document.RootElement, ModelSerializationExtensions.WireOptions);

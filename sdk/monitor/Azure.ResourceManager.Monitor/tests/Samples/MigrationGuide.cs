@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Monitor.Tests.Samples
                 "/subscriptions/<subscription_id>/resourceGroups/<resource_group_name>/providers/Microsoft.Storage/storageAccounts/<resource_name>";
 
             ArmClient client = new(new DefaultAzureCredential());
-            Azure.Response<Azure.ResourceManager.Monitor.Models.Response> response = await client.GetMonitorMetricsAsync(
+            Azure.Response<MonitorMetricsResult> response = await client.GetMonitorMetricsAsync(
                 new ResourceIdentifier(resourceId),
                 metricnames: "Availability",
                 autoAdjustTimegrain: true);

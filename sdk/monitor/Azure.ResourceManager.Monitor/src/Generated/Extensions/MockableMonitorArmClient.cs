@@ -405,7 +405,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <param name="rollupby"> Dimension name(s) to rollup results by. For example if you only want to see metric values with a filter like 'City eq Seattle or City eq Tacoma' but don't want to see separate values for each city, you can specify 'RollUpBy=City' to see the results for Seattle and Tacoma rolled up into one timeseries. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public virtual async Task<Response<Models.Response>> GetMonitorMetricsAsync(ResourceIdentifier scope, string timespan = default, string interval = default, string metricnames = default, string aggregation = default, int? top = default, string @orderby = default, string filter = default, MonitorResultType? resultType = default, string metricnamespace = default, bool? autoAdjustTimegrain = default, bool? validateDimensions = default, string rollupby = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MonitorMetricsResult>> GetMonitorMetricsAsync(ResourceIdentifier scope, string timespan = default, string interval = default, string metricnames = default, string aggregation = default, int? top = default, string @orderby = default, string filter = default, MonitorResultType? resultType = default, string metricnamespace = default, bool? autoAdjustTimegrain = default, bool? validateDimensions = default, string rollupby = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
                 };
                 HttpMessage message = MetricsRestClient.CreateGetMonitorMetricsRequest(scope.ToString(), timespan, interval, metricnames, aggregation, top, @orderby, filter, resultType?.ToSerialString(), metricnamespace, autoAdjustTimegrain, validateDimensions, rollupby, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<Models.Response> response = Response.FromValue(Models.Response.FromResponse(result), result);
+                Response<MonitorMetricsResult> response = Response.FromValue(MonitorMetricsResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <param name="rollupby"> Dimension name(s) to rollup results by. For example if you only want to see metric values with a filter like 'City eq Seattle or City eq Tacoma' but don't want to see separate values for each city, you can specify 'RollUpBy=City' to see the results for Seattle and Tacoma rolled up into one timeseries. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public virtual Response<Models.Response> GetMonitorMetrics(ResourceIdentifier scope, string timespan = default, string interval = default, string metricnames = default, string aggregation = default, int? top = default, string @orderby = default, string filter = default, MonitorResultType? resultType = default, string metricnamespace = default, bool? autoAdjustTimegrain = default, bool? validateDimensions = default, string rollupby = default, CancellationToken cancellationToken = default)
+        public virtual Response<MonitorMetricsResult> GetMonitorMetrics(ResourceIdentifier scope, string timespan = default, string interval = default, string metricnames = default, string aggregation = default, int? top = default, string @orderby = default, string filter = default, MonitorResultType? resultType = default, string metricnamespace = default, bool? autoAdjustTimegrain = default, bool? validateDimensions = default, string rollupby = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -493,7 +493,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
                 };
                 HttpMessage message = MetricsRestClient.CreateGetMonitorMetricsRequest(scope.ToString(), timespan, interval, metricnames, aggregation, top, @orderby, filter, resultType?.ToSerialString(), metricnamespace, autoAdjustTimegrain, validateDimensions, rollupby, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<Models.Response> response = Response.FromValue(Models.Response.FromResponse(result), result);
+                Response<MonitorMetricsResult> response = Response.FromValue(MonitorMetricsResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

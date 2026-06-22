@@ -1880,12 +1880,12 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="namespace"> The namespace of the metrics being queried. </param>
         /// <param name="resourceregion"> The region of the resource being queried for metrics. </param>
         /// <param name="value"> The value of the collection. </param>
-        /// <returns> A new <see cref="Models.Response"/> instance for mocking. </returns>
-        public static Response Response(int? cost = default, string timespan = default, string interval = default, string @namespace = default, string resourceregion = default, IEnumerable<MonitorMetric> value = default)
+        /// <returns> A new <see cref="Models.MonitorMetricsResult"/> instance for mocking. </returns>
+        public static MonitorMetricsResult MonitorMetricsResult(int? cost = default, string timespan = default, string interval = default, string @namespace = default, string resourceregion = default, IEnumerable<MonitorMetric> value = default)
         {
             value ??= new ChangeTrackingList<MonitorMetric>();
 
-            return new Response(
+            return new MonitorMetricsResult(
                 cost,
                 timespan,
                 interval,
