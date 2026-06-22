@@ -7534,8 +7534,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             return new AmlComputeNodeInformation(
                 nodeId,
-                privateIpAddress,
-                publicIpAddress,
+                privateIpAddress is null ? null : IPAddress.Parse(privateIpAddress),
+                publicIpAddress is null ? null : IPAddress.Parse(publicIpAddress),
                 port,
                 nodeState,
                 runId,
@@ -9255,8 +9255,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             return new AmlComputeNodeInformation(
                 nodeId,
-                default,
-                default,
+                privateIPAddress,
+                publicIPAddress,
                 port,
                 nodeState,
                 runId,

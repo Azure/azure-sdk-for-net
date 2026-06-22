@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Net;
 using System.Text.Json;
 using Azure.ResourceManager.MachineLearning;
 
@@ -82,12 +83,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (options.Format != "W" && Optional.IsDefined(PrivateIpAddress))
             {
                 writer.WritePropertyName("privateIpAddress"u8);
-                writer.WriteStringValue(PrivateIpAddress);
+                writer.WriteStringValue(PrivateIpAddress.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(PublicIpAddress))
             {
                 writer.WritePropertyName("publicIpAddress"u8);
-                writer.WriteStringValue(PublicIpAddress);
+                writer.WriteStringValue(PublicIpAddress.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(Port))
             {
@@ -147,8 +148,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             string nodeId = default;
-            string privateIpAddress = default;
-            string publicIpAddress = default;
+            IPAddress privateIpAddress = default;
+            IPAddress publicIpAddress = default;
             int? port = default;
             MachineLearningNodeState? nodeState = default;
             string runId = default;
@@ -164,20 +165,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        privateIpAddress = null;
                         continue;
                     }
-                    privateIpAddress = prop.Value.GetString();
+                    privateIpAddress = IPAddress.Parse(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("publicIpAddress"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        publicIpAddress = null;
                         continue;
                     }
-                    publicIpAddress = prop.Value.GetString();
+                    publicIpAddress = IPAddress.Parse(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("port"u8))

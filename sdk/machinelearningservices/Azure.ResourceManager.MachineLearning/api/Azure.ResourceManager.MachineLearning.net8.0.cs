@@ -3295,9 +3295,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public Azure.ResourceManager.MachineLearning.Models.MachineLearningNodeState? NodeState { get { throw null; } }
         public int? Port { get { throw null; } }
         public System.Net.IPAddress PrivateIPAddress { get { throw null; } }
-        public string PrivateIpAddress { get { throw null; } }
+        public System.Net.IPAddress PrivateIpAddress { get { throw null; } }
         public System.Net.IPAddress PublicIPAddress { get { throw null; } }
-        public string PublicIpAddress { get { throw null; } }
+        public System.Net.IPAddress PublicIpAddress { get { throw null; } }
         public string RunId { get { throw null; } }
         protected virtual Azure.ResourceManager.MachineLearning.Models.AmlComputeNodeInformation JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
