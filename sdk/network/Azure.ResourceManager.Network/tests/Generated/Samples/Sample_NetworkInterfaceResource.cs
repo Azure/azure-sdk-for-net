@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network.Samples
             NetworkInterfaceResource networkInterface = client.GetNetworkInterfaceResource(networkInterfaceResourceId);
 
             // invoke the operation
-            await networkInterface.DeleteAsync(WaitUntil.Completed);
+            await networkInterface.DeleteAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Network.Samples
             NetworkInterfaceResource networkInterface = client.GetNetworkInterfaceResource(networkInterfaceResourceId);
 
             // invoke the operation
-            ArmOperation<EffectiveRouteListResult> lro = await networkInterface.GetEffectiveRouteTableAsync(WaitUntil.Completed);
+            ArmOperation<EffectiveRouteListResult> lro = await networkInterface.GetEffectiveRouteTableAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
             EffectiveRouteListResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Network.Samples
             NetworkInterfaceResource networkInterface = client.GetNetworkInterfaceResource(networkInterfaceResourceId);
 
             // invoke the operation
-            ArmOperation<EffectiveNetworkSecurityGroupListResult> lro = await networkInterface.GetEffectiveNetworkSecurityGroupsAsync(WaitUntil.Completed);
+            ArmOperation<EffectiveNetworkSecurityGroupListResult> lro = await networkInterface.GetEffectiveNetworkSecurityGroupsAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
             EffectiveNetworkSecurityGroupListResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Network.Samples
             NetworkInterfaceResource networkInterface = client.GetNetworkInterfaceResource(networkInterfaceResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (LoadBalancerResource item in networkInterface.GetNetworkInterfaceLoadBalancersAsync())
+            await foreach (LoadBalancerResource item in networkInterface.GetNetworkInterfaceLoadBalancersAsync(System.Threading.CancellationToken.None))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance

@@ -166,6 +166,52 @@ namespace Azure.Generator.Tests.Visitors
             Assert.AreEqual(Helpers.GetExpectedFromFile(isProtocolMethod.ToString()), result);
         }
 
+        // This test validates that the "Async" suffix is stripped from the scope name for a protocol
+        // method whose name ends in "Async", since GetScopeName() handles the stripping centrally.
+        [Test]
+        public void TestAsyncProtocolMethodScopeNameStripsAsyncSuffix()
+        {
+            var visitor = new TestDistributedTracingVisitor();
+
+            // load the input
+            List<InputMethodParameter> parameters =
+            [
+                InputFactory.MethodParameter(
+                "p1",
+                InputPrimitiveType.String)
+            ];
+            var basicOperation = InputFactory.Operation(
+                "foo",
+                parameters: parameters);
+            var basicServiceMethod = InputFactory.BasicServiceMethod("foo", basicOperation, parameters: parameters);
+            var inputClient = InputFactory.Client("TestClient", methods: [basicServiceMethod]);
+            MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
+            // create the client provider
+            var clientProvider = AzureClientGenerator.Instance.TypeFactory.CreateClient(inputClient);
+            Assert.IsNotNull(clientProvider);
+
+            // create a protocol method whose name ends in "Async" to test the visitor
+            var methodSignature = new MethodSignature(
+                "FooAsync",
+                null,
+                MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual | MethodSignatureModifiers.Async,
+                AzureClientGenerator.Instance.TypeFactory.ClientResponseApi.ClientResponseType,
+                $"The response returned from the service.",
+                [new ParameterProvider("p1", $"p1", AzureClientGenerator.Instance.TypeFactory.RequestContentApi.RequestContentType)]);
+            var bodyStatements = InvokeConsoleWriteLine(Literal("Hello World"));
+            var method = new ScmMethodProvider(methodSignature, bodyStatements, clientProvider!, ScmMethodKind.Protocol);
+
+            var updatedMethod = visitor.InvokeVisitMethod(method!);
+            Assert.IsNotNull(updatedMethod?.BodyStatements);
+
+            var result = updatedMethod!.BodyStatements!.ToDisplayString();
+            // The "Async" suffix should be stripped from the scope name.
+            Assert.IsTrue(result.Contains("ClientDiagnostics.CreateScope(\"TestClient.Foo\")"),
+                $"Scope name should strip the \"Async\" suffix. Actual: {result}");
+            Assert.IsFalse(result.Contains("TestClient.FooAsync"),
+                $"Scope name should not contain the \"Async\" suffix. Actual: {result}");
+        }
+
         [TestCase(true, ScmMethodKind.Protocol)]
         [TestCase(false, ScmMethodKind.Protocol)]
         [TestCase(true, ScmMethodKind.Convenience)]

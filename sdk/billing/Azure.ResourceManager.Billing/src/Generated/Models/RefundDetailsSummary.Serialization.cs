@@ -8,16 +8,57 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
-    public partial class RefundDetailsSummary : IUtf8JsonSerializable, IJsonModel<RefundDetailsSummary>
+    /// <summary> The details of refund request. </summary>
+    public partial class RefundDetailsSummary : IJsonModel<RefundDetailsSummary>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RefundDetailsSummary>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual RefundDetailsSummary PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RefundDetailsSummary>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeRefundDetailsSummary(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RefundDetailsSummary)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RefundDetailsSummary>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerBillingContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(RefundDetailsSummary)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<RefundDetailsSummary>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RefundDetailsSummary IPersistableModel<RefundDetailsSummary>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<RefundDetailsSummary>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RefundDetailsSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +70,11 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RefundDetailsSummary>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RefundDetailsSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RefundDetailsSummary)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(RequestedOn))
             {
                 writer.WritePropertyName("requestedOn"u8);
@@ -50,12 +90,12 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WritePropertyName("completedOn"u8);
                 writer.WriteStringValue(CompletedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(AmountRequested))
+            if (Optional.IsDefined(AmountRequested))
             {
                 writer.WritePropertyName("amountRequested"u8);
                 writer.WriteObjectValue(AmountRequested, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(AmountRefunded))
+            if (Optional.IsDefined(AmountRefunded))
             {
                 writer.WritePropertyName("amountRefunded"u8);
                 writer.WriteObjectValue(AmountRefunded, options);
@@ -85,15 +125,15 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WritePropertyName("refundReason"u8);
                 writer.WriteStringValue(RefundReason.Value.ToString());
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -102,22 +142,27 @@ namespace Azure.ResourceManager.Billing.Models
             }
         }
 
-        RefundDetailsSummary IJsonModel<RefundDetailsSummary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RefundDetailsSummary IJsonModel<RefundDetailsSummary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual RefundDetailsSummary JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RefundDetailsSummary>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RefundDetailsSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RefundDetailsSummary)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeRefundDetailsSummary(document.RootElement, options);
         }
 
-        internal static RefundDetailsSummary DeserializeRefundDetailsSummary(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static RefundDetailsSummary DeserializeRefundDetailsSummary(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -132,102 +177,100 @@ namespace Azure.ResourceManager.Billing.Models
             RefundStatus? refundStatus = default;
             string refundOperationId = default;
             RefundReasonCode? refundReason = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("requestedOn"u8))
+                if (prop.NameEquals("requestedOn"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    requestedOn = property.Value.GetDateTimeOffset("O");
+                    requestedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("approvedOn"u8))
+                if (prop.NameEquals("approvedOn"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    approvedOn = property.Value.GetDateTimeOffset("O");
+                    approvedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("completedOn"u8))
+                if (prop.NameEquals("completedOn"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    completedOn = property.Value.GetDateTimeOffset("O");
+                    completedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("amountRequested"u8))
+                if (prop.NameEquals("amountRequested"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    amountRequested = BillingAmount.DeserializeBillingAmount(property.Value, options);
+                    amountRequested = BillingAmount.DeserializeBillingAmount(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("amountRefunded"u8))
+                if (prop.NameEquals("amountRefunded"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    amountRefunded = BillingAmount.DeserializeBillingAmount(property.Value, options);
+                    amountRefunded = BillingAmount.DeserializeBillingAmount(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("rebillInvoiceId"u8))
+                if (prop.NameEquals("rebillInvoiceId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    rebillInvoiceId = new ResourceIdentifier(property.Value.GetString());
+                    rebillInvoiceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("transactionCount"u8))
+                if (prop.NameEquals("transactionCount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    transactionCount = property.Value.GetInt32();
+                    transactionCount = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("refundStatus"u8))
+                if (prop.NameEquals("refundStatus"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    refundStatus = new RefundStatus(property.Value.GetString());
+                    refundStatus = new RefundStatus(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("refundOperationId"u8))
+                if (prop.NameEquals("refundOperationId"u8))
                 {
-                    refundOperationId = property.Value.GetString();
+                    refundOperationId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("refundReason"u8))
+                if (prop.NameEquals("refundReason"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    refundReason = new RefundReasonCode(property.Value.GetString());
+                    refundReason = new RefundReasonCode(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new RefundDetailsSummary(
                 requestedOn,
                 approvedOn,
@@ -239,216 +282,7 @@ namespace Azure.ResourceManager.Billing.Models
                 refundStatus,
                 refundOperationId,
                 refundReason,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequestedOn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  requestedOn: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(RequestedOn))
-                {
-                    builder.Append("  requestedOn: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(RequestedOn.Value, "o");
-                    builder.AppendLine($"'{formattedDateTimeString}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApprovedOn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  approvedOn: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ApprovedOn))
-                {
-                    builder.Append("  approvedOn: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(ApprovedOn.Value, "o");
-                    builder.AppendLine($"'{formattedDateTimeString}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CompletedOn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  completedOn: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CompletedOn))
-                {
-                    builder.Append("  completedOn: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(CompletedOn.Value, "o");
-                    builder.AppendLine($"'{formattedDateTimeString}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AmountRequested), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  amountRequested: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(AmountRequested))
-                {
-                    builder.Append("  amountRequested: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, AmountRequested, options, 2, false, "  amountRequested: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AmountRefunded), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  amountRefunded: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(AmountRefunded))
-                {
-                    builder.Append("  amountRefunded: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, AmountRefunded, options, 2, false, "  amountRefunded: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RebillInvoiceId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  rebillInvoiceId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(RebillInvoiceId))
-                {
-                    builder.Append("  rebillInvoiceId: ");
-                    builder.AppendLine($"'{RebillInvoiceId.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TransactionCount), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  transactionCount: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(TransactionCount))
-                {
-                    builder.Append("  transactionCount: ");
-                    builder.AppendLine($"{TransactionCount.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RefundStatus), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  refundStatus: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(RefundStatus))
-                {
-                    builder.Append("  refundStatus: ");
-                    builder.AppendLine($"'{RefundStatus.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RefundOperationId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  refundOperationId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(RefundOperationId))
-                {
-                    builder.Append("  refundOperationId: ");
-                    if (RefundOperationId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{RefundOperationId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{RefundOperationId}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RefundReason), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  refundReason: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(RefundReason))
-                {
-                    builder.Append("  refundReason: ");
-                    builder.AppendLine($"'{RefundReason.Value.ToString()}'");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<RefundDetailsSummary>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<RefundDetailsSummary>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerBillingContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(RefundDetailsSummary)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        RefundDetailsSummary IPersistableModel<RefundDetailsSummary>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<RefundDetailsSummary>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeRefundDetailsSummary(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(RefundDetailsSummary)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<RefundDetailsSummary>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

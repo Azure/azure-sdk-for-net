@@ -25,6 +25,7 @@ namespace Azure.Data.AppConfiguration.Tests
         [TestCase(SettingFields.LastModified, "last_modified")]
         [TestCase(SettingFields.IsReadOnly, "locked")]
         [TestCase(SettingFields.Tags, "tags")]
+        [TestCase(SettingFields.Description, "description")]
         public void SplitWithSingleField(SettingFields fields, string expectedFieldString)
         {
             IEnumerable<string> splitFields = fields.Split();

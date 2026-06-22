@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.Billing.Models
     public readonly partial struct SubscriptionWorkloadType : IEquatable<SubscriptionWorkloadType>
     {
         private readonly string _value;
+        /// <summary> None. </summary>
+        private const string NoneValue = "None";
+        /// <summary> Production. </summary>
+        private const string ProductionValue = "Production";
+        /// <summary> DevTest. </summary>
+        private const string DevTestValue = "DevTest";
+        /// <summary> Internal. </summary>
+        private const string InternalValue = "Internal";
 
         /// <summary> Initializes a new instance of <see cref="SubscriptionWorkloadType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SubscriptionWorkloadType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "None";
-        private const string ProductionValue = "Production";
-        private const string DevTestValue = "DevTest";
-        private const string InternalValue = "Internal";
+            _value = value;
+        }
 
         /// <summary> None. </summary>
         public static SubscriptionWorkloadType None { get; } = new SubscriptionWorkloadType(NoneValue);
+
         /// <summary> Production. </summary>
         public static SubscriptionWorkloadType Production { get; } = new SubscriptionWorkloadType(ProductionValue);
+
         /// <summary> DevTest. </summary>
         public static SubscriptionWorkloadType DevTest { get; } = new SubscriptionWorkloadType(DevTestValue);
+
         /// <summary> Internal. </summary>
         public static SubscriptionWorkloadType Internal { get; } = new SubscriptionWorkloadType(InternalValue);
+
         /// <summary> Determines if two <see cref="SubscriptionWorkloadType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SubscriptionWorkloadType left, SubscriptionWorkloadType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SubscriptionWorkloadType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SubscriptionWorkloadType left, SubscriptionWorkloadType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SubscriptionWorkloadType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SubscriptionWorkloadType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SubscriptionWorkloadType(string value) => new SubscriptionWorkloadType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SubscriptionWorkloadType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SubscriptionWorkloadType?(string value) => value == null ? null : new SubscriptionWorkloadType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SubscriptionWorkloadType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SubscriptionWorkloadType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.OperationalInsights
 {
+    /// <summary></summary>
     public partial class OperationalInsightsLinkedStorageAccountsResource : IJsonModel<OperationalInsightsLinkedStorageAccountsData>
     {
-        private static OperationalInsightsLinkedStorageAccountsData s_dataDeserializationInstance;
-        private static OperationalInsightsLinkedStorageAccountsData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<OperationalInsightsLinkedStorageAccountsData> s_dataDeserializationInstance;
 
+        private static IJsonModel<OperationalInsightsLinkedStorageAccountsData> DataDeserializationInstance => s_dataDeserializationInstance ??= new OperationalInsightsLinkedStorageAccountsData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<OperationalInsightsLinkedStorageAccountsData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<OperationalInsightsLinkedStorageAccountsData>)Data).Write(writer, options);
 
-        OperationalInsightsLinkedStorageAccountsData IJsonModel<OperationalInsightsLinkedStorageAccountsData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<OperationalInsightsLinkedStorageAccountsData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        OperationalInsightsLinkedStorageAccountsData IJsonModel<OperationalInsightsLinkedStorageAccountsData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<OperationalInsightsLinkedStorageAccountsData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<OperationalInsightsLinkedStorageAccountsData>(Data, options, AzureResourceManagerOperationalInsightsContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         OperationalInsightsLinkedStorageAccountsData IPersistableModel<OperationalInsightsLinkedStorageAccountsData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<OperationalInsightsLinkedStorageAccountsData>(data, options, AzureResourceManagerOperationalInsightsContext.Default);
 
-        string IPersistableModel<OperationalInsightsLinkedStorageAccountsData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<OperationalInsightsLinkedStorageAccountsData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<OperationalInsightsLinkedStorageAccountsData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

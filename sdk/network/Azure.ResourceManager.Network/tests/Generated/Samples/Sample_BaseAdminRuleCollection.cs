@@ -63,7 +63,7 @@ AddressPrefixType = AddressPrefixType.NetworkGroup,
                 Priority = 1,
                 Direction = SecurityConfigurationRuleDirection.Inbound,
             };
-            ArmOperation<BaseAdminRuleResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName, data);
+            ArmOperation<BaseAdminRuleResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName, data, cancellationToken: System.Threading.CancellationToken.None);
             BaseAdminRuleResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -120,7 +120,7 @@ AddressPrefixType = AddressPrefixType.IPPrefix,
                 Priority = 1,
                 Direction = SecurityConfigurationRuleDirection.Inbound,
             };
-            ArmOperation<BaseAdminRuleResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName, data);
+            ArmOperation<BaseAdminRuleResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName, data, cancellationToken: System.Threading.CancellationToken.None);
             BaseAdminRuleResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

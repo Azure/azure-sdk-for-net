@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -14,59 +15,92 @@ namespace Azure.ResourceManager.Billing.Models
     public readonly partial struct SubscriptionStatusReason : IEquatable<SubscriptionStatusReason>
     {
         private readonly string _value;
+        /// <summary> None. </summary>
+        private const string NoneValue = "None";
+        /// <summary> Cancelled. </summary>
+        private const string CancelledValue = "Cancelled";
+        /// <summary> PastDue. </summary>
+        private const string PastDueValue = "PastDue";
+        /// <summary> SuspiciousActivity. </summary>
+        private const string SuspiciousActivityValue = "SuspiciousActivity";
+        /// <summary> Other. </summary>
+        private const string OtherValue = "Other";
+        /// <summary> Transferred. </summary>
+        private const string TransferredValue = "Transferred";
+        /// <summary> PolicyViolation. </summary>
+        private const string PolicyViolationValue = "PolicyViolation";
+        /// <summary> SpendingLimitReached. </summary>
+        private const string SpendingLimitReachedValue = "SpendingLimitReached";
+        /// <summary> Expired. </summary>
+        private const string ExpiredValue = "Expired";
 
         /// <summary> Initializes a new instance of <see cref="SubscriptionStatusReason"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SubscriptionStatusReason(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "None";
-        private const string CancelledValue = "Cancelled";
-        private const string PastDueValue = "PastDue";
-        private const string SuspiciousActivityValue = "SuspiciousActivity";
-        private const string OtherValue = "Other";
-        private const string TransferredValue = "Transferred";
-        private const string PolicyViolationValue = "PolicyViolation";
-        private const string SpendingLimitReachedValue = "SpendingLimitReached";
-        private const string ExpiredValue = "Expired";
+            _value = value;
+        }
 
         /// <summary> None. </summary>
         public static SubscriptionStatusReason None { get; } = new SubscriptionStatusReason(NoneValue);
+
         /// <summary> Cancelled. </summary>
         public static SubscriptionStatusReason Cancelled { get; } = new SubscriptionStatusReason(CancelledValue);
+
         /// <summary> PastDue. </summary>
         public static SubscriptionStatusReason PastDue { get; } = new SubscriptionStatusReason(PastDueValue);
+
         /// <summary> SuspiciousActivity. </summary>
         public static SubscriptionStatusReason SuspiciousActivity { get; } = new SubscriptionStatusReason(SuspiciousActivityValue);
+
         /// <summary> Other. </summary>
         public static SubscriptionStatusReason Other { get; } = new SubscriptionStatusReason(OtherValue);
+
         /// <summary> Transferred. </summary>
         public static SubscriptionStatusReason Transferred { get; } = new SubscriptionStatusReason(TransferredValue);
+
         /// <summary> PolicyViolation. </summary>
         public static SubscriptionStatusReason PolicyViolation { get; } = new SubscriptionStatusReason(PolicyViolationValue);
+
         /// <summary> SpendingLimitReached. </summary>
         public static SubscriptionStatusReason SpendingLimitReached { get; } = new SubscriptionStatusReason(SpendingLimitReachedValue);
+
         /// <summary> Expired. </summary>
         public static SubscriptionStatusReason Expired { get; } = new SubscriptionStatusReason(ExpiredValue);
+
         /// <summary> Determines if two <see cref="SubscriptionStatusReason"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SubscriptionStatusReason left, SubscriptionStatusReason right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SubscriptionStatusReason"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SubscriptionStatusReason left, SubscriptionStatusReason right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SubscriptionStatusReason"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SubscriptionStatusReason"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SubscriptionStatusReason(string value) => new SubscriptionStatusReason(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SubscriptionStatusReason"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SubscriptionStatusReason?(string value) => value == null ? null : new SubscriptionStatusReason(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SubscriptionStatusReason other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SubscriptionStatusReason other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -61,7 +61,7 @@ AddressPrefixType = AddressPrefixType.IPPrefix,
                 DestinationPortRanges = { "22" },
                 Direction = SecurityConfigurationRuleDirection.Inbound,
             };
-            ArmOperation<NetworkManagerSecurityUserRuleResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName, data);
+            ArmOperation<NetworkManagerSecurityUserRuleResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName, data, cancellationToken: System.Threading.CancellationToken.None);
             NetworkManagerSecurityUserRuleResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

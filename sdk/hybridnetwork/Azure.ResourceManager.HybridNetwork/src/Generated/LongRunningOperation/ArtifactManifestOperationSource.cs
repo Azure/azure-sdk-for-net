@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.HybridNetwork
 {
-    internal class ArtifactManifestOperationSource : IOperationSource<ArtifactManifestResource>
+    /// <summary></summary>
+    internal partial class ArtifactManifestOperationSource : IOperationSource<ArtifactManifestResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal ArtifactManifestOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         ArtifactManifestResource IOperationSource<ArtifactManifestResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ArtifactManifestData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHybridNetworkContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            ArtifactManifestData data = ArtifactManifestData.DeserializeArtifactManifestData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new ArtifactManifestResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<ArtifactManifestResource> IOperationSource<ArtifactManifestResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ArtifactManifestData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHybridNetworkContext.Default);
-            return await Task.FromResult(new ArtifactManifestResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            ArtifactManifestData data = ArtifactManifestData.DeserializeArtifactManifestData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ArtifactManifestResource(_client, data);
         }
     }
 }

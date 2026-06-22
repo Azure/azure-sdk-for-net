@@ -8,67 +8,66 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.HybridNetwork
 {
     /// <summary>
     /// A class representing a collection of <see cref="ArtifactManifestResource"/> and their operations.
     /// Each <see cref="ArtifactManifestResource"/> in the collection will belong to the same instance of <see cref="ArtifactStoreResource"/>.
-    /// To get an <see cref="ArtifactManifestCollection"/> instance call the GetArtifactManifests method from an instance of <see cref="ArtifactStoreResource"/>.
+    /// To get a <see cref="ArtifactManifestCollection"/> instance call the GetArtifactManifests method from an instance of <see cref="ArtifactStoreResource"/>.
     /// </summary>
     public partial class ArtifactManifestCollection : ArmCollection, IEnumerable<ArtifactManifestResource>, IAsyncEnumerable<ArtifactManifestResource>
     {
-        private readonly ClientDiagnostics _artifactManifestClientDiagnostics;
-        private readonly ArtifactManifestsRestOperations _artifactManifestRestClient;
+        private readonly ClientDiagnostics _artifactManifestsClientDiagnostics;
+        private readonly ArtifactManifests _artifactManifestsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ArtifactManifestCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ArtifactManifestCollection for mocking. </summary>
         protected ArtifactManifestCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ArtifactManifestCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArtifactManifestCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ArtifactManifestCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _artifactManifestClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridNetwork", ArtifactManifestResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ArtifactManifestResource.ResourceType, out string artifactManifestApiVersion);
-            _artifactManifestRestClient = new ArtifactManifestsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, artifactManifestApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _artifactManifestsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridNetwork", ArtifactManifestResource.ResourceType.Namespace, Diagnostics);
+            _artifactManifestsRestClient = new ArtifactManifests(_artifactManifestsClientDiagnostics, Pipeline, Endpoint, artifactManifestApiVersion ?? "2025-03-30");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ArtifactStoreResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ArtifactStoreResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ArtifactStoreResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Creates or updates a artifact manifest.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}/artifactManifests/{artifactManifestName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}/artifactManifests/{artifactManifestName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ArtifactManifests_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> ArtifactManifests_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ArtifactManifestResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,21 +75,34 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <param name="artifactManifestName"> The name of the artifact manifest. </param>
         /// <param name="data"> Parameters supplied to the create or update artifact manifest operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="artifactManifestName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="artifactManifestName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="artifactManifestName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<ArtifactManifestResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string artifactManifestName, ArtifactManifestData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(artifactManifestName, nameof(artifactManifestName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _artifactManifestClientDiagnostics.CreateScope("ArtifactManifestCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _artifactManifestsClientDiagnostics.CreateScope("ArtifactManifestCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _artifactManifestRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, artifactManifestName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new HybridNetworkArmOperation<ArtifactManifestResource>(new ArtifactManifestOperationSource(Client), _artifactManifestClientDiagnostics, Pipeline, _artifactManifestRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, artifactManifestName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _artifactManifestsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, artifactManifestName, ArtifactManifestData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                HybridNetworkArmOperation<ArtifactManifestResource> operation = new HybridNetworkArmOperation<ArtifactManifestResource>(
+                    new ArtifactManifestOperationSource(Client),
+                    _artifactManifestsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -104,20 +116,16 @@ namespace Azure.ResourceManager.HybridNetwork
         /// Creates or updates a artifact manifest.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}/artifactManifests/{artifactManifestName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}/artifactManifests/{artifactManifestName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ArtifactManifests_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> ArtifactManifests_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ArtifactManifestResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,21 +133,34 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <param name="artifactManifestName"> The name of the artifact manifest. </param>
         /// <param name="data"> Parameters supplied to the create or update artifact manifest operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="artifactManifestName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="artifactManifestName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="artifactManifestName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<ArtifactManifestResource> CreateOrUpdate(WaitUntil waitUntil, string artifactManifestName, ArtifactManifestData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(artifactManifestName, nameof(artifactManifestName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _artifactManifestClientDiagnostics.CreateScope("ArtifactManifestCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _artifactManifestsClientDiagnostics.CreateScope("ArtifactManifestCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _artifactManifestRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, artifactManifestName, data, cancellationToken);
-                var operation = new HybridNetworkArmOperation<ArtifactManifestResource>(new ArtifactManifestOperationSource(Client), _artifactManifestClientDiagnostics, Pipeline, _artifactManifestRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, artifactManifestName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _artifactManifestsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, artifactManifestName, ArtifactManifestData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                HybridNetworkArmOperation<ArtifactManifestResource> operation = new HybridNetworkArmOperation<ArtifactManifestResource>(
+                    new ArtifactManifestOperationSource(Client),
+                    _artifactManifestsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -153,38 +174,42 @@ namespace Azure.ResourceManager.HybridNetwork
         /// Gets information about a artifact manifest resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}/artifactManifests/{artifactManifestName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}/artifactManifests/{artifactManifestName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ArtifactManifests_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ArtifactManifests_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ArtifactManifestResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="artifactManifestName"> The name of the artifact manifest. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="artifactManifestName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="artifactManifestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="artifactManifestName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<ArtifactManifestResource>> GetAsync(string artifactManifestName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(artifactManifestName, nameof(artifactManifestName));
 
-            using var scope = _artifactManifestClientDiagnostics.CreateScope("ArtifactManifestCollection.Get");
+            using DiagnosticScope scope = _artifactManifestsClientDiagnostics.CreateScope("ArtifactManifestCollection.Get");
             scope.Start();
             try
             {
-                var response = await _artifactManifestRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, artifactManifestName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _artifactManifestsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, artifactManifestName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ArtifactManifestData> response = Response.FromValue(ArtifactManifestData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ArtifactManifestResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -198,38 +223,42 @@ namespace Azure.ResourceManager.HybridNetwork
         /// Gets information about a artifact manifest resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}/artifactManifests/{artifactManifestName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}/artifactManifests/{artifactManifestName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ArtifactManifests_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ArtifactManifests_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ArtifactManifestResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="artifactManifestName"> The name of the artifact manifest. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="artifactManifestName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="artifactManifestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="artifactManifestName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<ArtifactManifestResource> Get(string artifactManifestName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(artifactManifestName, nameof(artifactManifestName));
 
-            using var scope = _artifactManifestClientDiagnostics.CreateScope("ArtifactManifestCollection.Get");
+            using DiagnosticScope scope = _artifactManifestsClientDiagnostics.CreateScope("ArtifactManifestCollection.Get");
             scope.Start();
             try
             {
-                var response = _artifactManifestRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, artifactManifestName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _artifactManifestsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, artifactManifestName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ArtifactManifestData> response = Response.FromValue(ArtifactManifestData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ArtifactManifestResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -243,50 +272,51 @@ namespace Azure.ResourceManager.HybridNetwork
         /// Gets information about the artifact manifest.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}/artifactManifests</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}/artifactManifests. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ArtifactManifests_ListByArtifactStore</description>
+        /// <term> Operation Id. </term>
+        /// <description> ArtifactManifests_ListByArtifactStore. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ArtifactManifestResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ArtifactManifestResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ArtifactManifestResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ArtifactManifestResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _artifactManifestRestClient.CreateListByArtifactStoreRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _artifactManifestRestClient.CreateListByArtifactStoreNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ArtifactManifestResource(Client, ArtifactManifestData.DeserializeArtifactManifestData(e)), _artifactManifestClientDiagnostics, Pipeline, "ArtifactManifestCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ArtifactManifestData, ArtifactManifestResource>(new ArtifactManifestsGetByArtifactStoreAsyncCollectionResultOfT(
+                _artifactManifestsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "ArtifactManifestCollection.GetAll"), data => new ArtifactManifestResource(Client, data));
         }
 
         /// <summary>
         /// Gets information about the artifact manifest.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}/artifactManifests</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}/artifactManifests. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ArtifactManifests_ListByArtifactStore</description>
+        /// <term> Operation Id. </term>
+        /// <description> ArtifactManifests_ListByArtifactStore. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ArtifactManifestResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,45 +324,68 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <returns> A collection of <see cref="ArtifactManifestResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ArtifactManifestResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _artifactManifestRestClient.CreateListByArtifactStoreRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _artifactManifestRestClient.CreateListByArtifactStoreNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ArtifactManifestResource(Client, ArtifactManifestData.DeserializeArtifactManifestData(e)), _artifactManifestClientDiagnostics, Pipeline, "ArtifactManifestCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ArtifactManifestData, ArtifactManifestResource>(new ArtifactManifestsGetByArtifactStoreCollectionResultOfT(
+                _artifactManifestsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "ArtifactManifestCollection.GetAll"), data => new ArtifactManifestResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}/artifactManifests/{artifactManifestName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}/artifactManifests/{artifactManifestName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ArtifactManifests_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ArtifactManifests_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ArtifactManifestResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="artifactManifestName"> The name of the artifact manifest. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="artifactManifestName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="artifactManifestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="artifactManifestName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string artifactManifestName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(artifactManifestName, nameof(artifactManifestName));
 
-            using var scope = _artifactManifestClientDiagnostics.CreateScope("ArtifactManifestCollection.Exists");
+            using DiagnosticScope scope = _artifactManifestsClientDiagnostics.CreateScope("ArtifactManifestCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _artifactManifestRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, artifactManifestName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _artifactManifestsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, artifactManifestName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ArtifactManifestData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ArtifactManifestData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ArtifactManifestData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -346,36 +399,50 @@ namespace Azure.ResourceManager.HybridNetwork
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}/artifactManifests/{artifactManifestName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}/artifactManifests/{artifactManifestName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ArtifactManifests_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ArtifactManifests_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ArtifactManifestResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="artifactManifestName"> The name of the artifact manifest. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="artifactManifestName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="artifactManifestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="artifactManifestName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string artifactManifestName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(artifactManifestName, nameof(artifactManifestName));
 
-            using var scope = _artifactManifestClientDiagnostics.CreateScope("ArtifactManifestCollection.Exists");
+            using DiagnosticScope scope = _artifactManifestsClientDiagnostics.CreateScope("ArtifactManifestCollection.Exists");
             scope.Start();
             try
             {
-                var response = _artifactManifestRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, artifactManifestName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _artifactManifestsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, artifactManifestName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ArtifactManifestData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ArtifactManifestData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ArtifactManifestData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -389,38 +456,54 @@ namespace Azure.ResourceManager.HybridNetwork
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}/artifactManifests/{artifactManifestName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}/artifactManifests/{artifactManifestName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ArtifactManifests_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ArtifactManifests_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ArtifactManifestResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="artifactManifestName"> The name of the artifact manifest. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="artifactManifestName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="artifactManifestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="artifactManifestName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<ArtifactManifestResource>> GetIfExistsAsync(string artifactManifestName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(artifactManifestName, nameof(artifactManifestName));
 
-            using var scope = _artifactManifestClientDiagnostics.CreateScope("ArtifactManifestCollection.GetIfExists");
+            using DiagnosticScope scope = _artifactManifestsClientDiagnostics.CreateScope("ArtifactManifestCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _artifactManifestRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, artifactManifestName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _artifactManifestsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, artifactManifestName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ArtifactManifestData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ArtifactManifestData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ArtifactManifestData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ArtifactManifestResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ArtifactManifestResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -434,38 +517,54 @@ namespace Azure.ResourceManager.HybridNetwork
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}/artifactManifests/{artifactManifestName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}/artifactManifests/{artifactManifestName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ArtifactManifests_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ArtifactManifests_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ArtifactManifestResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-30. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="artifactManifestName"> The name of the artifact manifest. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="artifactManifestName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="artifactManifestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="artifactManifestName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<ArtifactManifestResource> GetIfExists(string artifactManifestName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(artifactManifestName, nameof(artifactManifestName));
 
-            using var scope = _artifactManifestClientDiagnostics.CreateScope("ArtifactManifestCollection.GetIfExists");
+            using DiagnosticScope scope = _artifactManifestsClientDiagnostics.CreateScope("ArtifactManifestCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _artifactManifestRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, artifactManifestName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _artifactManifestsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, artifactManifestName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ArtifactManifestData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ArtifactManifestData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ArtifactManifestData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ArtifactManifestResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ArtifactManifestResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -485,6 +584,7 @@ namespace Azure.ResourceManager.HybridNetwork
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<ArtifactManifestResource> IAsyncEnumerable<ArtifactManifestResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

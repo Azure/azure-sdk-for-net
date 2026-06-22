@@ -786,7 +786,7 @@ namespace Azure.Developer.DevCenter
                 Argument.AssertNotNull(content, nameof(content));
 
                 using HttpMessage message = CreateCreateDevBoxRequest(projectName, userId, devBoxName, content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "DevBoxesClient.CreateDevBoxAsync", OperationFinalStateVia.OriginalUri, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "DevBoxesClient.CreateDevBox", OperationFinalStateVia.OriginalUri, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -844,7 +844,7 @@ namespace Azure.Developer.DevCenter
                 Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
 
                 using HttpMessage message = CreateDeleteDevBoxRequest(projectName, userId, devBoxName, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "DevBoxesClient.DeleteDevBoxAsync", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "DevBoxesClient.DeleteDevBox", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -936,7 +936,7 @@ namespace Azure.Developer.DevCenter
                 Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
 
                 using HttpMessage message = CreateStartDevBoxRequest(projectName, userId, devBoxName, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "DevBoxesClient.StartDevBoxAsync", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "DevBoxesClient.StartDevBox", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1030,7 +1030,7 @@ namespace Azure.Developer.DevCenter
                 Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
 
                 using HttpMessage message = CreateStopDevBoxRequest(projectName, userId, devBoxName, hibernate, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "DevBoxesClient.StopDevBoxAsync", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "DevBoxesClient.StopDevBox", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1124,7 +1124,7 @@ namespace Azure.Developer.DevCenter
                 Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
 
                 using HttpMessage message = CreateRestartDevBoxRequest(projectName, userId, devBoxName, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "DevBoxesClient.RestartDevBoxAsync", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "DevBoxesClient.RestartDevBox", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {

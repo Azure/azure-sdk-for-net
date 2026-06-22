@@ -7,42 +7,59 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> The GalleryExpand. </summary>
+    /// <summary></summary>
     public readonly partial struct GalleryExpand : IEquatable<GalleryExpand>
     {
         private readonly string _value;
+        private const string SharingProfileGroupsValue = "SharingProfile/Groups";
 
         /// <summary> Initializes a new instance of <see cref="GalleryExpand"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public GalleryExpand(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string SharingProfileGroupsValue = "SharingProfile/Groups";
-
-        /// <summary> SharingProfile/Groups. </summary>
+        /// <summary> Gets the SharingProfileGroups. </summary>
         public static GalleryExpand SharingProfileGroups { get; } = new GalleryExpand(SharingProfileGroupsValue);
+
         /// <summary> Determines if two <see cref="GalleryExpand"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(GalleryExpand left, GalleryExpand right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="GalleryExpand"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(GalleryExpand left, GalleryExpand right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="GalleryExpand"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="GalleryExpand"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator GalleryExpand(string value) => new GalleryExpand(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="GalleryExpand"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator GalleryExpand?(string value) => value == null ? null : new GalleryExpand(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is GalleryExpand other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(GalleryExpand other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

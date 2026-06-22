@@ -1,0 +1,14 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+#nullable disable
+
+namespace Azure.ResourceManager.Network.Models
+{
+    /// <summary> Compatibility declaration for the NetworkIPConfiguration type. </summary>
+    public partial class NetworkIPConfiguration
+    {
+        /// <summary> Initializes a new instance of the NetworkIPConfiguration class. </summary>
+        protected NetworkIPConfiguration(bool _) { }
+    }
+}

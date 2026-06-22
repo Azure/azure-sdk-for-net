@@ -111,6 +111,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 writer.WritePropertyName("geoBackupEncryptionKeyStatus"u8);
                 writer.WriteStringValue(GeoBackupEncryptionKeyStatus.Value.ToString());
             }
+            if (Optional.IsDefined(PrimaryFederatedIdentityClientId))
+            {
+                writer.WritePropertyName("primaryFederatedIdentityClientId"u8);
+                writer.WriteStringValue(PrimaryFederatedIdentityClientId.Value);
+            }
+            if (Optional.IsDefined(GeoBackupFederatedIdentityClientId))
+            {
+                writer.WritePropertyName("geoBackupFederatedIdentityClientId"u8);
+                writer.WriteStringValue(GeoBackupFederatedIdentityClientId.Value);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -160,6 +170,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             PostgreSqlFlexibleServerKeyType? keyType = default;
             PostgreSqlKeyStatus? primaryEncryptionKeyStatus = default;
             PostgreSqlKeyStatus? geoBackupEncryptionKeyStatus = default;
+            Guid? primaryFederatedIdentityClientId = default;
+            Guid? geoBackupFederatedIdentityClientId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -222,6 +234,24 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     geoBackupEncryptionKeyStatus = new PostgreSqlKeyStatus(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("primaryFederatedIdentityClientId"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    primaryFederatedIdentityClientId = new Guid(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("geoBackupFederatedIdentityClientId"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    geoBackupFederatedIdentityClientId = new Guid(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -235,6 +265,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 keyType,
                 primaryEncryptionKeyStatus,
                 geoBackupEncryptionKeyStatus,
+                primaryFederatedIdentityClientId,
+                geoBackupFederatedIdentityClientId,
                 additionalBinaryDataProperties);
         }
     }

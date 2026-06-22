@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct AuthorizationUseStatus : IEquatable<AuthorizationUseStatus>
     {
         private readonly string _value;
+        /// <summary> Available. </summary>
+        private const string AvailableValue = "Available";
+        /// <summary> InUse. </summary>
+        private const string InUseValue = "InUse";
 
         /// <summary> Initializes a new instance of <see cref="AuthorizationUseStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AuthorizationUseStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AvailableValue = "Available";
-        private const string InUseValue = "InUse";
+            _value = value;
+        }
 
         /// <summary> Available. </summary>
         public static AuthorizationUseStatus Available { get; } = new AuthorizationUseStatus(AvailableValue);
+
         /// <summary> InUse. </summary>
         public static AuthorizationUseStatus InUse { get; } = new AuthorizationUseStatus(InUseValue);
+
         /// <summary> Determines if two <see cref="AuthorizationUseStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AuthorizationUseStatus left, AuthorizationUseStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AuthorizationUseStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AuthorizationUseStatus left, AuthorizationUseStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AuthorizationUseStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AuthorizationUseStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AuthorizationUseStatus(string value) => new AuthorizationUseStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AuthorizationUseStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AuthorizationUseStatus?(string value) => value == null ? null : new AuthorizationUseStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AuthorizationUseStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AuthorizationUseStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

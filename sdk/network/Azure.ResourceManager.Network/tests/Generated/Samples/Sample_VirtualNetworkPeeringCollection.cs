@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network.Samples
                 LocalSubnetNames = { "Subnet1", "Subnet4" },
                 RemoteSubnetNames = { "Subnet2" },
             };
-            ArmOperation<VirtualNetworkPeeringResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkPeeringName, data);
+            ArmOperation<VirtualNetworkPeeringResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkPeeringName, data, cancellationToken: System.Threading.CancellationToken.None);
             VirtualNetworkPeeringResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Network.Samples
                 UseRemoteGateways = false,
                 RemoteVirtualNetworkId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/peerTest/providers/Microsoft.Network/virtualNetworks/vnet2"),
             };
-            ArmOperation<VirtualNetworkPeeringResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkPeeringName, data);
+            ArmOperation<VirtualNetworkPeeringResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkPeeringName, data, cancellationToken: System.Threading.CancellationToken.None);
             VirtualNetworkPeeringResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Network.Samples
                 UseRemoteGateways = false,
                 RemoteVirtualNetworkId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/peerTest/providers/Microsoft.Network/virtualNetworks/vnet2"),
             };
-            ArmOperation<VirtualNetworkPeeringResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkPeeringName, data);
+            ArmOperation<VirtualNetworkPeeringResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkPeeringName, data, cancellationToken: System.Threading.CancellationToken.None);
             VirtualNetworkPeeringResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Network.Samples
                 LocalSubnetNames = { "Subnet1", "Subnet4" },
                 RemoteSubnetNames = { "Subnet2" },
             };
-            ArmOperation<VirtualNetworkPeeringResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkPeeringName, data);
+            ArmOperation<VirtualNetworkPeeringResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkPeeringName, data, cancellationToken: System.Threading.CancellationToken.None);
             VirtualNetworkPeeringResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Network.Samples
                 RemoteVirtualNetworkId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/peerTest/providers/Microsoft.Network/virtualNetworks/vnet2"),
             };
             SyncRemoteAddressSpace? syncRemoteAddressSpace = SyncRemoteAddressSpace.True;
-            ArmOperation<VirtualNetworkPeeringResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkPeeringName, data, syncRemoteAddressSpace: syncRemoteAddressSpace);
+            ArmOperation<VirtualNetworkPeeringResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkPeeringName, data, syncRemoteAddressSpace: syncRemoteAddressSpace, cancellationToken: System.Threading.CancellationToken.None);
             VirtualNetworkPeeringResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.Network.Samples
                 EnableOnlyIPv6Peering = true,
             };
             SyncRemoteAddressSpace? syncRemoteAddressSpace = SyncRemoteAddressSpace.True;
-            ArmOperation<VirtualNetworkPeeringResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkPeeringName, data, syncRemoteAddressSpace: syncRemoteAddressSpace);
+            ArmOperation<VirtualNetworkPeeringResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkPeeringName, data, syncRemoteAddressSpace: syncRemoteAddressSpace, cancellationToken: System.Threading.CancellationToken.None);
             VirtualNetworkPeeringResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Network.Samples
                 EnableOnlyIPv6Peering = false,
             };
             SyncRemoteAddressSpace? syncRemoteAddressSpace = SyncRemoteAddressSpace.True;
-            ArmOperation<VirtualNetworkPeeringResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkPeeringName, data, syncRemoteAddressSpace: syncRemoteAddressSpace);
+            ArmOperation<VirtualNetworkPeeringResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkPeeringName, data, syncRemoteAddressSpace: syncRemoteAddressSpace, cancellationToken: System.Threading.CancellationToken.None);
             VirtualNetworkPeeringResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

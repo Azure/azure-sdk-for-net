@@ -18,42 +18,66 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Initializes a new instance of <see cref="CommunityGalleryImageVersionData"/>. </summary>
         internal CommunityGalleryImageVersionData()
         {
-            ArtifactTags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CommunityGalleryImageVersionData"/>. </summary>
         /// <param name="name"> Resource name. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="resourceType"> Resource type. </param>
-        /// <param name="uniqueId"> The unique id of this community gallery. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="publishedOn"> The published date of the gallery image version Definition. This property can be used for decommissioning purposes. This property is updatable. </param>
-        /// <param name="endOfLifeOn"> The end of life date of the gallery image version Definition. This property can be used for decommissioning purposes. This property is updatable. </param>
-        /// <param name="isExcludedFromLatest"> If set to true, Virtual Machines deployed from the latest version of the Image Definition won't use this Image Version. </param>
-        /// <param name="storageProfile"> Describes the storage profile of the image version. </param>
-        /// <param name="disclaimer"> The disclaimer for a community gallery resource. </param>
-        /// <param name="artifactTags"> The artifact tags of a community gallery resource. </param>
-        internal CommunityGalleryImageVersionData(string name, AzureLocation? location, ResourceType? resourceType, string uniqueId, IDictionary<string, BinaryData> serializedAdditionalRawData, DateTimeOffset? publishedOn, DateTimeOffset? endOfLifeOn, bool? isExcludedFromLatest, SharedGalleryImageVersionStorageProfile storageProfile, string disclaimer, IReadOnlyDictionary<string, string> artifactTags) : base(name, location, resourceType, uniqueId, serializedAdditionalRawData)
+        /// <param name="galleryIdentifier"> The identifier information of community gallery. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Describes the properties of a gallery image version. </param>
+        internal CommunityGalleryImageVersionData(string name, AzureLocation? location, ResourceType? resourceType, CommunityGalleryIdentifier galleryIdentifier, IDictionary<string, BinaryData> additionalBinaryDataProperties, CommunityGalleryImageVersionProperties properties) : base(name, location, resourceType, galleryIdentifier, additionalBinaryDataProperties)
         {
-            PublishedOn = publishedOn;
-            EndOfLifeOn = endOfLifeOn;
-            IsExcludedFromLatest = isExcludedFromLatest;
-            StorageProfile = storageProfile;
-            Disclaimer = disclaimer;
-            ArtifactTags = artifactTags;
+            Properties = properties;
         }
 
+        /// <summary> Describes the properties of a gallery image version. </summary>
+        internal CommunityGalleryImageVersionProperties Properties { get; }
+
         /// <summary> The published date of the gallery image version Definition. This property can be used for decommissioning purposes. This property is updatable. </summary>
-        public DateTimeOffset? PublishedOn { get; }
+        public DateTimeOffset? PublishedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublishedOn;
+            }
+        }
+
         /// <summary> The end of life date of the gallery image version Definition. This property can be used for decommissioning purposes. This property is updatable. </summary>
-        public DateTimeOffset? EndOfLifeOn { get; }
+        public DateTimeOffset? EndOfLifeOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EndOfLifeOn;
+            }
+        }
+
         /// <summary> If set to true, Virtual Machines deployed from the latest version of the Image Definition won't use this Image Version. </summary>
-        public bool? IsExcludedFromLatest { get; }
+        public bool? IsExcludedFromLatest
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsExcludedFromLatest;
+            }
+        }
+
         /// <summary> Describes the storage profile of the image version. </summary>
-        public SharedGalleryImageVersionStorageProfile StorageProfile { get; }
+        public SharedGalleryImageVersionStorageProfile StorageProfile
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StorageProfile;
+            }
+        }
+
         /// <summary> The disclaimer for a community gallery resource. </summary>
-        public string Disclaimer { get; }
-        /// <summary> The artifact tags of a community gallery resource. </summary>
-        public IReadOnlyDictionary<string, string> ArtifactTags { get; }
+        public string Disclaimer
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Disclaimer;
+            }
+        }
     }
 }

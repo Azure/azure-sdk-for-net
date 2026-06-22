@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
@@ -190,22 +189,21 @@ public partial class AIProjectRoutines
 
     /// <summary> Create or update a routine. </summary>
     /// <param name="routineName"> The unique name of the routine. </param>
-    /// <param name="triggers"> The triggers configured for the routine. In v1, exactly one trigger entry is supported. </param>
-    /// <param name="action"> The action executed when the routine fires. </param>
-    /// <param name="description"> A human-readable description of the routine. </param>
-    /// <param name="enabled"> Whether the routine is enabled. </param>
+    /// <param name="options"> The options for routine. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-    /// <exception cref="ArgumentNullException"> <paramref name="routineName"/>, <paramref name="triggers"/> or <paramref name="action"/> is null. </exception>
+    /// <exception cref="ArgumentNullException"> <paramref name="routineName"/> or <paramref name="options"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="routineName"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual ClientResult<ProjectsRoutine> CreateOrUpdateRoutine(string routineName, IDictionary<string, RoutineTrigger> triggers, RoutineAction action, string description = default, bool? enabled = default, CancellationToken cancellationToken = default)
+    public virtual ClientResult<ProjectsRoutine> CreateOrUpdateRoutine(string routineName, ProjectsRoutineOptions options, CancellationToken cancellationToken = default)
     {
+        Argument.AssertNotNullOrEmpty(routineName, nameof(routineName));
+        Argument.AssertNotNull(options, nameof(options));
         return CreateOrUpdateRoutine(
             routineName: routineName,
-            triggers: triggers,
-            action: action,
-            description: description,
-            enabled:enabled,
+            triggers: options.Triggers,
+            action: options.Action,
+            description: options.Description,
+            enabled: options.Enabled,
             foundryFeatures: default,
             cancellationToken: cancellationToken
         );
@@ -213,22 +211,21 @@ public partial class AIProjectRoutines
 
     /// <summary> Create or update a routine. </summary>
     /// <param name="routineName"> The unique name of the routine. </param>
-    /// <param name="triggers"> The triggers configured for the routine. In v1, exactly one trigger entry is supported. </param>
-    /// <param name="action"> The action executed when the routine fires. </param>
-    /// <param name="description"> A human-readable description of the routine. </param>
-    /// <param name="enabled"> Whether the routine is enabled. </param>
+    /// <param name="options"> The options for routine. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-    /// <exception cref="ArgumentNullException"> <paramref name="routineName"/>, <paramref name="triggers"/> or <paramref name="action"/> is null. </exception>
+    /// <exception cref="ArgumentNullException"> <paramref name="routineName"/> or <paramref name="options"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="routineName"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual async Task<ClientResult<ProjectsRoutine>> CreateOrUpdateRoutineAsync(string routineName, IDictionary<string, RoutineTrigger> triggers, RoutineAction action, string description = default, bool? enabled = default, CancellationToken cancellationToken = default)
+    public virtual async Task<ClientResult<ProjectsRoutine>> CreateOrUpdateRoutineAsync(string routineName, ProjectsRoutineOptions options, CancellationToken cancellationToken = default)
     {
+        Argument.AssertNotNullOrEmpty(routineName, nameof(routineName));
+        Argument.AssertNotNull(options, nameof(options));
         return await CreateOrUpdateRoutineAsync(
             routineName: routineName,
-            triggers: triggers,
-            action: action,
-            description: description,
-            enabled: enabled,
+            triggers: options.Triggers,
+            action: options.Action,
+            description: options.Description,
+            enabled: options.Enabled,
             foundryFeatures: default,
             cancellationToken: cancellationToken
         ).ConfigureAwait(false);
@@ -242,6 +239,7 @@ public partial class AIProjectRoutines
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     public virtual ClientResult<ProjectsRoutine> GetRoutine(string routineName, CancellationToken cancellationToken = default)
     {
+        Argument.AssertNotNullOrEmpty(routineName, nameof(routineName));
         return GetRoutine(
             routineName: routineName,
             foundryFeatures: default,
@@ -257,6 +255,7 @@ public partial class AIProjectRoutines
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     public virtual async Task<ClientResult<ProjectsRoutine>> GetRoutineAsync(string routineName, CancellationToken cancellationToken = default)
     {
+        Argument.AssertNotNullOrEmpty(routineName, nameof(routineName));
         return await GetRoutineAsync(
             routineName: routineName,
             foundryFeatures: default,
@@ -272,6 +271,7 @@ public partial class AIProjectRoutines
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     public virtual ClientResult<ProjectsRoutine> EnableRoutine(string routineName, CancellationToken cancellationToken = default)
     {
+        Argument.AssertNotNullOrEmpty(routineName, nameof(routineName));
         return EnableRoutine(
             routineName: routineName,
             foundryFeatures: default,
@@ -287,6 +287,7 @@ public partial class AIProjectRoutines
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     public virtual async Task<ClientResult<ProjectsRoutine>> EnableRoutineAsync(string routineName, CancellationToken cancellationToken = default)
     {
+        Argument.AssertNotNullOrEmpty(routineName, nameof(routineName));
         return await EnableRoutineAsync(
             routineName: routineName,
             foundryFeatures: default,
@@ -302,6 +303,7 @@ public partial class AIProjectRoutines
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     public virtual ClientResult<ProjectsRoutine> DisableRoutine(string routineName, CancellationToken cancellationToken = default)
     {
+        Argument.AssertNotNullOrEmpty(routineName, nameof(routineName));
         return DisableRoutine(
             routineName: routineName,
             foundryFeatures: default,
@@ -317,6 +319,7 @@ public partial class AIProjectRoutines
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     public virtual async Task<ClientResult<ProjectsRoutine>> DisableRoutineAsync(string routineName, CancellationToken cancellationToken = default)
     {
+        Argument.AssertNotNullOrEmpty(routineName, nameof(routineName));
         return await DisableRoutineAsync(
             routineName: routineName,
             foundryFeatures: default,
@@ -332,6 +335,7 @@ public partial class AIProjectRoutines
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     public virtual ClientResult DeleteRoutine(string routineName, CancellationToken cancellationToken = default)
     {
+        Argument.AssertNotNullOrEmpty(routineName, nameof(routineName));
         return DeleteRoutine(
             routineName: routineName,
             foundryFeatures: default,
@@ -347,6 +351,7 @@ public partial class AIProjectRoutines
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     public virtual async Task<ClientResult> DeleteRoutineAsync(string routineName, CancellationToken cancellationToken = default)
     {
+        Argument.AssertNotNullOrEmpty(routineName, nameof(routineName));
         return await DeleteRoutineAsync(
             routineName: routineName,
             foundryFeatures: default,
@@ -363,6 +368,7 @@ public partial class AIProjectRoutines
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     public virtual ClientResult<DispatchRoutineResponse> DispatchAsyncRoutine(string routineName, RoutineDispatchPayload payload = default, CancellationToken cancellationToken = default)
     {
+        Argument.AssertNotNullOrEmpty(routineName, nameof(routineName));
         return DispatchAsyncRoutine(
             routineName: routineName,
             payload: payload,
@@ -380,6 +386,7 @@ public partial class AIProjectRoutines
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     public virtual Task<ClientResult<DispatchRoutineResponse>> DispatchAsyncRoutineAsync(string routineName, RoutineDispatchPayload payload = default, CancellationToken cancellationToken = default)
     {
+        Argument.AssertNotNullOrEmpty(routineName, nameof(routineName));
         return DispatchAsyncRoutineAsync(
             routineName: routineName,
             payload: payload,
