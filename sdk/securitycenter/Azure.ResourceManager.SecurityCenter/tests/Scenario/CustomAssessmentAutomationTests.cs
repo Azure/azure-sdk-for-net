@@ -52,6 +52,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         }
 
         [RecordedTest]
+        [Category("Manually")]
         public async Task GetAll()
         {
             var list = await _customAssessmentAutomationCollection.GetAllAsync().ToEnumerableAsync();

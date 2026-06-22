@@ -96,6 +96,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         }
 
         [RecordedTest]
+        [Category("Manually")]
         public async Task Delete()
         {
             var assessmentMetadataName = Recording.Random.NewGuid().ToString();

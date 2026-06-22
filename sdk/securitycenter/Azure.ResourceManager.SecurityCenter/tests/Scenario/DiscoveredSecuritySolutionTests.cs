@@ -48,6 +48,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         }
 
         [RecordedTest]
+        [Category("Manually")]
         public async Task ListByHomeRegion()
         {
             var ascLocation = await DefaultSubscription.GetSecurityCenterLocations().GetAsync("centralus");

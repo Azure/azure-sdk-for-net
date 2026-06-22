@@ -104,6 +104,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         }
 
         [RecordedTest]
+        [Category("Manually")]
         public async Task Delete()
         {
             string automationName = Recording.GenerateAssetName("automation");
@@ -119,6 +120,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         [TestCase(null)]
         [TestCase(false)]
         [TestCase(true)]
+        [Category("Manually")]
         public async Task AddRemoveTag(bool? useTagResource)
         {
             SetTagResourceUsage(Client, useTagResource);

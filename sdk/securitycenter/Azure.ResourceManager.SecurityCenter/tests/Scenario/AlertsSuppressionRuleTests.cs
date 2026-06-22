@@ -57,6 +57,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         }
 
         [RecordedTest]
+        [Category("Manually")]
         public async Task CreateOrUpdateUpdate()
         {
             string alertsSuppressionRuleName = Recording.GenerateAssetName("testrule");
@@ -65,6 +66,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         }
 
         [RecordedTest]
+        [Category("Manually")]
         public async Task Exist()
         {
             string alertsSuppressionRuleName = Recording.GenerateAssetName("testrule");
@@ -74,6 +76,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         }
 
         [RecordedTest]
+        [Category("Manually")]
         public async Task Get()
         {
             string alertsSuppressionRuleName = Recording.GenerateAssetName("testrule");
@@ -83,6 +86,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         }
 
         [RecordedTest]
+        [Category("Manually")]
         public async Task GetAll()
         {
             string alertsSuppressionRuleName = Recording.GenerateAssetName("testrule");
@@ -93,6 +97,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         }
 
         [RecordedTest]
+        [Category("Manually")]
         public async Task Delete()
         {
             string alertsSuppressionRuleName = Recording.GenerateAssetName("testrule");

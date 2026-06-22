@@ -37,6 +37,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         }
 
         [RecordedTest]
+        [Category("Manually")]
         public async Task GenericDevOpsConfiguration_CreateOrUpdateAndDeleteFailed()
         {
             var tempResourceGroupName = Recording.GenerateAssetName(TempDevOpsConnectorsResourceGroup);
@@ -404,6 +405,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         }
 
         [RecordedTest]
+        [Category("Manually")]
         public async Task GitLab_GetGitLabSubgroupsAsync()
         {
             string connectorName = GitLabStaticConnectorName;
