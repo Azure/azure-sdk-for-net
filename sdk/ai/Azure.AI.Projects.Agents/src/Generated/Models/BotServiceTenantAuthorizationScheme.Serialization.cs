@@ -9,52 +9,52 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> The HeaderIsolationKeySource. </summary>
-    public partial class HeaderIsolationKeySource : IsolationKeySource, IJsonModel<HeaderIsolationKeySource>
+    /// <summary> The BotServiceTenantAuthorizationScheme. </summary>
+    public partial class BotServiceTenantAuthorizationScheme : AgentEndpointAuthorizationScheme, IJsonModel<BotServiceTenantAuthorizationScheme>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override IsolationKeySource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override AgentEndpointAuthorizationScheme PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HeaderIsolationKeySource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BotServiceTenantAuthorizationScheme>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeHeaderIsolationKeySource(document.RootElement, options);
+                        return DeserializeBotServiceTenantAuthorizationScheme(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HeaderIsolationKeySource)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BotServiceTenantAuthorizationScheme)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HeaderIsolationKeySource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BotServiceTenantAuthorizationScheme>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIProjectsAgentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(HeaderIsolationKeySource)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BotServiceTenantAuthorizationScheme)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<HeaderIsolationKeySource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<BotServiceTenantAuthorizationScheme>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HeaderIsolationKeySource IPersistableModel<HeaderIsolationKeySource>.Create(BinaryData data, ModelReaderWriterOptions options) => (HeaderIsolationKeySource)PersistableModelCreateCore(data, options);
+        BotServiceTenantAuthorizationScheme IPersistableModel<BotServiceTenantAuthorizationScheme>.Create(BinaryData data, ModelReaderWriterOptions options) => (BotServiceTenantAuthorizationScheme)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<HeaderIsolationKeySource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<BotServiceTenantAuthorizationScheme>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<HeaderIsolationKeySource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<BotServiceTenantAuthorizationScheme>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -65,46 +65,46 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HeaderIsolationKeySource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BotServiceTenantAuthorizationScheme>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HeaderIsolationKeySource)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(BotServiceTenantAuthorizationScheme)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HeaderIsolationKeySource IJsonModel<HeaderIsolationKeySource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (HeaderIsolationKeySource)JsonModelCreateCore(ref reader, options);
+        BotServiceTenantAuthorizationScheme IJsonModel<BotServiceTenantAuthorizationScheme>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (BotServiceTenantAuthorizationScheme)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override IsolationKeySource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override AgentEndpointAuthorizationScheme JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HeaderIsolationKeySource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BotServiceTenantAuthorizationScheme>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HeaderIsolationKeySource)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(BotServiceTenantAuthorizationScheme)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeHeaderIsolationKeySource(document.RootElement, options);
+            return DeserializeBotServiceTenantAuthorizationScheme(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static HeaderIsolationKeySource DeserializeHeaderIsolationKeySource(JsonElement element, ModelReaderWriterOptions options)
+        internal static BotServiceTenantAuthorizationScheme DeserializeBotServiceTenantAuthorizationScheme(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IsolationKeySourceKind kind = default;
+            AgentEndpointAuthorizationSchemeType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("kind"u8))
+                if (prop.NameEquals("type"u8))
                 {
-                    kind = new IsolationKeySourceKind(prop.Value.GetString());
+                    @type = new AgentEndpointAuthorizationSchemeType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -112,7 +112,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new HeaderIsolationKeySource(kind, additionalBinaryDataProperties);
+            return new BotServiceTenantAuthorizationScheme(@type, additionalBinaryDataProperties);
         }
     }
 }

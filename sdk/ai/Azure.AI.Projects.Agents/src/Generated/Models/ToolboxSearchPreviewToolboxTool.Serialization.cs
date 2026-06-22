@@ -6,60 +6,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using OpenAI;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary>
-    /// A tool for searching over the agent's toolbox.
-    /// When present, deferred tools are hidden from `tools/list` and only
-    /// discoverable via `search_tools` queries at runtime.
-    /// </summary>
-    public partial class ToolboxSearchPreviewTool : ProjectsAgentTool, IJsonModel<ToolboxSearchPreviewTool>
+    /// <summary> A toolbox search tool stored in a toolbox. </summary>
+    public partial class ToolboxSearchPreviewToolboxTool : ToolboxTool, IJsonModel<ToolboxSearchPreviewToolboxTool>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ProjectsAgentTool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override ToolboxTool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ToolboxSearchPreviewTool>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ToolboxSearchPreviewToolboxTool>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeToolboxSearchPreviewTool(document.RootElement, options);
+                        return DeserializeToolboxSearchPreviewToolboxTool(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ToolboxSearchPreviewTool)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ToolboxSearchPreviewToolboxTool)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ToolboxSearchPreviewTool>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ToolboxSearchPreviewToolboxTool>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIProjectsAgentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ToolboxSearchPreviewTool)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ToolboxSearchPreviewToolboxTool)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ToolboxSearchPreviewTool>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ToolboxSearchPreviewToolboxTool>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ToolboxSearchPreviewTool IPersistableModel<ToolboxSearchPreviewTool>.Create(BinaryData data, ModelReaderWriterOptions options) => (ToolboxSearchPreviewTool)PersistableModelCreateCore(data, options);
+        ToolboxSearchPreviewToolboxTool IPersistableModel<ToolboxSearchPreviewToolboxTool>.Create(BinaryData data, ModelReaderWriterOptions options) => (ToolboxSearchPreviewToolboxTool)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ToolboxSearchPreviewTool>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ToolboxSearchPreviewToolboxTool>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ToolboxSearchPreviewTool>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ToolboxSearchPreviewToolboxTool>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -70,70 +65,49 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ToolboxSearchPreviewTool>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ToolboxSearchPreviewToolboxTool>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ToolboxSearchPreviewTool)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ToolboxSearchPreviewToolboxTool)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
-            }
-            if (Optional.IsCollectionDefined(ToolConfigs))
-            {
-                writer.WritePropertyName("tool_configs"u8);
-                writer.WriteStartObject();
-                foreach (var item in ToolConfigs)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value, options);
-                }
-                writer.WriteEndObject();
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ToolboxSearchPreviewTool IJsonModel<ToolboxSearchPreviewTool>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ToolboxSearchPreviewTool)JsonModelCreateCore(ref reader, options);
+        ToolboxSearchPreviewToolboxTool IJsonModel<ToolboxSearchPreviewToolboxTool>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ToolboxSearchPreviewToolboxTool)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ProjectsAgentTool JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override ToolboxTool JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ToolboxSearchPreviewTool>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ToolboxSearchPreviewToolboxTool>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ToolboxSearchPreviewTool)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ToolboxSearchPreviewToolboxTool)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeToolboxSearchPreviewTool(document.RootElement, options);
+            return DeserializeToolboxSearchPreviewToolboxTool(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ToolboxSearchPreviewTool DeserializeToolboxSearchPreviewTool(JsonElement element, ModelReaderWriterOptions options)
+        internal static ToolboxSearchPreviewToolboxTool DeserializeToolboxSearchPreviewToolboxTool(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ToolType @type = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            ToolboxToolType @type = default;
             string name = default;
             string description = default;
             IDictionary<string, ToolConfig> toolConfigs = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new ToolType(prop.Value.GetString());
+                    @type = prop.Value.GetString().ToToolboxToolType();
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
@@ -165,7 +139,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ToolboxSearchPreviewTool(@type, additionalBinaryDataProperties, name, description, toolConfigs ?? new ChangeTrackingDictionary<string, ToolConfig>());
+            return new ToolboxSearchPreviewToolboxTool(@type, name, description, toolConfigs ?? new ChangeTrackingDictionary<string, ToolConfig>(), additionalBinaryDataProperties);
         }
     }
 }
