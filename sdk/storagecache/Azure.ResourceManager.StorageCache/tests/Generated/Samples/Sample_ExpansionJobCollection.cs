@@ -13,7 +13,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.StorageCache.Samples
 {
-    public partial class Sample_ExpansionJobCollection
+    public partial class Sample_AmlFileSystemExpansionJobCollection
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -35,12 +35,12 @@ namespace Azure.ResourceManager.StorageCache.Samples
             ResourceIdentifier amlFileSystemResourceId = AmlFileSystemResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, amlFileSystemName);
             AmlFileSystemResource amlFileSystem = client.GetAmlFileSystemResource(amlFileSystemResourceId);
 
-            // get the collection of this ExpansionJobResource
-            ExpansionJobCollection collection = amlFileSystem.GetExpansionJobs();
+            // get the collection of this AmlFileSystemExpansionJobResource
+            AmlFileSystemExpansionJobCollection collection = amlFileSystem.GetAmlFileSystemExpansionJobs();
 
             // invoke the operation
             string expansionJobName = "expansionjob1";
-            ExpansionJobData data = new ExpansionJobData(new AzureLocation("eastus"))
+            AmlFileSystemExpansionJobData data = new AmlFileSystemExpansionJobData(new AzureLocation("eastus"))
             {
                 NewStorageCapacityTiB = 16,
                 Tags =
@@ -48,12 +48,12 @@ namespace Azure.ResourceManager.StorageCache.Samples
 ["Dept"] = "ContosoAds"
 },
             };
-            ArmOperation<ExpansionJobResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, expansionJobName, data);
-            ExpansionJobResource result = lro.Value;
+            ArmOperation<AmlFileSystemExpansionJobResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, expansionJobName, data);
+            AmlFileSystemExpansionJobResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ExpansionJobData resourceData = result.Data;
+            AmlFileSystemExpansionJobData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -78,16 +78,16 @@ namespace Azure.ResourceManager.StorageCache.Samples
             ResourceIdentifier amlFileSystemResourceId = AmlFileSystemResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, amlFileSystemName);
             AmlFileSystemResource amlFileSystem = client.GetAmlFileSystemResource(amlFileSystemResourceId);
 
-            // get the collection of this ExpansionJobResource
-            ExpansionJobCollection collection = amlFileSystem.GetExpansionJobs();
+            // get the collection of this AmlFileSystemExpansionJobResource
+            AmlFileSystemExpansionJobCollection collection = amlFileSystem.GetAmlFileSystemExpansionJobs();
 
             // invoke the operation
             string expansionJobName = "expansionjob1";
-            ExpansionJobResource result = await collection.GetAsync(expansionJobName);
+            AmlFileSystemExpansionJobResource result = await collection.GetAsync(expansionJobName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ExpansionJobData resourceData = result.Data;
+            AmlFileSystemExpansionJobData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -112,15 +112,15 @@ namespace Azure.ResourceManager.StorageCache.Samples
             ResourceIdentifier amlFileSystemResourceId = AmlFileSystemResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, amlFileSystemName);
             AmlFileSystemResource amlFileSystem = client.GetAmlFileSystemResource(amlFileSystemResourceId);
 
-            // get the collection of this ExpansionJobResource
-            ExpansionJobCollection collection = amlFileSystem.GetExpansionJobs();
+            // get the collection of this AmlFileSystemExpansionJobResource
+            AmlFileSystemExpansionJobCollection collection = amlFileSystem.GetAmlFileSystemExpansionJobs();
 
             // invoke the operation and iterate over the result
-            await foreach (ExpansionJobResource item in collection.GetAllAsync())
+            await foreach (AmlFileSystemExpansionJobResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ExpansionJobData resourceData = item.Data;
+                AmlFileSystemExpansionJobData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -148,8 +148,8 @@ namespace Azure.ResourceManager.StorageCache.Samples
             ResourceIdentifier amlFileSystemResourceId = AmlFileSystemResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, amlFileSystemName);
             AmlFileSystemResource amlFileSystem = client.GetAmlFileSystemResource(amlFileSystemResourceId);
 
-            // get the collection of this ExpansionJobResource
-            ExpansionJobCollection collection = amlFileSystem.GetExpansionJobs();
+            // get the collection of this AmlFileSystemExpansionJobResource
+            AmlFileSystemExpansionJobCollection collection = amlFileSystem.GetAmlFileSystemExpansionJobs();
 
             // invoke the operation
             string expansionJobName = "expansionjob1";
@@ -178,13 +178,13 @@ namespace Azure.ResourceManager.StorageCache.Samples
             ResourceIdentifier amlFileSystemResourceId = AmlFileSystemResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, amlFileSystemName);
             AmlFileSystemResource amlFileSystem = client.GetAmlFileSystemResource(amlFileSystemResourceId);
 
-            // get the collection of this ExpansionJobResource
-            ExpansionJobCollection collection = amlFileSystem.GetExpansionJobs();
+            // get the collection of this AmlFileSystemExpansionJobResource
+            AmlFileSystemExpansionJobCollection collection = amlFileSystem.GetAmlFileSystemExpansionJobs();
 
             // invoke the operation
             string expansionJobName = "expansionjob1";
-            NullableResponse<ExpansionJobResource> response = await collection.GetIfExistsAsync(expansionJobName);
-            ExpansionJobResource result = response.HasValue ? response.Value : null;
+            NullableResponse<AmlFileSystemExpansionJobResource> response = await collection.GetIfExistsAsync(expansionJobName);
+            AmlFileSystemExpansionJobResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.StorageCache.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ExpansionJobData resourceData = result.Data;
+                AmlFileSystemExpansionJobData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

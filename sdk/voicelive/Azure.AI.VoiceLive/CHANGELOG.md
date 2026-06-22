@@ -1,9 +1,27 @@
 # Release History
 
-## 1.1.0 (2026-06-02)
- 
+## 1.2.0-beta.2 (2026-06-16)
+
+### Other Changes
+- Updated samples to use MCPApprovalKind
+
+## 1.2.0-beta.1 (2026-06-09)
+
 ### Features Added
- 
+
+- Added `AzureRealtimeNativeVoice` and `AzureRealtimeNativeVoiceName` with 12 new voice options (Aarti, Andrew, Ava, Denise, Diya, Elsa, Florian, Francisca, Meera, Xiaoxiao, Ximena, Yunxi).
+- Added `SmartEndOfTurnDetection` (end-of-utterance detection with `ThresholdLevel` and `TimeoutMs`).
+- Added `ParallelToolCalls` property on `VoiceLiveSessionOptions`.
+- Added `Channels` and `ReferenceSource` (`EchoCancellationReferenceSource`) properties on `AudioEchoCancellation`.
+- Added RTC call support: `ClientEventRtcCallSdpCreate`, `ServerEventRtcCallSdpCreated`, `ServerEventRtcCallError`, `RtcCallErrorDetails`.
+- Added output audio buffer events: `ServerEventOutputAudioBufferStarted`, `ServerEventOutputAudioBufferStopped`.
+- Added streaming text input events: `ClientEventInputTextDelta`, `ClientEventInputTextDone`.
+- Added `ServerEventResponseInvocationDelta` for streaming invocation deltas.
+
+## 1.1.0 (2026-06-03)
+
+### Features Added
+
 - Added support for built-in tool calling scenarios, including file search and web search.
 - Added lifecycle status tracking for tool calls, including `Searching`, `InProgress`, and `Completed` states.
 - Added streaming server events for tool execution, transcript annotations, and video output updates.
@@ -11,9 +29,9 @@
 - Added phrase-level transcription support, including word-level timing, confidence, and phrase grouping.
 - Added new personal voice models: `PersonalVoiceModels.MaiVoice1` and `PersonalVoiceModels.DragonHDOmniLatestNeural`.
 - Added new turn-detection options, including semantic VAD variants (`AzureSemanticVadTurnDetection`, `AzureSemanticVadTurnDetectionEn`, and `AzureSemanticVadTurnDetectionMultilingual`).
- 
+
 ### Breaking Changes
- 
+
 - Updated transcription completion APIs to include additional metadata (logprobs and phrases).
 - Updated `OutputTokenDetails` constructors to support reasoning tokens.
 - Updated `VoiceLiveSessionOptions` to include new properties such as `Include` and `Metadata`.
@@ -24,6 +42,10 @@
 - Renamed `PhotoAvatarBaseModes` to `PhotoAvatarBaseMode` (singular). `AvatarConfiguration.Model` was renamed to `AvatarConfiguration.BaseMode` and now uses the new type.
 - Renamed `AvatarConfiguration.OutputAuditAudio` to `AvatarConfiguration.AuditOutputAudio`.
 - Renamed `ReasoningEffort.Xhigh` to `ReasoningEffort.ExtraHigh`.
+
+### Bugs Fixed
+
+- Telemetry: `gen_ai.event.content` on `.done` and related response events now correctly respects the content recording opt-in (`OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT` or `AZURE_TRACING_GEN_AI_CONTENT_RECORDING_ENABLED`). Previously these events emitted message content (transcripts, function-call arguments, response bodies) unconditionally. To restore the previous behavior, set one of those environment variables to `true`.
 
 ### Other Changes
 
@@ -38,7 +60,7 @@
 
 ### Features Added
 - Replaced `BinaryData` with new `RequireApprovalOption` typed property on `VoiceLiveMcpServerDefinition.RequireApproval`. Customers can now set approval directly (`server.RequireApproval = McpApprovalKind.Never`) instead of using `BinaryData.FromObjectAsJson()`.
-- Added OpenTelemetry distributed tracing support. The SDK now emits spans via `System.Diagnostics.ActivitySource` named `"Azure.AI.VoiceLive"` — no extra instrumentation package required. Spans include standard [GenAI semantic convention](https://opentelemetry.io/docs/specs/semconv/gen-ai/) attributes such as token usage, first-token latency, turn count, and interruption count. 
+- Added OpenTelemetry distributed tracing support. The SDK now emits spans via `System.Diagnostics.ActivitySource` named `"Azure.AI.VoiceLive"` — no extra instrumentation package required. Spans include standard [GenAI semantic convention](https://opentelemetry.io/docs/specs/semconv/gen-ai/) attributes such as token usage, first-token latency, turn count, and interruption count.
 - Added OpenTelemetry metrics support. The SDK now emits `gen_ai.client.operation.duration` and `gen_ai.client.token.usage` metrics via a `System.Diagnostics.Metrics.Meter` named `"Azure.AI.VoiceLive"` in compliance with GenAI semantic conventions.
 
 ### Breaking Changes

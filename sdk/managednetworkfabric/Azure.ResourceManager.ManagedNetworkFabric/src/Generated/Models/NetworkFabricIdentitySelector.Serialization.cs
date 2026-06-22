@@ -10,13 +10,60 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class NetworkFabricIdentitySelector : IUtf8JsonSerializable, IJsonModel<NetworkFabricIdentitySelector>
+    /// <summary> IdentitySelector represents the selection of a managed identity for use. </summary>
+    public partial class NetworkFabricIdentitySelector : IJsonModel<NetworkFabricIdentitySelector>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkFabricIdentitySelector>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricIdentitySelector"/> for deserialization. </summary>
+        internal NetworkFabricIdentitySelector()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual NetworkFabricIdentitySelector PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkFabricIdentitySelector>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeNetworkFabricIdentitySelector(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NetworkFabricIdentitySelector)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkFabricIdentitySelector>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerManagedNetworkFabricContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(NetworkFabricIdentitySelector)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<NetworkFabricIdentitySelector>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NetworkFabricIdentitySelector IPersistableModel<NetworkFabricIdentitySelector>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<NetworkFabricIdentitySelector>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NetworkFabricIdentitySelector>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +75,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkFabricIdentitySelector>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkFabricIdentitySelector>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NetworkFabricIdentitySelector)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("identityType"u8);
             writer.WriteStringValue(IdentityType.ToString());
             if (Optional.IsDefined(UserAssignedIdentityResourceId))
@@ -41,15 +87,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("userAssignedIdentityResourceId"u8);
                 writer.WriteStringValue(UserAssignedIdentityResourceId);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -58,84 +104,56 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
         }
 
-        NetworkFabricIdentitySelector IJsonModel<NetworkFabricIdentitySelector>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NetworkFabricIdentitySelector IJsonModel<NetworkFabricIdentitySelector>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual NetworkFabricIdentitySelector JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkFabricIdentitySelector>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkFabricIdentitySelector>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NetworkFabricIdentitySelector)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeNetworkFabricIdentitySelector(document.RootElement, options);
         }
 
-        internal static NetworkFabricIdentitySelector DeserializeNetworkFabricIdentitySelector(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static NetworkFabricIdentitySelector DeserializeNetworkFabricIdentitySelector(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             NetworkFabricManagedIdentitySelectorType identityType = default;
             ResourceIdentifier userAssignedIdentityResourceId = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("identityType"u8))
+                if (prop.NameEquals("identityType"u8))
                 {
-                    identityType = new NetworkFabricManagedIdentitySelectorType(property.Value.GetString());
+                    identityType = new NetworkFabricManagedIdentitySelectorType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("userAssignedIdentityResourceId"u8))
+                if (prop.NameEquals("userAssignedIdentityResourceId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    userAssignedIdentityResourceId = new ResourceIdentifier(property.Value.GetString());
+                    userAssignedIdentityResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new NetworkFabricIdentitySelector(identityType, userAssignedIdentityResourceId, serializedAdditionalRawData);
+            return new NetworkFabricIdentitySelector(identityType, userAssignedIdentityResourceId, additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<NetworkFabricIdentitySelector>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkFabricIdentitySelector>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerManagedNetworkFabricContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(NetworkFabricIdentitySelector)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        NetworkFabricIdentitySelector IPersistableModel<NetworkFabricIdentitySelector>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkFabricIdentitySelector>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeNetworkFabricIdentitySelector(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(NetworkFabricIdentitySelector)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<NetworkFabricIdentitySelector>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

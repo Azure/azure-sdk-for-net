@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies the sku profile for the virtual machine scale set. With this property the customer is able to specify a list of VM sizes and an allocation strategy. </summary>
     public partial class ComputeSkuProfile
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ComputeSkuProfile"/>. </summary>
         public ComputeSkuProfile()
@@ -54,17 +26,40 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="ComputeSkuProfile"/>. </summary>
         /// <param name="vmSizes"> Specifies the VM sizes for the virtual machine scale set. </param>
         /// <param name="allocationStrategy"> Specifies the allocation strategy for the virtual machine scale set based on which the VMs will be allocated. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeSkuProfile(IList<ComputeSkuProfileVmSize> vmSizes, ComputeAllocationStrategy? allocationStrategy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="automaticSkuMigrationPolicy"> Specifies the policy that controls whether the platform may automatically migrate scale set instances to a different VM size from the SKU profile depending on platform demands. When omitted, automatic SKU migration is disabled. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ComputeSkuProfile(IList<ComputeSkuProfileVmSize> vmSizes, ComputeAllocationStrategy? allocationStrategy, AutomaticSkuMigrationPolicy automaticSkuMigrationPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VmSizes = vmSizes;
             AllocationStrategy = allocationStrategy;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            AutomaticSkuMigrationPolicy = automaticSkuMigrationPolicy;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Specifies the VM sizes for the virtual machine scale set. </summary>
         public IList<ComputeSkuProfileVmSize> VmSizes { get; }
+
         /// <summary> Specifies the allocation strategy for the virtual machine scale set based on which the VMs will be allocated. </summary>
         public ComputeAllocationStrategy? AllocationStrategy { get; set; }
+
+        /// <summary> Specifies the policy that controls whether the platform may automatically migrate scale set instances to a different VM size from the SKU profile depending on platform demands. When omitted, automatic SKU migration is disabled. </summary>
+        internal AutomaticSkuMigrationPolicy AutomaticSkuMigrationPolicy { get; set; }
+
+        /// <summary> Specifies whether automatic SKU migration should be enabled on the virtual machine scale set. The default value is false. </summary>
+        public bool? IsAutomaticSkuMigrationPolicyEnabled
+        {
+            get
+            {
+                return AutomaticSkuMigrationPolicy is null ? default : AutomaticSkuMigrationPolicy.IsAutomaticSkuMigrationPolicyEnabled;
+            }
+            set
+            {
+                if (AutomaticSkuMigrationPolicy is null)
+                {
+                    AutomaticSkuMigrationPolicy = new AutomaticSkuMigrationPolicy();
+                }
+                AutomaticSkuMigrationPolicy.IsAutomaticSkuMigrationPolicyEnabled = value;
+            }
+        }
     }
 }

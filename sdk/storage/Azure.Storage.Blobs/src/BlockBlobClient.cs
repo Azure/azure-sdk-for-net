@@ -887,10 +887,12 @@ namespace Azure.Storage.Blobs.Specialized
                     Errors.VerifyStreamPosition(content, nameof(content));
 
                     ContentHasher.GetHashResult hashResult = null;
+                    // length of the raw stream
                     long contentLength = (content?.Length - content?.Position) ?? 0;
+                    // length of content within a structured message wrapper
                     long? structuredContentLength = default;
                     string structuredBodyType = null;
-                    if (content != null &&
+                    if (contentLength > 0 &&
                         validationOptions != null &&
                         validationOptions.ChecksumAlgorithm.ResolveAuto() == StorageChecksumAlgorithm.StorageCrc64 &&
                         ClientSideEncryption == null) // don't allow feature combination

@@ -8,139 +8,152 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Load balancer backend addresses. </summary>
     public partial class LoadBalancerBackendAddress
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="LoadBalancerBackendAddress"/>. </summary>
         public LoadBalancerBackendAddress()
         {
-            InboundNatRulesPortMapping = new ChangeTrackingList<NatRulePortMapping>();
         }
 
         /// <summary> Initializes a new instance of <see cref="LoadBalancerBackendAddress"/>. </summary>
+        /// <param name="properties"> Properties of load balancer backend address pool. </param>
         /// <param name="name"> Name of the backend address. </param>
-        /// <param name="virtualNetwork"> Reference to an existing virtual network. </param>
-        /// <param name="subnet"> Reference to an existing subnet. </param>
-        /// <param name="ipAddress"> IP Address belonging to the referenced virtual network. </param>
-        /// <param name="networkInterfaceIPConfiguration"> Reference to IP address defined in network interfaces. </param>
-        /// <param name="loadBalancerFrontendIPConfiguration"> Reference to the frontend ip address configuration defined in regional loadbalancer. </param>
-        /// <param name="inboundNatRulesPortMapping"> Collection of inbound NAT rule port mappings. </param>
-        /// <param name="adminState"> A list of administrative states which once set can override health probe so that Load Balancer will always forward new connections to backend, or deny new connections and reset existing connections. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LoadBalancerBackendAddress(string name, WritableSubResource virtualNetwork, WritableSubResource subnet, string ipAddress, WritableSubResource networkInterfaceIPConfiguration, WritableSubResource loadBalancerFrontendIPConfiguration, IReadOnlyList<NatRulePortMapping> inboundNatRulesPortMapping, LoadBalancerBackendAddressAdminState? adminState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal LoadBalancerBackendAddress(LoadBalancerBackendAddressPropertiesFormat properties, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            Properties = properties;
             Name = name;
-            VirtualNetwork = virtualNetwork;
-            Subnet = subnet;
-            IPAddress = ipAddress;
-            NetworkInterfaceIPConfiguration = networkInterfaceIPConfiguration;
-            LoadBalancerFrontendIPConfiguration = loadBalancerFrontendIPConfiguration;
-            InboundNatRulesPortMapping = inboundNatRulesPortMapping;
-            AdminState = adminState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Properties of load balancer backend address pool. </summary>
+        [WirePath("properties")]
+        internal LoadBalancerBackendAddressPropertiesFormat Properties { get; set; }
 
         /// <summary> Name of the backend address. </summary>
         [WirePath("name")]
         public string Name { get; set; }
-        /// <summary> Reference to an existing virtual network. </summary>
-        internal WritableSubResource VirtualNetwork { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.virtualNetwork.id")]
-        public ResourceIdentifier VirtualNetworkId
-        {
-            get => VirtualNetwork is null ? default : VirtualNetwork.Id;
-            set
-            {
-                if (VirtualNetwork is null)
-                    VirtualNetwork = new WritableSubResource();
-                VirtualNetwork.Id = value;
-            }
-        }
-
-        /// <summary> Reference to an existing subnet. </summary>
-        internal WritableSubResource Subnet { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.subnet.id")]
-        public ResourceIdentifier SubnetId
-        {
-            get => Subnet is null ? default : Subnet.Id;
-            set
-            {
-                if (Subnet is null)
-                    Subnet = new WritableSubResource();
-                Subnet.Id = value;
-            }
-        }
 
         /// <summary> IP Address belonging to the referenced virtual network. </summary>
         [WirePath("properties.ipAddress")]
-        public string IPAddress { get; set; }
-        /// <summary> Reference to IP address defined in network interfaces. </summary>
-        internal WritableSubResource NetworkInterfaceIPConfiguration { get; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.networkInterfaceIPConfiguration.id")]
-        public ResourceIdentifier NetworkInterfaceIPConfigurationId
+        public string IpAddress
         {
-            get => NetworkInterfaceIPConfiguration?.Id;
+            get
+            {
+                return Properties is null ? default : Properties.IpAddress;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LoadBalancerBackendAddressPropertiesFormat();
+                }
+                Properties.IpAddress = value;
+            }
         }
 
         /// <summary> Reference to the frontend ip address configuration defined in regional loadbalancer. </summary>
-        internal WritableSubResource LoadBalancerFrontendIPConfiguration { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.loadBalancerFrontendIPConfiguration.id")]
-        public ResourceIdentifier LoadBalancerFrontendIPConfigurationId
+        [WirePath("properties.loadBalancerFrontendIPConfiguration")]
+        public ResourceIdentifier LoadBalancerFrontendIPConfiguration
         {
-            get => LoadBalancerFrontendIPConfiguration is null ? default : LoadBalancerFrontendIPConfiguration.Id;
+            get
+            {
+                return Properties is null ? default : Properties.LoadBalancerFrontendIPConfiguration;
+            }
             set
             {
-                if (LoadBalancerFrontendIPConfiguration is null)
-                    LoadBalancerFrontendIPConfiguration = new WritableSubResource();
-                LoadBalancerFrontendIPConfiguration.Id = value;
+                if (Properties is null)
+                {
+                    Properties = new LoadBalancerBackendAddressPropertiesFormat();
+                }
+                Properties.LoadBalancerFrontendIPConfiguration = value;
             }
         }
 
         /// <summary> Collection of inbound NAT rule port mappings. </summary>
         [WirePath("properties.inboundNatRulesPortMapping")]
-        public IReadOnlyList<NatRulePortMapping> InboundNatRulesPortMapping { get; }
+        public IReadOnlyList<NatRulePortMapping> InboundNatRulesPortMapping
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new LoadBalancerBackendAddressPropertiesFormat();
+                }
+                return Properties.InboundNatRulesPortMapping;
+            }
+        }
+
         /// <summary> A list of administrative states which once set can override health probe so that Load Balancer will always forward new connections to backend, or deny new connections and reset existing connections. </summary>
         [WirePath("properties.adminState")]
-        public LoadBalancerBackendAddressAdminState? AdminState { get; set; }
+        public LoadBalancerBackendAddressAdminState? AdminState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AdminState;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LoadBalancerBackendAddressPropertiesFormat();
+                }
+                Properties.AdminState = value;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        [WirePath("properties.virtualNetwork.id")]
+        public ResourceIdentifier VirtualNetworkId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VirtualNetworkId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LoadBalancerBackendAddressPropertiesFormat();
+                }
+                Properties.VirtualNetworkId = value;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        [WirePath("properties.subnet.id")]
+        public ResourceIdentifier SubnetId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SubnetId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LoadBalancerBackendAddressPropertiesFormat();
+                }
+                Properties.SubnetId = value;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        [WirePath("properties.networkInterfaceIPConfiguration.id")]
+        public ResourceIdentifier NetworkInterfaceIPConfigurationId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NetworkInterfaceIPConfigurationId;
+            }
+        }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Reservations;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.Reservations.Models
     public readonly partial struct CalculateExchangeOperationResultStatus : IEquatable<CalculateExchangeOperationResultStatus>
     {
         private readonly string _value;
+        /// <summary> Succeeded. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Cancelled. </summary>
+        private const string CancelledValue = "Cancelled";
+        /// <summary> Pending. </summary>
+        private const string PendingValue = "Pending";
 
         /// <summary> Initializes a new instance of <see cref="CalculateExchangeOperationResultStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CalculateExchangeOperationResultStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SucceededValue = "Succeeded";
-        private const string FailedValue = "Failed";
-        private const string CancelledValue = "Cancelled";
-        private const string PendingValue = "Pending";
+            _value = value;
+        }
 
         /// <summary> Succeeded. </summary>
         public static CalculateExchangeOperationResultStatus Succeeded { get; } = new CalculateExchangeOperationResultStatus(SucceededValue);
+
         /// <summary> Failed. </summary>
         public static CalculateExchangeOperationResultStatus Failed { get; } = new CalculateExchangeOperationResultStatus(FailedValue);
+
         /// <summary> Cancelled. </summary>
         public static CalculateExchangeOperationResultStatus Cancelled { get; } = new CalculateExchangeOperationResultStatus(CancelledValue);
+
         /// <summary> Pending. </summary>
         public static CalculateExchangeOperationResultStatus Pending { get; } = new CalculateExchangeOperationResultStatus(PendingValue);
+
         /// <summary> Determines if two <see cref="CalculateExchangeOperationResultStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CalculateExchangeOperationResultStatus left, CalculateExchangeOperationResultStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CalculateExchangeOperationResultStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CalculateExchangeOperationResultStatus left, CalculateExchangeOperationResultStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CalculateExchangeOperationResultStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CalculateExchangeOperationResultStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CalculateExchangeOperationResultStatus(string value) => new CalculateExchangeOperationResultStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CalculateExchangeOperationResultStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CalculateExchangeOperationResultStatus?(string value) => value == null ? null : new CalculateExchangeOperationResultStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CalculateExchangeOperationResultStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CalculateExchangeOperationResultStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

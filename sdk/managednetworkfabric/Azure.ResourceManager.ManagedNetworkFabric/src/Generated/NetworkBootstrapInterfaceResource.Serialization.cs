@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
+    /// <summary></summary>
     public partial class NetworkBootstrapInterfaceResource : IJsonModel<NetworkBootstrapInterfaceData>
     {
-        private static NetworkBootstrapInterfaceData s_dataDeserializationInstance;
-        private static NetworkBootstrapInterfaceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<NetworkBootstrapInterfaceData> s_dataDeserializationInstance;
 
+        private static IJsonModel<NetworkBootstrapInterfaceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new NetworkBootstrapInterfaceData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NetworkBootstrapInterfaceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetworkBootstrapInterfaceData>)Data).Write(writer, options);
 
-        NetworkBootstrapInterfaceData IJsonModel<NetworkBootstrapInterfaceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkBootstrapInterfaceData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NetworkBootstrapInterfaceData IJsonModel<NetworkBootstrapInterfaceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<NetworkBootstrapInterfaceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkBootstrapInterfaceData>(Data, options, AzureResourceManagerManagedNetworkFabricContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         NetworkBootstrapInterfaceData IPersistableModel<NetworkBootstrapInterfaceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkBootstrapInterfaceData>(data, options, AzureResourceManagerManagedNetworkFabricContext.Default);
 
-        string IPersistableModel<NetworkBootstrapInterfaceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkBootstrapInterfaceData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<NetworkBootstrapInterfaceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
 
         private ClientDiagnostics PrivateDnsZoneSuffixClientDiagnostics => _privateDnsZoneSuffixClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PrivateDnsZoneSuffix PrivateDnsZoneSuffixRestClient => _privateDnsZoneSuffixRestClient ??= new PrivateDnsZoneSuffix(PrivateDnsZoneSuffixClientDiagnostics, Pipeline, Endpoint, "2026-01-01-preview");
+        private PrivateDnsZoneSuffix PrivateDnsZoneSuffixRestClient => _privateDnsZoneSuffixRestClient ??= new PrivateDnsZoneSuffix(PrivateDnsZoneSuffixClientDiagnostics, Pipeline, Endpoint, "2026-04-01-preview");
     }
 }

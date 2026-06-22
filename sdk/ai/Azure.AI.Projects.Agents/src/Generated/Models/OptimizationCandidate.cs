@@ -4,7 +4,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents
@@ -17,50 +16,33 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Initializes a new instance of <see cref="OptimizationCandidate"/>. </summary>
         /// <param name="name"> Display name of the candidate (e.g., 'baseline', 'instruction-v2'). </param>
-        /// <param name="config"> The agent configuration that produced this candidate. </param>
-        /// <param name="mutations"> What was mutated from the baseline (e.g., {system_prompt: 'new prompt'}). </param>
         /// <param name="avgScore"> Average composite score across all tasks. </param>
         /// <param name="avgTokens"> Average token usage across all tasks. </param>
-        /// <param name="passRate"> Fraction of tasks that met the pass threshold. </param>
-        /// <param name="taskScores"> Individual task-level scores. </param>
-        /// <param name="isParetoOptimal"> Whether this candidate is on the Pareto frontier (score vs cost). </param>
-        internal OptimizationCandidate(string name, OptimizationAgentDefinition config, IDictionary<string, BinaryData> mutations, double avgScore, double avgTokens, double passRate, IEnumerable<OptimizationTaskResult> taskScores, bool isParetoOptimal)
+        internal OptimizationCandidate(string name, double avgScore, double avgTokens)
         {
             Name = name;
-            Config = config;
-            Mutations = mutations;
+            Mutations = new ChangeTrackingDictionary<string, BinaryData>();
             AvgScore = avgScore;
             AvgTokens = avgTokens;
-            PassRate = passRate;
-            TaskScores = taskScores.ToList();
-            IsParetoOptimal = isParetoOptimal;
         }
 
         /// <summary> Initializes a new instance of <see cref="OptimizationCandidate"/>. </summary>
         /// <param name="candidateId"> Server-assigned candidate identifier. Use with GET /candidates/{id} sub-endpoints. </param>
         /// <param name="name"> Display name of the candidate (e.g., 'baseline', 'instruction-v2'). </param>
-        /// <param name="config"> The agent configuration that produced this candidate. </param>
         /// <param name="mutations"> What was mutated from the baseline (e.g., {system_prompt: 'new prompt'}). </param>
         /// <param name="avgScore"> Average composite score across all tasks. </param>
         /// <param name="avgTokens"> Average token usage across all tasks. </param>
-        /// <param name="passRate"> Fraction of tasks that met the pass threshold. </param>
-        /// <param name="taskScores"> Individual task-level scores. </param>
-        /// <param name="isParetoOptimal"> Whether this candidate is on the Pareto frontier (score vs cost). </param>
         /// <param name="evalId"> Foundry evaluation identifier used to score this candidate. </param>
         /// <param name="evalRunId"> Foundry evaluation run identifier for this candidate's scoring run. </param>
         /// <param name="promotion"> Promotion metadata. Null if the candidate has not been promoted. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OptimizationCandidate(string candidateId, string name, OptimizationAgentDefinition config, IDictionary<string, BinaryData> mutations, double avgScore, double avgTokens, double passRate, IList<OptimizationTaskResult> taskScores, bool isParetoOptimal, string evalId, string evalRunId, PromotionInfo promotion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OptimizationCandidate(string candidateId, string name, IDictionary<string, BinaryData> mutations, double avgScore, double avgTokens, string evalId, string evalRunId, PromotionInfo promotion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CandidateId = candidateId;
             Name = name;
-            Config = config;
             Mutations = mutations;
             AvgScore = avgScore;
             AvgTokens = avgTokens;
-            PassRate = passRate;
-            TaskScores = taskScores;
-            IsParetoOptimal = isParetoOptimal;
             EvalId = evalId;
             EvalRunId = evalRunId;
             Promotion = promotion;
@@ -72,9 +54,6 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Display name of the candidate (e.g., 'baseline', 'instruction-v2'). </summary>
         public string Name { get; }
-
-        /// <summary> The agent configuration that produced this candidate. </summary>
-        public OptimizationAgentDefinition Config { get; }
 
         /// <summary>
         /// What was mutated from the baseline (e.g., {system_prompt: 'new prompt'}).
@@ -109,15 +88,6 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Average token usage across all tasks. </summary>
         public double AvgTokens { get; }
-
-        /// <summary> Fraction of tasks that met the pass threshold. </summary>
-        public double PassRate { get; }
-
-        /// <summary> Individual task-level scores. </summary>
-        public IList<OptimizationTaskResult> TaskScores { get; }
-
-        /// <summary> Whether this candidate is on the Pareto frontier (score vs cost). </summary>
-        public bool IsParetoOptimal { get; }
 
         /// <summary> Foundry evaluation identifier used to score this candidate. </summary>
         public string EvalId { get; }

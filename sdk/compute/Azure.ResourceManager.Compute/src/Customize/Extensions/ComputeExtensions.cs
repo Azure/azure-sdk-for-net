@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.Compute
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AsyncPageable<VirtualMachineResource> GetVirtualMachinesAsync(this SubscriptionResource subscriptionResource, string statusOnly, string filter, CancellationToken cancellationToken)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
             return GetMockableComputeSubscriptionResource(subscriptionResource).GetVirtualMachinesAsync(statusOnly, filter, cancellationToken);
         }
 
@@ -25,6 +26,7 @@ namespace Azure.ResourceManager.Compute
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static Pageable<VirtualMachineResource> GetVirtualMachines(this SubscriptionResource subscriptionResource, string statusOnly, string filter, CancellationToken cancellationToken)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
             return GetMockableComputeSubscriptionResource(subscriptionResource).GetVirtualMachines(statusOnly, filter, cancellationToken);
         }
 
@@ -55,6 +57,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> An async collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImagesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string publisherName, string offer, string skus, string expand = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
             return GetMockableComputeSubscriptionResource(subscriptionResource).GetVirtualMachineImagesAsync(location, publisherName, offer, skus, expand, top, orderby, cancellationToken);
         }
 
@@ -85,63 +88,8 @@ namespace Azure.ResourceManager.Compute
         /// <returns> A collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<VirtualMachineImageBase> GetVirtualMachineImages(this SubscriptionResource subscriptionResource, AzureLocation location, string publisherName, string offer, string skus, string expand = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
             return GetMockableComputeSubscriptionResource(subscriptionResource).GetVirtualMachineImages(location, publisherName, offer, skus, expand, top, orderby, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a virtual machine image in an edge zone.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/edgeZones/{edgeZone}/publishers/{publisherName}/artifacttypes/vmimage/offers/{offer}/skus/{skus}/versions/{version}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachineImagesEdgeZone_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The name of a supported Azure region. </param>
-        /// <param name="edgeZone"> The name of the edge zone. </param>
-        /// <param name="publisherName"> A valid image publisher. </param>
-        /// <param name="offer"> A valid image publisher offer. </param>
-        /// <param name="skus"> A valid image SKU. </param>
-        /// <param name="version"> A valid image SKU version. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="edgeZone"/>, <paramref name="publisherName"/>, <paramref name="offer"/>, <paramref name="skus"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="edgeZone"/>, <paramref name="publisherName"/>, <paramref name="offer"/>, <paramref name="skus"/> or <paramref name="version"/> is null. </exception>
-        public static async Task<Response<VirtualMachineImage>> GetVirtualMachineImagesEdgeZoneAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string edgeZone, string publisherName, string offer, string skus, string version, CancellationToken cancellationToken = default)
-        {
-            return await GetMockableComputeSubscriptionResource(subscriptionResource).GetVirtualMachineImagesEdgeZoneAsync(location, edgeZone, publisherName, offer, skus, version, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a virtual machine image in an edge zone.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/edgeZones/{edgeZone}/publishers/{publisherName}/artifacttypes/vmimage/offers/{offer}/skus/{skus}/versions/{version}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachineImagesEdgeZone_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The name of a supported Azure region. </param>
-        /// <param name="edgeZone"> The name of the edge zone. </param>
-        /// <param name="publisherName"> A valid image publisher. </param>
-        /// <param name="offer"> A valid image publisher offer. </param>
-        /// <param name="skus"> A valid image SKU. </param>
-        /// <param name="version"> A valid image SKU version. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="edgeZone"/>, <paramref name="publisherName"/>, <paramref name="offer"/>, <paramref name="skus"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="edgeZone"/>, <paramref name="publisherName"/>, <paramref name="offer"/>, <paramref name="skus"/> or <paramref name="version"/> is null. </exception>
-        public static Response<VirtualMachineImage> GetVirtualMachineImagesEdgeZone(this SubscriptionResource subscriptionResource, AzureLocation location, string edgeZone, string publisherName, string offer, string skus, string version, CancellationToken cancellationToken = default)
-        {
-            return GetMockableComputeSubscriptionResource(subscriptionResource).GetVirtualMachineImagesEdgeZone(location, edgeZone, publisherName, offer, skus, version, cancellationToken);
         }
 
         /// <summary>
@@ -172,6 +120,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> An async collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImagesEdgeZonesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string edgeZone, string publisherName, string offer, string skus, string expand = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
             return GetMockableComputeSubscriptionResource(subscriptionResource).GetVirtualMachineImagesEdgeZonesAsync(location, edgeZone, publisherName, offer, skus, expand, top, orderby, cancellationToken);
         }
 
@@ -203,7 +152,69 @@ namespace Azure.ResourceManager.Compute
         /// <returns> A collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<VirtualMachineImageBase> GetVirtualMachineImagesEdgeZones(this SubscriptionResource subscriptionResource, AzureLocation location, string edgeZone, string publisherName, string offer, string skus, string expand = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
             return GetMockableComputeSubscriptionResource(subscriptionResource).GetVirtualMachineImagesEdgeZones(location, edgeZone, publisherName, offer, skus, expand, top, orderby, cancellationToken);
+        }
+
+        // Backward-compat extension overloads accepting the legacy "*Options" bag types.
+        // The new TypeSpec generator no longer emits option-bag overloads (it produces
+        // a single multi-parameter method instead); these forwarding overloads keep the
+        // old surface working by delegating to the multi-parameter generated extensions.
+
+        /// <summary> Gets a list of virtual machine images. </summary>
+        public static AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImagesAsync(this SubscriptionResource subscriptionResource, SubscriptionResourceGetVirtualMachineImagesOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetVirtualMachineImagesAsync(options, cancellationToken);
+        }
+
+        /// <summary> Gets a list of virtual machine images. </summary>
+        public static Pageable<VirtualMachineImageBase> GetVirtualMachineImages(this SubscriptionResource subscriptionResource, SubscriptionResourceGetVirtualMachineImagesOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetVirtualMachineImages(options, cancellationToken);
+        }
+
+        /// <summary> Gets a virtual machine image in an edge zone. </summary>
+        public static async Task<Response<VirtualMachineImage>> GetVirtualMachineImagesEdgeZoneAsync(this SubscriptionResource subscriptionResource, SubscriptionResourceGetVirtualMachineImagesEdgeZoneOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            return await GetMockableComputeSubscriptionResource(subscriptionResource).GetVirtualMachineImagesEdgeZoneAsync(options, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets a virtual machine image in an edge zone. </summary>
+        public static Response<VirtualMachineImage> GetVirtualMachineImagesEdgeZone(this SubscriptionResource subscriptionResource, SubscriptionResourceGetVirtualMachineImagesEdgeZoneOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetVirtualMachineImagesEdgeZone(options, cancellationToken);
+        }
+
+        /// <summary> Gets a list of virtual machine images in an edge zone. </summary>
+        public static AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImagesEdgeZonesAsync(this SubscriptionResource subscriptionResource, SubscriptionResourceGetVirtualMachineImagesEdgeZonesOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetVirtualMachineImagesEdgeZonesAsync(options, cancellationToken);
+        }
+
+        /// <summary> Gets a list of virtual machine images in an edge zone. </summary>
+        public static Pageable<VirtualMachineImageBase> GetVirtualMachineImagesEdgeZones(this SubscriptionResource subscriptionResource, SubscriptionResourceGetVirtualMachineImagesEdgeZonesOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetVirtualMachineImagesEdgeZones(options, cancellationToken);
+        }
+
+        /// <summary> Gets a list of virtual machine images with their detailed properties. </summary>
+        public static AsyncPageable<VirtualMachineImage> GetVirtualMachineImagesWithPropertiesAsync(this SubscriptionResource subscriptionResource, SubscriptionResourceGetVirtualMachineImagesWithPropertiesOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetVirtualMachineImagesWithPropertiesAsync(options, cancellationToken);
+        }
+
+        /// <summary> Gets a list of virtual machine images with their detailed properties. </summary>
+        public static Pageable<VirtualMachineImage> GetVirtualMachineImagesWithProperties(this SubscriptionResource subscriptionResource, SubscriptionResourceGetVirtualMachineImagesWithPropertiesOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetVirtualMachineImagesWithProperties(options, cancellationToken);
         }
 
         /// <summary>

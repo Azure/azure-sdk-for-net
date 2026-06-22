@@ -8,17 +8,20 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes the properties of a Virtual Machine Scale Set. </summary>
     public partial class VirtualMachineScaleSetProperties
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetProperties"/>. </summary>
         public VirtualMachineScaleSetProperties()
         {
-            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetProperties"/>. </summary>
@@ -48,8 +51,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="highSpeedInterconnectPlacement"> Specifies the high speed interconnect placement for the virtual machine scale set. </param>
         /// <param name="lifecycleHooksProfile"> Specifies the lifecycle hooks profile for the virtual machine scale set. </param>
         /// <param name="externalHealthPolicy"> Specifies the external health policy for the virtual machine scale set. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        internal VirtualMachineScaleSetProperties(VirtualMachineScaleSetUpgradePolicy upgradePolicy, ScheduledEventsPolicy scheduledEventsPolicy, AutomaticRepairsPolicy automaticRepairsPolicy, VirtualMachineScaleSetVmProfile virtualMachineProfile, string provisioningState, bool? overprovision, bool? doNotRunExtensionsOnOverprovisionedVms, string uniqueId, bool? singlePlacementGroup, bool? zoneBalance, int? platformFaultDomainCount, WritableSubResource proximityPlacementGroup, WritableSubResource hostGroup, AdditionalCapabilities additionalCapabilities, ScaleInPolicy scaleInPolicy, OrchestrationMode? orchestrationMode, SpotRestorePolicy spotRestorePolicy, VirtualMachineScaleSetPriorityMixPolicy priorityMixPolicy, DateTimeOffset? timeCreated, bool? isMaximumCapacityConstrained, ResiliencyPolicy resiliencyPolicy, ZonalPlatformFaultDomainAlignMode? zonalPlatformFaultDomainAlignMode, ComputeSkuProfile skuProfile, HighSpeedInterconnectPlacement? highSpeedInterconnectPlacement, LifecycleHooksProfile lifecycleHooksProfile, ExternalHealthPolicy externalHealthPolicy, IDictionary<string, BinaryData> additionalProperties)
+        /// <param name="additionalProperties"></param>
+        internal VirtualMachineScaleSetProperties(VirtualMachineScaleSetUpgradePolicy upgradePolicy, ScheduledEventsPolicy scheduledEventsPolicy, AutomaticRepairsPolicy automaticRepairsPolicy, VirtualMachineScaleSetVmProfile virtualMachineProfile, string provisioningState, bool? overprovision, bool? doNotRunExtensionsOnOverprovisionedVms, string uniqueId, bool? singlePlacementGroup, bool? zoneBalance, int? platformFaultDomainCount, ComputeWriteableSubResourceData proximityPlacementGroup, ComputeWriteableSubResourceData hostGroup, AdditionalCapabilities additionalCapabilities, ScaleInPolicy scaleInPolicy, OrchestrationMode? orchestrationMode, SpotRestorePolicy spotRestorePolicy, VirtualMachineScaleSetPriorityMixPolicy priorityMixPolicy, DateTimeOffset? timeCreated, bool? isMaximumCapacityConstrained, ResiliencyPolicy resiliencyPolicy, ZonalPlatformFaultDomainAlignMode? zonalPlatformFaultDomainAlignMode, ComputeSkuProfile skuProfile, HighSpeedInterconnectPlacement? highSpeedInterconnectPlacement, LifecycleHooksProfile lifecycleHooksProfile, ExternalHealthPolicy externalHealthPolicy, IDictionary<string, BinaryData> additionalProperties)
         {
             UpgradePolicy = upgradePolicy;
             ScheduledEventsPolicy = scheduledEventsPolicy;
@@ -77,126 +80,127 @@ namespace Azure.ResourceManager.Compute.Models
             HighSpeedInterconnectPlacement = highSpeedInterconnectPlacement;
             LifecycleHooksProfile = lifecycleHooksProfile;
             ExternalHealthPolicy = externalHealthPolicy;
-            AdditionalProperties = additionalProperties;
+            _additionalBinaryDataProperties = additionalProperties;
         }
 
         /// <summary> The upgrade policy. </summary>
         public VirtualMachineScaleSetUpgradePolicy UpgradePolicy { get; set; }
+
         /// <summary> The ScheduledEventsPolicy. </summary>
         public ScheduledEventsPolicy ScheduledEventsPolicy { get; set; }
+
         /// <summary> Policy for automatic repairs. </summary>
         public AutomaticRepairsPolicy AutomaticRepairsPolicy { get; set; }
+
         /// <summary> The virtual machine profile. </summary>
         public VirtualMachineScaleSetVmProfile VirtualMachineProfile { get; set; }
+
         /// <summary> The provisioning state, which only appears in the response. </summary>
         public string ProvisioningState { get; }
+
         /// <summary> Specifies whether the Virtual Machine Scale Set should be overprovisioned. </summary>
         public bool? Overprovision { get; set; }
+
         /// <summary> When Overprovision is enabled, extensions are launched only on the requested number of VMs which are finally kept. This property will hence ensure that the extensions do not run on the extra overprovisioned VMs. </summary>
         public bool? DoNotRunExtensionsOnOverprovisionedVms { get; set; }
+
         /// <summary> Specifies the ID which uniquely identifies a Virtual Machine Scale Set. </summary>
         public string UniqueId { get; }
+
         /// <summary> When true this limits the scale set to a single placement group, of max size 100 virtual machines. NOTE: If singlePlacementGroup is true, it may be modified to false. However, if singlePlacementGroup is false, it may not be modified to true. </summary>
         public bool? SinglePlacementGroup { get; set; }
+
         /// <summary> Whether to force strictly even Virtual Machine distribution cross x-zones in case there is zone outage. zoneBalance property can only be set if the zones property of the scale set contains more than one zone. If there are no zones or only one zone specified, then zoneBalance property should not be set. </summary>
         public bool? ZoneBalance { get; set; }
+
         /// <summary> Fault Domain count for each placement group. </summary>
         public int? PlatformFaultDomainCount { get; set; }
+
         /// <summary> Specifies information about the proximity placement group that the virtual machine scale set should be assigned to. Minimum api-version: 2018-04-01. </summary>
-        internal WritableSubResource ProximityPlacementGroup { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        public ResourceIdentifier ProximityPlacementGroupId
-        {
-            get => ProximityPlacementGroup is null ? default : ProximityPlacementGroup.Id;
-            set
-            {
-                if (ProximityPlacementGroup is null)
-                    ProximityPlacementGroup = new WritableSubResource();
-                ProximityPlacementGroup.Id = value;
-            }
-        }
+        internal ComputeWriteableSubResourceData ProximityPlacementGroup { get; set; }
 
         /// <summary> Specifies information about the dedicated host group that the virtual machine scale set resides in. Minimum api-version: 2020-06-01. </summary>
-        internal WritableSubResource HostGroup { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        public ResourceIdentifier HostGroupId
-        {
-            get => HostGroup is null ? default : HostGroup.Id;
-            set
-            {
-                if (HostGroup is null)
-                    HostGroup = new WritableSubResource();
-                HostGroup.Id = value;
-            }
-        }
+        internal ComputeWriteableSubResourceData HostGroup { get; set; }
 
         /// <summary> Specifies additional capabilities enabled or disabled on the Virtual Machines in the Virtual Machine Scale Set. For instance: whether the Virtual Machines have the capability to support attaching managed data disks with UltraSSD_LRS storage account type. </summary>
         public AdditionalCapabilities AdditionalCapabilities { get; set; }
+
         /// <summary> Specifies the policies applied when scaling in Virtual Machines in the Virtual Machine Scale Set. </summary>
         public ScaleInPolicy ScaleInPolicy { get; set; }
+
         /// <summary> Specifies the orchestration mode for the virtual machine scale set. </summary>
         public OrchestrationMode? OrchestrationMode { get; set; }
+
         /// <summary> Specifies the Spot Restore properties for the virtual machine scale set. </summary>
         public SpotRestorePolicy SpotRestorePolicy { get; set; }
+
         /// <summary> Specifies the desired targets for mixing Spot and Regular priority VMs within the same VMSS Flex instance. </summary>
         public VirtualMachineScaleSetPriorityMixPolicy PriorityMixPolicy { get; set; }
+
         /// <summary> Specifies the time at which the Virtual Machine Scale Set resource was created. Minimum api-version: 2021-11-01. </summary>
         public DateTimeOffset? TimeCreated { get; }
+
         /// <summary> Optional property which must either be set to True or omitted. </summary>
         public bool? IsMaximumCapacityConstrained { get; set; }
+
         /// <summary> Policy for Resiliency. </summary>
         public ResiliencyPolicy ResiliencyPolicy { get; set; }
+
         /// <summary> Specifies the align mode between Virtual Machine Scale Set compute and storage Fault Domain count. </summary>
         public ZonalPlatformFaultDomainAlignMode? ZonalPlatformFaultDomainAlignMode { get; set; }
+
         /// <summary> Specifies the sku profile for the virtual machine scale set. </summary>
         public ComputeSkuProfile SkuProfile { get; set; }
+
         /// <summary> Specifies the high speed interconnect placement for the virtual machine scale set. </summary>
         public HighSpeedInterconnectPlacement? HighSpeedInterconnectPlacement { get; set; }
+
         /// <summary> Specifies the lifecycle hooks profile for the virtual machine scale set. </summary>
         internal LifecycleHooksProfile LifecycleHooksProfile { get; set; }
+
+        /// <summary> Specifies the external health policy for the virtual machine scale set. </summary>
+        public ExternalHealthPolicy ExternalHealthPolicy { get; set; }
+
+        /// <summary> Gets the AdditionalProperties. </summary>
+        public IDictionary<string, BinaryData> AdditionalProperties => _additionalBinaryDataProperties;
+
+        /// <summary> Resource Id. </summary>
+        public ResourceIdentifier ProximityPlacementGroupId
+        {
+            get
+            {
+                return ProximityPlacementGroup is null ? default : ProximityPlacementGroup.Id;
+            }
+            set
+            {
+                ProximityPlacementGroup = new ComputeWriteableSubResourceData(value);
+            }
+        }
+
+        /// <summary> Resource Id. </summary>
+        public ResourceIdentifier HostGroupId
+        {
+            get
+            {
+                return HostGroup is null ? default : HostGroup.Id;
+            }
+            set
+            {
+                HostGroup = new ComputeWriteableSubResourceData(value);
+            }
+        }
+
         /// <summary> Specifies the lifecycle hooks configured for the virtual machine scale set. </summary>
         public IList<LifecycleHook> LifecycleHooks
         {
             get
             {
                 if (LifecycleHooksProfile is null)
+                {
                     LifecycleHooksProfile = new LifecycleHooksProfile();
+                }
                 return LifecycleHooksProfile.LifecycleHooks;
             }
         }
-
-        /// <summary> Specifies the external health policy for the virtual machine scale set. </summary>
-        public ExternalHealthPolicy ExternalHealthPolicy { get; set; }
-        /// <summary>
-        /// Additional Properties
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

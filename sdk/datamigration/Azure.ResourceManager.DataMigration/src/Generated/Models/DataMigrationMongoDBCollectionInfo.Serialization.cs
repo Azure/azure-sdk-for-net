@@ -9,14 +9,60 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class DataMigrationMongoDBCollectionInfo : IUtf8JsonSerializable, IJsonModel<DataMigrationMongoDBCollectionInfo>
+    /// <summary> Describes a supported collection within a MongoDB database. </summary>
+    public partial class DataMigrationMongoDBCollectionInfo : DataMigrationMongoDBObjectInfo, IJsonModel<DataMigrationMongoDBCollectionInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataMigrationMongoDBCollectionInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="DataMigrationMongoDBCollectionInfo"/> for deserialization. </summary>
+        internal DataMigrationMongoDBCollectionInfo()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DataMigrationMongoDBObjectInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataMigrationMongoDBCollectionInfo>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDataMigrationMongoDBCollectionInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataMigrationMongoDBCollectionInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataMigrationMongoDBCollectionInfo>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DataMigrationMongoDBCollectionInfo)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DataMigrationMongoDBCollectionInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataMigrationMongoDBCollectionInfo IPersistableModel<DataMigrationMongoDBCollectionInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => (DataMigrationMongoDBCollectionInfo)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DataMigrationMongoDBCollectionInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataMigrationMongoDBCollectionInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +74,11 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataMigrationMongoDBCollectionInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataMigrationMongoDBCollectionInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataMigrationMongoDBCollectionInfo)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("databaseName"u8);
             writer.WriteStringValue(DatabaseName);
@@ -57,157 +102,129 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
         }
 
-        DataMigrationMongoDBCollectionInfo IJsonModel<DataMigrationMongoDBCollectionInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataMigrationMongoDBCollectionInfo IJsonModel<DataMigrationMongoDBCollectionInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DataMigrationMongoDBCollectionInfo)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DataMigrationMongoDBObjectInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataMigrationMongoDBCollectionInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataMigrationMongoDBCollectionInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataMigrationMongoDBCollectionInfo)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDataMigrationMongoDBCollectionInfo(document.RootElement, options);
         }
 
-        internal static DataMigrationMongoDBCollectionInfo DeserializeDataMigrationMongoDBCollectionInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DataMigrationMongoDBCollectionInfo DeserializeDataMigrationMongoDBCollectionInfo(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string databaseName = default;
-            bool isCapped = default;
-            bool isSystemCollection = default;
-            bool isView = default;
-            DataMigrationMongoDBShardKeyInfo shardKey = default;
-            bool supportsSharding = default;
-            string viewOf = default;
             long averageDocumentSize = default;
             long dataSize = default;
             long documentCount = default;
             string name = default;
             string qualifiedName = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            string databaseName = default;
+            bool isCapped = default;
+            bool isSystemCollection = default;
+            bool isView = default;
+            DataMigrationMongoDBShardKeyInfo shardKey = default;
+            bool isShardingSupported = default;
+            string viewOf = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("databaseName"u8))
+                if (prop.NameEquals("averageDocumentSize"u8))
                 {
-                    databaseName = property.Value.GetString();
+                    averageDocumentSize = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("isCapped"u8))
+                if (prop.NameEquals("dataSize"u8))
                 {
-                    isCapped = property.Value.GetBoolean();
+                    dataSize = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("isSystemCollection"u8))
+                if (prop.NameEquals("documentCount"u8))
                 {
-                    isSystemCollection = property.Value.GetBoolean();
+                    documentCount = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("isView"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    isView = property.Value.GetBoolean();
+                    name = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("shardKey"u8))
+                if (prop.NameEquals("qualifiedName"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    qualifiedName = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("databaseName"u8))
+                {
+                    databaseName = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("isCapped"u8))
+                {
+                    isCapped = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("isSystemCollection"u8))
+                {
+                    isSystemCollection = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("isView"u8))
+                {
+                    isView = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("shardKey"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    shardKey = DataMigrationMongoDBShardKeyInfo.DeserializeDataMigrationMongoDBShardKeyInfo(property.Value, options);
+                    shardKey = DataMigrationMongoDBShardKeyInfo.DeserializeDataMigrationMongoDBShardKeyInfo(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("supportsSharding"u8))
+                if (prop.NameEquals("supportsSharding"u8))
                 {
-                    supportsSharding = property.Value.GetBoolean();
+                    isShardingSupported = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("viewOf"u8))
+                if (prop.NameEquals("viewOf"u8))
                 {
-                    viewOf = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("averageDocumentSize"u8))
-                {
-                    averageDocumentSize = property.Value.GetInt64();
-                    continue;
-                }
-                if (property.NameEquals("dataSize"u8))
-                {
-                    dataSize = property.Value.GetInt64();
-                    continue;
-                }
-                if (property.NameEquals("documentCount"u8))
-                {
-                    documentCount = property.Value.GetInt64();
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("qualifiedName"u8))
-                {
-                    qualifiedName = property.Value.GetString();
+                    viewOf = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new DataMigrationMongoDBCollectionInfo(
                 averageDocumentSize,
                 dataSize,
                 documentCount,
                 name,
                 qualifiedName,
-                serializedAdditionalRawData,
+                additionalBinaryDataProperties,
                 databaseName,
                 isCapped,
                 isSystemCollection,
                 isView,
                 shardKey,
-                supportsSharding,
+                isShardingSupported,
                 viewOf);
         }
-
-        BinaryData IPersistableModel<DataMigrationMongoDBCollectionInfo>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataMigrationMongoDBCollectionInfo>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DataMigrationMongoDBCollectionInfo)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        DataMigrationMongoDBCollectionInfo IPersistableModel<DataMigrationMongoDBCollectionInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataMigrationMongoDBCollectionInfo>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDataMigrationMongoDBCollectionInfo(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DataMigrationMongoDBCollectionInfo)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<DataMigrationMongoDBCollectionInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

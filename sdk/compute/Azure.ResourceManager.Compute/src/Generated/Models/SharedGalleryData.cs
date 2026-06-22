@@ -18,21 +18,29 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Initializes a new instance of <see cref="SharedGalleryData"/>. </summary>
         internal SharedGalleryData()
         {
-            ArtifactTags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SharedGalleryData"/>. </summary>
         /// <param name="name"> Resource name. </param>
         /// <param name="location"> Resource location. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="uniqueId"> The unique id of this shared gallery. </param>
-        /// <param name="artifactTags"> The artifact tags of a shared gallery resource. </param>
-        internal SharedGalleryData(string name, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData, string uniqueId, IReadOnlyDictionary<string, string> artifactTags) : base(name, location, serializedAdditionalRawData, uniqueId)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="galleryIdentifier"> The identifier information of shared gallery. </param>
+        /// <param name="properties"> Specifies the properties of a shared gallery. </param>
+        internal SharedGalleryData(string name, AzureLocation? location, IDictionary<string, BinaryData> additionalBinaryDataProperties, SharedGalleryIdentifier galleryIdentifier, SharedGalleryProperties properties) : base(name, location, additionalBinaryDataProperties, galleryIdentifier)
         {
-            ArtifactTags = artifactTags;
+            Properties = properties;
         }
 
+        /// <summary> Specifies the properties of a shared gallery. </summary>
+        internal SharedGalleryProperties Properties { get; }
+
         /// <summary> The artifact tags of a shared gallery resource. </summary>
-        public IReadOnlyDictionary<string, string> ArtifactTags { get; }
+        public IReadOnlyDictionary<string, string> ArtifactTags
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ArtifactTags;
+            }
+        }
     }
 }

@@ -2,14 +2,17 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.Metrics;
 using System.Globalization;
 using System.Net.Http;
 using System.Text.Json;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.NetworkSdkStats;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
 using OpenTelemetry;
 using OpenTelemetry.Metrics;
@@ -38,6 +41,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
 
         internal MeterProvider? _statsbeatMeterProvider;
 
+        // Wall-clock throttle for the Attach observable gauge so it emits at most once per
+        // AttachEmissionInterval even though the shared reader collects every 15 min.
+        private long _lastAttachEmissionTicks;
+
+        /// <summary>
+        /// Records Network SDKStats on the shared statsbeat <see cref="MeterProvider"/>.
+        /// </summary>
+        internal NetworkSdkStatsManager? NetworkSdkStatsManager { get; }
+
         internal static Regex s_endpoint_pattern => new("^https?://(?:www\\.)?([^/.-]+)");
 
         internal AzureMonitorStatsbeat(ConnectionVars connectionStringVars, IPlatform platform)
@@ -56,21 +68,35 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
 
             _customer_Ikey = connectionStringVars.InstrumentationKey;
 
-            s_myMeter.CreateObservableGauge(StatsbeatConstants.AttachStatsbeatMetricName, () => GetAttachStatsbeat());
+            // IEnumerable<Measurement<T>> overload lets the callback yield zero
+            // measurements while throttled - see GetAttachStatsbeat.
+            s_myMeter.CreateObservableGauge(StatsbeatConstants.AttachStatsbeatMetricName, GetAttachStatsbeat);
 
-            // Configure for attach statsbeat which has collection
-            // schedule of 24 hrs == 86400000 milliseconds.
+            try
+            {
+                NetworkSdkStatsManager = new NetworkSdkStatsManager(connectionStringVars, platform);
+            }
+            catch
+            {
+                // Internal telemetry - swallow.
+            }
+
+            // One MeterProvider for both long and short-interval stats. The reader runs
+            // at the Network (15 min) cadence. Delta temporality + the Attach throttle
+            // keep the long-interval instruments on their native 24 hr cadence.
             var exporterOptions = new AzureMonitorExporterOptions
             {
                 DisableOfflineStorage = true,
                 ConnectionString = _statsbeat_ConnectionString,
-                EnableStatsbeat = false, // to avoid recursive Statsbeat.
+                EnableStatsbeat = false, // avoid recursive SDK Stats.
             };
 
             _statsbeatMeterProvider = Sdk.CreateMeterProviderBuilder()
                 .AddMeter(StatsbeatConstants.AttachStatsbeatMeterName)
                 .AddMeter(StatsbeatConstants.FeatureStatsbeatMeterName)
-                .AddReader(new PeriodicExportingMetricReader(new AzureMonitorMetricExporter(exporterOptions), StatsbeatConstants.GeneralStatsbeatInterval)
+                .AddMeter(StatsbeatConstants.DistroFeatureSdkStatsMeterName)
+                .AddMeter(StatsbeatConstants.NetworkSdkStatsMeterName)
+                .AddReader(new PeriodicExportingMetricReader(new AzureMonitorMetricExporter(exporterOptions), StatsbeatConstants.NetworkStatsbeatInterval)
                 { TemporalityPreference = MetricReaderTemporalityPreference.Delta })
                 .Build();
 
@@ -94,26 +120,65 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
 
         internal static string? GetStatsbeatConnectionString(string ingestionEndpoint)
         {
+            // When the distro AppContext switch is set, route SDK statistics to the
+            // distro-owned ingestion endpoints. Region selection still derives from the
+            // customer's ingestion endpoint when it maps to a known region; otherwise
+            // default to the non-EU distro endpoint instead of returning null (which would
+            // prevent Statsbeat initialization for the distro's inert exporter pin).
+            var routeToDistroEndpoint =
+                AppContext.TryGetSwitch(StatsbeatConstants.RouteSdkStatsToDistroEndpointSwitchName, out var enabled)
+                && enabled;
+
             var patternMatch = s_endpoint_pattern.Match(ingestionEndpoint);
-            string? statsbeatConnectionString = null;
-            if (patternMatch.Success)
+            if (!patternMatch.Success)
             {
-                var endpoint = patternMatch.Groups[1].Value;
-                if (StatsbeatConstants.s_EU_Endpoints.Contains(endpoint))
-                {
-                    statsbeatConnectionString = StatsbeatConstants.Statsbeat_ConnectionString_EU;
-                }
-                else if (StatsbeatConstants.s_non_EU_Endpoints.Contains(endpoint))
-                {
-                    statsbeatConnectionString = StatsbeatConstants.Statsbeat_ConnectionString_NonEU;
-                }
+                return routeToDistroEndpoint
+                    ? StatsbeatConstants.SdkStats_ConnectionString_Distro_NonEU
+                    : null;
             }
 
-            return statsbeatConnectionString;
+            var endpoint = patternMatch.Groups[1].Value;
+            if (StatsbeatConstants.s_EU_Endpoints.Contains(endpoint))
+            {
+                return routeToDistroEndpoint
+                    ? StatsbeatConstants.SdkStats_ConnectionString_Distro_EU
+                    : StatsbeatConstants.Statsbeat_ConnectionString_EU;
+            }
+
+            if (StatsbeatConstants.s_non_EU_Endpoints.Contains(endpoint))
+            {
+                return routeToDistroEndpoint
+                    ? StatsbeatConstants.SdkStats_ConnectionString_Distro_NonEU
+                    : StatsbeatConstants.Statsbeat_ConnectionString_NonEU;
+            }
+
+            // Unknown region: under the distro fall back to the non-EU distro endpoint;
+            // otherwise preserve existing behavior of returning null so the
+            // AzureMonitorStatsbeat constructor throws and Statsbeat stays disabled.
+            return routeToDistroEndpoint
+                ? StatsbeatConstants.SdkStats_ConnectionString_Distro_NonEU
+                : null;
         }
 
-        private Measurement<int> GetAttachStatsbeat()
+        private IEnumerable<Measurement<int>> GetAttachStatsbeat()
         {
+            // Emit at most once per AttachEmissionInterval. Delta temporality means
+            // skipped intervals don't produce an exported metric point.
+            long previousTicks = Volatile.Read(ref _lastAttachEmissionTicks);
+            long nowTicks = DateTime.UtcNow.Ticks;
+            if (previousTicks != 0
+                && nowTicks - previousTicks < StatsbeatConstants.AttachEmissionInterval.Ticks)
+            {
+                yield break;
+            }
+
+            // CAS before doing any work so a racing reader can't double-emit.
+            if (Interlocked.CompareExchange(ref _lastAttachEmissionTicks, nowTicks, previousTicks) != previousTicks)
+            {
+                yield break;
+            }
+
+            Measurement<int> measurement;
             try
             {
                 if (_resourceProvider == null)
@@ -121,23 +186,26 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
                     SetResourceProviderDetails(_platform);
                 }
 
-                return
-                    new Measurement<int>(1,
-                        new("rp", _resourceProvider),
-                        new("rpId", _resourceProviderId),
-                        new("attach", s_attachMode),
-                        new("cikey", _customer_Ikey),
-                        new("runtimeVersion", s_runtimeVersion),
-                        new("language", "dotnet"),
-                        // We don't memoize this version because it can be updated up to a minute into the application startup
-                        new("version", SdkVersionUtils.GetVersion()),
-                        new("os", _operatingSystem));
+                measurement = new Measurement<int>(1,
+                    new("rp", _resourceProvider),
+                    new("rpId", _resourceProviderId),
+                    new("attach", s_attachMode),
+                    new("cikey", _customer_Ikey),
+                    new("runtimeVersion", s_runtimeVersion),
+                    new("language", "dotnet"),
+                    // We don't memoize this version because it can be updated up to a minute into the application startup
+                    new("version", SdkVersionUtils.GetVersion()),
+                    new("os", _operatingSystem));
             }
             catch (Exception ex)
             {
                 AzureMonitorExporterEventSource.Log.StatsbeatFailed(ex);
-                return new Measurement<int>();
+                // Rewind the throttle so we retry on the next collection.
+                Volatile.Write(ref _lastAttachEmissionTicks, previousTicks);
+                yield break;
             }
+
+            yield return measurement;
         }
 
         internal static VmMetadataResponse? GetVmMetadataResponse()

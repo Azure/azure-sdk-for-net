@@ -38,7 +38,7 @@ internal class SerializationVisitor : ScmLibraryVisitor
     {
         TryUpdateExplicitCreateMethod(method);
 
-        if (method.EnclosingType is MrwSerializationTypeDefinition && method.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Operator))
+        if (method.EnclosingType is MrwSerializationTypeDefinition serializationType && method.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Operator))
         {
             var modifiers = method.Signature.Modifiers & ~MethodSignatureModifiers.Operator & ~MethodSignatureModifiers.Public | MethodSignatureModifiers.Internal;
             if (modifiers.HasFlag(MethodSignatureModifiers.Implicit))
@@ -49,10 +49,55 @@ internal class SerializationVisitor : ScmLibraryVisitor
             else if (modifiers.HasFlag(MethodSignatureModifiers.Explicit))
             {
                 modifiers &= ~MethodSignatureModifiers.Explicit;
+                if (HasBaseFromResponse(serializationType))
+                {
+                    // Static FromResponse methods hide by name and parameter list; the return type is not
+                    // considered. Make the intended hiding explicit when the base model also has one.
+                    modifiers |= MethodSignatureModifiers.New;
+                }
                 method.Signature.Update(modifiers: modifiers, name: FromResponseMethodName);
             }
         }
         return base.VisitMethod(method);
+    }
+
+    private static bool HasBaseFromResponse(MrwSerializationTypeDefinition serializationType)
+    {
+        if (!ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap.TryGetValue(serializationType.Type, out var typeProvider)
+            || typeProvider is not ModelProvider model)
+        {
+            return false;
+        }
+
+        var current = model.BaseModelProvider;
+        while (current is not null)
+        {
+            if (current.SerializationProviders
+                .OfType<MrwSerializationTypeDefinition>()
+                .SelectMany(provider => provider.Methods)
+                .Any(IsFromResponseMethod))
+            {
+                return true;
+            }
+
+            current = current.BaseModelProvider;
+        }
+
+        return false;
+    }
+
+    private static bool IsFromResponseMethod(MethodProvider method)
+    {
+        // SerializationVisitor rewrites the explicit Response conversion operator to FromResponse.
+        // Depending on visitor ordering, base methods may still be in their pre-rewrite operator form.
+        if (method.Signature.Parameters is not [var parameter] || !parameter.Type.AreNamesEqual(typeof(Response)))
+        {
+            return false;
+        }
+
+        return method.Signature.Name == FromResponseMethodName
+            || (method.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Operator)
+                && method.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Explicit));
     }
 
     private static bool TryUpdateExplicitCreateMethod(MethodProvider method)

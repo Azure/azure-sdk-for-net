@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DataMigration
 {
@@ -24,51 +25,49 @@ namespace Azure.ResourceManager.DataMigration
     /// </summary>
     public partial class DataMigrationProjectCollection : ArmCollection, IEnumerable<DataMigrationProjectResource>, IAsyncEnumerable<DataMigrationProjectResource>
     {
-        private readonly ClientDiagnostics _dataMigrationProjectProjectsClientDiagnostics;
-        private readonly ProjectsRestOperations _dataMigrationProjectProjectsRestClient;
+        private readonly ClientDiagnostics _dataMigrationProjectsClientDiagnostics;
+        private readonly DataMigrationProjects _dataMigrationProjectsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="DataMigrationProjectCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of DataMigrationProjectCollection for mocking. </summary>
         protected DataMigrationProjectCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DataMigrationProjectCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataMigrationProjectCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DataMigrationProjectCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _dataMigrationProjectProjectsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataMigration", DataMigrationProjectResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(DataMigrationProjectResource.ResourceType, out string dataMigrationProjectProjectsApiVersion);
-            _dataMigrationProjectProjectsRestClient = new ProjectsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dataMigrationProjectProjectsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(DataMigrationProjectResource.ResourceType, out string dataMigrationProjectApiVersion);
+            _dataMigrationProjectsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataMigration", DataMigrationProjectResource.ResourceType.Namespace, Diagnostics);
+            _dataMigrationProjectsRestClient = new DataMigrationProjects(_dataMigrationProjectsClientDiagnostics, Pipeline, Endpoint, dataMigrationProjectApiVersion ?? "2025-09-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != DataMigrationServiceResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, DataMigrationServiceResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DataMigrationServiceResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// The project resource is a nested resource representing a stored migration project. The PUT method creates a new project or updates an existing one.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/projects/{projectName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/projects/{projectName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Projects_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> Projects_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-30</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataMigrationProjectResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,23 +75,31 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="projectName"> Name of the project. </param>
         /// <param name="data"> Information about the project. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<DataMigrationProjectResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string projectName, DataMigrationProjectData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _dataMigrationProjectProjectsClientDiagnostics.CreateScope("DataMigrationProjectCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _dataMigrationProjectsClientDiagnostics.CreateScope("DataMigrationProjectCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _dataMigrationProjectProjectsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, projectName, data, cancellationToken).ConfigureAwait(false);
-                var uri = _dataMigrationProjectProjectsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, projectName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new DataMigrationArmOperation<DataMigrationProjectResource>(Response.FromValue(new DataMigrationProjectResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dataMigrationProjectsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, projectName, DataMigrationProjectData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DataMigrationProjectData> response = Response.FromValue(DataMigrationProjectData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                DataMigrationArmOperation<DataMigrationProjectResource> operation = new DataMigrationArmOperation<DataMigrationProjectResource>(Response.FromValue(new DataMigrationProjectResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -106,20 +113,16 @@ namespace Azure.ResourceManager.DataMigration
         /// The project resource is a nested resource representing a stored migration project. The PUT method creates a new project or updates an existing one.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/projects/{projectName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/projects/{projectName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Projects_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> Projects_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-30</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataMigrationProjectResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -127,23 +130,31 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="projectName"> Name of the project. </param>
         /// <param name="data"> Information about the project. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<DataMigrationProjectResource> CreateOrUpdate(WaitUntil waitUntil, string projectName, DataMigrationProjectData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _dataMigrationProjectProjectsClientDiagnostics.CreateScope("DataMigrationProjectCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _dataMigrationProjectsClientDiagnostics.CreateScope("DataMigrationProjectCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _dataMigrationProjectProjectsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, projectName, data, cancellationToken);
-                var uri = _dataMigrationProjectProjectsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, projectName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new DataMigrationArmOperation<DataMigrationProjectResource>(Response.FromValue(new DataMigrationProjectResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dataMigrationProjectsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, projectName, DataMigrationProjectData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DataMigrationProjectData> response = Response.FromValue(DataMigrationProjectData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                DataMigrationArmOperation<DataMigrationProjectResource> operation = new DataMigrationArmOperation<DataMigrationProjectResource>(Response.FromValue(new DataMigrationProjectResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -157,38 +168,42 @@ namespace Azure.ResourceManager.DataMigration
         /// The project resource is a nested resource representing a stored migration project. The GET method retrieves information about a project.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/projects/{projectName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/projects/{projectName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Projects_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Projects_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-30</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataMigrationProjectResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="projectName"> Name of the project. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<DataMigrationProjectResource>> GetAsync(string projectName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            using var scope = _dataMigrationProjectProjectsClientDiagnostics.CreateScope("DataMigrationProjectCollection.Get");
+            using DiagnosticScope scope = _dataMigrationProjectsClientDiagnostics.CreateScope("DataMigrationProjectCollection.Get");
             scope.Start();
             try
             {
-                var response = await _dataMigrationProjectProjectsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, projectName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dataMigrationProjectsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, projectName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DataMigrationProjectData> response = Response.FromValue(DataMigrationProjectData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DataMigrationProjectResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -202,38 +217,42 @@ namespace Azure.ResourceManager.DataMigration
         /// The project resource is a nested resource representing a stored migration project. The GET method retrieves information about a project.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/projects/{projectName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/projects/{projectName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Projects_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Projects_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-30</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataMigrationProjectResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="projectName"> Name of the project. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<DataMigrationProjectResource> Get(string projectName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            using var scope = _dataMigrationProjectProjectsClientDiagnostics.CreateScope("DataMigrationProjectCollection.Get");
+            using DiagnosticScope scope = _dataMigrationProjectsClientDiagnostics.CreateScope("DataMigrationProjectCollection.Get");
             scope.Start();
             try
             {
-                var response = _dataMigrationProjectProjectsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, projectName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dataMigrationProjectsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, projectName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DataMigrationProjectData> response = Response.FromValue(DataMigrationProjectData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DataMigrationProjectResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -247,50 +266,50 @@ namespace Azure.ResourceManager.DataMigration
         /// The project resource is a nested resource representing a stored migration project. This method returns a list of projects owned by a service resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/projects</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/projects. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Projects_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> Projects_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-30</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataMigrationProjectResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataMigrationProjectResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataMigrationProjectResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataMigrationProjectResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataMigrationProjectProjectsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataMigrationProjectProjectsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataMigrationProjectResource(Client, DataMigrationProjectData.DeserializeDataMigrationProjectData(e)), _dataMigrationProjectProjectsClientDiagnostics, Pipeline, "DataMigrationProjectCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<DataMigrationProjectData, DataMigrationProjectResource>(new DataMigrationProjectsGetAllAsyncCollectionResultOfT(
+                _dataMigrationProjectsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DataMigrationProjectCollection.GetAll"), data => new DataMigrationProjectResource(Client, data));
         }
 
         /// <summary>
         /// The project resource is a nested resource representing a stored migration project. This method returns a list of projects owned by a service resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/projects</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/projects. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Projects_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> Projects_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-30</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataMigrationProjectResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -298,45 +317,67 @@ namespace Azure.ResourceManager.DataMigration
         /// <returns> A collection of <see cref="DataMigrationProjectResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataMigrationProjectResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _dataMigrationProjectProjectsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataMigrationProjectProjectsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataMigrationProjectResource(Client, DataMigrationProjectData.DeserializeDataMigrationProjectData(e)), _dataMigrationProjectProjectsClientDiagnostics, Pipeline, "DataMigrationProjectCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<DataMigrationProjectData, DataMigrationProjectResource>(new DataMigrationProjectsGetAllCollectionResultOfT(
+                _dataMigrationProjectsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "DataMigrationProjectCollection.GetAll"), data => new DataMigrationProjectResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/projects/{projectName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/projects/{projectName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Projects_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Projects_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-30</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataMigrationProjectResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="projectName"> Name of the project. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string projectName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            using var scope = _dataMigrationProjectProjectsClientDiagnostics.CreateScope("DataMigrationProjectCollection.Exists");
+            using DiagnosticScope scope = _dataMigrationProjectsClientDiagnostics.CreateScope("DataMigrationProjectCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _dataMigrationProjectProjectsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, projectName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dataMigrationProjectsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, projectName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<DataMigrationProjectData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DataMigrationProjectData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DataMigrationProjectData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -350,36 +391,50 @@ namespace Azure.ResourceManager.DataMigration
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/projects/{projectName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/projects/{projectName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Projects_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Projects_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-30</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataMigrationProjectResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="projectName"> Name of the project. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string projectName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            using var scope = _dataMigrationProjectProjectsClientDiagnostics.CreateScope("DataMigrationProjectCollection.Exists");
+            using DiagnosticScope scope = _dataMigrationProjectsClientDiagnostics.CreateScope("DataMigrationProjectCollection.Exists");
             scope.Start();
             try
             {
-                var response = _dataMigrationProjectProjectsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, projectName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dataMigrationProjectsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, projectName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<DataMigrationProjectData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DataMigrationProjectData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DataMigrationProjectData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -393,38 +448,54 @@ namespace Azure.ResourceManager.DataMigration
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/projects/{projectName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/projects/{projectName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Projects_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Projects_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-30</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataMigrationProjectResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="projectName"> Name of the project. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<DataMigrationProjectResource>> GetIfExistsAsync(string projectName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            using var scope = _dataMigrationProjectProjectsClientDiagnostics.CreateScope("DataMigrationProjectCollection.GetIfExists");
+            using DiagnosticScope scope = _dataMigrationProjectsClientDiagnostics.CreateScope("DataMigrationProjectCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _dataMigrationProjectProjectsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, projectName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dataMigrationProjectsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, projectName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<DataMigrationProjectData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DataMigrationProjectData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DataMigrationProjectData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<DataMigrationProjectResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new DataMigrationProjectResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -438,38 +509,54 @@ namespace Azure.ResourceManager.DataMigration
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/projects/{projectName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/projects/{projectName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Projects_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Projects_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-30</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataMigrationProjectResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="projectName"> Name of the project. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<DataMigrationProjectResource> GetIfExists(string projectName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            using var scope = _dataMigrationProjectProjectsClientDiagnostics.CreateScope("DataMigrationProjectCollection.GetIfExists");
+            using DiagnosticScope scope = _dataMigrationProjectsClientDiagnostics.CreateScope("DataMigrationProjectCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _dataMigrationProjectProjectsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, projectName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dataMigrationProjectsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, projectName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<DataMigrationProjectData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DataMigrationProjectData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DataMigrationProjectData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<DataMigrationProjectResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new DataMigrationProjectResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -489,6 +576,7 @@ namespace Azure.ResourceManager.DataMigration
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<DataMigrationProjectResource> IAsyncEnumerable<DataMigrationProjectResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

@@ -7,173 +7,368 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary>
-    /// A class representing the NetworkInterface data model.
-    /// A network interface in a resource group.
-    /// </summary>
+    /// <summary> A network interface in a resource group. </summary>
     public partial class NetworkInterfaceData : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of <see cref="NetworkInterfaceData"/>. </summary>
         public NetworkInterfaceData()
         {
-            IPConfigurations = new ChangeTrackingList<NetworkInterfaceIPConfigurationData>();
-            TapConfigurations = new ChangeTrackingList<NetworkInterfaceTapConfigurationData>();
-            HostedWorkloads = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkInterfaceData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="type"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties of the network interface. </param>
         /// <param name="extendedLocation"> The extended location of the network interface. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="virtualMachine"> The reference to a virtual machine. </param>
-        /// <param name="networkSecurityGroup"> The reference to the NetworkSecurityGroup resource. </param>
-        /// <param name="privateEndpoint"> A reference to the private endpoint to which the network interface is linked. </param>
-        /// <param name="ipConfigurations"> A list of IPConfigurations of the network interface. </param>
-        /// <param name="tapConfigurations"> A list of TapConfigurations of the network interface. </param>
-        /// <param name="dnsSettings"> The DNS settings in network interface. </param>
-        /// <param name="macAddress"> The MAC address of the network interface. </param>
-        /// <param name="primary"> Whether this is a primary network interface on a virtual machine. </param>
-        /// <param name="vnetEncryptionSupported"> Whether the virtual machine this nic is attached to supports encryption. </param>
-        /// <param name="defaultOutboundConnectivityEnabled"> Whether default outbound connectivity for nic was configured or not. </param>
-        /// <param name="enableAcceleratedNetworking"> If the network interface is configured for accelerated networking. Not applicable to VM sizes which require accelerated networking. </param>
-        /// <param name="disableTcpStateTracking"> Indicates whether to disable tcp state tracking. </param>
-        /// <param name="enableIPForwarding"> Indicates whether IP forwarding is enabled on this network interface. </param>
-        /// <param name="hostedWorkloads"> A list of references to linked BareMetal resources. </param>
-        /// <param name="dscpConfiguration"> A reference to the dscp configuration to which the network interface is linked. </param>
-        /// <param name="resourceGuid"> The resource GUID property of the network interface resource. </param>
-        /// <param name="provisioningState"> The provisioning state of the network interface resource. </param>
-        /// <param name="workloadType"> WorkloadType of the NetworkInterface for BareMetal resources. </param>
-        /// <param name="nicType"> Type of Network Interface resource. </param>
-        /// <param name="privateLinkService"> Privatelinkservice of the network interface resource. </param>
-        /// <param name="migrationPhase"> Migration phase of Network Interface resource. </param>
-        /// <param name="auxiliaryMode"> Auxiliary mode of Network Interface resource. </param>
-        /// <param name="auxiliarySku"> Auxiliary sku of Network Interface resource. </param>
-        internal NetworkInterfaceData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ExtendedLocation extendedLocation, ETag? etag, WritableSubResource virtualMachine, NetworkSecurityGroupData networkSecurityGroup, PrivateEndpointData privateEndpoint, IList<NetworkInterfaceIPConfigurationData> ipConfigurations, IReadOnlyList<NetworkInterfaceTapConfigurationData> tapConfigurations, NetworkInterfaceDnsSettings dnsSettings, string macAddress, bool? primary, bool? vnetEncryptionSupported, bool? defaultOutboundConnectivityEnabled, bool? enableAcceleratedNetworking, bool? disableTcpStateTracking, bool? enableIPForwarding, IReadOnlyList<string> hostedWorkloads, WritableSubResource dscpConfiguration, Guid? resourceGuid, NetworkProvisioningState? provisioningState, string workloadType, NetworkInterfaceNicType? nicType, PrivateLinkServiceData privateLinkService, NetworkInterfaceMigrationPhase? migrationPhase, NetworkInterfaceAuxiliaryMode? auxiliaryMode, NetworkInterfaceAuxiliarySku? auxiliarySku) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        internal NetworkInterfaceData(ResourceIdentifier id, string name, string @type, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, NetworkInterfacePropertiesFormat properties, ExtendedLocation extendedLocation, ETag? eTag) : base(id, name, @type, location, tags, additionalBinaryDataProperties)
         {
+            Properties = properties;
             ExtendedLocation = extendedLocation;
-            ETag = etag;
-            VirtualMachine = virtualMachine;
-            NetworkSecurityGroup = networkSecurityGroup;
-            PrivateEndpoint = privateEndpoint;
-            IPConfigurations = ipConfigurations;
-            TapConfigurations = tapConfigurations;
-            DnsSettings = dnsSettings;
-            MacAddress = macAddress;
-            Primary = primary;
-            VnetEncryptionSupported = vnetEncryptionSupported;
-            DefaultOutboundConnectivityEnabled = defaultOutboundConnectivityEnabled;
-            EnableAcceleratedNetworking = enableAcceleratedNetworking;
-            DisableTcpStateTracking = disableTcpStateTracking;
-            EnableIPForwarding = enableIPForwarding;
-            HostedWorkloads = hostedWorkloads;
-            DscpConfiguration = dscpConfiguration;
-            ResourceGuid = resourceGuid;
-            ProvisioningState = provisioningState;
-            WorkloadType = workloadType;
-            NicType = nicType;
-            PrivateLinkService = privateLinkService;
-            MigrationPhase = migrationPhase;
-            AuxiliaryMode = auxiliaryMode;
-            AuxiliarySku = auxiliarySku;
+            ETag = eTag;
         }
+
+        /// <summary> Properties of the network interface. </summary>
+        [WirePath("properties")]
+        internal NetworkInterfacePropertiesFormat Properties { get; set; }
 
         /// <summary> The extended location of the network interface. </summary>
         [WirePath("extendedLocation")]
         public ExtendedLocation ExtendedLocation { get; set; }
+
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }
-        /// <summary> The reference to a virtual machine. </summary>
-        internal WritableSubResource VirtualMachine { get; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.virtualMachine.id")]
-        public ResourceIdentifier VirtualMachineId
-        {
-            get => VirtualMachine?.Id;
-        }
 
         /// <summary> The reference to the NetworkSecurityGroup resource. </summary>
         [WirePath("properties.networkSecurityGroup")]
-        public NetworkSecurityGroupData NetworkSecurityGroup { get; set; }
+        public NetworkSecurityGroupData NetworkSecurityGroup
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NetworkSecurityGroup;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkInterfacePropertiesFormat();
+                }
+                Properties.NetworkSecurityGroup = value;
+            }
+        }
+
         /// <summary> A reference to the private endpoint to which the network interface is linked. </summary>
         [WirePath("properties.privateEndpoint")]
-        public PrivateEndpointData PrivateEndpoint { get; }
+        public PrivateEndpointData PrivateEndpoint
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateEndpoint;
+            }
+        }
+
         /// <summary> A list of IPConfigurations of the network interface. </summary>
         [WirePath("properties.ipConfigurations")]
-        public IList<NetworkInterfaceIPConfigurationData> IPConfigurations { get; }
+        public IList<NetworkInterfaceIPConfigurationData> IpConfigurations
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkInterfacePropertiesFormat();
+                }
+                return Properties.IpConfigurations;
+            }
+        }
+
         /// <summary> A list of TapConfigurations of the network interface. </summary>
         [WirePath("properties.tapConfigurations")]
-        public IReadOnlyList<NetworkInterfaceTapConfigurationData> TapConfigurations { get; }
+        public IReadOnlyList<NetworkInterfaceTapConfigurationData> TapConfigurations
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkInterfacePropertiesFormat();
+                }
+                return Properties.TapConfigurations;
+            }
+        }
+
         /// <summary> The DNS settings in network interface. </summary>
         [WirePath("properties.dnsSettings")]
-        public NetworkInterfaceDnsSettings DnsSettings { get; set; }
+        public NetworkInterfaceDnsSettings DnsSettings
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DnsSettings;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkInterfacePropertiesFormat();
+                }
+                Properties.DnsSettings = value;
+            }
+        }
+
         /// <summary> The MAC address of the network interface. </summary>
         [WirePath("properties.macAddress")]
-        public string MacAddress { get; }
+        public string MacAddress
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MacAddress;
+            }
+        }
+
         /// <summary> Whether this is a primary network interface on a virtual machine. </summary>
         [WirePath("properties.primary")]
-        public bool? Primary { get; }
+        public bool? Primary
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Primary;
+            }
+        }
+
         /// <summary> Whether the virtual machine this nic is attached to supports encryption. </summary>
         [WirePath("properties.vnetEncryptionSupported")]
-        public bool? VnetEncryptionSupported { get; }
+        public bool? VnetEncryptionSupported
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VnetEncryptionSupported;
+            }
+        }
+
         /// <summary> Whether default outbound connectivity for nic was configured or not. </summary>
         [WirePath("properties.defaultOutboundConnectivityEnabled")]
-        public bool? DefaultOutboundConnectivityEnabled { get; }
+        public bool? DefaultOutboundConnectivityEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DefaultOutboundConnectivityEnabled;
+            }
+        }
+
         /// <summary> If the network interface is configured for accelerated networking. Not applicable to VM sizes which require accelerated networking. </summary>
         [WirePath("properties.enableAcceleratedNetworking")]
-        public bool? EnableAcceleratedNetworking { get; set; }
+        public bool? EnableAcceleratedNetworking
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnableAcceleratedNetworking;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkInterfacePropertiesFormat();
+                }
+                Properties.EnableAcceleratedNetworking = value;
+            }
+        }
+
         /// <summary> Indicates whether to disable tcp state tracking. </summary>
         [WirePath("properties.disableTcpStateTracking")]
-        public bool? DisableTcpStateTracking { get; set; }
+        public bool? DisableTcpStateTracking
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisableTcpStateTracking;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkInterfacePropertiesFormat();
+                }
+                Properties.DisableTcpStateTracking = value;
+            }
+        }
+
         /// <summary> Indicates whether IP forwarding is enabled on this network interface. </summary>
         [WirePath("properties.enableIPForwarding")]
-        public bool? EnableIPForwarding { get; set; }
+        public bool? EnableIPForwarding
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnableIPForwarding;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkInterfacePropertiesFormat();
+                }
+                Properties.EnableIPForwarding = value;
+            }
+        }
+
         /// <summary> A list of references to linked BareMetal resources. </summary>
         [WirePath("properties.hostedWorkloads")]
-        public IReadOnlyList<string> HostedWorkloads { get; }
-        /// <summary> A reference to the dscp configuration to which the network interface is linked. </summary>
-        internal WritableSubResource DscpConfiguration { get; }
-        /// <summary> Gets or sets Id. </summary>
+        public IReadOnlyList<string> HostedWorkloads
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkInterfacePropertiesFormat();
+                }
+                return Properties.HostedWorkloads;
+            }
+        }
+
+        /// <summary> The provisioning state of the network interface resource. </summary>
+        [WirePath("properties.provisioningState")]
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> WorkloadType of the NetworkInterface for BareMetal resources. </summary>
+        [WirePath("properties.workloadType")]
+        public string WorkloadType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.WorkloadType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkInterfacePropertiesFormat();
+                }
+                Properties.WorkloadType = value;
+            }
+        }
+
+        /// <summary> Type of Network Interface resource. </summary>
+        [WirePath("properties.nicType")]
+        public NetworkInterfaceNicType? NicType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NicType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkInterfacePropertiesFormat();
+                }
+                Properties.NicType = value;
+            }
+        }
+
+        /// <summary> Privatelinkservice of the network interface resource. </summary>
+        [WirePath("properties.privateLinkService")]
+        public PrivateLinkServiceData PrivateLinkService
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateLinkService;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkInterfacePropertiesFormat();
+                }
+                Properties.PrivateLinkService = value;
+            }
+        }
+
+        /// <summary> Migration phase of Network Interface resource. </summary>
+        [WirePath("properties.migrationPhase")]
+        public NetworkInterfaceMigrationPhase? MigrationPhase
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MigrationPhase;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkInterfacePropertiesFormat();
+                }
+                Properties.MigrationPhase = value;
+            }
+        }
+
+        /// <summary> Auxiliary mode of Network Interface resource. </summary>
+        [WirePath("properties.auxiliaryMode")]
+        public NetworkInterfaceAuxiliaryMode? AuxiliaryMode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AuxiliaryMode;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkInterfacePropertiesFormat();
+                }
+                Properties.AuxiliaryMode = value;
+            }
+        }
+
+        /// <summary> Auxiliary sku of Network Interface resource. </summary>
+        [WirePath("properties.auxiliarySku")]
+        public NetworkInterfaceAuxiliarySku? AuxiliarySku
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AuxiliarySku;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkInterfacePropertiesFormat();
+                }
+                Properties.AuxiliarySku = value;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        [WirePath("properties.virtualMachine.id")]
+        public ResourceIdentifier VirtualMachineId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VirtualMachineId;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
         [WirePath("properties.dscpConfiguration.id")]
         public ResourceIdentifier DscpConfigurationId
         {
-            get => DscpConfiguration?.Id;
+            get
+            {
+                return Properties is null ? default : Properties.DscpConfigurationId;
+            }
         }
-
-        /// <summary> The resource GUID property of the network interface resource. </summary>
-        [WirePath("properties.resourceGuid")]
-        public Guid? ResourceGuid { get; }
-        /// <summary> The provisioning state of the network interface resource. </summary>
-        [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
-        /// <summary> WorkloadType of the NetworkInterface for BareMetal resources. </summary>
-        [WirePath("properties.workloadType")]
-        public string WorkloadType { get; set; }
-        /// <summary> Type of Network Interface resource. </summary>
-        [WirePath("properties.nicType")]
-        public NetworkInterfaceNicType? NicType { get; set; }
-        /// <summary> Privatelinkservice of the network interface resource. </summary>
-        [WirePath("properties.privateLinkService")]
-        public PrivateLinkServiceData PrivateLinkService { get; set; }
-        /// <summary> Migration phase of Network Interface resource. </summary>
-        [WirePath("properties.migrationPhase")]
-        public NetworkInterfaceMigrationPhase? MigrationPhase { get; set; }
-        /// <summary> Auxiliary mode of Network Interface resource. </summary>
-        [WirePath("properties.auxiliaryMode")]
-        public NetworkInterfaceAuxiliaryMode? AuxiliaryMode { get; set; }
-        /// <summary> Auxiliary sku of Network Interface resource. </summary>
-        [WirePath("properties.auxiliarySku")]
-        public NetworkInterfaceAuxiliarySku? AuxiliarySku { get; set; }
     }
 }

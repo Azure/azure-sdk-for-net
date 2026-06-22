@@ -9,14 +9,60 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MigrateSsisTaskInput : IUtf8JsonSerializable, IJsonModel<MigrateSsisTaskInput>
+    /// <summary> Input for task that migrates SSIS packages from SQL Server to Azure SQL Database Managed Instance. </summary>
+    public partial class MigrateSsisTaskInput : SqlMigrationTaskInput, IJsonModel<MigrateSsisTaskInput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrateSsisTaskInput>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="MigrateSsisTaskInput"/> for deserialization. </summary>
+        internal MigrateSsisTaskInput()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override SqlMigrationTaskInput PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MigrateSsisTaskInput>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeMigrateSsisTaskInput(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MigrateSsisTaskInput)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MigrateSsisTaskInput>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(MigrateSsisTaskInput)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<MigrateSsisTaskInput>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MigrateSsisTaskInput IPersistableModel<MigrateSsisTaskInput>.Create(BinaryData data, ModelReaderWriterOptions options) => (MigrateSsisTaskInput)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<MigrateSsisTaskInput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MigrateSsisTaskInput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,97 +74,68 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MigrateSsisTaskInput>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MigrateSsisTaskInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MigrateSsisTaskInput)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("ssisMigrationInfo"u8);
             writer.WriteObjectValue(SsisMigrationInfo, options);
         }
 
-        MigrateSsisTaskInput IJsonModel<MigrateSsisTaskInput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MigrateSsisTaskInput IJsonModel<MigrateSsisTaskInput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (MigrateSsisTaskInput)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override SqlMigrationTaskInput JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MigrateSsisTaskInput>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MigrateSsisTaskInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MigrateSsisTaskInput)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeMigrateSsisTaskInput(document.RootElement, options);
         }
 
-        internal static MigrateSsisTaskInput DeserializeMigrateSsisTaskInput(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static MigrateSsisTaskInput DeserializeMigrateSsisTaskInput(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            SsisMigrationInfo ssisMigrationInfo = default;
             DataMigrationSqlConnectionInfo sourceConnectionInfo = default;
             DataMigrationSqlConnectionInfo targetConnectionInfo = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            SsisMigrationInfo ssisMigrationInfo = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("ssisMigrationInfo"u8))
+                if (prop.NameEquals("sourceConnectionInfo"u8))
                 {
-                    ssisMigrationInfo = SsisMigrationInfo.DeserializeSsisMigrationInfo(property.Value, options);
+                    sourceConnectionInfo = DataMigrationSqlConnectionInfo.DeserializeDataMigrationSqlConnectionInfo(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("sourceConnectionInfo"u8))
+                if (prop.NameEquals("targetConnectionInfo"u8))
                 {
-                    sourceConnectionInfo = DataMigrationSqlConnectionInfo.DeserializeDataMigrationSqlConnectionInfo(property.Value, options);
+                    targetConnectionInfo = DataMigrationSqlConnectionInfo.DeserializeDataMigrationSqlConnectionInfo(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("targetConnectionInfo"u8))
+                if (prop.NameEquals("ssisMigrationInfo"u8))
                 {
-                    targetConnectionInfo = DataMigrationSqlConnectionInfo.DeserializeDataMigrationSqlConnectionInfo(property.Value, options);
+                    ssisMigrationInfo = SsisMigrationInfo.DeserializeSsisMigrationInfo(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new MigrateSsisTaskInput(sourceConnectionInfo, targetConnectionInfo, serializedAdditionalRawData, ssisMigrationInfo);
+            return new MigrateSsisTaskInput(sourceConnectionInfo, targetConnectionInfo, additionalBinaryDataProperties, ssisMigrationInfo);
         }
-
-        BinaryData IPersistableModel<MigrateSsisTaskInput>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MigrateSsisTaskInput>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(MigrateSsisTaskInput)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        MigrateSsisTaskInput IPersistableModel<MigrateSsisTaskInput>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MigrateSsisTaskInput>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeMigrateSsisTaskInput(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(MigrateSsisTaskInput)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<MigrateSsisTaskInput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

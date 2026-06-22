@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Initializes a new instance of <see cref="SafeguardsAvailableVersionsList"/>. </summary>
         /// <param name="value"> The SafeguardsAvailableVersion items on this page. </param>
-        internal SafeguardsAvailableVersionsList(IEnumerable<SafeguardsAvailableVersionData> value)
+        internal SafeguardsAvailableVersionsList(IEnumerable<ContainerServiceSafeguardsAvailableVersionData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="value"> The SafeguardsAvailableVersion items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SafeguardsAvailableVersionsList(IList<SafeguardsAvailableVersionData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SafeguardsAvailableVersionsList(IList<ContainerServiceSafeguardsAvailableVersionData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> The SafeguardsAvailableVersion items on this page. </summary>
         [WirePath("value")]
-        public IList<SafeguardsAvailableVersionData> Value { get; }
+        public IList<ContainerServiceSafeguardsAvailableVersionData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         [WirePath("nextLink")]

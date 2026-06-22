@@ -5,6 +5,7 @@ using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.Data.AppConfiguration.Samples
@@ -14,10 +15,10 @@ namespace Azure.Data.AppConfiguration.Samples
         [Test]
         public async Task ReadRevisionHistory()
         {
-            var connectionString = TestEnvironment.ConnectionString;
+            var endpoint = TestEnvironment.Endpoint;
 
             #region Snippet:AzConfigSample4_CreateConfigurationClient
-            var client = new ConfigurationClient(connectionString);
+            var client = new ConfigurationClient(new Uri(endpoint), new DefaultAzureCredential());
             #endregion
 
             #region Snippet:AzConfigSample4_SetConfigurationSetting

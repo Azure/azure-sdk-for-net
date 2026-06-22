@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,50 +15,77 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct WebApplicationFirewallPolicyResourceState : IEquatable<WebApplicationFirewallPolicyResourceState>
     {
         private readonly string _value;
+        /// <summary> Creating. </summary>
+        private const string CreatingValue = "Creating";
+        /// <summary> Enabling. </summary>
+        private const string EnablingValue = "Enabling";
+        /// <summary> Enabled. </summary>
+        private const string EnabledValue = "Enabled";
+        /// <summary> Disabling. </summary>
+        private const string DisablingValue = "Disabling";
+        /// <summary> Disabled. </summary>
+        private const string DisabledValue = "Disabled";
+        /// <summary> Deleting. </summary>
+        private const string DeletingValue = "Deleting";
 
         /// <summary> Initializes a new instance of <see cref="WebApplicationFirewallPolicyResourceState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public WebApplicationFirewallPolicyResourceState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string CreatingValue = "Creating";
-        private const string EnablingValue = "Enabling";
-        private const string EnabledValue = "Enabled";
-        private const string DisablingValue = "Disabling";
-        private const string DisabledValue = "Disabled";
-        private const string DeletingValue = "Deleting";
+            _value = value;
+        }
 
         /// <summary> Creating. </summary>
         public static WebApplicationFirewallPolicyResourceState Creating { get; } = new WebApplicationFirewallPolicyResourceState(CreatingValue);
+
         /// <summary> Enabling. </summary>
         public static WebApplicationFirewallPolicyResourceState Enabling { get; } = new WebApplicationFirewallPolicyResourceState(EnablingValue);
+
         /// <summary> Enabled. </summary>
         public static WebApplicationFirewallPolicyResourceState Enabled { get; } = new WebApplicationFirewallPolicyResourceState(EnabledValue);
+
         /// <summary> Disabling. </summary>
         public static WebApplicationFirewallPolicyResourceState Disabling { get; } = new WebApplicationFirewallPolicyResourceState(DisablingValue);
+
         /// <summary> Disabled. </summary>
         public static WebApplicationFirewallPolicyResourceState Disabled { get; } = new WebApplicationFirewallPolicyResourceState(DisabledValue);
+
         /// <summary> Deleting. </summary>
         public static WebApplicationFirewallPolicyResourceState Deleting { get; } = new WebApplicationFirewallPolicyResourceState(DeletingValue);
+
         /// <summary> Determines if two <see cref="WebApplicationFirewallPolicyResourceState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(WebApplicationFirewallPolicyResourceState left, WebApplicationFirewallPolicyResourceState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="WebApplicationFirewallPolicyResourceState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(WebApplicationFirewallPolicyResourceState left, WebApplicationFirewallPolicyResourceState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="WebApplicationFirewallPolicyResourceState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="WebApplicationFirewallPolicyResourceState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator WebApplicationFirewallPolicyResourceState(string value) => new WebApplicationFirewallPolicyResourceState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="WebApplicationFirewallPolicyResourceState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator WebApplicationFirewallPolicyResourceState?(string value) => value == null ? null : new WebApplicationFirewallPolicyResourceState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is WebApplicationFirewallPolicyResourceState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(WebApplicationFirewallPolicyResourceState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

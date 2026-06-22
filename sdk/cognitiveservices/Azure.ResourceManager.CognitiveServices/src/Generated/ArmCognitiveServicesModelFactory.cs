@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="createdOn"> Gets the date of cognitive services account creation. </param>
         /// <param name="callRateLimit"> The call rate limit Cognitive Services account. </param>
         /// <param name="enableDynamicThrottling"> The flag to enable dynamic throttling. </param>
-        /// <param name="storedCompletionsDisabled"> The flag to disable stored completions. </param>
+        /// <param name="isStoredCompletionsDisabled"> The flag to disable stored completions. </param>
         /// <param name="quotaLimit"></param>
         /// <param name="restrictOutboundNetworkAccess"></param>
         /// <param name="allowedFqdnList"></param>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="defaultProject"> Specifies the project, by project name, that is targeted when data plane endpoints are called without a project parameter. </param>
         /// <param name="associatedProjects"> Specifies the projects, by project name, that are associated with this resource. </param>
         /// <returns> A new <see cref="Models.CognitiveServicesAccountProperties"/> instance for mocking. </returns>
-        public static CognitiveServicesAccountProperties CognitiveServicesAccountProperties(ServiceAccountProvisioningState? provisioningState = default, string endpoint = default, IEnumerable<CognitiveServicesSkuCapability> capabilities = default, bool? isMigrated = default, string migrationToken = default, CognitiveServicesSkuChangeInfo skuChangeInfo = default, string customSubDomainName = default, CognitiveServicesNetworkRuleSet networkAcls = default, ServiceAccountEncryptionProperties encryption = default, IEnumerable<ServiceAccountUserOwnedStorage> userOwnedStorage = default, UserOwnedAmlWorkspace amlWorkspace = default, IEnumerable<CognitiveServicesPrivateEndpointConnectionData> privateEndpointConnections = default, ServiceAccountPublicNetworkAccess? publicNetworkAccess = default, ServiceAccountApiProperties apiProperties = default, DateTimeOffset? createdOn = default, ServiceAccountCallRateLimit callRateLimit = default, bool? enableDynamicThrottling = default, bool? storedCompletionsDisabled = default, ServiceAccountQuotaLimit quotaLimit = default, bool? restrictOutboundNetworkAccess = default, IEnumerable<string> allowedFqdnList = default, bool? disableLocalAuth = default, IReadOnlyDictionary<string, string> endpoints = default, bool? restore = default, DateTimeOffset? deletedOn = default, string scheduledPurgeDate = default, CognitiveServicesMultiRegionSettings locations = default, IEnumerable<CommitmentPlanAssociation> commitmentPlanAssociations = default, AbusePenalty abusePenalty = default, RaiMonitorConfig raiMonitorConfig = default, IEnumerable<AIFoundryNetworkInjection> aiFoundryNetworkInjections = default, FoundryAutoUpgrade foundryAutoUpgrade = default, bool? allowProjectManagement = default, string defaultProject = default, IEnumerable<string> associatedProjects = default)
+        public static CognitiveServicesAccountProperties CognitiveServicesAccountProperties(ServiceAccountProvisioningState? provisioningState = default, string endpoint = default, IEnumerable<CognitiveServicesSkuCapability> capabilities = default, bool? isMigrated = default, string migrationToken = default, CognitiveServicesSkuChangeInfo skuChangeInfo = default, string customSubDomainName = default, CognitiveServicesNetworkRuleSet networkAcls = default, ServiceAccountEncryptionProperties encryption = default, IEnumerable<ServiceAccountUserOwnedStorage> userOwnedStorage = default, UserOwnedAmlWorkspace amlWorkspace = default, IEnumerable<CognitiveServicesPrivateEndpointConnectionData> privateEndpointConnections = default, ServiceAccountPublicNetworkAccess? publicNetworkAccess = default, ServiceAccountApiProperties apiProperties = default, DateTimeOffset? createdOn = default, ServiceAccountCallRateLimit callRateLimit = default, bool? enableDynamicThrottling = default, bool? isStoredCompletionsDisabled = default, ServiceAccountQuotaLimit quotaLimit = default, bool? restrictOutboundNetworkAccess = default, IEnumerable<string> allowedFqdnList = default, bool? disableLocalAuth = default, IReadOnlyDictionary<string, string> endpoints = default, bool? restore = default, DateTimeOffset? deletedOn = default, string scheduledPurgeDate = default, CognitiveServicesMultiRegionSettings locations = default, IEnumerable<CommitmentPlanAssociation> commitmentPlanAssociations = default, AbusePenalty abusePenalty = default, RaiMonitorConfig raiMonitorConfig = default, IEnumerable<AIFoundryNetworkInjection> aiFoundryNetworkInjections = default, FoundryAutoUpgrade foundryAutoUpgrade = default, bool? allowProjectManagement = default, string defaultProject = default, IEnumerable<string> associatedProjects = default)
         {
             capabilities ??= new ChangeTrackingList<CognitiveServicesSkuCapability>();
             userOwnedStorage ??= new ChangeTrackingList<ServiceAccountUserOwnedStorage>();
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 createdOn,
                 callRateLimit,
                 enableDynamicThrottling,
-                storedCompletionsDisabled,
+                isStoredCompletionsDisabled,
                 quotaLimit,
                 restrictOutboundNetworkAccess,
                 (allowedFqdnList ?? new ChangeTrackingList<string>()).ToList(),
@@ -782,6 +782,93 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 default);
         }
 
+        /// <param name="deployments"> The list of hypothetical deployments to evaluate against Azure Policy. </param>
+        /// <returns> A new <see cref="Models.EvaluateDeploymentPoliciesContent"/> instance for mocking. </returns>
+        public static EvaluateDeploymentPoliciesContent EvaluateDeploymentPoliciesContent(IEnumerable<EvaluateDeploymentPoliciesDeployment> deployments = default)
+        {
+            deployments ??= new ChangeTrackingList<EvaluateDeploymentPoliciesDeployment>();
+
+            return new EvaluateDeploymentPoliciesContent((deployments ?? new ChangeTrackingList<EvaluateDeploymentPoliciesDeployment>()).ToList(), default);
+        }
+
+        /// <param name="name"> The name of the hypothetical deployment. </param>
+        /// <param name="properties"> Properties of the hypothetical deployment. </param>
+        /// <returns> A new <see cref="Models.EvaluateDeploymentPoliciesDeployment"/> instance for mocking. </returns>
+        public static EvaluateDeploymentPoliciesDeployment EvaluateDeploymentPoliciesDeployment(string name = default, EvaluateDeploymentPoliciesDeploymentProperties properties = default)
+        {
+            return new EvaluateDeploymentPoliciesDeployment(name, properties, default);
+        }
+
+        /// <param name="model"> The model to evaluate. </param>
+        /// <param name="raiPolicyName"> The name of the RAI policy to evaluate. </param>
+        /// <returns> A new <see cref="Models.EvaluateDeploymentPoliciesDeploymentProperties"/> instance for mocking. </returns>
+        public static EvaluateDeploymentPoliciesDeploymentProperties EvaluateDeploymentPoliciesDeploymentProperties(CognitiveServicesAccountDeploymentModel model = default, string raiPolicyName = default)
+        {
+            return new EvaluateDeploymentPoliciesDeploymentProperties(model, raiPolicyName, default);
+        }
+
+        /// <param name="results"> Per-deployment policy evaluation results, keyed by deployment name. </param>
+        /// <returns> A new <see cref="Models.EvaluateDeploymentPoliciesResult"/> instance for mocking. </returns>
+        public static EvaluateDeploymentPoliciesResult EvaluateDeploymentPoliciesResult(IDictionary<string, DeploymentPolicyEvaluationResult> results = default)
+        {
+            results ??= new ChangeTrackingDictionary<string, DeploymentPolicyEvaluationResult>();
+
+            return new EvaluateDeploymentPoliciesResult(results ?? new ChangeTrackingDictionary<string, DeploymentPolicyEvaluationResult>(), default);
+        }
+
+        /// <param name="evaluationOutcome"> The evaluation outcome. </param>
+        /// <param name="errorMessage"> Error message if the evaluation outcome is Error. </param>
+        /// <param name="nonCompliantAssignments"> Details of non-compliant policy assignments. </param>
+        /// <returns> A new <see cref="Models.DeploymentPolicyEvaluationResult"/> instance for mocking. </returns>
+        public static DeploymentPolicyEvaluationResult DeploymentPolicyEvaluationResult(PolicyEvaluationOutcome? evaluationOutcome = default, string errorMessage = default, IEnumerable<PolicyAssignmentEvaluationDetails> nonCompliantAssignments = default)
+        {
+            nonCompliantAssignments ??= new ChangeTrackingList<PolicyAssignmentEvaluationDetails>();
+
+            return new DeploymentPolicyEvaluationResult(evaluationOutcome, errorMessage, (nonCompliantAssignments ?? new ChangeTrackingList<PolicyAssignmentEvaluationDetails>()).ToList(), default);
+        }
+
+        /// <param name="assignmentId"> The policy assignment ID. </param>
+        /// <param name="policyDefinitionId"> The policy definition ID. </param>
+        /// <param name="policySetDefinitionId"> The policy set definition ID. </param>
+        /// <param name="evaluationOutcome"> The evaluation outcome for this assignment. </param>
+        /// <param name="nonComplianceReason"> The reason for non-compliance. </param>
+        /// <param name="effect"> The policy effect (e.g., Deny, Audit). </param>
+        /// <param name="expressionEvaluations"> Expression-level evaluation details. </param>
+        /// <returns> A new <see cref="Models.PolicyAssignmentEvaluationDetails"/> instance for mocking. </returns>
+        public static PolicyAssignmentEvaluationDetails PolicyAssignmentEvaluationDetails(string assignmentId = default, string policyDefinitionId = default, string policySetDefinitionId = default, PolicyEvaluationOutcome? evaluationOutcome = default, string nonComplianceReason = default, string effect = default, IEnumerable<PolicyExpressionEvaluationDetails> expressionEvaluations = default)
+        {
+            expressionEvaluations ??= new ChangeTrackingList<PolicyExpressionEvaluationDetails>();
+
+            return new PolicyAssignmentEvaluationDetails(
+                assignmentId,
+                policyDefinitionId,
+                policySetDefinitionId,
+                evaluationOutcome,
+                nonComplianceReason,
+                effect,
+                (expressionEvaluations ?? new ChangeTrackingList<PolicyExpressionEvaluationDetails>()).ToList(),
+                default);
+        }
+
+        /// <param name="expression"> The policy expression. </param>
+        /// <param name="expressionKind"> The kind of expression. </param>
+        /// <param name="operator"> The operator used in evaluation. </param>
+        /// <param name="result"> The evaluation result. </param>
+        /// <param name="targetValue"> The target value of the expression. </param>
+        /// <param name="expressionValue"> The actual value of the expression. </param>
+        /// <returns> A new <see cref="Models.PolicyExpressionEvaluationDetails"/> instance for mocking. </returns>
+        public static PolicyExpressionEvaluationDetails PolicyExpressionEvaluationDetails(string expression = default, string expressionKind = default, string @operator = default, string result = default, string targetValue = default, string expressionValue = default)
+        {
+            return new PolicyExpressionEvaluationDetails(
+                expression,
+                expressionKind,
+                @operator,
+                result,
+                targetValue,
+                expressionValue,
+                default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1071,11 +1158,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="customBlocklists"> The list of custom Blocklist. </param>
         /// <param name="safetyProviders"> The list of Safety Providers. </param>
         /// <returns> A new <see cref="Models.RaiPolicyProperties"/> instance for mocking. </returns>
-        public static RaiPolicyProperties RaiPolicyProperties(RaiPolicyType? policyType = default, RaiPolicyMode? mode = default, string basePolicyName = default, IEnumerable<RaiPolicyContentFilter> contentFilters = default, IEnumerable<CustomBlocklistConfig> customBlocklists = default, IEnumerable<SafetyProviderConfig> safetyProviders = default)
+        public static RaiPolicyProperties RaiPolicyProperties(RaiPolicyType? policyType = default, RaiPolicyMode? mode = default, string basePolicyName = default, IEnumerable<RaiPolicyContentFilter> contentFilters = default, IEnumerable<CustomBlocklistConfig> customBlocklists = default, IEnumerable<RaiSafetyProviderSourceConfig> safetyProviders = default)
         {
             contentFilters ??= new ChangeTrackingList<RaiPolicyContentFilter>();
             customBlocklists ??= new ChangeTrackingList<CustomBlocklistConfig>();
-            safetyProviders ??= new ChangeTrackingList<SafetyProviderConfig>();
+            safetyProviders ??= new ChangeTrackingList<RaiSafetyProviderSourceConfig>();
 
             return new RaiPolicyProperties(
                 policyType,
@@ -1083,7 +1170,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 basePolicyName,
                 (contentFilters ?? new ChangeTrackingList<RaiPolicyContentFilter>()).ToList(),
                 (customBlocklists ?? new ChangeTrackingList<CustomBlocklistConfig>()).ToList(),
-                (safetyProviders ?? new ChangeTrackingList<SafetyProviderConfig>()).ToList(),
+                (safetyProviders ?? new ChangeTrackingList<RaiSafetyProviderSourceConfig>()).ToList(),
                 default);
         }
 
@@ -1126,10 +1213,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="safetyProviderName"> Name of RAI Safety Provider. </param>
         /// <param name="isBlocking"> If blocking would occur. </param>
         /// <param name="source"> Content source to apply the Content Filters. </param>
-        /// <returns> A new <see cref="Models.SafetyProviderConfig"/> instance for mocking. </returns>
-        public static SafetyProviderConfig SafetyProviderConfig(string safetyProviderName = default, bool? isBlocking = default, RaiPolicyContentSource? source = default)
+        /// <returns> A new <see cref="Models.RaiSafetyProviderSourceConfig"/> instance for mocking. </returns>
+        public static RaiSafetyProviderSourceConfig RaiSafetyProviderSourceConfig(string safetyProviderName = default, bool? isBlocking = default, RaiPolicyContentSource? source = default)
         {
-            return new SafetyProviderConfig(safetyProviderName, isBlocking, default, source);
+            return new RaiSafetyProviderSourceConfig(safetyProviderName, isBlocking, default, source);
         }
 
         /// <param name="safetyProviderName"> Name of RAI Safety Provider. </param>
@@ -2698,6 +2785,337 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 provisioningState,
                 minReplicas,
                 maxReplicas);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Properties of the Cognitive Services managed compute deployment. </param>
+        /// <param name="sku"> The resource model definition representing SKU. </param>
+        /// <param name="eTag"> Resource Etag. </param>
+        /// <returns> A new <see cref="CognitiveServices.CognitiveServicesManagedComputeDeploymentData"/> instance for mocking. </returns>
+        public static CognitiveServicesManagedComputeDeploymentData CognitiveServicesManagedComputeDeploymentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CognitiveServicesManagedComputeDeploymentProperties properties = default, CognitiveServicesSku sku = default, ETag? eTag = default)
+        {
+            return new CognitiveServicesManagedComputeDeploymentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                sku,
+                eTag,
+                default);
+        }
+
+        /// <param name="model">
+        /// AzureML Registry model asset URI. Required on creation; immutable after creation.
+        /// Example: azureml://registries/{registry}/models/{model}/versions/{version}
+        /// </param>
+        /// <param name="deploymentTemplate">
+        /// Deployment template identifier. Optional on creation.
+        /// Accepts an AzureML Registry deployment template URI or a project-scoped deployment template path for VmManagedCompute.
+        /// Examples: azureml://registries/{registry}/deploymenttemplates/{template}/versions/{version}, projects/{project}/deploymentTemplates/{template}/versions/{version}
+        /// </param>
+        /// <param name="acceleratorType"> Accelerator type (e.g., H100_80GB). Optional on creation; immutable after creation. </param>
+        /// <param name="versionUpgradeOption"> Template auto-upgrade policy. Defaults to OnceNewDefaultVersionAvailable. </param>
+        /// <param name="computeId"> Foundry compute ARM resource ID for VM-backed managed compute deployments. Required when sku.name is VmManagedCompute; immutable after creation. </param>
+        /// <param name="priority"> Scheduling priority for VM-backed managed compute deployments. Immutable after creation. </param>
+        /// <param name="acceleratorsPerInstance"> Read-only. Number of accelerators (GPUs) consumed by each model instance, sourced from the deployment template. </param>
+        /// <param name="totalAccelerators"> Read-only. Total accelerators allocated: sku.capacity (instances) x acceleratorsPerInstance. </param>
+        /// <param name="provisioningState"> Read-only. Current provisioning state. </param>
+        /// <param name="provisioningDetails"> Read-only. Status message and timestamp from the last provisioning operation. </param>
+        /// <param name="routes"> Read-only. Inference route paths relative to the account endpoint. Populated when provisioningState is Succeeded. </param>
+        /// <returns> A new <see cref="Models.CognitiveServicesManagedComputeDeploymentProperties"/> instance for mocking. </returns>
+        public static CognitiveServicesManagedComputeDeploymentProperties CognitiveServicesManagedComputeDeploymentProperties(Uri model = default, string deploymentTemplate = default, string acceleratorType = default, DeploymentModelVersionUpgradeOption? versionUpgradeOption = default, string computeId = default, string priority = default, int? acceleratorsPerInstance = default, int? totalAccelerators = default, ServiceAccountProvisioningState? provisioningState = default, CognitiveServicesManagedComputeDeploymentProvisioningDetails provisioningDetails = default, CognitiveServicesManagedComputeDeploymentRoutes routes = default)
+        {
+            return new CognitiveServicesManagedComputeDeploymentProperties(
+                model,
+                deploymentTemplate,
+                acceleratorType,
+                versionUpgradeOption,
+                computeId,
+                priority,
+                acceleratorsPerInstance,
+                totalAccelerators,
+                provisioningState,
+                provisioningDetails,
+                routes,
+                default);
+        }
+
+        /// <param name="message"> A human-readable status message from the last provisioning operation. </param>
+        /// <param name="lastOperationOn"> Timestamp of the last provisioning operation. </param>
+        /// <returns> A new <see cref="Models.CognitiveServicesManagedComputeDeploymentProvisioningDetails"/> instance for mocking. </returns>
+        public static CognitiveServicesManagedComputeDeploymentProvisioningDetails CognitiveServicesManagedComputeDeploymentProvisioningDetails(string message = default, DateTimeOffset? lastOperationOn = default)
+        {
+            return new CognitiveServicesManagedComputeDeploymentProvisioningDetails(message, lastOperationOn, default);
+        }
+
+        /// <param name="chatCompletionsScoringPath"> Relative path to the chat completions scoring endpoint. </param>
+        /// <param name="swagger"> Relative path to the Swagger/OpenAPI endpoint. </param>
+        /// <param name="messagesApiScoringPath"> Relative path to the messages API scoring endpoint. </param>
+        /// <returns> A new <see cref="Models.CognitiveServicesManagedComputeDeploymentRoutes"/> instance for mocking. </returns>
+        public static CognitiveServicesManagedComputeDeploymentRoutes CognitiveServicesManagedComputeDeploymentRoutes(string chatCompletionsScoringPath = default, string swagger = default, string messagesApiScoringPath = default)
+        {
+            return new CognitiveServicesManagedComputeDeploymentRoutes(chatCompletionsScoringPath, swagger, messagesApiScoringPath, default);
+        }
+
+        /// <param name="sku"> The resource model definition representing SKU. </param>
+        /// <returns> A new <see cref="Models.CognitiveServicesManagedComputeDeploymentPatch"/> instance for mocking. </returns>
+        public static CognitiveServicesManagedComputeDeploymentPatch CognitiveServicesManagedComputeDeploymentPatch(CognitiveServicesSku sku = default)
+        {
+            return new CognitiveServicesManagedComputeDeploymentPatch(sku, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the managed compute usage. </param>
+        /// <param name="name"> The name information for the metric. </param>
+        /// <param name="type"> The resource type. </param>
+        /// <param name="unit"> The unit of the metric. </param>
+        /// <param name="limit"> Maximum value for this metric. </param>
+        /// <param name="currentValue"> Current value for this metric. </param>
+        /// <param name="offerScope"> Offer scope (e.g., 'Global', 'Datazone-US'). </param>
+        /// <param name="deployments"> Deployments consuming this managed compute quota. </param>
+        /// <returns> A new <see cref="Models.ManagedComputeUsage"/> instance for mocking. </returns>
+        public static ManagedComputeUsage ManagedComputeUsage(string id = default, ServiceAccountUsageMetricName name = default, string @type = default, ServiceAccountUsageUnitType? unit = default, double? limit = default, double? currentValue = default, string offerScope = default, IEnumerable<CognitiveServicesManagedComputeDeploymentInfo> deployments = default)
+        {
+            deployments ??= new ChangeTrackingList<CognitiveServicesManagedComputeDeploymentInfo>();
+
+            return new ManagedComputeUsage(
+                id,
+                name,
+                @type,
+                unit,
+                limit,
+                currentValue,
+                offerScope,
+                (deployments ?? new ChangeTrackingList<CognitiveServicesManagedComputeDeploymentInfo>()).ToList(),
+                default);
+        }
+
+        /// <param name="deploymentId"> Full ARM resource ID of the deployment. </param>
+        /// <param name="projectId"> Full ARM resource ID of the account/project. </param>
+        /// <param name="modelId"> Model name (e.g., 'azureml://registries//models//versions/gpt-4o'). </param>
+        /// <param name="acceleratorCount"> Number of GPUs consumed by this deployment. </param>
+        /// <param name="instanceCount"> Number of instances for this deployment. </param>
+        /// <returns> A new <see cref="Models.CognitiveServicesManagedComputeDeploymentInfo"/> instance for mocking. </returns>
+        public static CognitiveServicesManagedComputeDeploymentInfo CognitiveServicesManagedComputeDeploymentInfo(string deploymentId = default, string projectId = default, string modelId = default, long? acceleratorCount = default, int? instanceCount = default)
+        {
+            return new CognitiveServicesManagedComputeDeploymentInfo(
+                deploymentId,
+                projectId,
+                modelId,
+                acceleratorCount,
+                instanceCount,
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Polymorphic properties of the compute resource. Use computeType to select Cluster or ContainerInstance. </param>
+        /// <param name="eTag"> Resource Etag. </param>
+        /// <param name="location"> The location of the compute resource. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="kind"> The kind (type) of compute resource. </param>
+        /// <param name="identity"> Identity for the resource. </param>
+        /// <returns> A new <see cref="CognitiveServices.CognitiveServicesComputeData"/> instance for mocking. </returns>
+        public static CognitiveServicesComputeData CognitiveServicesComputeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CognitiveServicesComputeProperties properties = default, ETag? eTag = default, AzureLocation? location = default, IDictionary<string, string> tags = default, string kind = default, ManagedServiceIdentity identity = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new CognitiveServicesComputeData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                eTag,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                kind,
+                identity,
+                default);
+        }
+
+        /// <param name="computeType"> The type of compute resource. </param>
+        /// <param name="provisioningState"> Provisioning state of the compute resource. </param>
+        /// <param name="errors"> Error details for the compute resource. </param>
+        /// <param name="createdOn"> Creation time of the compute resource. </param>
+        /// <returns> A new <see cref="Models.CognitiveServicesComputeProperties"/> instance for mocking. </returns>
+        public static CognitiveServicesComputeProperties CognitiveServicesComputeProperties(string computeType = default, CognitiveServicesComputeProvisioningState? provisioningState = default, IEnumerable<ResponseError> errors = default, DateTimeOffset? createdOn = default)
+        {
+            errors ??= new ChangeTrackingList<ResponseError>();
+
+            return new UnknownCognitiveServicesComputeProperties(default, provisioningState, (errors ?? new ChangeTrackingList<ResponseError>()).ToList(), createdOn, default);
+        }
+
+        /// <param name="provisioningState"> Provisioning state of the compute resource. </param>
+        /// <param name="errors"> Error details for the compute resource. </param>
+        /// <param name="createdOn"> Creation time of the compute resource. </param>
+        /// <param name="pools"> Pools attached to this compute cluster. </param>
+        /// <param name="subnetArmId"> ARM ID of the subnet used for compute. </param>
+        /// <returns> A new <see cref="Models.ClusterComputeProperties"/> instance for mocking. </returns>
+        public static ClusterComputeProperties ClusterComputeProperties(CognitiveServicesComputeProvisioningState? provisioningState = default, IEnumerable<ResponseError> errors = default, DateTimeOffset? createdOn = default, IEnumerable<CognitiveServicesComputePool> pools = default, string subnetArmId = default)
+        {
+            errors ??= new ChangeTrackingList<ResponseError>();
+            pools ??= new ChangeTrackingList<CognitiveServicesComputePool>();
+
+            return new ClusterComputeProperties(
+                default,
+                provisioningState,
+                (errors ?? new ChangeTrackingList<ResponseError>()).ToList(),
+                createdOn,
+                default,
+                (pools ?? new ChangeTrackingList<CognitiveServicesComputePool>()).ToList(),
+                subnetArmId);
+        }
+
+        /// <param name="name"> The name of the pool. </param>
+        /// <param name="vmPriority"> The VM priority of the pool. </param>
+        /// <param name="instanceType"> The instance type (VM SKU) used in the pool. </param>
+        /// <param name="nodeCount"> The number of nodes in the pool. </param>
+        /// <returns> A new <see cref="Models.CognitiveServicesComputePool"/> instance for mocking. </returns>
+        public static CognitiveServicesComputePool CognitiveServicesComputePool(string name = default, VmPriority vmPriority = default, string instanceType = default, int nodeCount = default)
+        {
+            return new CognitiveServicesComputePool(name, vmPriority, instanceType, nodeCount, default);
+        }
+
+        /// <param name="provisioningState"> Provisioning state of the compute resource. </param>
+        /// <param name="errors"> Error details for the compute resource. </param>
+        /// <param name="createdOn"> Creation time of the compute resource. </param>
+        /// <param name="targetClusterId"> ARM resource ID of the parent cluster that hosts this container instance. </param>
+        /// <param name="imageLink"> Container image URI (e.g., MCR or ACR image path) for the container instance. </param>
+        /// <param name="idleTimeBeforeShutdown"> ISO 8601 duration before the idle instance is automatically shut down (e.g., 'PT30M'). </param>
+        /// <param name="sshSettings"> SSH configuration for remote access to the container instance. </param>
+        /// <param name="connectivityEndpoints"> Network connectivity endpoints assigned to the container instance. </param>
+        /// <returns> A new <see cref="Models.ContainerInstanceComputeProperties"/> instance for mocking. </returns>
+        public static ContainerInstanceComputeProperties ContainerInstanceComputeProperties(CognitiveServicesComputeProvisioningState? provisioningState = default, IEnumerable<ResponseError> errors = default, DateTimeOffset? createdOn = default, string targetClusterId = default, string imageLink = default, string idleTimeBeforeShutdown = default, CognitiveServicesComputeSshSettings sshSettings = default, CognitiveServicesComputeConnectivityEndpoints connectivityEndpoints = default)
+        {
+            errors ??= new ChangeTrackingList<ResponseError>();
+
+            return new ContainerInstanceComputeProperties(
+                default,
+                provisioningState,
+                (errors ?? new ChangeTrackingList<ResponseError>()).ToList(),
+                createdOn,
+                default,
+                targetClusterId,
+                imageLink,
+                idleTimeBeforeShutdown,
+                sshSettings,
+                connectivityEndpoints);
+        }
+
+        /// <param name="sshPublicKey"> The SSH public key for authenticating to the compute instance. </param>
+        /// <param name="isAdminEnabled"> Whether SSH admin access is enabled. </param>
+        /// <returns> A new <see cref="Models.CognitiveServicesComputeSshSettings"/> instance for mocking. </returns>
+        public static CognitiveServicesComputeSshSettings CognitiveServicesComputeSshSettings(string sshPublicKey = default, bool? isAdminEnabled = default)
+        {
+            return new CognitiveServicesComputeSshSettings(sshPublicKey, isAdminEnabled, default);
+        }
+
+        /// <param name="publicIpAddress"> The public IP address of the compute instance. </param>
+        /// <param name="sshPort"> The SSH port for the compute instance. </param>
+        /// <returns> A new <see cref="Models.CognitiveServicesComputeConnectivityEndpoints"/> instance for mocking. </returns>
+        public static CognitiveServicesComputeConnectivityEndpoints CognitiveServicesComputeConnectivityEndpoints(string publicIpAddress = default, int? sshPort = default)
+        {
+            return new CognitiveServicesComputeConnectivityEndpoints(publicIpAddress, sshPort, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Properties of the workbench resource. </param>
+        /// <param name="eTag"> Resource Etag. </param>
+        /// <param name="location"> The location of the workbench resource. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="identity"> Identity for the resource. </param>
+        /// <returns> A new <see cref="CognitiveServices.CognitiveServicesWorkbenchData"/> instance for mocking. </returns>
+        public static CognitiveServicesWorkbenchData CognitiveServicesWorkbenchData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CognitiveServicesWorkbenchProperties properties = default, ETag? eTag = default, AzureLocation? location = default, IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new CognitiveServicesWorkbenchData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                eTag,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                identity,
+                default);
+        }
+
+        /// <param name="targetClusterId"> ARM resource ID of the parent cluster that hosts this workbench. </param>
+        /// <param name="imageLink"> Container image URI (e.g., MCR or ACR image path) for the workbench. </param>
+        /// <param name="idleTimeBeforeShutdown"> ISO 8601 duration before the idle workbench is automatically shut down (e.g., 'PT30M'). </param>
+        /// <param name="datasetId"> The dataset ID to mount for the workbench. </param>
+        /// <param name="sshSettings"> SSH configuration for remote access to the workbench. </param>
+        /// <param name="connectivityEndpoints"> Network connectivity endpoints assigned to the workbench. </param>
+        /// <param name="webEndpoint"> The web endpoint URL for accessing the workbench. </param>
+        /// <param name="provisioningState"> Provisioning state of the workbench resource. </param>
+        /// <param name="errors"> Error details for the workbench resource. </param>
+        /// <param name="createdOn"> Creation time of the workbench resource. </param>
+        /// <returns> A new <see cref="Models.CognitiveServicesWorkbenchProperties"/> instance for mocking. </returns>
+        public static CognitiveServicesWorkbenchProperties CognitiveServicesWorkbenchProperties(string targetClusterId = default, string imageLink = default, string idleTimeBeforeShutdown = default, string datasetId = default, CognitiveServicesComputeSshSettings sshSettings = default, CognitiveServicesComputeConnectivityEndpoints connectivityEndpoints = default, string webEndpoint = default, CognitiveServicesComputeProvisioningState? provisioningState = default, IEnumerable<ResponseError> errors = default, DateTimeOffset? createdOn = default)
+        {
+            errors ??= new ChangeTrackingList<ResponseError>();
+
+            return new CognitiveServicesWorkbenchProperties(
+                targetClusterId,
+                imageLink,
+                idleTimeBeforeShutdown,
+                datasetId,
+                sshSettings,
+                connectivityEndpoints,
+                webEndpoint,
+                provisioningState,
+                (errors ?? new ChangeTrackingList<ResponseError>()).ToList(),
+                createdOn,
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Properties of the managed compute capacity resource. </param>
+        /// <returns> A new <see cref="Models.ManagedComputeCapacity"/> instance for mocking. </returns>
+        public static ManagedComputeCapacity ManagedComputeCapacity(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ManagedComputeCapacityProperties properties = default)
+        {
+            return new ManagedComputeCapacity(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <param name="acceleratorType"> The type of accelerator (e.g., Azure.A100, Azure.H100). </param>
+        /// <param name="location"> The Azure region where the capacity is available. </param>
+        /// <param name="availableAccelerators"> The number of available accelerators in the region. </param>
+        /// <param name="deploymentSizeCapacities"> Capacity information broken down by deployment size. </param>
+        /// <returns> A new <see cref="Models.ManagedComputeCapacityProperties"/> instance for mocking. </returns>
+        public static ManagedComputeCapacityProperties ManagedComputeCapacityProperties(string acceleratorType = default, AzureLocation? location = default, int? availableAccelerators = default, IEnumerable<DeploymentSizeCapacity> deploymentSizeCapacities = default)
+        {
+            deploymentSizeCapacities ??= new ChangeTrackingList<DeploymentSizeCapacity>();
+
+            return new ManagedComputeCapacityProperties(acceleratorType, location, availableAccelerators, (deploymentSizeCapacities ?? new ChangeTrackingList<DeploymentSizeCapacity>()).ToList(), default);
+        }
+
+        /// <param name="modelInstanceAcceleratorCount"> The number of accelerators required per model instance. </param>
+        /// <param name="totalAvailableCapacity"> The total available capacity for this deployment size. </param>
+        /// <param name="largestDeploymentCapacity"> The largest contiguous deployment capacity available for this deployment size. </param>
+        /// <returns> A new <see cref="Models.DeploymentSizeCapacity"/> instance for mocking. </returns>
+        public static DeploymentSizeCapacity DeploymentSizeCapacity(int? modelInstanceAcceleratorCount = default, int? totalAvailableCapacity = default, int? largestDeploymentCapacity = default)
+        {
+            return new DeploymentSizeCapacity(modelInstanceAcceleratorCount, totalAvailableCapacity, largestDeploymentCapacity, default);
         }
 
         /// <param name="resourceType"> The type of resource the SKU applies to. </param>

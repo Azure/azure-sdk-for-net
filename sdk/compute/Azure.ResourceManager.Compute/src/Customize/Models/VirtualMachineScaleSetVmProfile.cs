@@ -10,6 +10,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
+    // Backward compatibility: flatten ScheduledEventsTerminateNotificationProfile from ScheduledEventsProfile.
     public partial class VirtualMachineScaleSetVmProfile
     {
         /// <summary> Specifies Terminate Scheduled Event related configurations. </summary>
