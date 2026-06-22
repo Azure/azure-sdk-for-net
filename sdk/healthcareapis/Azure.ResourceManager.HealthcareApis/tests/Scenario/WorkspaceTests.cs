@@ -82,7 +82,6 @@ namespace Azure.ResourceManager.HealthcareApis.Tests
         [TestCase(null)]
         [TestCase(false)]
         [TestCase(true)]
-        [RecordedTest]
         public async Task AddRemoveTag(bool? useTagResource)
         {
             SetTagResourceUsage(Client, useTagResource);

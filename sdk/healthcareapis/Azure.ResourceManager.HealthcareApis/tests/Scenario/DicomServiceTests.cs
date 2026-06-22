@@ -14,6 +14,8 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.HealthcareApis.Tests
 {
+    [NUnit.Framework.Ignore("Recordings need re-recording with current EventHubs SDK. See https://github.com/Azure/azure-sdk-for-net/issues/57316")]
+
     internal class DicomServiceTests : HealthcareApisManagementTestBase
     {
         private DicomServiceCollection _dicomServiceCollection;
@@ -32,7 +34,6 @@ namespace Azure.ResourceManager.HealthcareApis.Tests
         }
 
         [RecordedTest]
-        [AsyncOnly]
         public async Task CreateOrUpdateExistGetGetAllDelete()
         {
             // CreateOrUpdate
@@ -62,7 +63,6 @@ namespace Azure.ResourceManager.HealthcareApis.Tests
         [TestCase(null)]
         [TestCase(false)]
         [TestCase(true)]
-        [RecordedTest]
         public async Task AddRemoveTag(bool? useTagResource)
         {
             SetTagResourceUsage(Client, useTagResource);
@@ -86,8 +86,8 @@ namespace Azure.ResourceManager.HealthcareApis.Tests
         private async Task<DicomServiceResource> CreateDicomService(string dicomServiceName)
         {
             DicomServiceData data = new DicomServiceData(DefaultLocation);
-            var lro = await _dicomServiceCollection.CreateOrUpdateAsync(WaitUntil.Started, dicomServiceName, data);
-            return (await lro.WaitForCompletionAsync()).Value;
+            var lro = await _dicomServiceCollection.CreateOrUpdateAsync(WaitUntil.Completed, dicomServiceName, data);
+            return lro.Value;
         }
 
         private void ValidateDicomService(DicomServiceData dicomService, string dicomServiceName)

@@ -14,6 +14,8 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.HealthcareApis.Tests
 {
+    [NUnit.Framework.Ignore("Recordings need re-recording with current EventHubs SDK. See https://github.com/Azure/azure-sdk-for-net/issues/57316")]
+
     internal class HealthcareApisIotConnectorTests : HealthcareApisManagementTestBase
     {
         private const string _iotConnectorPrefixName = "medtech";
@@ -63,7 +65,6 @@ namespace Azure.ResourceManager.HealthcareApis.Tests
         [TestCase(null)]
         [TestCase(false)]
         [TestCase(true)]
-        [RecordedTest]
         public async Task AddRemoveTag(bool? useTagResource)
         {
             SetTagResourceUsage(Client, useTagResource);
