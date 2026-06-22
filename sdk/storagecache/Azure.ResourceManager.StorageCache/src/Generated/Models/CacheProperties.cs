@@ -13,7 +13,6 @@ using Azure.ResourceManager.StorageCache;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    /// <summary> Properties of the cache. </summary>
     internal partial class CacheProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -98,9 +97,6 @@ namespace Azure.ResourceManager.StorageCache.Models
 
         /// <summary> Availability zones for resources. This field should only contain a single element in the array. </summary>
         public IList<string> Zones { get; } = new ChangeTrackingList<string>();
-
-        /// <summary> Specifies the priming jobs defined in the cache. </summary>
-        public IReadOnlyList<PrimingJob> PrimingJobs { get; } = new ChangeTrackingList<PrimingJob>();
 
         /// <summary> Specifies the space allocation percentage for each storage target in the cache. </summary>
         public IReadOnlyList<StorageTargetSpaceAllocation> SpaceAllocation { get; } = new ChangeTrackingList<StorageTargetSpaceAllocation>();

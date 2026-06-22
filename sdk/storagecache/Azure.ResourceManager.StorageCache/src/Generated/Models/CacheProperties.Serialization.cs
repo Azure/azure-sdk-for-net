@@ -15,7 +15,6 @@ using Azure.ResourceManager.StorageCache;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    /// <summary> Properties of the cache. </summary>
     internal partial class CacheProperties : IJsonModel<CacheProperties>
     {
         /// <param name="data"> The data to parse. </param>
@@ -156,7 +155,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(PrimingJobs))
+            if (Optional.IsCollectionDefined(PrimingJobs))
             {
                 writer.WritePropertyName("primingJobs"u8);
                 writer.WriteStartArray();
