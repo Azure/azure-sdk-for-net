@@ -1,4 +1,4 @@
-# Azure.ResourceManager.NapsterOmniagentApi management client library for .NET
+# Azure ResourceManager NapsterOmniagentApi management client library for .NET
 
 This library supports managing Microsoft Azure resources.
 
