@@ -380,6 +380,86 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         }
 
         /// <summary>
+        /// Lists the historical availability statuses for a single child resource. Use the nextLink property in the response to get the next page of availability status
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.ResourceHealth/childAvailabilityStatuses. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ChildAvailabilityStatuses_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
+        /// <param name="expand"> Setting $expand=recommendedactions in url query expands the recommendedactions in the response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        /// <returns> A collection of <see cref="ResourceHealthAvailabilityStatus"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ResourceHealthAvailabilityStatus> GetHistoricalAvailabilityStatusesOfChildResourceAsync(ResourceIdentifier scope, string filter = default, string expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ChildAvailabilityStatusesGetHistoricalAvailabilityStatusesOfChildResourceAsyncCollectionResultOfT(
+                ChildAvailabilityStatusesRestClient,
+                scope.ToString(),
+                filter,
+                expand,
+                context,
+                "MockableResourceHealthArmClient.GetHistoricalAvailabilityStatusesOfChildResource");
+        }
+
+        /// <summary>
+        /// Lists the historical availability statuses for a single child resource. Use the nextLink property in the response to get the next page of availability status
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.ResourceHealth/childAvailabilityStatuses. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ChildAvailabilityStatuses_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
+        /// <param name="expand"> Setting $expand=recommendedactions in url query expands the recommendedactions in the response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        /// <returns> A collection of <see cref="ResourceHealthAvailabilityStatus"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ResourceHealthAvailabilityStatus> GetHistoricalAvailabilityStatusesOfChildResource(ResourceIdentifier scope, string filter = default, string expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ChildAvailabilityStatusesGetHistoricalAvailabilityStatusesOfChildResourceCollectionResultOfT(
+                ChildAvailabilityStatusesRestClient,
+                scope.ToString(),
+                filter,
+                expand,
+                context,
+                "MockableResourceHealthArmClient.GetHistoricalAvailabilityStatusesOfChildResource");
+        }
+
+        /// <summary>
         /// Lists the all the children and its current health status for a parent resource. Use the nextLink property in the response to get the next page of children current health
         /// <list type="bullet">
         /// <item>

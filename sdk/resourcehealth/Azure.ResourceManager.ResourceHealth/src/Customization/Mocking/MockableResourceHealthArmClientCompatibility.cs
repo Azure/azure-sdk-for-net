@@ -56,20 +56,6 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
             return new GetHealthEventsOfSingleResourceCollectionResult(EventsRestClient, scope.ToString(), filter, CreateRequestContext(cancellationToken));
         }
 
-        /// <summary> Lists child resource historical availability statuses. </summary>
-        public virtual AsyncPageable<ResourceHealthAvailabilityStatus> GetHistoricalAvailabilityStatusesOfChildResourceAsync(ResourceIdentifier scope, string filter = default, string expand = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(scope, nameof(scope));
-            return new GetHistoricalAvailabilityStatusesOfChildResourceAsyncCollectionResult(ChildAvailabilityStatusesRestClient, scope.ToString(), filter, expand, CreateRequestContext(cancellationToken));
-        }
-
-        /// <summary> Lists child resource historical availability statuses. </summary>
-        public virtual Pageable<ResourceHealthAvailabilityStatus> GetHistoricalAvailabilityStatusesOfChildResource(ResourceIdentifier scope, string filter = default, string expand = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(scope, nameof(scope));
-            return new GetHistoricalAvailabilityStatusesOfChildResourceCollectionResult(ChildAvailabilityStatusesRestClient, scope.ToString(), filter, expand, CreateRequestContext(cancellationToken));
-        }
-
         private async Task<Response> GetChildResponseAsync(ResourceIdentifier scope, string filter, string expand, CancellationToken cancellationToken)
         {
             Argument.AssertNotNull(scope, nameof(scope));
