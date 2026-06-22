@@ -25,16 +25,16 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="enableAutomaticUpdates"> Whether to EnableAutomaticUpdates on the machine. </param>
         /// <param name="ssh"> Specifies the ssh key configuration for Windows OS. </param>
         /// <param name="timeZone"> TimeZone for the virtual machine instance. </param>
-        /// <param name="provisionVmAgent"> Used to indicate whether Arc for Servers agent onboarding should be triggered during the virtual machine instance creation process. </param>
-        /// <param name="provisionVmConfigAgent"> Used to indicate whether the VM Config Agent should be installed during the virtual machine creation process. </param>
+        /// <param name="shouldProvisionVmAgent"> Used to indicate whether Arc for Servers agent onboarding should be triggered during the virtual machine instance creation process. </param>
+        /// <param name="shouldProvisionVmConfigAgent"> Used to indicate whether the VM Config Agent should be installed during the virtual machine creation process. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HciVmInstanceOSProfileWindowsConfiguration(bool? enableAutomaticUpdates, HciVmOSProfileSshConfiguration ssh, string timeZone, bool? provisionVmAgent, bool? provisionVmConfigAgent, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HciVmInstanceOSProfileWindowsConfiguration(bool? enableAutomaticUpdates, HciVmOSProfileSshConfiguration ssh, string timeZone, bool? shouldProvisionVmAgent, bool? shouldProvisionVmConfigAgent, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EnableAutomaticUpdates = enableAutomaticUpdates;
             Ssh = ssh;
             TimeZone = timeZone;
-            ProvisionVmAgent = provisionVmAgent;
-            ProvisionVmConfigAgent = provisionVmConfigAgent;
+            ShouldProvisionVmAgent = shouldProvisionVmAgent;
+            ShouldProvisionVmConfigAgent = shouldProvisionVmConfigAgent;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -48,10 +48,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public string TimeZone { get; set; }
 
         /// <summary> Used to indicate whether Arc for Servers agent onboarding should be triggered during the virtual machine instance creation process. </summary>
-        public bool? ProvisionVmAgent { get; set; }
+        public bool? ShouldProvisionVmAgent { get; set; }
 
         /// <summary> Used to indicate whether the VM Config Agent should be installed during the virtual machine creation process. </summary>
-        public bool? ProvisionVmConfigAgent { get; set; }
+        public bool? ShouldProvisionVmConfigAgent { get; set; }
 
         /// <summary> The list of SSH public keys used to authenticate with linux based VMs. </summary>
         public IList<HciVmOSProfileSshPublicKey> SshPublicKeys
