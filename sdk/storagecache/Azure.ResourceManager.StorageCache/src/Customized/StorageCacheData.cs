@@ -10,7 +10,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.StorageCache
 {
-    [CodeGenType("Cache")]
     public partial class StorageCacheData : TrackedResourceData
     {
         // primingJobs is writable in TypeSpec, but the previous C# surface exposed it as read-only.
