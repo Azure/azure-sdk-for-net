@@ -3468,29 +3468,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 default);
         }
 
-        /// <param name="results"> Expected results in the baseline. </param>
-        /// <param name="isLatestScan"> Take results from latest scan. </param>
-        /// <returns> A new <see cref="Models.RuleResultsProperties"/> instance for mocking. </returns>
-        public static RuleResultsProperties RuleResultsProperties(IEnumerable<IList<string>> results = default, bool? isLatestScan = default)
-        {
-            results ??= new ChangeTrackingList<IList<string>>();
-
-            return new RuleResultsProperties((results ?? new ChangeTrackingList<IList<string>>()).ToList(), isLatestScan, default);
-        }
-
-        /// <param name="isLatestScan"> Take results from latest scan. </param>
-        /// <param name="results">
-        /// Expected results to be inserted into the baseline.
-        /// Leave this field empty if latestScan == true.
-        /// </param>
-        /// <returns> A new <see cref="Models.RuleResultsInput"/> instance for mocking. </returns>
-        public static RuleResultsInput RuleResultsInput(bool? isLatestScan = default, IEnumerable<IList<string>> results = default)
-        {
-            results ??= new ChangeTrackingList<IList<string>>();
-
-            return new RuleResultsInput(isLatestScan, (results ?? new ChangeTrackingList<IList<string>>()).ToList(), default);
-        }
-
         /// <param name="value"> List of rule results. </param>
         /// <param name="nextLink"></param>
         /// <returns> A new <see cref="Models.RulesResults"/> instance for mocking. </returns>
@@ -3499,19 +3476,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             value ??= new ChangeTrackingList<SqlVulnerabilityAssessmentBaselineRuleData>();
 
             return new RulesResults((value ?? new ChangeTrackingList<SqlVulnerabilityAssessmentBaselineRuleData>()).ToList(), nextLink, default);
-        }
-
-        /// <param name="isLatestScan"> Take results from latest scan. </param>
-        /// <param name="results">
-        /// Expected results to be inserted into the baseline.
-        /// Leave this field empty if latestScan == true.
-        /// </param>
-        /// <returns> A new <see cref="Models.RulesResultsInput"/> instance for mocking. </returns>
-        public static RulesResultsInput RulesResultsInput(bool? isLatestScan = default, IDictionary<string, IList<IList<string>>> results = default)
-        {
-            results ??= new ChangeTrackingDictionary<string, IList<IList<string>>>();
-
-            return new RulesResultsInput(isLatestScan, results ?? new ChangeTrackingDictionary<string, IList<IList<string>>>(), default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -3531,29 +3495,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 default);
         }
 
-        /// <param name="ruleId"> The rule Id. </param>
-        /// <param name="status"> The rule result status. </param>
-        /// <param name="isTrimmed"> Indicates whether the results specified here are trimmed. </param>
-        /// <param name="queryResults"> The results of the query that was run. </param>
-        /// <param name="remediation"> Remediation details. </param>
-        /// <param name="baselineAdjustedResult"> The rule result adjusted with baseline. </param>
-        /// <param name="ruleMetadata"> vulnerability assessment rule metadata details. </param>
-        /// <returns> A new <see cref="Models.ScanResultProperties"/> instance for mocking. </returns>
-        public static ScanResultProperties ScanResultProperties(string ruleId = default, SqlVulnerabilityAssessmentScanResultRuleStatus? status = default, bool? isTrimmed = default, IEnumerable<IList<string>> queryResults = default, Remediation remediation = default, BaselineAdjustedResult baselineAdjustedResult = default, VaRule ruleMetadata = default)
-        {
-            queryResults ??= new ChangeTrackingList<IList<string>>();
-
-            return new ScanResultProperties(
-                ruleId,
-                status,
-                isTrimmed,
-                (queryResults ?? new ChangeTrackingList<IList<string>>()).ToList(),
-                remediation,
-                baselineAdjustedResult,
-                ruleMetadata,
-                default);
-        }
-
         /// <param name="description"> Remediation description. </param>
         /// <param name="scripts"> Remediation script. </param>
         /// <param name="isAutomated"> Is remediation automated. </param>
@@ -3564,28 +3505,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             scripts ??= new ChangeTrackingList<string>();
 
             return new Remediation(description, (scripts ?? new ChangeTrackingList<string>()).ToList(), isAutomated, portalLink, default);
-        }
-
-        /// <param name="baseline"> Baseline details. </param>
-        /// <param name="status"> The rule result status. </param>
-        /// <param name="resultsNotInBaseline"> Results that are not in the baseline. </param>
-        /// <param name="resultsOnlyInBaseline"> Results that are in the baseline. </param>
-        /// <returns> A new <see cref="Models.BaselineAdjustedResult"/> instance for mocking. </returns>
-        public static BaselineAdjustedResult BaselineAdjustedResult(SqlVulnerabilityAssessmentBaseline baseline = default, SqlVulnerabilityAssessmentScanResultRuleStatus? status = default, IEnumerable<IList<string>> resultsNotInBaseline = default, IEnumerable<IList<string>> resultsOnlyInBaseline = default)
-        {
-            resultsNotInBaseline ??= new ChangeTrackingList<IList<string>>();
-            resultsOnlyInBaseline ??= new ChangeTrackingList<IList<string>>();
-
-            return new BaselineAdjustedResult(baseline, status, (resultsNotInBaseline ?? new ChangeTrackingList<IList<string>>()).ToList(), (resultsOnlyInBaseline ?? new ChangeTrackingList<IList<string>>()).ToList(), default);
-        }
-
-        /// <param name="expectedResults"> Expected results. </param>
-        /// <returns> A new <see cref="Models.SqlVulnerabilityAssessmentBaseline"/> instance for mocking. </returns>
-        public static SqlVulnerabilityAssessmentBaseline SqlVulnerabilityAssessmentBaseline(IEnumerable<IList<string>> expectedResults = default)
-        {
-            expectedResults ??= new ChangeTrackingList<IList<string>>();
-
-            return new SqlVulnerabilityAssessmentBaseline((expectedResults ?? new ChangeTrackingList<IList<string>>()).ToList(), default);
         }
 
         /// <param name="ruleId"> The rule Id. </param>
@@ -3613,18 +3532,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 queryCheck,
                 (benchmarkReferences ?? new ChangeTrackingList<BenchmarkReference>()).ToList(),
                 default);
-        }
-
-        /// <param name="query"> The rule query. </param>
-        /// <param name="expectedResult"> Expected result. </param>
-        /// <param name="columnNames"> Column names of expected result. </param>
-        /// <returns> A new <see cref="Models.QueryCheck"/> instance for mocking. </returns>
-        public static QueryCheck QueryCheck(string query = default, IEnumerable<IList<string>> expectedResult = default, IEnumerable<string> columnNames = default)
-        {
-            expectedResult ??= new ChangeTrackingList<IList<string>>();
-            columnNames ??= new ChangeTrackingList<string>();
-
-            return new QueryCheck(query, (expectedResult ?? new ChangeTrackingList<IList<string>>()).ToList(), (columnNames ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
         /// <param name="benchmark"> The benchmark name. </param>
