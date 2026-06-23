@@ -53,24 +53,6 @@ namespace Azure.ResourceManager.Automation.Models
             }
         }
 
-        /// <summary> Gets or sets the parameter sets of the activity. </summary>
-        public IReadOnlyList<AutomationActivityParameterSet> ParameterSets
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ParameterSets;
-            }
-        }
-
-        /// <summary> Gets or sets the output types of the activity. </summary>
-        public IReadOnlyList<AutomationActivityOutputType> OutputTypes
-        {
-            get
-            {
-                return Properties is null ? default : Properties.OutputTypes;
-            }
-        }
-
         /// <summary> Gets or sets the creation time. </summary>
         public DateTimeOffset? CreatedOn
         {

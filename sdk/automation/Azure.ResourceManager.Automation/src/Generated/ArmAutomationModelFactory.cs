@@ -751,53 +751,6 @@ namespace Azure.ResourceManager.Automation.Models
             return new RunbookAssociationProperty(name, default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="startedBy"> Gets or sets the job started by. </param>
-        /// <param name="runOn"> Gets or sets the runOn which specifies the group name where the job is to be executed. </param>
-        /// <param name="jobId"> Gets or sets the id of the job. </param>
-        /// <param name="createdOn"> Gets or sets the creation time of the job. </param>
-        /// <param name="status"> Gets or sets the status of the job. </param>
-        /// <param name="statusDetails"> Gets or sets the status details of the job. </param>
-        /// <param name="startOn"> Gets or sets the start time of the job. </param>
-        /// <param name="endOn"> Gets or sets the end time of the job. </param>
-        /// <param name="exception"> Gets or sets the exception of the job. </param>
-        /// <param name="lastModifiedOn"> Gets or sets the last modified time of the job. </param>
-        /// <param name="lastStatusModifiedOn"> Gets or sets the last status modified time of the job. </param>
-        /// <param name="parameters"> Gets or sets the parameters of the job. </param>
-        /// <param name="provisioningState"> The current provisioning state of the job. </param>
-        /// <param name="runbookName"> Gets or sets the name of the runbook. </param>
-        /// <param name="runtimeEnvironmentName"> Name of Runtime Environment. </param>
-        /// <returns> A new <see cref="Automation.AutomationJobData"/> instance for mocking. </returns>
-        public static AutomationJobData AutomationJobData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string startedBy = default, string runOn = default, Guid? jobId = default, DateTimeOffset? createdOn = default, AutomationJobStatus? status = default, string statusDetails = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, string exception = default, DateTimeOffset? lastModifiedOn = default, DateTimeOffset? lastStatusModifiedOn = default, IDictionary<string, string> parameters = default, JobProvisioningState? provisioningState = default, string runbookName = default, string runtimeEnvironmentName = default)
-        {
-            return new AutomationJobData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                runbookName is null && startedBy is null && runOn is null && runtimeEnvironmentName is null && jobId is null && createdOn is null && status is null && statusDetails is null && startOn is null && endOn is null && exception is null && lastModifiedOn is null && lastStatusModifiedOn is null && parameters is null && provisioningState is null ? default : new JobProperties(
-                    new RunbookAssociationProperty(runbookName, default),
-                    startedBy,
-                    runOn,
-                    new JobRuntimeEnvironment(runtimeEnvironmentName, default),
-                    jobId,
-                    createdOn,
-                    status,
-                    statusDetails,
-                    startOn,
-                    endOn,
-                    exception,
-                    lastModifiedOn,
-                    lastStatusModifiedOn,
-                    parameters ?? new ChangeTrackingDictionary<string, string>(),
-                    provisioningState,
-                    default),
-                default);
-        }
-
         /// <param name="parameters"> Gets or sets the parameters of the job. </param>
         /// <param name="runOn"> Gets or sets the runOn which specifies the group name where the job is to be executed. </param>
         /// <param name="runbookName"> Gets or sets the name of the runbook. </param>
@@ -2165,7 +2118,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="streamText"> The text of the sync job stream. </param>
         /// <param name="value"> The values of the job stream. </param>
         /// <returns> A new <see cref="Models.SourceControlSyncJobStreamResult"/> instance for mocking. </returns>
-        public static SourceControlSyncJobStreamResult SourceControlSyncJobStreamResult(ResourceIdentifier id = default, string sourceControlSyncJobStreamId = default, string summary = default, DateTimeOffset? time = default, SourceControlStreamType? streamType = default, string streamText = default, IReadOnlyDictionary<string, BinaryData> value = default)
+        public static SourceControlSyncJobStreamResult SourceControlSyncJobStreamResult(ResourceIdentifier id = default, string sourceControlSyncJobStreamId = default, string summary = default, DateTimeOffset? time = default, SourceControlStreamType? streamType = default, string streamText = default, IDictionary<string, BinaryData> value = default)
         {
             return new SourceControlSyncJobStreamResult(id, sourceControlSyncJobStreamId is null && summary is null && time is null && streamType is null && streamText is null && value is null ? default : new SourceControlSyncJobStreamByIdProperties(
                 sourceControlSyncJobStreamId,
@@ -2413,6 +2366,28 @@ namespace Azure.ResourceManager.Automation.Models
                 streamType,
                 streamText,
                 summary,
+                new ChangeTrackingDictionary<string, BinaryData>(value ?? new ChangeTrackingDictionary<string, BinaryData>()),
+                default), default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SourceControlSyncJobStreamResult"/>. </summary>
+        /// <param name="id"> Resource id. </param>
+        /// <param name="sourceControlSyncJobStreamId"> The sync job stream id. </param>
+        /// <param name="summary"> The summary of the sync job stream. </param>
+        /// <param name="time"> The time of the sync job stream. </param>
+        /// <param name="streamType"> The type of the sync job stream. </param>
+        /// <param name="streamText"> The text of the sync job stream. </param>
+        /// <param name="value"> The values of the job stream. </param>
+        /// <returns> A new <see cref="Models.SourceControlSyncJobStreamResult"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SourceControlSyncJobStreamResult SourceControlSyncJobStreamResult(ResourceIdentifier id = default, string sourceControlSyncJobStreamId = default, string summary = default, DateTimeOffset? time = default, SourceControlStreamType? streamType = default, string streamText = default, IReadOnlyDictionary<string, BinaryData> value = default)
+        {
+            return new SourceControlSyncJobStreamResult(id, sourceControlSyncJobStreamId is null && summary is null && time is null && streamType is null && streamText is null && value is null ? default : new SourceControlSyncJobStreamByIdProperties(
+                sourceControlSyncJobStreamId,
+                summary,
+                time,
+                streamType,
+                streamText,
                 new ChangeTrackingDictionary<string, BinaryData>(value ?? new ChangeTrackingDictionary<string, BinaryData>()),
                 default), default);
         }

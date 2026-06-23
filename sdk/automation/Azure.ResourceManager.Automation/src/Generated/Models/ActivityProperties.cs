@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="lastModifiedOn"> Gets or sets the last modified time. </param>
         /// <param name="description"> Gets or sets the description. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ActivityProperties(string definition, IReadOnlyList<AutomationActivityParameterSet> parameterSets, IReadOnlyList<AutomationActivityOutputType> outputTypes, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ActivityProperties(string definition, IList<AutomationActivityParameterSet> parameterSets, IList<AutomationActivityOutputType> outputTypes, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Definition = definition;
             ParameterSets = parameterSets;
@@ -47,10 +47,10 @@ namespace Azure.ResourceManager.Automation.Models
         public string Definition { get; }
 
         /// <summary> Gets or sets the parameter sets of the activity. </summary>
-        public IReadOnlyList<AutomationActivityParameterSet> ParameterSets { get; } = new ChangeTrackingList<AutomationActivityParameterSet>();
+        public IList<AutomationActivityParameterSet> ParameterSets { get; } = new ChangeTrackingList<AutomationActivityParameterSet>();
 
         /// <summary> Gets or sets the output types of the activity. </summary>
-        public IReadOnlyList<AutomationActivityOutputType> OutputTypes { get; } = new ChangeTrackingList<AutomationActivityOutputType>();
+        public IList<AutomationActivityOutputType> OutputTypes { get; } = new ChangeTrackingList<AutomationActivityOutputType>();
 
         /// <summary> Gets or sets the creation time. </summary>
         public DateTimeOffset? CreatedOn { get; }

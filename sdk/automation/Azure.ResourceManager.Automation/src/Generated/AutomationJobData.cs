@@ -240,23 +240,6 @@ namespace Azure.ResourceManager.Automation
             }
         }
 
-        /// <summary> The current provisioning state of the job. </summary>
-        public JobProvisioningState? ProvisioningState
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ProvisioningState;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new JobProperties();
-                }
-                Properties.ProvisioningState = value;
-            }
-        }
-
         /// <summary> Gets or sets the name of the runbook. </summary>
         public string RunbookName
         {

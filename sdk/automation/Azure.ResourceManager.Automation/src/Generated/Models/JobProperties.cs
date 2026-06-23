@@ -11,7 +11,6 @@ using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary> Definition of job properties. </summary>
     internal partial class JobProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -101,9 +100,6 @@ namespace Azure.ResourceManager.Automation.Models
 
         /// <summary> Gets or sets the parameters of the job. </summary>
         public IDictionary<string, string> Parameters { get; } = new ChangeTrackingDictionary<string, string>();
-
-        /// <summary> The current provisioning state of the job. </summary>
-        public JobProvisioningState? ProvisioningState { get; set; }
 
         /// <summary> Gets or sets the name of the runbook. </summary>
         public string RunbookName

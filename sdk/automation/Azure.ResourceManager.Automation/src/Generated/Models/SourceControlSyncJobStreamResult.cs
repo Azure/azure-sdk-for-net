@@ -83,14 +83,5 @@ namespace Azure.ResourceManager.Automation.Models
                 return Properties is null ? default : Properties.StreamText;
             }
         }
-
-        /// <summary> The values of the job stream. </summary>
-        public IReadOnlyDictionary<string, BinaryData> Value
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Value;
-            }
-        }
     }
 }

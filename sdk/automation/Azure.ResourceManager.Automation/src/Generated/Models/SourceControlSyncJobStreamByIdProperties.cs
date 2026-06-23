@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="streamText"> The text of the sync job stream. </param>
         /// <param name="value"> The values of the job stream. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SourceControlSyncJobStreamByIdProperties(string sourceControlSyncJobStreamId, string summary, DateTimeOffset? time, SourceControlStreamType? streamType, string streamText, IReadOnlyDictionary<string, BinaryData> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SourceControlSyncJobStreamByIdProperties(string sourceControlSyncJobStreamId, string summary, DateTimeOffset? time, SourceControlStreamType? streamType, string streamText, IDictionary<string, BinaryData> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SourceControlSyncJobStreamId = sourceControlSyncJobStreamId;
             Summary = summary;
@@ -84,6 +84,6 @@ namespace Azure.ResourceManager.Automation.Models
         /// </list>
         /// </para>
         /// </summary>
-        public IReadOnlyDictionary<string, BinaryData> Value { get; } = new ChangeTrackingDictionary<string, BinaryData>();
+        public IDictionary<string, BinaryData> Value { get; } = new ChangeTrackingDictionary<string, BinaryData>();
     }
 }

@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("definition"u8);
                 writer.WriteStringValue(Definition);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ParameterSets))
+            if (Optional.IsCollectionDefined(ParameterSets))
             {
                 writer.WritePropertyName("parameterSets"u8);
                 writer.WriteStartArray();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(OutputTypes))
+            if (Optional.IsCollectionDefined(OutputTypes))
             {
                 writer.WritePropertyName("outputTypes"u8);
                 writer.WriteStartArray();
@@ -157,8 +157,8 @@ namespace Azure.ResourceManager.Automation.Models
                 return null;
             }
             string definition = default;
-            IReadOnlyList<AutomationActivityParameterSet> parameterSets = default;
-            IReadOnlyList<AutomationActivityOutputType> outputTypes = default;
+            IList<AutomationActivityParameterSet> parameterSets = default;
+            IList<AutomationActivityOutputType> outputTypes = default;
             DateTimeOffset? createdOn = default;
             DateTimeOffset? lastModifiedOn = default;
             string description = default;

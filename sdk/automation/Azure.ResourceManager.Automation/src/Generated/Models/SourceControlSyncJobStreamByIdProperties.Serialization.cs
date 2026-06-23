@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("streamText"u8);
                 writer.WriteStringValue(StreamText);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartObject();
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Automation.Models
             DateTimeOffset? time = default;
             SourceControlStreamType? streamType = default;
             string streamText = default;
-            IReadOnlyDictionary<string, BinaryData> value = default;
+            IDictionary<string, BinaryData> value = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
