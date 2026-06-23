@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="provisioningState"> Read-only provision state status property. </param>
         /// <param name="shouldCreateAiServicesEndpoint"> Whether the proxy (non-byo) endpoint is a regular endpoint or a OneKeyV2 AI services account endpoint. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OpenAIEndpointResourceProperties(ResourceIdentifier associatedResourceId, IList<EndpointDeploymentResourcePropertiesBasicResourceData> deployments, EndpointType endpointType, Uri endpointUri, string failureReason, string location, string name, DefaultResourceProvisioningState? provisioningState, bool? shouldCreateAiServicesEndpoint, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(associatedResourceId, deployments, endpointType, endpointUri, failureReason, location, name, provisioningState, shouldCreateAiServicesEndpoint, additionalBinaryDataProperties)
+        internal OpenAIEndpointResourceProperties(ResourceIdentifier associatedResourceId, IList<MachineLearningWorkspaceConnectionDeploymentData> deployments, EndpointType endpointType, Uri endpointUri, string failureReason, string location, string name, DefaultResourceProvisioningState? provisioningState, bool? shouldCreateAiServicesEndpoint, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(associatedResourceId, deployments, endpointType, endpointUri, failureReason, location, name, provisioningState, shouldCreateAiServicesEndpoint, additionalBinaryDataProperties)
         {
         }
     }

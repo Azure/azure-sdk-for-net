@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary></summary>
-    internal partial class EndpointDeploymentResourceOperationSource : IOperationSource<EndpointDeploymentResource>
+    internal partial class MachineLearningWorkspaceConnectionDeploymentResourceOperationSource : IOperationSource<MachineLearningWorkspaceConnectionDeploymentResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal EndpointDeploymentResourceOperationSource(ArmClient client)
+        internal MachineLearningWorkspaceConnectionDeploymentResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        EndpointDeploymentResource IOperationSource<EndpointDeploymentResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        MachineLearningWorkspaceConnectionDeploymentResource IOperationSource<MachineLearningWorkspaceConnectionDeploymentResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
             MachineLearningWorkspaceConnectionDeploymentData data = MachineLearningWorkspaceConnectionDeploymentData.DeserializeEndpointDeploymentResourcePropertiesBasicResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new EndpointDeploymentResource(_client, data);
+            return new MachineLearningWorkspaceConnectionDeploymentResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<EndpointDeploymentResource> IOperationSource<EndpointDeploymentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<MachineLearningWorkspaceConnectionDeploymentResource> IOperationSource<MachineLearningWorkspaceConnectionDeploymentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             MachineLearningWorkspaceConnectionDeploymentData data = MachineLearningWorkspaceConnectionDeploymentData.DeserializeEndpointDeploymentResourcePropertiesBasicResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new EndpointDeploymentResource(_client, data);
+            return new MachineLearningWorkspaceConnectionDeploymentResource(_client, data);
         }
     }
 }

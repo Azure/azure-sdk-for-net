@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<EndpointDeploymentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string deploymentName, EndpointDeploymentResourcePropertiesBasicResourceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<EndpointDeploymentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string deploymentName, MachineLearningWorkspaceConnectionDeploymentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
             Argument.AssertNotNull(data, nameof(data));
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _endpointDeploymentRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, EndpointDeploymentResourcePropertiesBasicResourceData.ToRequestContent(data), context);
+                HttpMessage message = _endpointDeploymentRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, MachineLearningWorkspaceConnectionDeploymentData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 MachineLearningArmOperation<EndpointDeploymentResource> operation = new MachineLearningArmOperation<EndpointDeploymentResource>(
                     new EndpointDeploymentResourceOperationSource(Client),
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<EndpointDeploymentResource> CreateOrUpdate(WaitUntil waitUntil, string deploymentName, EndpointDeploymentResourcePropertiesBasicResourceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<EndpointDeploymentResource> CreateOrUpdate(WaitUntil waitUntil, string deploymentName, MachineLearningWorkspaceConnectionDeploymentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
             Argument.AssertNotNull(data, nameof(data));
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _endpointDeploymentRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, EndpointDeploymentResourcePropertiesBasicResourceData.ToRequestContent(data), context);
+                HttpMessage message = _endpointDeploymentRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, MachineLearningWorkspaceConnectionDeploymentData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 MachineLearningArmOperation<EndpointDeploymentResource> operation = new MachineLearningArmOperation<EndpointDeploymentResource>(
                     new EndpointDeploymentResourceOperationSource(Client),
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.MachineLearning
                 };
                 HttpMessage message = _endpointDeploymentRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<EndpointDeploymentResourcePropertiesBasicResourceData> response = Response.FromValue(EndpointDeploymentResourcePropertiesBasicResourceData.FromResponse(result), result);
+                Response<MachineLearningWorkspaceConnectionDeploymentData> response = Response.FromValue(MachineLearningWorkspaceConnectionDeploymentData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.MachineLearning
                 };
                 HttpMessage message = _endpointDeploymentRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<EndpointDeploymentResourcePropertiesBasicResourceData> response = Response.FromValue(EndpointDeploymentResourcePropertiesBasicResourceData.FromResponse(result), result);
+                Response<MachineLearningWorkspaceConnectionDeploymentData> response = Response.FromValue(MachineLearningWorkspaceConnectionDeploymentData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EndpointDeploymentResourcePropertiesBasicResourceData, EndpointDeploymentResource>(new EndpointDeploymentGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<MachineLearningWorkspaceConnectionDeploymentData, EndpointDeploymentResource>(new EndpointDeploymentGetAllAsyncCollectionResultOfT(
                 _endpointDeploymentRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EndpointDeploymentResourcePropertiesBasicResourceData, EndpointDeploymentResource>(new EndpointDeploymentGetAllCollectionResultOfT(
+            return new PageableWrapper<MachineLearningWorkspaceConnectionDeploymentData, EndpointDeploymentResource>(new EndpointDeploymentGetAllCollectionResultOfT(
                 _endpointDeploymentRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -374,14 +374,14 @@ namespace Azure.ResourceManager.MachineLearning
                 HttpMessage message = _endpointDeploymentRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<EndpointDeploymentResourcePropertiesBasicResourceData> response = default;
+                Response<MachineLearningWorkspaceConnectionDeploymentData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(EndpointDeploymentResourcePropertiesBasicResourceData.FromResponse(result), result);
+                        response = Response.FromValue(MachineLearningWorkspaceConnectionDeploymentData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((EndpointDeploymentResourcePropertiesBasicResourceData)null, result);
+                        response = Response.FromValue((MachineLearningWorkspaceConnectionDeploymentData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -431,14 +431,14 @@ namespace Azure.ResourceManager.MachineLearning
                 HttpMessage message = _endpointDeploymentRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<EndpointDeploymentResourcePropertiesBasicResourceData> response = default;
+                Response<MachineLearningWorkspaceConnectionDeploymentData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(EndpointDeploymentResourcePropertiesBasicResourceData.FromResponse(result), result);
+                        response = Response.FromValue(MachineLearningWorkspaceConnectionDeploymentData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((EndpointDeploymentResourcePropertiesBasicResourceData)null, result);
+                        response = Response.FromValue((MachineLearningWorkspaceConnectionDeploymentData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -488,14 +488,14 @@ namespace Azure.ResourceManager.MachineLearning
                 HttpMessage message = _endpointDeploymentRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<EndpointDeploymentResourcePropertiesBasicResourceData> response = default;
+                Response<MachineLearningWorkspaceConnectionDeploymentData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(EndpointDeploymentResourcePropertiesBasicResourceData.FromResponse(result), result);
+                        response = Response.FromValue(MachineLearningWorkspaceConnectionDeploymentData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((EndpointDeploymentResourcePropertiesBasicResourceData)null, result);
+                        response = Response.FromValue((MachineLearningWorkspaceConnectionDeploymentData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -549,14 +549,14 @@ namespace Azure.ResourceManager.MachineLearning
                 HttpMessage message = _endpointDeploymentRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<EndpointDeploymentResourcePropertiesBasicResourceData> response = default;
+                Response<MachineLearningWorkspaceConnectionDeploymentData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(EndpointDeploymentResourcePropertiesBasicResourceData.FromResponse(result), result);
+                        response = Response.FromValue(MachineLearningWorkspaceConnectionDeploymentData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((EndpointDeploymentResourcePropertiesBasicResourceData)null, result);
+                        response = Response.FromValue((MachineLearningWorkspaceConnectionDeploymentData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);

@@ -667,10 +667,10 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary> Gets a collection of Connections in the <see cref="MachineLearningWorkspaceConnectionResource"/>. </summary>
-        /// <returns> An object representing collection of Connections and their operations over a ConnectionResource. </returns>
-        public virtual ConnectionCollection GetConnections()
+        /// <returns> An object representing collection of Connections and their operations over a MachineLearningWorkspaceConnectionDeploymentResource. </returns>
+        public virtual MachineLearningWorkspaceConnectionDeploymentCollection GetConnections()
         {
-            return GetCachedClient(client => new ConnectionCollection(client, Id));
+            return GetCachedClient(client => new MachineLearningWorkspaceConnectionDeploymentCollection(client, Id));
         }
 
         /// <summary> Get deployments under the Azure OpenAI connection by name. </summary>
@@ -679,7 +679,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ConnectionResource>> GetConnectionAsync(string deploymentName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MachineLearningWorkspaceConnectionDeploymentResource>> GetConnectionAsync(string deploymentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
@@ -692,7 +692,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ConnectionResource> GetConnection(string deploymentName, CancellationToken cancellationToken = default)
+        public virtual Response<MachineLearningWorkspaceConnectionDeploymentResource> GetConnection(string deploymentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 

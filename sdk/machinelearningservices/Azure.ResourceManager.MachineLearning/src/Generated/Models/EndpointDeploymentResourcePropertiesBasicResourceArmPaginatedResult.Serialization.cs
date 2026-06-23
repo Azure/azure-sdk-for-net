@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (EndpointDeploymentResourcePropertiesBasicResourceData item in Value)
+            foreach (MachineLearningWorkspaceConnectionDeploymentData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            IList<EndpointDeploymentResourcePropertiesBasicResourceData> value = default;
+            IList<MachineLearningWorkspaceConnectionDeploymentData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<EndpointDeploymentResourcePropertiesBasicResourceData> array = new List<EndpointDeploymentResourcePropertiesBasicResourceData>();
+                    List<MachineLearningWorkspaceConnectionDeploymentData> array = new List<MachineLearningWorkspaceConnectionDeploymentData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(EndpointDeploymentResourcePropertiesBasicResourceData.DeserializeEndpointDeploymentResourcePropertiesBasicResourceData(item, options));
+                        array.Add(MachineLearningWorkspaceConnectionDeploymentData.DeserializeEndpointDeploymentResourcePropertiesBasicResourceData(item, options));
                     }
                     value = array;
                     continue;

@@ -33,10 +33,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"></param>
-        /// <returns> A new <see cref="MachineLearning.EndpointDeploymentResourcePropertiesBasicResourceData"/> instance for mocking. </returns>
-        public static EndpointDeploymentResourcePropertiesBasicResourceData EndpointDeploymentResourcePropertiesBasicResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, EndpointDeploymentResourceProperties properties = default)
+        /// <returns> A new <see cref="MachineLearning.MachineLearningWorkspaceConnectionDeploymentData"/> instance for mocking. </returns>
+        public static MachineLearningWorkspaceConnectionDeploymentData MachineLearningWorkspaceConnectionDeploymentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, EndpointDeploymentResourceProperties properties = default)
         {
-            return new EndpointDeploymentResourcePropertiesBasicResourceData(
+            return new MachineLearningWorkspaceConnectionDeploymentData(
                 id,
                 name,
                 resourceType,
@@ -783,16 +783,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="appInsightsInstrumentationKey"> The access key of the workspace app insights. </param>
         /// <param name="containerRegistryCredentials"></param>
         /// <param name="notebookAccessKeys"></param>
-        /// <param name="userStorageArmId"> The arm Id key of the workspace storage. </param>
+        /// <param name="userStorageResourceId"> The arm Id key of the workspace storage. </param>
         /// <param name="userStorageKey"> The access key of the workspace storage. </param>
         /// <returns> A new <see cref="Models.MachineLearningWorkspaceGetKeysResult"/> instance for mocking. </returns>
-        public static MachineLearningWorkspaceGetKeysResult MachineLearningWorkspaceGetKeysResult(string appInsightsInstrumentationKey = default, MachineLearningContainerRegistryCredentials containerRegistryCredentials = default, MachineLearningWorkspaceGetNotebookKeysResult notebookAccessKeys = default, string userStorageArmId = default, string userStorageKey = default)
+        public static MachineLearningWorkspaceGetKeysResult MachineLearningWorkspaceGetKeysResult(string appInsightsInstrumentationKey = default, MachineLearningContainerRegistryCredentials containerRegistryCredentials = default, MachineLearningWorkspaceGetNotebookKeysResult notebookAccessKeys = default, string userStorageResourceId = default, string userStorageKey = default)
         {
             return new MachineLearningWorkspaceGetKeysResult(
                 appInsightsInstrumentationKey,
                 containerRegistryCredentials,
                 notebookAccessKeys,
-                userStorageArmId,
+                userStorageResourceId,
                 userStorageKey,
                 default);
         }
@@ -8544,13 +8544,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="provisioningState"> Read-only provision state status property. </param>
         /// <param name="shouldCreateAiServicesEndpoint"> Whether the proxy (non-byo) endpoint is a regular endpoint or a OneKeyV2 AI services account endpoint. </param>
         /// <returns> A new <see cref="Models.EndpointResourceProperties"/> instance for mocking. </returns>
-        public static EndpointResourceProperties EndpointResourceProperties(ResourceIdentifier associatedResourceId = default, IEnumerable<EndpointDeploymentResourcePropertiesBasicResourceData> deployments = default, string endpointType = default, Uri endpointUri = default, string failureReason = default, string location = default, string name = default, DefaultResourceProvisioningState? provisioningState = default, bool? shouldCreateAiServicesEndpoint = default)
+        public static EndpointResourceProperties EndpointResourceProperties(ResourceIdentifier associatedResourceId = default, IEnumerable<MachineLearningWorkspaceConnectionDeploymentData> deployments = default, string endpointType = default, Uri endpointUri = default, string failureReason = default, string location = default, string name = default, DefaultResourceProvisioningState? provisioningState = default, bool? shouldCreateAiServicesEndpoint = default)
         {
-            deployments ??= new ChangeTrackingList<EndpointDeploymentResourcePropertiesBasicResourceData>();
+            deployments ??= new ChangeTrackingList<MachineLearningWorkspaceConnectionDeploymentData>();
 
             return new UnknownEndpointResourceProperties(
                 associatedResourceId,
-                (deployments ?? new ChangeTrackingList<EndpointDeploymentResourcePropertiesBasicResourceData>()).ToList(),
+                (deployments ?? new ChangeTrackingList<MachineLearningWorkspaceConnectionDeploymentData>()).ToList(),
                 default,
                 endpointUri,
                 failureReason,
@@ -8575,13 +8575,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="provisioningState"> Read-only provision state status property. </param>
         /// <param name="shouldCreateAiServicesEndpoint"> Whether the proxy (non-byo) endpoint is a regular endpoint or a OneKeyV2 AI services account endpoint. </param>
         /// <returns> A new <see cref="Models.ContentSafetyEndpointResourceProperties"/> instance for mocking. </returns>
-        public static ContentSafetyEndpointResourceProperties ContentSafetyEndpointResourceProperties(ResourceIdentifier associatedResourceId = default, IEnumerable<EndpointDeploymentResourcePropertiesBasicResourceData> deployments = default, Uri endpointUri = default, string failureReason = default, string location = default, string name = default, DefaultResourceProvisioningState? provisioningState = default, bool? shouldCreateAiServicesEndpoint = default)
+        public static ContentSafetyEndpointResourceProperties ContentSafetyEndpointResourceProperties(ResourceIdentifier associatedResourceId = default, IEnumerable<MachineLearningWorkspaceConnectionDeploymentData> deployments = default, Uri endpointUri = default, string failureReason = default, string location = default, string name = default, DefaultResourceProvisioningState? provisioningState = default, bool? shouldCreateAiServicesEndpoint = default)
         {
-            deployments ??= new ChangeTrackingList<EndpointDeploymentResourcePropertiesBasicResourceData>();
+            deployments ??= new ChangeTrackingList<MachineLearningWorkspaceConnectionDeploymentData>();
 
             return new ContentSafetyEndpointResourceProperties(
                 associatedResourceId,
-                (deployments ?? new ChangeTrackingList<EndpointDeploymentResourcePropertiesBasicResourceData>()).ToList(),
+                (deployments ?? new ChangeTrackingList<MachineLearningWorkspaceConnectionDeploymentData>()).ToList(),
                 default,
                 endpointUri,
                 failureReason,
@@ -8612,15 +8612,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="scoringUri"></param>
         /// <param name="traffic"></param>
         /// <returns> A new <see cref="Models.ManagedOnlineEndpointResourceProperties"/> instance for mocking. </returns>
-        public static ManagedOnlineEndpointResourceProperties ManagedOnlineEndpointResourceProperties(ResourceIdentifier associatedResourceId = default, IEnumerable<EndpointDeploymentResourcePropertiesBasicResourceData> deployments = default, Uri endpointUri = default, string failureReason = default, string location = default, string name = default, DefaultResourceProvisioningState? provisioningState = default, bool? shouldCreateAiServicesEndpoint = default, MachineLearningEndpointAuthMode? authMode = default, string compute = default, string description = default, IDictionary<string, int> mirrorTraffic = default, Uri scoringUri = default, IDictionary<string, int> traffic = default)
+        public static ManagedOnlineEndpointResourceProperties ManagedOnlineEndpointResourceProperties(ResourceIdentifier associatedResourceId = default, IEnumerable<MachineLearningWorkspaceConnectionDeploymentData> deployments = default, Uri endpointUri = default, string failureReason = default, string location = default, string name = default, DefaultResourceProvisioningState? provisioningState = default, bool? shouldCreateAiServicesEndpoint = default, MachineLearningEndpointAuthMode? authMode = default, string compute = default, string description = default, IDictionary<string, int> mirrorTraffic = default, Uri scoringUri = default, IDictionary<string, int> traffic = default)
         {
-            deployments ??= new ChangeTrackingList<EndpointDeploymentResourcePropertiesBasicResourceData>();
+            deployments ??= new ChangeTrackingList<MachineLearningWorkspaceConnectionDeploymentData>();
             mirrorTraffic ??= new ChangeTrackingDictionary<string, int>();
             traffic ??= new ChangeTrackingDictionary<string, int>();
 
             return new ManagedOnlineEndpointResourceProperties(
                 associatedResourceId,
-                (deployments ?? new ChangeTrackingList<EndpointDeploymentResourcePropertiesBasicResourceData>()).ToList(),
+                (deployments ?? new ChangeTrackingList<MachineLearningWorkspaceConnectionDeploymentData>()).ToList(),
                 default,
                 endpointUri,
                 failureReason,
@@ -8651,13 +8651,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="provisioningState"> Read-only provision state status property. </param>
         /// <param name="shouldCreateAiServicesEndpoint"> Whether the proxy (non-byo) endpoint is a regular endpoint or a OneKeyV2 AI services account endpoint. </param>
         /// <returns> A new <see cref="Models.OpenAIEndpointResourceProperties"/> instance for mocking. </returns>
-        public static OpenAIEndpointResourceProperties OpenAIEndpointResourceProperties(ResourceIdentifier associatedResourceId = default, IEnumerable<EndpointDeploymentResourcePropertiesBasicResourceData> deployments = default, Uri endpointUri = default, string failureReason = default, string location = default, string name = default, DefaultResourceProvisioningState? provisioningState = default, bool? shouldCreateAiServicesEndpoint = default)
+        public static OpenAIEndpointResourceProperties OpenAIEndpointResourceProperties(ResourceIdentifier associatedResourceId = default, IEnumerable<MachineLearningWorkspaceConnectionDeploymentData> deployments = default, Uri endpointUri = default, string failureReason = default, string location = default, string name = default, DefaultResourceProvisioningState? provisioningState = default, bool? shouldCreateAiServicesEndpoint = default)
         {
-            deployments ??= new ChangeTrackingList<EndpointDeploymentResourcePropertiesBasicResourceData>();
+            deployments ??= new ChangeTrackingList<MachineLearningWorkspaceConnectionDeploymentData>();
 
             return new OpenAIEndpointResourceProperties(
                 associatedResourceId,
-                (deployments ?? new ChangeTrackingList<EndpointDeploymentResourcePropertiesBasicResourceData>()).ToList(),
+                (deployments ?? new ChangeTrackingList<MachineLearningWorkspaceConnectionDeploymentData>()).ToList(),
                 default,
                 endpointUri,
                 failureReason,
@@ -8691,13 +8691,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="modelId"> Gets or sets the ModelId. </param>
         /// <param name="offer"></param>
         /// <returns> A new <see cref="Models.ServerlessEndpointResourceProperties"/> instance for mocking. </returns>
-        public static ServerlessEndpointResourceProperties ServerlessEndpointResourceProperties(ResourceIdentifier associatedResourceId = default, IEnumerable<EndpointDeploymentResourcePropertiesBasicResourceData> deployments = default, Uri endpointUri = default, string failureReason = default, string location = default, string name = default, DefaultResourceProvisioningState? provisioningState = default, bool? shouldCreateAiServicesEndpoint = default, ServerlessInferenceEndpointAuthMode? authMode = default, ServerlessEndpointCapacityReservation capacityReservation = default, ContentSafetyStatus? contentSafetyStatus = default, ServerlessEndpointState? endpointState = default, ServerlessEndpointInferenceEndpoint inferenceEndpoint = default, string marketplaceSubscriptionId = default, BinaryData metadata = default, string modelId = default, ServerlessOffer offer = default)
+        public static ServerlessEndpointResourceProperties ServerlessEndpointResourceProperties(ResourceIdentifier associatedResourceId = default, IEnumerable<MachineLearningWorkspaceConnectionDeploymentData> deployments = default, Uri endpointUri = default, string failureReason = default, string location = default, string name = default, DefaultResourceProvisioningState? provisioningState = default, bool? shouldCreateAiServicesEndpoint = default, ServerlessInferenceEndpointAuthMode? authMode = default, ServerlessEndpointCapacityReservation capacityReservation = default, ContentSafetyStatus? contentSafetyStatus = default, ServerlessEndpointState? endpointState = default, ServerlessEndpointInferenceEndpoint inferenceEndpoint = default, string marketplaceSubscriptionId = default, BinaryData metadata = default, string modelId = default, ServerlessOffer offer = default)
         {
-            deployments ??= new ChangeTrackingList<EndpointDeploymentResourcePropertiesBasicResourceData>();
+            deployments ??= new ChangeTrackingList<MachineLearningWorkspaceConnectionDeploymentData>();
 
             return new ServerlessEndpointResourceProperties(
                 associatedResourceId,
-                (deployments ?? new ChangeTrackingList<EndpointDeploymentResourcePropertiesBasicResourceData>()).ToList(),
+                (deployments ?? new ChangeTrackingList<MachineLearningWorkspaceConnectionDeploymentData>()).ToList(),
                 default,
                 endpointUri,
                 failureReason,
@@ -8757,13 +8757,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="provisioningState"> Read-only provision state status property. </param>
         /// <param name="shouldCreateAiServicesEndpoint"> Whether the proxy (non-byo) endpoint is a regular endpoint or a OneKeyV2 AI services account endpoint. </param>
         /// <returns> A new <see cref="Models.SpeechEndpointResourceProperties"/> instance for mocking. </returns>
-        public static SpeechEndpointResourceProperties SpeechEndpointResourceProperties(ResourceIdentifier associatedResourceId = default, IEnumerable<EndpointDeploymentResourcePropertiesBasicResourceData> deployments = default, Uri endpointUri = default, string failureReason = default, string location = default, string name = default, DefaultResourceProvisioningState? provisioningState = default, bool? shouldCreateAiServicesEndpoint = default)
+        public static SpeechEndpointResourceProperties SpeechEndpointResourceProperties(ResourceIdentifier associatedResourceId = default, IEnumerable<MachineLearningWorkspaceConnectionDeploymentData> deployments = default, Uri endpointUri = default, string failureReason = default, string location = default, string name = default, DefaultResourceProvisioningState? provisioningState = default, bool? shouldCreateAiServicesEndpoint = default)
         {
-            deployments ??= new ChangeTrackingList<EndpointDeploymentResourcePropertiesBasicResourceData>();
+            deployments ??= new ChangeTrackingList<MachineLearningWorkspaceConnectionDeploymentData>();
 
             return new SpeechEndpointResourceProperties(
                 associatedResourceId,
-                (deployments ?? new ChangeTrackingList<EndpointDeploymentResourcePropertiesBasicResourceData>()).ToList(),
+                (deployments ?? new ChangeTrackingList<MachineLearningWorkspaceConnectionDeploymentData>()).ToList(),
                 default,
                 endpointUri,
                 failureReason,

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Initializes a new instance of <see cref="EndpointDeploymentResourcePropertiesBasicResourceArmPaginatedResult"/>. </summary>
         /// <param name="value"> The EndpointDeploymentResourcePropertiesBasicResource items on this page. </param>
-        internal EndpointDeploymentResourcePropertiesBasicResourceArmPaginatedResult(IEnumerable<EndpointDeploymentResourcePropertiesBasicResourceData> value)
+        internal EndpointDeploymentResourcePropertiesBasicResourceArmPaginatedResult(IEnumerable<MachineLearningWorkspaceConnectionDeploymentData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="value"> The EndpointDeploymentResourcePropertiesBasicResource items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EndpointDeploymentResourcePropertiesBasicResourceArmPaginatedResult(IList<EndpointDeploymentResourcePropertiesBasicResourceData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EndpointDeploymentResourcePropertiesBasicResourceArmPaginatedResult(IList<MachineLearningWorkspaceConnectionDeploymentData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> The EndpointDeploymentResourcePropertiesBasicResource items on this page. </summary>
         [WirePath("value")]
-        public IList<EndpointDeploymentResourcePropertiesBasicResourceData> Value { get; }
+        public IList<MachineLearningWorkspaceConnectionDeploymentData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         [WirePath("nextLink")]

@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             ResourceIdentifier associatedResourceId = default;
-            IList<EndpointDeploymentResourcePropertiesBasicResourceData> deployments = default;
+            IList<MachineLearningWorkspaceConnectionDeploymentData> deployments = default;
             EndpointType endpointType = default;
             Uri endpointUri = default;
             string failureReason = default;
@@ -140,10 +140,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    List<EndpointDeploymentResourcePropertiesBasicResourceData> array = new List<EndpointDeploymentResourcePropertiesBasicResourceData>();
+                    List<MachineLearningWorkspaceConnectionDeploymentData> array = new List<MachineLearningWorkspaceConnectionDeploymentData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(EndpointDeploymentResourcePropertiesBasicResourceData.DeserializeEndpointDeploymentResourcePropertiesBasicResourceData(item, options));
+                        array.Add(MachineLearningWorkspaceConnectionDeploymentData.DeserializeEndpointDeploymentResourcePropertiesBasicResourceData(item, options));
                     }
                     deployments = array;
                     continue;
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             return new UnknownEndpointResourceProperties(
                 associatedResourceId,
-                deployments ?? new ChangeTrackingList<EndpointDeploymentResourcePropertiesBasicResourceData>(),
+                deployments ?? new ChangeTrackingList<MachineLearningWorkspaceConnectionDeploymentData>(),
                 endpointType,
                 endpointUri,
                 failureReason,

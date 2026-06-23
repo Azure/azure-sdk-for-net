@@ -18,35 +18,35 @@ namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary>
     /// A class representing a Connection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ConnectionResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MachineLearningWorkspaceConnectionDeploymentResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
     /// Otherwise you can get one from its parent resource <see cref="MachineLearningWorkspaceConnectionResource"/> using the GetConnections method.
     /// </summary>
-    public partial class ConnectionResource : ArmResource
+    public partial class MachineLearningWorkspaceConnectionDeploymentResource : ArmResource
     {
         private readonly ClientDiagnostics _connectionClientDiagnostics;
         private readonly Connection _connectionRestClient;
-        private readonly EndpointDeploymentResourcePropertiesBasicResourceData _data;
+        private readonly MachineLearningWorkspaceConnectionDeploymentData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.MachineLearningServices/workspaces/connections/deployments";
 
-        /// <summary> Initializes a new instance of ConnectionResource for mocking. </summary>
-        protected ConnectionResource()
+        /// <summary> Initializes a new instance of MachineLearningWorkspaceConnectionDeploymentResource for mocking. </summary>
+        protected MachineLearningWorkspaceConnectionDeploymentResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspaceConnectionDeploymentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ConnectionResource(ArmClient client, EndpointDeploymentResourcePropertiesBasicResourceData data) : this(client, data.Id)
+        internal MachineLearningWorkspaceConnectionDeploymentResource(ArmClient client, MachineLearningWorkspaceConnectionDeploymentData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspaceConnectionDeploymentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ConnectionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal MachineLearningWorkspaceConnectionDeploymentResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string connectionApiVersion);
             _connectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", ResourceType.Namespace, Diagnostics);
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.MachineLearning
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual EndpointDeploymentResourcePropertiesBasicResourceData Data
+        public virtual MachineLearningWorkspaceConnectionDeploymentData Data
         {
             get
             {
@@ -109,14 +109,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ConnectionResource"/>. </description>
+        /// <description> <see cref="MachineLearningWorkspaceConnectionDeploymentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ConnectionResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MachineLearningWorkspaceConnectionDeploymentResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _connectionClientDiagnostics.CreateScope("ConnectionResource.Get");
+            using DiagnosticScope scope = _connectionClientDiagnostics.CreateScope("MachineLearningWorkspaceConnectionDeploymentResource.Get");
             scope.Start();
             try
             {
@@ -126,12 +126,12 @@ namespace Azure.ResourceManager.MachineLearning
                 };
                 HttpMessage message = _connectionRestClient.CreateGetDeploymentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<EndpointDeploymentResourcePropertiesBasicResourceData> response = Response.FromValue(EndpointDeploymentResourcePropertiesBasicResourceData.FromResponse(result), result);
+                Response<MachineLearningWorkspaceConnectionDeploymentData> response = Response.FromValue(MachineLearningWorkspaceConnectionDeploymentData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ConnectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MachineLearningWorkspaceConnectionDeploymentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -157,14 +157,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ConnectionResource"/>. </description>
+        /// <description> <see cref="MachineLearningWorkspaceConnectionDeploymentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ConnectionResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<MachineLearningWorkspaceConnectionDeploymentResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _connectionClientDiagnostics.CreateScope("ConnectionResource.Get");
+            using DiagnosticScope scope = _connectionClientDiagnostics.CreateScope("MachineLearningWorkspaceConnectionDeploymentResource.Get");
             scope.Start();
             try
             {
@@ -174,12 +174,12 @@ namespace Azure.ResourceManager.MachineLearning
                 };
                 HttpMessage message = _connectionRestClient.CreateGetDeploymentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<EndpointDeploymentResourcePropertiesBasicResourceData> response = Response.FromValue(EndpointDeploymentResourcePropertiesBasicResourceData.FromResponse(result), result);
+                Response<MachineLearningWorkspaceConnectionDeploymentData> response = Response.FromValue(MachineLearningWorkspaceConnectionDeploymentData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ConnectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MachineLearningWorkspaceConnectionDeploymentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ConnectionResource"/>. </description>
+        /// <description> <see cref="MachineLearningWorkspaceConnectionDeploymentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _connectionClientDiagnostics.CreateScope("ConnectionResource.Delete");
+            using DiagnosticScope scope = _connectionClientDiagnostics.CreateScope("MachineLearningWorkspaceConnectionDeploymentResource.Delete");
             scope.Start();
             try
             {
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ConnectionResource"/>. </description>
+        /// <description> <see cref="MachineLearningWorkspaceConnectionDeploymentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _connectionClientDiagnostics.CreateScope("ConnectionResource.Delete");
+            using DiagnosticScope scope = _connectionClientDiagnostics.CreateScope("MachineLearningWorkspaceConnectionDeploymentResource.Delete");
             scope.Start();
             try
             {
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ConnectionResource"/>. </description>
+        /// <description> <see cref="MachineLearningWorkspaceConnectionDeploymentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -311,11 +311,11 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="data"> deployment object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<ConnectionResource>> UpdateAsync(WaitUntil waitUntil, EndpointDeploymentResourcePropertiesBasicResourceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<MachineLearningWorkspaceConnectionDeploymentResource>> UpdateAsync(WaitUntil waitUntil, MachineLearningWorkspaceConnectionDeploymentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _connectionClientDiagnostics.CreateScope("ConnectionResource.Update");
+            using DiagnosticScope scope = _connectionClientDiagnostics.CreateScope("MachineLearningWorkspaceConnectionDeploymentResource.Update");
             scope.Start();
             try
             {
@@ -323,10 +323,10 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectionRestClient.CreateCreateOrUpdateDeploymentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, EndpointDeploymentResourcePropertiesBasicResourceData.ToRequestContent(data), context);
+                HttpMessage message = _connectionRestClient.CreateCreateOrUpdateDeploymentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, MachineLearningWorkspaceConnectionDeploymentData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                MachineLearningArmOperation<ConnectionResource> operation = new MachineLearningArmOperation<ConnectionResource>(
-                    new ConnectionResourceOperationSource(Client),
+                MachineLearningArmOperation<MachineLearningWorkspaceConnectionDeploymentResource> operation = new MachineLearningArmOperation<MachineLearningWorkspaceConnectionDeploymentResource>(
+                    new MachineLearningWorkspaceConnectionDeploymentResourceOperationSource(Client),
                     _connectionClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ConnectionResource"/>. </description>
+        /// <description> <see cref="MachineLearningWorkspaceConnectionDeploymentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -370,11 +370,11 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="data"> deployment object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<ConnectionResource> Update(WaitUntil waitUntil, EndpointDeploymentResourcePropertiesBasicResourceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<MachineLearningWorkspaceConnectionDeploymentResource> Update(WaitUntil waitUntil, MachineLearningWorkspaceConnectionDeploymentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _connectionClientDiagnostics.CreateScope("ConnectionResource.Update");
+            using DiagnosticScope scope = _connectionClientDiagnostics.CreateScope("MachineLearningWorkspaceConnectionDeploymentResource.Update");
             scope.Start();
             try
             {
@@ -382,10 +382,10 @@ namespace Azure.ResourceManager.MachineLearning
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectionRestClient.CreateCreateOrUpdateDeploymentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, EndpointDeploymentResourcePropertiesBasicResourceData.ToRequestContent(data), context);
+                HttpMessage message = _connectionRestClient.CreateCreateOrUpdateDeploymentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, MachineLearningWorkspaceConnectionDeploymentData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                MachineLearningArmOperation<ConnectionResource> operation = new MachineLearningArmOperation<ConnectionResource>(
-                    new ConnectionResourceOperationSource(Client),
+                MachineLearningArmOperation<MachineLearningWorkspaceConnectionDeploymentResource> operation = new MachineLearningArmOperation<MachineLearningWorkspaceConnectionDeploymentResource>(
+                    new MachineLearningWorkspaceConnectionDeploymentResourceOperationSource(Client),
                     _connectionClientDiagnostics,
                     Pipeline,
                     message.Request,

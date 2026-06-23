@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearning
     /// A Class representing a MachineLearningWorkspaceConnection along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MachineLearningWorkspaceConnectionResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetWorkspaceConnectionPropertiesV2BasicResource method.
-    /// Otherwise you can get one from its parent resource <see cref="WorkspaceResource" /> using the GetMachineLearningWorkspaceConnection method.
+    /// Otherwise you can get one from its parent resource <see cref="MachineLearningWorkspaceResource" /> using the GetMachineLearningWorkspaceConnection method.
     /// </summary>
     public partial class MachineLearningWorkspaceConnectionResource : ArmResource
     {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.MachineLearning
         public virtual Task<ArmOperation<MachineLearningWorkspaceConnectionResource>> UpdateAsync(WaitUntil waitUntil, MachineLearningWorkspaceConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
-            throw new NotSupportedException("Backward-compat method not available after TypeSpec migration");
+            throw new NotSupportedException("The legacy WorkspaceConnections_Create overload accepted full resource data for an endpoint that now updates connection properties through PATCH. The generated replacement is UpdateAsync(WorkspaceConnectionPropertiesV2BasicResourcePatch, CancellationToken); replaying the old PUT would require private generated serialization against a removed request shape.");
         }
 
         /// <summary>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.MachineLearning
         public virtual ArmOperation<MachineLearningWorkspaceConnectionResource> Update(WaitUntil waitUntil, MachineLearningWorkspaceConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
-            throw new NotSupportedException("Backward-compat method not available after TypeSpec migration");
+            throw new NotSupportedException("The legacy WorkspaceConnections_Create overload accepted full resource data for an endpoint that now updates connection properties through PATCH. The generated replacement is Update(WorkspaceConnectionPropertiesV2BasicResourcePatch, CancellationToken); replaying the old PUT would require private generated serialization against a removed request shape.");
         }
     }
 }

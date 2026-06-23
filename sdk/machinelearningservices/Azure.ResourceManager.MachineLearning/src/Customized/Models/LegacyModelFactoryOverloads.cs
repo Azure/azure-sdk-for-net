@@ -52,73 +52,73 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of <see cref="Models.MachineLearningComputeProperties"/>. </summary>
         public static MachineLearningComputeProperties MachineLearningComputeProperties(string computeType = default, string computeLocation = default, MachineLearningProvisioningState? provisioningState = default, string description = default, DateTimeOffset? createdOn = default, DateTimeOffset? modifiedOn = default, ResourceIdentifier resourceId = default, IEnumerable<MachineLearningError> provisioningErrors = default, bool? isAttachedCompute = default, bool? disableLocalAuth = default)
         {
-            return MachineLearningComputeProperties(computeType, computeLocation, provisioningState, description, createdOn, modifiedOn, resourceId, provisioningErrors, isAttachedCompute, disableLocalAuth);
+            return new UnknownCompute(computeType, computeLocation, provisioningState, description, createdOn, modifiedOn, resourceId, provisioningErrors is null ? null : new List<MachineLearningError>(provisioningErrors), isAttachedCompute, disableLocalAuth, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MachineLearningAksCompute"/>. </summary>
         public static MachineLearningAksCompute MachineLearningAksCompute(string computeLocation = default, MachineLearningProvisioningState? provisioningState = default, string description = default, DateTimeOffset? createdOn = default, DateTimeOffset? modifiedOn = default, ResourceIdentifier resourceId = default, IEnumerable<MachineLearningError> provisioningErrors = default, bool? isAttachedCompute = default, bool? disableLocalAuth = default, MachineLearningAksComputeProperties properties = default)
         {
-            return MachineLearningAksCompute(computeLocation, provisioningState, description, createdOn, modifiedOn, resourceId, provisioningErrors, isAttachedCompute, disableLocalAuth, properties);
+            return new MachineLearningAksCompute(ComputeType.AKS, computeLocation, provisioningState, description, createdOn, modifiedOn, resourceId, provisioningErrors is null ? null : new List<MachineLearningError>(provisioningErrors), isAttachedCompute, disableLocalAuth, additionalBinaryDataProperties: null, properties);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MachineLearningKubernetesCompute"/>. </summary>
         public static MachineLearningKubernetesCompute MachineLearningKubernetesCompute(string computeLocation = default, MachineLearningProvisioningState? provisioningState = default, string description = default, DateTimeOffset? createdOn = default, DateTimeOffset? modifiedOn = default, ResourceIdentifier resourceId = default, IEnumerable<MachineLearningError> provisioningErrors = default, bool? isAttachedCompute = default, bool? disableLocalAuth = default, MachineLearningKubernetesProperties properties = default)
         {
-            return MachineLearningKubernetesCompute(computeLocation, provisioningState, description, createdOn, modifiedOn, resourceId, provisioningErrors, isAttachedCompute, disableLocalAuth, properties);
+            return new MachineLearningKubernetesCompute(ComputeType.Kubernetes, computeLocation, provisioningState, description, createdOn, modifiedOn, resourceId, provisioningErrors is null ? null : new List<MachineLearningError>(provisioningErrors), isAttachedCompute, disableLocalAuth, additionalBinaryDataProperties: null, properties);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AmlCompute"/>. </summary>
         public static AmlCompute AmlCompute(string computeLocation = default, MachineLearningProvisioningState? provisioningState = default, string description = default, DateTimeOffset? createdOn = default, DateTimeOffset? modifiedOn = default, ResourceIdentifier resourceId = default, IEnumerable<MachineLearningError> provisioningErrors = default, bool? isAttachedCompute = default, bool? disableLocalAuth = default, AmlComputeProperties properties = default)
         {
-            return AmlCompute(computeLocation, provisioningState, description, createdOn, modifiedOn, resourceId, provisioningErrors, isAttachedCompute, disableLocalAuth, properties);
+            return new AmlCompute(ComputeType.AmlCompute, computeLocation, provisioningState, description, createdOn, modifiedOn, resourceId, provisioningErrors is null ? null : new List<MachineLearningError>(provisioningErrors), isAttachedCompute, disableLocalAuth, additionalBinaryDataProperties: null, properties);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AmlComputeProperties"/>. </summary>
         public static AmlComputeProperties AmlComputeProperties(MachineLearningOSType? osType = default, string vmSize = default, MachineLearningVmPriority? vmPriority = default, string virtualMachineImageId = default, bool? isolatedNetwork = default, AmlComputeScaleSettings scaleSettings = default, MachineLearningUserAccountCredentials userAccountCredentials = default, ResourceIdentifier subnetId = default, MachineLearningRemoteLoginPortPublicAccess? remoteLoginPortPublicAccess = default, MachineLearningAllocationState? allocationState = default, DateTimeOffset? allocationStateTransitionOn = default, IEnumerable<MachineLearningError> errors = default, int? currentNodeCount = default, int? targetNodeCount = default, MachineLearningNodeStateCounts nodeStateCounts = default, bool? enableNodePublicIP = default, BinaryData propertyBag = default)
         {
-            return AmlComputeProperties(osType, vmSize, vmPriority, virtualMachineImageId, isolatedNetwork, scaleSettings, userAccountCredentials, subnetId, remoteLoginPortPublicAccess, allocationState, allocationStateTransitionOn, errors, currentNodeCount, targetNodeCount, nodeStateCounts, enableNodePublicIP, propertyBag);
+            return new AmlComputeProperties(osType, vmSize, vmPriority, virtualMachineImageId is null ? null : new VirtualMachineImage(virtualMachineImageId, additionalBinaryDataProperties: null), isolatedNetwork, scaleSettings, userAccountCredentials, subnetId is null ? null : new ResourceId(subnetId, additionalBinaryDataProperties: null), remoteLoginPortPublicAccess, allocationState, allocationStateTransitionOn, errors is null ? null : new List<MachineLearningError>(errors), currentNodeCount, targetNodeCount, nodeStateCounts, enableNodePublicIP, propertyBag, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MachineLearningComputeInstance"/>. </summary>
         public static MachineLearningComputeInstance MachineLearningComputeInstance(string computeLocation = default, MachineLearningProvisioningState? provisioningState = default, string description = default, DateTimeOffset? createdOn = default, DateTimeOffset? modifiedOn = default, ResourceIdentifier resourceId = default, IEnumerable<MachineLearningError> provisioningErrors = default, bool? isAttachedCompute = default, bool? disableLocalAuth = default, MachineLearningComputeInstanceProperties properties = default)
         {
-            return MachineLearningComputeInstance(computeLocation, provisioningState, description, createdOn, modifiedOn, resourceId, provisioningErrors, isAttachedCompute, disableLocalAuth, properties);
+            return new MachineLearningComputeInstance(ComputeType.ComputeInstance, computeLocation, provisioningState, description, createdOn, modifiedOn, resourceId, provisioningErrors is null ? null : new List<MachineLearningError>(provisioningErrors), isAttachedCompute, disableLocalAuth, additionalBinaryDataProperties: null, properties);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MachineLearningVirtualMachineCompute"/>. </summary>
         public static MachineLearningVirtualMachineCompute MachineLearningVirtualMachineCompute(string computeLocation = default, MachineLearningProvisioningState? provisioningState = default, string description = default, DateTimeOffset? createdOn = default, DateTimeOffset? modifiedOn = default, ResourceIdentifier resourceId = default, IEnumerable<MachineLearningError> provisioningErrors = default, bool? isAttachedCompute = default, bool? disableLocalAuth = default, MachineLearningVirtualMachineProperties properties = default)
         {
-            return MachineLearningVirtualMachineCompute(computeLocation, provisioningState, description, createdOn, modifiedOn, resourceId, provisioningErrors, isAttachedCompute, disableLocalAuth, properties);
+            return new MachineLearningVirtualMachineCompute(ComputeType.VirtualMachine, computeLocation, provisioningState, description, createdOn, modifiedOn, resourceId, provisioningErrors is null ? null : new List<MachineLearningError>(provisioningErrors), isAttachedCompute, disableLocalAuth, additionalBinaryDataProperties: null, properties);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MachineLearningHDInsightCompute"/>. </summary>
         public static MachineLearningHDInsightCompute MachineLearningHDInsightCompute(string computeLocation = default, MachineLearningProvisioningState? provisioningState = default, string description = default, DateTimeOffset? createdOn = default, DateTimeOffset? modifiedOn = default, ResourceIdentifier resourceId = default, IEnumerable<MachineLearningError> provisioningErrors = default, bool? isAttachedCompute = default, bool? disableLocalAuth = default, MachineLearningHDInsightProperties properties = default)
         {
-            return MachineLearningHDInsightCompute(computeLocation, provisioningState, description, createdOn, modifiedOn, resourceId, provisioningErrors, isAttachedCompute, disableLocalAuth, properties);
+            return new MachineLearningHDInsightCompute(ComputeType.HDInsight, computeLocation, provisioningState, description, createdOn, modifiedOn, resourceId, provisioningErrors is null ? null : new List<MachineLearningError>(provisioningErrors), isAttachedCompute, disableLocalAuth, additionalBinaryDataProperties: null, properties);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MachineLearningDataFactoryCompute"/>. </summary>
         public static MachineLearningDataFactoryCompute MachineLearningDataFactoryCompute(string computeLocation = default, MachineLearningProvisioningState? provisioningState = default, string description = default, DateTimeOffset? createdOn = default, DateTimeOffset? modifiedOn = default, ResourceIdentifier resourceId = default, IEnumerable<MachineLearningError> provisioningErrors = default, bool? isAttachedCompute = default, bool? disableLocalAuth = default)
         {
-            return MachineLearningDataFactoryCompute(computeLocation, provisioningState, description, createdOn, modifiedOn, resourceId, provisioningErrors, isAttachedCompute, disableLocalAuth);
+            return new MachineLearningDataFactoryCompute(ComputeType.DataFactory, computeLocation, provisioningState, description, createdOn, modifiedOn, resourceId, provisioningErrors is null ? null : new List<MachineLearningError>(provisioningErrors), isAttachedCompute, disableLocalAuth, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MachineLearningDatabricksCompute"/>. </summary>
         public static MachineLearningDatabricksCompute MachineLearningDatabricksCompute(string computeLocation = default, MachineLearningProvisioningState? provisioningState = default, string description = default, DateTimeOffset? createdOn = default, DateTimeOffset? modifiedOn = default, ResourceIdentifier resourceId = default, IEnumerable<MachineLearningError> provisioningErrors = default, bool? isAttachedCompute = default, bool? disableLocalAuth = default, MachineLearningDatabricksProperties properties = default)
         {
-            return MachineLearningDatabricksCompute(computeLocation, provisioningState, description, createdOn, modifiedOn, resourceId, provisioningErrors, isAttachedCompute, disableLocalAuth, properties);
+            return new MachineLearningDatabricksCompute(ComputeType.Databricks, computeLocation, provisioningState, description, createdOn, modifiedOn, resourceId, provisioningErrors is null ? null : new List<MachineLearningError>(provisioningErrors), isAttachedCompute, disableLocalAuth, additionalBinaryDataProperties: null, properties);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MachineLearningDataLakeAnalytics"/>. </summary>
         public static MachineLearningDataLakeAnalytics MachineLearningDataLakeAnalytics(string computeLocation = default, MachineLearningProvisioningState? provisioningState = default, string description = default, DateTimeOffset? createdOn = default, DateTimeOffset? modifiedOn = default, ResourceIdentifier resourceId = default, IEnumerable<MachineLearningError> provisioningErrors = default, bool? isAttachedCompute = default, bool? disableLocalAuth = default, string dataLakeStoreAccountName = default)
         {
-            return MachineLearningDataLakeAnalytics(computeLocation, provisioningState, description, createdOn, modifiedOn, resourceId, provisioningErrors, isAttachedCompute, disableLocalAuth, dataLakeStoreAccountName);
+            return new MachineLearningDataLakeAnalytics(ComputeType.DataLakeAnalytics, computeLocation, provisioningState, description, createdOn, modifiedOn, resourceId, provisioningErrors is null ? null : new List<MachineLearningError>(provisioningErrors), isAttachedCompute, disableLocalAuth, additionalBinaryDataProperties: null, new DataLakeAnalyticsSchemaProperties(dataLakeStoreAccountName, additionalBinaryDataProperties: null));
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MachineLearningSynapseSpark"/>. </summary>
         public static MachineLearningSynapseSpark MachineLearningSynapseSpark(string computeLocation = default, MachineLearningProvisioningState? provisioningState = default, string description = default, DateTimeOffset? createdOn = default, DateTimeOffset? modifiedOn = default, ResourceIdentifier resourceId = default, IEnumerable<MachineLearningError> provisioningErrors = default, bool? isAttachedCompute = default, bool? disableLocalAuth = default, MachineLearningSynapseSparkProperties properties = default)
         {
-            return MachineLearningSynapseSpark(computeLocation, provisioningState, description, createdOn, modifiedOn, resourceId, provisioningErrors, isAttachedCompute, disableLocalAuth, properties);
+            return new MachineLearningSynapseSpark(ComputeType.SynapseSpark, computeLocation, provisioningState, description, createdOn, modifiedOn, resourceId, provisioningErrors is null ? null : new List<MachineLearningError>(provisioningErrors), isAttachedCompute, disableLocalAuth, additionalBinaryDataProperties: null, properties);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RegistryPrivateEndpoint"/>. </summary>

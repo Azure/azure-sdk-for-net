@@ -659,8 +659,8 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="endpointType"> Endpoint type filter. </param>
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="EndpointDeploymentResourcePropertiesBasicResourceData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<EndpointDeploymentResourcePropertiesBasicResourceData> GetInWorkspaceAsync(EndpointType? endpointType = default, string skip = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MachineLearningWorkspaceConnectionDeploymentData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MachineLearningWorkspaceConnectionDeploymentData> GetInWorkspaceAsync(EndpointType? endpointType = default, string skip = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -701,8 +701,8 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="endpointType"> Endpoint type filter. </param>
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="EndpointDeploymentResourcePropertiesBasicResourceData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<EndpointDeploymentResourcePropertiesBasicResourceData> GetInWorkspace(EndpointType? endpointType = default, string skip = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MachineLearningWorkspaceConnectionDeploymentData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MachineLearningWorkspaceConnectionDeploymentData> GetInWorkspace(EndpointType? endpointType = default, string skip = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {

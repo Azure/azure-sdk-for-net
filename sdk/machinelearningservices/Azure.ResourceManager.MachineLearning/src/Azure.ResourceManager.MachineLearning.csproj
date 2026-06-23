@@ -11,14 +11,6 @@
 
   <PropertyGroup>
     <!-- Link to preapproved, registered namespaces: https://azure.github.io/azure-sdk/registered_namespaces.html  -->
-    <!-- CS0109: 'new' keyword in serialization workaround for generator bug -->
-    <NoWarn>$(NoWarn);CS1591;CS0109</NoWarn>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
   </PropertyGroup>
-
-  <!-- Generator bug: WorkspaceConnectionPropertiesV2BasicResourceData inherits ArmResource
-       instead of ResourceData, so the generated 'override void JsonModelWriteCore' fails.
-       A fixed copy with 'new' is in Customized/. -->
-  <ItemGroup>
-    <Compile Remove="Generated/WorkspaceConnectionPropertiesV2BasicResourceData.Serialization.cs" />
-  </ItemGroup>
 </Project>

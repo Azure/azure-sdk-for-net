@@ -323,13 +323,13 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
             return new MachineLearningComputeResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="ConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="MachineLearningWorkspaceConnectionDeploymentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ConnectionResource"/> object. </returns>
-        public virtual ConnectionResource GetConnectionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MachineLearningWorkspaceConnectionDeploymentResource"/> object. </returns>
+        public virtual MachineLearningWorkspaceConnectionDeploymentResource GetConnectionResource(ResourceIdentifier id)
         {
-            ConnectionResource.ValidateResourceId(id);
-            return new ConnectionResource(Client, id);
+            MachineLearningWorkspaceConnectionDeploymentResource.ValidateResourceId(id);
+            return new MachineLearningWorkspaceConnectionDeploymentResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="MachineLearningRegistryCodeContainerResource"/> along with the instance operations that can be performed on it but with no data. </summary>

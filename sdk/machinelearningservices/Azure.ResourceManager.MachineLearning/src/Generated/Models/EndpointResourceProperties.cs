@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="endpointType"> Type of the endpoint. </param>
         private protected EndpointResourceProperties(EndpointType endpointType)
         {
-            Deployments = new ChangeTrackingList<EndpointDeploymentResourcePropertiesBasicResourceData>();
+            Deployments = new ChangeTrackingList<MachineLearningWorkspaceConnectionDeploymentData>();
             EndpointType = endpointType;
         }
 
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="provisioningState"> Read-only provision state status property. </param>
         /// <param name="shouldCreateAiServicesEndpoint"> Whether the proxy (non-byo) endpoint is a regular endpoint or a OneKeyV2 AI services account endpoint. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EndpointResourceProperties(ResourceIdentifier associatedResourceId, IList<EndpointDeploymentResourcePropertiesBasicResourceData> deployments, EndpointType endpointType, Uri endpointUri, string failureReason, string location, string name, DefaultResourceProvisioningState? provisioningState, bool? shouldCreateAiServicesEndpoint, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EndpointResourceProperties(ResourceIdentifier associatedResourceId, IList<MachineLearningWorkspaceConnectionDeploymentData> deployments, EndpointType endpointType, Uri endpointUri, string failureReason, string location, string name, DefaultResourceProvisioningState? provisioningState, bool? shouldCreateAiServicesEndpoint, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AssociatedResourceId = associatedResourceId;
             Deployments = deployments;
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Deployments info. </summary>
         [WirePath("deployments")]
-        public IList<EndpointDeploymentResourcePropertiesBasicResourceData> Deployments { get; }
+        public IList<MachineLearningWorkspaceConnectionDeploymentData> Deployments { get; }
 
         /// <summary> Type of the endpoint. </summary>
         [WirePath("endpointType")]

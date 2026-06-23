@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 writer.WritePropertyName("deployments"u8);
                 writer.WriteStartArray();
-                foreach (EndpointDeploymentResourcePropertiesBasicResourceData item in Deployments)
+                foreach (MachineLearningWorkspaceConnectionDeploymentData item in Deployments)
                 {
                     writer.WriteObjectValue(item, options);
                 }

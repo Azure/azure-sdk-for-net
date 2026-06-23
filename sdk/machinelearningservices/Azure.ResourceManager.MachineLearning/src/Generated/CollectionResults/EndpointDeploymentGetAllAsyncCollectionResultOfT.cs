@@ -15,7 +15,7 @@ using Azure.ResourceManager.MachineLearning.Models;
 
 namespace Azure.ResourceManager.MachineLearning
 {
-    internal partial class EndpointDeploymentGetAllAsyncCollectionResultOfT : AsyncPageable<EndpointDeploymentResourcePropertiesBasicResourceData>
+    internal partial class EndpointDeploymentGetAllAsyncCollectionResultOfT : AsyncPageable<MachineLearningWorkspaceConnectionDeploymentData>
     {
         private readonly EndpointDeployment _client;
         private readonly Guid _subscriptionId;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of EndpointDeploymentGetAllAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<EndpointDeploymentResourcePropertiesBasicResourceData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<MachineLearningWorkspaceConnectionDeploymentData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.MachineLearning
                     yield break;
                 }
                 EndpointDeploymentResourcePropertiesBasicResourceArmPaginatedResult result = EndpointDeploymentResourcePropertiesBasicResourceArmPaginatedResult.FromResponse(response);
-                yield return Page<EndpointDeploymentResourcePropertiesBasicResourceData>.FromValues((IReadOnlyList<EndpointDeploymentResourcePropertiesBasicResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<MachineLearningWorkspaceConnectionDeploymentData>.FromValues((IReadOnlyList<MachineLearningWorkspaceConnectionDeploymentData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
