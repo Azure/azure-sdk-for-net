@@ -8,6 +8,10 @@
 
 ### Breaking Changes
 
+- Migrated management-plane APIs to TypeSpec-based generation, which may rename generated resource, collection, model, and operation types to align with current Azure SDK naming guidelines.
+- Removed or changed generated operations whose Swagger/AutoRest shapes are no longer represented by the migrated TypeSpec API surface.
+- Changed selected ARM resource ID properties from `string` to `ResourceIdentifier`.
+
 ### Bugs Fixed
 
 ### Other Changes

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.MachineLearning
     /// <summary>
     /// A Class representing a MachineLearningWorkspaceConnection along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MachineLearningWorkspaceConnectionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetWorkspaceConnectionPropertiesV2BasicResource method.
+    /// from an instance of <see cref="ArmClient" /> using the GetMachineLearningWorkspaceConnectionResource method.
     /// Otherwise you can get one from its parent resource <see cref="MachineLearningWorkspaceResource" /> using the GetMachineLearningWorkspaceConnection method.
     /// </summary>
     public partial class MachineLearningWorkspaceConnectionResource : ArmResource
@@ -43,6 +43,7 @@ namespace Azure.ResourceManager.MachineLearning
             Argument.AssertNotNull(data, nameof(data));
             // Customized: preserve the shipped WorkspaceConnections_Create method shape for source compatibility,
             // but do not replay the old PUT because the migrated TypeSpec API only exposes a PATCH request shape.
+            // TODO: tracked in https://github.com/Azure/azure-sdk-for-net/issues/60130 - remove when the generated API restores a safe full-resource PUT overload.
             throw new NotSupportedException("The legacy WorkspaceConnections_Create overload accepted full resource data for an endpoint that now updates connection properties through PATCH. The generated replacement is UpdateAsync(WorkspaceConnectionPropertiesV2BasicResourcePatch, CancellationToken); replaying the old PUT would require private generated serialization against a removed request shape.");
         }
 
@@ -68,6 +69,7 @@ namespace Azure.ResourceManager.MachineLearning
             Argument.AssertNotNull(data, nameof(data));
             // Customized: preserve the shipped WorkspaceConnections_Create method shape for source compatibility,
             // but do not replay the old PUT because the migrated TypeSpec API only exposes a PATCH request shape.
+            // TODO: tracked in https://github.com/Azure/azure-sdk-for-net/issues/60130 - remove when the generated API restores a safe full-resource PUT overload.
             throw new NotSupportedException("The legacy WorkspaceConnections_Create overload accepted full resource data for an endpoint that now updates connection properties through PATCH. The generated replacement is Update(WorkspaceConnectionPropertiesV2BasicResourcePatch, CancellationToken); replaying the old PUT would require private generated serialization against a removed request shape.");
         }
     }
