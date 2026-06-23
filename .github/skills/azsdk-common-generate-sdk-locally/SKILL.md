@@ -10,7 +10,7 @@ compatibility: "azure-sdk-mcp server, local azure-sdk-for-{language} clone, lang
 
 # Generate SDK Locally
 
-This skill generates, builds, and tests Azure SDKs locally from TypeSpec with automatic customization support, covering the end-to-end workflow for fixing generation issues, applying SDK-specific updates, and refreshing package metadata when needed.
+This skill generates, builds, validate, and tests Azure SDKs locally from TypeSpec with automatic customization support, covering the end-to-end workflow for fixing generation issues, applying SDK-specific updates, and refreshing package metadata when needed.
 
 ## Triggers
 
