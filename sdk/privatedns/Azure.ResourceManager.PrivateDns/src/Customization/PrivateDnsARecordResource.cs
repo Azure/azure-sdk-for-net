@@ -24,7 +24,6 @@ namespace Azure.ResourceManager.PrivateDns
     /// Otherwise you can get one from its parent resource <see cref="PrivateDnsZoneResource"/> using the GetPrivateDnsARecords method.
     /// </summary>
     [CodeGenResourceDataAttribute(typeof(PrivateDnsARecordData))]
-    [CodeGenSuppressAttribute("PrivateDnsARecordResource", typeof(ArmClient), typeof(PrivateDnsRecordData))]
     [CodeGenSuppressAttribute("UpdateAsync", typeof(PrivateDnsRecordData), typeof(ETag?), typeof(CancellationToken))]
     [CodeGenSuppressAttribute("Update", typeof(PrivateDnsRecordData), typeof(ETag?), typeof(CancellationToken))]
     public partial class PrivateDnsARecordResource : ArmResource
