@@ -26,6 +26,8 @@ namespace Azure.Generator.Management.Providers
             // The shared context collector only discovers framework types by walking generated type
             // provider shapes. ARM custom resource data still deserializes SystemData through the
             // generated context, so management generators must keep this framework model registered.
+            // TODO: Remove this workaround after the base generator restores recursive base-model
+            // framework type discovery.
             return [
                 .. attributes,
                 new AttributeStatement(
