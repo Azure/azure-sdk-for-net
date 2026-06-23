@@ -145,9 +145,9 @@ namespace Azure.Generator.Management.Tests.Providers
         }
 
         [TestCase]
-        public void Verify_SetTagsInvokesTagPatchHook()
+        public void Verify_TagPatchHookRunsBeforePatchMutation()
         {
-            var setTagsMethod = GetTagMethodByName("SetTags", false, customizationSources:
+            string[] customizationSources =
             [
                 """
                 namespace Microsoft.TypeSpec.Generator.Customizations
@@ -169,12 +169,20 @@ namespace Azure.Generator.Management.Tests.Providers
                     }
                 }
                 """
-            ]);
+            ];
 
+            var setTagsMethod = GetTagMethodByName("SetTags", false, customizationSources);
             var bodyStatements = setTagsMethod.BodyStatements?.ToDisplayString();
             Assert.That(bodyStatements, Is.Not.Null);
             Assert.That(bodyStatements, Does.Contain("this.PrepareTagPatch(patch, current);"));
             Assert.That(bodyStatements!.IndexOf("this.PrepareTagPatch(patch, current);"), Is.LessThan(bodyStatements.IndexOf("patch.Tags.ReplaceWith(tags);")));
+
+            var addTagMethod = GetTagMethodByName("AddTag", false, customizationSources);
+            bodyStatements = addTagMethod.BodyStatements?.ToDisplayString();
+            Assert.That(bodyStatements, Is.Not.Null);
+            Assert.That(bodyStatements, Does.Contain("this.PrepareTagPatch(patch, current);"));
+            Assert.That(bodyStatements!.IndexOf("patch.Tags.Add(tag);"), Is.LessThan(bodyStatements.IndexOf("this.PrepareTagPatch(patch, current);")));
+            Assert.That(bodyStatements.IndexOf("this.PrepareTagPatch(patch, current);"), Is.LessThan(bodyStatements.IndexOf("patch.Tags[key] = value;")));
         }
 
         [TestCase]
