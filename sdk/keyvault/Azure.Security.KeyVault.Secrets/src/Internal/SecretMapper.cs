@@ -89,13 +89,12 @@ namespace Azure.Security.KeyVault.Secrets
         {
             if (secret is null) throw new ArgumentNullException(nameof(secret));
 
-            // The non-null guard for `Value` lives on the generated
-            // `SecretSetParameters(string value)` ctor (Argument.AssertNotNull),
-            // so a null Value still throws ArgumentNullException client-side.
-            // This is unreachable via the public surface today — KeyVaultSecret's
-            // ctor rejects null Value and the `Value` setter is internal — so the
-            // exact ArgumentException vs. ArgumentNullException distinction is
-            // not observable.
+            // A null `Value` cannot reach this path via the public surface:
+            // KeyVaultSecret(string name, string value) throws ArgumentNullException
+            // when `value` is null (see KeyVaultSecret.cs), and the `Value` setter
+            // on KeyVaultSecret is internal. The generated SecretSetParameters
+            // constructor itself does NOT validate `value`, so we rely on the
+            // public-surface guard above.
             var p = secret.Properties;
             var setParams = new SecretSetParameters(secret.Value)
             {

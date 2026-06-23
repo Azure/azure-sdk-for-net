@@ -190,9 +190,9 @@ namespace Azure.Security.KeyVault.Secrets.Tests
         }
 
         // -------------------------------------------------------------------
-        // Service-version mapping. Pre-7.5 enum values are mapped to wire
-        // api-version 7.5 (the operations exposed by this client are identical
-        // on those versions). All values must construct successfully — silent
+        // Service-version mapping. V7_0..V7_4 are forwarded with their exact
+        // legacy wire string ("7.0".."7.4") so existing customers see byte-
+        // identical requests. All values must construct successfully — silent
         // breaking changes for customers who pinned an older enum value are
         // not acceptable.
         // -------------------------------------------------------------------
@@ -208,13 +208,6 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             }
         }
 
-        // Proves the wire api-version that goes on every request for each
-        // SecretClientOptions.ServiceVersion enum value. V7_0..V7_4 are
-        // intentionally mapped to "7.5" — those older spec versions only
-        // differ from 7.5 in operations this client does not expose, so the
-        // result is functionally identical for every existing caller. This
-        // test pins that mapping so a future refactor cannot silently change
-        // the wire api-version a caller experiences.
         // Pins the wire api-version that goes on every request for each
         // SecretClientOptions.ServiceVersion enum value. The mapping must
         // match the legacy hand-written SecretClientOptions.GetVersionString()

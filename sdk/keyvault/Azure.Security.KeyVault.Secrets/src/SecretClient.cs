@@ -796,13 +796,10 @@ namespace Azure.Security.KeyVault.Secrets
         // ---- plumbing ----
 
         // Maps the customer-facing SecretClientOptions.ServiceVersion enum to the
-        // api-version string the wire client should send. The TypeSpec spec dropped
-        // the pre-7.5 service versions, so any caller still parameterized over
-        // V7_0..V7_4 is mapped down to V7_5 for the operations this client supports
-        // (those older versions only differ from 7.5 in operations we don't expose).
-        // No exception is thrown — that would silently break customers who pinned
-        // an older enum value. The mapping is observable: callers that care can
-        // probe the wire api-version header.
+        // api-version string the wire client should send. V7_0..V7_4 are forwarded
+        // with their exact legacy wire string ("7.0".."7.4") so existing customers
+        // who pinned an older enum value see byte-identical wire requests. V7_5,
+        // V7_6, and V2025_07_01 round-trip through their own values.
         private static string MapApiVersion(SecretClientOptions.ServiceVersion version) => version switch
         {
             SecretClientOptions.ServiceVersion.V7_0 => "7.0",
