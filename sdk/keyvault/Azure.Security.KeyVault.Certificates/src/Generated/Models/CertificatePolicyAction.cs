@@ -12,8 +12,5 @@ namespace Azure.Security.KeyVault.Certificates
     /// <summary> The type of the action. </summary>
     public readonly partial struct CertificatePolicyAction : IEquatable<CertificatePolicyAction>
     {
-        /// <summary> Converts a string to a <see cref="CertificatePolicyAction"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator CertificatePolicyAction?(string value) => value == null ? null : new CertificatePolicyAction(value);
     }
 }

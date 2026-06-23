@@ -12,13 +12,17 @@
   be expressed in the spec. Each is narrowly scoped and idempotent. They
   exist because the recorded HTTP cassettes the playback suite depends on
   were captured against the legacy hand-written KeyVaultPipeline, and the
-  generated request shapes diverge in five specific places:
+  generated request shapes diverge in six specific places:
 
     1. UpdateCertificate (4-arg) call-site argument order.
     2. Trailing-slash bug for /certificates/{name}/{version} when version is null.
     3. /certificates/contacts URL missing trailing slash.
     4. /certificates/issuers (LIST) URL missing trailing slash.
     5. PurgeDeletedCertificate missing the Accept header.
+    6. Generated nullable `op_Implicit(string) -> CertificatePolicyAction?`
+       silently swallows nulls instead of throwing ArgumentNullException as the
+       handwritten partial's non-nullable operator did. Removing the generated
+       overload restores the legacy throw contract.
 
   Each patch will be deleted as soon as the upstream
   @azure-typespec/http-client-csharp emitter is fixed.
@@ -108,11 +112,40 @@ if ($restClient) {
     # client that doesn't set Accept (because it returns 204 No Content -- the
     # only handler using PipelineMessageClassifier204). Recordings expect the
     # header. Anchor on the unique 204 classifier so we touch only this method.
-    $purgeBlock     = "            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);`n            Request request = message.Request;`n            request.Uri = uri;`n            request.Method = RequestMethod.Delete;`n            return message;"
-    $purgeBlockFix  = "            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);`n            Request request = message.Request;`n            request.Uri = uri;`n            request.Method = RequestMethod.Delete;`n            request.Headers.SetValue(`"Accept`", `"application/json`");`n            return message;"
-    $text = $text.Replace($purgeBlock, $purgeBlockFix)
-    if ($text.Contains($purgeBlock)) {
-        Write-Warning "Patch 5 (PurgeDeletedCertificate Accept header) failed to apply - verify the 204-classifier block shape or line endings."
+    # Uses a regex (with \r?\n) so the patch matches both LF and CRLF emitter
+    # output, unlike literal-string Replace which is exact-match.
+    $purgePattern = [regex] @"
+(?ms)(HttpMessage message = Pipeline\.CreateMessage\(context, PipelineMessageClassifier204\);\r?\n            Request request = message\.Request;\r?\n            request\.Uri = uri;\r?\n            request\.Method = RequestMethod\.Delete;\r?\n)(            return message;)
+"@
+    $text = $purgePattern.Replace($text, '$1            request.Headers.SetValue("Accept", "application/json");' + "`r`n" + '$2')
+    # If the post-patch text still contains the unpatched shape (Delete followed
+    # directly by return, with no Accept header in between), the patch missed.
+    if ([regex]::IsMatch($text, '(?ms)PipelineMessageClassifier204\);\r?\n            Request request = message\.Request;\r?\n            request\.Uri = uri;\r?\n            request\.Method = RequestMethod\.Delete;\r?\n            return message;')) {
+        Write-Warning "Patch 5 (PurgeDeletedCertificate Accept header) failed to apply - verify the 204-classifier block shape."
+    }
+
+    # Patch 6: the generated `op_Implicit(string) -> CertificatePolicyAction?`
+    # silently turns a null string into a null CertificatePolicyAction?. The
+    # legacy non-nullable operator on the handwritten partial throws
+    # ArgumentNullException, and customer code that assigns string-typed
+    # nullable values relied on that throw. Remove the generated nullable
+    # overload (and its preceding doc-comment block) so the handwritten throw
+    # stays the only contract.
+    $caPath = Join-Path $GeneratedRoot 'Models\CertificatePolicyAction.cs'
+    if (Test-Path $caPath) {
+        $caText     = [System.IO.File]::ReadAllText($caPath)
+        $caOriginal = $caText
+        $nullableOpPattern = [regex] @"
+(?ms)\r?\n        /// <summary> Converts a string to a <see cref="CertificatePolicyAction"/>\. </summary>\r?\n        /// <param name="value"> The value\. </param>\r?\n        public static implicit operator CertificatePolicyAction\?\(string value\) => value == null \? null : new CertificatePolicyAction\(value\);\r?\n
+"@
+        $caText = $nullableOpPattern.Replace($caText, "`r`n")
+        if ($caText -ne $caOriginal) {
+            [System.IO.File]::WriteAllText($caPath, $caText)
+            Write-Host '  patched: Models/CertificatePolicyAction.cs (remove nullable op_Implicit)'
+        }
+        elseif ($caText.Contains('public static implicit operator CertificatePolicyAction?(string value)')) {
+            Write-Warning "Patch 6 (remove nullable CertificatePolicyAction operator) failed to apply - operator still present."
+        }
     }
 
     if ($text -ne $original) {

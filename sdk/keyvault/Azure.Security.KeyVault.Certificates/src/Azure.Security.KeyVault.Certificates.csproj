@@ -25,10 +25,17 @@
 
   <!--
     Auto-generated TypeSpec output (see ..\tsp-location.yaml) lives under
-    .\Generated. The Internalize-Generated.ps1 step hides those types from the
-    public API surface — the customer-facing client is the hand-written
-    CertificateClient. This mirrors Java's `implementation.models` subpackage and
-    Python's `_generated` namespace conventions.
+    .\Generated. Type visibility (public -> internal) is driven at the spec
+    level via `@@access(KeyVault, Access.internal, "csharp")` in client.tsp.
+    `eng/Internalize-Generated.ps1` only applies a small set of post-emit
+    wire-shape patches that the spec cannot yet express; see that file's
+    header for the full list.
+
+    Two generated wire-model files share names with hand-written public types
+    (PlatformManaged, CertificatePolicyAction) in src/. The spec @@access
+    leaves those types `public partial` so the C# compiler merges them with
+    the hand-written `public partial` declarations. Hand-written owns the
+    customer-facing API; generated contributes additive MRW JSON support.
 
     Inputs is intentionally scoped to .\Generated only (plus the script itself)
     so incremental builds don't re-run the script when unrelated handwritten

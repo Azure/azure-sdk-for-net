@@ -4,14 +4,19 @@
 
 ### Features Added
 
+- Added `CertificateClientOptions.ServiceVersion.V2026_05_01_Preview` to opt into Key Vault API version `2026-05-01-preview`. This is the version the TypeSpec spec is generated against and the new default selected by the generated client. The existing `V2026_03_01_Preview` and earlier values continue to work; pinning is unchanged for existing callers.
+- `PlatformManaged` now implements `IJsonModel<PlatformManaged>` and `IPersistableModel<PlatformManaged>` so the model participates in System.ClientModel's `ModelReaderWriter` round-trip. Existing constructors and properties are unchanged.
+- Added `AzureSecurityKeyVaultCertificatesContext` (the package's `ModelReaderWriterContext`) for AOT-friendly model serialization. Customers can pass `AzureSecurityKeyVaultCertificatesContext.Default` to `ModelReaderWriter` overloads that accept a context.
+
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
 
-- Internal transport rewired to delegate to the TypeSpec-generated `KeyVaultCertificatesClient` instead of the legacy hand-written `KeyVaultPipeline`. This brings the .NET package in line with the established Java/Python/Go/JavaScript layering (an internal generated client wrapped by the hand-written `CertificateClient` public surface). No public API changes, no behavior changes — the same `CertificateClient`, the same models, the same diagnostic scope names on the public surface, and the same on-the-wire requests; existing recordings replay byte-for-byte. The customer's full `CertificateClientOptions` (including `AddPolicy`, custom `Retry`, `Diagnostics.LoggedHeaderNames`/`LoggedQueryParameters`, `Transport`, and `ApplicationId`) continues to flow end-to-end into the generated client.
+- Internal transport rewired to delegate to the TypeSpec-generated `KeyVaultCertificatesClient` instead of the legacy hand-written `KeyVaultPipeline`. This brings the .NET package in line with the established Java/Python/Go/JavaScript layering (an internal generated client wrapped by the hand-written `CertificateClient` public surface). `DownloadCertificate` continues to use the legacy `KeyVaultPipeline` for both calls because the second call hits the Secrets endpoint and the first call must keep the recorded `/certificates/{name}/` shape until the Phase 3 download rewire lands. The customer's full `CertificateClientOptions` (including `AddPolicy`, custom `Retry`, `Diagnostics.LoggedHeaderNames`/`LoggedQueryParameters`, `Transport`, and `ApplicationId`) continues to flow end-to-end into the generated client.
 - Operations now emit an additional nested `KeyVaultCertificatesClient.<Op>` distributed-tracing span from the internal generated client, in addition to the existing `CertificateClient.<Op>` span — visible only to telemetry consumers (no wire effect).
+- Removed two unused legacy hand-written request-parameter types (`CertificateUpdateParameters`, `CertificateOperationUpdateParameters`); both were `internal` so no customer-visible effect.
 
 ## 4.10.0-beta.1 (2026-06-04)
 
