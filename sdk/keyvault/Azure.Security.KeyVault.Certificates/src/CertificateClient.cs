@@ -1898,17 +1898,19 @@ namespace Azure.Security.KeyVault.Certificates
                 while (true)
                 {
                     Page<TIn> page;
+                    List<TOut> values;
                     DiagnosticScope scope = _diagnostics.CreateScope(_scopeName);
                     scope.Start();
                     try
                     {
                         if (!e.MoveNext()) { scope.Dispose(); yield break; }
                         page = e.Current;
+                        values = new List<TOut>(page.Values.Count);
+                        // Map page items inside the scope so deserialization failures are recorded as Failed.
+                        foreach (TIn v in page.Values) values.Add(_map(v));
                     }
                     catch (Exception ex) { scope.Failed(ex); scope.Dispose(); throw; }
                     scope.Dispose();
-                    var values = new List<TOut>(page.Values.Count);
-                    foreach (TIn v in page.Values) values.Add(_map(v));
                     yield return Page<TOut>.FromValues(values, page.ContinuationToken, page.GetRawResponse());
                 }
             }
@@ -1930,17 +1932,18 @@ namespace Azure.Security.KeyVault.Certificates
                     while (true)
                     {
                         Page<TIn> page;
+                        List<TOut> values;
                         DiagnosticScope scope = _diagnostics.CreateScope(_scopeName);
                         scope.Start();
                         try
                         {
                             if (!await e.MoveNextAsync().ConfigureAwait(false)) { scope.Dispose(); yield break; }
                             page = e.Current;
+                            values = new List<TOut>(page.Values.Count);
+                            foreach (TIn v in page.Values) values.Add(_map(v));
                         }
                         catch (Exception ex) { scope.Failed(ex); scope.Dispose(); throw; }
                         scope.Dispose();
-                        var values = new List<TOut>(page.Values.Count);
-                        foreach (TIn v in page.Values) values.Add(_map(v));
                         yield return Page<TOut>.FromValues(values, page.ContinuationToken, page.GetRawResponse());
                     }
                 }
