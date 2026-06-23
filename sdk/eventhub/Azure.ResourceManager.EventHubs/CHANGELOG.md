@@ -4,6 +4,9 @@
 
 ### Features Added
 
+- Added support for the `2026-01-01` API version.
+- Added the `IpAddressType` property to the Event Hubs namespace, allowing a namespace to be configured for `IPv4` only or `DualStack` (IPv4 and IPv6).
+
 ### Breaking Changes
 
 ### Bugs Fixed
