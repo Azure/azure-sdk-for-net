@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -531,7 +530,7 @@ namespace Azure.Storage.Test.Shared
 
             // Assert
             Assert.IsTrue(progress.List.Count > 0);
-            Assert.AreEqual(GetExpectedDataLength(dataSize), progress.List.Max());
+            Assert.AreEqual(GetExpectedDataLength(dataSize), progress.List[progress.List.Count - 1]);
 
             await (AdditionalAssertions?.Invoke(client) ?? Task.CompletedTask);
         }

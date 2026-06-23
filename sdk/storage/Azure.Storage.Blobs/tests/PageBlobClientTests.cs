@@ -1007,7 +1007,7 @@ namespace Azure.Storage.Blobs.Test
             // Assert
             Assert.IsFalse(progress.List.Count == 0);
 
-            Assert.AreEqual(blobSize, progress.List.Max());
+            Assert.AreEqual(blobSize, progress.List[progress.List.Count - 1]);
         }
 
         [RecordedTest]

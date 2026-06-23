@@ -2,19 +2,21 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
 namespace Azure.Storage.Test
 {
     public class TestProgress : IProgress<long>
     {
-        public ConcurrentBag<long> List = new ConcurrentBag<long>();
+        private readonly object _lock = new object();
+        public List<long> List = new List<long>();
         public void Report(long value)
         {
-            List.Add(value);
+            lock (_lock)
+            {
+                List.Add(value);
+            }
         }
     }
 }
