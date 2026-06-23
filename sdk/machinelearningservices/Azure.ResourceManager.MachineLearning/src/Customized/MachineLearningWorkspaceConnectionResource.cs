@@ -41,6 +41,8 @@ namespace Azure.ResourceManager.MachineLearning
         public virtual Task<ArmOperation<MachineLearningWorkspaceConnectionResource>> UpdateAsync(WaitUntil waitUntil, MachineLearningWorkspaceConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
+            // Customized: preserve the shipped WorkspaceConnections_Create method shape for source compatibility,
+            // but do not replay the old PUT because the migrated TypeSpec API only exposes a PATCH request shape.
             throw new NotSupportedException("The legacy WorkspaceConnections_Create overload accepted full resource data for an endpoint that now updates connection properties through PATCH. The generated replacement is UpdateAsync(WorkspaceConnectionPropertiesV2BasicResourcePatch, CancellationToken); replaying the old PUT would require private generated serialization against a removed request shape.");
         }
 
@@ -64,6 +66,8 @@ namespace Azure.ResourceManager.MachineLearning
         public virtual ArmOperation<MachineLearningWorkspaceConnectionResource> Update(WaitUntil waitUntil, MachineLearningWorkspaceConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
+            // Customized: preserve the shipped WorkspaceConnections_Create method shape for source compatibility,
+            // but do not replay the old PUT because the migrated TypeSpec API only exposes a PATCH request shape.
             throw new NotSupportedException("The legacy WorkspaceConnections_Create overload accepted full resource data for an endpoint that now updates connection properties through PATCH. The generated replacement is Update(WorkspaceConnectionPropertiesV2BasicResourcePatch, CancellationToken); replaying the old PUT would require private generated serialization against a removed request shape.");
         }
     }
