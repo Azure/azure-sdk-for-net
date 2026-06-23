@@ -18,8 +18,6 @@ namespace Azure.ResourceManager.Cdn
     // That is useful for newly generated SDKs, but it changes the shipped .NET API from
     // ArmOperation to ArmOperation<CdnCustomDomainResource>. Keep the old return type for
     // binary/source compatibility with Azure.ResourceManager.Cdn 1.5.1.
-    [CodeGenSuppress("DeleteAsync", typeof(WaitUntil), typeof(CancellationToken))]
-    [CodeGenSuppress("Delete", typeof(WaitUntil), typeof(CancellationToken))]
     public partial class CdnCustomDomainResource
     {
         /// <summary>
