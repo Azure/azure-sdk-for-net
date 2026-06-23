@@ -1,11 +1,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.ClientModel.TestFramework.Mocks;
-using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.ClientModel.TestFramework.Mocks;
+using NUnit.Framework;
 
 namespace Microsoft.ClientModel.TestFramework.Tests;
 

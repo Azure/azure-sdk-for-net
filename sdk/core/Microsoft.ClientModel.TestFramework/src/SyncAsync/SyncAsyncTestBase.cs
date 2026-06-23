@@ -1,9 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.ClientModel.TestFramework.Mocks;
 using System;
 using System.IO;
+using Microsoft.ClientModel.TestFramework.Mocks;
 
 namespace Microsoft.ClientModel.TestFramework;
 

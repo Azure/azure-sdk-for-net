@@ -1,15 +1,15 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Castle.DynamicProxy;
-using NUnit.Framework;
-using NUnit.Framework.Internal;
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
+using Castle.DynamicProxy;
+using NUnit.Framework;
+using NUnit.Framework.Internal;
 
 namespace Microsoft.ClientModel.TestFramework;
 
@@ -239,7 +239,8 @@ public abstract class ClientTestBase
     /// </exception>
     protected T GetOriginal<T>(T proxied)
     {
-        if (proxied == null) throw new ArgumentNullException(nameof(proxied));
+        if (proxied == null)
+            throw new ArgumentNullException(nameof(proxied));
         var i = proxied as IProxiedClient ?? throw new InvalidOperationException($"{proxied.GetType()} is not an instrumented type");
         return (T)i.Original;
     }

@@ -57,6 +57,7 @@ namespace Azure.AI.Projects
             _endpoint = endpoint;
             Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new UserAgentPolicy(typeof(AIProjectClient).Assembly), authenticationPolicy }, Array.Empty<PipelinePolicy>());
             _apiVersion = options.Version;
+            ClientDiagnostics = new ClientDiagnostics(options, true);
         }
 
         /// <summary> Initializes a new instance of AIProjectClient. </summary>
@@ -98,6 +99,7 @@ namespace Azure.AI.Projects
             PipelinePolicyHelpers.OpenAI.AddAzureFinetuningParityPolicy(options);
 
             Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new BearerTokenPolicy(_tokenProvider, _flows) }, Array.Empty<PipelinePolicy>());
+            ClientDiagnostics = new ClientDiagnostics(options, true);
 
             _cacheManager = new ClientConnectionCacheManager(_endpoint, Pipeline, tokenProvider);
         }
