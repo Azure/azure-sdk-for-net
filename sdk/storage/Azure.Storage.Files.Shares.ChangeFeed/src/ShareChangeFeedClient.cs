@@ -410,6 +410,102 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         }
         #endregion GetLastConsumable
 
+        #region GetSnapshotStatus
+        /// <summary>
+        /// Reports whether a share snapshot is recorded in the change feed and, if so,
+        /// whether it has been finalized.
+        /// </summary>
+        /// <param name="snapshotTimestamp">
+        /// The ISO 8601 UTC timestamp identifying the share snapshot (for example,
+        /// <c>"2024-01-15T08:00:00.000Z"</c>). Must end with <c>'Z'</c>.
+        /// </param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/>.</param>
+        /// <returns>
+        /// <see cref="ShareChangeFeedSnapshotStatus.NotFound"/> when the change feed has no
+        /// metadata for the supplied timestamp, <see cref="ShareChangeFeedSnapshotStatus.Pending"/>
+        /// when metadata exists but the snapshot has not yet been finalized, or
+        /// <see cref="ShareChangeFeedSnapshotStatus.Finalized"/> when the snapshot is fully
+        /// recorded and can be used with
+        /// <see cref="GetChangesBetweenSnapshots(string, string)"/>.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// Thrown when <paramref name="snapshotTimestamp"/> is null or empty.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// Thrown when <paramref name="snapshotTimestamp"/> is not a valid UTC ISO 8601 timestamp
+        /// ending with <c>'Z'</c>.
+        /// </exception>
+        public virtual ShareChangeFeedSnapshotStatus GetSnapshotStatus(
+            string snapshotTimestamp,
+            CancellationToken cancellationToken = default)
+            => GetSnapshotStatusInternal(
+                snapshotTimestamp,
+                async: false,
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// Reports whether a share snapshot is recorded in the change feed and, if so,
+        /// whether it has been finalized.
+        /// </summary>
+        /// <param name="snapshotTimestamp">
+        /// The ISO 8601 UTC timestamp identifying the share snapshot (for example,
+        /// <c>"2024-01-15T08:00:00.000Z"</c>). Must end with <c>'Z'</c>.
+        /// </param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/>.</param>
+        /// <returns>
+        /// <see cref="ShareChangeFeedSnapshotStatus.NotFound"/> when the change feed has no
+        /// metadata for the supplied timestamp, <see cref="ShareChangeFeedSnapshotStatus.Pending"/>
+        /// when metadata exists but the snapshot has not yet been finalized, or
+        /// <see cref="ShareChangeFeedSnapshotStatus.Finalized"/> when the snapshot is fully
+        /// recorded and can be used with
+        /// <see cref="GetChangesBetweenSnapshotsAsync(string, string)"/>.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// Thrown when <paramref name="snapshotTimestamp"/> is null or empty.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// Thrown when <paramref name="snapshotTimestamp"/> is not a valid UTC ISO 8601 timestamp
+        /// ending with <c>'Z'</c>.
+        /// </exception>
+        public virtual async Task<ShareChangeFeedSnapshotStatus> GetSnapshotStatusAsync(
+            string snapshotTimestamp,
+            CancellationToken cancellationToken = default)
+            => await GetSnapshotStatusInternal(
+                snapshotTimestamp,
+                async: true,
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        private async Task<ShareChangeFeedSnapshotStatus> GetSnapshotStatusInternal(
+            string snapshotTimestamp,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            SnapshotInputValidator.ValidateInputString(snapshotTimestamp, nameof(snapshotTimestamp));
+
+            BlobContainerClient containerClient = await GetContainerClientAsync(async, cancellationToken).ConfigureAwait(false);
+
+            SnapshotMetadata metadata = await SnapshotQueryHelper.TryReadSnapshotMetadataAsync(
+                containerClient,
+                snapshotTimestamp,
+                async,
+                cancellationToken)
+                .ConfigureAwait(false);
+
+            if (metadata == null)
+            {
+                return ShareChangeFeedSnapshotStatus.NotFound;
+            }
+
+            // Any non-"Finalized" status string (current or future) maps to Pending so the
+            // public surface never claims a snapshot is usable until the service confirms it.
+            return string.Equals(metadata.Status, "Finalized", StringComparison.OrdinalIgnoreCase)
+                ? ShareChangeFeedSnapshotStatus.Finalized
+                : ShareChangeFeedSnapshotStatus.Pending;
+        }
+        #endregion GetSnapshotStatus
+
         /// <summary>
         /// Resolves the change feed container and builds a <see cref="BlobContainerClient"/>
         /// and <see cref="ChangeFeedConfiguration{ShareChangeFeedEvent}"/>. Called by pageables.

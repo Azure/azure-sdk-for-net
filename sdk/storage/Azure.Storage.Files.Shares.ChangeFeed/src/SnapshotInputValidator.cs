@@ -19,20 +19,23 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         /// </summary>
         public static void ValidateInputStrings(string beginSnapshot, string endSnapshot)
         {
-            if (string.IsNullOrEmpty(beginSnapshot))
-                throw new ArgumentNullException(nameof(beginSnapshot));
-            if (string.IsNullOrEmpty(endSnapshot))
-                throw new ArgumentNullException(nameof(endSnapshot));
+            ValidateInputString(beginSnapshot, nameof(beginSnapshot));
+            ValidateInputString(endSnapshot, nameof(endSnapshot));
+        }
 
-            if (!IsValidUtcSnapshot(beginSnapshot))
-                throw new ArgumentException(
-                    $"'{beginSnapshot}' is not a valid UTC ISO 8601 snapshot timestamp (must end with 'Z').",
-                    nameof(beginSnapshot));
+        /// <summary>
+        /// Validates a single raw snapshot string supplied by the caller. Throws synchronously
+        /// for argument errors so the user sees the problem at the call site.
+        /// </summary>
+        public static void ValidateInputString(string snapshot, string paramName)
+        {
+            if (string.IsNullOrEmpty(snapshot))
+                throw new ArgumentNullException(paramName);
 
-            if (!IsValidUtcSnapshot(endSnapshot))
+            if (!IsValidUtcSnapshot(snapshot))
                 throw new ArgumentException(
-                    $"'{endSnapshot}' is not a valid UTC ISO 8601 snapshot timestamp (must end with 'Z').",
-                    nameof(endSnapshot));
+                    $"'{snapshot}' is not a valid UTC ISO 8601 snapshot timestamp (must end with 'Z').",
+                    paramName);
         }
 
         // Snapshot timestamps are surfaced by the service in UTC ISO 8601 with an uppercase 'Z'

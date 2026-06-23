@@ -298,5 +298,65 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
             Assert.DoesNotThrow(() => client.GetChangesAsync(t, null));
             Assert.DoesNotThrow(() => client.GetChangesAsync(null, t));
         }
+
+        // GetSnapshotStatus must reject null/empty input synchronously, before any
+        // service call, so callers see the problem at the call site.
+        [TestCase(null)]
+        [TestCase("")]
+        public void GetSnapshotStatus_NullOrEmpty_Throws(string snapshotTimestamp)
+        {
+            ShareChangeFeedClient client = new ShareChangeFeedClient(
+                FileServiceUriWithSas,
+                TestShareName);
+
+            ArgumentNullException ex = Assert.Throws<ArgumentNullException>(
+                () => client.GetSnapshotStatus(snapshotTimestamp));
+            Assert.AreEqual("snapshotTimestamp", ex.ParamName);
+        }
+
+        [TestCase(null)]
+        [TestCase("")]
+        public void GetSnapshotStatusAsync_NullOrEmpty_Throws(string snapshotTimestamp)
+        {
+            ShareChangeFeedClient client = new ShareChangeFeedClient(
+                FileServiceUriWithSas,
+                TestShareName);
+
+            ArgumentNullException ex = Assert.ThrowsAsync<ArgumentNullException>(
+                async () => await client.GetSnapshotStatusAsync(snapshotTimestamp));
+            Assert.AreEqual("snapshotTimestamp", ex.ParamName);
+        }
+
+        // The snapshot timestamp must be UTC ISO 8601 (ending in 'Z'); any other offset would
+        // let two strings that name the same instant resolve to different meta blob paths.
+        [TestCase("2024-01-15T08:00:00.000+00:00")]
+        [TestCase("2024-01-15T08:00:00.000-05:00")]
+        [TestCase("not a timestamp at all")]
+        [TestCase("2024-13-99T99:99:99.000Z")]
+        public void GetSnapshotStatus_InvalidFormat_Throws(string snapshotTimestamp)
+        {
+            ShareChangeFeedClient client = new ShareChangeFeedClient(
+                FileServiceUriWithSas,
+                TestShareName);
+
+            ArgumentException ex = Assert.Throws<ArgumentException>(
+                () => client.GetSnapshotStatus(snapshotTimestamp));
+            Assert.AreEqual("snapshotTimestamp", ex.ParamName);
+        }
+
+        [TestCase("2024-01-15T08:00:00.000+00:00")]
+        [TestCase("2024-01-15T08:00:00.000-05:00")]
+        [TestCase("not a timestamp at all")]
+        [TestCase("2024-13-99T99:99:99.000Z")]
+        public void GetSnapshotStatusAsync_InvalidFormat_Throws(string snapshotTimestamp)
+        {
+            ShareChangeFeedClient client = new ShareChangeFeedClient(
+                FileServiceUriWithSas,
+                TestShareName);
+
+            ArgumentException ex = Assert.ThrowsAsync<ArgumentException>(
+                async () => await client.GetSnapshotStatusAsync(snapshotTimestamp));
+            Assert.AreEqual("snapshotTimestamp", ex.ParamName);
+        }
     }
 }

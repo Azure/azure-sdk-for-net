@@ -146,6 +146,28 @@ await foreach (ShareChangeFeedEvent changeFeedEvent in changeFeedClient.GetChang
 }
 ```
 
+### Check whether a snapshot is recorded and finalized
+
+```C#
+// Before calling GetChangesBetweenSnapshots, verify that the change feed has
+// recorded and finalized the snapshot you intend to use as an endpoint.
+ShareChangeFeedSnapshotStatus status = await changeFeedClient.GetSnapshotStatusAsync(
+    "2024-01-15T12:00:00.000Z");
+
+switch (status)
+{
+    case ShareChangeFeedSnapshotStatus.Finalized:
+        // Safe to use as a begin/end snapshot for GetChangesBetweenSnapshots.
+        break;
+    case ShareChangeFeedSnapshotStatus.Pending:
+        // Metadata exists but the snapshot has not been finalized yet; try again later.
+        break;
+    case ShareChangeFeedSnapshotStatus.NotFound:
+        // No metadata was published for this timestamp.
+        break;
+}
+```
+
 ## Troubleshooting
 
 All Azure Storage service operations will throw a
