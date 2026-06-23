@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.HybridNetwork
 {
     /// <summary></summary>
-    internal partial class ArtifactManifestOperationSource : IOperationSource<ArtifactManifestResource>
+    internal partial class ConfigurationGroupValueResourceOperationSource : IOperationSource<ConfigurationGroupValueResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal ArtifactManifestOperationSource(ArmClient client)
+        internal ConfigurationGroupValueResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        ArtifactManifestResource IOperationSource<ArtifactManifestResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ConfigurationGroupValueResource IOperationSource<ConfigurationGroupValueResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            ArtifactManifestData data = ArtifactManifestData.DeserializeArtifactManifestData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new ArtifactManifestResource(_client, data);
+            ConfigurationGroupValueData data = ConfigurationGroupValueData.DeserializeConfigurationGroupValueData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ConfigurationGroupValueResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<ArtifactManifestResource> IOperationSource<ArtifactManifestResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ConfigurationGroupValueResource> IOperationSource<ConfigurationGroupValueResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            ArtifactManifestData data = ArtifactManifestData.DeserializeArtifactManifestData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new ArtifactManifestResource(_client, data);
+            ConfigurationGroupValueData data = ConfigurationGroupValueData.DeserializeConfigurationGroupValueData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ConfigurationGroupValueResource(_client, data);
         }
     }
 }

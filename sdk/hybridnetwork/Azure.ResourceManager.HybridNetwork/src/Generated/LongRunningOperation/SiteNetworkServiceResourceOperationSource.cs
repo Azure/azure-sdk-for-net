@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.HybridNetwork
 {
     /// <summary></summary>
-    internal partial class ArtifactStoreOperationSource : IOperationSource<ArtifactStoreResource>
+    internal partial class SiteNetworkServiceResourceOperationSource : IOperationSource<SiteNetworkServiceResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal ArtifactStoreOperationSource(ArmClient client)
+        internal SiteNetworkServiceResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        ArtifactStoreResource IOperationSource<ArtifactStoreResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        SiteNetworkServiceResource IOperationSource<SiteNetworkServiceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            ArtifactStoreData data = ArtifactStoreData.DeserializeArtifactStoreData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new ArtifactStoreResource(_client, data);
+            SiteNetworkServiceData data = SiteNetworkServiceData.DeserializeSiteNetworkServiceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new SiteNetworkServiceResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<ArtifactStoreResource> IOperationSource<ArtifactStoreResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<SiteNetworkServiceResource> IOperationSource<SiteNetworkServiceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            ArtifactStoreData data = ArtifactStoreData.DeserializeArtifactStoreData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new ArtifactStoreResource(_client, data);
+            SiteNetworkServiceData data = SiteNetworkServiceData.DeserializeSiteNetworkServiceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new SiteNetworkServiceResource(_client, data);
         }
     }
 }

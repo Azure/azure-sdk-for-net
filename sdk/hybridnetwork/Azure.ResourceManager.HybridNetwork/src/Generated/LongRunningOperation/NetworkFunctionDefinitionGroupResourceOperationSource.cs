@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.HybridNetwork
 {
     /// <summary></summary>
-    internal partial class NetworkServiceDesignGroupOperationSource : IOperationSource<NetworkServiceDesignGroupResource>
+    internal partial class NetworkFunctionDefinitionGroupResourceOperationSource : IOperationSource<NetworkFunctionDefinitionGroupResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal NetworkServiceDesignGroupOperationSource(ArmClient client)
+        internal NetworkFunctionDefinitionGroupResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        NetworkServiceDesignGroupResource IOperationSource<NetworkServiceDesignGroupResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        NetworkFunctionDefinitionGroupResource IOperationSource<NetworkFunctionDefinitionGroupResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            NetworkServiceDesignGroupData data = NetworkServiceDesignGroupData.DeserializeNetworkServiceDesignGroupData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new NetworkServiceDesignGroupResource(_client, data);
+            NetworkFunctionDefinitionGroupData data = NetworkFunctionDefinitionGroupData.DeserializeNetworkFunctionDefinitionGroupData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new NetworkFunctionDefinitionGroupResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<NetworkServiceDesignGroupResource> IOperationSource<NetworkServiceDesignGroupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<NetworkFunctionDefinitionGroupResource> IOperationSource<NetworkFunctionDefinitionGroupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            NetworkServiceDesignGroupData data = NetworkServiceDesignGroupData.DeserializeNetworkServiceDesignGroupData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new NetworkServiceDesignGroupResource(_client, data);
+            NetworkFunctionDefinitionGroupData data = NetworkFunctionDefinitionGroupData.DeserializeNetworkFunctionDefinitionGroupData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new NetworkFunctionDefinitionGroupResource(_client, data);
         }
     }
 }

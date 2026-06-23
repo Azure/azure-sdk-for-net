@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.HybridNetwork
 {
     /// <summary></summary>
-    internal partial class PublisherOperationSource : IOperationSource<PublisherResource>
+    internal partial class ArtifactManifestResourceOperationSource : IOperationSource<ArtifactManifestResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal PublisherOperationSource(ArmClient client)
+        internal ArtifactManifestResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        PublisherResource IOperationSource<PublisherResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ArtifactManifestResource IOperationSource<ArtifactManifestResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            PublisherData data = PublisherData.DeserializePublisherData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new PublisherResource(_client, data);
+            ArtifactManifestData data = ArtifactManifestData.DeserializeArtifactManifestData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ArtifactManifestResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<PublisherResource> IOperationSource<PublisherResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ArtifactManifestResource> IOperationSource<ArtifactManifestResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            PublisherData data = PublisherData.DeserializePublisherData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new PublisherResource(_client, data);
+            ArtifactManifestData data = ArtifactManifestData.DeserializeArtifactManifestData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ArtifactManifestResource(_client, data);
         }
     }
 }
