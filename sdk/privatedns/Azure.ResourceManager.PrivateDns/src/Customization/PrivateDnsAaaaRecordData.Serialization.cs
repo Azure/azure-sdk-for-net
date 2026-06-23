@@ -13,7 +13,6 @@ using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.PrivateDns.Models;
 using Azure.ResourceManager.Models;
-using CodeGenSuppressAttribute = Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppressAttribute;
 
 namespace Azure.ResourceManager.PrivateDns
 {
