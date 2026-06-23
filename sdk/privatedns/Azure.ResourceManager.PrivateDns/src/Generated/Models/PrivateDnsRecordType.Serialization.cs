@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
         public static string ToSerialString(this PrivateDnsRecordType value) => value switch
         {
             PrivateDnsRecordType.A => "A",
-            PrivateDnsRecordType.Aaaaa => "AAAA",
+            PrivateDnsRecordType.Aaaa => "AAAA",
             PrivateDnsRecordType.Cname => "CNAME",
             PrivateDnsRecordType.MX => "MX",
             PrivateDnsRecordType.Ptr => "PTR",
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
             }
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "AAAA"))
             {
-                return PrivateDnsRecordType.Aaaaa;
+                return PrivateDnsRecordType.Aaaa;
             }
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "CNAME"))
             {

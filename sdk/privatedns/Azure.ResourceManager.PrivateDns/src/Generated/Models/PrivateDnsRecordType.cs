@@ -12,8 +12,8 @@ namespace Azure.ResourceManager.PrivateDns.Models
     {
         /// <summary> A. </summary>
         A,
-        /// <summary> Aaaaa. </summary>
-        Aaaaa,
+        /// <summary> Aaaa. </summary>
+        Aaaa,
         /// <summary> Cname. </summary>
         Cname,
         /// <summary> MX. </summary>

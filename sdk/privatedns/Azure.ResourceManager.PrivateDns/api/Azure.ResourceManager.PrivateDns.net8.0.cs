@@ -736,7 +736,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
     public enum PrivateDnsRecordType
     {
         A = 0,
-        Aaaaa = 1,
+        Aaaa = 1,
         Cname = 2,
         MX = 3,
         Ptr = 4,
